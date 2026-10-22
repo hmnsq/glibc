@@ -15,43 +15,43 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#ضمن <argz.h>
+#ضمن <errno.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
 
 
 error_t
-__argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+__argz_add_sep (حرف **argz, size_t *argz_len, ثابت حرف *string, صحيح delim)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  إذا (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ثابت حرف *rp;
+      حرف *wp;
 
-      *argz = (char *) realloc (*argz, *argz_len + nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (حرف *) realloc (*argz, *argz_len + nlen);
+      إذا (*argz == عدم)
+	أرجع ENOMEM;
 
       wp = *argz + *argz_len;
       rp = string;
-      do
-	if (*rp == delim)
+      افعل
+	إذا (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    إذا (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    وإلا
 	      --nlen;
 	  }
-	else
+	وإلا
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      طالما (*rp++ != '\0');
 
       *argz_len += nlen;
     }
 
-  return 0;
+  أرجع 0;
 }
 weak_alias (__argz_add_sep, argz_add_sep)
