@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
 #undef strchr
 #undef index
@@ -25,11 +25,11 @@
 #endif
 
 /* Find the first occurrence of C in S.  */
-char *
-strchr (const char *s, int c_in)
+वर्ण *
+strchr (ध्रुव वर्ण *s, पूर्णाङ्क c_in)
 {
-  char *r = __strchrnul (s, c_in);
-  return (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
+  वर्ण *r = __strchrnul (s, c_in);
+  प्रत्यागम (*(unsigned वर्ण *)r == (unsigned वर्ण)c_in) ? r : रिक्त;
 }
 #ifndef STRCHR
 weak_alias (strchr, index)
