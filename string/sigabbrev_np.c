@@ -16,18 +16,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#અન્તર્ભાવ <string.h>
+#અન્તર્ભાવ <signal.h>
+#અન્તર્ભાવ <array_length.h>
 
-const char *
-sigabbrev_np (int signum)
+અચલ અક્ષર *
+sigabbrev_np (પૂર્ણાંક signum)
 {
-  const char *abbrev = NULL;
+  અચલ અક્ષર *abbrev = ખાલી;
 
-  if (signum >= 0 && signum <= NSIG
+  જો (signum >= 0 && signum <= NSIG
       && signum < array_length (__sys_sigabbrev))
     abbrev = __sys_sigabbrev[signum];
 
-  return abbrev;
+  પાછા abbrev;
 }

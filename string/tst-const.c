@@ -16,92 +16,92 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#અન્તર્ભાવ <string.h>
+#અન્તર્ભાવ <libc-diag.h>
 
-void *vp;
-const void *cvp;
-int *ip;
-const int *cip;
-char *cp;
-const char *ccp;
-int c;
+શૂન્ય *vp;
+અચલ શૂન્ય *cvp;
+પૂર્ણાંક *ip;
+અચલ પૂર્ણાંક *cip;
+અક્ષર *cp;
+અચલ અક્ષર *ccp;
+પૂર્ણાંક c;
 size_t sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#define CHECK_TYPE(પદાવલિ, TYPE)					\
+  _Static_assert (_Generic (પદાવલિ, TYPE: 1), "type check")
 
-static int
-do_test (void)
+સ્થિર પૂર્ણાંક
+do_test (શૂન્ય)
 {
   /* This is a compilation test.  */
-  CHECK_TYPE (memchr (vp, c, sz), void *);
-  CHECK_TYPE (memchr (cvp, c, sz), const void *);
-  CHECK_TYPE (memchr (ip, c, sz), void *);
-  CHECK_TYPE (memchr (cip, c, sz), const void *);
-  CHECK_TYPE (memchr (cp, c, sz), void *);
-  CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (vp, c, sz), શૂન્ય *);
+  CHECK_TYPE (memchr (cvp, c, sz), અચલ શૂન્ય *);
+  CHECK_TYPE (memchr (ip, c, sz), શૂન્ય *);
+  CHECK_TYPE (memchr (cip, c, sz), અચલ શૂન્ય *);
+  CHECK_TYPE (memchr (cp, c, sz), શૂન્ય *);
+  CHECK_TYPE (memchr (ccp, c, sz), અચલ શૂન્ય *);
+  DIAG_ધકેલો_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (memchr (0, c, sz), void *);
-  CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((memchr) (cvp, c, sz), void *);
-  CHECK_TYPE (strchr (vp, c), char *);
-  CHECK_TYPE (strchr (cvp, c), const char *);
-  CHECK_TYPE (strchr (cp, c), char *);
-  CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (0, c, sz), શૂન્ય *);
+  CHECK_TYPE (memchr ((શૂન્ય *) 0, c, sz), શૂન્ય *);
+  DIAG_કાઢો_NEEDS_COMMENT;
+  CHECK_TYPE ((memchr) (cvp, c, sz), શૂન્ય *);
+  CHECK_TYPE (strchr (vp, c), અક્ષર *);
+  CHECK_TYPE (strchr (cvp, c), અચલ અક્ષર *);
+  CHECK_TYPE (strchr (cp, c), અક્ષર *);
+  CHECK_TYPE (strchr (ccp, c), અચલ અક્ષર *);
+  DIAG_ધકેલો_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strchr (0, c), char *);
-  CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strchr) (ccp, c), char *);
-  CHECK_TYPE (strpbrk (vp, vp), char *);
-  CHECK_TYPE (strpbrk (vp, cvp), char *);
-  CHECK_TYPE (strpbrk (cvp, vp), const char *);
-  CHECK_TYPE (strpbrk (cvp, cvp), const char *);
-  CHECK_TYPE (strpbrk (cp, cp), char *);
-  CHECK_TYPE (strpbrk (cp, ccp), char *);
-  CHECK_TYPE (strpbrk (ccp, cp), const char *);
-  CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strchr (0, c), અક્ષર *);
+  CHECK_TYPE (strchr ((શૂન્ય *) 0, c), અક્ષર *);
+  DIAG_કાઢો_NEEDS_COMMENT;
+  CHECK_TYPE ((strchr) (ccp, c), અક્ષર *);
+  CHECK_TYPE (strpbrk (vp, vp), અક્ષર *);
+  CHECK_TYPE (strpbrk (vp, cvp), અક્ષર *);
+  CHECK_TYPE (strpbrk (cvp, vp), અચલ અક્ષર *);
+  CHECK_TYPE (strpbrk (cvp, cvp), અચલ અક્ષર *);
+  CHECK_TYPE (strpbrk (cp, cp), અક્ષર *);
+  CHECK_TYPE (strpbrk (cp, ccp), અક્ષર *);
+  CHECK_TYPE (strpbrk (ccp, cp), અચલ અક્ષર *);
+  CHECK_TYPE (strpbrk (ccp, ccp), અચલ અક્ષર *);
+  DIAG_ધકેલો_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strpbrk (0, cp), char *);
-  CHECK_TYPE (strpbrk (0, ccp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
-  CHECK_TYPE (strrchr (vp, c), char *);
-  CHECK_TYPE (strrchr (cvp, c), const char *);
-  CHECK_TYPE (strrchr (cp, c), char *);
-  CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strpbrk (0, cp), અક્ષર *);
+  CHECK_TYPE (strpbrk (0, ccp), અક્ષર *);
+  CHECK_TYPE (strpbrk ((શૂન્ય *) 0, cp), અક્ષર *);
+  CHECK_TYPE (strpbrk ((શૂન્ય *) 0, ccp), અક્ષર *);
+  DIAG_કાઢો_NEEDS_COMMENT;
+  CHECK_TYPE ((strpbrk) (ccp, ccp), અક્ષર *);
+  CHECK_TYPE (strrchr (vp, c), અક્ષર *);
+  CHECK_TYPE (strrchr (cvp, c), અચલ અક્ષર *);
+  CHECK_TYPE (strrchr (cp, c), અક્ષર *);
+  CHECK_TYPE (strrchr (ccp, c), અચલ અક્ષર *);
+  DIAG_ધકેલો_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strrchr (0, c), char *);
-  CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strrchr) (ccp, c), char *);
-  CHECK_TYPE (strstr (vp, vp), char *);
-  CHECK_TYPE (strstr (vp, cvp), char *);
-  CHECK_TYPE (strstr (cvp, vp), const char *);
-  CHECK_TYPE (strstr (cvp, cvp), const char *);
-  CHECK_TYPE (strstr (cp, cp), char *);
-  CHECK_TYPE (strstr (cp, ccp), char *);
-  CHECK_TYPE (strstr (ccp, cp), const char *);
-  CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strrchr (0, c), અક્ષર *);
+  CHECK_TYPE (strrchr ((શૂન્ય *) 0, c), અક્ષર *);
+  DIAG_કાઢો_NEEDS_COMMENT;
+  CHECK_TYPE ((strrchr) (ccp, c), અક્ષર *);
+  CHECK_TYPE (strstr (vp, vp), અક્ષર *);
+  CHECK_TYPE (strstr (vp, cvp), અક્ષર *);
+  CHECK_TYPE (strstr (cvp, vp), અચલ અક્ષર *);
+  CHECK_TYPE (strstr (cvp, cvp), અચલ અક્ષર *);
+  CHECK_TYPE (strstr (cp, cp), અક્ષર *);
+  CHECK_TYPE (strstr (cp, ccp), અક્ષર *);
+  CHECK_TYPE (strstr (ccp, cp), અચલ અક્ષર *);
+  CHECK_TYPE (strstr (ccp, ccp), અચલ અક્ષર *);
+  DIAG_ધકેલો_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strstr (0, cp), char *);
-  CHECK_TYPE (strstr (0, ccp), char *);
-  CHECK_TYPE (strstr ((void *) 0, cp), char *);
-  CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  CHECK_TYPE (strstr (0, cp), અક્ષર *);
+  CHECK_TYPE (strstr (0, ccp), અક્ષર *);
+  CHECK_TYPE (strstr ((શૂન્ય *) 0, cp), અક્ષર *);
+  CHECK_TYPE (strstr ((શૂન્ય *) 0, ccp), અક્ષર *);
+  DIAG_કાઢો_NEEDS_COMMENT;
+  CHECK_TYPE ((strstr) (ccp, ccp), અક્ષર *);
+  પાછા 0;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

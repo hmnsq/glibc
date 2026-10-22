@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#અન્તર્ભાવ <string.h>
 
 #undef strncpy
 
@@ -23,12 +23,12 @@
  #define STRNCPY strncpy
 #endif
 
-char *
-STRNCPY (char *s1, const char *s2, size_t n)
+અક્ષર *
+STRNCPY (અક્ષર *s1, અચલ અક્ષર *s2, size_t n)
 {
   size_t size = __strnlen (s2, n);
-  if (size != n)
+  જો (size != n)
     memset (s1 + size, '\0', n - size);
-  return memcpy (s1, s2, size);
+  પાછા memcpy (s1, s2, size);
 }
 libc_hidden_builtin_def (strncpy)

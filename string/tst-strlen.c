@@ -2,56 +2,56 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#અન્તર્ભાવ <stdio.h>
+#અન્તર્ભાવ <string.h>
 
-int
-do_test (void)
+પૂર્ણાંક
+do_test (શૂન્ય)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  સ્થિર અચલ size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  અક્ષર basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  માટે (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      અક્ષર *buf = basebuf + base;
+      size_t શબ્દો;
 
-      for (words = 0; words < 4; ++words)
+      માટે (શબ્દો = 0; શબ્દો < 4; ++શબ્દો)
 	{
 	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  memset (buf, 'a', શબ્દો * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  માટે (last = 0; last < 16; ++last)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[શબ્દો * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
+	      buf[શબ્દો * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
+	      buf[શબ્દો * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
+	      buf[શબ્દો * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
+	      buf[શબ્દો * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      જો (strlen (buf) != શબ્દો * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+strlen failed માટે base=%zu, શબ્દો=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, શબ્દો, last,
+			  strlen (buf), શબ્દો * 4 + lens[last]);
+		  પાછા 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      જો (strnlen (buf, -1) != શબ્દો * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+strnlen failed માટે base=%zu, શબ્દો=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, શબ્દો, last,
+			  strnlen (buf, -1), શબ્દો * 4 + lens[last]);
+		  પાછા 1;
 		}
 	    }
 	}
     }
-  return 0;
+  પાછા 0;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

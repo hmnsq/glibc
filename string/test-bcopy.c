@@ -17,4 +17,4 @@
    <https://www.gnu.org/licenses/>.  */
 
 #define TEST_BCOPY
-#include "test-memmove.c"
+#અન્તર્ભાવ "test-memmove.c"

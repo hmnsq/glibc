@@ -15,7 +15,7 @@
    License along with the GNU C Library; see the file COPYING.LIB.  If
    not, see <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#અન્તર્ભાવ <string.h>
 
 /* Find the length of S, but scan at most MAXLEN characters.  If no
    '\0' terminator is found in that many characters, return MAXLEN.  */
@@ -25,10 +25,10 @@
 #endif
 
 size_t
-__strnlen (const char *str, size_t maxlen)
+__strnlen (અચલ અક્ષર *str, size_t maxlen)
 {
-  const char *found = memchr (str, '\0', maxlen);
-  return found ? found - str : maxlen;
+  અચલ અક્ષર *found = memchr (str, '\0', maxlen);
+  પાછા found ? found - str : maxlen;
 }
 
 #ifndef STRNLEN

@@ -16,4 +16,4 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 #define TEST_MEMSET_EXPLICIT
-#include "test-memset.c"
+#અન્તર્ભાવ "test-memset.c"

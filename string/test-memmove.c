@@ -19,142 +19,142 @@
 #define TEST_MAIN
 #ifdef TEST_BCOPY
 # define TEST_NAME "bcopy"
-#else
+#નહીંતર
 # define TEST_NAME "memmove"
 #endif
-#include "test-string.h"
-#include <support/test-driver.h>
+#અન્તર્ભાવ "test-string.h"
+#અન્તર્ભાવ <support/test-driver.h>
 
-char *simple_memmove (char *, const char *, size_t);
+અક્ષર *simple_memmove (અક્ષર *, અચલ અક્ષર *, size_t);
 
 #ifdef TEST_BCOPY
-typedef void (*proto_t) (const char *, char *, size_t);
+પ્રકારવ્યાખ્યા શૂન્ય (*proto_t) (અચલ અક્ષર *, અક્ષર *, size_t);
 
 IMPL (bcopy, 1)
 
 /* Naive implementation to verify results.  */
-void
-simple_bcopy (const char *src, char *dst, size_t n)
+શૂન્ય
+simple_bcopy (અચલ અક્ષર *src, અક્ષર *dst, size_t n)
 {
   simple_memmove (dst, src, n);
 }
 
-#else
-typedef char *(*proto_t) (char *, const char *, size_t);
+#નહીંતર
+પ્રકારવ્યાખ્યા અક્ષર *(*proto_t) (અક્ષર *, અચલ અક્ષર *, size_t);
 
 IMPL (memmove, 1)
 #endif
 
 /* Naive implementation to verify results.  */
-char *
+અક્ષર *
 test_cc_inhibit_loop_to_libcall
-simple_memmove (char *dst, const char *src, size_t n)
+simple_memmove (અક્ષર *dst, અચલ અક્ષર *src, size_t n)
 {
-  char *ret = dst;
-  if (src < dst)
+  અક્ષર *ret = dst;
+  જો (src < dst)
     {
       dst += n;
       src += n;
-      while (n--)
+      જ્યારે (n--)
 	*--dst = *--src;
     }
-  else
-    while (n--)
+  નહીંતર
+    જ્યારે (n--)
       *dst++ = *src++;
-  return ret;
+  પાછા ret;
 }
 
-static void
-do_one_test (impl_t *impl, char *dst, char *src, const char *orig_src,
+સ્થિર શૂન્ય
+do_one_test (impl_t *impl, અક્ષર *dst, અક્ષર *src, અચલ અક્ષર *orig_src,
 	     size_t len)
 {
   /* This also clears the destination buffer set by the previous run.  */
   memcpy (src, orig_src, len);
 #ifdef TEST_BCOPY
   CALL (impl, src, dst, len);
-#else
-  char *res;
+#નહીંતર
+  અક્ષર *res;
 
   res = CALL (impl, dst, src, len);
-  if (res != dst)
+  જો (res != dst)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, dst);
       ret = 1;
-      return;
+      પાછા;
     }
 #endif
 
-  if (memcmp (dst, orig_src, len) != 0)
+  જો (memcmp (dst, orig_src, len) != 0)
     {
       error (0, 0, "Wrong result in function %s dst \"%s\" src \"%s\"",
 	     impl->name, dst, src);
       ret = 1;
-      return;
+      પાછા;
     }
 }
 
-static void
+સ્થિર શૂન્ય
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  અક્ષર *s1, *s2;
 
   align1 &= (getpagesize() - 1);
-  if (align1 + len >= page_size)
-    return;
+  જો (align1 + len >= page_size)
+    પાછા;
 
   align2 &= (getpagesize() - 1);
-  if (align2 + len >= page_size)
-    return;
+  જો (align2 + len >= page_size)
+    પાછા;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (અક્ષર *) (buf1 + align1);
+  s2 = (અક્ષર *) (buf2 + align2);
 
-  for (i = 0, j = 1; i < len; i++, j += 23)
+  માટે (i = 0, j = 1; i < len; i++, j += 23)
     s1[i] = j;
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s2, (char *) (buf2 + align1), s1, len);
+    do_one_test (impl, s2, (અક્ષર *) (buf2 + align1), s1, len);
 }
 
-static void
-do_random_tests (void)
+સ્થિર શૂન્ય
+do_random_tests (શૂન્ય)
 {
   size_t i, n, align1, align2, len, size;
   size_t srcstart, srcend, dststart, dstend;
-  int c;
-  unsigned char *p1, *p2;
+  પૂર્ણાંક c;
+  unsigned અક્ષર *p1, *p2;
 #ifndef TEST_BCOPY
-  unsigned char *res;
+  unsigned અક્ષર *res;
 #endif
 
-  for (n = 0; n < ITERATIONS; n++)
+  માટે (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 255) == 0)
+      જો ((random () & 255) == 0)
 	size = 65536;
-      else
+      નહીંતર
 	size = 512;
-      if (size > page_size)
+      જો (size > page_size)
 	size = page_size;
-      if ((random () & 3) == 0)
+      જો ((random () & 3) == 0)
 	{
 	  len = random () & (size - 1);
 	  align1 = size - len - (random () & 31);
 	  align2 = size - len - (random () & 31);
-	  if (align1 > size)
+	  જો (align1 > size)
 	    align1 = 0;
-	  if (align2 > size)
+	  જો (align2 > size)
 	    align2 = 0;
 	}
-      else
+      નહીંતર
 	{
 	  align1 = random () & (size / 2 - 1);
 	  align2 = random () & (size / 2 - 1);
 	  len = random () & (size - 1);
-	  if (align1 + len > size)
+	  જો (align1 + len > size)
 	    align1 = size - len;
-	  if (align2 + len > size)
+	  જો (align2 + len > size)
 	    align2 = size - len;
 	}
 
@@ -162,20 +162,20 @@ do_random_tests (void)
       p2 = buf2 + page_size - size;
       c = random () & 255;
       srcend = align1 + len + 256;
-      if (srcend > size)
+      જો (srcend > size)
 	srcend = size;
-      if (align1 > 256)
+      જો (align1 > 256)
 	srcstart = align1 - 256;
-      else
+      નહીંતર
 	srcstart = 0;
-      for (i = srcstart; i < srcend; ++i)
+      માટે (i = srcstart; i < srcend; ++i)
 	p1[i] = random () & 255;
       dstend = align2 + len + 256;
-      if (dstend > size)
+      જો (dstend > size)
 	dstend = size;
-      if (align2 > 256)
+      જો (align2 > 256)
 	dststart = align2 - 256;
-      else
+      નહીંતર
 	dststart = 0;
 
       FOR_EACH_IMPL (impl, 1)
@@ -183,124 +183,124 @@ do_random_tests (void)
 	  memset (p2 + dststart, c, dstend - dststart);
 	  memcpy (p2 + srcstart, p1 + srcstart, srcend - srcstart);
 #ifdef TEST_BCOPY
-	  CALL (impl, (char *) (p2 + align1), (char *) (p2 + align2), len);
-#else
-	  res = (unsigned char *) CALL (impl,
-					(char *) (p2 + align2),
-					(char *) (p2 + align1), len);
-	  if (res != p2 + align2)
+	  CALL (impl, (અક્ષર *) (p2 + align1), (અક્ષર *) (p2 + align2), len);
+#નહીંતર
+	  res = (unsigned અક્ષર *) CALL (impl,
+					(અક્ષર *) (p2 + align2),
+					(અક્ષર *) (p2 + align1), len);
+	  જો (res != p2 + align2)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res, p2 + align2);
 	      ret = 1;
 	    }
 #endif
-	  if (memcmp (p1 + align1, p2 + align2, len))
+	  જો (memcmp (p1 + align1, p2 + align2, len))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
 	    }
-	  for (i = dststart; i < dstend; ++i)
+	  માટે (i = dststart; i < dstend; ++i)
 	    {
-	      if (i >= align2 && i < align2 + len)
+	      જો (i >= align2 && i < align2 + len)
 		{
 		  i = align2 + len - 1;
-		  continue;
+		  ચાલુ;
 		}
-	      if (i >= srcstart && i < srcend)
+	      જો (i >= srcstart && i < srcend)
 		{
 		  i = srcend - 1;
-		  continue;
+		  ચાલુ;
 		}
-	      if (p2[i] != c)
+	      જો (p2[i] != c)
 		{
 		  error (0, 0, "Iteration %zd - garbage in memset area, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  તોડો;
 		}
 	    }
 
-	  if (srcstart < align2
+	  જો (srcstart < align2
 	      && memcmp (p2 + srcstart, p1 + srcstart,
 			 (srcend > align2 ? align2 : srcend) - srcstart))
 	    {
 	      error (0, 0, "Iteration %zd - garbage before dst, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
-	      break;
+	      તોડો;
 	    }
 
 	  i = srcstart > align2 + len ? srcstart : align2 + len;
-	  if (srcend > align2 + len
+	  જો (srcend > align2 + len
 	      && memcmp (p2 + i, p1 + i, srcend - i))
 	    {
 	      error (0, 0, "Iteration %zd - garbage after dst, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
-	      break;
+	      તોડો;
 	    }
 	}
     }
 }
 
-static void
+સ્થિર શૂન્ય
 do_test2 (size_t offset)
 {
   size_t size = 0x20000000;
   uint32_t * large_buf;
 
-  large_buf = mmap ((void*) 0x70000000, size, PROT_READ | PROT_WRITE,
+  large_buf = mmap ((શૂન્ય*) 0x70000000, size, PROT_READ | PROT_WRITE,
 		    MAP_PRIVATE | MAP_ANON, -1, 0);
 
-  if (large_buf == MAP_FAILED)
+  જો (large_buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "Large mmap failed");
 
-  if ((uintptr_t) large_buf > 0x80000000 - 128
+  જો ((uintptr_t) large_buf > 0x80000000 - 128
       || 0x80000000 - (uintptr_t) large_buf > 0x20000000)
     {
       error (0, 0, "Large mmap allocated improperly");
       ret = EXIT_UNSUPPORTED;
-      munmap ((void *) large_buf, size);
-      return;
+      munmap ((શૂન્ય *) large_buf, size);
+      પાછા;
     }
 
   size_t bytes_move = 0x80000000 - (uintptr_t) large_buf;
-  if (bytes_move + offset * sizeof (uint32_t) > size)
+  જો (bytes_move + offset * કદ (uint32_t) > size)
     {
-      munmap ((void *) large_buf, size);
-      return;
+      munmap ((શૂન્ય *) large_buf, size);
+      પાછા;
     }
-  size_t arr_size = bytes_move / sizeof (uint32_t);
+  size_t arr_size = bytes_move / કદ (uint32_t);
   size_t i;
   size_t repeats;
   uint32_t * src = large_buf;
   uint32_t * dst = &large_buf[offset];
-  for (repeats = 0; repeats < 2; ++repeats)
+  માટે (repeats = 0; repeats < 2; ++repeats)
     {
       FOR_EACH_IMPL (impl, 0)
         {
-          for (i = 0; i < arr_size; i++)
+          માટે (i = 0; i < arr_size; i++)
             src[i] = (uint32_t) i;
 
 
 #ifdef TEST_BCOPY
-          CALL (impl, (char *) src, (char *) dst, bytes_move);
-#else
-          CALL (impl, (char *) dst, (char *) src, bytes_move);
+          CALL (impl, (અક્ષર *) src, (અક્ષર *) dst, bytes_move);
+#નહીંતર
+          CALL (impl, (અક્ષર *) dst, (અક્ષર *) src, bytes_move);
 #endif
 
-          for (i = 0; i < arr_size; i++)
+          માટે (i = 0; i < arr_size; i++)
 	    {
-	      if (dst[i] != (uint32_t) i)
+	      જો (dst[i] != (uint32_t) i)
 		{
 		  error (0, 0,
 			 "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
 			 impl->name, dst, src, i);
 		  ret = 1;
-		  munmap ((void *) large_buf, size);
-		  return;
+		  munmap ((શૂન્ય *) large_buf, size);
+		  પાછા;
 		}
 	    }
 	}
@@ -308,100 +308,100 @@ do_test2 (size_t offset)
       dst = large_buf;
     }
 
-  munmap ((void *) large_buf, size);
+  munmap ((શૂન્ય *) large_buf, size);
 }
 
-static void
+સ્થિર શૂન્ય
 do_test3 (size_t bytes_move, size_t offset)
 {
   size_t size = bytes_move * 3;
   uint32_t *buf;
 
-  buf = mmap (NULL, size, PROT_READ | PROT_WRITE,
+  buf = mmap (ખાલી, size, PROT_READ | PROT_WRITE,
 	      MAP_PRIVATE | MAP_ANON, -1, 0);
 
-  if (buf == MAP_FAILED)
+  જો (buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  size_t arr_size = bytes_move / sizeof (uint32_t);
+  size_t arr_size = bytes_move / કદ (uint32_t);
   size_t i;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      for (i = 0; i < arr_size; i++)
+      માટે (i = 0; i < arr_size; i++)
         buf[i] = (uint32_t) i;
 
       uint32_t *dst = &buf[arr_size + offset];
 
 #ifdef TEST_BCOPY
-      CALL (impl, (char *) buf, (char *) dst, bytes_move);
-#else
-      CALL (impl, (char *) dst, (char *) buf, bytes_move);
+      CALL (impl, (અક્ષર *) buf, (અક્ષર *) dst, bytes_move);
+#નહીંતર
+      CALL (impl, (અક્ષર *) dst, (અક્ષર *) buf, bytes_move);
 #endif
 
-      for (i = 0; i < arr_size; i++)
+      માટે (i = 0; i < arr_size; i++)
 	{
-	  if (dst[i] != (uint32_t) i)
+	  જો (dst[i] != (uint32_t) i)
 	    {
 	      error (0, 0,
 		     "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
 		     impl->name, dst, buf, i);
 	      ret = 1;
-	      break;
+	      તોડો;
 	    }
 	}
     }
 
-  munmap ((void *) buf, size);
+  munmap ((શૂન્ય *) buf, size);
 }
 
-static void
+સ્થિર શૂન્ય
 do_test4 (size_t bytes_move, size_t offset1, size_t offset2)
 {
   size_t size, repeats, i;
   uint8_t *buf, *dst, *src;
 
   size = bytes_move + MAX(offset1, offset2);
-  buf  = mmap(NULL, size, PROT_READ | PROT_WRITE,
+  buf  = mmap(ખાલી, size, PROT_READ | PROT_WRITE,
              MAP_PRIVATE | MAP_ANON, -1, 0);
 
-  if (buf == MAP_FAILED)
+  જો (buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
   dst = &buf[offset1];
   src = &buf[offset2];
-  for (repeats = 0; repeats < 2; ++repeats)
+  માટે (repeats = 0; repeats < 2; ++repeats)
     {
       FOR_EACH_IMPL (impl, 0)
         {
-          for (i = 0; i < bytes_move; i++)
+          માટે (i = 0; i < bytes_move; i++)
               src[i] = (uint8_t) i;
 #ifdef TEST_BCOPY
-          CALL (impl, (char *) src, (char *) dst, bytes_move);
-#else
-          CALL (impl, (char *) dst, (char *) src, bytes_move);
+          CALL (impl, (અક્ષર *) src, (અક્ષર *) dst, bytes_move);
+#નહીંતર
+          CALL (impl, (અક્ષર *) dst, (અક્ષર *) src, bytes_move);
 #endif
-          for (i = 0; i < bytes_move; i++)
+          માટે (i = 0; i < bytes_move; i++)
             {
-              if (dst[i] != (uint8_t) i)
+              જો (dst[i] != (uint8_t) i)
                 {
                   error (0, 0,
                          "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
                          impl->name, dst, buf, i);
                   ret = 1;
-                  break;
+                  તોડો;
                 }
             }
         }
       dst = &buf[offset2];
       src = &buf[offset1];
     }
-  munmap ((void *) buf, size);
+  munmap ((શૂન્ય *) buf, size);
 }
 
 
-int
-test_main (void)
+પૂર્ણાંક
+test_main (શૂન્ય)
 {
   size_t i;
 
@@ -412,7 +412,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 14; ++i)
+  માટે (i = 0; i < 14; ++i)
     {
       do_test (0, 32, 1 << i);
       do_test (32, 0, 1 << i);
@@ -420,7 +420,7 @@ test_main (void)
       do_test (i, 0, 1 << i);
     }
 
-  for (i = 0; i < 32; ++i)
+  માટે (i = 0; i < 32; ++i)
     {
       do_test (0, 32, i);
       do_test (32, 0, i);
@@ -428,10 +428,10 @@ test_main (void)
       do_test (i, 0, i);
     }
 
-  for (i = 3; i < 32; ++i)
+  માટે (i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
-	continue;
+      જો ((i & (i - 1)) == 0)
+	ચાલુ;
       do_test (0, 32, 16 * i);
       do_test (32, 0, 16 * i);
       do_test (0, i, 16 * i);
@@ -454,7 +454,7 @@ test_main (void)
 
   /* Copy 16KB data.  */
   do_test3 (16384, 3);
-  for (i = 4096; i <= 16384; i <<= 1)
+  માટે (i = 4096; i <= 16384; i <<= 1)
     {
       do_test4 (i, 0, i);
       do_test4 (i, 0, i - 1);
@@ -474,7 +474,7 @@ test_main (void)
     }
 
 
-  return ret;
+  પાછા ret;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

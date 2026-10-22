@@ -20,72 +20,72 @@
 #define TEST_NAME "memmem"
 #define BUF1PAGES 20
 #define ITERATIONS 500
-#include "test-string.h"
+#અન્તર્ભાવ "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+પ્રકારવ્યાખ્યા અક્ષર *(*proto_t) (અચલ શૂન્ય *, size_t, અચલ શૂન્ય *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+શૂન્ય *
+simple_memmem (અચલ શૂન્ય *haystack, size_t haystack_len, અચલ શૂન્ય *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  અચલ અક્ષર *begin;
+  અચલ અક્ષર *અચલ last_possible
+    = (અચલ અક્ષર *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  જો (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    પાછા (શૂન્ય *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  જો (__glibc_unlikely (haystack_len < needle_len))
+    પાછા ખાલી;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  માટે (begin = (અચલ અક્ષર *) haystack; begin <= last_possible; ++begin)
+    જો (begin[0] == ((અચલ અક્ષર *) needle)[0]
+        && !memcmp ((અચલ શૂન્ય *) &begin[1],
+		    (અચલ શૂન્ય *) ((અચલ અક્ષર *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      પાછા (શૂન્ય *) begin;
 
-  return NULL;
+  પાછા ખાલી;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+સ્થિર પૂર્ણાંક
+check_result (impl_t *impl, અચલ શૂન્ય *haystack, size_t haystack_len,
+	     અચલ શૂન્ય *needle, size_t needle_len, અચલ શૂન્ય *expected)
 {
-  void *res;
+  શૂન્ય *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  જો (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      પાછા -1;
     }
 
-  return 0;
+  પાછા 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+સ્થિર શૂન્ય
+do_one_test (impl_t *impl, અચલ શૂન્ય *haystack, size_t haystack_len,
+	     અચલ શૂન્ય *needle, size_t needle_len, અચલ શૂન્ય *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  જો (check_result (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    પાછા;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+સ્થિર શૂન્ય
+do_test (અચલ અક્ષર *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  અક્ષર tmpbuf[len];
 
   memcpy (tmpbuf, buf1 + idx, len);
   memcpy (buf1 + idx, str, len);
@@ -96,23 +96,23 @@ do_test (const char *str, size_t len, size_t idx)
   memcpy (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+સ્થિર શૂન્ય
+do_random_tests (શૂન્ય)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  માટે (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      અક્ષર tmpbuf[32];
 
       size_t shift = random () % 11;
       size_t rel = random () % ((2 << (shift + 1)) * 64);
       size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
+      size_t len = random () % (કદ (tmpbuf) - 1) + 1;
       len = MIN (len, BUF1PAGES * page_size - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      માટે (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  અક્ષર ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
@@ -125,24 +125,24 @@ do_random_tests (void)
     }
 }
 
-static void
-check1 (void)
+સ્થિર શૂન્ય
+check1 (શૂન્ય)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  અચલ અક્ષર શોધ_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  અચલ અક્ષર pattern[2] = { 0x78, 0x56 };
+  શૂન્ય *શોધ_buf = (શૂન્ય *) buf1 + page_size - કદ શોધ_buf_data;
+  શૂન્ય *exp_result;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  memcpy (શોધ_buf, શોધ_buf_data, કદ શોધ_buf_data);
+  exp_result = simple_memmem (શોધ_buf, કદ શોધ_buf_data,
+			      pattern, કદ pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_result (impl, શોધ_buf, કદ શોધ_buf_data,
+		  pattern, કદ pattern, exp_result);
 }
 
-static const char *const strs[] =
+સ્થિર અચલ અક્ષર *અચલ strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+પૂર્ણાંક
+test_main (શૂન્ય)
 {
   size_t i;
 
@@ -164,11 +164,11 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  માટે (i = 0; i < BUF1PAGES * page_size; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  માટે (i = 0; i < કદ (strs) / કદ (strs[0]); ++i)
+    માટે (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
 
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  પાછા ret;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

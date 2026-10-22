@@ -18,106 +18,106 @@
 #ifndef	_STRINGS_H
 #define	_STRINGS_H	1
 
-#include <features.h>
+#અન્તર્ભાવ <features.h>
 #define __need_size_t
-#include <stddef.h>
+#અન્તર્ભાવ <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && __GNUC_PREREQ (4, 4)
+#જો defined __cplusplus && __GNUC_PREREQ (4, 4)
 # define __CORRECT_ISO_CPP_STRINGS_H_PROTO
 #endif
 
 __BEGIN_DECLS
 
-#if defined __USE_MISC || !defined __USE_XOPEN2K8
+#જો defined __USE_MISC || !defined __USE_XOPEN2K8
 /* Compare N bytes of S1 and S2 (same as memcmp).  */
-extern int bcmp (const void *__s1, const void *__s2, size_t __n)
+બાહ્ય પૂર્ણાંક bcmp (અચલ શૂન્ય *__s1, અચલ શૂન્ય *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Copy N bytes of SRC to DEST (like memmove, but args reversed).  */
-extern void bcopy (const void *__src, void *__dest, size_t __n)
+બાહ્ય શૂન્ય bcopy (અચલ શૂન્ય *__src, શૂન્ય *__dest, size_t __n)
   __THROW __nonnull ((1, 2));
 
 /* Set N bytes of S to 0.  */
-extern void bzero (void *__s, size_t __n) __THROW __nonnull ((1));
+બાહ્ય શૂન્ય bzero (શૂન્ય *__s, size_t __n) __THROW __nonnull ((1));
 
 /* Find the first occurrence of C in S (same as strchr).  */
 # ifdef __CORRECT_ISO_CPP_STRINGS_H_PROTO
-extern "C++"
+બાહ્ય "C++"
 {
-extern char *index (char *__s, int __c)
+બાહ્ય અક્ષર *index (અક્ષર *__s, પૂર્ણાંક __c)
      __THROW __asm ("index") __attribute_pure__ __nonnull ((1));
-extern const char *index (const char *__s, int __c)
+બાહ્ય અચલ અક્ષર *index (અચલ અક્ષર *__s, પૂર્ણાંક __c)
      __THROW __asm ("index") __attribute_pure__ __nonnull ((1));
 
-#  if defined __OPTIMIZE__
-__extern_always_inline char *
-index (char *__s, int __c) __THROW
+#  જો defined __OPTIMIZE__
+__extern_always_inline અક્ષર *
+index (અક્ષર *__s, પૂર્ણાંક __c) __THROW
 {
-  return __builtin_index (__s, __c);
+  પાછા __builtin_index (__s, __c);
 }
 
-__extern_always_inline const char *
-index (const char *__s, int __c) __THROW
+__extern_always_inline અચલ અક્ષર *
+index (અચલ અક્ષર *__s, પૂર્ણાંક __c) __THROW
 {
-  return __builtin_index (__s, __c);
+  પાછા __builtin_index (__s, __c);
 }
 #  endif
 }
-# else
-extern char *index (const char *__s, int __c)
+# નહીંતર
+બાહ્ય અક્ષર *index (અચલ અક્ષર *__s, પૂર્ણાંક __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Find the last occurrence of C in S (same as strrchr).  */
 # ifdef __CORRECT_ISO_CPP_STRINGS_H_PROTO
-extern "C++"
+બાહ્ય "C++"
 {
-extern char *rindex (char *__s, int __c)
+બાહ્ય અક્ષર *rindex (અક્ષર *__s, પૂર્ણાંક __c)
      __THROW __asm ("rindex") __attribute_pure__ __nonnull ((1));
-extern const char *rindex (const char *__s, int __c)
+બાહ્ય અચલ અક્ષર *rindex (અચલ અક્ષર *__s, પૂર્ણાંક __c)
      __THROW __asm ("rindex") __attribute_pure__ __nonnull ((1));
 
-#  if defined __OPTIMIZE__
-__extern_always_inline char *
-rindex (char *__s, int __c) __THROW
+#  જો defined __OPTIMIZE__
+__extern_always_inline અક્ષર *
+rindex (અક્ષર *__s, પૂર્ણાંક __c) __THROW
 {
-  return __builtin_rindex (__s, __c);
+  પાછા __builtin_rindex (__s, __c);
 }
 
-__extern_always_inline const char *
-rindex (const char *__s, int __c) __THROW
+__extern_always_inline અચલ અક્ષર *
+rindex (અચલ અક્ષર *__s, પૂર્ણાંક __c) __THROW
 {
-  return __builtin_rindex (__s, __c);
+  પાછા __builtin_rindex (__s, __c);
 }
 #  endif
 }
-# else
-extern char *rindex (const char *__s, int __c)
+# નહીંતર
+બાહ્ય અક્ષર *rindex (અચલ અક્ષર *__s, પૂર્ણાંક __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 #endif
 
-#if defined __USE_MISC || !defined __USE_XOPEN2K8 || defined __USE_XOPEN2K8XSI
+#જો defined __USE_MISC || !defined __USE_XOPEN2K8 || defined __USE_XOPEN2K8XSI
 /* Return the position of the first bit set in I, or 0 if none are set.
    The least-significant bit is position 1, the most-significant 32.  */
-extern int ffs (int __i) __THROW __attribute_const__;
+બાહ્ય પૂર્ણાંક ffs (પૂર્ણાંક __i) __THROW __attribute_const__;
 #endif
 
 /* The following two functions are non-standard but necessary for non-32 bit
    platforms.  */
 # ifdef	__USE_MISC
-extern int ffsl (long int __l) __THROW __attribute_const__;
-__extension__ extern int ffsll (long long int __ll)
+બાહ્ય પૂર્ણાંક ffsl (long પૂર્ણાંક __l) __THROW __attribute_const__;
+__extension__ બાહ્ય પૂર્ણાંક ffsll (long long પૂર્ણાંક __ll)
      __THROW __attribute_const__;
 # endif
 
 /* Compare S1 and S2, ignoring case.  */
-extern int strcasecmp (const char *__s1, const char *__s2)
+બાહ્ય પૂર્ણાંક strcasecmp (અચલ અક્ષર *__s1, અચલ અક્ષર *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare no more than N chars of S1 and S2, ignoring case.  */
-extern int strncasecmp (const char *__s1, const char *__s2, size_t __n)
+બાહ્ય પૂર્ણાંક strncasecmp (અચલ અક્ષર *__s1, અચલ અક્ષર *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 #ifdef	__USE_XOPEN2K8
@@ -125,22 +125,22 @@ extern int strncasecmp (const char *__s1, const char *__s2, size_t __n)
 # include <bits/types/locale_t.h>
 
 /* Compare S1 and S2, ignoring case, using collation rules from LOC.  */
-extern int strcasecmp_l (const char *__s1, const char *__s2, locale_t __loc)
+બાહ્ય પૂર્ણાંક strcasecmp_l (અચલ અક્ષર *__s1, અચલ અક્ષર *__s2, locale_t __loc)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 
 /* Compare no more than N chars of S1 and S2, ignoring case, using
    collation rules from LOC.  */
-extern int strncasecmp_l (const char *__s1, const char *__s2,
+બાહ્ય પૂર્ણાંક strncasecmp_l (અચલ અક્ષર *__s1, અચલ અક્ષર *__s2,
 			  size_t __n, locale_t __loc)
      __THROW __attribute_pure__ __nonnull ((1, 2, 4));
 #endif
 
 __END_DECLS
 
-#if __GNUC_PREREQ (3,4) && __USE_FORTIFY_LEVEL > 0 \
+#જો __GNUC_PREREQ (3,4) && __USE_FORTIFY_LEVEL > 0 \
     && defined __fortify_function
 /* Functions with security checks.  */
-# if defined __USE_MISC || !defined __USE_XOPEN2K8
+# જો defined __USE_MISC || !defined __USE_XOPEN2K8
 #  include <bits/strings_fortified.h>
 # endif
 #endif

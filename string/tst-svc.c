@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#અન્તર્ભાવ <stdlib.h>
+#અન્તર્ભાવ <stdio.h>
+#અન્તર્ભાવ <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_લીટી_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+સ્થિર પૂર્ણાંક
+compare (અચલ શૂન્ય *p1, અચલ શૂન્ય *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  પાછા strverscmp (*((અક્ષર **) p1), *((અક્ષર **) p2));
 }
 
-int
-do_test (void)
+પૂર્ણાંક
+do_test (શૂન્ય)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  અક્ષર લીટી[MAX_લીટી_SIZE + 1];
+  અક્ષર *str[MAX_STRINGS];
+  પૂર્ણાંક  ગણતરી = 0;
+  પૂર્ણાંક  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  જ્યારે (ગણતરી < MAX_STRINGS && fgets (લીટી, MAX_લીટી_SIZE, stdin) != ખાલી)
     {
-      n = strlen (line) - 1;
+      n = strlen (લીટી) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      જો (લીટી[n] == '\n')
+        લીટી[n] = '\0';
 
-      str[count] = strdup (line);
+      str[ગણતરી] = strdup (લીટી);
 
-      if (str[count] == NULL)
+      જો (str[ગણતરી] == ખાલી)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++ગણતરી;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, ગણતરી, કદ (અક્ષર *), compare);
 
-  for (i = 0; i < count; ++i)
+  માટે (i = 0; i < ગણતરી; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  પાછા EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#અન્તર્ભાવ <string.h>
 
 #ifndef STRNCAT
 # undef strncat
@@ -23,10 +23,10 @@
 # define STRNCAT_PRIMARY
 #endif
 
-char *
-STRNCAT (char *s1, const char *s2, size_t n)
+અક્ષર *
+STRNCAT (અક્ષર *s1, અચલ અક્ષર *s2, size_t n)
 {
-  char *s = s1;
+  અક્ષર *s = s1;
 
   /* Find the end of S1.  */
   s1 += strlen (s1);
@@ -36,7 +36,7 @@ STRNCAT (char *s1, const char *s2, size_t n)
   s1[ss] = '\0';
   memcpy (s1, s2, ss);
 
-  return s;
+  પાછા s;
 }
 #ifdef STRNCAT_PRIMARY
 strong_alias (STRNCAT, __strncat)

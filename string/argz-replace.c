@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#અન્તર્ભાવ <stdlib.h>
+#અન્તર્ભાવ <string.h>
+#અન્તર્ભાવ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+સ્થિર શૂન્ય
+str_append (અક્ષર **to, size_t *to_len, અચલ અક્ષર *buf, અચલ size_t buf_len)
 {
   size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  અક્ષર *new_to = realloc (*to, new_len + 1);
 
-  if (new_to)
+  જો (new_to)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
+      *((અક્ષર *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
       *to = new_to;
       *to_len = new_len;
     }
-  else
+  નહીંતર
     {
-      free (*to);
-      *to = NULL;
+      મુક્ત (*to);
+      *to = ખાલી;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (અક્ષર **argz, size_t *argz_len, અચલ અક્ષર *str, અચલ અક્ષર *with,
+		unsigned *replace_ગણતરી)
 {
   error_t err = 0;
 
-  if (str && *str)
+  જો (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      અક્ષર *arg = ખાલી;
+      અક્ષર *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      અક્ષર *dst = ખાલી;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      પૂર્ણાંક delayed_copy = 1;	/* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      જ્યારે (!err && (arg = argz_next (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  અક્ષર *match = strstr (arg, str);
+	  જો (match)
 	    {
-	      char *from = match + str_len;
+	      અક્ષર *from = match + str_len;
 	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      અક્ષર *to = __strndup (arg, to_len);
 
-	      while (to && from)
+	      જ્યારે (to && from)
 		{
 		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  જો (to)
 		    {
 		      match = strstr (from, str);
-		      if (match)
+		      જો (match)
 			{
 			  str_append (&to, &to_len, from, match - from);
 			  from = match + str_len;
 			}
-		      else
+		      નહીંતર
 			{
 			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  from = ખાલી;
 			}
 		    }
 		}
 
-	      if (to)
+	      જો (to)
 		{
-		  if (delayed_copy)
+		  જો (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      જો (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
+		  જો (! err)
 		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  મુક્ત (to);
 		}
-	      else
+	      નહીંતર
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      જો (replace_ગણતરી)
+		(*replace_ગણતરી)++;
 	    }
-	  else if (! delayed_copy)
+	  નહીંતર જો (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      જો (! err)
 	{
-	  if (! delayed_copy)
+	  જો (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      મુક્ત (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      નહીંતર જો (dst_len > 0)
+	મુક્ત (dst);
     }
 
-  return err;
+  પાછા err;
 }
 weak_alias (__argz_replace, argz_replace)

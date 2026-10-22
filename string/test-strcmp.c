@@ -22,11 +22,11 @@
 #define TEST_MAIN
 #ifdef WIDE
 # define TEST_NAME "wcscmp"
-#else
+#નહીંતર
 # define TEST_NAME "strcmp"
 #endif
-#include "test-string.h"
-#include <support/test-driver.h>
+#અન્તર્ભાવ "test-string.h"
+#અન્તર્ભાવ <support/test-driver.h>
 
 #ifdef WIDE
 # include <wchar.h>
@@ -50,23 +50,23 @@
 /* Wcscmp uses signed semantics for comparison, not unsigned */
 /* Avoid using subtraction since possible overflow */
 
-int
-simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
+પૂર્ણાંક
+simple_wcscmp (અચલ wchar_t *s1, અચલ wchar_t *s2)
 {
   wchar_t c1, c2;
-  do
+  કરો
     {
       c1 = *s1++;
       c2 = *s2++;
-      if (c2 == L'\0')
-      return c1 - c2;
+      જો (c2 == L'\0')
+      પાછા c1 - c2;
     }
-  while (c1 == c2);
+  જ્યારે (c1 == c2);
 
-  return c1 < c2 ? -1 : 1;
+  પાછા c1 < c2 ? -1 : 1;
 }
 
-#else
+#નહીંતર
 # include <limits.h>
 
 # define L(str) str
@@ -75,8 +75,8 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 # define STRLEN strlen
 # define MEMCPY memcpy
 # define SIMPLE_STRCMP simple_strcmp
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR અક્ષર
+# define UCHAR unsigned અક્ષર
 # define CHARBYTES 1
 # define CHARBYTESLOG 0
 # define CHARALIGN 1
@@ -86,18 +86,18 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 # define CHAR__MIN CHAR_MIN
 
 /* Strcmp uses unsigned semantics for comparison. */
-int
-simple_strcmp (const char *s1, const char *s2)
+પૂર્ણાંક
+simple_strcmp (અચલ અક્ષર *s1, અચલ અક્ષર *s2)
 {
-  int ret;
+  પૂર્ણાંક ret;
 
-  while ((ret = *(unsigned char *) s1 - *(unsigned char*) s2++) == 0 && *s1++);
-  return ret;
+  જ્યારે ((ret = *(unsigned અક્ષર *) s1 - *(unsigned અક્ષર*) s2++) == 0 && *s1++);
+  પાછા ret;
 }
 
 #endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *);
+પ્રકારવ્યાખ્યા પૂર્ણાંક (*proto_t) (અચલ CHAR *, અચલ CHAR *);
 
 IMPL (STRCMP, 1)
 
@@ -115,7 +115,7 @@ IMPL (STRCMP, 1)
 # define STRCMP __strcmp_default
 # include "string/strcmp.c"
 # define STRCMP_DEFAULT STRCMP
-#else
+#નહીંતર
 # define WCSCMP __wcscmp_default
 # include "wcsmbs/wcscmp.c"
 # define STRCMP_DEFAULT WCSCMP
@@ -123,55 +123,55 @@ IMPL (STRCMP, 1)
 IMPL (STRCMP_DEFAULT, 1)
 
 
-static int
+સ્થિર પૂર્ણાંક
 check_result (impl_t *impl,
-	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+	     અચલ CHAR *s1, અચલ CHAR *s2,
+	     પૂર્ણાંક exp_result)
 {
-  int result = CALL (impl, s1, s2);
-  if ((exp_result == 0 && result != 0)
+  પૂર્ણાંક result = CALL (impl, s1, s2);
+  જો ((exp_result == 0 && result != 0)
       || (exp_result < 0 && result >= 0)
       || (exp_result > 0 && result <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      પાછા -1;
     }
 
-  return 0;
+  પાછા 0;
 }
 
-static void
+સ્થિર શૂન્ય
 do_one_test (impl_t *impl,
-	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+	     અચલ CHAR *s1, અચલ CHAR *s2,
+	     પૂર્ણાંક exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  જો (check_result (impl, s1, s2, exp_result) < 0)
+    પાછા;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char,
-         int exp_result)
+સ્થિર શૂન્ય
+do_test (size_t align1, size_t align2, size_t len, પૂર્ણાંક max_char,
+         પૂર્ણાંક exp_result)
 {
   size_t i;
 
   CHAR *s1, *s2;
 
-  if (len == 0)
-    return;
+  જો (len == 0)
+    પાછા;
 
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  જો (align1 + (len + 1) * CHARBYTES >= page_size)
+    પાછા;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  જો (align2 + (len + 1) * CHARBYTES >= page_size)
+    પાછા;
 
   /* Put them close to the end of page.  */
   i = align1 + CHARBYTES * (len + 2);
@@ -179,7 +179,7 @@ do_test (size_t align1, size_t align2, size_t len, int max_char,
   i = align2 + CHARBYTES * (len + 2);
   s2 = (CHAR *)(buf2 + ((page_size - i) / 16 * 16) + align2);
 
-  for (i = 0; i < len; i++)
+  માટે (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % max_char;
 
   s1[len] = s2[len] = 0;
@@ -192,13 +192,13 @@ do_test (size_t align1, size_t align2, size_t len, int max_char,
 }
 
 
-static void
-do_random_tests (void)
+સ્થિર શૂન્ય
+do_random_tests (શૂન્ય)
 {
 	UCHAR *p1 = (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
 	UCHAR *p2 = (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
 
-	for (size_t n = 0; n < ITERATIONS; n++)
+	માટે (size_t n = 0; n < ITERATIONS; n++)
 	  {
 	    /* for wcscmp case align1 and align2 mean here alignment
 	       in wchar_t symbols, it equal 4*k alignment in bytes, we
@@ -207,62 +207,62 @@ do_random_tests (void)
 	       because it's wrong using of wchar_t type.  */
 	    size_t align1 = random () & 31;
 	    size_t align2;
-	    if (random () & 1)
+	    જો (random () & 1)
 	      align2 = random () & 31;
-	    else
+	    નહીંતર
 	      align2 = align1 + (random () & 24);
 	    size_t pos = random () & 511;
 	    size_t j = align1 > align2 ? align1 : align2;
-	    if (pos + j >= 511)
+	    જો (pos + j >= 511)
 	      pos = 510 - j - (random () & 7);
 	    size_t len1 = random () & 511;
-	    if (pos >= len1 && (random () & 1))
+	    જો (pos >= len1 && (random () & 1))
 	      len1 = pos + (random () & 7);
-	    if (len1 + j >= 512)
+	    જો (len1 + j >= 512)
 	      len1 = 511 - j - (random () & 7);
 	    size_t len2;
-	    if (pos >= len1)
+	    જો (pos >= len1)
 	      len2 = len1;
-	    else
+	    નહીંતર
 	      len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
 	    j = (pos > len2 ? pos : len2) + align1 + 64;
-	    if (j > 512)
+	    જો (j > 512)
 	      j = 512;
-	    for (size_t i = 0; i < j; ++i)
+	    માટે (size_t i = 0; i < j; ++i)
 	      {
 		p1[i] = random () & 255;
-		if (i < len1 + align1 && !p1[i])
+		જો (i < len1 + align1 && !p1[i])
 		  {
 		    p1[i] = random () & 255;
-		    if (!p1[i])
+		    જો (!p1[i])
 		      p1[i] = 1 + (random () & 127);
 		  }
 	      }
-	    for (size_t i = 0; i < j; ++i)
+	    માટે (size_t i = 0; i < j; ++i)
 	      {
 		p2[i] = random () & 255;
-		if (i < len2 + align2 && !p2[i])
+		જો (i < len2 + align2 && !p2[i])
 		  {
 		    p2[i] = random () & 255;
-		    if (!p2[i])
+		    જો (!p2[i])
 		      p2[i] = 1 + (random () & 127);
 		  }
 	      }
 
-	    int result = 0;
+	    પૂર્ણાંક result = 0;
 	    MEMCPY (p2 + align2, p1 + align1, pos);
-	    if (pos < len1)
+	    જો (pos < len1)
 	      {
-		if (p2[align2 + pos] == p1[align1 + pos])
+		જો (p2[align2 + pos] == p1[align1 + pos])
 		  {
 		    p2[align2 + pos] = random () & 255;
-		    if (p2[align2 + pos] == p1[align1 + pos])
+		    જો (p2[align2 + pos] == p1[align1 + pos])
 		      p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 		  }
 
-		if (p1[align1 + pos] < p2[align2 + pos])
+		જો (p1[align1 + pos] < p2[align2 + pos])
 		  result = -1;
-		else
+		નહીંતર
 		  result = 1;
 	      }
 	    p1[len1 + align1] = 0;
@@ -270,11 +270,11 @@ do_random_tests (void)
 
 	    FOR_EACH_IMPL (impl, 1)
 	      {
-		int r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
+		પૂર્ણાંક r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
 		/* Test whether on 64-bit architectures where ABI requires
 		   callee to promote has the promotion been done.  */
 		asm ("" : "=g" (r) : "0" (r));
-		if ((r == 0 && result)
+		જો ((r == 0 && result)
 		    || (r < 0 && result >= 0)
 		    || (r > 0 && result <= 0))
 		  {
@@ -286,8 +286,8 @@ do_random_tests (void)
      }
 }
 
-static void
-check (void)
+સ્થિર શૂન્ય
+check (શૂન્ય)
 {
   CHAR *s1 = (CHAR *) (buf1 + 0xb2c);
   CHAR *s2 = (CHAR *) (buf1 + 0xfd8);
@@ -314,29 +314,29 @@ check (void)
   size_t l1 = STRLEN (s1);
   size_t l2 = STRLEN (s2);
 
-  for (size_t i1 = 0; i1 < l1; i1++)
-    for (size_t i2 = 0; i2 < l2; i2++)
+  માટે (size_t i1 = 0; i1 < l1; i1++)
+    માટે (size_t i2 = 0; i2 < l2; i2++)
       {
-		int exp_result = SIMPLE_STRCMP (s1 + i1, s2 + i2);
+		પૂર્ણાંક exp_result = SIMPLE_STRCMP (s1 + i1, s2 + i2);
 		FOR_EACH_IMPL (impl, 0)
 		check_result (impl, s1 + i1, s2 + i2, exp_result);
       }
 
   /* Test cases where there are multiple zero bytes after the first.  */
 
-  for (size_t i = 0; i < 16 + 1; i++)
+  માટે (size_t i = 0; i < 16 + 1; i++)
     {
       s1[i] = 0x00;
       s2[i] = 0x00;
     }
 
-  for (size_t i = 0; i < 16; i++)
+  માટે (size_t i = 0; i < 16; i++)
     {
-      int exp_result;
+      પૂર્ણાંક exp_result;
 
-      for (int val = 0x01; val < 0x100; val++)
+      માટે (પૂર્ણાંક val = 0x01; val < 0x100; val++)
 	{
-	  for (size_t j = 0; j < i; j++)
+	  માટે (size_t j = 0; j < i; j++)
 	    {
 	      s1[j] = val;
 	      s2[j] = val;
@@ -351,8 +351,8 @@ check (void)
     }
 }
 
-static void
-check2 (void)
+સ્થિર શૂન્ય
+check2 (શૂન્ય)
 {
   /* To trigger bug 25933, we need a size that is equal to the vector
      length times 4. In the case of AVX2 for Intel, we need 32 * 4.  We
@@ -361,7 +361,7 @@ check2 (void)
   size_t size = 32 * 4;
   CHAR *s1 = (CHAR *) (buf1 + (BUF1PAGES - 1) * page_size);
   CHAR *s2 = (CHAR *) (buf2 + (BUF1PAGES - 1) * page_size);
-  int exp_result;
+  પૂર્ણાંક exp_result;
 
   memset (s1, 'a', page_size);
   memset (s2, 'a', page_size);
@@ -372,9 +372,9 @@ check2 (void)
      trigger up to the size we expect will trigger the bug e.g. [99-128].
      Likewise iterate the start of two strings between 30 and 31 bytes
      away from the boundary to simulate alignment changes.  */
-  for (size_t s = 99; s <= size; s++)
-    for (size_t s1a = 30; s1a < 32; s1a++)
-      for (size_t s2a = 30; s2a < 32; s2a++)
+  માટે (size_t s = 99; s <= size; s++)
+    માટે (size_t s1a = 30; s1a < 32; s1a++)
+      માટે (size_t s2a = 30; s2a < 32; s2a++)
 	{
 	  CHAR *s1p = s1 + (page_size / CHARBYTES - s) - s1a;
 	  CHAR *s2p = s2 + (page_size / CHARBYTES - s) - s2a;
@@ -384,37 +384,37 @@ check2 (void)
 	}
 }
 
-static void
-check3 (void)
+સ્થિર શૂન્ય
+check3 (શૂન્ય)
 {
   size_t size = 0xd000 + 0x4000;
   CHAR *s1, *s2;
-  CHAR *buffer1 = mmap (NULL, size, PROT_READ | PROT_WRITE,
+  CHAR *buffer1 = mmap (ખાલી, size, PROT_READ | PROT_WRITE,
 			MAP_PRIVATE | MAP_ANON, -1, 0);
-  CHAR *buffer2 = mmap (NULL, size, PROT_READ | PROT_WRITE,
+  CHAR *buffer2 = mmap (ખાલી, size, PROT_READ | PROT_WRITE,
 			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
+  જો (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  s1 = (CHAR *) (buffer1 + 0x8f8 / sizeof (CHAR));
-  s2 = (CHAR *) (buffer2 + 0xcff3 / sizeof (CHAR));
+  s1 = (CHAR *) (buffer1 + 0x8f8 / કદ (CHAR));
+  s2 = (CHAR *) (buffer2 + 0xcff3 / કદ (CHAR));
 
   STRCPY(s1, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/util/PathDocFileFactory.java"));
   STRCPY(s2, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/taglets/ThrowsTaglet.java"));
 
-  int exp_result = SIMPLE_STRCMP (s1, s2);
+  પૂર્ણાંક exp_result = SIMPLE_STRCMP (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 
-  munmap ((void *) buffer1, size);
-  munmap ((void *) buffer2, size);
+  munmap ((શૂન્ય *) buffer1, size);
+  munmap ((શૂન્ય *) buffer2, size);
 }
 
-int
-test_main (void)
+પૂર્ણાંક
+test_main (શૂન્ય)
 {
   size_t i, j, k;
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
+  અચલ size_t test_len = MIN(TEST_LEN, 3 * 4096);
   test_init ();
   check();
   check2 ();
@@ -425,14 +425,14 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 32; ++i)
+  માટે (i = 1; i < 32; ++i)
     {
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, 0);
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, 1);
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, -1);
     }
 
-  for (i = 1; i < 10 + CHARBYTESLOG; ++i)
+  માટે (i = 1; i < 10 + CHARBYTESLOG; ++i)
     {
       do_test (0, 0, 2 << i, MIDCHAR, 0);
       do_test (0, 0, 2 << i, LARGECHAR, 0);
@@ -444,7 +444,7 @@ test_main (void)
       do_test (CHARBYTES * i, CHARBYTES * (i + 1), 2 << i, LARGECHAR, 1);
     }
 
-  for (i = 1; i < 8; ++i)
+  માટે (i = 1; i < 8; ++i)
     {
       do_test (CHARBYTES * i, 2 * CHARBYTES * i, 8 << i, MIDCHAR, 0);
       do_test (2 * CHARBYTES * i, CHARBYTES * i, 8 << i, LARGECHAR, 0);
@@ -454,9 +454,9 @@ test_main (void)
       do_test (2 * CHARBYTES * i, CHARBYTES * i, 8 << i, LARGECHAR, -1);
     }
 
-  for (j = 0; j < 160; ++j)
+  માટે (j = 0; j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      માટે (i = 0; i < test_len;)
         {
           do_test (getpagesize () - j - 1, 0, i, 127, 0);
           do_test (getpagesize () - j - 1, 0, i, 127, 1);
@@ -474,7 +474,7 @@ test_main (void)
           do_test (j, getpagesize () - j - 1, i, 127, 1);
           do_test (j, getpagesize () - j - 1, i, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          માટે (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i, 127, 0);
               do_test (getpagesize () - k - 1, getpagesize () - j - 1, i, 127,
@@ -487,29 +487,29 @@ test_main (void)
                        -1);
             }
 
-          if (i < 32)
+          જો (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          નહીંતર જો (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          નહીંતર જો (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              જો (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          નહીંતર જો (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          નહીંતર
             {
               i += 1;
             }
@@ -517,7 +517,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  પાછા ret;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

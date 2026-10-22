@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#અન્તર્ભાવ <endian.h>
+#અન્તર્ભાવ <stddef.h>
 
-int i;
+પૂર્ણાંક i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = કદ (htobe16 (i));
+size_t s1 = કદ (htole16 (i));
+size_t s2 = કદ (be16toh (i));
+size_t s3 = કદ (le16toh (i));
+size_t s4 = કદ (htobe32 (i));
+size_t s5 = કદ (htole32 (i));
+size_t s6 = કદ (be32toh (i));
+size_t s7 = કદ (le32toh (i));
+size_t s8 = કદ (htobe64 (i));
+size_t s9 = કદ (htole64 (i));
+size_t s10 = કદ (be64toh (i));
+size_t s11 = કદ (le64toh (i));
 
-static int
-do_test (void)
+સ્થિર પૂર્ણાંક
+do_test (શૂન્ય)
 {
   /* This is a compilation test.  */
-  return 0;
+  પાછા 0;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

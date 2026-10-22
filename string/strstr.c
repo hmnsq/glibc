@@ -20,14 +20,14 @@
 # include <config.h>
 #endif
 
-#include <string.h>
+#અન્તર્ભાવ <string.h>
 
-#define RETURN_TYPE char *
+#define RETURN_TYPE અક્ષર *
 #define AVAILABLE(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((શૂન્ય*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#include "str-two-way.h"
+#અન્તર્ભાવ "str-two-way.h"
 
 #undef strstr
 
@@ -35,31 +35,31 @@
 #define STRSTR strstr
 #endif
 
-static inline char *
-strstr2 (const unsigned char *hs, const unsigned char *ne)
+સ્થિર અંતઃરેખ અક્ષર *
+strstr2 (અચલ unsigned અક્ષર *hs, અચલ unsigned અક્ષર *ne)
 {
   uint32_t h1 = (ne[0] << 16) | ne[1];
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  માટે (પૂર્ણાંક c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 << 16) | c;
-  return h1 == h2 ? (char *)hs - 2 : NULL;
+  પાછા h1 == h2 ? (અક્ષર *)hs - 2 : ખાલી;
 }
 
-static inline char *
-strstr3 (const unsigned char *hs, const unsigned char *ne)
+સ્થિર અંતઃરેખ અક્ષર *
+strstr3 (અચલ unsigned અક્ષર *hs, અચલ unsigned અક્ષર *ne)
 {
   uint32_t h1 = ((uint32_t)ne[0] << 24) | (ne[1] << 16) | (ne[2] << 8);
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  માટે (પૂર્ણાંક c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 | c) << 8;
-  return h1 == h2 ? (char *)hs - 3 : NULL;
+  પાછા h1 == h2 ? (અક્ષર *)hs - 3 : ખાલી;
 }
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % કદ (shift))
 
 /* Fast strstr algorithm with guaranteed linear-time performance.
    Small needles up to size 3 use a dedicated linear search.  Longer needles
@@ -72,84 +72,84 @@ strstr3 (const unsigned char *hs, const unsigned char *ne)
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-char *
-STRSTR (const char *haystack, const char *needle)
+અક્ષર *
+STRSTR (અચલ અક્ષર *haystack, અચલ અક્ષર *needle)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  અચલ unsigned અક્ષર *hs = (અચલ unsigned અક્ષર *) haystack;
+  અચલ unsigned અક્ષર *ne = (અચલ unsigned અક્ષર *) needle;
 
   /* Handle short needle special cases first.  */
-  if (ne[0] == '\0')
-    return (char *)hs;
-  hs = (const unsigned char *)strchr ((const char*)hs, ne[0]);
-  if (hs == NULL || ne[1] == '\0')
-    return (char*)hs;
-  if (ne[2] == '\0')
-    return strstr2 (hs, ne);
-  if (ne[3] == '\0')
-    return strstr3 (hs, ne);
+  જો (ne[0] == '\0')
+    પાછા (અક્ષર *)hs;
+  hs = (અચલ unsigned અક્ષર *)strchr ((અચલ અક્ષર*)hs, ne[0]);
+  જો (hs == ખાલી || ne[1] == '\0')
+    પાછા (અક્ષર*)hs;
+  જો (ne[2] == '\0')
+    પાછા strstr2 (hs, ne);
+  જો (ne[3] == '\0')
+    પાછા strstr3 (hs, ne);
 
   /* Ensure haystack length is at least as long as needle length.
      Since a match may occur early on in a huge haystack, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  size_t ne_len = strlen ((const char*)ne);
-  size_t hs_len = __strnlen ((const char*)hs, ne_len | 512);
-  if (hs_len < ne_len)
-    return NULL;
+  size_t ne_len = strlen ((અચલ અક્ષર*)ne);
+  size_t hs_len = __strnlen ((અચલ અક્ષર*)hs, ne_len | 512);
+  જો (hs_len < ne_len)
+    પાછા ખાલી;
 
   /* Check whether we have a match.  This improves performance since we
      avoid initialization overheads.  */
-  if (memcmp (hs, ne, ne_len) == 0)
-    return (char *) hs;
+  જો (memcmp (hs, ne, ne_len) == 0)
+    પાછા (અક્ષર *) hs;
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__glibc_unlikely (ne_len > 256))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  જો (__glibc_unlikely (ne_len > 256))
+    પાછા two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  અચલ unsigned અક્ષર *end = hs + hs_len - ne_len;
   uint8_t shift[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
   size_t offset = 0;
 
   /* Initialize bad character shift hash table.  */
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
+  memset (shift, 0, કદ (shift));
+  માટે (પૂર્ણાંક i = 1; i < m1; i++)
     shift[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
   shift1 = m1 - shift[hash2 (ne + m1)];
   shift[hash2 (ne + m1)] = m1;
 
-  while (1)
+  જ્યારે (1)
     {
-      if (__glibc_unlikely (hs > end))
+      જો (__glibc_unlikely (hs > end))
 	{
-	  end += __strnlen ((const char*)end + m1 + 1, 2048);
-	  if (hs > end)
-	    return NULL;
+	  end += __strnlen ((અચલ અક્ષર*)end + m1 + 1, 2048);
+	  જો (hs > end)
+	    પાછા ખાલી;
 	}
 
       /* Skip past character pairs not in the needle.  */
-      do
+      કરો
 	{
 	  hs += m1;
 	  tmp = shift[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      જ્યારે (tmp == 0 && hs <= end);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      જો (tmp < m1)
+	ચાલુ;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      જો (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  જો (memcmp (hs, ne, m1) == 0)
+	    પાછા (શૂન્ય *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
 	  offset = (offset >= 8 ? offset : m1) - 8;

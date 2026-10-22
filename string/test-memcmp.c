@@ -19,13 +19,13 @@
 #define TEST_MAIN
 #ifdef TEST_MEMCMPEQ
 # define TEST_NAME "__memcmpeq"
-#elif defined WIDE
+#અથવાજો defined WIDE
 # define TEST_NAME "wmemcmp"
-#else
+#નહીંતર
 # define TEST_NAME "memcmp"
 #endif
 
-#include "test-string.h"
+#અન્તર્ભાવ "test-string.h"
 #ifdef WIDE
 # include <inttypes.h>
 # include <wchar.h>
@@ -39,41 +39,41 @@
 # define CHAR__MIN WCHAR_MIN
 # define CHAR__MAX WCHAR_MAX
 
-int
-SIMPLE_MEMCMP (const wchar_t *s1, const wchar_t *s2, size_t n)
+પૂર્ણાંક
+SIMPLE_MEMCMP (અચલ wchar_t *s1, અચલ wchar_t *s2, size_t n)
 {
-  int ret = 0;
+  પૂર્ણાંક ret = 0;
   /* Warning!
 	wmemcmp has to use SIGNED comparison for elements.
 	memcmp has to use UNSIGNED comparison for elements.
   */
-  while (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
-  return ret;
+  જ્યારે (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
+  પાછા ret;
 }
-#else
+#નહીંતર
 # include <limits.h>
 # ifdef TEST_MEMCMPEQ
 #  define MEMCMP __memcmpeq
 #  define SIMPLE_MEMCMP simple_memcmpeq
-# else
+# નહીંતર
 #  define MEMCMP memcmp
 #  define SIMPLE_MEMCMP simple_memcmp
 # endif
 # define MEMCPY memcpy
-# define CHAR char
+# define CHAR અક્ષર
 # define MAX_CHAR 255
-# define UCHAR unsigned char
+# define UCHAR unsigned અક્ષર
 # define CHARBYTES 1
 # define CHAR__MIN CHAR_MIN
 # define CHAR__MAX CHAR_MAX
 
-int
-SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
+પૂર્ણાંક
+SIMPLE_MEMCMP (અચલ અક્ષર *s1, અચલ અક્ષર *s2, size_t n)
 {
-  int ret = 0;
+  પૂર્ણાંક ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1++ - *(unsigned char *) s2++) == 0);
-  return ret;
+  જ્યારે (n-- && (ret = *(unsigned અક્ષર *) s1++ - *(unsigned અક્ષર *) s2++) == 0);
+  પાછા ret;
 }
 #endif
 
@@ -83,61 +83,61 @@ SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
      ((result) > 0 && (expec) <= 0))
 # endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+પ્રકારવ્યાખ્યા પૂર્ણાંક (*proto_t) (અચલ CHAR *, અચલ CHAR *, size_t);
 
 IMPL (MEMCMP, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	      int exp_result)
+સ્થિર પૂર્ણાંક
+check_result (impl_t *impl, અચલ CHAR *s1, અચલ CHAR *s2, size_t len,
+	      પૂર્ણાંક exp_result)
 {
-  int result = CALL (impl, s1, s2, len);
-  if (BAD_RESULT(result, exp_result))
+  પૂર્ણાંક result = CALL (impl, s1, s2, len);
+  જો (BAD_RESULT(result, exp_result))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      પાછા -1;
     }
 
-  return 0;
+  પાછા 0;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	     int exp_result)
+સ્થિર શૂન્ય
+do_one_test (impl_t *impl, અચલ CHAR *s1, અચલ CHAR *s2, size_t len,
+	     પૂર્ણાંક exp_result)
 {
-  if (check_result (impl, s1, s2, len, exp_result) < 0)
-    return;
+  જો (check_result (impl, s1, s2, len, exp_result) < 0)
+    પાછા;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int exp_result)
+સ્થિર શૂન્ય
+do_test (size_t align1, size_t align2, size_t len, પૂર્ણાંક exp_result)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= (4096 - CHARBYTES);
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  જો (align1 + (len + 1) * CHARBYTES >= page_size)
+    પાછા;
 
   align2 &= (4096 - CHARBYTES);
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  જો (align2 + (len + 1) * CHARBYTES >= page_size)
+    પાછા;
 
   s1 = (CHAR *) (buf1 + align1);
   s2 = (CHAR *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  માટે (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % CHAR__MAX;
 
-  if (len)
+  જો (len)
     {
       s1[len] = align1;
       s2[len] = align2;
       s2[len - 1] -= exp_result;
     }
-  else
+  નહીંતર
     {
       exp_result = 0;
     }
@@ -146,62 +146,62 @@ do_test (size_t align1, size_t align2, size_t len, int exp_result)
     do_one_test (impl, s1, s2, len, exp_result);
 }
 
-static void
-do_random_tests (void)
+સ્થિર શૂન્ય
+do_random_tests (શૂન્ય)
 {
   size_t i, j, n, align1, align2, pos, len;
-  int result;
+  પૂર્ણાંક result;
   long r;
   UCHAR *p1 =  (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
   UCHAR *p2 =  (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
 
-  for (n = 0; n < ITERATIONS; n++)
+  માટે (n = 0; n < ITERATIONS; n++)
     {
    align1 = random () & 31;
-      if (random () & 1)
+      જો (random () & 1)
 	align2 = random () & 31;
-      else
+      નહીંતર
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1;
-      if (align2 > j)
+      જો (align2 > j)
 	j = align2;
-      if (pos + j >= 512)
+      જો (pos + j >= 512)
 	pos = 511 - j - (random () & 7);
       len = random () & 511;
-      if (len + j >= 512)
+      જો (len + j >= 512)
 	len = 511 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512) j = 512;
-      for (i = 0; i < j; ++i)
+      જો (j > 512) j = 512;
+      માટે (i = 0; i < j; ++i)
 	p1[i] = random () & 255;
-      for (i = 0; i < j; ++i)
+      માટે (i = 0; i < j; ++i)
 	p2[i] = random () & 255;
 
       result = 0;
-      if (pos >= len)
-	MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, len);
-      else
+      જો (pos >= len)
+	MEMCPY ((CHAR *) p2 + align2, (અચલ CHAR *) p1 + align1, len);
+      નહીંતર
 	{
-	  MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, pos);
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  MEMCPY ((CHAR *) p2 + align2, (અચલ CHAR *) p1 + align1, pos);
+	  જો (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      જો (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (p1[align1 + pos] < p2[align2 + pos])
+	  જો (p1[align1 + pos] < p2[align2 + pos])
 	    result = -1;
-	  else
+	  નહીંતર
 	    result = 1;
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (CHAR *) p1 + align1, (const CHAR *) p2 + align2,
+	  r = CALL (impl, (CHAR *) p1 + align1, (અચલ CHAR *) p2 + align2,
 		    len);
-	  if (BAD_RESULT(r, result))
+	  જો (BAD_RESULT(r, result))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
 		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, result, p1, p2);
@@ -211,11 +211,11 @@ do_random_tests (void)
     }
 }
 
-static void
-check1 (void)
+સ્થિર શૂન્ય
+check1 (શૂન્ય)
 {
   CHAR s1[116], s2[116];
-  int n, exp_result;
+  પૂર્ણાંક n, exp_result;
 
   s1[0] = -108;
   s2[0] = -108;
@@ -451,8 +451,8 @@ check1 (void)
   s2[115] = 1;
 
   n = 116;
-  for (size_t i = 0; i < n; i++)
-    for (size_t len = 0; len <= n - i; ++len)
+  માટે (size_t i = 0; i < n; i++)
+    માટે (size_t len = 0; len <= n - i; ++len)
       {
 	exp_result = SIMPLE_MEMCMP (s1 + i, s2 + i, len);
 	FOR_EACH_IMPL (impl, 0)
@@ -461,30 +461,30 @@ check1 (void)
 }
 
 /* This test checks that memcmp doesn't overrun buffers.  */
-static void
-check2 (void)
+સ્થિર શૂન્ય
+check2 (શૂન્ય)
 {
-  size_t max_length = page_size / sizeof (CHAR);
+  size_t max_length = page_size / કદ (CHAR);
 
   /* Initialize buf2 to the same values as buf1.  The bug requires the
      last compared byte to be different.  */
   memcpy (buf2, buf1, page_size);
-  ((char *) buf2)[page_size - 1] ^= 0x11;
+  ((અક્ષર *) buf2)[page_size - 1] ^= 0x11;
 
-  for (size_t length = 1; length < max_length; length++)
+  માટે (size_t length = 1; length < max_length; length++)
     {
       CHAR *s1 = (CHAR *) buf1 + max_length - length;
       CHAR *s2 = (CHAR *) buf2 + max_length - length;
 
-      const int exp_result = SIMPLE_MEMCMP (s1, s2, length);
+      અચલ પૂર્ણાંક exp_result = SIMPLE_MEMCMP (s1, s2, length);
 
       FOR_EACH_IMPL (impl, 0)
 	check_result (impl, s1, s2, length, exp_result);
     }
 }
 
-int
-test_main (void)
+પૂર્ણાંક
+test_main (શૂન્ય)
 {
   size_t i;
 
@@ -498,14 +498,14 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 32; ++i)
+  માટે (i = 1; i < 32; ++i)
     {
       do_test (i * CHARBYTES, i * CHARBYTES, i, 0);
       do_test (i * CHARBYTES, i * CHARBYTES, i, 1);
       do_test (i * CHARBYTES, i * CHARBYTES, i, -1);
     }
 
-  for (i = 0; i < 32; ++i)
+  માટે (i = 0; i < 32; ++i)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -524,7 +524,7 @@ test_main (void)
       do_test (4000, 95, i, -1);
     }
 
-  for (i = 33; i < 385; i += 32)
+  માટે (i = 33; i < 385; i += 32)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -534,7 +534,7 @@ test_main (void)
       do_test (i, i, i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  માટે (i = 1; i < 10; ++i)
     {
       do_test (0, 0, 2 << i, 0);
       do_test (0, 0, 2 << i, 1);
@@ -551,7 +551,7 @@ test_main (void)
       do_test (i, i, 16 << i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  માટે (i = 1; i < 10; ++i)
     {
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 0);
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 1);
@@ -559,7 +559,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  પાછા ret;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

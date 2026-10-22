@@ -19,17 +19,17 @@
 #ifndef __STRINGS_FORTIFIED
 # define __STRINGS_FORTIFIED 1
 
-__fortify_function void
-__NTH (bcopy (const void *__src, void *__dest, size_t __len))
+__fortify_function શૂન્ય
+__NTH (bcopy (અચલ શૂન્ય *__src, શૂન્ય *__dest, size_t __len))
 {
-  (void) __builtin___memmove_chk (__dest, __src, __len,
+  (શૂન્ય) __builtin___memmove_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 
-__fortify_function void
-__NTH (bzero (void *__dest, size_t __len))
+__fortify_function શૂન્ય
+__NTH (bzero (શૂન્ય *__dest, size_t __len))
 {
-  (void) __builtin___memset_chk (__dest, '\0', __len,
+  (શૂન્ય) __builtin___memset_chk (__dest, '\0', __len,
 				 __glibc_objsize0 (__dest));
 }
 

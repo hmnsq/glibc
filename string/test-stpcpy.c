@@ -20,14 +20,14 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpcpy"
-#else
+#નહીંતર
 # define TEST_NAME "wcpcpy"
 #endif /* !WIDE */
-#include "test-string.h"
+#અન્તર્ભાવ "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR અક્ષર
 # define STPCPY stpcpy
-#else
+#નહીંતર
 # include <wchar.h>
 # define CHAR wchar_t
 # define STPCPY wcpcpy
@@ -49,7 +49,7 @@ IMPL (STPCPY, 1)
 # define STPCPY __stpcpy_default
 # include "string/stpcpy.c"
 IMPL (__stpcpy_default, 1)
-#else
+#નહીંતર
 # define __wcslen wcslen
 # define __wmemcpy wmemcpy
 # define WCPCPY __wcpcpy_default
@@ -58,4 +58,4 @@ IMPL (__wcpcpy_default, 1)
 #endif
 
 #undef CHAR
-#include "test-strcpy.c"
+#અન્તર્ભાવ "test-strcpy.c"

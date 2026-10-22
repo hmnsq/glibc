@@ -17,18 +17,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdio.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <array_length.h>
+#અન્તર્ભાવ <string.h>
+#અન્તર્ભાવ <stdio.h>
+#અન્તર્ભાવ <signal.h>
+#અન્તર્ભાવ <stdlib.h>
+#અન્તર્ભાવ <locale.h>
+#અન્તર્ભાવ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#અન્તર્ભાવ <support/support.h>
+#અન્તર્ભાવ <support/check.h>
 
-static int
-do_test (void)
+સ્થિર પૂર્ણાંક
+do_test (શૂન્ય)
 {
   unsetenv ("LANGUAGE");
 
@@ -37,11 +37,11 @@ do_test (void)
   TEST_COMPARE_STRING (strsignal (SIGINT),     "Interrupt");
   TEST_COMPARE_STRING (strsignal (-1),         "Unknown signal -1");
 #ifdef SIGRTMIN
-  if (SIGRTMIN < SIGRTMAX)
+  જો (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),   "Real-time signal 0");
 #endif
 #ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+  જો (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Unknown signal 65");
 #endif
 
@@ -50,15 +50,15 @@ do_test (void)
   TEST_COMPARE_STRING (strsignal (SIGINT),    "Interrup\xc3\xa7\xc3\xa3\x6f");
   TEST_COMPARE_STRING (strsignal (-1),        "Sinal desconhecido -1");
 #ifdef SIGRTMI
-  if (SIGRTMIN < SIGRTMAX)
+  જો (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),  "Sinal de tempo-real 0");
 #endif
 #ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+  જો (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Sinal desconhecido 65");
 #endif
 
-  return 0;
+  પાછા 0;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>

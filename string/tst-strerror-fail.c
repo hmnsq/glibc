@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#અન્તર્ભાવ <locale.h>
+#અન્તર્ભાવ <stdbool.h>
+#અન્તર્ભાવ <stdlib.h>
+#અન્તર્ભાવ <string.h>
+#અન્તર્ભાવ <support/check.h>
+#અન્તર્ભાવ <support/namespace.h>
+#અન્તર્ભાવ <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+સ્થિર અસ્થિર bool fail_malloc;
 
-void *
+શૂન્ય *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  જો (fail_malloc)
+    પાછા ખાલી;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  સ્થિર શૂન્ય *(*original_malloc) (size_t);
+  જો (original_malloc == ખાલી)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  પાછા original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+સ્થિર શૂન્ય
+test_strerror (શૂન્ય *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  અચલ અક્ષર *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+સ્થિર શૂન્ય
+test_strerror_l (શૂન્ય *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  અચલ અક્ષર *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+સ્થિર પૂર્ણાંક
+do_test (શૂન્ય)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, ખાલી);
+  support_isolate_in_subprocess (test_strerror_l, ખાલી);
 
-  return 0;
+  પાછા 0;
 }
 
-#include <support/test-driver.c>
+#અન્તર્ભાવ <support/test-driver.c>
