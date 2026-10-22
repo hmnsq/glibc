@@ -1,0 +1,537 @@
+# What is still missing
+
+76 languages. Each line says in how many languages it is missing.
+
+## Files in languages BURP cannot read yet
+
+
+## Keywords with no word in a language's table
+
+- guru:size_t: 71
+- guru:ULONG_MAX: 71
+- guru:memcmp: 71
+- guru:wchar_t: 71
+- guru:memchr: 71
+- guru:strchr: 71
+- guru:tolower: 71
+- guru:strtok: 71
+- guru:strrchr: 71
+- guru:CHAR_MAX: 71
+- guru:memmove: 71
+- guru:errno: 71
+- guru:strncat: 71
+- guru:strncpy: 71
+- guru:strcspn: 71
+- guru:strerror: 71
+- guru:strspn: 71
+- guru:CHAR_BIT: 71
+- guru:abort: 71
+- guru:setlocale: 71
+- guru:asm: 71
+- guru:EXIT_FAILURE: 71
+- guru:realloc: 71
+- guru:CHAR_MIN: 71
+- guru:EXIT_SUCCESS: 71
+- guru:perror: 71
+- guru:UINT_MAX: 71
+- guru:strtoul: 71
+- guru:fprintf: 71
+- guru:stdout: 71
+- guru:ERANGE: 71
+- guru:SIGINT: 71
+- guru:UCHAR_MAX: 71
+- guru:time: 71
+- guru:close: 71
+- guru:LONG_MIN: 71
+- guru:LONG_MAX: 71
+- guru:EDOM: 71
+- guru:fgets: 71
+- guru:stdin: 71
+- guru:strcpy: 70
+- guru:memset: 70
+- guru:puts: 70
+- guru:strcmp: 70
+- guru:strcat: 70
+- guru:open: 70
+- guru:qsort: 70
+- guru:restrict: 67
+- guru:exp: 67
+- guru:#endif: 66
+- guru:#define: 66
+- guru:#ifndef: 66
+- guru:#undef: 66
+- guru:#ifdef: 66
+- guru:unsigned: 62
+- guru:printf: 62
+- guru:strlen: 62
+- guru:long: 62
+- guru:memcpy: 62
+- guru:strstr: 62
+- guru:putchar: 62
+- guru:strncmp: 62
+- guru:toupper: 62
+- guru:malloc: 62
+- guru:isdigit: 62
+- guru:exit: 62
+- guru:short: 62
+- guru:abs: 62
+- guru:main: 54
+- guru:void: 25
+- guru:const: 25
+- guru:NULL: 25
+- guru:static: 25
+- guru:extern: 25
+- guru:goto: 25
+- guru:typedef: 25
+- guru:free: 25
+- guru:do: 25
+- guru:switch: 25
+- guru:continue: 25
+- guru:assert: 25
+- guru:default: 25
+- guru:#elif: 25
+- guru:#include: 25
+- guru:read: 25
+- guru:for: 9
+- guru:char: 9
+- guru:sizeof: 9
+- guru:break: 9
+- guru:case: 9
+- guru:struct: 9
+- guru:inline: 9
+- guru:enum: 9
+- guru:volatile: 9
+- guru:union: 9
+- guru:if: 1
+- guru:int: 1
+- guru:return: 1
+- guru:else: 1
+- guru:while: 1
+- guru:#else: 1
+- guru:#if: 1
+
+## Names with no dictionary entry (the most common first)
+
+- `i`: 76
+- `len`: 76
+- `j`: 76
+- `do_test`: 76
+- `define`: 76
+- `one`: 76
+- `CHAR`: 76
+- `impl`: 76
+- `n`: 76
+- `s1`: 76
+- `s2`: 76
+- `align2`: 76
+- `align1`: 76
+- `s`: 76
+- `check`: 76
+- `align`: 76
+- `pos`: 76
+- `p`: 76
+- `op_t`: 76
+- `equal`: 76
+- `buf1`: 76
+- `outer`: 76
+- `p2`: 76
+- `cp`: 76
+- `ret`: 76
+- `buf`: 76
+- `p1`: 76
+- `c`: 76
+- `name`: 76
+- `dst`: 76
+- `src`: 76
+- `len1`: 76
+- `BIG_CHAR`: 76
+- `FOR_EACH_IMPL`: 76
+- `dest`: 76
+- `SMALL_CHAR`: 76
+- `L`: 76
+- `error`: 76
+- `len2`: 76
+- `OPSIZ`: 76
+- `k`: 76
+- `res`: 76
+- `srcp`: 76
+- `inner`: 76
+- `do_one_test`: 76
+- `do_test_n`: 76
+- `a`: 76
+- `dstp`: 76
+- `UCHAR`: 76
+- `x`: 76
+- `CALL`: 76
+- `needed`: 76
+- `buf2`: 76
+- `seek_char`: 76
+- `CHARBYTES`: 76
+- `adr`: 76
+- `klen`: 76
+- `strsep`: 76
+- `r`: 76
+- `haystack`: 76
+- `nchars`: 76
+- `hlen`: 76
+- `TEST_NAME`: 76
+- `val`: 76
+- `l`: 76
+- `weak_alias`: 76
+- `str`: 76
+- `endif`: 76
+- `a0`: 76
+- `needle`: 76
+- `a1`: 76
+- `argz`: 76
+- `IMPL`: 76
+- `WIDE`: 76
+- `do_random_tests`: 76
+- `two`: 76
+- `defined`: 76
+- `MEMSET`: 76
+- `libc_hidden_def`: 76
+- `STRLEN`: 76
+- `b`: 76
+- `hs`: 76
+- `do_test1`: 76
+- `CHECK_TYPE`: 76
+- `needle_len`: 76
+- `idx`: 76
+- `weights`: 76
+- `srcp1`: 76
+- `max_char`: 76
+- `stpcpy`: 76
+- `strpbrk`: 76
+- `impl_t`: 76
+- `backw`: 76
+- `MEMCMP`: 76
+- `it`: 76
+- `w1`: 76
+- `N`: 76
+- `buflen`: 76
+- `pass`: 76
+- `TEST_MAIN`: 76
+- `maxoffset`: 76
+- `strtok_r`: 76
+- `libc_hidden_builtin_def`: 76
+- `srcp2`: 76
+- `idxcnt`: 76
+- `rej`: 76
+- `test_main`: 76
+- `test_init`: 76
+- `sh_1`: 76
+- `w2`: 76
+- `SIMPLE_COPY`: 76
+- `proto_t`: 76
+- `err`: 76
+- `ne`: 76
+- `c1`: 76
+- `ITERATIONS`: 76
+- `USTRING_TYPE`: 76
+- `MEMCPY`: 76
+- `backw_stop`: 76
+- `sh_2`: 76
+- `phaystack`: 76
+- `CANON_ELEMENT`: 76
+- `STRCPY`: 76
+- `strncasecmp`: 76
+- `cnt`: 76
+- `ifdef`: 76
+- `STRCHR`: 76
+- `c2`: 76
+- `TEST_COMPARE`: 76
+- `acc`: 76
+- `m`: 76
+- `argz_len`: 76
+- `string`: 76
+- `token`: 76
+- `envz`: 76
+- `STRINGIFY`: 76
+- `TEST_COMPARE_STRING`: 76
+- `envz_len`: 76
+- `suffix`: 76
+- `STRNLEN`: 76
+- `strnlen`: 76
+- `STRCMP`: 76
+- `test_len`: 76
+- `n2`: 76
+- `b0`: 76
+- `seq`: 76
+- `CMP`: 76
+- `idxarr`: 76
+- `tmp`: 76
+- `DIAG_IGNORE_NEEDS_COMMENT`: 76
+- `m1`: 76
+- `max128`: 76
+- `loc`: 76
+- `idxmax`: 76
+- `nrules`: 76
+- `exp_res`: 76
+- `large_buf`: 76
+- `tests`: 76
+- `error_t`: 76
+- `a2`: 76
+- `haystack_len`: 76
+- `repeats`: 76
+- `size1`: 76
+- `size2`: 76
+- `p3`: 76
+- `l1`: 76
+- `exp_len`: 76
+- `ccp`: 76
+- `d`: 76
+- `seq1`: 76
+- `buf_addr`: 76
+- `off1`: 76
+- `a3`: 76
+- `memrchr`: 76
+- `ofs`: 76
+- `pneedle`: 76
+- `us`: 76
+- `expected`: 76
+- `TEST_COMPARE_BLOB`: 76
+- `off2`: 76
+- `s1_addr`: 76
+- `errors`: 76
+- `n3`: 76
+- `signum`: 76
+- `period`: 76
+- `STRNCMP`: 76
+- `b1`: 76
+- `w2b`: 76
+- `x1`: 76
+- `STRING_TYPE`: 76
+- `seq2`: 76
+- `dl`: 76
+- `PRIx64`: 76
+- `_LIBC`: 76
+- `ne_len`: 76
+- `cccc`: 76
+- `strcasecmp`: 76
+- `rulesets`: 76
+- `libc`: 76
+- `GLIBC_2_1_1`: 76
+- `ntest`: 76
+- `memccpy`: 76
+- `repeated_c`: 76
+- `ifndef`: 76
+- `OP_T_THRES`: 76
+- `u16`: 76
+- `u32`: 76
+- `u64`: 76
+- `static_weak_alias`: 76
+- `mempcpy`: 76
+- `t1`: 76
+- `t2`: 76
+- `MEMCHR`: 76
+- `nchars64`: 76
+- `strchrnul`: 76
+- `extra`: 76
+- `rindex`: 76
+- `do_test4`: 76
+- `test_locale`: 76
+- `errnum`: 76
+- `arg`: 76
+- `strlcat`: 76
+- `S`: 76
+- `rawmemchr`: 76
+- `STPNCPY`: 76
+- `current`: 76
+- `strxfrm`: 76
+- `srcstart`: 76
+- `wcslen`: 76
+- `locale`: 76
+- `before`: 76
+- `stpncpy`: 76
+- `strs`: 76
+- `has_zero`: 76
+- `STRNCPY`: 76
+- `PROT_READ`: 76
+- `PROT_WRITE`: 76
+- `begin`: 76
+- `TEST_LEN`: 76
+- `ptr`: 76
+- `cvp`: 76
+- `strerror_r`: 76
+- `wp`: 76
+- `from`: 76
+- `CMP_LT_OR_GT`: 76
+- `do1`: 76
+- `do2`: 76
+- `do3`: 76
+- `do0`: 76
+- `h`: 76
+- `h_l`: 76
+- `STPCPY`: 76
+- `w2a`: 76
+- `zu`: 76
+- `x2`: 76
+- `diff`: 76
+- `state`: 76
+- `cur`: 76
+- `check1`: 76
+- `srcend`: 76
+- `do_test2`: 76
+- `sfmt`: 76
+- `MIDCHAR`: 76
+- `memp`: 76
+- `dst_off`: 76
+- `n1`: 76
+- `vp`: 76
+- `label`: 76
+- `delim`: 76
+- `nlen`: 76
+- `ISOC23`: 76
+- `STRRCHR`: 76
+- `backw_len`: 76
+- `CHAR__MAX`: 76
+- `USE_FOR_STRCHRNUL`: 76
+- `xmalloc`: 76
+- `uc_co`: 76
+- `rp`: 76
+- `libc_hidden_weak`: 76
+- `strlcpy`: 76
+- `bzero`: 76
+- `bcmp`: 76
+- `RETURN_TYPE`: 76
+- `n_l`: 76
+- `hash2`: 76
+- `MAP_ANON`: 76
+- `MAP_FAILED`: 76
+- `TOLOWER`: 76
+- `Ch`: 76
+- `SUFFIX`: 76
+- `CONCAT`: 76
+- `c0`: 76
+- `strsignal`: 76
+- `maxlen`: 76
+- `h2`: 76
+- `wmemcmp`: 76
+- `CHAR__MIN`: 76
+- `check2`: 76
+- `wmemset`: 76
+- `s2len`: 76
+
+## Comments with no translation
+
+- WIDE: 76
+- Basic test.: 76
+- Naive implementation to verify results.: 76
+- Empty string.: 76
+- Wrote too much?: 76
+- Writeover.: 76
+- End of string.: 76
+- Beginning.: 76
+- Returned value.: 76
+- Stomped on source?: 76
+- Not found.: 76
+- Finding NUL.: 76
+- Finding first.: 76
+- Also check the generic implementation.: 76
+- !WIDE: 76
+- Zero-length copy.: 76
+- NUL in empty string.: 76
+- This is the right position for do0.  Please don't move
+     it into the loop.: 76
+- Zero count.: 76
+- Just paranoia.: 76
+- Persistence.: 76
+- !USE_FOR_STRCHRNUL: 76
+- Identity.: 76
+- Multicharacter.: 76
+- Did the copy go right?: 76
+- Restricted.: 76
+- Different separators.: 76
+- Permute list too.: 76
+- Scan for matches in left half.: 76
+- Handle the pushed backward sequence.: 76
+- Now handle the forward element.: 76
+- No more characters fit into the buffer.: 76
+- Handle the pushed elements now.: 76
+- This is a compilation test.: 76
+- !TEST_BZERO: 76
+- Honestly unequal.: 76
+- Count limited.: 76
+- If there not too few bytes to copy, use word copy.: 76
+- Copy just a few bytes to make DSTP aligned.: 76
+- Fall out and copy the tail.: 76
+- There are just a few bytes to copy.  Use byte memory operations.: 76
+- Likewise GCC 11, with a different warning option.: 76
+- Find the first occurrence of C in S.: 76
+- Unaligned loop.  The invariant is that W2B, which is "ahead" of W1,
+	 does not contain end-of-string: 76
+- Make sure we don't test the optimized inline functions if we want to
+   test the real implementation: 76
+- Test whether on 64-bit architectures where ABI requires
+	     callee to promote has the promotion be: 76
+- Also check the default implementation.: 76
+- Put s1 at the maxoffset from the edge of buf1's last page.: 76
+- Both strings are bounded to a page with read/write access and the next
+     page is protected with P: 76
+- Basic test encore.: 76
+- Unaligned destination.: 76
+- Unaligned source.: 76
+- Finding last.: 76
+- Extra delims, 1 tok.: 76
+- Changing delim lists.: 76
+- New string before done.: 76
+- No tokens.: 76
+- No delimiters.: 76
+- Empty delimiter list.: 76
+- Basics again...: 76
+- Stomped past end?: 76
+- Stomped old tokens?: 76
+- Return a string describing the errno code in ERRNUM.: 76
+- Returns the number of strings in ARGZ.: 76
+- Make a '\0' separated arg vector from a unix argv vector, returning it in
+   ARGZ, and the total len: 76
+- Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
+   existing entry in ARGZ; if BE: 76
+- Replace any occurrences of the string STR in ARGZ with WITH, reallocating
+   ARGZ as necessary.  If : 76
+- Make '\0' separated arg vector ARGZ printable by converting all the '\0's
+   except the last into th: 76
+- Set N bytes of S to 0.: 76
+- Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
+   if there is none.: 76
+- Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.: 76
+- Adds an entry for NAME with value VALUE to ENVZ & ENVZ_LEN.  If an entry
+   with the same name alrea: 76
+- Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
+   OVERRIDE is true, then va: 76
+- Remove null entries.: 76
+- Compiler barrier.: 76
+- Find the first bit set in I.: 76
+- Copy no more than N bytes of SRC to DEST, stopping when C is found.
+   Return the position in DEST o: 76
+- We found a match, but it might be in a byte past the end of the
+	 array.: 76
+- Avoid warning about uninitialized local variables.: 76
+- Fall through.: 76
+- Copy from the beginning to the end.: 76
+- Hash character pairs so a small shift table can be used.  All bits of
+   p[0] are included, but not : 76
+- Use Two-Way algorithm for very long needles.: 76
+- Shift1 is the amount we can skip after matching the hash of the
+     needle end but not the full nee: 76
+- Skip past character pairs not in the needle.: 76
+- If the match is not at the end of the needle, shift to the end
+	 and continue until we match the has: 76
+- Hash of the last 2 characters matches.  If the needle is long,
+	 try to quickly filter out mismatche: 76
+- Adjust filter offset when it doesn't find the mismatch.: 76
+- Skip based on matching the hash of the needle end.: 76
+- Copy from SRCP to DSTP taking advantage of the known
+	     alignment of DSTP.  Number of bytes remai: 76
+- string.h: 76
+- Copy SRC to DEST, returning the address of the terminating '\0' in DEST.: 76
+- nothing: 76
+- Suffix is smaller, period is entire prefix so far.: 76
+- Advance through repetition of the current period.: 76
+- Suffix is larger, start over from current location.: 76
+- Return the first location of non-empty NEEDLE within HAYSTACK, or
+   NULL.  HAYSTACK_LEN is the mini: 76
+- Index into current byte of NEEDLE.: 76
+- Index into current window of HAYSTACK.: 76
+- The period of the right half of needle.: 76
