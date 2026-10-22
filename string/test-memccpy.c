@@ -24,63 +24,63 @@ IMPL (memccpy, 1)
 
 /* Naive implementation to verify results.  */
 void *
-simple_memccpy (void *dst, const void *src, int c, size_t n)
+simple_memccpy (void *dst, const void *src, puur_naa_nka c, size_t n)
 {
-  const char *s = src;
-  char *d = dst;
+  const var_na *s = src;
+  var_na *d = dst;
 
-  while (n-- > 0)
-    if ((*d++ = *s++) == (char) c)
-      return d;
+  ᬲᭂᬤᭂᬮ (n-- > 0)
+    ᬬᬾᬦ᭄ ((*d++ = *s++) == (var_na) c)
+      ᬯᬮᬶ d;
 
-  return NULL;
+  ᬯᬮᬶ NULL;
 }
 
-typedef void *(*proto_t) (void *, const void *, int c, size_t);
+typedef void *(*proto_t) (void *, const void *, puur_naa_nka c, size_t);
 
 static void
-do_one_test (impl_t *impl, void *dst, const void *src, int c, size_t len,
+do_one_test (impl_t *impl, void *dst, const void *src, puur_naa_nka c, size_t len,
 	     size_t n)
 {
-  void *expect = len > n ? NULL : (char *) dst + len;
-  if (CALL (impl, dst, src, c, n) != expect)
+  void *expect = len > n ? NULL : (var_na *) dst + len;
+  ᬬᬾᬦ᭄ (CALL (impl, dst, src, c, n) != expect)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, c, n), expect);
       ret = 1;
-      return;
+      ᬯᬮᬶ;
     }
 
-  if (memcmp (dst, src, len > n ? n : len) != 0)
+  ᬬᬾᬦ᭄ (memcmp (dst, src, len > n ? n : len) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      ᬯᬮᬶ;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, int c, size_t len, size_t n,
-	 int max_char)
+do_test (size_t align1, size_t align2, puur_naa_nka c, size_t len, size_t n,
+	 puur_naa_nka max_char)
 {
   size_t i;
-  char *s1, *s2;
+  var_na *s1, *s2;
 
   align1 &= 7;
-  if (align1 + len >= page_size)
-    return;
+  ᬬᬾᬦ᭄ (align1 + len >= page_size)
+    ᬯᬮᬶ;
 
   align2 &= 7;
-  if (align2 + len >= page_size)
-    return;
+  ᬬᬾᬦ᭄ (align2 + len >= page_size)
+    ᬯᬮᬶ;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (var_na *) (buf1 + align1);
+  s2 = (var_na *) (buf2 + align2);
 
   for (i = 0; i < len - 1; ++i)
     {
       s1[i] = 32 + 23 * i % (max_char - 32);
-      if (s1[i] == (char) c)
+      ᬬᬾᬦ᭄ (s1[i] == (var_na) c)
 	--s1[i];
     }
   s1[len - 1] = c;
@@ -95,83 +95,83 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
-  unsigned char *res, c;
+  unsigned var_na *p1 = buf1 + page_size - 512;
+  unsigned var_na *p2 = buf2 + page_size - 512;
+  unsigned var_na *res, c;
 
   for (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
       c = random ();
-      if (mode & 1)
+      ᬬᬾᬦ᭄ (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  ᬬᬾᬦ᭄ (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  ᬮᬶᬬ
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  ᬬᬾᬦ᭄ (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  ᬬᬾᬦ᭄ (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  ᬮᬶᬬ
 	    len = 512;
-	  if (len >= 512)
+	  ᬬᬾᬦ᭄ (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      ᬮᬶᬬ
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  ᬬᬾᬦ᭄ (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  ᬮᬶᬬ
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  ᬬᬾᬦ᭄ (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  ᬬᬾᬦ᭄ (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      ᬬᬾᬦ᭄ (size + j > 512)
 		size = 512 - j - (random() & 31);
 	    }
-	  else
+	  ᬮᬶᬬ
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  ᬬᬾᬦ᭄ ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      ᬬᬾᬦ᭄ (j > 512)
 	j = 512;
       for (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ᬬᬾᬦ᭄ (i == len + align1)
 	    p1[i] = c;
-	  else
+	  ᬮᬶᬬ
 	    {
 	      p1[i] = random () & 255;
-	      if (i >= align1 && i < len + align1 && p1[i] == c)
+	      ᬬᬾᬦ᭄ (i >= align1 && i < len + align1 && p1[i] == c)
 		p1[i] = (random () & 127) + 3 + c;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  unsigned char *expect;
+	  unsigned var_na *expect;
 	  memset (p2 - 64, '\1', 512 + 64);
-	  res = CALL (impl, p2 + align2, p1 + align1, (char) c, size);
-	  if (len >= size)
+	  res = CALL (impl, p2 + align2, p1 + align1, (var_na) c, size);
+	  ᬬᬾᬦ᭄ (len >= size)
 	    expect = NULL;
-	  else
+	  ᬮᬶᬬ
 	    expect = p2 + align2 + len + 1;
 
-	  if (res != expect)
+	  ᬬᬾᬦ᭄ (res != expect)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %d) %p != %p",
 		     n, impl->name, align1, align2, len, size, c, res, expect);
@@ -179,31 +179,31 @@ do_random_tests (void)
 	    }
 	  for (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ᬬᬾᬦ᭄ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 < j)
+	  ᬬᬾᬦ᭄ (size + align2 < j)
 	    j = size + align2;
 	  for (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ᬬᬾᬦ᭄ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
 	  j = len + 1;
-	  if (size < j)
+	  ᬬᬾᬦ᭄ (size < j)
 	    j = size;
-	  if (memcmp (p1 + align1, p2 + align2, j))
+	  ᬬᬾᬦ᭄ (memcmp (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -213,7 +213,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -246,7 +246,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ᬯᬮᬶ ret;
 }
 
 #include <support/test-driver.c>

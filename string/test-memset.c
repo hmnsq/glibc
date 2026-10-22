@@ -20,17 +20,17 @@
 #ifdef TEST_BZERO
 # ifdef TEST_EXPLICIT_BZERO
 #  define TEST_NAME "explicit_bzero"
-# else
+# ᬮᬶᬬ
 #  define TEST_NAME "bzero"
 # endif
-#else
+#ᬮᬶᬬ
 # ifndef WIDE
 #  ifdef TEST_MEMSET_EXPLICIT
 #   define TEST_NAME "memset_explicit"
-#  else
+#  ᬮᬶᬬ
 #   define TEST_NAME "memset"
 #  endif
-# else
+# ᬮᬶᬬ
 #  define TEST_NAME "wmemset"
 # endif /* WIDE */
 #endif /* !TEST_BZERO */
@@ -40,15 +40,15 @@
 #ifndef WIDE
 # ifdef TEST_MEMSET_EXPLICIT
 #  define MEMSET memset_explicit
-# else
+# ᬮᬶᬬ
 #  define MEMSET memset
 # endif
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define SIMPLE_MEMSET simple_memset
 # define MEMCMP memcmp
 # define BIG_CHAR CHAR_MAX
-#else
+#ᬮᬶᬬ
 # include <wchar.h>
 # define MEMSET wmemset
 # define CHAR wchar_t
@@ -59,47 +59,47 @@
 #endif /* WIDE */
 
 #ifdef TEST_BZERO
-typedef void (*proto_t) (char *, size_t);
+typedef void (*proto_t) (var_na *, size_t);
 # ifdef TEST_EXPLICIT_BZERO
 IMPL (explicit_bzero, 1)
-# else
+# ᬮᬶᬬ
 IMPL (bzero, 1)
 # endif
-#else
-typedef CHAR *(*proto_t) (CHAR *, int, size_t);
+#ᬮᬶᬬ
+typedef CHAR *(*proto_t) (CHAR *, puur_naa_nka, size_t);
 IMPL (MEMSET, 1)
 #endif /* !TEST_BZERO */
 
 /* Naive implementation to verify results.  */
 CHAR *
 test_cc_inhibit_loop_to_libcall
-SIMPLE_MEMSET (CHAR *s, int c, size_t n)
+SIMPLE_MEMSET (CHAR *s, puur_naa_nka c, size_t n)
 {
   CHAR *r = s, *end = s + n;
-  while (r < end)
+  ᬲᭂᬤᭂᬮ (r < end)
     *r++ = c;
-  return s;
+  ᬯᬮᬶ s;
 }
 
 static void
-do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int space_below, int space_above)
+do_one_test (impl_t *impl, CHAR *s, puur_naa_nka c __attribute ((unused)), size_t n, puur_naa_nka space_below, puur_naa_nka space_above)
 {
   CHAR buf[n];
   CHAR sentinel = ~c;
-  if (space_below)
+  ᬬᬾᬦ᭄ (space_below)
       s[-1] = sentinel;
-  if (space_above)
+  ᬬᬾᬦ᭄ (space_above)
       s[n] = sentinel;
   SIMPLE_MEMSET(s, ~c, n);
 #ifdef TEST_BZERO
   SIMPLE_MEMSET (buf, 0, n);
   CALL (impl, s, n);
-  if (memcmp (s, buf, n) != 0
+  ᬬᬾᬦ᭄ (memcmp (s, buf, n) != 0
       || (space_below && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#else
+#ᬮᬶᬬ
   CHAR *res = CALL (impl, s, c, n);
-  if (res != s
+  ᬬᬾᬦ᭄ (res != s
       || SIMPLE_MEMSET (buf, c, n) != buf
       || MEMCMP (s, buf, n) != 0
       || (space_below && s[-1] != sentinel)
@@ -108,20 +108,20 @@ do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int 
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      ᬯᬮᬶ;
     }
 }
 
 static void
-do_test (size_t align, int c, size_t len)
+do_test (size_t align, puur_naa_nka c, size_t len)
 {
-  int space_below, space_above;
+  puur_naa_nka space_below, space_above;
   align &= 4095;
-  if ((align + len) * sizeof (CHAR) > page_size)
-    return;
+  ᬬᬾᬦ᭄ ((align + len) * parimaa_na (CHAR) > page_size)
+    ᬯᬮᬶ;
 
   space_below = !!align;
-  space_above = !((align + len + 1) * sizeof (CHAR) > page_size);
+  space_above = !((align + len + 1) * parimaa_na (CHAR) > page_size);
 
   FOR_EACH_IMPL (impl, 0)
     do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_below, space_above);
@@ -132,39 +132,39 @@ static void
 do_random_tests (void)
 {
   size_t i, j, k, n, align, len, size;
-  int c, o;
+  puur_naa_nka c, o;
   UCHAR *p, *res;
   UCHAR *p2 = (UCHAR *) buf2;
 
-  for (i = 0; i < 65536 / sizeof (CHAR); ++i)
+  for (i = 0; i < 65536 / parimaa_na (CHAR); ++i)
     p2[i] = random () & BIG_CHAR;
 
   for (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 31) == 0)
-	size = 65536 / sizeof (CHAR);
-      else
+      ᬬᬾᬦ᭄ ((random () & 31) == 0)
+	size = 65536 / parimaa_na (CHAR);
+      ᬮᬶᬬ
 	size = 512;
       p = (UCHAR *) (buf1 + page_size) - size;
       len = random () & (size - 1);
       align = size - len - (random () & 31);
-      if (align > size)
+      ᬬᬾᬦ᭄ (align > size)
 	align = size - len;
-      if ((random () & 7) == 0)
+      ᬬᬾᬦ᭄ ((random () & 7) == 0)
 	align &= ~63;
-      if ((random () & 7) == 0)
+      ᬬᬾᬦ᭄ ((random () & 7) == 0)
 	c = 0;
-      else
+      ᬮᬶᬬ
 	c = random () & BIG_CHAR;
       o = random () & BIG_CHAR;
-      if (o == c)
+      ᬬᬾᬦ᭄ (o == c)
 	o = (c + 1) & BIG_CHAR;
       j = len + align + 128;
-      if (j > size)
+      ᬬᬾᬦ᭄ (j > size)
 	j = size;
-      if (align >= 128)
+      ᬬᬾᬦ᭄ (align >= 128)
 	k = align - 128;
-      else
+      ᬮᬶᬬ
 	k = 0;
       for (i = k; i < align; ++i)
 	p[i] = o;
@@ -176,50 +176,50 @@ do_random_tests (void)
 	  for (i = 0; i < len; ++i)
 	    {
 	      p[i + align] = p2[i];
-	      if (p[i + align] == c)
+	      ᬬᬾᬦ᭄ (p[i + align] == c)
 		p[i + align] = o;
 	    }
 	  res = (UCHAR *) CALL (impl, (CHAR *) p + align, c, len);
-	  if (res != p + align)
+	  ᬬᬾᬦ᭄ (res != p + align)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd) %p != %p",
 		     n, impl->name, align, c, len, res, p + align);
 	      ret = 1;
 	    }
 	  for (i = k; i < align; ++i)
-	    if (p[i] != o)
+	    ᬬᬾᬦ᭄ (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage before %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		bha_nga;
 	      }
 	  for (; i < align + len; ++i)
-	    if (p[i] != c)
+	    ᬬᬾᬦ᭄ (p[i] != c)
 	      {
 		error (0, 0, "Iteration %zd - not cleared correctly %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		bha_nga;
 	      }
 	  for (; i < j; ++i)
-	    if (p[i] != o)
+	    ᬬᬾᬦ᭄ (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage after %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		bha_nga;
 	      }
 	}
     }
 }
 #endif /* !TEST_BZERO */
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
-  int c = 0;
+  puur_naa_nka c = 0;
 
   test_init ();
 
@@ -239,7 +239,7 @@ test_main (void)
 	  do_test (i, c, i);
 	  do_test (4096 - i, c, i);
 	  do_test (4095, c, i);
-	  if (i & (i - 1))
+	  ᬬᬾᬦ᭄ (i & (i - 1))
 	    do_test (0, c, i);
 	}
       do_test (1, c, 14);
@@ -252,7 +252,7 @@ test_main (void)
   do_random_tests ();
 #endif
 
-  return ret;
+  ᬯᬮᬶ ret;
 }
 
 #include <support/test-driver.c>

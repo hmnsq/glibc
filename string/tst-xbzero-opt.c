@@ -50,7 +50,7 @@
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+static const unsigned var_na test_pattern[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,7 +60,7 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
+#define PATTERN_SIZE (parimaa_na test_pattern)
 #define PATTERN_REPS 32
 #define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
 
@@ -97,53 +97,53 @@ static const unsigned char test_pattern[16] =
 
 static ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+static __attribute_optimization_barrier__ puur_naa_nka
+use_test_buffer (unsigned var_na *buf)
 {
-  unsigned int sum = 0;
+  unsigned puur_naa_nka sum = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  for (unsigned puur_naa_nka i = 0; i < PATTERN_REPS; i++)
     sum += buf[i * PATTERN_SIZE];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  ᬯᬮᬶ (sum == 2 * PATTERN_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#ᬬᬾᬦ᭄ defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#ᬮᬶᬬ
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
 #endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+static anta_hstha ALWAYS_INLINE void
+prepare_test_buffer (unsigned var_na *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  for (unsigned puur_naa_nka i = 0; i < PATTERN_REPS; i++)
     memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
 
-  if (swapcontext (&uc_co, &uc_main))
+  ᬬᬾᬦ᭄ (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  ᬬᬾᬦ᭄ (use_test_buffer (buf))
     abort ();
 }
 
 static void
 setup_no_clear (void)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned var_na buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
 }
 
 static void
 setup_ordinary_clear (void)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned var_na buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
   memset (buf, 0, TEST_BUFFER_SIZE);
 }
@@ -151,28 +151,28 @@ setup_ordinary_clear (void)
 static void
 setup_explicit_clear (void)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned var_na buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
 #ifdef TEST_MEMSET_EXPLICIT
   memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
+#ᬮᬶᬬ
   explicit_bzero (buf, TEST_BUFFER_SIZE);
 #endif
 }
 
-enum test_expectation
+ga_nanaa test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+sa_nracanaa subtest
 {
   void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  const var_na *label;
+  ga_nanaa test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+static const sa_nracanaa subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+static const sa_nracanaa subtest subtests[] =
 {
   { setup_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
@@ -185,10 +185,10 @@ static const struct subtest subtests[] =
 static void
 test_coroutine (void)
 {
-  while (cur_subtest->setup_subtest)
+  ᬲᭂᬤᭂᬮ (cur_subtest->setup_subtest)
     {
       cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      ᬬᬾᬦ᭄ (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,75 +196,75 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
+static puur_naa_nka test_status;
+static unsigned var_na *co_stack_buffer;
 static size_t co_stack_size;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+static unsigned puur_naa_nka
+count_test_patterns (unsigned var_na *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  unsigned var_na *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
+  ᬬᬾᬦ᭄ (!first)
+    ᬯᬮᬶ 0;
+  unsigned puur_naa_nka cnt = 0;
+  for (unsigned puur_naa_nka i = 0; i < PATTERN_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      unsigned var_na *p = first + i*PATTERN_SIZE;
+      ᬬᬾᬦ᭄ (p + PATTERN_SIZE - buf > bufsiz)
+	bha_nga;
+      ᬬᬾᬦ᭄ (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
 	cnt++;
     }
-  return cnt;
+  ᬯᬮᬶ cnt;
 }
 
 static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+check_test_buffer (ga_nanaa test_expectation expected,
+		   const var_na *label, const var_na *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
+  unsigned puur_naa_nka cnt = count_test_patterns (co_stack_buffer, co_stack_size);
   switch (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
+    pak_sa EXPECT_NONE:
+      ᬬᬾᬦ᭄ (cnt == 0)
 	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+      ᬮᬶᬬ
 	{
 	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
 	  test_status = 1;
 	}
-      break;
+      bha_nga;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
+    pak_sa EXPECT_SOME:
+      ᬬᬾᬦ᭄ (cnt > 0)
 	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+      ᬮᬶᬬ
 	{
 	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
 	  test_status = 1;
 	}
-      break;
+      bha_nga;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
+     pak_sa EXPECT_ALL:
+      ᬬᬾᬦ᭄ (cnt == PATTERN_REPS)
 	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
 		PATTERN_REPS, cnt);
-      else
+      ᬮᬶᬬ
 	{
 	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
 		  PATTERN_REPS, cnt);
 	  test_status = 1;
 	}
-      break;
+      bha_nga;
 
-    case NO_EXPECTATIONS:
+    pak_sa NO_EXPECTATIONS:
       printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      bha_nga;
 
     default:
       printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
+	      label, stage, (puur_naa_nka)expected);
       test_status = 1;
     }
 }
@@ -273,45 +273,45 @@ static void
 test_loop (void)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  ᬲᭂᬤᭂᬮ (cur_subtest->setup_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      ᬬᬾᬦ᭄ (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      ᬬᬾᬦ᭄ (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  ᬬᬾᬦ᭄ (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
+puur_naa_nka
 do_test (void)
 {
   size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  ᬬᬾᬦ᭄ (page_alignment < parimaa_na (void *))
+    page_alignment = parimaa_na (void *);
 
   co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
+  ᬬᬾᬦ᭄ (co_stack_size < page_alignment * 4)
     co_stack_size = page_alignment * 4;
 
   void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  puur_naa_nka err = posix_memalign (&p, page_alignment, co_stack_size);
+  ᬬᬾᬦ᭄ (err || !p)
     {
       printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      ᬯᬮᬶ 2;
     }
   co_stack_buffer = p;
 
-  if (getcontext (&uc_co))
+  ᬬᬾᬦ᭄ (getcontext (&uc_co))
     {
       printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      ᬯᬮᬶ 2;
     }
   uc_co.uc_stack.ss_sp   = co_stack_buffer;
   uc_co.uc_stack.ss_size = co_stack_size;
@@ -319,7 +319,7 @@ do_test (void)
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  ᬯᬮᬶ test_status;
 }
 
 #include <support/test-driver.c>

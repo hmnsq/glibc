@@ -2,24 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+puur_naa_nka
 do_test (void)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  var_na buf[1] = { 0 };
+  puur_naa_nka result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  ᬬᬾᬦ᭄ (strtok (buf, " ") != NULL)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  ᬮᬶᬬ ᬬᬾᬦ᭄ (strtok (NULL, " ") != NULL)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  ᬯᬮᬶ result;
 }
 
 #include <support/test-driver.c>

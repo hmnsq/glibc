@@ -20,7 +20,7 @@
 #define TEST_NAME "memrchr"
 #include "test-string.h"
 
-typedef char *(*proto_t) (const char *, int, size_t);
+typedef var_na *(*proto_t) (const var_na *, puur_naa_nka, size_t);
 
 IMPL (memrchr, 1)
 
@@ -32,117 +32,117 @@ IMPL (memrchr, 1)
 IMPL (__memrchr_default, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memrchr (const char *s, int c, size_t n)
+var_na *
+simple_memrchr (const var_na *s, puur_naa_nka c, size_t n)
 {
   s = s + n;
-  while (n--)
-    if (*--s == (char) c)
-      return (char *) s;
-  return NULL;
+  ᬲᭂᬤᭂᬮ (n--)
+    ᬬᬾᬦ᭄ (*--s == (var_na) c)
+      ᬯᬮᬶ (var_na *) s;
+  ᬯᬮᬶ NULL;
 }
 
 static void
-do_one_test (impl_t *impl, const char *s, int c, size_t n, char *exp_res)
+do_one_test (impl_t *impl, const var_na *s, puur_naa_nka c, size_t n, var_na *exp_res)
 {
-  char *res = CALL (impl, s, c, n);
-  if (res != exp_res)
+  var_na *res = CALL (impl, s, c, n);
+  ᬬᬾᬦ᭄ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      ᬯᬮᬶ;
     }
 }
 
 static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+do_test (size_t align, size_t pos, size_t len, puur_naa_nka seek_char)
 {
   size_t i;
-  char *result;
+  var_na *result;
 
   align &= 7;
-  if (align + len >= page_size)
-    return;
+  ᬬᬾᬦ᭄ (align + len >= page_size)
+    ᬯᬮᬶ;
 
   for (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      ᬬᬾᬦ᭄ (buf1[align + i] == seek_char)
         buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
 
-  if (pos < len)
+  ᬬᬾᬦ᭄ (pos < len)
     {
       buf1[align + pos] = seek_char;
       buf1[align + len] = -seek_char;
-      result = (char *) (buf1 + align + pos);
+      result = (var_na *) (buf1 + align + pos);
     }
-  else
+  ᬮᬶᬬ
     {
       result = NULL;
       buf1[align + len] = seek_char;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (char *) (buf1 + align), seek_char, len, result);
+    do_one_test (impl, (var_na *) (buf1 + align), seek_char, len, result);
 }
 
 static void
 do_random_tests (void)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  char *result;
-  unsigned char *p = buf1 + page_size - 512;
+  puur_naa_nka seek_char;
+  var_na *result;
+  unsigned var_na *p = buf1 + page_size - 512;
 
   for (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      ᬬᬾᬦ᭄ (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (pos >= len)
+      ᬬᬾᬦ᭄ (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      ᬬᬾᬦ᭄ (len + align >= 512)
         len = 512 - align - (random () & 7);
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      ᬬᬾᬦ᭄ (j > 512)
         j = 512;
 
       for (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ᬬᬾᬦ᭄ (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  ᬮᬶᬬ
 	    {
 	      p[i] = random () & 255;
-	      if (p[i] == seek_char)
+	      ᬬᬾᬦ᭄ (p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (pos < len)
-	result = (char *) (p + pos + align);
-      else
+      ᬬᬾᬦ᭄ (pos < len)
+	result = (var_na *) (p + pos + align);
+      ᬮᬶᬬ
 	result = NULL;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char, len) != result)
+	ᬬᬾᬦ᭄ (CALL (impl, (var_na *) (p + align), seek_char, len) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (char *) (p + align), seek_char, len),
+		   CALL (impl, (var_na *) (p + align), seek_char, len),
 		   result, p);
 	    ret = 1;
 	  }
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -185,7 +185,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ᬯᬮᬶ ret;
 }
 
 #include <support/test-driver.c>

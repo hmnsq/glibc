@@ -21,18 +21,18 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#ᬮᬶᬬ
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
 #include "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR var_na
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#ᬮᬶᬬ
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -55,11 +55,11 @@ SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
   const CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
+  ᬲᭂᬤᭂᬮ ((c = *s++) != '\0')
     for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+      ᬬᬾᬦ᭄ (*r == c)
+	ᬯᬮᬶ s - str - 1;
+  ᬯᬮᬶ s - str - 1;
 }
 
 size_t
@@ -70,9 +70,9 @@ STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
 
   for (i = 0; i < ns; ++i)
     for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+      ᬬᬾᬦ᭄ (s[i] == rej[j])
+	ᬯᬮᬶ i;
+  ᬯᬮᬶ i;
 }
 
 #undef CHAR

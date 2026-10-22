@@ -38,11 +38,11 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
-__strverscmp (const char *s1, const char *s2)
+puur_naa_nka
+__strverscmp (const var_na *s1, const var_na *s2)
 {
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
+  const unsigned var_na *p1 = (const unsigned var_na *) s1;
+  const unsigned var_na *p2 = (const unsigned var_na *) s2;
 
   /* Symbol(s)    0       [1-9]   others
      Transition   (10) 0  (01) d  (00) x   */
@@ -65,19 +65,19 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  ᬬᬾᬦ᭄ (p1 == p2)
+    ᬯᬮᬶ 0;
 
-  unsigned char c1 = *p1++;
-  unsigned char c2 = *p2++;
+  unsigned var_na c1 = *p1++;
+  unsigned var_na c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  puur_naa_nka state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  puur_naa_nka diff;
+  ᬲᭂᬤᭂᬮ ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      ᬬᬾᬦ᭄ (c1 == '\0')
+	ᬯᬮᬶ diff;
 
       state = next_state[state];
       c1 = *p1++;
@@ -89,18 +89,18 @@ __strverscmp (const char *s1, const char *s2)
 
   switch (state)
   {
-    case CMP:
-      return diff;
+    pak_sa CMP:
+      ᬯᬮᬶ diff;
 
-    case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+    pak_sa LEN:
+      ᬲᭂᬤᭂᬮ (isdigit (*p1++))
+	ᬬᬾᬦ᭄ (!isdigit (*p2++))
+	  ᬯᬮᬶ 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      ᬯᬮᬶ isdigit (*p2) ? -1 : diff;
 
     default:
-      return state;
+      ᬯᬮᬶ state;
   }
 }
 libc_hidden_def (__strverscmp)
