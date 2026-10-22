@@ -25,9 +25,9 @@
 
 /* Find the last occurrence of C in S.  */
 char *
-STRRCHR (const char *s, int c)
+STRRCHR (const char *s, ціле c)
 {
-  return __memrchr (s, c, strlen (s) + 1);
+  повернути __memrchr (s, c, strlen (s) + 1);
 }
 
 #ifdef weak_alias

@@ -29,13 +29,13 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
   size_t new_len = *to_len + buf_len;
   char *new_to = realloc (*to, new_len + 1);
 
-  if (new_to)
+  якщо (new_to)
     {
       *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
       *to = new_to;
       *to_len = new_len;
     }
-  else
+  інакше
     {
       free (*to);
       *to = NULL;
@@ -51,37 +51,37 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 {
   error_t err = 0;
 
-  if (str && *str)
+  якщо (str && *str)
     {
       char *arg = NULL;
       char *src = *argz;
       size_t src_len = *argz_len;
       char *dst = NULL;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      ціле delayed_copy = 1;	/* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      поки (!err && (arg = argz_next (src, src_len, arg)))
 	{
 	  char *match = strstr (arg, str);
-	  if (match)
+	  якщо (match)
 	    {
 	      char *from = match + str_len;
 	      size_t to_len = match - arg;
 	      char *to = __strndup (arg, to_len);
 
-	      while (to && from)
+	      поки (to && from)
 		{
 		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  якщо (to)
 		    {
 		      match = strstr (from, str);
-		      if (match)
+		      якщо (match)
 			{
 			  str_append (&to, &to_len, from, match - from);
 			  from = match + str_len;
 			}
-		      else
+		      інакше
 			{
 			  str_append (&to, &to_len, from, strlen (from));
 			  from = NULL;
@@ -89,34 +89,34 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 		    }
 		}
 
-	      if (to)
+	      якщо (to)
 		{
-		  if (delayed_copy)
+		  якщо (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      якщо (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
+		  якщо (! err)
 		    err = __argz_add (&dst, &dst_len, to);
 		  free (to);
 		}
-	      else
+	      інакше
 		err = ENOMEM;
 
-	      if (replace_count)
+	      якщо (replace_count)
 		(*replace_count)++;
 	    }
-	  else if (! delayed_copy)
+	  інакше якщо (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      якщо (! err)
 	{
-	  if (! delayed_copy)
+	  якщо (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
 	      free (src);
@@ -124,10 +124,10 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
+      інакше якщо (dst_len > 0)
 	free (dst);
     }
 
-  return err;
+  повернути err;
 }
 weak_alias (__argz_replace, argz_replace)

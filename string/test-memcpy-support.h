@@ -36,9 +36,9 @@ char *
 simple_memcpy (char *dst, const char *src, size_t n)
 {
   char *ret = dst;
-  while (n--)
+  поки (n--)
     *dst++ = *src++;
-  return ret;
+  повернути ret;
 }
 
 #endif
@@ -51,25 +51,25 @@ do_one_test (impl_t *impl, char *dst, const char *src, size_t len)
   size_t i;
 
   /* Must clear the destination buffer set by the previous run.  */
-  for (i = 0; i < len; i++)
+  для (i = 0; i < len; i++)
     dst[i] = 0;
 
-  if (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
+  якщо (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
              CALL (impl, dst, src, len), MEMCPY_RESULT (dst, len));
       ret = 1;
-      return;
+      повернути;
     }
 
-  if (memcmp (dst, src, len) != 0)
+  якщо (memcmp (dst, src, len) != 0)
     {
       error (0, 0,
              "Wrong result in function %s dst %p \"%.*s\" src %p \"%.*s\" len "
              "%zu",
-             impl->name, dst, (int)len, dst, src, (int)len, src, len);
+             impl->name, dst, (ціле)len, dst, src, (ціле)len, src, len);
       ret = 1;
-      return;
+      повернути;
     }
 }
 
@@ -80,18 +80,18 @@ do_test (size_t align1, size_t align2, size_t len)
   char *s1, *s2;
 
   align1 &= 4095;
-  if (align1 + len >= page_size)
-    return;
+  якщо (align1 + len >= page_size)
+    повернути;
 
   align2 &= 4095;
-  if (align2 + len >= page_size)
-    return;
+  якщо (align2 + len >= page_size)
+    повернути;
 
   s1 = (char *)(buf1 + align1);
   s2 = (char *)(buf2 + align2);
-  for (size_t repeats = 0; repeats < 2; ++repeats)
+  для (size_t repeats = 0; repeats < 2; ++repeats)
     {
-      for (i = 0, j = 1; i < len; i++, j += 23)
+      для (i = 0, j = 1; i < len; i++, j += 23)
         s1[i] = j;
 
       FOR_EACH_IMPL (impl, 0)
@@ -109,11 +109,11 @@ do_test1 (size_t align1, size_t align2, size_t size)
   size_t mmap_size, region_size;
 
   align1 &= (page_size - 1);
-  if (align1 == 0)
+  якщо (align1 == 0)
     align1 = page_size;
 
   align2 &= (page_size - 1);
-  if (align2 == 0)
+  якщо (align2 == 0)
     align2 = page_size;
 
   region_size = (size + page_size - 1) & (~(page_size - 1));
@@ -121,30 +121,30 @@ do_test1 (size_t align1, size_t align2, size_t size)
   mmap_size = region_size * 2 + 3 * page_size;
   large_buf = mmap (NULL, mmap_size, PROT_READ | PROT_WRITE,
                     MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (large_buf == MAP_FAILED)
+  якщо (large_buf == MAP_FAILED)
     {
       puts ("Failed to allocate large_buf, skipping do_test");
-      return;
+      повернути;
     }
-  if (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
+  якщо (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
 
   size_t array_size = size / sizeof (uint32_t);
   unaligned_uint32_t *dest = large_buf + align1;
   unaligned_uint32_t *src = large_buf + region_size + 2 * page_size + align2;
   size_t i;
-  for (size_t repeats = 0; repeats < 2; repeats++)
+  для (size_t repeats = 0; repeats < 2; repeats++)
     {
-      for (i = 0; i < array_size; i++)
+      для (i = 0; i < array_size; i++)
         src[i] = (uint32_t)i;
       FOR_EACH_IMPL (impl, 0)
 	{
 	  memset (dest, -1, size);
 	  CALL (impl, (char *)dest, (char *)src, size);
-	  if (memcmp (src, dest, size))
+	  якщо (memcmp (src, dest, size))
 	    {
-	      for (i = 0; i < array_size; i++)
-		if (dest[i] != src[i])
+	      для (i = 0; i < array_size; i++)
+		якщо (dest[i] != src[i])
 		  {
 		    error (0, 0,
 			   "Wrong result in function %s dst \"%p\" src \"%p\" "
@@ -152,7 +152,7 @@ do_test1 (size_t align1, size_t align2, size_t size)
 			   impl->name, dest, src, i);
 		    ret = 1;
 		    munmap ((void *)large_buf, mmap_size);
-		    return;
+		    повернути;
 		  }
 	    }
 	}

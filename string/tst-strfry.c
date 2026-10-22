@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+ціле
 do_test (void)
 {
   char str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  повернути 0;
 }
 
 #include <support/test-driver.c>

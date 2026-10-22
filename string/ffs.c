@@ -22,12 +22,12 @@
 #include <math-use-builtins.h>
 
 /* Find the first bit set in I.  */
-int
-__ffs (int i)
+ціле
+__ffs (ціле i)
 {
-#if USE_FFS_BUILTIN
-  return __builtin_ffs (i);
-#else
+#якщо USE_FFS_BUILTIN
+  повернути __builtin_ffs (i);
+#інакше
   static const unsigned char table[] =
     {
       0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
@@ -39,19 +39,19 @@ __ffs (int i)
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
     };
-  unsigned int a;
-  unsigned int x = i & -i;
+  unsigned ціле a;
+  unsigned ціле x = i & -i;
 
   a = x <= 0xffff ? (x <= 0xff ? 0 : 8) : (x <= 0xffffff ?  16 : 24);
 
-  return table[x >> a] + a;
+  повернути table[x >> a] + a;
 #endif
 }
 static_weak_alias (__ffs, ffs)
 libc_hidden_def (__ffs)
 libc_hidden_builtin_def (ffs)
 
-#if ULONG_MAX == UINT_MAX
+#якщо ULONG_MAX == UINT_MAX
 #undef ffsl
 weak_alias (__ffs, ffsl)
 #endif

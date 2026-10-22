@@ -25,34 +25,34 @@
 
 /* Return a string describing the meaning of the signal number SIGNUM.  */
 char *
-strsignal (int signum)
+strsignal (ціле signum)
 {
   const char *desc = __sigdescr_np (signum);
-  if (desc != NULL)
-    return _(desc);
+  якщо (desc != NULL)
+    повернути _(desc);
 
-  if (__libc_initial)
+  якщо (__libc_initial)
     {
       struct tls_internal_t *tls_internal = __glibc_tls_internal ();
       free (tls_internal->strsignal_buf);
 
-      int r;
+      ціле r;
 #ifdef SIGRTMIN
-      if (signum >= SIGRTMIN && signum <= SIGRTMAX)
+      якщо (signum >= SIGRTMIN && signum <= SIGRTMAX)
 	r = __asprintf (&tls_internal->strsignal_buf, _("Real-time signal %d"),
 			signum - SIGRTMIN);
-      else
+      інакше
 #endif
 	r = __asprintf (&tls_internal->strsignal_buf, _("Unknown signal %d"),
 			signum);
 
-      if (r >= 0)
-	return tls_internal->strsignal_buf;
-      else
+      якщо (r >= 0)
+	повернути tls_internal->strsignal_buf;
+      інакше
 	tls_internal->strsignal_buf = NULL;
     }
   /* Fall through on asprintf error, and for !__libc_initial:
      secondary namespaces use a different malloc and cannot
      participate in the buffer management.  */
-  return _("Unknown signal");
+  повернути _("Unknown signal");
 }

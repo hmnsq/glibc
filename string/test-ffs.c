@@ -20,36 +20,36 @@
 #include <string.h>
 #include <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+void try (const char *name, long long ціле param, ціле value, ціле expected)
 {
-  if (value != expected)
+  якщо (value != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
 	      name, param, expected, value);
       support_record_failure ();
     }
-  else
+  інакше
     printf ("%s(%#llx) as expected %d\n", name, param, value);
 }
 
-int
+ціле
 do_test (void)
 {
-  int i;
+  ціле i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  для (i=0 ; i < 8 * sizeof (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  для (i=0 ; i < 8 * sizeof (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, ціле);
+  TEST (ffsl, long ціле);
+  TEST (ffsll, long long ціле);
 
-  return 0;
+  повернути 0;
 }
 
 #include <support/test-driver.c>

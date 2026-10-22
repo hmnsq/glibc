@@ -38,7 +38,7 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
+ціле
 __strverscmp (const char *s1, const char *s2)
 {
   const unsigned char *p1 = (const unsigned char *) s1;
@@ -65,19 +65,19 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  якщо (p1 == p2)
+    повернути 0;
 
   unsigned char c1 = *p1++;
   unsigned char c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  ціле state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  ціле diff;
+  поки ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      якщо (c1 == '\0')
+	повернути diff;
 
       state = next_state[state];
       c1 = *p1++;
@@ -90,17 +90,17 @@ __strverscmp (const char *s1, const char *s2)
   switch (state)
   {
     case CMP:
-      return diff;
+      повернути diff;
 
     case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+      поки (isdigit (*p1++))
+	якщо (!isdigit (*p2++))
+	  повернути 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      повернути isdigit (*p2) ? -1 : diff;
 
     default:
-      return state;
+      повернути state;
   }
 }
 libc_hidden_def (__strverscmp)

@@ -42,28 +42,28 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+static ціле
+string_length (ціле a_count, ціле start_offset)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  якщо (start_offset == buffer_length || start_offset >= a_count)
+    повернути 0;
+  інакше
+    повернути a_count - start_offset;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+static ціле
+maximum_length (ціле start_offset, ціле zero_count)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  якщо (start_offset == buffer_length)
+    повернути 0;
+  інакше якщо (zero_count > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    повернути buffer_length + 32;
+  інакше
+    повернути buffer_length - start_offset;
 }
 
 typedef __typeof (TEST_IDENTIFIER) *proto_t;
@@ -73,7 +73,7 @@ typedef __typeof (TEST_IDENTIFIER) *proto_t;
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
+static ціле
 test_main (void)
 {
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
@@ -89,52 +89,52 @@ test_main (void)
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      для (size_t i = 0; i < buffer_length; ++i)
         left_buffer[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
+      для (ціле left_zero_count = 0; left_zero_count <= buffer_length;
            ++left_zero_count)
         {
-          if (left_zero_count > 0)
+          якщо (left_zero_count > 0)
             left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
+          ціле left_a_count = buffer_length - left_zero_count;
+          для (size_t i = 0; i < buffer_length; ++i)
             right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
+          для (ціле right_zero_count = 0; right_zero_count <= buffer_length;
                ++right_zero_count)
             {
-              if (right_zero_count > 0)
+              якщо (right_zero_count > 0)
                 right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
+              ціле right_a_count = buffer_length - right_zero_count;
+              для (ціле left_start_offset = 0;
                    left_start_offset <= buffer_length;
                    ++left_start_offset)
                 {
                   CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
+                  ціле left_maxlen
                     = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
+                  ціле left_length
                     = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
+                  для (ціле right_start_offset = 0;
                        right_start_offset <= buffer_length;
                        ++right_start_offset)
                     {
                       CHAR *right_start_pointer
                         = right_buffer + right_start_offset;
-                      int right_maxlen
+                      ціле right_maxlen
                         = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
+                      ціле right_length
                         = string_length (right_a_count, right_start_offset);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      ціле maxlen = MIN (left_maxlen, right_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
+                      для (ціле length_argument = 0; length_argument <= maxlen;
                            ++length_argument)
                         {
-                          if (test_verbose)
+                          якщо (test_verbose)
                             {
                               printf ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
@@ -151,21 +151,21 @@ test_main (void)
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
+                          ціле left_effective
                             = MIN (left_length, length_argument);
-                          int right_effective
+                          ціле right_effective
                             = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          якщо (left_effective == right_effective)
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
                                                 length_argument), 0);
-                          else if (left_effective < right_effective)
+                          інакше якщо (left_effective < right_effective)
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
                                                 length_argument) < 0, 1);
-                          else
+                          інакше
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  повернути 0;
 }
 
 #include <support/test-driver.c>

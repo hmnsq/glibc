@@ -8,7 +8,7 @@
 char const string[] = "";
 
 
-static int
+static ціле
 test (const char *locale)
 {
   size_t bufsize;
@@ -16,23 +16,23 @@ test (const char *locale)
   size_t l;
   char *buf;
   locale_t loc;
-  int result = 0;
+  ціле result = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  якщо (setlocale (LC_COLLATE, locale) == NULL)
     {
       printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      повернути 1;
     }
   bufsize = strxfrm (NULL, string, 0) + 1;
   buf = malloc (bufsize);
-  if (buf == NULL)
+  якщо (buf == NULL)
     {
       printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      повернути 1;
     }
   r = strxfrm (buf, string, bufsize);
   l = strlen (buf);
-  if (r != l)
+  якщо (r != l)
     {
        printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -43,7 +43,7 @@ test (const char *locale)
 
   r = strxfrm_l (buf, string, bufsize, loc);
   l = strlen (buf);
-  if (r != l)
+  якщо (r != l)
     {
        printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -54,20 +54,20 @@ test (const char *locale)
 
   free (buf);
 
-  return result;
+  повернути result;
 }
 
 
-int
+ціле
 do_test (void)
 {
-  int result = 0;
+  ціле result = 0;
 
   result |= test ("C");
   result |= test ("en_US.ISO-8859-1");
   result |= test ("de_DE.UTF-8");
 
-  return result;
+  повернути result;
 }
 
 #include <support/test-driver.c>

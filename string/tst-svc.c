@@ -7,30 +7,30 @@
 #define  MAX_STRINGS      256
 #define  MAX_LINE_SIZE    32
 
-static int
+static ціле
 compare (const void *p1, const void *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  повернути strverscmp (*((char **) p1), *((char **) p2));
 }
 
-int
+ціле
 do_test (void)
 {
   char line[MAX_LINE_SIZE + 1];
   char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  ціле  count = 0;
+  ціле  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  поки (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
     {
       n = strlen (line) - 1;
 
-      if (line[n] == '\n')
+      якщо (line[n] == '\n')
         line[n] = '\0';
 
       str[count] = strdup (line);
 
-      if (str[count] == NULL)
+      якщо (str[count] == NULL)
         exit (EXIT_FAILURE);
 
       ++count;
@@ -38,10 +38,10 @@ do_test (void)
 
   qsort (str, count, sizeof (char *), compare);
 
-  for (i = 0; i < count; ++i)
+  для (i = 0; i < count; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  повернути EXIT_SUCCESS;
 }
 
 #include <support/test-driver.c>

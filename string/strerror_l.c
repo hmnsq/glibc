@@ -28,32 +28,32 @@ translate (const char *str, locale_t loc)
   locale_t oldloc = __uselocale (loc);
   const char *res = _(str);
   __uselocale (oldloc);
-  return res;
+  повернути res;
 }
 
 static char *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  повернути (char *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
 char *
-__strerror_l (int errnum, locale_t loc)
+__strerror_l (ціле errnum, locale_t loc)
 {
-  int saved_errno = errno;
+  ціле saved_errno = errno;
   char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  якщо (__glibc_unlikely (err == NULL))
     {
-      if (__libc_initial)
+      якщо (__libc_initial)
 	{
 	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
 	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  якщо (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  інакше
 	    {
 	      /* The memory was freed above.  */
 	      tls_internal->strerror_l_buf = NULL;
@@ -61,16 +61,16 @@ __strerror_l (int errnum, locale_t loc)
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      інакше
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
+  інакше
     err = (char *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  повернути err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

@@ -25,7 +25,7 @@
 
 static const struct test_t
 {
-  int errno;
+  ціле errno;
   const char *abbrev;
   const char *descr;
 } tests[] =
@@ -36,16 +36,16 @@ static const struct test_t
 #undef init_sig
 };
 
-static int
+static ціле
 do_test (void)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  для (size_t i = 0; i < array_length (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  повернути 0;
 }
 
 #include <support/test-driver.c>

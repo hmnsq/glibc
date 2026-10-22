@@ -20,7 +20,7 @@
 # include "config.h"
 #endif
 
-#if defined HAVE_STRING_H || defined _LIBC
+#якщо defined HAVE_STRING_H || defined _LIBC
 # include <string.h>
 #endif
 
@@ -35,11 +35,11 @@
 # include <memcopy.h>
 # include <endian.h>
 
-# if __BYTE_ORDER == __BIG_ENDIAN
+# якщо __BYTE_ORDER == __BIG_ENDIAN
 #  define WORDS_BIGENDIAN
 # endif
 
-#else	/* Not in the GNU C library.  */
+#інакше	/* Not in the GNU C library.  */
 
 # include <sys/types.h>
 
@@ -53,7 +53,7 @@ typedef unsigned char byte;
 
 # ifndef WORDS_BIGENDIAN
 #  define MERGE(w0, sh_1, w1, sh_2) (((w0) >> (sh_1)) | ((w1) << (sh_2)))
-# else
+# інакше
 #  define MERGE(w0, sh_1, w1, sh_2) (((w0) << (sh_1)) | ((w1) >> (sh_2)))
 # endif
 
@@ -61,7 +61,7 @@ typedef unsigned char byte;
 
 #ifdef WORDS_BIGENDIAN
 # define CMP_LT_OR_GT(a, b) ((a) > (b) ? 1 : -1)
-#else
+#інакше
 # define CMP_LT_OR_GT(a, b) memcmp_bytes ((a), (b))
 #endif
 
@@ -83,13 +83,13 @@ typedef unsigned char byte;
    A and B are known to be different.
    This is needed only on little-endian machines.  */
 
-static int memcmp_bytes (op_t, op_t) __THROW;
+static ціле memcmp_bytes (op_t, op_t) __THROW;
 
-static int
+static ціле
 memcmp_bytes (op_t a, op_t b)
 {
-  long int srcp1 = (long int) &a;
-  long int srcp2 = (long int) &b;
+  long ціле srcp1 = (long ціле) &a;
+  long ціле srcp2 = (long ціле) &b;
   op_t a0, b0;
 
   do
@@ -99,18 +99,18 @@ memcmp_bytes (op_t a, op_t b)
       srcp1 += 1;
       srcp2 += 1;
     }
-  while (a0 == b0);
-  return a0 - b0;
+  поки (a0 == b0);
+  повернути a0 - b0;
 }
 #endif
 
-static int memcmp_common_alignment (long, long, size_t) __THROW;
+static ціле memcmp_common_alignment (long, long, size_t) __THROW;
 
 /* memcmp_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN `op_t'
    objects (not LEN bytes!).  Both SRCP1 and SRCP2 should be aligned for
    memory operations on `op_t's.  */
-static int
-memcmp_common_alignment (long int srcp1, long int srcp2, size_t len)
+static ціле
+memcmp_common_alignment (long ціле srcp1, long ціле srcp2, size_t len)
 {
   op_t a0, a1;
   op_t b0, b1;
@@ -133,8 +133,8 @@ memcmp_common_alignment (long int srcp1, long int srcp2, size_t len)
       len += 1;
       goto do2;
     case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return 0;
+      якщо (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	повернути 0;
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
       goto do3;
@@ -144,7 +144,7 @@ memcmp_common_alignment (long int srcp1, long int srcp2, size_t len)
       srcp1 += OPSIZ;
       srcp2 += OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      якщо (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       /* Fall through.  */
     }
@@ -153,53 +153,53 @@ memcmp_common_alignment (long int srcp1, long int srcp2, size_t len)
     {
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
-      if (a1 != b1)
-	return CMP_LT_OR_GT (a1, b1);
+      якщо (a1 != b1)
+	повернути CMP_LT_OR_GT (a1, b1);
 
     do3:
       a1 = ((op_t *) srcp1)[1];
       b1 = ((op_t *) srcp2)[1];
-      if (a0 != b0)
-	return CMP_LT_OR_GT (a0, b0);
+      якщо (a0 != b0)
+	повернути CMP_LT_OR_GT (a0, b0);
 
     do2:
       a0 = ((op_t *) srcp1)[2];
       b0 = ((op_t *) srcp2)[2];
-      if (a1 != b1)
-	return CMP_LT_OR_GT (a1, b1);
+      якщо (a1 != b1)
+	повернути CMP_LT_OR_GT (a1, b1);
 
     do1:
       a1 = ((op_t *) srcp1)[3];
       b1 = ((op_t *) srcp2)[3];
-      if (a0 != b0)
-	return CMP_LT_OR_GT (a0, b0);
+      якщо (a0 != b0)
+	повернути CMP_LT_OR_GT (a0, b0);
 
       srcp1 += 4 * OPSIZ;
       srcp2 += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  поки (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
-  if (a1 != b1)
-    return CMP_LT_OR_GT (a1, b1);
-  return 0;
+  якщо (a1 != b1)
+    повернути CMP_LT_OR_GT (a1, b1);
+  повернути 0;
 }
 
-static int memcmp_not_common_alignment (long, long, size_t) __THROW;
+static ціле memcmp_not_common_alignment (long, long, size_t) __THROW;
 
 /* memcmp_not_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN
    `op_t' objects (not LEN bytes!).  SRCP2 should be aligned for memory
    operations on `op_t', but SRCP1 *should be unaligned*.  */
-static int
-memcmp_not_common_alignment (long int srcp1, long int srcp2, size_t len)
+static ціле
+memcmp_not_common_alignment (long ціле srcp1, long ціле srcp2, size_t len)
 {
   op_t a0, a1, a2, a3;
   op_t b0, b1, b2, b3;
   op_t x;
-  int shl, shr;
+  ціле shl, shr;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp1 to make it aligned for comparison.  */
@@ -230,8 +230,8 @@ memcmp_not_common_alignment (long int srcp1, long int srcp2, size_t len)
       len += 1;
       goto do2;
     case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return 0;
+      якщо (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	повернути 0;
       a3 = ((op_t *) srcp1)[0];
       a0 = ((op_t *) srcp1)[1];
       b0 = ((op_t *) srcp2)[0];
@@ -244,7 +244,7 @@ memcmp_not_common_alignment (long int srcp1, long int srcp2, size_t len)
       srcp1 += 2 * OPSIZ;
       srcp2 += 1 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      якщо (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       /* Fall through.  */
     }
@@ -254,67 +254,67 @@ memcmp_not_common_alignment (long int srcp1, long int srcp2, size_t len)
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
       x = MERGE(a2, shl, a3, shr);
-      if (x != b3)
-	return CMP_LT_OR_GT (x, b3);
+      якщо (x != b3)
+	повернути CMP_LT_OR_GT (x, b3);
 
     do3:
       a1 = ((op_t *) srcp1)[1];
       b1 = ((op_t *) srcp2)[1];
       x = MERGE(a3, shl, a0, shr);
-      if (x != b0)
-	return CMP_LT_OR_GT (x, b0);
+      якщо (x != b0)
+	повернути CMP_LT_OR_GT (x, b0);
 
     do2:
       a2 = ((op_t *) srcp1)[2];
       b2 = ((op_t *) srcp2)[2];
       x = MERGE(a0, shl, a1, shr);
-      if (x != b1)
-	return CMP_LT_OR_GT (x, b1);
+      якщо (x != b1)
+	повернути CMP_LT_OR_GT (x, b1);
 
     do1:
       a3 = ((op_t *) srcp1)[3];
       b3 = ((op_t *) srcp2)[3];
       x = MERGE(a1, shl, a2, shr);
-      if (x != b2)
-	return CMP_LT_OR_GT (x, b2);
+      якщо (x != b2)
+	повернути CMP_LT_OR_GT (x, b2);
 
       srcp1 += 4 * OPSIZ;
       srcp2 += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  поки (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
   x = MERGE(a2, shl, a3, shr);
-  if (x != b3)
-    return CMP_LT_OR_GT (x, b3);
-  return 0;
+  якщо (x != b3)
+    повернути CMP_LT_OR_GT (x, b3);
+  повернути 0;
 }
 
-int
+ціле
 MEMCMP (const void *s1, const void *s2, size_t len)
 {
   op_t a0;
   op_t b0;
-  long int srcp1 = (long int) s1;
-  long int srcp2 = (long int) s2;
+  long ціле srcp1 = (long ціле) s1;
+  long ціле srcp2 = (long ціле) s2;
   op_t res;
 
-  if (len >= OP_T_THRES)
+  якщо (len >= OP_T_THRES)
     {
       /* There are at least some bytes to compare.  No need to test
 	 for LEN == 0 in this alignment loop.  */
-      while (srcp2 % OPSIZ != 0)
+      поки (srcp2 % OPSIZ != 0)
 	{
 	  a0 = ((byte *) srcp1)[0];
 	  b0 = ((byte *) srcp2)[0];
 	  srcp1 += 1;
 	  srcp2 += 1;
 	  res = a0 - b0;
-	  if (res != 0)
-	    return res;
+	  якщо (res != 0)
+	    повернути res;
 	  len -= 1;
 	}
 
@@ -322,12 +322,12 @@ MEMCMP (const void *s1, const void *s2, size_t len)
 	 SRCP1 alignment determines if we can do a simple,
 	 aligned compare or need to shuffle bits.  */
 
-      if (srcp1 % OPSIZ == 0)
+      якщо (srcp1 % OPSIZ == 0)
 	res = memcmp_common_alignment (srcp1, srcp2, len / OPSIZ);
-      else
+      інакше
 	res = memcmp_not_common_alignment (srcp1, srcp2, len / OPSIZ);
-      if (res != 0)
-	return res;
+      якщо (res != 0)
+	повернути res;
 
       /* Number of bytes remaining in the interval [0..OPSIZ-1].  */
       srcp1 += len & -OPSIZ;
@@ -336,19 +336,19 @@ MEMCMP (const void *s1, const void *s2, size_t len)
     }
 
   /* There are just a few bytes to compare.  Use byte memory operations.  */
-  while (len != 0)
+  поки (len != 0)
     {
       a0 = ((byte *) srcp1)[0];
       b0 = ((byte *) srcp2)[0];
       srcp1 += 1;
       srcp2 += 1;
       res = a0 - b0;
-      if (res != 0)
-	return res;
+      якщо (res != 0)
+	повернути res;
       len -= 1;
     }
 
-  return 0;
+  повернути 0;
 }
 libc_hidden_builtin_def(memcmp)
 #ifdef weak_alias

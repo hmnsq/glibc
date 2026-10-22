@@ -23,7 +23,7 @@
 void
 __argz_extract (const char *argz, size_t len, char **argv)
 {
-  while (len > 0)
+  поки (len > 0)
     {
       size_t part_len = strlen (argz);
       *argv++ = (char *) argz;

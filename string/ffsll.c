@@ -23,23 +23,23 @@
 #include <libc-diag.h>
 
 /* Find the first bit set in I.  */
-int
-__ffsll (long long int i)
+ціле
+__ffsll (long long ціле i)
 {
-#if USE_FFSLL_BUILTIN
-  return __builtin_ffsll (i);
-#else
-  unsigned long long int x = i & -i;
+#якщо USE_FFSLL_BUILTIN
+  повернути __builtin_ffsll (i);
+#інакше
+  unsigned long long ціле x = i & -i;
 
-  if (x <= 0xffffffff)
-    return ffs (i);
-  else
-    return 32 + ffs (i >> 32);
+  якщо (x <= 0xffffffff)
+    повернути ffs (i);
+  інакше
+    повернути 32 + ffs (i >> 32);
 #endif
 }
 static_weak_alias (__ffsll, ffsll)
 
-#if ULONG_MAX != UINT_MAX
+#якщо ULONG_MAX != UINT_MAX
 #undef ffsl
 static_weak_alias (__ffsll, ffsl)
 #endif
