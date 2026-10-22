@@ -1,4 +1,4 @@
-#define TEST_IDENTIFIER strncmp
+#define TEST_IDENTIFIER म_भेदन
 #define TEST_NAME "strncmp"
-typedef char CHAR;
-#include "test-Xncmp-nonarray.c"
+प्रकारनिर्देश वर्ण CHAR;
+#अन्तर्भाव "test-Xncmp-nonarray.c"

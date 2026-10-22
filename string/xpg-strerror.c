@@ -15,32 +15,32 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/param.h>
+#अन्तर्भाव <assert.h>
+#अन्तर्भाव <errno.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <sys/param.h>
 
 
 /* Fill buf with a string describing the errno code in ERRNUM.  */
-int
-__xpg_strerror_r (int errnum, char *buf, size_t buflen)
+पूर्णाङ्क
+__xpg_strerror_r (पूर्णाङ्क errnum, वर्ण *buf, माप_प्रकार buflen)
 {
-  const char *estr = __strerror_r (errnum, buf, buflen);
+  अचर वर्ण *estr = __strerror_r (errnum, buf, buflen);
 
   /* We know that __strerror_r returns buf (with a dynamically computed
      string) if errnum is invalid, otherwise it returns a string whose
      storage has indefinite extent.  */
-  if (estr == buf)
-    return EINVAL;
-  else
+  यदि (estr == buf)
+    फर्काऊ EINVAL;
+  अन्यथा
     {
-      size_t estrlen = strlen (estr);
+      माप_प्रकार estrlen = म_माप (estr);
 
       /* Terminate the string in any case.  */
-      if (buflen > 0)
-	*((char *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
+      यदि (buflen > 0)
+	*((वर्ण *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
 
-      return buflen <= estrlen ? ERANGE : 0;
+      फर्काऊ buflen <= estrlen ? दुस्फल : 0;
     }
 }

@@ -15,12 +15,12 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#अन्तर्भाव <libc-pointer-arith.h>
+#अन्तर्भाव <string-fzb.h>
+#अन्तर्भाव <string-fzc.h>
+#अन्तर्भाव <string-fzi.h>
+#अन्तर्भाव <string-shift.h>
+#अन्तर्भाव <string.h>
 
 #undef __strchrnul
 #undef strchrnul
@@ -30,25 +30,25 @@
 #endif
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
-char *
-__strchrnul (const char *str, int c_in)
+वर्ण *
+__strchrnul (अचर वर्ण *str, पूर्णाङ्क c_in)
 {
   /* Align pointer to sizeof op_t.  */
   uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  अचर op_t *word_ptr = (अचर op_t *) PTR_ALIGN_DOWN (str, परिमाण (op_t));
 
   op_t repeated_c = repeat_bytes (c_in);
 
   op_t word = *word_ptr;
   find_t mask = shift_find (find_zero_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
-    return (char *) str + index_first (mask);
+  यदि (mask != 0)
+    फर्काऊ (वर्ण *) str + index_first (mask);
 
-  do
+  गर
     word = *++word_ptr;
-  while (! has_zero_eq (word, repeated_c));
+  जबसम्म (! has_zero_eq (word, repeated_c));
 
-  return (char *) word_ptr + index_first_zero_eq (word, repeated_c);
+  फर्काऊ (वर्ण *) word_ptr + index_first_zero_eq (word, repeated_c);
 }
 #ifndef STRCHRNUL
 libc_hidden_def (__strchrnul)

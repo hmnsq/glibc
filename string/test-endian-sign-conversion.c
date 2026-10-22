@@ -16,15 +16,15 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stdint.h>
+#अन्तर्भाव <endian.h>
+#अन्तर्भाव <stdint.h>
 
 uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-static int
-do_test (void)
+स्थिर पूर्णाङ्क
+do_test (शून्य)
 {
   /* This is a compilation test.  */
   u16 = (htobe16 (u16));
@@ -39,10 +39,10 @@ do_test (void)
   u64 = (htole64 (u64));
   u64 = (be64toh (u64));
   u64 = (le64toh (u64));
-  (void) u16;
-  (void) u32;
-  (void) u64;
-  return 0;
+  (शून्य) u16;
+  (शून्य) u32;
+  (शून्य) u64;
+  फर्काऊ 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

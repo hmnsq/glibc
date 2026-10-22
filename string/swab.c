@@ -15,18 +15,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <unistd.h>
+#अन्तर्भाव <unistd.h>
 
-void
-swab (const void *bfrom, void *bto, ssize_t n)
+शून्य
+swab (अचर शून्य *bfrom, शून्य *bto, ssize_t n)
 {
-  const char *from = (const char *) bfrom;
-  char *to = (char *) bto;
+  अचर वर्ण *from = (अचर वर्ण *) bfrom;
+  वर्ण *to = (वर्ण *) bto;
 
   n &= ~((ssize_t) 1);
-  while (n > 1)
+  जबसम्म (n > 1)
     {
-      const char b0 = from[--n], b1 = from[--n];
+      अचर वर्ण b0 = from[--n], b1 = from[--n];
       to[n] = b0;
       to[n + 1] = b1;
     }

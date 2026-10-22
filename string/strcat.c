@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#undef strcat
+#undef म_जोड़ो
 
 #ifndef STRCAT
-# define STRCAT strcat
+# define STRCAT म_जोड़ो
 #endif
 
 /* Append SRC on the end of DEST.  */
-char *
-STRCAT (char *dest, const char *src)
+वर्ण *
+STRCAT (वर्ण *dest, अचर वर्ण *src)
 {
-  strcpy (dest + strlen (dest), src);
-  return dest;
+  म_नकल (dest + म_माप (dest), src);
+  फर्काऊ dest;
 }
-libc_hidden_builtin_def (strcat)
+libc_hidden_builtin_def (म_जोड़ो)

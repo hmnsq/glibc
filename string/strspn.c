@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdint.h>
+#अन्तर्भाव <libc-pointer-arith.h>
 
-#undef strspn
+#undef म_अखोज
 #ifndef STRSPN
-# define STRSPN strspn
+# define STRSPN म_अखोज
 #endif
 
 /* Return the length of the maximum initial segment
    of S which contains only characters in ACCEPT.  */
-size_t
-STRSPN (const char *str, const char *accept)
+माप_प्रकार
+STRSPN (अचर वर्ण *str, अचर वर्ण *accept)
 {
-  if (accept[0] == '\0')
-    return 0;
-  if (__glibc_unlikely (accept[1] == '\0'))
+  यदि (accept[0] == '\0')
+    फर्काऊ 0;
+  यदि (__glibc_unlikely (accept[1] == '\0'))
     {
-      const char *a = str;
-      for (; *str == *accept; str++);
-      return str - a;
+      अचर वर्ण *a = str;
+      लागि (; *str == *accept; str++);
+      फर्काऊ str - a;
     }
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
-  memset (p + 64, 0, 64);
-  memset (p + 128, 0, 64);
-  memset (p + 192, 0, 64);
+  अचिन्हित वर्ण table[256];
+  अचिन्हित वर्ण *p = स_रखो (table, 0, 64);
+  स_रखो (p + 64, 0, 64);
+  स_रखो (p + 128, 0, 64);
+  स_रखो (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) accept;
+  अचिन्हित वर्ण *s = (अचिन्हित वर्ण*) accept;
   /* Different from strcspn it does not add the NULL on the table
      so can avoid check if str[i] is NULL, since table['\0'] will
      be 0 and thus stopping the loop check.  */
-  do
+  गर
     p[*s++] = 1;
-  while (*s);
+  जबसम्म (*s);
 
-  s = (unsigned char*) str;
-  if (!p[s[0]]) return 0;
-  if (!p[s[1]]) return 1;
-  if (!p[s[2]]) return 2;
-  if (!p[s[3]]) return 3;
+  s = (अचिन्हित वर्ण*) str;
+  यदि (!p[s[0]]) फर्काऊ 0;
+  यदि (!p[s[1]]) फर्काऊ 1;
+  यदि (!p[s[2]]) फर्काऊ 2;
+  यदि (!p[s[3]]) फर्काऊ 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (अचिन्हित वर्ण *) PTR_ALIGN_DOWN (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do {
+  अचिन्हित पूर्णाङ्क c0, c1, c2, c3;
+  गर {
       s += 4;
       c0 = p[s[0]];
       c1 = p[s[1]];
       c2 = p[s[2]];
       c3 = p[s[3]];
-  } while ((c0 & c1 & c2 & c3) != 0);
+  } जबसम्म ((c0 & c1 & c2 & c3) != 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 & c1) == 0 ? count + c0 : count + c2 + 2;
+  माप_प्रकार गन्ती = s - (अचिन्हित वर्ण *) str;
+  फर्काऊ (c0 & c1) == 0 ? गन्ती + c0 : गन्ती + c2 + 2;
 }
-libc_hidden_builtin_def (strspn)
+libc_hidden_builtin_def (म_अखोज)
