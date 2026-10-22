@@ -19,16 +19,16 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlen"
-#else
+#ᨀᨘᨁ
 # define TEST_NAME "wcslen"
 #endif
 #include "test-string.h"
 
 #ifndef WIDE
 # define STRLEN strlen
-# define CHAR char
+# define CHAR var_na
 # define MAX_CHAR CHAR_MAX
-#else
+#ᨀᨘᨁ
 # include <wchar.h>
 # define STRLEN wcslen
 # define CHAR wchar_t
@@ -49,7 +49,7 @@ IMPL (STRLEN, 1)
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 IMPL (__strlen_default, 1)
-#else
+#ᨀᨘᨁ
 # define WCSLEN __wcslen_default
 # include "wcsmbs/wcslen.c"
 IMPL (__wcslen_default, 1)
@@ -60,12 +60,12 @@ static void
 do_one_test (impl_t *impl, const CHAR *s, size_t exp_len)
 {
   size_t len = CALL (impl, s);
-  if (len != exp_len)
+  ᨀᨘ (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      ᨀᨘᨒ;
     }
 }
 
@@ -74,9 +74,9 @@ do_test (size_t align, size_t len)
 {
   size_t i;
 
-  align &= (getpagesize () / sizeof (CHAR)) - 1;
-  if (align + sizeof (CHAR) * len >= page_size)
-    return;
+  align &= (getpagesize () / parimaa_na (CHAR)) - 1;
+  ᨀᨘ (align + parimaa_na (CHAR) * len >= page_size)
+    ᨀᨘᨒ;
 
   CHAR *buf = (CHAR *) (buf1);
 
@@ -92,32 +92,32 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align, len;
-  CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  CHAR *p = (CHAR *) (buf1 + page_size - 512 * parimaa_na (CHAR));
 
   for (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      ᨀᨘ (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      ᨀᨘ (j > 512)
 	j = 512;
 
       for (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  ᨀᨘ (i == len + align)
 	    p[i] = 0;
-	  else
+	  ᨀᨘᨁ
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      ᨀᨘ (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align)) != len)
+	ᨀᨘ (CALL (impl, (CHAR *) (p + align)) != len)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd) %zd != %zd, p %p",
 		   n, impl->name, align, CALL (impl, (CHAR *) (p + align)),
@@ -127,7 +127,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -143,22 +143,22 @@ test_main (void)
 
   for (i = 1; i < 8; ++i)
   {
-    do_test (sizeof (CHAR) * i, i);
+    do_test (parimaa_na (CHAR) * i, i);
     do_test (0, i);
   }
 
   for (i = 2; i <= 12; ++i)
     {
       do_test (0, 1 << i);
-      do_test (sizeof (CHAR) * 7, 1 << i);
-      do_test (sizeof (CHAR) * i, 1 << i);
-      do_test (sizeof (CHAR) * i, (size_t)((1 << i) / 1.5));
+      do_test (parimaa_na (CHAR) * 7, 1 << i);
+      do_test (parimaa_na (CHAR) * i, 1 << i);
+      do_test (parimaa_na (CHAR) * i, (size_t)((1 << i) / 1.5));
     }
 
   /* Test strings near page boundary */
 
-  size_t maxlength = 64 / sizeof (CHAR) - 1;
-  size_t pagesize = getpagesize () / sizeof (CHAR);
+  size_t maxlength = 64 / parimaa_na (CHAR) - 1;
+  size_t pagesize = getpagesize () / parimaa_na (CHAR);
 
   for (i = maxlength ; i > 1; --i)
     {
@@ -169,7 +169,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ᨀᨘᨒ ret;
 }
 
 #include <support/test-driver.c>

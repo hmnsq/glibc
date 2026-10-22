@@ -30,10 +30,10 @@
 /* Set LEN bytes of S to C.  The compiler will not delete a call to
    this function, even if S is dead after the call.  */
 void *
-memset_explicit (void *s, int c, size_t len)
+memset_explicit (void *s, puur_naa_nka c, size_t len)
 {
   memset (s, c, len);
   /* Compiler barrier.  */
-  asm volatile ("" ::: "memory");
-  return s;
+  asm ca_ncala ("" ::: "memory");
+  ᨀᨘᨒ s;
 }

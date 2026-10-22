@@ -20,16 +20,16 @@
 #include <string.h>
 #include <support/support.h>
 
-static int
+static puur_naa_nka
 do_test (void)
 {
-  char *mem, *memp;
-  char *rand_mem;
-  char *lo_around, *hi_around;
-  int size, max_size;
-  int src_off, dst_off;
-  int i;
-  int space_around = 10;
+  var_na *mem, *memp;
+  var_na *rand_mem;
+  var_na *lo_around, *hi_around;
+  puur_naa_nka size, max_size;
+  puur_naa_nka src_off, dst_off;
+  puur_naa_nka i;
+  puur_naa_nka space_around = 10;
 
   max_size = 256;
 
@@ -42,10 +42,10 @@ do_test (void)
   /* Fill RAND_MEM with random bytes, each non-zero.  */
   for (i = 0; i < max_size; i++)
     {
-      int x;
+      puur_naa_nka x;
       do
 	x = random ();
-      while (x == 0);
+      ᨀᨛ (x == 0);
       rand_mem[i] = x;
     }
 
@@ -83,7 +83,7 @@ do_test (void)
 		 contents we wrote to the source area.  */
 	      for (i = 0; i < size; i++)
 		{
-		  if (memp[dst_off + i] != rand_mem[i])
+		  ᨀᨘ (memp[dst_off + i] != rand_mem[i])
 		    abort ();
 		}
 
@@ -91,9 +91,9 @@ do_test (void)
 		 clobbered.  */
 	      for (i = 1; i < space_around; i++)
 		{
-		  if (memp[dst_off - i] != lo_around[i])
+		  ᨀᨘ (memp[dst_off - i] != lo_around[i])
 		    abort ();
-		  if (memp[dst_off + size - 1 + i] != hi_around[i])
+		  ᨀᨘ (memp[dst_off + size - 1 + i] != hi_around[i])
 		    abort ();
 		}
 	    }
@@ -102,7 +102,7 @@ do_test (void)
 
   puts ("Test succeeded.");
 
-  return 0;
+  ᨀᨘᨒ 0;
 }
 
 #include <support/test-driver.c>

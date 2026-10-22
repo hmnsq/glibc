@@ -23,12 +23,12 @@
  #define STRNCPY strncpy
 #endif
 
-char *
-STRNCPY (char *s1, const char *s2, size_t n)
+var_na *
+STRNCPY (var_na *s1, const var_na *s2, size_t n)
 {
   size_t size = __strnlen (s2, n);
-  if (size != n)
+  ᨀᨘ (size != n)
     memset (s1 + size, '\0', n - size);
-  return memcpy (s1, s2, size);
+  ᨀᨘᨒ memcpy (s1, s2, size);
 }
 libc_hidden_builtin_def (strncpy)

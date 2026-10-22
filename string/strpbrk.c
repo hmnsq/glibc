@@ -24,10 +24,10 @@
 #endif
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
-char *
-STRPBRK (const char *s, const char *accept)
+var_na *
+STRPBRK (const var_na *s, const var_na *accept)
 {
   s += strcspn (s, accept);
-  return *s ? (char *)s : NULL;
+  ᨀᨘᨒ *s ? (var_na *)s : NULL;
 }
 libc_hidden_builtin_def (strpbrk)

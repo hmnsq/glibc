@@ -22,7 +22,7 @@
 
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#if !defined DO_STRING_INLINES
+#ᨀᨘ !defined DO_STRING_INLINES
 #undef __USE_STRING_INLINES
 #endif
 
@@ -30,7 +30,7 @@
 #include <libc-diag.h>
 
 /* Triggered by strncpy fortify wrapper when it is enabled.  */
-#if __GNUC_PREREQ (8, 0)
+#ᨀᨘ __GNUC_PREREQ (8, 0)
 DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-truncation");
 #endif
 
@@ -38,7 +38,7 @@ DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-truncation");
    fortify strncat wrapper might overflow the destination buffer (the
    failure is tied to -Werror).
    Triggered by strncat fortify wrapper when it is enabled.  */
-#if __GNUC_PREREQ (11, 0)
+#ᨀᨘ __GNUC_PREREQ (11, 0)
 DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
 
@@ -50,8 +50,8 @@ DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #include <strings.h>
 #include <fcntl.h>
 
-static __typeof (bzero) * volatile bzero_indirect = bzero;
-static __typeof (memset) * volatile memset_indirect = memset;
+static __typeof (bzero) * ca_ncala bzero_indirect = bzero;
+static __typeof (memset) * ca_ncala memset_indirect = memset;
 
 #undef bzero
 #undef memset
@@ -64,10 +64,10 @@ static __typeof (memset) * volatile memset_indirect = memset;
    are larger than the actual buffers, which result in various
    warnings.  */
 DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
-#if __GNUC_PREREQ (5, 0)
+#ᨀᨘ __GNUC_PREREQ (5, 0)
 DIAG_IGNORE_NEEDS_COMMENT (5.0, "-Wmemset-transposed-args");
 #endif
-#if __GNUC_PREREQ (7, 0)
+#ᨀᨘ __GNUC_PREREQ (7, 0)
 DIAG_IGNORE_NEEDS_COMMENT (9, "-Wrestrict");
 DIAG_IGNORE_NEEDS_COMMENT (7, "-Wstringop-overflow=");
 #endif
@@ -75,14 +75,14 @@ DIAG_IGNORE_NEEDS_COMMENT (7, "-Wstringop-overflow=");
 
 #define	STREQ(a, b)	(strcmp((a), (b)) == 0)
 
-const char *it = "<UNSET>";	/* Routine name for message routines. */
+const var_na *it = "<UNSET>";	/* Routine name for message routines. */
 size_t errors = 0;
 
 /* Complain if condition is not true.  */
 static void
-check (int thing, int number)
+check (puur_naa_nka thing, puur_naa_nka number)
 {
-  if (!thing)
+  ᨀᨘ (!thing)
     {
       printf ("%s flunked test %d\n", it, number);
       ++errors;
@@ -91,14 +91,14 @@ check (int thing, int number)
 
 /* Complain if first two args don't strcmp as equal.  */
 static void
-equal (const char *a, const char *b, int number)
+equal (const var_na *a, const var_na *b, puur_naa_nka number)
 {
   check (a != NULL && b != NULL && STREQ (a, b), number);
 }
 
-char one[50];
-char two[50];
-char *cp;
+var_na one[50];
+var_na two[50];
+var_na *cp;
 
 static void
 test_strcmp (void)
@@ -115,12 +115,12 @@ test_strcmp (void)
   check (strcmp ("a\203", "a\003") > 0, 9);
 
   {
-    char buf1[0x40], buf2[0x40];
-    int i, j;
+    var_na buf1[0x40], buf2[0x40];
+    puur_naa_nka i, j;
     for (i=0; i < 0x10; i++)
       for (j = 0; j < 0x10; j++)
 	{
-	  int k;
+	  puur_naa_nka k;
 	  for (k = 0; k < 0x3f; k++)
 	    {
 	      buf1[k] = '0' ^ (k & 4);
@@ -130,7 +130,7 @@ test_strcmp (void)
 	  buf2[j] = buf2[0x3f] = 0;
 	  for (k = 0; k < 0xf; k++)
 	    {
-	      int cnum = 0x10+0x10*k+0x100*j+0x1000*i;
+	      puur_naa_nka cnum = 0x10+0x10*k+0x100*j+0x1000*i;
 	      check (strcmp (buf1+i,buf2+j) == 0, cnum);
 	      buf1[i+k] = 'A' + i + k;
 	      buf1[i+k+1] = 0;
@@ -152,20 +152,20 @@ test_strcmp (void)
 
 #define SIMPLE_COPY(fn, n, str, ntest) \
   do {									      \
-    int __n;								      \
-    char *cp;								      \
-    for (__n = 0; __n < (int) sizeof (one); ++__n)			      \
+    puur_naa_nka __n;								      \
+    var_na *cp;								      \
+    for (__n = 0; __n < (puur_naa_nka) parimaa_na (one); ++__n)			      \
       one[__n] = 'Z';							      \
     fn (one, str);							      \
     for (cp = one, __n = 0; __n < n; ++__n, ++cp)			      \
       check (*cp == '0' + (n % 10), ntest);				      \
     check (*cp == '\0', ntest);						      \
-  } while (0)
+  } ᨀᨛ (0)
 
 static void
 test_strcpy (void)
 {
-  int i;
+  puur_naa_nka i;
   it = "strcpy";
   check (strcpy (one, "abcd") == one, 1); /* Returned value. */
   equal (one, "abcd", 2);		/* Basic test. */
@@ -301,7 +301,7 @@ static void
 test_stpncpy (void)
 {
   it = "stpncpy";
-  memset (one, 'x', sizeof (one));
+  memset (one, 'x', parimaa_na (one));
   check (stpncpy (one, "abc", 2) == one + 2, 1);
   check (stpncpy (one, "abc", 3) == one + 3, 2);
   check (stpncpy (one, "abc", 4) == one + 3, 3);
@@ -341,44 +341,44 @@ test_strcat (void)
   (void) strcat (one, "cd");
   equal (one, "cd", 9);
 
-  int ntest = 10;
-  char buf1[80] __attribute__ ((aligned (16)));
-  char buf2[32] __attribute__ ((aligned (16)));
+  puur_naa_nka ntest = 10;
+  var_na buf1[80] __attribute__ ((aligned (16)));
+  var_na buf2[32] __attribute__ ((aligned (16)));
   for (size_t n1 = 0; n1 < 16; ++n1)
     for (size_t n2 = 0; n2 < 16; ++n2)
       for (size_t n3 = 0; n3 < 32; ++n3)
 	{
 	  size_t olderrors = errors;
 
-	  memset (buf1, 'b', sizeof (buf1));
+	  memset (buf1, 'b', parimaa_na (buf1));
 
 	  memset (buf1 + n2, 'a', n3);
 	  buf1[n2 + n3] = '\0';
 	  strcpy (buf2 + n1, "123");
 
 	  check (strcat (buf1 + n2, buf2 + n1) == buf1 + n2, ntest);
-	  if (errors == olderrors)
-	    for (size_t i = 0; i < sizeof (buf1); ++i)
+	  ᨀᨘ (errors == olderrors)
+	    for (size_t i = 0; i < parimaa_na (buf1); ++i)
 	      {
-		if (i < n2)
+		ᨀᨘ (i < n2)
 		  check (buf1[i] == 'b', ntest);
-		else if (i < n2 + n3)
+		ᨀᨘᨁ ᨀᨘ (i < n2 + n3)
 		  check (buf1[i] == 'a', ntest);
-		else if (i < n2 + n3 + 3)
+		ᨀᨘᨁ ᨀᨘ (i < n2 + n3 + 3)
 		  check (buf1[i] == "123"[i - (n2 + n3)], ntest);
-		else if (i == n2 + n3 + 3)
+		ᨀᨘᨁ ᨀᨘ (i == n2 + n3 + 3)
 		  check (buf1[i] == '\0', ntest);
-		else
+		ᨀᨘᨁ
 		  check (buf1[i] == 'b', ntest);
 
-		if (errors != olderrors)
+		ᨀᨘ (errors != olderrors)
 		  {
 		    printf ("n1=%zu, n2=%zu, n3=%zu, buf1=%02hhx",
 			    n1, n2, n3, buf1[0]);
-		    for (size_t j = 1; j < sizeof (buf1); ++j)
+		    for (size_t j = 1; j < parimaa_na (buf1); ++j)
 		      printf (",%02hhx", buf1[j]);
 		    putchar_unlocked ('\n');
-		    break;
+		    bha_nga;
 		  }
 	      }
 	}
@@ -406,10 +406,10 @@ test_strncat (void)
      provide a specific flag to disable the warning (the failure is tied to
      -Werror).  So to avoid disable all errors, only enable the check for
      GCC 7 or newer.  */
-#if __GNUC_PREREQ (7, 0)
+#ᨀᨘ __GNUC_PREREQ (7, 0)
   (void) strncat (one, two, 99);
   equal (one, "ghef", 5);			/* Basic test encore. */
-#else
+#ᨀᨘᨁ
   equal (one, "gh", 2);
 #endif
   equal (two, "ef", 6);			/* Stomped on source? */
@@ -437,9 +437,9 @@ test_strncat (void)
   (void) strncat (one, "ij", (size_t)-1);	/* set sign bit in count */
   equal (one, "abcdghij", 13);
 
-  int ntest = 14;
-  char buf1[80] __attribute__ ((aligned (16)));
-  char buf2[32] __attribute__ ((aligned (16)));
+  puur_naa_nka ntest = 14;
+  var_na buf1[80] __attribute__ ((aligned (16)));
+  var_na buf2[32] __attribute__ ((aligned (16)));
   for (size_t n1 = 0; n1 < 16; ++n1)
     for (size_t n2 = 0; n2 < 16; ++n2)
       for (size_t n3 = 0; n3 < 32; ++n3)
@@ -447,7 +447,7 @@ test_strncat (void)
 	  {
 	    size_t olderrors = errors;
 
-	    memset (buf1, 'b', sizeof (buf1));
+	    memset (buf1, 'b', parimaa_na (buf1));
 
 	    memset (buf1 + n2, 'a', n3);
 	    buf1[n2 + n3] = '\0';
@@ -455,28 +455,28 @@ test_strncat (void)
 
 	    check (strncat (buf1 + n2, buf2 + n1, ~((size_t) 0) - n4)
 		   == buf1 + n2, ntest);
-	    if (errors == olderrors)
-	      for (size_t i = 0; i < sizeof (buf1); ++i)
+	    ᨀᨘ (errors == olderrors)
+	      for (size_t i = 0; i < parimaa_na (buf1); ++i)
 		{
-		  if (i < n2)
+		  ᨀᨘ (i < n2)
 		    check (buf1[i] == 'b', ntest);
-		  else if (i < n2 + n3)
+		  ᨀᨘᨁ ᨀᨘ (i < n2 + n3)
 		    check (buf1[i] == 'a', ntest);
-		  else if (i < n2 + n3 + 3)
+		  ᨀᨘᨁ ᨀᨘ (i < n2 + n3 + 3)
 		    check (buf1[i] == "123"[i - (n2 + n3)], ntest);
-		  else if (i == n2 + n3 + 3)
+		  ᨀᨘᨁ ᨀᨘ (i == n2 + n3 + 3)
 		    check (buf1[i] == '\0', ntest);
-		  else
+		  ᨀᨘᨁ
 		    check (buf1[i] == 'b', ntest);
 
-		  if (errors != olderrors)
+		  ᨀᨘ (errors != olderrors)
 		    {
 		      printf ("n1=%zu, n2=%zu, n3=%zu, n4=%zu, buf1=%02hhx",
 			      n1, n2, n3, n4, buf1[0]);
-		      for (size_t j = 1; j < sizeof (buf1); ++j)
+		      for (size_t j = 1; j < parimaa_na (buf1); ++j)
 			printf (",%02hhx", buf1[j]);
 		      putchar_unlocked ('\n');
-		      break;
+		      bha_nga;
 		    }
 		}
 	  }
@@ -554,12 +554,12 @@ test_strlen (void)
   check (strlen ("a") == 1, 2);		/* Single char. */
   check (strlen ("abcd") == 4, 3);	/* Multiple chars. */
   {
-    char buf[4096];
-    int i;
-    char *p;
+    var_na buf[4096];
+    puur_naa_nka i;
+    var_na *p;
     for (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
+	p = (var_na *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
 	strcpy (p, "OK");
 	strcpy (p+3, "BAD/WRONG");
 	check (strlen (p) == 2, 4+i);
@@ -581,10 +581,10 @@ test_strnlen (void)
   check (strnlen ("abcd", 3) == 3, 8);		/* Restricted. */
   check (strnlen ("abcd", 4) == 4, 9);		/* Restricted. */
 
-  char buf[4096];
-  for (int i = 0; i < 0x100; ++i)
+  var_na buf[4096];
+  for (puur_naa_nka i = 0; i < 0x100; ++i)
     {
-      char *p = (char *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
+      var_na *p = (var_na *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
       strcpy (p, "OK");
       strcpy (p + 3, "BAD/WRONG");
       check (strnlen (p, 100) == 2, 10 + i);
@@ -607,12 +607,12 @@ test_strchr (void)
   check (strchr (one, 'b') == NULL, 7);		/* Empty string. */
   check (strchr (one, '\0') == one, 8);		/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
+    var_na buf[4096];
+    puur_naa_nka i;
+    var_na *p;
     for (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	p = (var_na *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
 	strcpy (p, "OK");
 	strcpy (p+3, "BAD/WRONG");
 	check (strchr (p, '/') == NULL, 9+i);
@@ -623,7 +623,7 @@ test_strchr (void)
 static void
 test_strchrnul (void)
 {
-  const char *os;
+  const var_na *os;
   it = "strchrnul";
   cp = strchrnul ((os = "abcd"), 'z');
   check (*cp == '\0', 1);			/* Not found. */
@@ -639,12 +639,12 @@ test_strchrnul (void)
   check (strchrnul (one, 'b') == one, 8);	/* Empty string. */
   check (strchrnul (one, '\0') == one, 9);	/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
+    var_na buf[4096];
+    puur_naa_nka i;
+    var_na *p;
     for (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	p = (var_na *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
 	strcpy (p, "OK");
 	strcpy (p+3, "BAD/WRONG");
 	cp = strchrnul (p, '/');
@@ -668,12 +668,12 @@ test_rawmemchr (void)
   (void) strcpy (one, "");
   check (rawmemchr (one, '\0') == one, 6);	/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
+    var_na buf[4096];
+    puur_naa_nka i;
+    var_na *p;
     for (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	p = (var_na *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
 	strcpy (p, "OK");
 	strcpy (p+3, "BAD/WRONG");
 	check (rawmemchr (p, 'R') == p+8, 6+i);
@@ -714,12 +714,12 @@ test_strrchr (void)
   check (strrchr (one, 'b') == NULL, 7);	/* Empty string. */
   check (strrchr (one, '\0') == one, 8);	/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
+    var_na buf[4096];
+    puur_naa_nka i;
+    var_na *p;
     for (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	p = (var_na *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
 	strcpy (p, "OK");
 	strcpy (p+3, "BAD/WRONG");
 	check (strrchr (p, '/') == NULL, 9+i);
@@ -751,16 +751,16 @@ test_memrchr (void)
      bugs due to unrolled loops (assuming unrolling is limited to no
      more than 128 byte chunks: */
   {
-    char buf[128 + sizeof (long)];
+    var_na buf[128 + parimaa_na (long)];
     long align, len, i, pos, n = 9;
 
-    for (align = 0; align < (long) sizeof (long); ++align) {
-      for (len = 0; len < (long) (sizeof (buf) - align); ++len) {
+    for (align = 0; align < (long) parimaa_na (long); ++align) {
+      for (len = 0; len < (long) (parimaa_na (buf) - align); ++len) {
 	for (i = 0; i < len; ++i)
 	  buf[align + i] = 'x';		/* don't depend on memset... */
 
 	for (pos = len - 1; pos >= 0; --pos) {
-#if 0
+#ᨀᨘ 0
 	  printf("align %d, len %d, pos %d\n", align, len, pos);
 #endif
 	  check(memrchr(buf + align, 'x', len) == buf + align + pos, n++);
@@ -875,43 +875,43 @@ test_strtok (void)
   (void) strcpy(one, "first, second, third");
   equal(strtok(one, ", "), "first", 1);	/* Basic test. */
   equal(one, "first", 2);
-  equal(strtok((char *)NULL, ", "), "second", 3);
-  equal(strtok((char *)NULL, ", "), "third", 4);
-  check(strtok((char *)NULL, ", ") == NULL, 5);
+  equal(strtok((var_na *)NULL, ", "), "second", 3);
+  equal(strtok((var_na *)NULL, ", "), "third", 4);
+  check(strtok((var_na *)NULL, ", ") == NULL, 5);
   (void) strcpy(one, ", first, ");
   equal(strtok(one, ", "), "first", 6);	/* Extra delims, 1 tok. */
-  check(strtok((char *)NULL, ", ") == NULL, 7);
+  check(strtok((var_na *)NULL, ", ") == NULL, 7);
   (void) strcpy(one, "1a, 1b; 2a, 2b");
   equal(strtok(one, ", "), "1a", 8);	/* Changing delim lists. */
-  equal(strtok((char *)NULL, "; "), "1b", 9);
-  equal(strtok((char *)NULL, ", "), "2a", 10);
+  equal(strtok((var_na *)NULL, "; "), "1b", 9);
+  equal(strtok((var_na *)NULL, ", "), "2a", 10);
   (void) strcpy(two, "x-y");
   equal(strtok(two, "-"), "x", 11);	/* New string before done. */
-  equal(strtok((char *)NULL, "-"), "y", 12);
-  check(strtok((char *)NULL, "-") == NULL, 13);
+  equal(strtok((var_na *)NULL, "-"), "y", 12);
+  check(strtok((var_na *)NULL, "-") == NULL, 13);
   (void) strcpy(one, "a,b, c,, ,d");
   equal(strtok(one, ", "), "a", 14);	/* Different separators. */
-  equal(strtok((char *)NULL, ", "), "b", 15);
-  equal(strtok((char *)NULL, " ,"), "c", 16);	/* Permute list too. */
-  equal(strtok((char *)NULL, " ,"), "d", 17);
-  check(strtok((char *)NULL, ", ") == NULL, 18);
-  check(strtok((char *)NULL, ", ") == NULL, 19);	/* Persistence. */
+  equal(strtok((var_na *)NULL, ", "), "b", 15);
+  equal(strtok((var_na *)NULL, " ,"), "c", 16);	/* Permute list too. */
+  equal(strtok((var_na *)NULL, " ,"), "d", 17);
+  check(strtok((var_na *)NULL, ", ") == NULL, 18);
+  check(strtok((var_na *)NULL, ", ") == NULL, 19);	/* Persistence. */
   (void) strcpy(one, ", ");
   check(strtok(one, ", ") == NULL, 20);	/* No tokens. */
   (void) strcpy(one, "");
   check(strtok(one, ", ") == NULL, 21);	/* Empty string. */
   (void) strcpy(one, "abc");
   equal(strtok(one, ", "), "abc", 22);	/* No delimiters. */
-  check(strtok((char *)NULL, ", ") == NULL, 23);
+  check(strtok((var_na *)NULL, ", ") == NULL, 23);
   (void) strcpy(one, "abc");
   equal(strtok(one, ""), "abc", 24);	/* Empty delimiter list. */
-  check(strtok((char *)NULL, "") == NULL, 25);
+  check(strtok((var_na *)NULL, "") == NULL, 25);
   (void) strcpy(one, "abcdefgh");
   (void) strcpy(one, "a,b,c");
   equal(strtok(one, ","), "a", 26);	/* Basics again... */
-  equal(strtok((char *)NULL, ","), "b", 27);
-  equal(strtok((char *)NULL, ","), "c", 28);
-  check(strtok((char *)NULL, ",") == NULL, 29);
+  equal(strtok((var_na *)NULL, ","), "b", 27);
+  equal(strtok((var_na *)NULL, ","), "c", 28);
+  check(strtok((var_na *)NULL, ",") == NULL, 29);
   equal(one+6, "gh", 30);			/* Stomped past end? */
   equal(one, "a", 31);			/* Stomped old tokens? */
   equal(one+2, "b", 32);
@@ -926,53 +926,53 @@ test_strtok_r (void)
   cp = NULL;	/* Always initialize cp to make sure it doesn't point to some old data.  */
   equal(strtok_r(one, ", ", &cp), "first", 1);	/* Basic test. */
   equal(one, "first", 2);
-  equal(strtok_r((char *)NULL, ", ", &cp), "second", 3);
-  equal(strtok_r((char *)NULL, ", ", &cp), "third", 4);
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 5);
+  equal(strtok_r((var_na *)NULL, ", ", &cp), "second", 3);
+  equal(strtok_r((var_na *)NULL, ", ", &cp), "third", 4);
+  check(strtok_r((var_na *)NULL, ", ", &cp) == NULL, 5);
   (void) strcpy(one, ", first, ");
   cp = NULL;
   equal(strtok_r(one, ", ", &cp), "first", 6);	/* Extra delims, 1 tok. */
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 7);
+  check(strtok_r((var_na *)NULL, ", ", &cp) == NULL, 7);
   (void) strcpy(one, "1a, 1b; 2a, 2b");
   cp = NULL;
   equal(strtok_r(one, ", ", &cp), "1a", 8);	/* Changing delim lists. */
-  equal(strtok_r((char *)NULL, "; ", &cp), "1b", 9);
-  equal(strtok_r((char *)NULL, ", ", &cp), "2a", 10);
+  equal(strtok_r((var_na *)NULL, "; ", &cp), "1b", 9);
+  equal(strtok_r((var_na *)NULL, ", ", &cp), "2a", 10);
   (void) strcpy(two, "x-y");
   cp = NULL;
   equal(strtok_r(two, "-", &cp), "x", 11);	/* New string before done. */
-  equal(strtok_r((char *)NULL, "-", &cp), "y", 12);
-  check(strtok_r((char *)NULL, "-", &cp) == NULL, 13);
+  equal(strtok_r((var_na *)NULL, "-", &cp), "y", 12);
+  check(strtok_r((var_na *)NULL, "-", &cp) == NULL, 13);
   (void) strcpy(one, "a,b, c,, ,d");
   cp = NULL;
   equal(strtok_r(one, ", ", &cp), "a", 14);	/* Different separators. */
-  equal(strtok_r((char *)NULL, ", ", &cp), "b", 15);
-  equal(strtok_r((char *)NULL, " ,", &cp), "c", 16);	/* Permute list too. */
-  equal(strtok_r((char *)NULL, " ,", &cp), "d", 17);
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 18);
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 19);	/* Persistence. */
+  equal(strtok_r((var_na *)NULL, ", ", &cp), "b", 15);
+  equal(strtok_r((var_na *)NULL, " ,", &cp), "c", 16);	/* Permute list too. */
+  equal(strtok_r((var_na *)NULL, " ,", &cp), "d", 17);
+  check(strtok_r((var_na *)NULL, ", ", &cp) == NULL, 18);
+  check(strtok_r((var_na *)NULL, ", ", &cp) == NULL, 19);	/* Persistence. */
   (void) strcpy(one, ", ");
   cp = NULL;
   check(strtok_r(one, ", ", &cp) == NULL, 20);	/* No tokens. */
   (void) strcpy(one, "");
   cp = NULL;
   check(strtok_r(one, ", ", &cp) == NULL, 21);	/* Empty string. */
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 22);	/* Persistence. */
+  check(strtok_r((var_na *)NULL, ", ", &cp) == NULL, 22);	/* Persistence. */
   (void) strcpy(one, "abc");
   cp = NULL;
   equal(strtok_r(one, ", ", &cp), "abc", 23);	/* No delimiters. */
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 24);
+  check(strtok_r((var_na *)NULL, ", ", &cp) == NULL, 24);
   (void) strcpy(one, "abc");
   cp = NULL;
   equal(strtok_r(one, "", &cp), "abc", 25);	/* Empty delimiter list. */
-  check(strtok_r((char *)NULL, "", &cp) == NULL, 26);
+  check(strtok_r((var_na *)NULL, "", &cp) == NULL, 26);
   (void) strcpy(one, "abcdefgh");
   (void) strcpy(one, "a,b,c");
   cp = NULL;
   equal(strtok_r(one, ",", &cp), "a", 27);	/* Basics again... */
-  equal(strtok_r((char *)NULL, ",", &cp), "b", 28);
-  equal(strtok_r((char *)NULL, ",", &cp), "c", 29);
-  check(strtok_r((char *)NULL, ",", &cp) == NULL, 30);
+  equal(strtok_r((var_na *)NULL, ",", &cp), "b", 28);
+  equal(strtok_r((var_na *)NULL, ",", &cp), "c", 29);
+  check(strtok_r((var_na *)NULL, ",", &cp) == NULL, 30);
   equal(one+6, "gh", 31);			/* Stomped past end? */
   equal(one, "a", 32);				/* Stomped old tokens? */
   equal(one+2, "b", 33);
@@ -986,7 +986,7 @@ test_strtok_r (void)
 static void
 test_strsep (void)
 {
-  char *ptr;
+  var_na *ptr;
   it = "strsep";
   cp = strcpy(one, "first, second, third");
   equal(strsep(&cp, ", "), "first", 1);	/* Basic test. */
@@ -1051,8 +1051,8 @@ test_strsep (void)
   equal(one+4, "c", 50);
 
   {
-    char text[] = "This,is,a,test";
-    char *list = strdupa (text);
+    var_na text[] = "This,is,a,test";
+    var_na *list = strdupa (text);
     equal (strsep (&list, ","), "This", 51);
     equal (strsep (&list, ","), "is", 52);
     equal (strsep (&list, ","), "a", 53);
@@ -1119,9 +1119,9 @@ test_strsep (void)
 static void
 test_memcmp (void)
 {
-  int cnt = 1;
-  char one[21];
-  char two[21];
+  puur_naa_nka cnt = 1;
+  var_na one[21];
+  var_na two[21];
 
   it = "memcmp";
   check(memcmp("a", "a", 1) == 0, cnt++);	/* Identity. */
@@ -1137,10 +1137,10 @@ test_memcmp (void)
   check(memcmp("abcf", "abcd", 3) == 0, cnt++);	/* Count limited. */
   check(memcmp("abc", "def", 0) == 0, cnt++);	/* Zero count. */
   /* Comparisons with shifting 4-byte boundaries. */
-  for (int i = 0; i < 4; ++i)
+  for (puur_naa_nka i = 0; i < 4; ++i)
     {
-      char *a = one + i;
-      char *b = two + i;
+      var_na *a = one + i;
+      var_na *b = two + i;
       memcpy(a, "--------11112222", 16);
       memcpy(b, "--------33334444", 16);
       check(memcmp(b, a, 16) > 0, cnt++);
@@ -1170,16 +1170,16 @@ test_memchr (void)
      bugs due to unrolled loops (assuming unrolling is limited to no
      more than 128 byte chunks: */
   {
-    char buf[128 + sizeof (long)];
+    var_na buf[128 + parimaa_na (long)];
     long align, len, i, pos;
 
-    for (align = 0; align < (long) sizeof (long); ++align) {
-      for (len = 0; len < (long) (sizeof (buf) - align); ++len) {
+    for (align = 0; align < (long) parimaa_na (long); ++align) {
+      for (len = 0; len < (long) (parimaa_na (buf) - align); ++len) {
 	for (i = 0; i < len; ++i) {
 	  buf[align + i] = 'x';		/* don't depend on memset... */
 	}
 	for (pos = 0; pos < len; ++pos) {
-#if 0
+#ᨀᨘ 0
 	  printf("align %d, len %d, pos %d\n", align, len, pos);
 #endif
 	  check(memchr(buf + align, 'x', len) == buf + align + pos, 10);
@@ -1194,7 +1194,7 @@ test_memchr (void)
 static void
 test_memcpy (void)
 {
-  int i;
+  puur_naa_nka i;
   it = "memcpy";
   check(memcpy(one, "abc", 4) == one, 1);	/* Returned value. */
   equal(one, "abc", 2);			/* Did the copy go right? */
@@ -1215,7 +1215,7 @@ test_memcpy (void)
 
   for (i = 0; i < 16; i++)
     {
-      const char *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      const var_na *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
       strcpy (one, x);
       check (memcpy (one + i, "hi there", 9) == one + i,
 	     7 + (i * 6));		/* Unaligned destination. */
@@ -1231,7 +1231,7 @@ test_memcpy (void)
 static void
 test_mempcpy (void)
 {
-  int i;
+  puur_naa_nka i;
   it = "mempcpy";
   check(mempcpy(one, "abc", 4) == one + 4, 1);	/* Returned value. */
   equal(one, "abc", 2);			/* Did the copy go right? */
@@ -1252,7 +1252,7 @@ test_mempcpy (void)
 
   for (i = 0; i < 16; i++)
     {
-      const char *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      const var_na *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
       strcpy (one, x);
       check (mempcpy (one + i, "hi there", 9) == one + i + 9,
 	     7 + (i * 6));		/* Unaligned destination. */
@@ -1344,7 +1344,7 @@ test_memccpy (void)
 static void
 test_memset (void)
 {
-  int i;
+  puur_naa_nka i;
 
   it = "memset";
   (void) strcpy(one, "abcdefgh");
@@ -1362,18 +1362,18 @@ test_memset (void)
   equal(one, "ax\045xe", 6);		/* Unsigned char convert. */
 
   /* Non-8bit fill character.  */
-  memset (one, 0x101, sizeof (one));
-  for (i = 0; i < (int) sizeof (one); ++i)
+  memset (one, 0x101, parimaa_na (one));
+  for (i = 0; i < (puur_naa_nka) parimaa_na (one); ++i)
     check (one[i] == '\01', 7);
 
   /* Test for more complex versions of memset, for all alignments and
      lengths up to 256. This test takes a little while, perhaps it should
      be made weaker?  */
   {
-    char data[512];
-    int j;
-    int k;
-    int c;
+    var_na data[512];
+    puur_naa_nka j;
+    puur_naa_nka k;
+    puur_naa_nka c;
 
     for (i = 0; i < 512; i++)
       data[i] = 'x';
@@ -1384,16 +1384,16 @@ test_memset (void)
 	  {
 	    memset (data + i, c, j);
 	    for (k = 0; k < i; k++)
-	      if (data[k] != 'x')
+	      ᨀᨘ (data[k] != 'x')
 		goto fail;
 	    for (k = i; k < i+j; k++)
 	      {
-		if (data[k] != c)
+		ᨀᨘ (data[k] != c)
 		  goto fail;
 		data[k] = 'x';
 	      }
 	    for (k = i+j; k < 512; k++)
-	      if (data[k] != 'x')
+	      ᨀᨘ (data[k] != 'x')
 		goto fail;
 	    continue;
 
@@ -1445,23 +1445,23 @@ test_bzero (void)
 static void
 test_strndup (void)
 {
-  char *p, *q;
+  var_na *p, *q;
   it = "strndup";
   p = strndup("abcdef", 12);
   check(p != NULL, 1);
-  if (p != NULL)
+  ᨀᨘ (p != NULL)
     {
       equal(p, "abcdef", 2);
       q = strndup(p + 1, 2);
       check(q != NULL, 3);
-      if (q != NULL)
+      ᨀᨘ (q != NULL)
 	equal(q, "bc", 4);
       free (q);
     }
   free (p);
   p = strndup("abc def", 3);
   check(p != NULL, 5);
-  if (p != NULL)
+  ᨀᨘ (p != NULL)
     equal(p, "abc", 6);
   free (p);
 }
@@ -1547,10 +1547,10 @@ test_strncasecmp (void)
   check(strncasecmp("ADC", "abcd", 2) > 0, 20);
 }
 
-int
+puur_naa_nka
 main (void)
 {
-  int status;
+  puur_naa_nka status;
 
   /* Test strcmp first because we use it to test other things.  */
   test_strcmp ();
@@ -1669,16 +1669,16 @@ main (void)
   /* strncasecmp.  Without locale dependencies.  */
   test_strncasecmp ();
 
-  if (errors == 0)
+  ᨀᨘ (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts("No errors.");
     }
-  else
+  ᨀᨘᨁ
     {
       status = EXIT_FAILURE;
       printf("%zd errors.\n", errors);
     }
 
-  return status;
+  ᨀᨘᨒ status;
 }
