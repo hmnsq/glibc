@@ -15,20 +15,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <limits.h>
+#অন্তর্ভাব <limits.h>
 #define ffsl __something_else
-#include <string.h>
+#অন্তর্ভাব <string.h>
 #undef	ffs
-#include <math-use-builtins.h>
+#অন্তর্ভাব <math-use-builtins.h>
 
 /* Find the first bit set in I.  */
-int
-__ffs (int i)
+পূর্ণাঙ্ক
+__ffs (পূর্ণাঙ্ক i)
 {
-#if USE_FFS_BUILTIN
-  return __builtin_ffs (i);
-#else
-  static const unsigned char table[] =
+#যদি USE_FFS_BUILTIN
+  প্রত্যাগম __builtin_ffs (i);
+#অন্যথা
+  স্থির ধ্রুব unsigned বর্ণ table[] =
     {
       0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
       6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -39,19 +39,19 @@ __ffs (int i)
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
     };
-  unsigned int a;
-  unsigned int x = i & -i;
+  unsigned পূর্ণাঙ্ক a;
+  unsigned পূর্ণাঙ্ক x = i & -i;
 
   a = x <= 0xffff ? (x <= 0xff ? 0 : 8) : (x <= 0xffffff ?  16 : 24);
 
-  return table[x >> a] + a;
+  প্রত্যাগম table[x >> a] + a;
 #endif
 }
 static_weak_alias (__ffs, ffs)
 libc_hidden_def (__ffs)
 libc_hidden_builtin_def (ffs)
 
-#if ULONG_MAX == UINT_MAX
+#যদি ULONG_MAX == UINT_MAX
 #undef ffsl
 weak_alias (__ffs, ffsl)
 #endif

@@ -16,53 +16,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <support/check.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <support/check.h>
 
-static int
-do_test (void)
+স্থির পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  struct {
-    char buf1[16];
-    char buf2[16];
+  সংরচনা {
+    বর্ণ buf1[16];
+    বর্ণ buf2[16];
   } s;
 
   /* Nothing is written to the destination if its size is 0.  */
-  memset (&s, '@', sizeof (s));
+  memset (&s, '@', পরিমাণ (s));
   TEST_COMPARE (strlcpy (s.buf1, "Hello!", 0), 6);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
+  TEST_COMPARE_BLOB (&s, পরিমাণ (s), "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* No bytes are are modified in the target buffer if the source
      string is short enough.  */
-  memset (&s, '@', sizeof (s));
-  TEST_COMPARE (strlcpy (s.buf1, "Hello!", sizeof (s.buf1)), 6);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "Hello!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
+  memset (&s, '@', পরিমাণ (s));
+  TEST_COMPARE (strlcpy (s.buf1, "Hello!", পরিমাণ (s.buf1)), 6);
+  TEST_COMPARE_BLOB (&s, পরিমাণ (s), "Hello!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* A source string which fits exactly into the destination buffer is
      not truncated.  */
-  memset (&s, '@', sizeof (s));
-  TEST_COMPARE (strlcpy (s.buf1, "Hello, world!!!", sizeof (s.buf1)), 15);
-  TEST_COMPARE_BLOB (&s, sizeof (s),
+  memset (&s, '@', পরিমাণ (s));
+  TEST_COMPARE (strlcpy (s.buf1, "Hello, world!!!", পরিমাণ (s.buf1)), 15);
+  TEST_COMPARE_BLOB (&s, পরিমাণ (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* A source string one character longer than the destination buffer
      is truncated by one character.  The untruncated source length is
      returned.  */
-  memset (&s, '@', sizeof (s));
-  TEST_COMPARE (strlcpy (s.buf1, "Hello, world!!!!", sizeof (s.buf1)), 16);
-  TEST_COMPARE_BLOB (&s, sizeof (s),
+  memset (&s, '@', পরিমাণ (s));
+  TEST_COMPARE (strlcpy (s.buf1, "Hello, world!!!!", পরিমাণ (s.buf1)), 16);
+  TEST_COMPARE_BLOB (&s, পরিমাণ (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* An even longer source string is truncated as well, and the
      original length is returned.  */
-  memset (&s, '@', sizeof (s));
-  TEST_COMPARE (strlcpy (s.buf1, "Hello, world!!!!!!!!", sizeof (s.buf1)), 20);
-  TEST_COMPARE_BLOB (&s, sizeof (s),
+  memset (&s, '@', পরিমাণ (s));
+  TEST_COMPARE (strlcpy (s.buf1, "Hello, world!!!!!!!!", পরিমাণ (s.buf1)), 20);
+  TEST_COMPARE_BLOB (&s, পরিমাণ (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
-  return 0;
+  প্রত্যাগম 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

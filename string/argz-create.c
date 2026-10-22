@@ -16,37 +16,37 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাব <argz.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
 
 /* Make a '\0' separated arg vector from a unix argv vector, returning it in
    ARGZ, and the total length in LEN.  If a memory allocation error occurs,
    ENOMEM is returned, otherwise 0.  */
 error_t
-__argz_create (char *const argv[], char **argz, size_t *len)
+__argz_create (বর্ণ *ধ্রুব argv[], বর্ণ **argz, size_t *len)
 {
-  int argc;
+  পূর্ণাঙ্ক argc;
   size_t tlen = 0;
-  char *const *ap;
-  char *p;
+  বর্ণ *ধ্রুব *ap;
+  বর্ণ *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
+  প্রতি (argc = 0; argv[argc] != রিক্ত; ++argc)
     tlen += strlen (argv[argc]) + 1;
 
-  if (tlen == 0)
-    *argz = NULL;
-  else
+  যদি (tlen == 0)
+    *argz = রিক্ত;
+  অন্যথা
     {
       *argz = malloc (tlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      যদি (*argz == রিক্ত)
+	প্রত্যাগম ENOMEM;
 
-      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+      প্রতি (p = *argz, ap = argv; *ap; ++ap, ++p)
 	p = __stpcpy (p, *ap);
     }
   *len = tlen;
 
-  return 0;
+  প্রত্যাগম 0;
 }
 weak_alias (__argz_create, argz_create)

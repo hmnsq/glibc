@@ -15,22 +15,22 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#অন্তর্ভাব <string.h>
 
 #ifndef STRING_TYPE
-# define STRING_TYPE char
+# define STRING_TYPE বর্ণ
 # define STRCOLL strcoll
 # define STRCOLL_L __strcoll_l
 # define USE_HIDDEN_DEF
 #endif
 
-#include "../locale/localeinfo.h"
+#অন্তর্ভাব "../locale/localeinfo.h"
 
 
-int
-STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2)
+পূর্ণাঙ্ক
+STRCOLL (ধ্রুব STRING_TYPE *s1, ধ্রুব STRING_TYPE *s2)
 {
-  return STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
+  প্রত্যাগম STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
 }
 
 #ifdef USE_HIDDEN_DEF

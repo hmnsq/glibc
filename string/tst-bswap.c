@@ -15,60 +15,60 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <byteswap.h>
-#include <stdio.h>
+#অন্তর্ভাব <byteswap.h>
+#অন্তর্ভাব <stdio.h>
 
-extern unsigned long long int wash (unsigned long long int a);
+বাহ্য unsigned long long পূর্ণাঙ্ক wash (unsigned long long পূর্ণাঙ্ক a);
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  int result = 0;
+  পূর্ণাঙ্ক result = 0;
 
   /* Test the functions with constant arguments.  */
-  if (bswap_16 (0x1234) != 0x3412)
+  যদি (bswap_16 (0x1234) != 0x3412)
     {
       puts ("bswap_16 (constant) flunked");
       result = 1;
     }
-  if (bswap_32 (0x12345678) != 0x78563412)
+  যদি (bswap_32 (0x12345678) != 0x78563412)
     {
       puts ("bswap_32 (constant) flunked");
       result = 1;
     }
-  if (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
+  যদি (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (constant) flunked");
       result = 1;
     }
 
   /* Test the functions with non-constant arguments.  */
-  if (bswap_16 (wash (0x1234)) != 0x3412)
+  যদি (bswap_16 (wash (0x1234)) != 0x3412)
     {
       puts ("bswap_16 (non-constant) flunked");
       result = 1;
     }
-  if (bswap_32 (wash (0x12345678)) != 0x78563412)
+  যদি (bswap_32 (wash (0x12345678)) != 0x78563412)
     {
       puts ("bswap_32 (non-constant) flunked");
       result = 1;
     }
-  if (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
+  যদি (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (non-constant) flunked");
       result = 1;
     }
 
-  return result;
+  প্রত্যাগম result;
 }
 
 
-unsigned long long int
-wash (unsigned long long int a)
+unsigned long long পূর্ণাঙ্ক
+wash (unsigned long long পূর্ণাঙ্ক a)
 {
   /* Do nothing.  This function simply exists to avoid that the compiler
      regards the argument to the bswap_*() functions as constant.  */
-  return a + 0;
+  প্রত্যাগম a + 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

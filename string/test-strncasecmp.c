@@ -16,8 +16,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <locale.h>
-#include <ctype.h>
+#অন্তর্ভাব <locale.h>
+#অন্তর্ভাব <ctype.h>
 
 #define TEST_LEN (getpagesize () * 3)
 #define MIN_PAGE_SIZE (TEST_LEN + 2 * getpagesize ())
@@ -25,82 +25,82 @@
 #define TEST_MAIN
 #define TEST_NAME "strncasecmp"
 #define TIMEOUT (5 * 60)
-#include "test-string.h"
+#অন্তর্ভাব "test-string.h"
 
-typedef int (*proto_t) (const char *, const char *, size_t);
-static int simple_strncasecmp (const char *, const char *, size_t);
+প্রকারনির্দেশ পূর্ণাঙ্ক (*proto_t) (ধ্রুব বর্ণ *, ধ্রুব বর্ণ *, size_t);
+স্থির পূর্ণাঙ্ক simple_strncasecmp (ধ্রুব বর্ণ *, ধ্রুব বর্ণ *, size_t);
 
 IMPL (strncasecmp, 1)
 
 /* Naive implementation to verify results.  */
-static int
-simple_strncasecmp (const char *s1, const char *s2, size_t n)
+স্থির পূর্ণাঙ্ক
+simple_strncasecmp (ধ্রুব বর্ণ *s1, ধ্রুব বর্ণ *s2, size_t n)
 {
-  int ret;
+  পূর্ণাঙ্ক ret;
 
-  if (n == 0)
-    return 0;
+  যদি (n == 0)
+    প্রত্যাগম 0;
 
-  while ((ret = ((unsigned char) tolower (*s1)
-		 - (unsigned char) tolower (*s2))) == 0
+  যাবত্ ((ret = ((unsigned বর্ণ) tolower (*s1)
+		 - (unsigned বর্ণ) tolower (*s2))) == 0
 	 && *s1++)
     {
-      if (--n == 0)
-	return 0;
+      যদি (--n == 0)
+	প্রত্যাগম 0;
       ++s2;
     }
-  return ret;
+  প্রত্যাগম ret;
 }
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2, size_t n,
-	      int exp_result)
+স্থির পূর্ণাঙ্ক
+check_result (impl_t *impl, ধ্রুব বর্ণ *s1, ধ্রুব বর্ণ *s2, size_t n,
+	      পূর্ণাঙ্ক exp_result)
 {
-  int result = CALL (impl, s1, s2, n);
-  if ((exp_result == 0 && result != 0)
+  পূর্ণাঙ্ক result = CALL (impl, s1, s2, n);
+  যদি ((exp_result == 0 && result != 0)
       || (exp_result < 0 && result >= 0)
       || (exp_result > 0 && result <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      প্রত্যাগম -1;
     }
 
-  return 0;
+  প্রত্যাগম 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, size_t n,
-	     int exp_result)
+স্থির শূন্য
+do_one_test (impl_t *impl, ধ্রুব বর্ণ *s1, ধ্রুব বর্ণ *s2, size_t n,
+	     পূর্ণাঙ্ক exp_result)
 {
-  if (check_result (impl, s1, s2, n, exp_result) < 0)
-    return;
+  যদি (check_result (impl, s1, s2, n, exp_result) < 0)
+    প্রত্যাগম;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t n, size_t len, int max_char,
-	 int exp_result)
+স্থির শূন্য
+do_test (size_t align1, size_t align2, size_t n, size_t len, পূর্ণাঙ্ক max_char,
+	 পূর্ণাঙ্ক exp_result)
 {
   size_t i;
-  char *s1, *s2;
+  বর্ণ *s1, *s2;
 
-  if (len == 0)
-    return;
+  যদি (len == 0)
+    প্রত্যাগম;
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 2) >= page_size)
-    return;
+  যদি (align1 + (len + 2) >= page_size)
+    প্রত্যাগম;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 2) >= page_size)
-    return;
+  যদি (align2 + (len + 2) >= page_size)
+    প্রত্যাগম;
 
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (বর্ণ *) (buf1 + align1);
+  s2 = (বর্ণ *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  প্রতি (i = 0; i < len; i++)
     {
       s1[i] = toupper (1 + 23 * i % max_char);
       s2[i] = tolower (s1[i]);
@@ -110,26 +110,26 @@ do_test (size_t align1, size_t align2, size_t n, size_t len, int max_char,
   s1[len + 1] = 23;
   s2[len + 1] = 24 + exp_result;
 
-  if ((s2[len - 1] == 'z' && exp_result == -1)
+  যদি ((s2[len - 1] == 'z' && exp_result == -1)
       || (s2[len - 1] == 'a' && exp_result == 1))
     s1[len - 1] += exp_result;
-  else if ((s1[len - 1] == 'Z' + 1 && exp_result == 1)
+  অন্যথা যদি ((s1[len - 1] == 'Z' + 1 && exp_result == 1)
            || (s1[len - 1] == 'A' - 1 && exp_result == -1))
     s1[len - 1] = tolower (s2[len - 1]) + exp_result;
-  else
+  অন্যথা
     s2[len - 1] -= exp_result;
 
   /* For some locals this is not guaranteed yet.  */
-  if (tolower (s1[len - 1]) - tolower (s2[len - 1]) != exp_result)
+  যদি (tolower (s1[len - 1]) - tolower (s2[len - 1]) != exp_result)
     {
-      if (exp_result == -1)
+      যদি (exp_result == -1)
         {
           s1[len - 1] = tolower ('a');
           s2[len - 1] = toupper (tolower ('a') - 1);
         }
-      else if (exp_result == 0)
+      অন্যথা যদি (exp_result == 0)
         s1[len - 1] = toupper (s2[len - 1]);
-      else
+      অন্যথা
         {
           s1[len - 1] = tolower ('a');
           s2[len - 1] = toupper (tolower ('a') + 1);
@@ -140,18 +140,18 @@ do_test (size_t align1, size_t align2, size_t n, size_t len, int max_char,
     do_one_test (impl, s1, s2, n, exp_result);
 }
 
-static void
-do_page_tests (void)
+স্থির শূন্য
+do_page_tests (শূন্য)
 {
-  char *s1, *s2;
-  int exp_result;
-  const size_t maxoffset = 64;
+  বর্ণ *s1, *s2;
+  পূর্ণাঙ্ক exp_result;
+  ধ্রুব size_t maxoffset = 64;
 
-  s1 = (char *) buf1 + BUF1PAGES * page_size - maxoffset;
+  s1 = (বর্ণ *) buf1 + BUF1PAGES * page_size - maxoffset;
   memset (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
 
-  s2 = (char *) buf2 + page_size - maxoffset;
+  s2 = (বর্ণ *) buf2 + page_size - maxoffset;
   memset (s2, 'a', maxoffset - 1);
   s2[maxoffset - 1] = '\0';
 
@@ -165,9 +165,9 @@ do_page_tests (void)
      inputs with a size larger than the string (so memory access outside
      the expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
+  প্রতি (size_t off1 = 0; off1 < maxoffset; off1++)
     {
-      for (size_t off2 = 0; off2 < maxoffset; off2++)
+      প্রতি (size_t off2 = 0; off2 < maxoffset; off2++)
 	{
 	  exp_result = (off1 == off2)
 			? 0
@@ -182,74 +182,74 @@ do_page_tests (void)
     }
 }
 
-static void
-do_random_tests (void)
+স্থির শূন্য
+do_random_tests (শূন্য)
 {
   size_t i, j, n, align1, align2, pos, len1, len2;
-  int result;
+  পূর্ণাঙ্ক result;
   long r;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
+  unsigned বর্ণ *p1 = buf1 + page_size - 512;
+  unsigned বর্ণ *p2 = buf2 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  প্রতি (n = 0; n < ITERATIONS; n++)
     {
       align1 = random () & 31;
-      if (random () & 1)
+      যদি (random () & 1)
 	align2 = random () & 31;
-      else
+      অন্যথা
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1 > align2 ? align1 : align2;
-      if (pos + j >= 511)
+      যদি (pos + j >= 511)
 	pos = 510 - j - (random () & 7);
       len1 = random () & 511;
-      if (pos >= len1 && (random () & 1))
+      যদি (pos >= len1 && (random () & 1))
 	len1 = pos + (random () & 7);
-      if (len1 + j >= 512)
+      যদি (len1 + j >= 512)
 	len1 = 511 - j - (random () & 7);
-      if (pos >= len1)
+      যদি (pos >= len1)
 	len2 = len1;
-      else
+      অন্যথা
 	len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
       j = (pos > len2 ? pos : len2) + align1 + 64;
-      if (j > 512)
+      যদি (j > 512)
 	j = 512;
-      for (i = 0; i < j; ++i)
+      প্রতি (i = 0; i < j; ++i)
 	{
 	  p1[i] = tolower (random () & 255);
-	  if (i < len1 + align1 && !p1[i])
+	  যদি (i < len1 + align1 && !p1[i])
 	    {
 	      p1[i] = tolower (random () & 255);
-	      if (!p1[i])
+	      যদি (!p1[i])
 		p1[i] = tolower (1 + (random () & 127));
 	    }
 	}
-      for (i = 0; i < j; ++i)
+      প্রতি (i = 0; i < j; ++i)
 	{
 	  p2[i] = toupper (random () & 255);
-	  if (i < len2 + align2 && !p2[i])
+	  যদি (i < len2 + align2 && !p2[i])
 	    {
 	      p2[i] = toupper (random () & 255);
-	      if (!p2[i])
+	      যদি (!p2[i])
 		toupper (p2[i] = 1 + (random () & 127));
 	    }
 	}
 
       result = 0;
       memcpy (p2 + align2, p1 + align1, pos);
-      if (pos < len1)
+      যদি (pos < len1)
 	{
-	  if (tolower (p2[align2 + pos]) == p1[align1 + pos])
+	  যদি (tolower (p2[align2 + pos]) == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = toupper (random () & 255);
-	      if (tolower (p2[align2 + pos]) == p1[align1 + pos])
+	      যদি (tolower (p2[align2 + pos]) == p1[align1 + pos])
 		p2[align2 + pos] = toupper (p1[align1 + pos]
 					    + 3 + (random () & 127));
 	    }
 
-	  if (p1[align1 + pos] < tolower (p2[align2 + pos]))
+	  যদি (p1[align1 + pos] < tolower (p2[align2 + pos]))
 	    result = -1;
-	  else
+	  অন্যথা
 	    result = 1;
 	}
       p1[len1 + align1] = 0;
@@ -257,12 +257,12 @@ do_random_tests (void)
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (char *) (p1 + align1), (char *) (p2 + align2),
+	  r = CALL (impl, (বর্ণ *) (p1 + align1), (বর্ণ *) (p2 + align2),
 		    pos + 1 + (random () & 255));
 	  /* Test whether on 64-bit architectures where ABI requires
 	     callee to promote has the promotion been done.  */
 	  asm ("" : "=g" (r) : "0" (r));
-	  if ((r == 0 && result)
+	  যদি ((r == 0 && result)
 	      || (r < 0 && result >= 0)
 	      || (r > 0 && result <= 0))
 	    {
@@ -275,14 +275,14 @@ do_random_tests (void)
 }
 
 /* Regression test for BZ #12205 */
-static void
-bz12205 (void)
+স্থির শূন্য
+bz12205 (শূন্য)
 {
-  static char cp [4096+16] __attribute__ ((aligned(4096)));
-  static char gotrel[4096] __attribute__ ((aligned(4096)));
-  char *s1 = cp + 0xffa;
-  char *s2 = gotrel + 0xcbe;
-  int exp_result;
+  স্থির বর্ণ cp [4096+16] __attribute__ ((aligned(4096)));
+  স্থির বর্ণ gotrel[4096] __attribute__ ((aligned(4096)));
+  বর্ণ *s1 = cp + 0xffa;
+  বর্ণ *s2 = gotrel + 0xcbe;
+  পূর্ণাঙ্ক exp_result;
   size_t n = 6;
 
   strcpy (s1, "gottpoff");
@@ -294,20 +294,20 @@ bz12205 (void)
 }
 
 /* Regression test for BZ #14195 */
-static void
-bz14195 (void)
+স্থির শূন্য
+bz14195 (শূন্য)
 {
-  const char *empty_string  = "";
+  ধ্রুব বর্ণ *empty_string  = "";
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, empty_string, "", 5, 0);
 }
 
-static void
-test_locale (const char *locale, int extra_tests)
+স্থির শূন্য
+test_locale (ধ্রুব বর্ণ *locale, পূর্ণাঙ্ক extra_tests)
 {
   size_t i, j, k;
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
-  if (setlocale (LC_CTYPE, locale) == NULL)
+  ধ্রুব size_t test_len = MIN(TEST_LEN, 3 * 4096);
+  যদি (setlocale (LC_CTYPE, locale) == রিক্ত)
     {
       error (0, 0, "cannot set locale \"%s\"", locale);
       ret = 1;
@@ -321,7 +321,7 @@ test_locale (const char *locale, int extra_tests)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 16; ++i)
+  প্রতি (i = 1; i < 16; ++i)
     {
       do_test (i, i, i - 1, i, 127, 0);
 
@@ -334,7 +334,7 @@ test_locale (const char *locale, int extra_tests)
       do_test (i, i, i + 1, i, 127, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  প্রতি (i = 1; i < 10; ++i)
     {
       do_test (0, 0, (2 << i) - 1, 2 << i, 127, 0);
       do_test (0, 0, 2 << i, 2 << i, 254, 0);
@@ -355,7 +355,7 @@ test_locale (const char *locale, int extra_tests)
       do_test (0, 0, (2 << i) + 10, 2 << i, 254, -1);
     }
 
-  for (i = 1; i < 8; ++i)
+  প্রতি (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, (8 << i) - 1, 8 << i, 127, 0);
       do_test (i, 2 * i, 8 << i, 8 << i, 127, 0);
@@ -378,9 +378,9 @@ test_locale (const char *locale, int extra_tests)
       do_test (2 * i, i, (8 << i) + 100, 8 << i, 254, -1);
     }
 
-  for (j = 0; extra_tests && j < 160; ++j)
+  প্রতি (j = 0; extra_tests && j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      প্রতি (i = 0; i < test_len;)
         {
             do_test (getpagesize () - j - 1, 0, i + 1, i, 127, 0);
             do_test (getpagesize () - j - 1, 0, i + 1, i, 127, 1);
@@ -442,7 +442,7 @@ test_locale (const char *locale, int extra_tests)
             do_test (j, getpagesize () - j - 1, ULONG_MAX - i, i, 127, 1);
             do_test (j, getpagesize () - j - 1, ULONG_MAX - i, i, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          প্রতি (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i - 1, i,
                        127, 0);
@@ -465,29 +465,29 @@ test_locale (const char *locale, int extra_tests)
               do_test (getpagesize () - k - 1, getpagesize () - j - 1, i + 1,
                        i, 127, 1);
             }
-          if (i < 32)
+          যদি (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          অন্যথা যদি (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          অন্যথা যদি (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              যদি (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          অন্যথা যদি (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          অন্যথা
             {
               i += 1;
             }
@@ -498,8 +498,8 @@ test_locale (const char *locale, int extra_tests)
   do_page_tests ();
 }
 
-int
-test_main (void)
+পূর্ণাঙ্ক
+test_main (শূন্য)
 {
   test_init ();
 
@@ -509,7 +509,7 @@ test_main (void)
   test_locale ("tr_TR.ISO-8859-9", 0);
   test_locale ("tr_TR.UTF-8", 0);
 
-  return ret;
+  প্রত্যাগম ret;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

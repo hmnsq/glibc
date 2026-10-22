@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <signal.h>
+#অন্তর্ভাব <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#অন্তর্ভাব <support/support.h>
+#অন্তর্ভাব <support/check.h>
 
-static const struct test_t
+স্থির ধ্রুব সংরচনা test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  পূর্ণাঙ্ক errno;
+  ধ্রুব বর্ণ *abbrev;
+  ধ্রুব বর্ণ *descr;
 } tests[] =
 {
 #define N_(name)                      name
 #define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
+#অন্তর্ভাব <siglist.h>
 #undef init_sig
 };
 
-static int
-do_test (void)
+স্থির পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  প্রতি (size_t i = 0; i < array_length (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  প্রত্যাগম 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

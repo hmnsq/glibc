@@ -15,41 +15,41 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/check.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+শূন্য try (ধ্রুব বর্ণ *name, long long পূর্ণাঙ্ক param, পূর্ণাঙ্ক মান, পূর্ণাঙ্ক expected)
 {
-  if (value != expected)
+  যদি (মান != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
+	      name, param, expected, মান);
       support_record_failure ();
     }
-  else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+  অন্যথা
+    printf ("%s(%#llx) as expected %d\n", name, param, মান);
 }
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  int i;
+  পূর্ণাঙ্ক i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  প্রতি (i=0 ; i < 8 * পরিমাণ (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  প্রতি (i=0 ; i < 8 * পরিমাণ (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, পূর্ণাঙ্ক);
+  TEST (ffsl, long পূর্ণাঙ্ক);
+  TEST (ffsll, long long পূর্ণাঙ্ক);
 
-  return 0;
+  প্রত্যাগম 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

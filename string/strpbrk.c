@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#অন্তর্ভাব <string.h>
 
 #undef strpbrk
 
@@ -24,10 +24,10 @@
 #endif
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
-char *
-STRPBRK (const char *s, const char *accept)
+বর্ণ *
+STRPBRK (ধ্রুব বর্ণ *s, ধ্রুব বর্ণ *accept)
 {
   s += strcspn (s, accept);
-  return *s ? (char *)s : NULL;
+  প্রত্যাগম *s ? (বর্ণ *)s : রিক্ত;
 }
 libc_hidden_builtin_def (strpbrk)

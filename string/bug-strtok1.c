@@ -1,27 +1,27 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <stdio.h>
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  ধ্রুব বর্ণ str[] = "axaaba";
+  বর্ণ *token;
+  বর্ণ *cp;
+  বর্ণ *l;
+  পূর্ণাঙ্ক result = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
   printf ("cp = %p, len = %zu\n", cp, strlen (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == রিক্ত || strcmp (token, "x");
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "ab");
-  result |= token != NULL;
+  result |= token != রিক্ত;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "a");
-  result |= token != NULL;
+  result |= token != রিক্ত;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
 
   puts ("test strtok_r");
@@ -29,16 +29,16 @@ do_test (void)
   size_t len = strlen (cp);
   printf ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == রিক্ত || strcmp (token, "x");
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != রিক্ত || l != cp + len;
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != রিক্ত || l != cp + len;
   printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
 
-  return result;
+  প্রত্যাগম result;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

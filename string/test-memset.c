@@ -20,35 +20,35 @@
 #ifdef TEST_BZERO
 # ifdef TEST_EXPLICIT_BZERO
 #  define TEST_NAME "explicit_bzero"
-# else
+# অন্যথা
 #  define TEST_NAME "bzero"
 # endif
-#else
+#অন্যথা
 # ifndef WIDE
 #  ifdef TEST_MEMSET_EXPLICIT
 #   define TEST_NAME "memset_explicit"
-#  else
+#  অন্যথা
 #   define TEST_NAME "memset"
 #  endif
-# else
+# অন্যথা
 #  define TEST_NAME "wmemset"
 # endif /* WIDE */
 #endif /* !TEST_BZERO */
 #define MIN_PAGE_SIZE 131072
-#include "test-string.h"
+#অন্তর্ভাব "test-string.h"
 
 #ifndef WIDE
 # ifdef TEST_MEMSET_EXPLICIT
 #  define MEMSET memset_explicit
-# else
+# অন্যথা
 #  define MEMSET memset
 # endif
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR বর্ণ
+# define UCHAR unsigned বর্ণ
 # define SIMPLE_MEMSET simple_memset
 # define MEMCMP memcmp
 # define BIG_CHAR CHAR_MAX
-#else
+#অন্যথা
 # include <wchar.h>
 # define MEMSET wmemset
 # define CHAR wchar_t
@@ -59,47 +59,47 @@
 #endif /* WIDE */
 
 #ifdef TEST_BZERO
-typedef void (*proto_t) (char *, size_t);
+প্রকারনির্দেশ শূন্য (*proto_t) (বর্ণ *, size_t);
 # ifdef TEST_EXPLICIT_BZERO
 IMPL (explicit_bzero, 1)
-# else
+# অন্যথা
 IMPL (bzero, 1)
 # endif
-#else
-typedef CHAR *(*proto_t) (CHAR *, int, size_t);
+#অন্যথা
+প্রকারনির্দেশ CHAR *(*proto_t) (CHAR *, পূর্ণাঙ্ক, size_t);
 IMPL (MEMSET, 1)
 #endif /* !TEST_BZERO */
 
 /* Naive implementation to verify results.  */
 CHAR *
 test_cc_inhibit_loop_to_libcall
-SIMPLE_MEMSET (CHAR *s, int c, size_t n)
+SIMPLE_MEMSET (CHAR *s, পূর্ণাঙ্ক c, size_t n)
 {
   CHAR *r = s, *end = s + n;
-  while (r < end)
+  যাবত্ (r < end)
     *r++ = c;
-  return s;
+  প্রত্যাগম s;
 }
 
-static void
-do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int space_below, int space_above)
+স্থির শূন্য
+do_one_test (impl_t *impl, CHAR *s, পূর্ণাঙ্ক c __attribute ((unused)), size_t n, পূর্ণাঙ্ক space_below, পূর্ণাঙ্ক space_above)
 {
   CHAR buf[n];
   CHAR sentinel = ~c;
-  if (space_below)
+  যদি (space_below)
       s[-1] = sentinel;
-  if (space_above)
+  যদি (space_above)
       s[n] = sentinel;
   SIMPLE_MEMSET(s, ~c, n);
 #ifdef TEST_BZERO
   SIMPLE_MEMSET (buf, 0, n);
   CALL (impl, s, n);
-  if (memcmp (s, buf, n) != 0
+  যদি (memcmp (s, buf, n) != 0
       || (space_below && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#else
+#অন্যথা
   CHAR *res = CALL (impl, s, c, n);
-  if (res != s
+  যদি (res != s
       || SIMPLE_MEMSET (buf, c, n) != buf
       || MEMCMP (s, buf, n) != 0
       || (space_below && s[-1] != sentinel)
@@ -108,118 +108,118 @@ do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int 
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      প্রত্যাগম;
     }
 }
 
-static void
-do_test (size_t align, int c, size_t len)
+স্থির শূন্য
+do_test (size_t align, পূর্ণাঙ্ক c, size_t len)
 {
-  int space_below, space_above;
+  পূর্ণাঙ্ক space_below, space_above;
   align &= 4095;
-  if ((align + len) * sizeof (CHAR) > page_size)
-    return;
+  যদি ((align + len) * পরিমাণ (CHAR) > page_size)
+    প্রত্যাগম;
 
   space_below = !!align;
-  space_above = !((align + len + 1) * sizeof (CHAR) > page_size);
+  space_above = !((align + len + 1) * পরিমাণ (CHAR) > page_size);
 
   FOR_EACH_IMPL (impl, 0)
     do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_below, space_above);
 }
 
 #ifndef TEST_BZERO
-static void
-do_random_tests (void)
+স্থির শূন্য
+do_random_tests (শূন্য)
 {
   size_t i, j, k, n, align, len, size;
-  int c, o;
+  পূর্ণাঙ্ক c, o;
   UCHAR *p, *res;
   UCHAR *p2 = (UCHAR *) buf2;
 
-  for (i = 0; i < 65536 / sizeof (CHAR); ++i)
+  প্রতি (i = 0; i < 65536 / পরিমাণ (CHAR); ++i)
     p2[i] = random () & BIG_CHAR;
 
-  for (n = 0; n < ITERATIONS; n++)
+  প্রতি (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 31) == 0)
-	size = 65536 / sizeof (CHAR);
-      else
+      যদি ((random () & 31) == 0)
+	size = 65536 / পরিমাণ (CHAR);
+      অন্যথা
 	size = 512;
       p = (UCHAR *) (buf1 + page_size) - size;
       len = random () & (size - 1);
       align = size - len - (random () & 31);
-      if (align > size)
+      যদি (align > size)
 	align = size - len;
-      if ((random () & 7) == 0)
+      যদি ((random () & 7) == 0)
 	align &= ~63;
-      if ((random () & 7) == 0)
+      যদি ((random () & 7) == 0)
 	c = 0;
-      else
+      অন্যথা
 	c = random () & BIG_CHAR;
       o = random () & BIG_CHAR;
-      if (o == c)
+      যদি (o == c)
 	o = (c + 1) & BIG_CHAR;
       j = len + align + 128;
-      if (j > size)
+      যদি (j > size)
 	j = size;
-      if (align >= 128)
+      যদি (align >= 128)
 	k = align - 128;
-      else
+      অন্যথা
 	k = 0;
-      for (i = k; i < align; ++i)
+      প্রতি (i = k; i < align; ++i)
 	p[i] = o;
-      for (i = align + len; i < j; ++i)
+      প্রতি (i = align + len; i < j; ++i)
 	p[i] = o;
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  for (i = 0; i < len; ++i)
+	  প্রতি (i = 0; i < len; ++i)
 	    {
 	      p[i + align] = p2[i];
-	      if (p[i + align] == c)
+	      যদি (p[i + align] == c)
 		p[i + align] = o;
 	    }
 	  res = (UCHAR *) CALL (impl, (CHAR *) p + align, c, len);
-	  if (res != p + align)
+	  যদি (res != p + align)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd) %p != %p",
 		     n, impl->name, align, c, len, res, p + align);
 	      ret = 1;
 	    }
-	  for (i = k; i < align; ++i)
-	    if (p[i] != o)
+	  প্রতি (i = k; i < align; ++i)
+	    যদি (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage before %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		ভঙ্গ;
 	      }
-	  for (; i < align + len; ++i)
-	    if (p[i] != c)
+	  প্রতি (; i < align + len; ++i)
+	    যদি (p[i] != c)
 	      {
 		error (0, 0, "Iteration %zd - not cleared correctly %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		ভঙ্গ;
 	      }
-	  for (; i < j; ++i)
-	    if (p[i] != o)
+	  প্রতি (; i < j; ++i)
+	    যদি (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage after %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		ভঙ্গ;
 	      }
 	}
     }
 }
 #endif /* !TEST_BZERO */
 
-int
-test_main (void)
+পূর্ণাঙ্ক
+test_main (শূন্য)
 {
   size_t i;
-  int c = 0;
+  পূর্ণাঙ্ক c = 0;
 
   test_init ();
 
@@ -229,17 +229,17 @@ test_main (void)
   putchar ('\n');
 
 #ifndef TEST_BZERO
-  for (c = -65; c <= 130; c += 65)
+  প্রতি (c = -65; c <= 130; c += 65)
 #endif
     {
-      for (i = 0; i < 18; ++i)
+      প্রতি (i = 0; i < 18; ++i)
 	do_test (0, c, 1 << i);
-      for (i = 1; i < 64; ++i)
+      প্রতি (i = 1; i < 64; ++i)
 	{
 	  do_test (i, c, i);
 	  do_test (4096 - i, c, i);
 	  do_test (4095, c, i);
-	  if (i & (i - 1))
+	  যদি (i & (i - 1))
 	    do_test (0, c, i);
 	}
       do_test (1, c, 14);
@@ -252,7 +252,7 @@ test_main (void)
   do_random_tests ();
 #endif
 
-  return ret;
+  প্রত্যাগম ret;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>
