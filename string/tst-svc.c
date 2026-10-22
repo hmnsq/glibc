@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ضمن <stdlib.h>
+#ضمن <stdio.h>
+#ضمن <string.h>
 
-#define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#وصف_ڪريو  MAX_لڙيون      256
+#وصف_ڪريو  MAX_سٽ_سائيز    32
 
-static int
-compare (const void *p1, const void *p2)
+ساكن صحيح
+compare (ثابت فراغ *p1, ثابت فراغ *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  أرجع strverscmp (*((حرف **) p1), *((حرف **) p2));
 }
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  حرف سٽ[MAX_سٽ_سائيز + 1];
+  حرف *str[MAX_لڙيون];
+  صحيح  ڳڻپ = 0;
+  صحيح  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  طالما (ڳڻپ < MAX_لڙيون && fgets (سٽ, MAX_سٽ_سائيز, stdin) != عدم)
     {
-      n = strlen (line) - 1;
+      n = لڙي_ڊيگهه (سٽ) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      إذا (سٽ[n] == '\n')
+        سٽ[n] = '\0';
 
-      str[count] = strdup (line);
+      str[ڳڻپ] = strdup (سٽ);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      إذا (str[ڳڻپ] == عدم)
+        ٻاهر_نڪرو (EXIT_FAILURE);
 
-      ++count;
+      ++ڳڻپ;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, ڳڻپ, حجم (حرف *), compare);
 
-  for (i = 0; i < count; ++i)
+  لكل (i = 0; i < ڳڻپ; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  أرجع EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

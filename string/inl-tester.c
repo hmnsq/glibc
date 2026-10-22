@@ -1,6 +1,6 @@
 /* We want to test the inline functions here.  */
 
-#define DO_STRING_INLINES
-#undef __USE_STRING_INLINES
-#define __USE_STRING_INLINES 1
-#include "tester.c"
+#وصف_ڪريو DO_STRING_INLINES
+#وصف_رد __USE_STRING_INLINES
+#وصف_ڪريو __USE_STRING_INLINES 1
+#ضمن "tester.c"

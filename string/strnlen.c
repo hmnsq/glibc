@@ -15,24 +15,24 @@
    License along with the GNU C Library; see the file COPYING.LIB.  If
    not, see <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
 /* Find the length of S, but scan at most MAXLEN characters.  If no
    '\0' terminator is found in that many characters, return MAXLEN.  */
 
-#ifdef STRNLEN
+#جيڪڏهن_وصف_ٿيل STRNLEN
 # define __strnlen STRNLEN
-#endif
+#جيڪڏهن_پورو
 
 size_t
-__strnlen (const char *str, size_t maxlen)
+__strnlen (ثابت حرف *str, size_t maxlen)
 {
-  const char *found = memchr (str, '\0', maxlen);
-  return found ? found - str : maxlen;
+  ثابت حرف *مليو = memchr (str, '\0', maxlen);
+  أرجع مليو ? مليو - str : maxlen;
 }
 
-#ifndef STRNLEN
+#جيڪڏهن_وصف_نه_ٿيل STRNLEN
 weak_alias (__strnlen, strnlen)
 libc_hidden_def (__strnlen)
 libc_hidden_def (strnlen)
-#endif
+#جيڪڏهن_پورو

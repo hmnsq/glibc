@@ -16,133 +16,133 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "memmem"
-#define BUF1PAGES 20
-#define ITERATIONS 500
-#include "test-string.h"
+#وصف_ڪريو TEST_MAIN
+#وصف_ڪريو TEST_NAME "memmem"
+#وصف_ڪريو BUF1_صفحا 20
+#وصف_ڪريو ITERATIONS 500
+#ضمن "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+تعريفنوع حرف *(*proto_t) (ثابت فراغ *, size_t, ثابت فراغ *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+فراغ *
+simple_memmem (ثابت فراغ *haystack, size_t haystack_len, ثابت فراغ *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  ثابت حرف *begin;
+  ثابت حرف *ثابت آخري_possible
+    = (ثابت حرف *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  إذا (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    أرجع (فراغ *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  إذا (__glibc_unlikely (haystack_len < needle_len))
+    أرجع عدم;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  لكل (begin = (ثابت حرف *) haystack; begin <= آخري_possible; ++begin)
+    إذا (begin[0] == ((ثابت حرف *) needle)[0]
+        && !memcmp ((ثابت فراغ *) &begin[1],
+		    (ثابت فراغ *) ((ثابت حرف *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      أرجع (فراغ *) begin;
 
-  return NULL;
+  أرجع عدم;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ساكن صحيح
+check_نتيجو (impl_t *impl, ثابت فراغ *haystack, size_t haystack_len,
+	     ثابت فراغ *needle, size_t needle_len, ثابت فراغ *expected)
 {
-  void *res;
+  فراغ *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  إذا (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      أرجع -1;
     }
 
-  return 0;
+  أرجع 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ساكن فراغ
+do_one_test (impl_t *impl, ثابت فراغ *haystack, size_t haystack_len,
+	     ثابت فراغ *needle, size_t needle_len, ثابت فراغ *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  إذا (check_نتيجو (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    أرجع;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+ساكن فراغ
+do_test (ثابت حرف *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  حرف tmpbuf[len];
 
-  memcpy (tmpbuf, buf1 + idx, len);
-  memcpy (buf1 + idx, str, len);
+  يادگيري_نقل (tmpbuf, buf1 + idx, len);
+  يادگيري_نقل (buf1 + idx, str, len);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, buf1, BUF1PAGES * page_size, str, len, buf1 + idx);
+    do_one_test (impl, buf1, BUF1_صفحا * صفحو_سائيز, str, len, buf1 + idx);
 
-  memcpy (buf1 + idx, tmpbuf, len);
+  يادگيري_نقل (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  لكل (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      حرف tmpbuf[32];
 
-      size_t shift = random () % 11;
-      size_t rel = random () % ((2 << (shift + 1)) * 64);
-      size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
-      len = MIN (len, BUF1PAGES * page_size - idx - 1);
-      memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      size_t سرڪايو = random () % 11;
+      size_t rel = random () % ((2 << (سرڪايو + 1)) * 64);
+      size_t idx = MIN ((2 << سرڪايو) * 64 + rel, BUF1_صفحا * صفحو_سائيز - 2);
+      size_t len = random () % (حجم (tmpbuf) - 1) + 1;
+      len = MIN (len, BUF1_صفحا * صفحو_سائيز - idx - 1);
+      يادگيري_نقل (tmpbuf, buf1 + idx, len);
+      لكل (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  حرف ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
 
       FOR_EACH_IMPL (impl, 0)
-	do_one_test (impl, buf1, BUF1PAGES * page_size, buf1 + idx, len,
+	do_one_test (impl, buf1, BUF1_صفحا * صفحو_سائيز, buf1 + idx, len,
 		     buf1 + idx);
 
-      memcpy (buf1 + idx, tmpbuf, len);
+      يادگيري_نقل (buf1 + idx, tmpbuf, len);
     }
 }
 
-static void
-check1 (void)
+ساكن فراغ
+check1 (فراغ)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  ثابت حرف ڳولا_buf_معلومات[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  ثابت حرف نمونو[2] = { 0x78, 0x56 };
+  فراغ *ڳولا_buf = (فراغ *) buf1 + صفحو_سائيز - حجم ڳولا_buf_معلومات;
+  فراغ *exp_نتيجو;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  يادگيري_نقل (ڳولا_buf, ڳولا_buf_معلومات, حجم ڳولا_buf_معلومات);
+  exp_نتيجو = simple_memmem (ڳولا_buf, حجم ڳولا_buf_معلومات,
+			      نمونو, حجم نمونو);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_نتيجو (impl, ڳولا_buf, حجم ڳولا_buf_معلومات,
+		  نمونو, حجم نمونو, exp_نتيجو);
 }
 
-static const char *const strs[] =
+ساكن ثابت حرف *ثابت strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i;
 
@@ -159,24 +159,24 @@ test_main (void)
 
   check1 ();
 
-  printf ("%23s", "");
+  لکو ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکو ("\t%s", impl->name);
+  اکر_لکو ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  لكل (i = 0; i < BUF1_صفحا * صفحو_سائيز; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  لكل (i = 0; i < حجم (strs) / حجم (strs[0]); ++i)
+    لكل (size_t j = 0; j < 120; j += 7)
       {
-	size_t len = strlen (strs[i]);
+	size_t len = لڙي_ڊيگهه (strs[i]);
 
 	do_test (strs[i], len, j);
       }
 
   do_random_tests ();
-  return ret;
+  أرجع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

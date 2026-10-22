@@ -38,19 +38,19 @@
    printf, but we know the OS won't erase it, so we can do all the
    checks and printing from the normal stack.  */
 
-#define _GNU_SOURCE 1
+#وصف_ڪريو GNU_ذريعو 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#ضمن <errno.h>
+#ضمن <signal.h>
+#ضمن <stdio.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
+#ضمن <ucontext.h>
+#ضمن <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+ساكن ثابت بنانشان حرف test_نمونو[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,9 +60,9 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
-#define PATTERN_REPS 32
-#define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
+#وصف_ڪريو نمونو_سائيز (حجم test_نمونو)
+#وصف_ڪريو نمونو_REPS 32
+#وصف_ڪريو TEST_بفر_سائيز (نمونو_سائيز * نمونو_REPS)
 
 /* There are three subtests, two of which are sanity checks.
    Each test follows this sequence:
@@ -70,16 +70,16 @@ static const unsigned char test_pattern[16] =
      main                      coroutine
      ----                      --------
      advance cur_subtest
-     swap
+مٽا_سٽا
                                call setup function
                                  prepare test buffer
-                                 swap
+مٽا_سٽا
      verify that buffer
      was filled in
-     swap
+مٽا_سٽا
                                  possibly clear buffer
                                  return
-                               swap
+مٽا_سٽا
      check buffer again,
      according to test
      expectation
@@ -95,100 +95,100 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+ساكن ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+ساكن __attribute_optimization_barrier__ صحيح
+use_test_بفر (بنانشان حرف *buf)
 {
-  unsigned int sum = 0;
+  بنانشان صحيح جوڙ = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    sum += buf[i * PATTERN_SIZE];
+  لكل (بنانشان صحيح i = 0; i < نمونو_REPS; i++)
+    جوڙ += buf[i * نمونو_سائيز];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  أرجع (جوڙ == 2 * نمونو_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#إذا defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#وإلا
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
-#endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+#جيڪڏهن_پورو
+ساكن مضمن ALWAYS_INLINE فراغ
+prepare_test_بفر (بنانشان حرف *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
+  لكل (بنانشان صحيح i = 0; i < نمونو_REPS; i++)
+    يادگيري_نقل (buf + i*نمونو_سائيز, test_نمونو, نمونو_سائيز);
 
-  if (swapcontext (&uc_co, &uc_main))
+  إذا (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  إذا (use_test_بفر (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+ساكن فراغ
+تياري_no_clear (فراغ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  بنانشان حرف buf[TEST_بفر_سائيز];
+  prepare_test_بفر (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+ساكن فراغ
+تياري_ordinary_clear (فراغ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-  memset (buf, 0, TEST_BUFFER_SIZE);
+  بنانشان حرف buf[TEST_بفر_سائيز];
+  prepare_test_بفر (buf);
+  memset (buf, 0, TEST_بفر_سائيز);
 }
 
-static void
-setup_explicit_clear (void)
+ساكن فراغ
+تياري_explicit_clear (فراغ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-#ifdef TEST_MEMSET_EXPLICIT
-  memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
-  explicit_bzero (buf, TEST_BUFFER_SIZE);
-#endif
+  بنانشان حرف buf[TEST_بفر_سائيز];
+  prepare_test_بفر (buf);
+#جيڪڏهن_وصف_ٿيل TEST_MEMSET_EXPLICIT
+  memset_explicit (buf, 0, TEST_بفر_سائيز);
+#وإلا
+  explicit_bzero (buf, TEST_بفر_سائيز);
+#جيڪڏهن_پورو
 }
 
-enum test_expectation
+تعداد test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+بنية subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  فراغ (*تياري_subtest) (فراغ);
+  ثابت حرف *label;
+  تعداد test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+ساكن ثابت بنية subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+ساكن ثابت بنية subtest subtests[] =
 {
-  { setup_no_clear,       "no clear",       EXPECT_SOME },
+  { تياري_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
      optimizations.  */
-  { setup_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
-  { setup_explicit_clear, "explicit clear", EXPECT_NONE },
+  { تياري_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
+  { تياري_explicit_clear, "explicit clear", EXPECT_NONE },
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+ساكن فراغ
+test_coroutine (فراغ)
 {
-  while (cur_subtest->setup_subtest)
+  طالما (cur_subtest->تياري_subtest)
     {
-      cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      cur_subtest->تياري_subtest ();
+      إذا (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+ساكن صحيح test_حالت;
+ساكن بنانشان حرف *co_ڍير_بفر;
+ساكن size_t co_ڍير_سائيز;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+ساكن بنانشان صحيح
+ڳڻپ_test_patterns (بنانشان حرف *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  بنانشان حرف *پهريون = memmem (buf, bufsiz, test_نمونو, نمونو_سائيز);
+  إذا (!پهريون)
+    أرجع 0;
+  بنانشان صحيح cnt = 0;
+  لكل (بنانشان صحيح i = 0; i < نمونو_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      بنانشان حرف *p = پهريون + i*نمونو_سائيز;
+      إذا (p + نمونو_سائيز - buf > bufsiz)
+	اكسر;
+      إذا (memcmp (p, test_نمونو, نمونو_سائيز) == 0)
 	cnt++;
     }
-  return cnt;
+  أرجع cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+ساكن فراغ
+check_test_بفر (تعداد test_expectation expected,
+		   ثابت حرف *label, ثابت حرف *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  بنانشان صحيح cnt = ڳڻپ_test_patterns (co_ڍير_بفر, co_ڍير_سائيز);
+  بدل (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
-	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+    حالة EXPECT_NONE:
+      إذا (cnt == 0)
+	لکو ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
+      وإلا
 	{
-	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
-	  test_status = 1;
+	  لکو ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
+	  test_حالت = 1;
 	}
-      break;
+      اكسر;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
-	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+    حالة EXPECT_SOME:
+      إذا (cnt > 0)
+	لکو ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
+      وإلا
 	{
-	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
-	  test_status = 1;
+	  لکو ("FAIL: %s/%s: expected some got 0\n", label, stage);
+	  test_حالت = 1;
 	}
-      break;
+      اكسر;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
-	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
-		PATTERN_REPS, cnt);
-      else
+     حالة EXPECT_ALL:
+      إذا (cnt == نمونو_REPS)
+	لکو ("PASS: %s/%s: expected %d got %d\n", label, stage,
+		نمونو_REPS, cnt);
+      وإلا
 	{
-	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
-		  PATTERN_REPS, cnt);
-	  test_status = 1;
+	  لکو ("FAIL: %s/%s: expected %d got %d\n", label, stage,
+		  نمونو_REPS, cnt);
+	  test_حالت = 1;
 	}
-      break;
+      اكسر;
 
-    case NO_EXPECTATIONS:
-      printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
+    حالة NO_EXPECTATIONS:
+      لکو ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      اكسر;
 
-    default:
-      printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
-      test_status = 1;
+    افتراضي:
+      لکو ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
+	      label, stage, (صحيح)expected);
+      test_حالت = 1;
     }
 }
 
-static void
-test_loop (void)
+ساكن فراغ
+test_loop (فراغ)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  طالما (cur_subtest->تياري_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      إذا (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      check_test_بفر (EXPECT_ALL, cur_subtest->label, "prepare");
+      إذا (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
+      check_test_بفر (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  إذا (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  size_t صفحو_alignment = sysconf (_SC_PAGESIZE);
+  إذا (صفحو_alignment < حجم (فراغ *))
+    صفحو_alignment = حجم (فراغ *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_ڍير_سائيز = SIGSTKSZ + TEST_بفر_سائيز;
+  إذا (co_ڍير_سائيز < صفحو_alignment * 4)
+    co_ڍير_سائيز = صفحو_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  فراغ *p;
+  صحيح err = posix_memalign (&p, صفحو_alignment, co_ڍير_سائيز);
+  إذا (err || !p)
     {
-      printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      لکو ("ERROR: allocating alt stack: %s\n", strerror (err));
+      أرجع 2;
     }
-  co_stack_buffer = p;
+  co_ڍير_بفر = p;
 
-  if (getcontext (&uc_co))
+  إذا (getcontext (&uc_co))
     {
-      printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      لکو ("ERROR: allocating coroutine context: %s\n", strerror (err));
+      أرجع 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_ڍير_بفر;
+  uc_co.uc_stack.ss_size = co_ڍير_سائيز;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  أرجع test_حالت;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

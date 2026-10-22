@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#جيڪڏهن_وصف_نه_ٿيل GNU_ذريعو
+#وصف_ڪريو GNU_ذريعو
+#جيڪڏهن_پورو
 
 /* Make sure we test the optimized inline functions.  */
-#define __USE_STRING_INLINES	1
+#وصف_ڪريو __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#ضمن <errno.h>
+#ضمن <stdio.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
+#ضمن <strings.h>
+#ضمن <fcntl.h>
 
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  صحيح حالت;
+  صحيح errors = 0;
+  حرف buf1[1000];
+  حرف *cp;
+  حرف ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  إذا (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  إذا (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  إذا (strchr ("hello world", ch++) == عدم)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ثابت حرف * ثابت hw = "hello world";
+  إذا (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  إذا (errors == 0)
     {
-      status = EXIT_SUCCESS;
+      حالت = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  وإلا
     {
-      status = EXIT_FAILURE;
-      printf ("%d errors.\n", errors);
+      حالت = EXIT_FAILURE;
+      لکو ("%d errors.\n", errors);
     }
-  return status;
+  أرجع حالت;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

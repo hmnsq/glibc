@@ -15,35 +15,35 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#ضمن <string.h>
+#ضمن <libc-diag.h>
 
-#ifndef RAWMEMCHR
+#جيڪڏهن_وصف_نه_ٿيل RAWMEMCHR
 # define RAWMEMCHR __rawmemchr
-#endif
+#جيڪڏهن_پورو
 
 /* The pragmata should be nested inside RAWMEMCHR below, but that
    triggers GCC PR 98512.  */
-DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+DIAG_ڌڪو_NEEDS_COMMENT;
+#إذا __GNUC_PREREQ (7, 0)
 /* GCC 8 warns about the size passed to memchr being larger than
    PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
 DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-overflow=");
-#endif
-#if __GNUC_PREREQ (11, 0)
+#جيڪڏهن_پورو
+#إذا __GNUC_PREREQ (11, 0)
 /* Likewise GCC 11, with a different warning option.  */
 DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
-#endif
+#جيڪڏهن_پورو
 
 /* Find the first occurrence of C in S.  */
-void *
-RAWMEMCHR (const void *s, int c)
+فراغ *
+RAWMEMCHR (ثابت فراغ *s, صحيح c)
 {
-  if ((unsigned char) c != '\0')
-    return memchr (s, c, (size_t)-1);
-  return (char *)s + strlen (s);
+  إذا ((بنانشان حرف) c != '\0')
+    أرجع memchr (s, c, (size_t)-1);
+  أرجع (حرف *)s + لڙي_ڊيگهه (s);
 }
 libc_hidden_def (__rawmemchr)
 weak_alias (__rawmemchr, rawmemchr)
 
-DIAG_POP_NEEDS_COMMENT;
+DIAG_ڪڍو_NEEDS_COMMENT;

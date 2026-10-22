@@ -17,18 +17,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdio.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <array_length.h>
+#ضمن <string.h>
+#ضمن <stdio.h>
+#ضمن <signal.h>
+#ضمن <stdlib.h>
+#ضمن <locale.h>
+#ضمن <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#ضمن <support/support.h>
+#ضمن <support/check.h>
 
-static int
-do_test (void)
+ساكن صحيح
+do_test (فراغ)
 {
   unsetenv ("LANGUAGE");
 
@@ -36,29 +36,29 @@ do_test (void)
 
   TEST_COMPARE_STRING (strsignal (SIGINT),     "Interrupt");
   TEST_COMPARE_STRING (strsignal (-1),         "Unknown signal -1");
-#ifdef SIGRTMIN
-  if (SIGRTMIN < SIGRTMAX)
+#جيڪڏهن_وصف_ٿيل SIGRTMIN
+  إذا (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),   "Real-time signal 0");
-#endif
-#ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+#جيڪڏهن_پورو
+#جيڪڏهن_وصف_ٿيل SIGRTMAX
+  إذا (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Unknown signal 65");
-#endif
+#جيڪڏهن_پورو
 
   xsetlocale (LC_ALL, "pt_BR.UTF-8");
 
   TEST_COMPARE_STRING (strsignal (SIGINT),    "Interrup\xc3\xa7\xc3\xa3\x6f");
   TEST_COMPARE_STRING (strsignal (-1),        "Sinal desconhecido -1");
-#ifdef SIGRTMI
-  if (SIGRTMIN < SIGRTMAX)
+#جيڪڏهن_وصف_ٿيل SIGRTMI
+  إذا (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),  "Sinal de tempo-real 0");
-#endif
-#ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+#جيڪڏهن_پورو
+#جيڪڏهن_وصف_ٿيل SIGRTMAX
+  إذا (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Sinal desconhecido 65");
-#endif
+#جيڪڏهن_پورو
 
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

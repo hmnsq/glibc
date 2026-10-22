@@ -16,8 +16,8 @@
    License along with the GNU C Library; if not, see
    <http://www.gnu.org/licenses/>.  */
 
-#ifndef _BITS_ENDIAN_H
-#define _BITS_ENDIAN_H 1
+#جيڪڏهن_وصف_نه_ٿيل _BITS_ENDIAN_H
+#وصف_ڪريو _BITS_ENDIAN_H 1
 
 /* Definitions for byte order, according to significance of bytes,
    from low addresses to high addresses.  The value is what you get by
@@ -27,23 +27,23 @@
    each byte, starting with the byte at the lowest address at the left,
    and proceeding to the byte with the highest address at the right.  */
 
-#define	__LITTLE_ENDIAN	1234
-#define	__BIG_ENDIAN	4321
-#define	__PDP_ENDIAN	3412
+#وصف_ڪريو	__LITTLE_ENDIAN	1234
+#وصف_ڪريو	__BIG_ENDIAN	4321
+#وصف_ڪريو	__PDP_ENDIAN	3412
 
 /* This file defines `__BYTE_ORDER' for the particular machine.  */
-#include <bits/endianness.h>
+#ضمن <bits/endianness.h>
 
 /* Some machines may need to use a different endianness for floating point
    values.  */
-#ifndef __FLOAT_WORD_ORDER
+#جيڪڏهن_وصف_نه_ٿيل __FLOAT_WORD_ORDER
 # define __FLOAT_WORD_ORDER __BYTE_ORDER
-#endif
+#جيڪڏهن_پورو
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#إذا __BYTE_ORDER == __LITTLE_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) LO, HI
-#elif __BYTE_ORDER == __BIG_ENDIAN
+#وإلاإذا __BYTE_ORDER == __BIG_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) HI, LO
-#endif
+#جيڪڏهن_پورو
 
-#endif /* bits/endian.h */
+#جيڪڏهن_پورو /* bits/endian.h */

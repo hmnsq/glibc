@@ -15,8 +15,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define USE_IN_EXTENDED_LOCALE_MODEL	1
-#include "strcasecmp.c"
+#وصف_ڪريو USE_اندريون_EXTENDED_LOCALE_MODEL	1
+#ضمن "strcasecmp.c"
 
 libc_hidden_def (__strcasecmp_l)
 weak_alias (__strcasecmp_l, strcasecmp_l)

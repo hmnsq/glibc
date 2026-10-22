@@ -1,25 +1,25 @@
 /* Testcase for strtok reported by Andrew Church <achurch@achurch.org>.  */
-#include <stdio.h>
-#include <string.h>
+#ضمن <stdio.h>
+#ضمن <string.h>
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  حرف buf[1] = { 0 };
+  صحيح نتيجو = 0;
 
-  if (strtok (buf, " ") != NULL)
+  إذا (strtok (buf, " ") != عدم)
     {
       puts ("first strtok call did not return NULL");
-      result = 1;
+      نتيجو = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  وإلا إذا (strtok (عدم, " ") != عدم)
     {
       puts ("second strtok call did not return NULL");
-      result = 1;
+      نتيجو = 1;
     }
 
-  return result;
+  أرجع نتيجو;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

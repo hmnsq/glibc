@@ -16,23 +16,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define BUF1PAGES 1
-#include "test-string.h"
+#وصف_ڪريو TEST_MAIN
+#وصف_ڪريو BUF1_صفحا 1
+#ضمن "test-string.h"
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
-  char **saveptrp;
-  char *tok;
+  حرف سٽ[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  حرف **saveptrp;
+  حرف *tok;
 
   test_init ();
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
-  saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
-  tok = strtok_r (line, " \t", saveptrp);
-  return strcmp (tok, "udf") != 0;
+  saveptrp = (حرف **) (buf1 + صفحو_سائيز - حجم (*saveptrp));
+  tok = strtok_r (سٽ, " \t", saveptrp);
+  أرجع strcmp (tok, "udf") != 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

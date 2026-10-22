@@ -15,42 +15,42 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#جيڪڏهن_وصف_ٿيل HAVE_CONFIG_H
 # include "config.h"
-#endif
+#جيڪڏهن_پورو
 
-#include <stdio.h>
-#include <sys/types.h>
+#ضمن <stdio.h>
+#ضمن <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#إذا defined _LIBC || defined STDC_سرا
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-#endif
+#وإلا
+حرف *يادگيري_ڏيو ();
+#جيڪڏهن_پورو
 
-#undef __strndup
-#undef strndup
+#وصف_رد __strndup
+#وصف_رد strndup
 
-#ifndef weak_alias
+#جيڪڏهن_وصف_نه_ٿيل weak_alias
 # define __strndup strndup
-#endif
+#جيڪڏهن_پورو
 
-char *
-__strndup (const char *s, size_t n)
+حرف *
+__strndup (ثابت حرف *s, size_t n)
 {
   size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  حرف *new = (حرف *) يادگيري_ڏيو (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  إذا (new == عدم)
+    أرجع عدم;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  أرجع (حرف *) يادگيري_نقل (new, s, len);
 }
-#ifdef libc_hidden_def
+#جيڪڏهن_وصف_ٿيل libc_hidden_def
 libc_hidden_def (__strndup)
-#endif
-#ifdef weak_alias
+#جيڪڏهن_پورو
+#جيڪڏهن_وصف_ٿيل weak_alias
 weak_alias (__strndup, strndup)
-#endif
+#جيڪڏهن_پورو
