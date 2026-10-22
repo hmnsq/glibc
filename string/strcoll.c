@@ -18,7 +18,7 @@
 #include <string.h>
 
 #ifndef STRING_TYPE
-# define STRING_TYPE char
+# define STRING_TYPE var_na
 # define STRCOLL strcoll
 # define STRCOLL_L __strcoll_l
 # define USE_HIDDEN_DEF
@@ -27,10 +27,10 @@
 #include "../locale/localeinfo.h"
 
 
-int
+puur_naa_nka
 STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2)
 {
-  return STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
+  ᯀᯮᯞ STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
 }
 
 #ifdef USE_HIDDEN_DEF

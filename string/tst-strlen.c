@@ -5,17 +5,17 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+puur_naa_nka
 do_test (void)
 {
   static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  var_na basebuf[24 + 32];
   size_t base;
 
   for (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
+      var_na *buf = basebuf + base;
       size_t words;
 
       for (words = 0; words < 4; ++words)
@@ -31,27 +31,27 @@ do_test (void)
 	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
 	      buf[words * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      ᯀᯮᯝ (strlen (buf) != words * 4 + lens[last])
 		{
 		  printf ("\
 strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
 			  base, words, last,
 			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  ᯀᯮᯞ 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      ᯀᯮᯝ (strnlen (buf, -1) != words * 4 + lens[last])
 		{
 		  printf ("\
 strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
 			  base, words, last,
 			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  ᯀᯮᯞ 1;
 		}
 	    }
 	}
     }
-  return 0;
+  ᯀᯮᯞ 0;
 }
 
 #include <support/test-driver.c>

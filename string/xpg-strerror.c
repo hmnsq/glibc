@@ -23,24 +23,24 @@
 
 
 /* Fill buf with a string describing the errno code in ERRNUM.  */
-int
-__xpg_strerror_r (int errnum, char *buf, size_t buflen)
+puur_naa_nka
+__xpg_strerror_r (puur_naa_nka errnum, var_na *buf, size_t buflen)
 {
-  const char *estr = __strerror_r (errnum, buf, buflen);
+  const var_na *estr = __strerror_r (errnum, buf, buflen);
 
   /* We know that __strerror_r returns buf (with a dynamically computed
      string) if errnum is invalid, otherwise it returns a string whose
      storage has indefinite extent.  */
-  if (estr == buf)
-    return EINVAL;
-  else
+  ᯀᯮᯝ (estr == buf)
+    ᯀᯮᯞ EINVAL;
+  ᯀᯮᯝᯂᯪ
     {
       size_t estrlen = strlen (estr);
 
       /* Terminate the string in any case.  */
-      if (buflen > 0)
-	*((char *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
+      ᯀᯮᯝ (buflen > 0)
+	*((var_na *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
 
-      return buflen <= estrlen ? ERANGE : 0;
+      ᯀᯮᯞ buflen <= estrlen ? ERANGE : 0;
     }
 }

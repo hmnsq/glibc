@@ -32,21 +32,21 @@
 IMPL (memcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memcpy (char *dst, const char *src, size_t n)
+var_na *
+simple_memcpy (var_na *dst, const var_na *src, size_t n)
 {
-  char *ret = dst;
-  while (n--)
+  var_na *ret = dst;
+  ᯀᯬᯝ (n--)
     *dst++ = *src++;
-  return ret;
+  ᯀᯮᯞ ret;
 }
 
 #endif
-typedef char *(*proto_t) (char *, const char *, size_t);
+typedef var_na *(*proto_t) (var_na *, const var_na *, size_t);
 typedef uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
 
 static void
-do_one_test (impl_t *impl, char *dst, const char *src, size_t len)
+do_one_test (impl_t *impl, var_na *dst, const var_na *src, size_t len)
 {
   size_t i;
 
@@ -54,22 +54,22 @@ do_one_test (impl_t *impl, char *dst, const char *src, size_t len)
   for (i = 0; i < len; i++)
     dst[i] = 0;
 
-  if (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
+  ᯀᯮᯝ (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
              CALL (impl, dst, src, len), MEMCPY_RESULT (dst, len));
       ret = 1;
-      return;
+      ᯀᯮᯞ;
     }
 
-  if (memcmp (dst, src, len) != 0)
+  ᯀᯮᯝ (memcmp (dst, src, len) != 0)
     {
       error (0, 0,
              "Wrong result in function %s dst %p \"%.*s\" src %p \"%.*s\" len "
              "%zu",
-             impl->name, dst, (int)len, dst, src, (int)len, src, len);
+             impl->name, dst, (puur_naa_nka)len, dst, src, (puur_naa_nka)len, src, len);
       ret = 1;
-      return;
+      ᯀᯮᯞ;
     }
 }
 
@@ -77,18 +77,18 @@ static void
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  var_na *s1, *s2;
 
   align1 &= 4095;
-  if (align1 + len >= page_size)
-    return;
+  ᯀᯮᯝ (align1 + len >= page_size)
+    ᯀᯮᯞ;
 
   align2 &= 4095;
-  if (align2 + len >= page_size)
-    return;
+  ᯀᯮᯝ (align2 + len >= page_size)
+    ᯀᯮᯞ;
 
-  s1 = (char *)(buf1 + align1);
-  s2 = (char *)(buf2 + align2);
+  s1 = (var_na *)(buf1 + align1);
+  s2 = (var_na *)(buf2 + align2);
   for (size_t repeats = 0; repeats < 2; ++repeats)
     {
       for (i = 0, j = 1; i < len; i++, j += 23)
@@ -97,8 +97,8 @@ do_test (size_t align1, size_t align2, size_t len)
       FOR_EACH_IMPL (impl, 0)
       do_one_test (impl, s2, s1, len);
 
-      s1 = (char *) (buf2 + align1);
-      s2 = (char *) (buf1 + align2);
+      s1 = (var_na *) (buf2 + align1);
+      s2 = (var_na *) (buf1 + align2);
     }
 }
 
@@ -109,11 +109,11 @@ do_test1 (size_t align1, size_t align2, size_t size)
   size_t mmap_size, region_size;
 
   align1 &= (page_size - 1);
-  if (align1 == 0)
+  ᯀᯮᯝ (align1 == 0)
     align1 = page_size;
 
   align2 &= (page_size - 1);
-  if (align2 == 0)
+  ᯀᯮᯝ (align2 == 0)
     align2 = page_size;
 
   region_size = (size + page_size - 1) & (~(page_size - 1));
@@ -121,15 +121,15 @@ do_test1 (size_t align1, size_t align2, size_t size)
   mmap_size = region_size * 2 + 3 * page_size;
   large_buf = mmap (NULL, mmap_size, PROT_READ | PROT_WRITE,
                     MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (large_buf == MAP_FAILED)
+  ᯀᯮᯝ (large_buf == MAP_FAILED)
     {
       puts ("Failed to allocate large_buf, skipping do_test");
-      return;
+      ᯀᯮᯞ;
     }
-  if (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
+  ᯀᯮᯝ (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
 
-  size_t array_size = size / sizeof (uint32_t);
+  size_t array_size = size / parimaa_na (uint32_t);
   unaligned_uint32_t *dest = large_buf + align1;
   unaligned_uint32_t *src = large_buf + region_size + 2 * page_size + align2;
   size_t i;
@@ -140,11 +140,11 @@ do_test1 (size_t align1, size_t align2, size_t size)
       FOR_EACH_IMPL (impl, 0)
 	{
 	  memset (dest, -1, size);
-	  CALL (impl, (char *)dest, (char *)src, size);
-	  if (memcmp (src, dest, size))
+	  CALL (impl, (var_na *)dest, (var_na *)src, size);
+	  ᯀᯮᯝ (memcmp (src, dest, size))
 	    {
 	      for (i = 0; i < array_size; i++)
-		if (dest[i] != src[i])
+		ᯀᯮᯝ (dest[i] != src[i])
 		  {
 		    error (0, 0,
 			   "Wrong result in function %s dst \"%p\" src \"%p\" "
@@ -152,7 +152,7 @@ do_test1 (size_t align1, size_t align2, size_t size)
 			   impl->name, dest, src, i);
 		    ret = 1;
 		    munmap ((void *)large_buf, mmap_size);
-		    return;
+		    ᯀᯮᯞ;
 		  }
 	    }
 	}

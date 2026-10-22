@@ -29,36 +29,36 @@
 # define STPCPY __stpcpy
 #endif
 
-static __always_inline char *
+static __always_inline var_na *
 write_byte_from_word (op_t *dest, op_t word)
 {
-  char *d = (char *) dest;
+  var_na *d = (var_na *) dest;
   for (size_t i = 0; i < OPSIZ; i++, ++d)
     {
-      char c = extractbyte (word, i);
+      var_na c = extractbyte (word, i);
       *d = c;
-      if (c == '\0')
-	break;
+      ᯀᯮᯝ (c == '\0')
+	bha_nga;
     }
-  return d;
+  ᯀᯮᯞ d;
 }
 
-static __always_inline char *
+static __always_inline var_na *
 stpcpy_aligned_loop (op_t *restrict dst, const op_t *restrict src)
 {
   op_t word;
-  while (1)
+  ᯀᯬᯝ (1)
     {
       word = *src++;
-      if (has_zero (word))
-	break;
+      ᯀᯮᯝ (has_zero (word))
+	bha_nga;
       *dst++ = word;
     }
 
-  return write_byte_from_word (dst, word);
+  ᯀᯮᯞ write_byte_from_word (dst, word);
 }
 
-static __always_inline char *
+static __always_inline var_na *
 stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
 		       uintptr_t ofs)
 {
@@ -67,23 +67,23 @@ stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
   uintptr_t sh_2 = OPSIZ * CHAR_BIT - sh_1;
 
   op_t w2 = MERGE (w2a, sh_1, (op_t)-1, sh_2);
-  if (!has_zero (w2))
+  ᯀᯮᯝ (!has_zero (w2))
     {
       op_t w2b;
 
       /* Unaligned loop.  The invariant is that W2B, which is "ahead" of W1,
 	 does not contain end-of-string.  Therefore it is safe (and necessary)
 	 to read another word from each while we do not have a difference.  */
-      while (1)
+      ᯀᯬᯝ (1)
 	{
 	  w2b = *src++;
 	  w2 = MERGE (w2a, sh_1, w2b, sh_2);
 	  /* Check if there is zero on w2a.  */
-	  if (has_zero (w2))
+	  ᯀᯮᯝ (has_zero (w2))
 	    goto out;
 	  *dst++ = w2;
-	  if (has_zero (w2b))
-	    break;
+	  ᯀᯮᯝ (has_zero (w2b))
+	    bha_nga;
 	  w2a = w2b;
 	}
 
@@ -92,27 +92,27 @@ stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
     }
 
 out:
-  return write_byte_from_word (dst, w2);
+  ᯀᯮᯞ write_byte_from_word (dst, w2);
 }
 
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-char *
-STPCPY (char *dest, const char *src)
+var_na *
+STPCPY (var_na *dest, const var_na *src)
 {
   /* Copy just a few bytes to make DEST aligned.  */
   size_t len = (-(uintptr_t) dest) % OPSIZ;
   for (; len != 0; len--, ++dest)
     {
-      char c = *src++;
+      var_na c = *src++;
       *dest = c;
-      if (c == '\0')
-	return dest;
+      ᯀᯮᯝ (c == '\0')
+	ᯀᯮᯞ dest;
     }
 
   /* DEST is now aligned to op_t, SRC may or may not be.  */
   uintptr_t ofs = (uintptr_t) src % OPSIZ;
-  return ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (const op_t *) src)
+  ᯀᯮᯞ ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (const op_t *) src)
 		  : stpcpy_unaligned_loop ((op_t*) dest,
 					   (const op_t *) (src - ofs) , ofs);
 }

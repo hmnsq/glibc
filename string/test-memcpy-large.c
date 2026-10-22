@@ -40,7 +40,7 @@ do_random_large_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i, j;
@@ -97,7 +97,7 @@ test_main (void)
     }
 
   do_random_large_tests ();
-  return ret;
+  ᯀᯮᯞ ret;
 }
 
 #include <support/test-driver.c>

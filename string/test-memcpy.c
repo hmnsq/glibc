@@ -23,13 +23,13 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, len, size1, size2, size;
-  int c;
-  unsigned char *p1, *p2;
-  unsigned char *res;
+  puur_naa_nka c;
+  unsigned var_na *p1, *p2;
+  unsigned var_na *res;
 
   for (n = 0; n < ITERATIONS; n++)
     {
-      if (n == 0)
+      ᯀᯮᯝ (n == 0)
         {
           len = getpagesize ();
           size = len + 512;
@@ -38,41 +38,41 @@ do_random_tests (void)
           align1 = 512;
           align2 = 512;
         }
-      else
+      ᯀᯮᯝᯂᯪ
         {
-          if ((random () & 255) == 0)
+          ᯀᯮᯝ ((random () & 255) == 0)
             size = 65536;
-          else
+          ᯀᯮᯝᯂᯪ
             size = 768;
-          if (size > page_size)
+          ᯀᯮᯝ (size > page_size)
             size = page_size;
           size1 = size;
           size2 = size;
           i = random ();
-          if (i & 3)
+          ᯀᯮᯝ (i & 3)
             size -= 256;
-          if (i & 1)
+          ᯀᯮᯝ (i & 1)
             size1 -= 256;
-          if (i & 2)
+          ᯀᯮᯝ (i & 2)
             size2 -= 256;
-          if (i & 4)
+          ᯀᯮᯝ (i & 4)
             {
               len = random () % size;
               align1 = size1 - len - (random () & 31);
               align2 = size2 - len - (random () & 31);
-              if (align1 > size1)
+              ᯀᯮᯝ (align1 > size1)
                 align1 = 0;
-              if (align2 > size2)
+              ᯀᯮᯝ (align2 > size2)
                 align2 = 0;
             }
-          else
+          ᯀᯮᯝᯂᯪ
             {
               align1 = random () & 63;
               align2 = random () & 63;
               len = random () % size;
-              if (align1 + len > size1)
+              ᯀᯮᯝ (align1 + len > size1)
                 align1 = size1 - len;
-              if (align2 + len > size2)
+              ᯀᯮᯝ (align2 + len > size2)
                 align2 = size2 - len;
             }
         }
@@ -80,7 +80,7 @@ do_random_tests (void)
       p2 = buf2 + page_size - size2;
       c = random () & 255;
       j = align1 + len + 256;
-      if (j > size1)
+      ᯀᯮᯝ (j > size1)
         j = size1;
       for (i = 0; i < j; ++i)
         p1[i] = random () & 255;
@@ -88,12 +88,12 @@ do_random_tests (void)
       FOR_EACH_IMPL (impl, 1)
       {
         j = align2 + len + 256;
-        if (j > size2)
+        ᯀᯮᯝ (j > size2)
           j = size2;
         memset (p2, c, j);
-        res = (unsigned char *)CALL (impl, (char *)(p2 + align2),
-                                     (char *)(p1 + align1), len);
-        if (res != MEMCPY_RESULT (p2 + align2, len))
+        res = (unsigned var_na *)CALL (impl, (var_na *)(p2 + align2),
+                                     (var_na *)(p1 + align1), len);
+        ᯀᯮᯝ (res != MEMCPY_RESULT (p2 + align2, len))
           {
             error (0, 0,
                    "Iteration %zd - wrong result in function %s (%zd, %zd, "
@@ -104,27 +104,27 @@ do_random_tests (void)
           }
         for (i = 0; i < align2; ++i)
           {
-            if (p2[i] != c)
+            ᯀᯮᯝ (p2[i] != c)
               {
                 error (0, 0,
                        "Iteration %zd - garbage before, %s (%zd, %zd, %zd)", n,
                        impl->name, align1, align2, len);
                 ret = 1;
-                break;
+                bha_nga;
               }
           }
         for (i = align2 + len; i < j; ++i)
           {
-            if (p2[i] != c)
+            ᯀᯮᯝ (p2[i] != c)
               {
                 error (0, 0,
                        "Iteration %zd - garbage after, %s (%zd, %zd, %zd)", n,
                        impl->name, align1, align2, len);
                 ret = 1;
-                break;
+                bha_nga;
               }
           }
-        if (memcmp (p1 + align1, p2 + align2, len))
+        ᯀᯮᯝ (memcmp (p1 + align1, p2 + align2, len))
           {
             error (0, 0,
                    "Iteration %zd - different strings, %s (%zd, %zd, %zd)", n,
@@ -135,7 +135,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i, j;
@@ -164,7 +164,7 @@ test_main (void)
 
   for (i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
+      ᯀᯮᯝ ((i & (i - 1)) == 0)
         continue;
       do_test (0, 0, 16 * i);
       do_test (i, 0, 16 * i);
@@ -222,7 +222,7 @@ test_main (void)
         }
     }
 
-  return ret;
+  ᯀᯮᯞ ret;
 }
 
 #include <support/test-driver.c>
