@@ -23,7 +23,7 @@ uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-static int
+static 整数
 do_test (void)
 {
   /* This is a compilation test.  */
@@ -42,7 +42,7 @@ do_test (void)
   (void) u16;
   (void) u32;
   (void) u64;
-  return 0;
+  返回 0;
 }
 
 #include <support/test-driver.c>

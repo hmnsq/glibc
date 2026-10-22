@@ -32,7 +32,7 @@
 void *
 MEMPCPY (void *dest, const void *src, size_t len)
 {
-  return memcpy (dest, src, len) + len;
+  返回 memcpy (dest, src, len) + len;
 }
 libc_hidden_def (__mempcpy)
 static_weak_alias (__mempcpy, mempcpy)

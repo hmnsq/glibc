@@ -25,7 +25,7 @@
 #ifndef _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#否则
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
@@ -35,31 +35,31 @@
 
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#否则
 # define LOCALE_PARAM
 #endif
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
+整数
 __strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#如果 defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
 #endif
   const unsigned char *p1 = (const unsigned char *) s1;
   const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+  整数 result;
 
-  if (p1 == p2)
-    return 0;
+  如果 (p1 == p2)
+    返回 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
+  当 ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    如果 (*p1++ == '\0')
       break;
 
-  return result;
+  返回 result;
 }
 #ifndef __strcasecmp
 libc_hidden_def (__strcasecmp)

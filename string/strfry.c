@@ -23,10 +23,10 @@
 char *
 strfry (char *string)
 {
-  static int init;
+  static 整数 init;
   static struct random_data rdata;
 
-  if (!init)
+  如果 (!init)
     {
       static char state[32];
       rdata.state = NULL;
@@ -36,8 +36,8 @@ strfry (char *string)
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  如果 (len > 0)
+    为 (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
@@ -48,5 +48,5 @@ strfry (char *string)
 	string[j] = c;
       }
 
-  return string;
+  返回 string;
 }

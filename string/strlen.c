@@ -37,14 +37,14 @@ __strlen (const char *str)
 
   op_t word = *word_ptr;
   find_t mask = shift_find (find_zero_all (word), s_int);
-  if (mask != 0)
-    return index_first (mask);
+  如果 (mask != 0)
+    返回 index_first (mask);
 
   do
     word = *++word_ptr;
-  while (! has_zero (word));
+  当 (! has_zero (word));
 
-  return ((const char *) word_ptr) + index_first_zero (word) - str;
+  返回 ((const char *) word_ptr) + index_first_zero (word) - str;
 }
 #ifndef STRLEN
 weak_alias (__strlen, strlen)

@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <support/check.h>
 
-static int
+static 整数
 do_test (void)
 {
   struct {
@@ -62,7 +62,7 @@ do_test (void)
   TEST_COMPARE_BLOB (&s, sizeof (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
-  return 0;
+  返回 0;
 }
 
 #include <support/test-driver.c>

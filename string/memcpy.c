@@ -27,13 +27,13 @@
 void *
 MEMCPY (void *dstpp, const void *srcpp, size_t len)
 {
-  unsigned long int dstp = (long int) dstpp;
-  unsigned long int srcp = (long int) srcpp;
+  unsigned long 整数 dstp = (long 整数) dstpp;
+  unsigned long 整数 srcp = (long 整数) srcpp;
 
   /* Copy from the beginning to the end.  */
 
   /* If there not too few bytes to copy, use word copy.  */
-  if (len >= OP_T_THRES)
+  如果 (len >= OP_T_THRES)
     {
       /* Copy just a few bytes to make DSTP aligned.  */
       len -= (-dstp) % OPSIZ;
@@ -56,6 +56,6 @@ MEMCPY (void *dstpp, const void *srcpp, size_t len)
   /* There are just a few bytes to copy.  Use byte memory operations.  */
   BYTE_COPY_FWD (dstp, srcp, len);
 
-  return dstpp;
+  返回 dstpp;
 }
 libc_hidden_builtin_def (MEMCPY)

@@ -22,7 +22,7 @@ char *
 __basename (const char *filename)
 {
   char *p = strrchr (filename, '/');
-  return p ? p + 1 : (char *) filename;
+  返回 p ? p + 1 : (char *) filename;
 }
 libc_hidden_def (__basename)
 static_weak_alias (__basename, basename)
