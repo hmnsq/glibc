@@ -25,12 +25,12 @@
 IMPL (mempcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_mempcpy (char *dst, const char *src, size_t n)
+var_na *
+simple_mempcpy (var_na *dst, const var_na *src, size_t n)
 {
-  while (n--)
+  ᰀᰬ (n--)
     *dst++ = *src++;
-  return dst;
+  ᰀᰧᰌ dst;
 }
 
 #include "test-memcpy.c"

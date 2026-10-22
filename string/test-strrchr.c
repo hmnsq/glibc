@@ -19,7 +19,7 @@
 #define TEST_MAIN
 #ifdef WIDE
 # define TEST_NAME "wcsrchr"
-#else
+#ᰀᰧᰀ
 # define TEST_NAME "strrchr"
 #endif
 #include "test-string.h"
@@ -31,15 +31,15 @@
 # define UCHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#else
+#ᰀᰧᰀ
 # define STRRCHR strrchr
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
 #endif
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+typedef CHAR *(*proto_t) (const CHAR *, puur_naa_nka);
 
 IMPL (STRRCHR, 1)
 
@@ -61,7 +61,7 @@ IMPL (STRRCHR, 1)
 # define STRRCHR __strrchr_default
 # include "string/strrchr.c"
 # define STRRCHR_DEFAULT __strrchr_default
-#else
+#ᰀᰧᰀ
 # define WCSRCHR __wcsrchr_default
 # include "wcsmbs/wcsrchr.c"
 # define STRRCHR_DEFAULT __wcsrchr_default
@@ -69,20 +69,20 @@ IMPL (STRRCHR, 1)
 IMPL (STRRCHR_DEFAULT, 1)
 
 static void
-do_one_test (impl_t *impl, const CHAR *s, int c, CHAR *exp_res)
+do_one_test (impl_t *impl, const CHAR *s, puur_naa_nka c, CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ᰀᰧ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      ᰀᰧᰌ;
     }
 }
 
 static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+do_test (size_t align, size_t pos, size_t len, puur_naa_nka seek_char, puur_naa_nka max_char)
 /* For wcsrchr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
@@ -92,29 +92,29 @@ do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
   CHAR *buf = (CHAR *) buf1;
 
   align &= 7;
-  if ( (align + len) * sizeof (CHAR) >= page_size)
-    return;
+  ᰀᰧ ( (align + len) * parimaa_na (CHAR) >= page_size)
+    ᰀᰧᰌ;
 
   for (i = 0; i < len; ++i)
     {
       buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      ᰀᰧ (!buf[align + i])
 	buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      ᰀᰧ (!buf[align + i])
 	buf[align + i] = 1;
-      if ((i > pos || pos >= len) && buf[align + i] == seek_char)
+      ᰀᰧ ((i > pos || pos >= len) && buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 10 + (random () & 15);
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  ᰀᰧ (pos < len)
     {
       buf[align + pos] = seek_char;
       result = (CHAR *) (buf + align + pos);
     }
-  else if (seek_char == 0)
+  ᰀᰧᰀ ᰀᰧ (seek_char == 0)
     result = (CHAR *) (buf + align + len);
-  else
+  ᰀᰧᰀ
     result = NULL;
 
   FOR_EACH_IMPL (impl, 0)
@@ -125,70 +125,70 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
+  puur_naa_nka seek_char;
   CHAR *result;
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
 
   for (n = 0; n < ITERATIONS; n++)
     {
-      align = random () & (63 / sizeof (CHAR));
+      align = random () & (63 / parimaa_na (CHAR));
       /* For wcsrchr: align here means align not in bytes, but in wchar_ts,
 	 in bytes it will equal to align * (sizeof (wchar_t)).
 	 For strrchr we need to check all alignments from 0 to 63 since
 	 some assembly implementations have separate prolog for alignments
 	 more 48. */
       pos = random () & 511;
-      if (pos + align >= 511)
+      ᰀᰧ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
-      if (pos >= len)
+      ᰀᰧ (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      ᰀᰧ (len + align >= 512)
 	len = 511 - align - (random () & 7);
       seek_char = random () & 255;
-      if (seek_char && pos == len)
+      ᰀᰧ (seek_char && pos == len)
 	{
-	  if (pos)
+	  ᰀᰧ (pos)
 	    --pos;
-	  else
+	  ᰀᰧᰀ
 	    ++len;
 	}
       j = len + align + 64;
-      if (j > 512)
+      ᰀᰧ (j > 512)
 	j = 512;
 
       for (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ᰀᰧ (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  ᰀᰧᰀ ᰀᰧ (i == len + align)
 	    p[i] = 0;
-	  else
+	  ᰀᰧᰀ
 	    {
 	      p[i] = random () & 255;
-	      if (((i > pos + align && i < len + align) || pos > len)
+	      ᰀᰧ (((i > pos + align && i < len + align) || pos > len)
 		  && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      ᰀᰧ (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  ᰀᰧ (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
+      ᰀᰧ (pos <= len)
 	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
+      ᰀᰧᰀ ᰀᰧ (seek_char == 0)
 	result = (CHAR *) (p + len + align);
-      else
+      ᰀᰧᰀ
 	result = NULL;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	ᰀᰧ (CALL (impl, (CHAR *) (p + align), seek_char) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
@@ -198,7 +198,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -247,7 +247,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ᰀᰧᰌ ret;
 }
 
 #include <support/test-driver.c>

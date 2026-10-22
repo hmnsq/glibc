@@ -20,36 +20,36 @@
 #include <string.h>
 #include <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+void try (const var_na *name, long long puur_naa_nka param, puur_naa_nka value, puur_naa_nka expected)
 {
-  if (value != expected)
+  ᰀᰧ (value != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
 	      name, param, expected, value);
       support_record_failure ();
     }
-  else
+  ᰀᰧᰀ
     printf ("%s(%#llx) as expected %d\n", name, param, value);
 }
 
-int
+puur_naa_nka
 do_test (void)
 {
-  int i;
+  puur_naa_nka i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  for (i=0 ; i < 8 * parimaa_na (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  for (i=0 ; i < 8 * parimaa_na (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, puur_naa_nka);
+  TEST (ffsl, long puur_naa_nka);
+  TEST (ffsll, long long puur_naa_nka);
 
-  return 0;
+  ᰀᰧᰌ 0;
 }
 
 #include <support/test-driver.c>

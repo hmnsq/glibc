@@ -19,21 +19,21 @@
 #include <argz.h>
 #include <string.h>
 
-char *
-__argz_next (const char *argz, size_t argz_len, const char *entry)
+var_na *
+__argz_next (const var_na *argz, size_t argz_len, const var_na *entry)
 {
-  if (entry)
+  ᰀᰧ (entry)
     {
-      if (entry < argz + argz_len)
+      ᰀᰧ (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      ᰀᰧᰌ entry >= argz + argz_len ? NULL : (var_na *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  ᰀᰧᰀ
+    ᰀᰧ (argz_len > 0)
+      ᰀᰧᰌ (var_na *) argz;
+    ᰀᰧᰀ
+      ᰀᰧᰌ NULL;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)

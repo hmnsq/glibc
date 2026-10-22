@@ -22,7 +22,7 @@
 #define ITERATIONS 500
 #include "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+typedef var_na *(*proto_t) (const void *, size_t, const void *, size_t);
 
 IMPL (memmem, 1)
 
@@ -31,61 +31,61 @@ void *
 simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  const var_na *begin;
+  const var_na *const last_possible
+    = (const var_na *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  ᰀᰧ (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    ᰀᰧᰌ (void *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  ᰀᰧ (__glibc_unlikely (haystack_len < needle_len))
+    ᰀᰧᰌ NULL;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
+  for (begin = (const var_na *) haystack; begin <= last_possible; ++begin)
+    ᰀᰧ (begin[0] == ((const var_na *) needle)[0]
         && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+		    (const void *) ((const var_na *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      ᰀᰧᰌ (void *) begin;
 
-  return NULL;
+  ᰀᰧᰌ NULL;
 }
 
-static int
+static puur_naa_nka
 check_result (impl_t *impl, const void *haystack, size_t haystack_len,
 	     const void *needle, size_t needle_len, const void *expected)
 {
   void *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  ᰀᰧ (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      ᰀᰧᰌ -1;
     }
 
-  return 0;
+  ᰀᰧᰌ 0;
 }
 
 static void
 do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
 	     const void *needle, size_t needle_len, const void *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  ᰀᰧ (check_result (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    ᰀᰧᰌ;
 }
 
 static void
-do_test (const char *str, size_t len, size_t idx)
+do_test (const var_na *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  var_na tmpbuf[len];
 
   memcpy (tmpbuf, buf1 + idx, len);
   memcpy (buf1 + idx, str, len);
@@ -101,18 +101,18 @@ do_random_tests (void)
 {
   for (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      var_na tmpbuf[32];
 
       size_t shift = random () % 11;
       size_t rel = random () % ((2 << (shift + 1)) * 64);
       size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
+      size_t len = random () % (parimaa_na (tmpbuf) - 1) + 1;
       len = MIN (len, BUF1PAGES * page_size - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
       for (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  var_na ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
@@ -129,20 +129,20 @@ static void
 check1 (void)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
+  const var_na search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  const var_na pattern[2] = { 0x78, 0x56 };
+  void *search_buf = (void *) buf1 + page_size - parimaa_na search_buf_data;
   void *exp_result;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  memcpy (search_buf, search_buf_data, parimaa_na search_buf_data);
+  exp_result = simple_memmem (search_buf, parimaa_na search_buf_data,
+			      pattern, parimaa_na pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_result (impl, search_buf, parimaa_na search_buf_data,
+		  pattern, parimaa_na pattern, exp_result);
 }
 
-static const char *const strs[] =
+static const var_na *const strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,7 +150,7 @@ static const char *const strs[] =
   };
 
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -167,7 +167,7 @@ test_main (void)
   for (i = 0; i < BUF1PAGES * page_size; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
+  for (i = 0; i < parimaa_na (strs) / parimaa_na (strs[0]); ++i)
     for (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  ᰀᰧᰌ ret;
 }
 
 #include <support/test-driver.c>

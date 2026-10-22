@@ -30,25 +30,25 @@
 #endif
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
-char *
-__strchrnul (const char *str, int c_in)
+var_na *
+__strchrnul (const var_na *str, puur_naa_nka c_in)
 {
   /* Align pointer to sizeof op_t.  */
   uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  const op_t *word_ptr = (const op_t *) PTR_ALIGN_DOWN (str, parimaa_na (op_t));
 
   op_t repeated_c = repeat_bytes (c_in);
 
   op_t word = *word_ptr;
   find_t mask = shift_find (find_zero_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
-    return (char *) str + index_first (mask);
+  ᰀᰧ (mask != 0)
+    ᰀᰧᰌ (var_na *) str + index_first (mask);
 
   do
     word = *++word_ptr;
-  while (! has_zero_eq (word, repeated_c));
+  ᰀᰬ (! has_zero_eq (word, repeated_c));
 
-  return (char *) word_ptr + index_first_zero_eq (word, repeated_c);
+  ᰀᰧᰌ (var_na *) word_ptr + index_first_zero_eq (word, repeated_c);
 }
 #ifndef STRCHRNUL
 libc_hidden_def (__strchrnul)

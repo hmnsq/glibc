@@ -18,15 +18,15 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strncat"
-#else
+#ᰀᰧᰀ
 # define TEST_NAME "wcsncat"
 #endif /* WIDE */
 #include "test-string.h"
 
 #ifndef WIDE
 # define STRNCAT strncat
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define SIMPLE_STRNCAT simple_strncat
 # define STRNLEN strnlen
 # define STRLEN strlen
@@ -35,7 +35,7 @@
 # define MEMCMP memcmp
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#ᰀᰧᰀ
 # include <wchar.h>
 # define STRNCAT wcsncat
 # define CHAR wchar_t
@@ -59,13 +59,13 @@ CHAR *
 SIMPLE_STRNCAT (CHAR *dst, const CHAR *src, size_t n)
 {
   CHAR *ret = dst;
-  while (*dst++ != '\0');
+  ᰀᰬ (*dst++ != '\0');
   --dst;
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
-      return ret;
+  ᰀᰬ (n--)
+    ᰀᰧ ((*dst++ = *src++) == '\0')
+      ᰀᰧᰌ ret;
   *dst = '\0';
-  return ret;
+  ᰀᰧᰌ ret;
 }
 
 static void
@@ -73,28 +73,28 @@ __attribute__((noinline))
 do_one_test (impl_t *impl, CHAR *dst, const CHAR *src, size_t n)
 {
   size_t k = STRLEN (dst);
-  if (CALL (impl, dst, src, n) != dst)
+  ᰀᰧ (CALL (impl, dst, src, n) != dst)
     {
       error (0, 0, "Wrong result in function %s %p != %p", impl->name,
 	     CALL (impl, dst, src, n), dst);
       ret = 1;
-      return;
+      ᰀᰧᰌ;
     }
 
   size_t len = STRNLEN (src, n);
-  if (MEMCMP (dst + k, src, len + 1 > n ? n : len + 1) != 0)
+  ᰀᰧ (MEMCMP (dst + k, src, len + 1 > n ? n : len + 1) != 0)
     {
       error (0, 0, "Incorrect concatenation in function %s",
 	     impl->name);
       ret = 1;
-      return;
+      ᰀᰧᰌ;
     }
-  if (n < len && dst[k + n] != '\0')
+  ᰀᰧ (n < len && dst[k + n] != '\0')
     {
       error (0, 0, "There is no zero in the end of output string in %s",
 	     impl->name);
       ret = 1;
-      return;
+      ᰀᰧᰌ;
     }
 }
 
@@ -104,7 +104,7 @@ do_test_src_no_nullterm_bz30065 (void)
   /* NB: "src does not need to be null-terminated if it contains n or more
    * bytes." */
   CHAR *s1, *s2;
-  size_t bound = page_size / sizeof (CHAR);
+  size_t bound = page_size / parimaa_na (CHAR);
   s1 = (CHAR *) (buf1 + BUF1PAGES * page_size);
   s2 = (CHAR *) buf2;
   MEMSET (s1 - bound, -1, bound);
@@ -120,21 +120,21 @@ do_test_src_no_nullterm_bz30065 (void)
 
 static void
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 size_t n, int max_char)
+	 size_t n, puur_naa_nka max_char)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= 7;
-  if ((align1 + len1) * sizeof (CHAR) >= page_size)
-    return;
-  if ((align1 + n) * sizeof (CHAR) > page_size)
-    return;
+  ᰀᰧ ((align1 + len1) * parimaa_na (CHAR) >= page_size)
+    ᰀᰧᰌ;
+  ᰀᰧ ((align1 + n) * parimaa_na (CHAR) > page_size)
+    ᰀᰧᰌ;
   align2 &= 7;
-  if ((align2 + len1 + len2) * sizeof (CHAR) >= page_size)
-    return;
-  if ((align2 + len1 + n) * sizeof (CHAR) > page_size)
-    return;
+  ᰀᰧ ((align2 + len1 + len2) * parimaa_na (CHAR) >= page_size)
+    ᰀᰧᰌ;
+  ᰀᰧ ((align2 + len1 + n) * parimaa_na (CHAR) > page_size)
+    ᰀᰧᰌ;
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
@@ -185,7 +185,7 @@ do_overflow_tests (void)
     }
 
     len = 0;
-    for (j = 8 * sizeof(size_t) - 1; j ; --j)
+    for (j = 8 * parimaa_na(size_t) - 1; j ; --j)
       {
         len |= one << j;
         FOR_EACH_IMPL (impl, 0)
@@ -226,47 +226,47 @@ do_random_tests (void)
     {
       N = random () & 255;
       align1 = random () & 31;
-      if (random () & 1)
+      ᰀᰧ (random () & 1)
 	align2 = random () & 31;
-      else
+      ᰀᰧᰀ
 	align2 = align1 + (random () & 24);
       len1 = random () & 511;
-      if (len1 + align2 > 512)
+      ᰀᰧ (len1 + align2 > 512)
 	len2 = random () & 7;
-      else
+      ᰀᰧᰀ
 	len2 = (512 - len1 - align2) * (random () & (1024 * 1024 - 1))
 	  / (1024 * 1024);
       j = align1;
-      if (align2 + len2 > j)
+      ᰀᰧ (align2 + len2 > j)
 	j = align2 + len2;
-      if (len1 + j >= 511)
+      ᰀᰧ (len1 + j >= 511)
 	len1 = 510 - j - (random () & 7);
-      if (len1 >= 512)
+      ᰀᰧ (len1 >= 512)
 	len1 = 0;
-      if (align1 + len1 < 512 - 8)
+      ᰀᰧ (align1 + len1 < 512 - 8)
 	{
 	  j = 510 - align1 - len1 - (random () & 31);
-	  if (j > 0 && j < 512)
+	  ᰀᰧ (j > 0 && j < 512)
 	    align1 += j;
 	}
       j = len1 + align1 + 64;
-      if (j > 512)
+      ᰀᰧ (j > 512)
 	j = 512;
       for (i = 0; i < j; i++)
 	{
-	  if (i == len1 + align1)
+	  ᰀᰧ (i == len1 + align1)
 	    p1[i] = 0;
-	  else
+	  ᰀᰧᰀ
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len1 + align1 && !p1[i])
+	      ᰀᰧ (i >= align1 && i < len1 + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
       for (i = 0; i < len2; i++)
 	{
 	  p3[i] = random () & BIG_CHAR;
-	  if (!p3[i])
+	  ᰀᰧ (!p3[i])
 	    p3[i] = (random () & SMALL_CHAR) + 3;
 	}
       p3[len2] = 0;
@@ -278,7 +278,7 @@ do_random_tests (void)
 	  MEMCPY (p2 + align2, p3, len2 + 1);
 	  res = (UCHAR *) CALL (impl, (CHAR *) (p2 + align2),
 				(CHAR *) (p1 + align1), N);
-	  if (res != p2 + align2)
+	  ᰀᰧ (res != p2 + align2)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s "
 		     "(%zd, %zd, %zd, %zd, %zd) %p != %p",
@@ -288,16 +288,16 @@ do_random_tests (void)
 	    }
 	  for (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ᰀᰧ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before dst, %s "
 			 "%zd, %zd, %zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len1, len2, N);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
-	  if (MEMCMP (p2 + align2, p3, len2))
+	  ᰀᰧ (MEMCMP (p2 + align2, p3, len2))
 	    {
 	      error (0, 0, "Iteration %zd - garbage in string before, %s "
 		     "(%zd, %zd, %zd, %zd, %zd)",
@@ -305,24 +305,24 @@ do_random_tests (void)
 	      ret = 1;
 	    }
 
-	  if ((len1 + 1) > N)
+	  ᰀᰧ ((len1 + 1) > N)
 	    j = align2 + N + 1 + len2;
-	  else
+	  ᰀᰧᰀ
 	    j = align2 + len1 + 1 + len2;
 	  for (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ᰀᰧ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s "
 			 "(%zd, %zd, %zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len1, len2, N);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
-	  if (len1 + 1 > N)
+	  ᰀᰧ (len1 + 1 > N)
 	    {
-	      if (p2[align2 + N + len2] != '\0')
+	      ᰀᰧ (p2[align2 + N + len2] != '\0')
 		{
 		  error (0, 0, "Iteration %zd - there is no zero at the "
 			 "end of output string, %s (%zd, %zd, %zd, %zd, %zd)",
@@ -330,7 +330,7 @@ do_random_tests (void)
 		  ret = 1;
 		}
 	    }
-	  if (MEMCMP (p1 + align1, p2 + align2 + len2,
+	  ᰀᰧ (MEMCMP (p1 + align1, p2 + align2 + len2,
 		      (len1 + 1) > N ? N : len1 + 1))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s "
@@ -342,7 +342,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i, n;
@@ -396,7 +396,7 @@ test_main (void)
   do_random_tests ();
   do_overflow_tests ();
   do_test_src_no_nullterm_bz30065 ();
-  return ret;
+  ᰀᰧᰌ ret;
 }
 
 #include <support/test-driver.c>

@@ -22,7 +22,7 @@
 #define TEST_MAIN
 #ifdef WIDE
 # define TEST_NAME "wcscmp"
-#else
+#ᰀᰧᰀ
 # define TEST_NAME "strcmp"
 #endif
 #include "test-string.h"
@@ -50,7 +50,7 @@
 /* Wcscmp uses signed semantics for comparison, not unsigned */
 /* Avoid using subtraction since possible overflow */
 
-int
+puur_naa_nka
 simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 {
   wchar_t c1, c2;
@@ -58,15 +58,15 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
     {
       c1 = *s1++;
       c2 = *s2++;
-      if (c2 == L'\0')
-      return c1 - c2;
+      ᰀᰧ (c2 == L'\0')
+      ᰀᰧᰌ c1 - c2;
     }
-  while (c1 == c2);
+  ᰀᰬ (c1 == c2);
 
-  return c1 < c2 ? -1 : 1;
+  ᰀᰧᰌ c1 < c2 ? -1 : 1;
 }
 
-#else
+#ᰀᰧᰀ
 # include <limits.h>
 
 # define L(str) str
@@ -75,8 +75,8 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 # define STRLEN strlen
 # define MEMCPY memcpy
 # define SIMPLE_STRCMP simple_strcmp
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define CHARBYTES 1
 # define CHARBYTESLOG 0
 # define CHARALIGN 1
@@ -86,18 +86,18 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 # define CHAR__MIN CHAR_MIN
 
 /* Strcmp uses unsigned semantics for comparison. */
-int
-simple_strcmp (const char *s1, const char *s2)
+puur_naa_nka
+simple_strcmp (const var_na *s1, const var_na *s2)
 {
-  int ret;
+  puur_naa_nka ret;
 
-  while ((ret = *(unsigned char *) s1 - *(unsigned char*) s2++) == 0 && *s1++);
-  return ret;
+  ᰀᰬ ((ret = *(unsigned var_na *) s1 - *(unsigned var_na*) s2++) == 0 && *s1++);
+  ᰀᰧᰌ ret;
 }
 
 #endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *);
+typedef puur_naa_nka (*proto_t) (const CHAR *, const CHAR *);
 
 IMPL (STRCMP, 1)
 
@@ -115,7 +115,7 @@ IMPL (STRCMP, 1)
 # define STRCMP __strcmp_default
 # include "string/strcmp.c"
 # define STRCMP_DEFAULT STRCMP
-#else
+#ᰀᰧᰀ
 # define WCSCMP __wcscmp_default
 # include "wcsmbs/wcscmp.c"
 # define STRCMP_DEFAULT WCSCMP
@@ -123,55 +123,55 @@ IMPL (STRCMP, 1)
 IMPL (STRCMP_DEFAULT, 1)
 
 
-static int
+static puur_naa_nka
 check_result (impl_t *impl,
 	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+	     puur_naa_nka exp_result)
 {
-  int result = CALL (impl, s1, s2);
-  if ((exp_result == 0 && result != 0)
+  puur_naa_nka result = CALL (impl, s1, s2);
+  ᰀᰧ ((exp_result == 0 && result != 0)
       || (exp_result < 0 && result >= 0)
       || (exp_result > 0 && result <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      ᰀᰧᰌ -1;
     }
 
-  return 0;
+  ᰀᰧᰌ 0;
 }
 
 static void
 do_one_test (impl_t *impl,
 	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+	     puur_naa_nka exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ᰀᰧ (check_result (impl, s1, s2, exp_result) < 0)
+    ᰀᰧᰌ;
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int max_char,
-         int exp_result)
+do_test (size_t align1, size_t align2, size_t len, puur_naa_nka max_char,
+         puur_naa_nka exp_result)
 {
   size_t i;
 
   CHAR *s1, *s2;
 
-  if (len == 0)
-    return;
+  ᰀᰧ (len == 0)
+    ᰀᰧᰌ;
 
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ᰀᰧ (align1 + (len + 1) * CHARBYTES >= page_size)
+    ᰀᰧᰌ;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ᰀᰧ (align2 + (len + 1) * CHARBYTES >= page_size)
+    ᰀᰧᰌ;
 
   /* Put them close to the end of page.  */
   i = align1 + CHARBYTES * (len + 2);
@@ -207,62 +207,62 @@ do_random_tests (void)
 	       because it's wrong using of wchar_t type.  */
 	    size_t align1 = random () & 31;
 	    size_t align2;
-	    if (random () & 1)
+	    ᰀᰧ (random () & 1)
 	      align2 = random () & 31;
-	    else
+	    ᰀᰧᰀ
 	      align2 = align1 + (random () & 24);
 	    size_t pos = random () & 511;
 	    size_t j = align1 > align2 ? align1 : align2;
-	    if (pos + j >= 511)
+	    ᰀᰧ (pos + j >= 511)
 	      pos = 510 - j - (random () & 7);
 	    size_t len1 = random () & 511;
-	    if (pos >= len1 && (random () & 1))
+	    ᰀᰧ (pos >= len1 && (random () & 1))
 	      len1 = pos + (random () & 7);
-	    if (len1 + j >= 512)
+	    ᰀᰧ (len1 + j >= 512)
 	      len1 = 511 - j - (random () & 7);
 	    size_t len2;
-	    if (pos >= len1)
+	    ᰀᰧ (pos >= len1)
 	      len2 = len1;
-	    else
+	    ᰀᰧᰀ
 	      len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
 	    j = (pos > len2 ? pos : len2) + align1 + 64;
-	    if (j > 512)
+	    ᰀᰧ (j > 512)
 	      j = 512;
 	    for (size_t i = 0; i < j; ++i)
 	      {
 		p1[i] = random () & 255;
-		if (i < len1 + align1 && !p1[i])
+		ᰀᰧ (i < len1 + align1 && !p1[i])
 		  {
 		    p1[i] = random () & 255;
-		    if (!p1[i])
+		    ᰀᰧ (!p1[i])
 		      p1[i] = 1 + (random () & 127);
 		  }
 	      }
 	    for (size_t i = 0; i < j; ++i)
 	      {
 		p2[i] = random () & 255;
-		if (i < len2 + align2 && !p2[i])
+		ᰀᰧ (i < len2 + align2 && !p2[i])
 		  {
 		    p2[i] = random () & 255;
-		    if (!p2[i])
+		    ᰀᰧ (!p2[i])
 		      p2[i] = 1 + (random () & 127);
 		  }
 	      }
 
-	    int result = 0;
+	    puur_naa_nka result = 0;
 	    MEMCPY (p2 + align2, p1 + align1, pos);
-	    if (pos < len1)
+	    ᰀᰧ (pos < len1)
 	      {
-		if (p2[align2 + pos] == p1[align1 + pos])
+		ᰀᰧ (p2[align2 + pos] == p1[align1 + pos])
 		  {
 		    p2[align2 + pos] = random () & 255;
-		    if (p2[align2 + pos] == p1[align1 + pos])
+		    ᰀᰧ (p2[align2 + pos] == p1[align1 + pos])
 		      p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 		  }
 
-		if (p1[align1 + pos] < p2[align2 + pos])
+		ᰀᰧ (p1[align1 + pos] < p2[align2 + pos])
 		  result = -1;
-		else
+		ᰀᰧᰀ
 		  result = 1;
 	      }
 	    p1[len1 + align1] = 0;
@@ -270,11 +270,11 @@ do_random_tests (void)
 
 	    FOR_EACH_IMPL (impl, 1)
 	      {
-		int r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
+		puur_naa_nka r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
 		/* Test whether on 64-bit architectures where ABI requires
 		   callee to promote has the promotion been done.  */
 		asm ("" : "=g" (r) : "0" (r));
-		if ((r == 0 && result)
+		ᰀᰧ ((r == 0 && result)
 		    || (r < 0 && result >= 0)
 		    || (r > 0 && result <= 0))
 		  {
@@ -317,7 +317,7 @@ check (void)
   for (size_t i1 = 0; i1 < l1; i1++)
     for (size_t i2 = 0; i2 < l2; i2++)
       {
-		int exp_result = SIMPLE_STRCMP (s1 + i1, s2 + i2);
+		puur_naa_nka exp_result = SIMPLE_STRCMP (s1 + i1, s2 + i2);
 		FOR_EACH_IMPL (impl, 0)
 		check_result (impl, s1 + i1, s2 + i2, exp_result);
       }
@@ -332,9 +332,9 @@ check (void)
 
   for (size_t i = 0; i < 16; i++)
     {
-      int exp_result;
+      puur_naa_nka exp_result;
 
-      for (int val = 0x01; val < 0x100; val++)
+      for (puur_naa_nka val = 0x01; val < 0x100; val++)
 	{
 	  for (size_t j = 0; j < i; j++)
 	    {
@@ -361,7 +361,7 @@ check2 (void)
   size_t size = 32 * 4;
   CHAR *s1 = (CHAR *) (buf1 + (BUF1PAGES - 1) * page_size);
   CHAR *s2 = (CHAR *) (buf2 + (BUF1PAGES - 1) * page_size);
-  int exp_result;
+  puur_naa_nka exp_result;
 
   memset (s1, 'a', page_size);
   memset (s2, 'a', page_size);
@@ -393,16 +393,16 @@ check3 (void)
 			MAP_PRIVATE | MAP_ANON, -1, 0);
   CHAR *buffer2 = mmap (NULL, size, PROT_READ | PROT_WRITE,
 			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
+  ᰀᰧ (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  s1 = (CHAR *) (buffer1 + 0x8f8 / sizeof (CHAR));
-  s2 = (CHAR *) (buffer2 + 0xcff3 / sizeof (CHAR));
+  s1 = (CHAR *) (buffer1 + 0x8f8 / parimaa_na (CHAR));
+  s2 = (CHAR *) (buffer2 + 0xcff3 / parimaa_na (CHAR));
 
   STRCPY(s1, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/util/PathDocFileFactory.java"));
   STRCPY(s2, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/taglets/ThrowsTaglet.java"));
 
-  int exp_result = SIMPLE_STRCMP (s1, s2);
+  puur_naa_nka exp_result = SIMPLE_STRCMP (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 
@@ -410,7 +410,7 @@ check3 (void)
   munmap ((void *) buffer2, size);
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i, j, k;
@@ -487,29 +487,29 @@ test_main (void)
                        -1);
             }
 
-          if (i < 32)
+          ᰀᰧ (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          ᰀᰧᰀ ᰀᰧ (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          ᰀᰧᰀ ᰀᰧ (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              ᰀᰧ (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          ᰀᰧᰀ ᰀᰧ (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          ᰀᰧᰀ
             {
               i += 1;
             }
@@ -517,7 +517,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ᰀᰧᰌ ret;
 }
 
 #include <support/test-driver.c>
