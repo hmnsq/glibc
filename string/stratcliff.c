@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define _GNU_SOURCE 1
+#تعریف_کړه GNU_سرچینه 1
 
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#undef __USE_STRING_INLINES
+#تعریف_لغوه __USE_STRING_INLINES
 
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <sys/param.h>
+#ضمن <errno.h>
+#ضمن <stdio.h>
+#ضمن <string.h>
+#ضمن <unistd.h>
+#ضمن <sys/mman.h>
+#ضمن <sys/param.h>
 
-#ifndef CHAR
+#که_نه_تعریف_شوی CHAR
 # define L(c) c
-# define CHAR char
+# define CHAR حرف
 # define MEMSET memset
-# define STRLEN strlen
+# define STRLEN مزي_اوږدوالی
 # define STRNLEN strnlen
 # define STRCHR strchr
 # define STRRCHR strrchr
@@ -42,577 +42,577 @@
 # define MEMCMP memcmp
 # define STPCPY stpcpy
 # define STPNCPY stpncpy
-# define MEMCPY memcpy
+# define MEMCPY حافظه_نقل
 # define MEMPCPY mempcpy
 # define MEMCHR memchr
 # define STRCMP strcmp
-# define STRNCMP strncmp
-#endif
+# define STRNCMP مزي_پرتله
+#د_که_پای
 
 
-#define STRINGIFY(s) STRINGIFY2 (s)
-#define STRINGIFY2(s) #s
+#تعریف_کړه STRINGIFY(s) STRINGIFY2 (s)
+#تعریف_کړه STRINGIFY2(s) #s
 
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  size_t size = sysconf (_SC_PAGESIZE);
-  size_t nchars = size / sizeof (CHAR);
+  size_t اندازه = sysconf (_SC_PAGESIZE);
+  size_t nchars = اندازه / حجم (CHAR);
   CHAR *adr;
   CHAR *dest;
-  int result = 0;
+  صحيح پایله = 0;
 
-  adr = (CHAR *) mmap (NULL, 3 * size, PROT_READ | PROT_WRITE,
-		       MAP_PRIVATE | MAP_ANON, -1, 0);
-  dest = (CHAR *) mmap (NULL, 3 * size, PROT_READ | PROT_WRITE,
-			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (adr == MAP_FAILED || dest == MAP_FAILED)
+  adr = (CHAR *) mmap (عدم, 3 * اندازه, PROT_READ | PROT_WRITE,
+		       MAP_شخصي | MAP_ANON, -1, 0);
+  dest = (CHAR *) mmap (عدم, 3 * اندازه, PROT_READ | PROT_WRITE,
+			MAP_شخصي | MAP_ANON, -1, 0);
+  إذا (adr == MAP_FAILED || dest == MAP_FAILED)
     {
-      if (errno == ENOSYS)
+      إذا (errno == ENOSYS)
 	puts ("No test, mmap not available.");
-      else
+      وإلا
 	{
-	  printf ("mmap failed: %m");
-	  result = 1;
+	  چاپ_کړه ("mmap failed: %m");
+	  پایله = 1;
 	}
     }
-  else
+  وإلا
     {
-      size_t inner, middle, outer, nchars64, max128;
+      size_t inner, منځ, outer, nchars64, max128;
 
-      if (nchars > 64)
+      إذا (nchars > 64)
 	nchars64 = nchars - 64;
-      else
+      وإلا
 	nchars64 = 0;
 
-      if (nchars > 128)
+      إذا (nchars > 128)
 	max128 = nchars - 128;
-      else
+      وإلا
 	max128 = 0;
 
-      mprotect (adr, size, PROT_NONE);
-      mprotect (adr + 2 * nchars, size, PROT_NONE);
+      mprotect (adr, اندازه, PROT_NONE);
+      mprotect (adr + 2 * nchars, اندازه, PROT_NONE);
       adr += nchars;
 
-      mprotect (dest, size, PROT_NONE);
-      mprotect (dest + 2 * nchars, size, PROT_NONE);
+      mprotect (dest, اندازه, PROT_NONE);
+      mprotect (dest + 2 * nchars, اندازه, PROT_NONE);
       dest += nchars;
 
       MEMSET (adr, L('T'), nchars);
 
       /* strlen/wcslen test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  لكل (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRLEN (&adr[outer]) != (size_t) (inner - outer))
+	      إذا (STRLEN (&adr[outer]) != (size_t) (inner - outer))
 		{
-		  printf ("%s flunked for outer = %zu, inner = %zu\n",
+		  چاپ_کړه ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STRLEN), outer, inner);
-		  result = 1;
+		  پایله = 1;
 		}
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* strnlen/wcsnlen test */
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  لكل (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRNLEN (&adr[outer], inner - outer + 1)
+	      إذا (STRNLEN (&adr[outer], inner - outer + 1)
 		  != (size_t) (inner - outer))
 		{
-		  printf ("%s flunked for outer = %zu, inner = %zu\n",
+		  چاپ_کړه ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STRNLEN), outer, inner);
-		  result = 1;
+		  پایله = 1;
 		}
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner <= nchars; ++inner)
+	  لكل (inner = MAX (outer, nchars64); inner <= nchars; ++inner)
 	    {
-	      if (STRNLEN (&adr[outer], inner - outer)
+	      إذا (STRNLEN (&adr[outer], inner - outer)
 		  != (size_t) (inner - outer))
 		{
-		  printf ("%s flunked bounded for outer = %zu, inner = %zu\n",
+		  چاپ_کړه ("%s flunked bounded for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STRNLEN), outer, inner);
-		  result = 1;
+		  پایله = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* strchr/wcschr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  لكل (منځ = MAX (outer, nchars64); منځ < nchars; ++منځ)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      لكل (inner = منځ; inner < nchars; ++inner)
 		{
-		  adr[middle] = L('V');
+		  adr[منځ] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
-		      || (inner != middle
-			  && (cp - &adr[outer]) != middle - outer))
+		  إذا ((inner == منځ && cp != عدم)
+		      || (inner != منځ
+			  && (cp - &adr[outer]) != منځ - outer))
 		    {
-		      printf ("%s flunked for outer = %zu, middle = %zu, "
+		      چاپ_کړه ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STRCHR), outer, middle, inner);
-		      result = 1;
+			      STRINGIFY (STRCHR), outer, منځ, inner);
+		      پایله = 1;
 		    }
 
 		  adr[inner] = L('T');
-		  adr[middle] = L('T');
+		  adr[منځ] = L('T');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* Special test.  */
       adr[nchars - 1] = L('\0');
-      if (STRCHR (&adr[nchars - 1], L('\n')) != NULL)
+      إذا (STRCHR (&adr[nchars - 1], L('\n')) != عدم)
 	{
-	  printf ("%s flunked test of empty string at end of page\n",
+	  چاپ_کړه ("%s flunked test of empty string at end of page\n",
 		  STRINGIFY (STRCHR));
-	  result = 1;
+	  پایله = 1;
 	}
 
       /* strrchr/wcsrchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  لكل (منځ = MAX (outer, nchars64); منځ < nchars; ++منځ)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      لكل (inner = منځ; inner < nchars; ++inner)
 		{
-		  adr[middle] = L('V');
+		  adr[منځ] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
-		      || (inner != middle
-			  && (cp - &adr[outer]) != middle - outer))
+		  إذا ((inner == منځ && cp != عدم)
+		      || (inner != منځ
+			  && (cp - &adr[outer]) != منځ - outer))
 		    {
-		      printf ("%s flunked for outer = %zu, middle = %zu, "
+		      چاپ_کړه ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STRRCHR), outer, middle, inner);
-		      result = 1;
+			      STRINGIFY (STRRCHR), outer, منځ, inner);
+		      پایله = 1;
 		    }
 
 		  adr[inner] = L('T');
-		  adr[middle] = L('T');
+		  adr[منځ] = L('T');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* memchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  لكل (منځ = MAX (outer, nchars64); منځ < nchars; ++منځ)
 	    {
-	      adr[middle] = L('V');
+	      adr[منځ] = L('V');
 
-	      CHAR *cp = MEMCHR (&adr[outer], L('V'), 3 * size);
+	      CHAR *cp = MEMCHR (&adr[outer], L('V'), 3 * اندازه);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      إذا (cp - &adr[outer] != منځ - outer)
 		{
-		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (MEMCHR), outer, middle);
-		  result = 1;
+		  چاپ_کړه ("%s flunked for outer = %zu, middle = %zu\n",
+			  STRINGIFY (MEMCHR), outer, منځ);
+		  پایله = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[منځ] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
 	  CHAR *cp = MEMCHR (&adr[outer], L('V'), nchars - outer);
 
-	  if (cp != NULL)
+	  إذا (cp != عدم)
 	    {
-	      printf ("%s flunked for outer = %zu\n",
+	      چاپ_کړه ("%s flunked for outer = %zu\n",
 		      STRINGIFY (MEMCHR), outer);
-	      result = 1;
+	      پایله = 1;
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* These functions only exist for single-byte characters.  */
-#ifndef WCSTEST
+#که_نه_تعریف_شوی WCSTEST
       /* rawmemchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  لكل (منځ = MAX (outer, nchars64); منځ < nchars; ++منځ)
 	    {
-	      adr[middle] = L('V');
+	      adr[منځ] = L('V');
 
 	      CHAR *cp = rawmemchr (&adr[outer], L('V'));
 
-	      if (cp - &adr[outer] != middle - outer)
+	      إذا (cp - &adr[outer] != منځ - outer)
 		{
-		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (rawmemchr), outer, middle);
-		  result = 1;
+		  چاپ_کړه ("%s flunked for outer = %zu, middle = %zu\n",
+			  STRINGIFY (rawmemchr), outer, منځ);
+		  پایله = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[منځ] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* memrchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  لكل (منځ = MAX (outer, nchars64); منځ < nchars; ++منځ)
 	    {
-	      adr[middle] = L('V');
+	      adr[منځ] = L('V');
 
 	      CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      إذا (cp - &adr[outer] != منځ - outer)
 		{
-		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (memrchr), outer, middle);
-		  result = 1;
+		  چاپ_کړه ("%s flunked for outer = %zu, middle = %zu\n",
+			  STRINGIFY (memrchr), outer, منځ);
+		  پایله = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[منځ] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
 	  CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	  if (cp != NULL)
+	  إذا (cp != عدم)
 	    {
-	      printf ("%s flunked for outer = %zu\n",
+	      چاپ_کړه ("%s flunked for outer = %zu\n",
 		      STRINGIFY (memrchr), outer);
-	      result = 1;
+	      پایله = 1;
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
-#endif
+#د_که_پای
 
       /* strcpy/wcscpy test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  لكل (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRCPY (dest, &adr[outer]) != dest
+	      إذا (STRCPY (dest, &adr[outer]) != dest
 		  || STRLEN (dest) != (size_t) (inner - outer))
 		{
-		  printf ("%s flunked for outer = %zu, inner = %zu\n",
+		  چاپ_کړه ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STRCPY), outer, inner);
-		  result = 1;
+		  پایله = 1;
 		}
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* strcmp/wcscmp tests */
-      for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+      لكل (outer = 1; outer < 32; ++outer)
+	لكل (منځ = 0; منځ < 16; ++منځ)
 	  {
-	    MEMSET (adr + middle, L('T'), 256);
+	    MEMSET (adr + منځ, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('\0');
 
-	    if (STRCMP (adr + middle, dest + nchars - outer) <= 0)
+	    إذا (STRCMP (adr + منځ, dest + nchars - outer) <= 0)
 	      {
-		printf ("%s 1 flunked for outer = %zu, middle = %zu\n",
-			STRINGIFY (STRCMP), outer, middle);
-		result = 1;
+		چاپ_کړه ("%s 1 flunked for outer = %zu, middle = %zu\n",
+			STRINGIFY (STRCMP), outer, منځ);
+		پایله = 1;
 	      }
 
-	    if (STRCMP (dest + nchars - outer, adr + middle) >= 0)
+	    إذا (STRCMP (dest + nchars - outer, adr + منځ) >= 0)
 	      {
-		printf ("%s 2 flunked for outer = %zu, middle = %zu\n",
-			STRINGIFY (STRCMP), outer, middle);
-		result = 1;
+		چاپ_کړه ("%s 2 flunked for outer = %zu, middle = %zu\n",
+			STRINGIFY (STRCMP), outer, منځ);
+		پایله = 1;
 	      }
 	  }
 
       /* strncmp/wcsncmp tests */
-      for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+      لكل (outer = 1; outer < 32; ++outer)
+	لكل (منځ = 0; منځ < 16; ++منځ)
 	  {
-	    MEMSET (adr + middle, L('T'), 256);
+	    MEMSET (adr + منځ, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('U');
 
-	    for (inner = 0; inner < outer; ++inner)
+	    لكل (inner = 0; inner < outer; ++inner)
 	      {
-		if (STRNCMP (adr + middle, dest + nchars - outer, inner) != 0)
+		إذا (STRNCMP (adr + منځ, dest + nchars - outer, inner) != 0)
 		  {
-		    printf ("%s 1 flunked for outer = %zu, middle = %zu, "
+		    چاپ_کړه ("%s 1 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
-			    STRINGIFY (STRNCMP), outer, middle, inner);
-		    result = 1;
+			    STRINGIFY (STRNCMP), outer, منځ, inner);
+		    پایله = 1;
 		  }
 
-		if (STRNCMP (dest + nchars - outer, adr + middle, inner) != 0)
+		إذا (STRNCMP (dest + nchars - outer, adr + منځ, inner) != 0)
 		  {
-		    printf ("%s 2 flunked for outer = %zu, middle = %zu, "
+		    چاپ_کړه ("%s 2 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
-			    STRINGIFY (STRNCMP), outer, middle, inner);
-		    result = 1;
+			    STRINGIFY (STRNCMP), outer, منځ, inner);
+		    پایله = 1;
 		  }
 	      }
 
-	    if (STRNCMP (adr + middle, dest + nchars - outer, outer) >= 0)
+	    إذا (STRNCMP (adr + منځ, dest + nchars - outer, outer) >= 0)
 	      {
-		printf ("%s 1 flunked for outer = %zu, middle = %zu, full\n",
-			STRINGIFY (STRNCMP), outer, middle);
-		result = 1;
+		چاپ_کړه ("%s 1 flunked for outer = %zu, middle = %zu, full\n",
+			STRINGIFY (STRNCMP), outer, منځ);
+		پایله = 1;
 	      }
 
-	    if (STRNCMP (dest + nchars - outer, adr + middle, outer) <= 0)
+	    إذا (STRNCMP (dest + nchars - outer, adr + منځ, outer) <= 0)
 	      {
-		printf ("%s 2 flunked for outer = %zu, middle = %zu, full\n",
-			STRINGIFY (STRNCMP), outer, middle);
-		result = 1;
+		چاپ_کړه ("%s 2 flunked for outer = %zu, middle = %zu, full\n",
+			STRINGIFY (STRNCMP), outer, منځ);
+		پایله = 1;
 	      }
 	  }
 
       /* strncpy/wcsncpy tests */
       adr[nchars - 1] = L('T');
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
 	  size_t len;
 
-	  for (len = 0; len < nchars - outer; ++len)
+	  لكل (len = 0; len < nchars - outer; ++len)
 	    {
-	      if (STRNCPY (dest, &adr[outer], len) != dest
+	      إذا (STRNCPY (dest, &adr[outer], len) != dest
 		  || MEMCMP (dest, &adr[outer], len) != 0)
 		{
-		  printf ("outer %s flunked for outer = %zu, len = %zu\n",
+		  چاپ_کړه ("outer %s flunked for outer = %zu, len = %zu\n",
 			  STRINGIFY (STRNCPY), outer, len);
-		  result = 1;
+		  پایله = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
       adr[nchars - 1] = L('\0');
 
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  لكل (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      size_t len;
 
 	      adr[inner] = L('\0');
 
-	      for (len = 0; len < nchars - outer + 64; ++len)
+	      لكل (len = 0; len < nchars - outer + 64; ++len)
 		{
-		  if (STRNCPY (dest, &adr[outer], len) != dest
+		  إذا (STRNCPY (dest, &adr[outer], len) != dest
 		      || MEMCMP (dest, &adr[outer],
 				 MIN (inner - outer, len)) != 0
 		      || (inner - outer < len
 			  && STRLEN (dest) != (inner - outer)))
 		    {
-		      printf ("%s flunked for outer = %zu, inner = %zu, "
+		      چاپ_کړه ("%s flunked for outer = %zu, inner = %zu, "
 			      "len = %zu\n",
 			      STRINGIFY (STRNCPY), outer, inner, len);
-		      result = 1;
+		      پایله = 1;
 		    }
-		  if (STRNCPY (dest + 1, &adr[outer], len) != dest + 1
+		  إذا (STRNCPY (dest + 1, &adr[outer], len) != dest + 1
 		      || MEMCMP (dest + 1, &adr[outer],
 				 MIN (inner - outer, len)) != 0
 		      || (inner - outer < len
 			  && STRLEN (dest + 1) != (inner - outer)))
 		    {
-		      printf ("%s+1 flunked for outer = %zu, inner = %zu, "
+		      چاپ_کړه ("%s+1 flunked for outer = %zu, inner = %zu, "
 			      "len = %zu\n",
 			      STRINGIFY (STRNCPY), outer, inner, len);
-		      result = 1;
+		      پایله = 1;
 		    }
 		}
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* stpcpy/wcpcpy test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  لكل (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if ((STPCPY (dest, &adr[outer]) - dest) != inner - outer)
+	      إذا ((STPCPY (dest, &adr[outer]) - dest) != inner - outer)
 		{
-		  printf ("%s flunked for outer = %zu, inner = %zu\n",
+		  چاپ_کړه ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STPCPY), outer, inner);
-		  result = 1;
+		  پایله = 1;
 		}
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* stpncpy/wcpncpy test */
       adr[nchars - 1] = L('T');
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
 	  size_t len;
 
-	  for (len = 0; len < nchars - outer; ++len)
+	  لكل (len = 0; len < nchars - outer; ++len)
 	    {
-	      if (STPNCPY (dest, &adr[outer], len) != dest + len
+	      إذا (STPNCPY (dest, &adr[outer], len) != dest + len
 		  || MEMCMP (dest, &adr[outer], len) != 0)
 		{
-		  printf ("outer %s flunked for outer = %zu, len = %zu\n",
+		  چاپ_کړه ("outer %s flunked for outer = %zu, len = %zu\n",
 			  STRINGIFY (STPNCPY), outer, len);
-		  result = 1;
+		  پایله = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
       adr[nchars - 1] = L('\0');
 
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  لكل (منځ = MAX (outer, nchars64); منځ < nchars; ++منځ)
 	    {
-	      adr[middle] = L('\0');
+	      adr[منځ] = L('\0');
 
-	      for (inner = 0; inner < nchars - outer; ++ inner)
+	      لكل (inner = 0; inner < nchars - outer; ++ inner)
 		{
-		  if ((STPNCPY (dest, &adr[outer], inner) - dest)
-		      != MIN (inner, middle - outer))
+		  إذا ((STPNCPY (dest, &adr[outer], inner) - dest)
+		      != MIN (inner, منځ - outer))
 		    {
-		      printf ("%s flunked for outer = %zu, middle = %zu, "
+		      چاپ_کړه ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STPNCPY), outer, middle, inner);
-		      result = 1;
+			      STRINGIFY (STPNCPY), outer, منځ, inner);
+		      پایله = 1;
 		    }
 		}
 
-	      adr[middle] = L('T');
+	      adr[منځ] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* memcpy/wmemcpy test */
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (MEMCPY (dest, &adr[outer], inner) !=  dest)
+	  لكل (inner = 0; inner < nchars - outer; ++inner)
+	    إذا (MEMCPY (dest, &adr[outer], inner) !=  dest)
 	      {
-		printf ("%s flunked for outer = %zu, inner = %zu\n",
+		چاپ_کړه ("%s flunked for outer = %zu, inner = %zu\n",
 			STRINGIFY (MEMCPY), outer, inner);
-		result = 1;
+		پایله = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* mempcpy/wmempcpy test */
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (MEMPCPY (dest, &adr[outer], inner) !=  dest + inner)
+	  لكل (inner = 0; inner < nchars - outer; ++inner)
+	    إذا (MEMPCPY (dest, &adr[outer], inner) !=  dest + inner)
 	      {
-		printf ("%s flunked for outer = %zu, inner = %zu\n",
+		چاپ_کړه ("%s flunked for outer = %zu, inner = %zu\n",
 			STRINGIFY (MEMPCPY), outer, inner);
-		result = 1;
+		پایله = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
 
       /* This function only exists for single-byte characters.  */
-#ifndef WCSTEST
+#که_نه_تعریف_شوی WCSTEST
       /* memccpy test */
       memset (adr, '\0', nchars);
-      for (outer = nchars; outer >= max128; --outer)
+      لكل (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (memccpy (dest, &adr[outer], L('\1'), inner) != NULL)
+	  لكل (inner = 0; inner < nchars - outer; ++inner)
+	    إذا (memccpy (dest, &adr[outer], L('\1'), inner) != عدم)
 	      {
-		printf ("memccpy flunked full copy for outer = %zu, inner = %zu\n",
+		چاپ_کړه ("memccpy flunked full copy for outer = %zu, inner = %zu\n",
 			outer, inner);
-		result = 1;
+		پایله = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
-      for (outer = nchars - 1; outer >= max128; --outer)
+      لكل (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = 0; middle < nchars - outer; ++middle)
+	  لكل (منځ = 0; منځ < nchars - outer; ++منځ)
 	    {
-	      memset (dest, L('\2'), middle + 1);
-	      for (inner = 0; inner < middle; ++inner)
+	      memset (dest, L('\2'), منځ + 1);
+	      لكل (inner = 0; inner < منځ; ++inner)
 		{
 		  adr[outer + inner] = L('\1');
 
-		  if (memccpy (dest, &adr[outer], '\1', middle + 128)
+		  إذا (memccpy (dest, &adr[outer], '\1', منځ + 128)
 		      !=  dest + inner + 1)
 		    {
-		      printf ("\
-			      memccpy flunked partial copy for outer = %zu, middle = %zu, inner = %zu\n",
-			      outer, middle, inner);
-		      result = 1;
+		      چاپ_کړه ("\
+			      memccpy flunked partial copy لكل outer = %zu, منځ = %zu, inner = %zu\n",
+			      outer, منځ, inner);
+		      پایله = 1;
 		    }
-		  else if (dest[inner + 1] != L('\2'))
+		  وإلا إذا (dest[inner + 1] != L('\2'))
 		    {
-		      printf ("\
-			      memccpy copied too much for outer = %zu, middle = %zu, inner = %zu\n",
-			      outer, middle, inner);
-		      result = 1;
+		      چاپ_کړه ("\
+			      memccpy copied too much لكل outer = %zu, منځ = %zu, inner = %zu\n",
+			      outer, منځ, inner);
+		      پایله = 1;
 		    }
 		  adr[outer + inner] = L('\0');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  إذا (outer == 0)
+	    اكسر;
 	}
-#endif
+#د_که_پای
     }
 
-  return result;
+  أرجع پایله;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

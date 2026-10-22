@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ضمن <stdlib.h>
+#ضمن <stdio.h>
+#ضمن <string.h>
 
-#define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#تعریف_کړه  MAX_مزي_ګانې      256
+#تعریف_کړه  MAX_کرښه_اندازه    32
 
-static int
-compare (const void *p1, const void *p2)
+ساكن صحيح
+compare (ثابت فراغ *p1, ثابت فراغ *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  أرجع strverscmp (*((حرف **) p1), *((حرف **) p2));
 }
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  حرف کرښه[MAX_کرښه_اندازه + 1];
+  حرف *str[MAX_مزي_ګانې];
+  صحيح  شمېر = 0;
+  صحيح  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  طالما (شمېر < MAX_مزي_ګانې && fgets (کرښه, MAX_کرښه_اندازه, stdin) != عدم)
     {
-      n = strlen (line) - 1;
+      n = مزي_اوږدوالی (کرښه) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      إذا (کرښه[n] == '\n')
+        کرښه[n] = '\0';
 
-      str[count] = strdup (line);
+      str[شمېر] = strdup (کرښه);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      إذا (str[شمېر] == عدم)
+        وتل (EXIT_FAILURE);
 
-      ++count;
+      ++شمېر;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, شمېر, حجم (حرف *), compare);
 
-  for (i = 0; i < count; ++i)
+  لكل (i = 0; i < شمېر; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  أرجع EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

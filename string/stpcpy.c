@@ -15,106 +15,106 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define NO_MEMPCPY_STPCPY_REDIRECT
-#include <string.h>
-#include <stdint.h>
-#include <memcopy.h>
-#include <string-fzb.h>
-#include <string-misc.h>
+#تعریف_کړه NO_MEMPCPY_STPCPY_REDIRECT
+#ضمن <string.h>
+#ضمن <stdint.h>
+#ضمن <memcopy.h>
+#ضمن <string-fzb.h>
+#ضمن <string-misc.h>
 
-#undef __stpcpy
-#undef stpcpy
+#تعریف_لغوه __stpcpy
+#تعریف_لغوه stpcpy
 
-#ifndef STPCPY
+#که_نه_تعریف_شوی STPCPY
 # define STPCPY __stpcpy
-#endif
+#د_که_پای
 
-static __always_inline char *
-write_byte_from_word (op_t *dest, op_t word)
+ساكن __always_inline حرف *
+write_byte_from_کلمه (op_t *dest, op_t کلمه)
 {
-  char *d = (char *) dest;
-  for (size_t i = 0; i < OPSIZ; i++, ++d)
+  حرف *d = (حرف *) dest;
+  لكل (size_t i = 0; i < OPSIZ; i++, ++d)
     {
-      char c = extractbyte (word, i);
+      حرف c = extractbyte (کلمه, i);
       *d = c;
-      if (c == '\0')
-	break;
+      إذا (c == '\0')
+	اكسر;
     }
-  return d;
+  أرجع d;
 }
 
-static __always_inline char *
-stpcpy_aligned_loop (op_t *restrict dst, const op_t *restrict src)
+ساكن __always_inline حرف *
+stpcpy_aligned_loop (op_t *محدود dst, ثابت op_t *محدود src)
 {
-  op_t word;
-  while (1)
+  op_t کلمه;
+  طالما (1)
     {
-      word = *src++;
-      if (has_zero (word))
-	break;
-      *dst++ = word;
+      کلمه = *src++;
+      إذا (has_zero (کلمه))
+	اكسر;
+      *dst++ = کلمه;
     }
 
-  return write_byte_from_word (dst, word);
+  أرجع write_byte_from_کلمه (dst, کلمه);
 }
 
-static __always_inline char *
-stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
+ساكن __always_inline حرف *
+stpcpy_unaligned_loop (op_t *محدود dst, ثابت op_t *محدود src,
 		       uintptr_t ofs)
 {
   op_t w2a = *src++;
   uintptr_t sh_1 = ofs * CHAR_BIT;
   uintptr_t sh_2 = OPSIZ * CHAR_BIT - sh_1;
 
-  op_t w2 = MERGE (w2a, sh_1, (op_t)-1, sh_2);
-  if (!has_zero (w2))
+  op_t w2 = یوځای (w2a, sh_1, (op_t)-1, sh_2);
+  إذا (!has_zero (w2))
     {
       op_t w2b;
 
       /* Unaligned loop.  The invariant is that W2B, which is "ahead" of W1,
 	 does not contain end-of-string.  Therefore it is safe (and necessary)
 	 to read another word from each while we do not have a difference.  */
-      while (1)
+      طالما (1)
 	{
 	  w2b = *src++;
-	  w2 = MERGE (w2a, sh_1, w2b, sh_2);
+	  w2 = یوځای (w2a, sh_1, w2b, sh_2);
 	  /* Check if there is zero on w2a.  */
-	  if (has_zero (w2))
-	    goto out;
+	  إذا (has_zero (w2))
+	    اذهب بهر;
 	  *dst++ = w2;
-	  if (has_zero (w2b))
-	    break;
+	  إذا (has_zero (w2b))
+	    اكسر;
 	  w2a = w2b;
 	}
 
       /* Align the final partial of P2.  */
-      w2 = MERGE (w2b, sh_1, 0, sh_2);
+      w2 = یوځای (w2b, sh_1, 0, sh_2);
     }
 
-out:
-  return write_byte_from_word (dst, w2);
+بهر:
+  أرجع write_byte_from_کلمه (dst, w2);
 }
 
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-char *
-STPCPY (char *dest, const char *src)
+حرف *
+STPCPY (حرف *dest, ثابت حرف *src)
 {
   /* Copy just a few bytes to make DEST aligned.  */
   size_t len = (-(uintptr_t) dest) % OPSIZ;
-  for (; len != 0; len--, ++dest)
+  لكل (; len != 0; len--, ++dest)
     {
-      char c = *src++;
+      حرف c = *src++;
       *dest = c;
-      if (c == '\0')
-	return dest;
+      إذا (c == '\0')
+	أرجع dest;
     }
 
   /* DEST is now aligned to op_t, SRC may or may not be.  */
   uintptr_t ofs = (uintptr_t) src % OPSIZ;
-  return ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (const op_t *) src)
+  أرجع ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (ثابت op_t *) src)
 		  : stpcpy_unaligned_loop ((op_t*) dest,
-					   (const op_t *) (src - ofs) , ofs);
+					   (ثابت op_t *) (src - ofs) , ofs);
 }
 weak_alias (__stpcpy, stpcpy)
 libc_hidden_def (__stpcpy)

@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRPBRK_RESULT(s, pos) (pos)
-#define RES_TYPE size_t
-#define TEST_MAIN
-#ifndef WIDE
+#تعریف_کړه STRPBRK_پایله(s, pos) (pos)
+#تعریف_کړه RES_TYPE size_t
+#تعریف_کړه TEST_MAIN
+#که_نه_تعریف_شوی WIDE
 # define TEST_NAME "strcspn"
-#else
+#وإلا
 # define TEST_NAME "wcscspn"
-#endif /* WIDE */
-#include "test-string.h"
+#د_که_پای /* WIDE */
+#ضمن "test-string.h"
 
-#ifndef WIDE
+#که_نه_تعریف_شوی WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR حرف
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
-# define STRLEN strlen
-#else
+# define STRLEN مزي_اوږدوالی
+#وإلا
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
 # define SIMPLE_STRCSPN simple_wcscspn
 # define STUPID_STRCSPN stupid_wcscspn
 # define STRLEN wcslen
-#endif /* WIDE */
+#د_که_پای /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+تعريفنوع size_t (*proto_t) (ثابت CHAR *, ثابت CHAR *);
+size_t SIMPLE_STRCSPN (ثابت CHAR *, ثابت CHAR *);
+size_t STUPID_STRCSPN (ثابت CHAR *, ثابت CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (ثابت CHAR *s, ثابت CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  ثابت CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  طالما ((c = *s++) != '\0')
+    لكل (r = rej; *r != '\0'; ++r)
+      إذا (*r == c)
+	أرجع s - str - 1;
+  أرجع s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (ثابت CHAR *s, ثابت CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  لكل (i = 0; i < ns; ++i)
+    لكل (j = 0; j < nrej; ++j)
+      إذا (s[i] == rej[j])
+	أرجع i;
+  أرجع i;
 }
 
-#undef CHAR
-#undef STRLEN
-#include "test-strpbrk.c"
+#تعریف_لغوه CHAR
+#تعریف_لغوه STRLEN
+#ضمن "test-strpbrk.c"

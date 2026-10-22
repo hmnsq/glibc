@@ -15,41 +15,41 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/check.h>
+#ضمن <stdlib.h>
+#ضمن <stdio.h>
+#ضمن <string.h>
+#ضمن <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+فراغ try (ثابت حرف *name, اوږد اوږد صحيح param, صحيح ارزښت, صحيح expected)
 {
-  if (value != expected)
+  إذا (ارزښت != expected)
     {
-      printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
-      support_record_failure ();
+      چاپ_کړه ("%s(%#llx) expected %d got %d\n",
+	      name, param, expected, ارزښت);
+      support_ریکارډ_failure ();
     }
-  else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+  وإلا
+    چاپ_کړه ("%s(%#llx) as expected %d\n", name, param, ارزښت);
 }
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  int i;
+  صحيح i;
 
-#define TEST(fct, type) \
+#تعریف_کړه TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  لكل (i=0 ; i < 8 * حجم (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  لكل (i=0 ; i < 8 * حجم (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, صحيح);
+  TEST (ffsl, اوږد صحيح);
+  TEST (ffsll, اوږد اوږد صحيح);
 
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

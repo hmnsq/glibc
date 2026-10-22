@@ -15,40 +15,40 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#که_تعریف_شوی HAVE_CONFIG_H
+#ضمن <config.h>
+#د_که_پای
 
-#if defined _LIBC || defined  STDC_HEADERS
+#إذا defined _LIBC || defined  STDC_سرلیکونه
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
-#endif
+#وإلا
+حرف *حافظه_ورکړه ();
+حرف *حافظه_نقل ();
+#د_که_پای
 
-#undef __strdup
-#undef strdup
+#تعریف_لغوه __strdup
+#تعریف_لغوه strdup
 
-#ifndef weak_alias
+#که_نه_تعریف_شوی weak_alias
 # define __strdup strdup
-#endif
+#د_که_پای
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+حرف *
+__strdup (ثابت حرف *s)
 {
-  size_t len = strlen (s) + 1;
-  void *new = malloc (len);
+  size_t len = مزي_اوږدوالی (s) + 1;
+  فراغ *new = حافظه_ورکړه (len);
 
-  if (new == NULL)
-    return NULL;
+  إذا (new == عدم)
+    أرجع عدم;
 
-  return (char *) memcpy (new, s, len);
+  أرجع (حرف *) حافظه_نقل (new, s, len);
 }
-#ifdef libc_hidden_def
+#که_تعریف_شوی libc_hidden_def
 libc_hidden_def (__strdup)
-#endif
-#ifdef weak_alias
+#د_که_پای
+#که_تعریف_شوی weak_alias
 weak_alias (__strdup, strdup)
-#endif
+#د_که_پای

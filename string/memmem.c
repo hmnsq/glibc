@@ -15,28 +15,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _LIBC
+#که_نه_تعریف_شوی _LIBC
 # include <config.h>
-#endif
+#د_که_پای
 
-#include <string.h>
+#ضمن <string.h>
 
-#ifndef _LIBC
+#که_نه_تعریف_شوی _LIBC
 # define __memmem	memmem
-#endif
+#د_که_پای
 
-#define RETURN_TYPE void *
-#define AVAILABLE(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
-#define FASTSEARCH(S,C,N) (void*) memchr ((void *)(S), (C), (N))
-#include "str-two-way.h"
+#تعریف_کړه RETURN_TYPE فراغ *
+#تعریف_کړه شته(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
+#تعریف_کړه FASTSEARCH(S,C,N) (فراغ*) memchr ((فراغ *)(S), (C), (N))
+#ضمن "str-two-way.h"
 
-#undef memmem
+#تعریف_لغوه memmem
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#تعریف_کړه hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % حجم (ښويدنه))
 
 /* Fast memmem algorithm with guaranteed linear-time performance.
    Small needles up to size 2 use a dedicated linear search.  Longer needles
@@ -49,80 +49,80 @@
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-void *
-__memmem (const void *haystack, size_t hs_len,
-	  const void *needle, size_t ne_len)
+فراغ *
+__memmem (ثابت فراغ *haystack, size_t hs_len,
+	  ثابت فراغ *needle, size_t ne_len)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  ثابت بینښه حرف *hs = (ثابت بینښه حرف *) haystack;
+  ثابت بینښه حرف *ne = (ثابت بینښه حرف *) needle;
 
-  if (ne_len == 0)
-    return (void *) hs;
-  if (ne_len == 1)
-    return (void *) memchr (hs, ne[0], hs_len);
+  إذا (ne_len == 0)
+    أرجع (فراغ *) hs;
+  إذا (ne_len == 1)
+    أرجع (فراغ *) memchr (hs, ne[0], hs_len);
 
   /* Ensure haystack length is >= needle length.  */
-  if (hs_len < ne_len)
-    return NULL;
+  إذا (hs_len < ne_len)
+    أرجع عدم;
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  ثابت بینښه حرف *پای_ټکی = hs + hs_len - ne_len;
 
-  if (ne_len == 2)
+  إذا (ne_len == 2)
     {
       uint32_t nw = ne[0] << 16 | ne[1], hw = hs[0] << 16 | hs[1];
-      for (hs++; hs <= end && hw != nw; )
+      لكل (hs++; hs <= پای_ټکی && hw != nw; )
 	hw = hw << 16 | *++hs;
-      return hw == nw ? (void *)hs - 1 : NULL;
+      أرجع hw == nw ? (فراغ *)hs - 1 : عدم;
     }
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__builtin_expect (ne_len > 256, 0))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  إذا (__builtin_expect (ne_len > 256, 0))
+    أرجع two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  uint8_t shift[256];
+  uint8_t ښويدنه[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
-  size_t offset = 0;
+  size_t دننه_واټن = 0;
 
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
-    shift[hash2 (ne + i)] = i;
+  memset (ښويدنه, 0, حجم (ښويدنه));
+  لكل (صحيح i = 1; i < m1; i++)
+    ښويدنه[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
-  shift1 = m1 - shift[hash2 (ne + m1)];
-  shift[hash2 (ne + m1)] = m1;
+  shift1 = m1 - ښويدنه[hash2 (ne + m1)];
+  ښويدنه[hash2 (ne + m1)] = m1;
 
-  for ( ; hs <= end; )
+  لكل ( ; hs <= پای_ټکی; )
     {
       /* Skip past character pairs not in the needle.  */
-      do
+      افعل
 	{
 	  hs += m1;
-	  tmp = shift[hash2 (hs)];
+	  tmp = ښويدنه[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      طالما (tmp == 0 && hs <= پای_ټکی);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      إذا (tmp < m1)
+	استمر;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      إذا (m1 < 15 || memcmp (hs + دننه_واټن, ne + دننه_واټن, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  إذا (memcmp (hs, ne, m1) == 0)
+	    أرجع (فراغ *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
-	  offset = (offset >= 8 ? offset : m1) - 8;
+	  دننه_واټن = (دننه_واټن >= 8 ? دننه_واټن : m1) - 8;
 	}
 
       /* Skip based on matching the hash of the needle end.  */
       hs += shift1;
     }
-  return NULL;
+  أرجع عدم;
 }
 libc_hidden_def (__memmem)
 static_weak_alias (__memmem, memmem)

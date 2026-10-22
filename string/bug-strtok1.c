@@ -1,44 +1,44 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#ضمن <string.h>
+#ضمن <stdio.h>
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  ثابت حرف str[] = "axaaba";
+  حرف *token;
+  حرف *cp;
+  حرف *l;
+  صحيح پایله = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
-  printf ("cp = %p, len = %zu\n", cp, strlen (cp));
+  چاپ_کړه ("cp = %p, len = %zu\n", cp, مزي_اوږدوالی (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  پایله |= token == عدم || strcmp (token, "x");
+  چاپ_کړه ("token: %s (%d)\n", token ? token : "NULL", پایله);
   token = strtok(0, "ab");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  پایله |= token != عدم;
+  چاپ_کړه ("token: %s (%d)\n", token ? token : "NULL", پایله);
   token = strtok(0, "a");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  پایله |= token != عدم;
+  چاپ_کړه ("token: %s (%d)\n", token ? token : "NULL", پایله);
 
   puts ("test strtok_r");
   cp = strdupa (str);
-  size_t len = strlen (cp);
-  printf ("cp = %p, len = %zu\n", cp, len);
+  size_t len = مزي_اوږدوالی (cp);
+  چاپ_کړه ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  پایله |= token == عدم || strcmp (token, "x");
+  چاپ_کړه ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, پایله);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  پایله |= token != عدم || l != cp + len;
+  چاپ_کړه ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, پایله);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
+  پایله |= token != عدم || l != cp + len;
+  چاپ_کړه ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, پایله);
 
-  return result;
+  أرجع پایله;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

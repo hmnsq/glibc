@@ -16,100 +16,100 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <assert.h>
-#include <langinfo.h>
-#include <locale.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-#include <sys/param.h>
-#include <libc-diag.h>
+#ضمن <assert.h>
+#ضمن <langinfo.h>
+#ضمن <locale.h>
+#ضمن <stddef.h>
+#ضمن <stdint.h>
+#ضمن <string.h>
+#ضمن <sys/param.h>
+#ضمن <libc-diag.h>
 
-#ifndef STRING_TYPE
-# define STRING_TYPE char
-# define USTRING_TYPE unsigned char
+#که_نه_تعریف_شوی STRING_TYPE
+# define STRING_TYPE حرف
+# define USTRING_TYPE بینښه حرف
 # define STRCOLL __strcoll_l
 # define STRCMP strcmp
-# define WEIGHT_H "../locale/weight.h"
+# define وزن_H "../locale/weight.h"
 # define SUFFIX	MB
 # define L(arg) arg
-#endif
+#د_که_پای
 
-#define CONCAT(a,b) CONCAT1(a,b)
-#define CONCAT1(a,b) a##b
+#تعریف_کړه CONCAT(a,b) CONCAT1(a,b)
+#تعریف_کړه CONCAT1(a,b) a##b
 
-#include "../locale/localeinfo.h"
-#include WEIGHT_H
+#ضمن "../locale/localeinfo.h"
+#ضمن وزن_H
 
 /* Track status while looking for sequences in a string.  */
-typedef struct
+تعريفنوع بنية
 {
-  int len;			/* Length of the current sequence.  */
+  صحيح len;			/* Length of the current sequence.  */
   size_t val;			/* Position of the sequence relative to the
 				   previous non-ignored sequence.  */
   size_t idxmax;		/* Maximum index in sequences.  */
   size_t idxcnt;		/* Current count of indices.  */
   size_t backw;			/* Current Backward sequence index.  */
   size_t backw_stop;		/* Index where the backward sequences stop.  */
-  const USTRING_TYPE *us;	/* The string.  */
-  unsigned char rule;		/* Saved rule for the first sequence.  */
+  ثابت USTRING_TYPE *us;	/* The string.  */
+  بینښه حرف قاعده;		/* Saved rule for the first sequence.  */
   int32_t idx;			/* Index to weight of the current sequence.  */
   int32_t save_idx;		/* Save looked up index of a forward
 				   sequence after the last backward
 				   sequence.  */
-  const USTRING_TYPE *back_us;	/* Beginning of the backward sequence.  */
+  ثابت USTRING_TYPE *شا_us;	/* Beginning of the backward sequence.  */
 } coll_seq;
 
 /* Get next sequence.  Traverse the string as required.  */
-static __always_inline void
-get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
-	      const USTRING_TYPE *weights, const int32_t *table,
-	      const USTRING_TYPE *extra, const int32_t *indirect,
-	      int pass)
+ساكن __always_inline فراغ
+get_بل_seq (coll_seq *seq, صحيح nrules, ثابت بینښه حرف *rulesets,
+	      ثابت USTRING_TYPE *weights, ثابت int32_t *جدول,
+	      ثابت USTRING_TYPE *extra, ثابت int32_t *غیرمستقیم,
+	      صحيح pass)
 {
   size_t val = seq->val = 0;
-  int len = seq->len;
+  صحيح len = seq->len;
   size_t backw_stop = seq->backw_stop;
   size_t backw = seq->backw;
   size_t idxcnt = seq->idxcnt;
   size_t idxmax = seq->idxmax;
   int32_t idx = seq->idx;
-  const USTRING_TYPE *us = seq->us;
+  ثابت USTRING_TYPE *us = seq->us;
 
-  while (len == 0)
+  طالما (len == 0)
     {
       ++val;
-      if (backw_stop != ~0ul)
+      إذا (backw_stop != ~0ul)
 	{
 	  /* There is something pushed.  */
-	  if (backw == backw_stop)
+	  إذا (backw == backw_stop)
 	    {
 	      /* The last pushed character was handled.  Continue
 		 with forward characters.  */
-	      if (idxcnt < idxmax)
+	      إذا (idxcnt < idxmax)
 		{
 		  idx = seq->save_idx;
 		  backw_stop = ~0ul;
 		}
-	      else
+	      وإلا
 		{
 		  /* Nothing anymore.  The backward sequence ended with
 		     the last sequence in the string.  Note that len is
 		     still zero.  */
 		  idx = 0;
-		  break;
+		  اكسر;
 	        }
 	    }
-	  else
+	  وإلا
 	    {
 	      /* XXX Traverse BACKW sequences from the beginning of
 		 BACKW_STOP to get the next sequence.  Is there a quicker way
 	         to do this?  */
 	      size_t i = backw_stop;
-	      us = seq->back_us;
-	      while (i < backw)
+	      us = seq->شا_us;
+	      طالما (i < backw)
 		{
-		  int32_t tmp = findidx (table, indirect, extra, &us, -1);
+		  int32_t tmp = findidx (جدول, غیرمستقیم, extra, &us, -1);
 		  idx = tmp & 0xffffff;
 		  i++;
 		}
@@ -117,55 +117,55 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 	      us = seq->us;
 	    }
 	}
-      else
+      وإلا
 	{
 	  backw_stop = idxmax;
 	  int32_t prev_idx = idx;
 
-	  while (*us != L('\0'))
+	  طالما (*us != L('\0'))
 	    {
-	      int32_t tmp = findidx (table, indirect, extra, &us, -1);
-	      unsigned char rule = tmp >> 24;
+	      int32_t tmp = findidx (جدول, غیرمستقیم, extra, &us, -1);
+	      بینښه حرف قاعده = tmp >> 24;
 	      prev_idx = idx;
 	      idx = tmp & 0xffffff;
 	      idxcnt = idxmax++;
 
 	      /* Save the rule for the first sequence.  */
-	      if (__glibc_unlikely (idxcnt == 0))
-	        seq->rule = rule;
+	      إذا (__glibc_unlikely (idxcnt == 0))
+	        seq->قاعده = قاعده;
 
-	      if ((rulesets[rule * nrules + pass]
-		   & sort_backward) == 0)
+	      إذا ((rulesets[قاعده * nrules + pass]
+		   & ترتیبول_backward) == 0)
 		/* No more backward characters to push.  */
-		break;
+		اكسر;
 	      ++idxcnt;
 	    }
 
-	  if (backw_stop >= idxcnt)
+	  إذا (backw_stop >= idxcnt)
 	    {
 	      /* No sequence at all or just one.  */
-	      if (idxcnt == idxmax || backw_stop > idxcnt)
+	      إذا (idxcnt == idxmax || backw_stop > idxcnt)
 		/* Note that len is still zero.  */
-		break;
+		اكسر;
 
 	      backw_stop = ~0ul;
 	    }
-	  else
+	  وإلا
 	    {
 	      /* We pushed backward sequences.  If the stream ended with the
 		 backward sequence, then we process the last sequence we
 		 found.  Otherwise we process the sequence before the last
 		 one since the last one was a forward sequence.  */
-	      seq->back_us = seq->us;
+	      seq->شا_us = seq->us;
 	      seq->us = us;
 	      backw = idxcnt;
-	      if (idxmax > idxcnt)
+	      إذا (idxmax > idxcnt)
 		{
 		  backw--;
 		  seq->save_idx = idx;
 		  idx = prev_idx;
 		}
-	      if (backw > backw_stop)
+	      إذا (backw > backw_stop)
 		backw--;
 	    }
 	}
@@ -179,12 +179,12 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 	 it is guarded by a sequence of checks against backw_stop which
 	 ensures that seq->save_idx was saved to first and contains a
 	 valid value.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_ټېل_NEEDS_COMMENT;
       DIAG_IGNORE_Os_NEEDS_COMMENT_GCC (5, "-Wmaybe-uninitialized");
       len = weights[idx++];
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_راوباسه_NEEDS_COMMENT;
       /* Skip over indices of previous levels.  */
-      for (int i = 0; i < pass; i++)
+      لكل (صحيح i = 0; i < pass; i++)
 	{
 	  idx += len;
 	  len = weights[idx];
@@ -204,33 +204,33 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 }
 
 /* Compare two sequences.  */
-static __always_inline int
-do_compare (coll_seq *seq1, coll_seq *seq2, int position,
-	    const USTRING_TYPE *weights)
+ساكن __always_inline صحيح
+do_compare (coll_seq *seq1, coll_seq *seq2, صحيح position,
+	    ثابت USTRING_TYPE *weights)
 {
-  int seq1len = seq1->len;
-  int seq2len = seq2->len;
+  صحيح seq1len = seq1->len;
+  صحيح seq2len = seq2->len;
   size_t val1 = seq1->val;
   size_t val2 = seq2->val;
-  int idx1 = seq1->idx;
-  int idx2 = seq2->idx;
-  int result = 0;
+  صحيح idx1 = seq1->idx;
+  صحيح idx2 = seq2->idx;
+  صحيح پایله = 0;
 
   /* Test for position if necessary.  */
-  if (position && val1 != val2)
+  إذا (position && val1 != val2)
     {
-      result = val1 > val2 ? 1 : -1;
-      goto out;
+      پایله = val1 > val2 ? 1 : -1;
+      اذهب بهر;
     }
 
   /* Compare the two sequences.  */
-  do
+  افعل
     {
-      if (weights[idx1] != weights[idx2])
+      إذا (weights[idx1] != weights[idx2])
 	{
 	  /* The sequences differ.  */
-	  result = weights[idx1] - weights[idx2];
-	  goto out;
+	  پایله = weights[idx1] - weights[idx2];
+	  اذهب بهر;
 	}
 
       /* Increment the offsets.  */
@@ -240,56 +240,56 @@ do_compare (coll_seq *seq1, coll_seq *seq2, int position,
       --seq1len;
       --seq2len;
     }
-  while (seq1len > 0 && seq2len > 0);
+  طالما (seq1len > 0 && seq2len > 0);
 
-  if (position && seq1len != seq2len)
-    result = seq1len - seq2len;
+  إذا (position && seq1len != seq2len)
+    پایله = seq1len - seq2len;
 
-out:
+بهر:
   seq1->len = seq1len;
   seq2->len = seq2len;
   seq1->idx = idx1;
   seq2->idx = idx2;
-  return result;
+  أرجع پایله;
 }
 
-int
-STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
+صحيح
+STRCOLL (ثابت STRING_TYPE *s1, ثابت STRING_TYPE *s2, locale_t l)
 {
-  struct __locale_data *current = l->__locales[LC_COLLATE];
-  uint32_t nrules = current->values[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
+  بنية __locale_data *current = l->__locales[LC_COLLATE];
+  uint32_t nrules = current->ارزښتونه[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].کلمه;
   /* We don't assign the following values right away since it might be
      unnecessary in case there are no rules.  */
-  const unsigned char *rulesets;
-  const int32_t *table;
-  const USTRING_TYPE *weights;
-  const USTRING_TYPE *extra;
-  const int32_t *indirect;
+  ثابت بینښه حرف *rulesets;
+  ثابت int32_t *جدول;
+  ثابت USTRING_TYPE *weights;
+  ثابت USTRING_TYPE *extra;
+  ثابت int32_t *غیرمستقیم;
 
-  if (nrules == 0)
-    return STRCMP (s1, s2);
+  إذا (nrules == 0)
+    أرجع STRCMP (s1, s2);
 
   /* Catch empty strings.  */
-  if (__glibc_unlikely (*s1 == '\0') || __glibc_unlikely (*s2 == '\0'))
-    return (*s1 != '\0') - (*s2 != '\0');
+  إذا (__glibc_unlikely (*s1 == '\0') || __glibc_unlikely (*s2 == '\0'))
+    أرجع (*s1 != '\0') - (*s2 != '\0');
 
-  rulesets = (const unsigned char *)
-    current->values[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
-  table = (const int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
-  weights = (const USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
-  extra = (const USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
-  indirect = (const int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
+  rulesets = (ثابت بینښه حرف *)
+    current->ارزښتونه[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
+  جدول = (ثابت int32_t *)
+    current->ارزښتونه[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_جدول,SUFFIX))].string;
+  weights = (ثابت USTRING_TYPE *)
+    current->ارزښتونه[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_وزن,SUFFIX))].string;
+  extra = (ثابت USTRING_TYPE *)
+    current->ارزښتونه[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
+  غیرمستقیم = (ثابت int32_t *)
+    current->ارزښتونه[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_غیرمستقیم,SUFFIX))].string;
 
-  assert (((uintptr_t) table) % __alignof__ (table[0]) == 0);
-  assert (((uintptr_t) weights) % __alignof__ (weights[0]) == 0);
-  assert (((uintptr_t) extra) % __alignof__ (extra[0]) == 0);
-  assert (((uintptr_t) indirect) % __alignof__ (indirect[0]) == 0);
+  أكد (((uintptr_t) جدول) % __alignof__ (جدول[0]) == 0);
+  أكد (((uintptr_t) weights) % __alignof__ (weights[0]) == 0);
+  أكد (((uintptr_t) extra) % __alignof__ (extra[0]) == 0);
+  أكد (((uintptr_t) غیرمستقیم) % __alignof__ (غیرمستقیم[0]) == 0);
 
-  int result = 0, rule = 0;
+  صحيح پایله = 0, قاعده = 0;
 
   /* With GCC 7 when compiling with -Os the compiler warns that
      seq1.back_us and seq2.back_us might be used uninitialized.
@@ -298,17 +298,17 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
      x86 and s390x, a warning appears at the definitions of seq1 and
      seq2.  This uninitialized use is impossible for the same reason
      as described in comments in locale/weightwc.h.  */
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_ټېل_NEEDS_COMMENT;
   DIAG_IGNORE_Os_NEEDS_COMMENT_GCC (7, "-Wmaybe-uninitialized");
   coll_seq seq1, seq2;
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_راوباسه_NEEDS_COMMENT;
   seq1.len = 0;
   seq1.idxmax = 0;
-  seq1.rule = 0;
+  seq1.قاعده = 0;
   seq2.len = 0;
   seq2.idxmax = 0;
 
-  for (int pass = 0; pass < nrules; ++pass)
+  لكل (صحيح pass = 0; pass < nrules; ++pass)
     {
       seq1.idxcnt = 0;
       seq1.idx = 0;
@@ -321,53 +321,53 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
 
       /* We need the elements of the strings as unsigned values since they
 	 are used as indices.  */
-      seq1.us = (const USTRING_TYPE *) s1;
-      seq2.us = (const USTRING_TYPE *) s2;
+      seq1.us = (ثابت USTRING_TYPE *) s1;
+      seq2.us = (ثابت USTRING_TYPE *) s2;
 
       /* We assume that if a rule has defined `position' in one section
 	 this is true for all of them.  Please note that the localedef programs
 	 makes sure that `position' is not used at the first level.  */
 
-      int position = rulesets[rule * nrules + pass] & sort_position;
+      صحيح position = rulesets[قاعده * nrules + pass] & ترتیبول_position;
 
-      while (1)
+      طالما (1)
 	{
-	  get_next_seq (&seq1, nrules, rulesets, weights, table,
-				    extra, indirect, pass);
-	  get_next_seq (&seq2, nrules, rulesets, weights, table,
-				    extra, indirect, pass);
+	  get_بل_seq (&seq1, nrules, rulesets, weights, جدول,
+				    extra, غیرمستقیم, pass);
+	  get_بل_seq (&seq2, nrules, rulesets, weights, جدول,
+				    extra, غیرمستقیم, pass);
 	  /* See whether any or both strings are empty.  */
-	  if (seq1.len == 0 || seq2.len == 0)
+	  إذا (seq1.len == 0 || seq2.len == 0)
 	    {
-	      if (seq1.len == seq2.len)
+	      إذا (seq1.len == seq2.len)
 		{
 		  /* Both strings ended and are equal at this level.  Do a
 		     byte-level comparison to ensure that we don't waste time
 		     going through multiple passes for totally equal strings
 		     before proceeding to subsequent passes.  */
-		  if (pass == 0 && STRCMP (s1, s2) == 0)
-		    return result;
-		  else
-		    break;
+		  إذا (pass == 0 && STRCMP (s1, s2) == 0)
+		    أرجع پایله;
+		  وإلا
+		    اكسر;
 	        }
 
 	      /* This means one string is shorter than the other.  Find out
 		 which one and return an appropriate value.  */
-	      return seq1.len == 0 ? -1 : 1;
+	      أرجع seq1.len == 0 ? -1 : 1;
 	    }
 
-	  result = do_compare (&seq1, &seq2, position, weights);
-	  if (result != 0)
-	    return result;
+	  پایله = do_compare (&seq1, &seq2, position, weights);
+	  إذا (پایله != 0)
+	    أرجع پایله;
 	}
 
-      rule = seq1.rule;
+      قاعده = seq1.قاعده;
     }
 
-  return result;
+  أرجع پایله;
 }
 libc_hidden_def (STRCOLL)
 
-#ifndef WIDE_CHAR_VERSION
+#که_نه_تعریف_شوی WIDE_CHAR_نسخه
 weak_alias (__strcoll_l, strcoll_l)
-#endif
+#د_که_پای

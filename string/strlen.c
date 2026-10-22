@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#ضمن <libc-pointer-arith.h>
+#ضمن <string-fzb.h>
+#ضمن <string-fzc.h>
+#ضمن <string-fzi.h>
+#ضمن <string-shift.h>
+#ضمن <string.h>
 
-#ifdef STRLEN
+#که_تعریف_شوی STRLEN
 # define __strlen STRLEN
-#endif
+#د_که_پای
 
 /* Return the length of the null-terminated string STR.  Scan for
    the null terminator quickly by testing four bytes at a time.  */
 size_t
-__strlen (const char *str)
+__strlen (ثابت حرف *str)
 {
   /* Align pointer to sizeof op_t.  */
-  const uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t*) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  ثابت uintptr_t s_int = (uintptr_t) str;
+  ثابت op_t *کلمه_ptr = (ثابت op_t*) PTR_ALIGN_ښکته (str, حجم (op_t));
 
-  op_t word = *word_ptr;
-  find_t mask = shift_find (find_zero_all (word), s_int);
-  if (mask != 0)
-    return index_first (mask);
+  op_t کلمه = *کلمه_ptr;
+  پیدا_کړه_t ماسک = ښويدنه_پیدا_کړه (پیدا_کړه_zero_all (کلمه), s_int);
+  إذا (ماسک != 0)
+    أرجع شاخص_لومړی (ماسک);
 
-  do
-    word = *++word_ptr;
-  while (! has_zero (word));
+  افعل
+    کلمه = *++کلمه_ptr;
+  طالما (! has_zero (کلمه));
 
-  return ((const char *) word_ptr) + index_first_zero (word) - str;
+  أرجع ((ثابت حرف *) کلمه_ptr) + شاخص_لومړی_zero (کلمه) - str;
 }
-#ifndef STRLEN
-weak_alias (__strlen, strlen)
-libc_hidden_builtin_def (strlen)
-#endif
+#که_نه_تعریف_شوی STRLEN
+weak_alias (__strlen, مزي_اوږدوالی)
+libc_hidden_builtin_def (مزي_اوږدوالی)
+#د_که_پای

@@ -25,16 +25,16 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#ضمن <array_length.h>
+#ضمن <string.h>
+#ضمن <support/check.h>
+#ضمن <support/next_to_fault.h>
+#ضمن <support/test-driver.h>
+#ضمن <sys/param.h>
+#ضمن <unistd.h>
 
 /* Much shorter than test-Xnlen-nonarray.c because of deeply nested loops.  */
-enum { buffer_length = 80 };
+تعداد { بفر_اوږدتیا = 80 };
 
 /* The test buffer layout follows what is described test-Xnlen-nonarray.c,
    except that there two buffers, left and right.  The variables
@@ -42,134 +42,134 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+ساكن صحيح
+string_اوږدتیا (صحيح a_شمېر, صحيح پیل_دننه_واټن)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  إذا (پیل_دننه_واټن == بفر_اوږدتیا || پیل_دننه_واټن >= a_شمېر)
+    أرجع 0;
+  وإلا
+    أرجع a_شمېر - پیل_دننه_واټن;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+ساكن صحيح
+اعظمي_اوږدتیا (صحيح پیل_دننه_واټن, صحيح zero_شمېر)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  إذا (پیل_دننه_واټن == بفر_اوږدتیا)
+    أرجع 0;
+  وإلا إذا (zero_شمېر > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    أرجع بفر_اوږدتیا + 32;
+  وإلا
+    أرجع بفر_اوږدتیا - پیل_دننه_واټن;
 }
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+تعريفنوع __typeof (TEST_IDENTIFIER) *proto_t;
 
-#define TEST_MAIN
-#include "test-string.h"
+#تعریف_کړه TEST_MAIN
+#ضمن "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+ساكن صحيح
+test_main (فراغ)
 {
-  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
+  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= بفر_اوږدتیا);
   test_init ();
 
-  struct support_next_to_fault left_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *right_buffer = (CHAR *) right_ntf.buffer;
+  بنية support_بل_منزل_fault کیڼ_ntf
+    = support_بل_منزل_fault_allocate (بفر_اوږدتیا * حجم (CHAR));
+  CHAR *کیڼ_بفر = (CHAR *) کیڼ_ntf.بفر;
+  بنية support_بل_منزل_fault ښی_ntf
+    = support_بل_منزل_fault_allocate (بفر_اوږدتیا * حجم (CHAR));
+  CHAR *ښی_بفر = (CHAR *) ښی_ntf.بفر;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        left_buffer[i] = 'A';
+      چاپ_کړه ("info: testing %s\n", impl->name);
+      لكل (size_t i = 0; i < بفر_اوږدتیا; ++i)
+        کیڼ_بفر[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
-           ++left_zero_count)
+      لكل (صحيح کیڼ_zero_شمېر = 0; کیڼ_zero_شمېر <= بفر_اوږدتیا;
+           ++کیڼ_zero_شمېر)
         {
-          if (left_zero_count > 0)
-            left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
-            right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
-               ++right_zero_count)
+          إذا (کیڼ_zero_شمېر > 0)
+            کیڼ_بفر[بفر_اوږدتیا - کیڼ_zero_شمېر] = 0;
+          صحيح کیڼ_a_شمېر = بفر_اوږدتیا - کیڼ_zero_شمېر;
+          لكل (size_t i = 0; i < بفر_اوږدتیا; ++i)
+            ښی_بفر[i] = 'A';
+          لكل (صحيح ښی_zero_شمېر = 0; ښی_zero_شمېر <= بفر_اوږدتیا;
+               ++ښی_zero_شمېر)
             {
-              if (right_zero_count > 0)
-                right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
-                   left_start_offset <= buffer_length;
-                   ++left_start_offset)
+              إذا (ښی_zero_شمېر > 0)
+                ښی_بفر[بفر_اوږدتیا - ښی_zero_شمېر] = 0;
+              صحيح ښی_a_شمېر = بفر_اوږدتیا - ښی_zero_شمېر;
+              لكل (صحيح کیڼ_پیل_دننه_واټن = 0;
+                   کیڼ_پیل_دننه_واټن <= بفر_اوږدتیا;
+                   ++کیڼ_پیل_دننه_واټن)
                 {
-                  CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
-                    = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
-                    = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
-                       right_start_offset <= buffer_length;
-                       ++right_start_offset)
+                  CHAR *کیڼ_پیل_اشاره_ګر = کیڼ_بفر + کیڼ_پیل_دننه_واټن;
+                  صحيح کیڼ_maxlen
+                    = اعظمي_اوږدتیا (کیڼ_پیل_دننه_واټن, کیڼ_zero_شمېر);
+                  صحيح کیڼ_اوږدتیا
+                    = string_اوږدتیا (کیڼ_a_شمېر, کیڼ_پیل_دننه_واټن);
+                  لكل (صحيح ښی_پیل_دننه_واټن = 0;
+                       ښی_پیل_دننه_واټن <= بفر_اوږدتیا;
+                       ++ښی_پیل_دننه_واټن)
                     {
-                      CHAR *right_start_pointer
-                        = right_buffer + right_start_offset;
-                      int right_maxlen
-                        = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
-                        = string_length (right_a_count, right_start_offset);
+                      CHAR *ښی_پیل_اشاره_ګر
+                        = ښی_بفر + ښی_پیل_دننه_واټن;
+                      صحيح ښی_maxlen
+                        = اعظمي_اوږدتیا (ښی_پیل_دننه_واټن, ښی_zero_شمېر);
+                      صحيح ښی_اوږدتیا
+                        = string_اوږدتیا (ښی_a_شمېر, ښی_پیل_دننه_واټن);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      صحيح maxlen = MIN (کیڼ_maxlen, ښی_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
-                           ++length_argument)
+                      لكل (صحيح اوږدتیا_دلیل = 0; اوږدتیا_دلیل <= maxlen;
+                           ++اوږدتیا_دلیل)
                         {
-                          if (test_verbose)
+                          إذا (test_verbose)
                             {
-                              printf ("left: zero_count=%d"
+                              چاپ_کړه ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      left_zero_count, left_a_count,
-                                      left_start_offset);
-                              printf ("right: zero_count=%d"
+                                      کیڼ_zero_شمېر, کیڼ_a_شمېر,
+                                      کیڼ_پیل_دننه_واټن);
+                              چاپ_کړه ("right: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      right_zero_count, right_a_count,
-                                      right_start_offset);
-                              printf ("length argument: %d\n",
-                                      length_argument);
+                                      ښی_zero_شمېر, ښی_a_شمېر,
+                                      ښی_پیل_دننه_واټن);
+                              چاپ_کړه ("length argument: %d\n",
+                                      اوږدتیا_دلیل);
                             }
 
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
-                            = MIN (left_length, length_argument);
-                          int right_effective
-                            = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          صحيح کیڼ_effective
+                            = MIN (کیڼ_اوږدتیا, اوږدتیا_دلیل);
+                          صحيح ښی_effective
+                            = MIN (ښی_اوږدتیا, اوږدتیا_دلیل);
+                          إذا (کیڼ_effective == ښی_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument), 0);
-                          else if (left_effective < right_effective)
+                                                کیڼ_پیل_اشاره_ګر,
+                                                ښی_پیل_اشاره_ګر,
+                                                اوږدتیا_دلیل), 0);
+                          وإلا إذا (کیڼ_effective < ښی_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument) < 0, 1);
-                          else
+                                                کیڼ_پیل_اشاره_ګر,
+                                                ښی_پیل_اشاره_ګر,
+                                                اوږدتیا_دلیل) < 0, 1);
+                          وإلا
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument) > 0, 1);
+                                                کیڼ_پیل_اشاره_ګر,
+                                                ښی_پیل_اشاره_ګر,
+                                                اوږدتیا_دلیل) > 0, 1);
                         }
                     }
                 }
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

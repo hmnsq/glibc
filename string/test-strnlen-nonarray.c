@@ -1,4 +1,4 @@
-#define TEST_IDENTIFIER strnlen
-#define TEST_NAME "strnlen"
-typedef char CHAR;
-#include "test-Xnlen-nonarray.c"
+#تعریف_کړه TEST_IDENTIFIER strnlen
+#تعریف_کړه TEST_NAME "strnlen"
+تعريفنوع حرف CHAR;
+#ضمن "test-Xnlen-nonarray.c"

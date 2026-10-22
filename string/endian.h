@@ -15,27 +15,27 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef	_ENDIAN_H
-#define	_ENDIAN_H	1
+#که_نه_تعریف_شوی	_ENDIAN_H
+#تعریف_کړه	_ENDIAN_H	1
 
-#include <features.h>
+#ضمن <features.h>
 
 /* Get the definitions of __*_ENDIAN, __BYTE_ORDER, and __FLOAT_WORD_ORDER.  */
-#include <bits/endian.h>
+#ضمن <bits/endian.h>
 
-#ifdef __USE_MISC
+#که_تعریف_شوی __USE_MISC
 # define LITTLE_ENDIAN	__LITTLE_ENDIAN
 # define BIG_ENDIAN	__BIG_ENDIAN
 # define PDP_ENDIAN	__PDP_ENDIAN
 # define BYTE_ORDER	__BYTE_ORDER
-#endif
+#د_که_پای
 
-#if defined __USE_MISC && !defined __ASSEMBLER__
+#إذا defined __USE_MISC && !defined __ASSEMBLER__
 /* Conversion interfaces.  */
 # include <bits/byteswap.h>
 # include <bits/uintn-identity.h>
 
-# if __BYTE_ORDER == __LITTLE_ENDIAN
+# إذا __BYTE_ORDER == __LITTLE_ENDIAN
 #  define htobe16(x) __bswap_16 (x)
 #  define htole16(x) __uint16_identity (x)
 #  define be16toh(x) __bswap_16 (x)
@@ -51,7 +51,7 @@
 #  define be64toh(x) __bswap_64 (x)
 #  define le64toh(x) __uint64_identity (x)
 
-# else
+# وإلا
 #  define htobe16(x) __uint16_identity (x)
 #  define htole16(x) __bswap_16 (x)
 #  define be16toh(x) __uint16_identity (x)
@@ -67,6 +67,6 @@
 #  define be64toh(x) __uint64_identity (x)
 #  define le64toh(x) __bswap_64 (x)
 # endif
-#endif
+#د_که_پای
 
-#endif	/* endian.h */
+#د_که_پای	/* endian.h */
