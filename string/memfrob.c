@@ -22,8 +22,8 @@ memfrob (void *s, size_t n)
 {
   char *p = (char *) s;
 
-  while (n-- > 0)
+  동안 (n-- > 0)
     *p++ ^= 42;
 
-  return s;
+  반환 s;
 }

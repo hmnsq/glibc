@@ -42,28 +42,28 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+static 정수
+string_length (정수 a_count, 정수 start_offset)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  만약 (start_offset == buffer_length || start_offset >= a_count)
+    반환 0;
+  아니면
+    반환 a_count - start_offset;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+static 정수
+maximum_length (정수 start_offset, 정수 zero_count)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  만약 (start_offset == buffer_length)
+    반환 0;
+  아니면 만약 (zero_count > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    반환 buffer_length + 32;
+  아니면
+    반환 buffer_length - start_offset;
 }
 
 typedef __typeof (TEST_IDENTIFIER) *proto_t;
@@ -73,7 +73,7 @@ typedef __typeof (TEST_IDENTIFIER) *proto_t;
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
+static 정수
 test_main (void)
 {
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
@@ -89,52 +89,52 @@ test_main (void)
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      위해 (size_t i = 0; i < buffer_length; ++i)
         left_buffer[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
+      위해 (정수 left_zero_count = 0; left_zero_count <= buffer_length;
            ++left_zero_count)
         {
-          if (left_zero_count > 0)
+          만약 (left_zero_count > 0)
             left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
+          정수 left_a_count = buffer_length - left_zero_count;
+          위해 (size_t i = 0; i < buffer_length; ++i)
             right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
+          위해 (정수 right_zero_count = 0; right_zero_count <= buffer_length;
                ++right_zero_count)
             {
-              if (right_zero_count > 0)
+              만약 (right_zero_count > 0)
                 right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
+              정수 right_a_count = buffer_length - right_zero_count;
+              위해 (정수 left_start_offset = 0;
                    left_start_offset <= buffer_length;
                    ++left_start_offset)
                 {
                   CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
+                  정수 left_maxlen
                     = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
+                  정수 left_length
                     = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
+                  위해 (정수 right_start_offset = 0;
                        right_start_offset <= buffer_length;
                        ++right_start_offset)
                     {
                       CHAR *right_start_pointer
                         = right_buffer + right_start_offset;
-                      int right_maxlen
+                      정수 right_maxlen
                         = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
+                      정수 right_length
                         = string_length (right_a_count, right_start_offset);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      정수 maxlen = MIN (left_maxlen, right_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
+                      위해 (정수 length_argument = 0; length_argument <= maxlen;
                            ++length_argument)
                         {
-                          if (test_verbose)
+                          만약 (test_verbose)
                             {
                               printf ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
@@ -151,21 +151,21 @@ test_main (void)
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
+                          정수 left_effective
                             = MIN (left_length, length_argument);
-                          int right_effective
+                          정수 right_effective
                             = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          만약 (left_effective == right_effective)
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
                                                 length_argument), 0);
-                          else if (left_effective < right_effective)
+                          아니면 만약 (left_effective < right_effective)
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
                                                 length_argument) < 0, 1);
-                          else
+                          아니면
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  반환 0;
 }
 
 #include <support/test-driver.c>

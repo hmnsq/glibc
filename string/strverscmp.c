@@ -38,7 +38,7 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
+정수
 __strverscmp (const char *s1, const char *s2)
 {
   const unsigned char *p1 = (const unsigned char *) s1;
@@ -65,19 +65,19 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  만약 (p1 == p2)
+    반환 0;
 
   unsigned char c1 = *p1++;
   unsigned char c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  정수 state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  정수 diff;
+  동안 ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      만약 (c1 == '\0')
+	반환 diff;
 
       state = next_state[state];
       c1 = *p1++;
@@ -90,17 +90,17 @@ __strverscmp (const char *s1, const char *s2)
   switch (state)
   {
     case CMP:
-      return diff;
+      반환 diff;
 
     case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+      동안 (isdigit (*p1++))
+	만약 (!isdigit (*p2++))
+	  반환 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      반환 isdigit (*p2) ? -1 : diff;
 
     default:
-      return state;
+      반환 state;
   }
 }
 libc_hidden_def (__strverscmp)

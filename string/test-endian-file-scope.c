@@ -19,7 +19,7 @@
 #include <endian.h>
 #include <stddef.h>
 
-int i;
+정수 i;
 
 size_t s0 = sizeof (htobe16 (i));
 size_t s1 = sizeof (htole16 (i));
@@ -34,11 +34,11 @@ size_t s9 = sizeof (htole64 (i));
 size_t s10 = sizeof (be64toh (i));
 size_t s11 = sizeof (le64toh (i));
 
-static int
+static 정수
 do_test (void)
 {
   /* This is a compilation test.  */
-  return 0;
+  반환 0;
 }
 
 #include <support/test-driver.c>

@@ -23,24 +23,24 @@
 
 
 /* Fill buf with a string describing the errno code in ERRNUM.  */
-int
-__xpg_strerror_r (int errnum, char *buf, size_t buflen)
+정수
+__xpg_strerror_r (정수 errnum, char *buf, size_t buflen)
 {
   const char *estr = __strerror_r (errnum, buf, buflen);
 
   /* We know that __strerror_r returns buf (with a dynamically computed
      string) if errnum is invalid, otherwise it returns a string whose
      storage has indefinite extent.  */
-  if (estr == buf)
-    return EINVAL;
-  else
+  만약 (estr == buf)
+    반환 EINVAL;
+  아니면
     {
       size_t estrlen = strlen (estr);
 
       /* Terminate the string in any case.  */
-      if (buflen > 0)
+      만약 (buflen > 0)
 	*((char *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
 
-      return buflen <= estrlen ? ERANGE : 0;
+      반환 buflen <= estrlen ? ERANGE : 0;
     }
 }

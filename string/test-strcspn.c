@@ -21,7 +21,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#아니면
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
 #include "test-string.h"
@@ -32,7 +32,7 @@
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#아니면
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -55,11 +55,11 @@ SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
   const CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  동안 ((c = *s++) != '\0')
+    위해 (r = rej; *r != '\0'; ++r)
+      만약 (*r == c)
+	반환 s - str - 1;
+  반환 s - str - 1;
 }
 
 size_t
@@ -68,11 +68,11 @@ STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  위해 (i = 0; i < ns; ++i)
+    위해 (j = 0; j < nrej; ++j)
+      만약 (s[i] == rej[j])
+	반환 i;
+  반환 i;
 }
 
 #undef CHAR

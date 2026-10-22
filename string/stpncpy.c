@@ -21,7 +21,7 @@
 
 #ifdef _LIBC
 # include <string.h>
-#else
+#아니면
 # include <sys/types.h>
 #endif
 
@@ -29,7 +29,7 @@
 # ifdef weak_alias
 #  define STPNCPY	__stpncpy
 weak_alias (__stpncpy, stpncpy)
-# else
+# 아니면
 #  define STPNCPY	stpncpy
 # endif
 #endif
@@ -42,9 +42,9 @@ STPNCPY (char *dest, const char *src, size_t n)
   size_t size = __strnlen (src, n);
   memcpy (dest, src, size);
   dest += size;
-  if (size == n)
-    return dest;
-  return memset (dest, '\0', n - size);
+  만약 (size == n)
+    반환 dest;
+  반환 memset (dest, '\0', n - size);
 }
 #ifdef weak_alias
 libc_hidden_def (__stpncpy)

@@ -19,7 +19,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlcpy"
-#else
+#아니면
 # define TEST_NAME "wcslcpy"
 #endif /* WIDE */
 #include "test-string.h"
@@ -34,7 +34,7 @@
 # define SMALL_CHAR 1273
 # define STRLCPY wcslcpy
 # define STRLEN wcslen
-#else
+#아니면
 # define BIG_CHAR CHAR_MAX
 # define CHAR char
 # define MEMCMP memcmp
@@ -51,14 +51,14 @@ SIMPLE_STRLCPY (CHAR *dst, const CHAR *src, size_t n)
 {
   size_t ret = STRLEN (src);
 
-  if (!n)
-    return ret;
+  만약 (!n)
+    반환 ret;
 
-  while (--n)
-    if ((*dst++ = *src++) == '\0')
-      return ret;
+  동안 (--n)
+    만약 ((*dst++ = *src++) == '\0')
+      반환 ret;
   *dst = '\0';
-  return ret;
+  반환 ret;
 }
 
 IMPL (SIMPLE_STRLCPY, 0)
@@ -69,35 +69,35 @@ typedef size_t (*proto_t) (CHAR *, const CHAR *, size_t);
 static void
 do_one_test (impl_t *impl, CHAR *dst, const CHAR *src, size_t len, size_t n)
 {
-  if (CALL (impl, dst, src, n) != len)
+  만약 (CALL (impl, dst, src, n) != len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     CALL (impl, dst, src, n), len);
       ret = 1;
-      return;
+      반환;
     }
 
-  if (n == 0)
-    return;
+  만약 (n == 0)
+    반환;
 
   len = (len >= n ? n - 1 : len);
-  if (MEMCMP (dst, src, len) != 0)
+  만약 (MEMCMP (dst, src, len) != 0)
     {
       error (0, 0, "Wrong result in function1 %s", impl->name);
       ret = 1;
-      return;
+      반환;
     }
 
-  if (dst [len] != '\0')
+  만약 (dst [len] != '\0')
     {
       error (0, 0, "Wrong result in function2 %s", impl->name);
       ret = 1;
-      return;
+      반환;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+do_test (size_t align1, size_t align2, size_t len, size_t n, 정수 max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -105,17 +105,17 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
   /* For wcslcpy: align1 and align2 here mean alignment not in bytes,
      but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t)).  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  만약 ((align1 + len) * sizeof (CHAR) >= page_size)
+    반환;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  만약 ((align2 + len) * sizeof (CHAR) >= page_size)
+    반환;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len; ++i)
+  위해 (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
@@ -146,9 +146,9 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
+  위해 (size_t off1 = 0; off1 < maxoffset; off1++)
     {
-      for (size_t off2 = 0; off2 < maxoffset; off2++)
+      위해 (size_t off2 = 0; off2 < maxoffset; off2++)
 	{
 	  FOR_EACH_IMPL (impl, 0)
 	    do_one_test (impl, s2 + off2, s1 + off1, maxoffset - off1 - 1,
@@ -165,61 +165,61 @@ do_random_tests (void)
   CHAR *p2 = (CHAR *) (buf2 + page_size) - 1024;
   size_t res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  위해 (n = 0; n < ITERATIONS; n++)
     {
       /* For wcslcpy: align1 and align2 here mean align not in bytes,
 	 but in wchar_ts, in bytes it will equal to align * (sizeof
 	 (wchar_t)).  */
 
       mode = random ();
-      if (mode & 1)
+      만약 (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  만약 (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  아니면
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  만약 (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  만약 (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  아니면
 	    len = 512;
-	  if (len >= 512)
+	  만약 (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      아니면
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  만약 (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  아니면
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  만약 (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  만약 (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      만약 (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  아니면
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  만약 ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1;
-      for (i = 0; i < j; i++)
+      위해 (i = 0; i < j; i++)
 	{
 	  p1[i] = random () & BIG_CHAR;
-	  if (i >= align1 && i < len + align1 && !p1[i])
+	  만약 (i >= align1 && i < len + align1 && !p1[i])
 	    p1[i] = (random () & SMALL_CHAR) + 3;
 	}
       p1[i] = 0;
@@ -229,15 +229,15 @@ do_random_tests (void)
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = CALL (impl, (CHAR *) (p2 + align2),
 		      (CHAR *) (p1 + align1), size);
-	  if (res != len)
+	  만약 (res != len)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd) %zd != %zd",
 		     n, impl->name, align1, align2, len, res);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  위해 (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      만약 (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -246,11 +246,11 @@ do_random_tests (void)
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 > j)
+	  만약 (size + align2 > j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  위해 (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      만약 (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -260,17 +260,17 @@ do_random_tests (void)
 	    }
 	  j = len;
 	  /* Check for zero size.  */
-	  if (size)
+	  만약 (size)
 	    {
-	      if (size <= j)
+	      만약 (size <= j)
 		j = size - 1;
-	      if (MEMCMP (p1 + align1, p2 + align2, j))
+	      만약 (MEMCMP (p1 + align1, p2 + align2, j))
 		{
 		  error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
 		}
-	      if (p2[align2 + j])
+	      만약 (p2[align2 + j])
 		{
 		  error (0, 0, "Iteration %zd - garbage after size, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -282,7 +282,7 @@ do_random_tests (void)
     }
 }
 
-int
+정수
 test_main (void)
 {
   size_t i;
@@ -294,7 +294,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  위해 (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, SMALL_CHAR);
       do_test (i, i, 16, 16, BIG_CHAR);
@@ -306,7 +306,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  위해 (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, SMALL_CHAR);
       do_test (0, 0, 16 << i, 8 << i, SMALL_CHAR);
@@ -316,7 +316,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  반환 ret;
 }
 
 #include <support/test-driver.c>

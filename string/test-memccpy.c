@@ -24,67 +24,67 @@ IMPL (memccpy, 1)
 
 /* Naive implementation to verify results.  */
 void *
-simple_memccpy (void *dst, const void *src, int c, size_t n)
+simple_memccpy (void *dst, const void *src, 정수 c, size_t n)
 {
   const char *s = src;
   char *d = dst;
 
-  while (n-- > 0)
-    if ((*d++ = *s++) == (char) c)
-      return d;
+  동안 (n-- > 0)
+    만약 ((*d++ = *s++) == (char) c)
+      반환 d;
 
-  return NULL;
+  반환 NULL;
 }
 
-typedef void *(*proto_t) (void *, const void *, int c, size_t);
+typedef void *(*proto_t) (void *, const void *, 정수 c, size_t);
 
 static void
-do_one_test (impl_t *impl, void *dst, const void *src, int c, size_t len,
+do_one_test (impl_t *impl, void *dst, const void *src, 정수 c, size_t len,
 	     size_t n)
 {
   void *expect = len > n ? NULL : (char *) dst + len;
-  if (CALL (impl, dst, src, c, n) != expect)
+  만약 (CALL (impl, dst, src, c, n) != expect)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, c, n), expect);
       ret = 1;
-      return;
+      반환;
     }
 
-  if (memcmp (dst, src, len > n ? n : len) != 0)
+  만약 (memcmp (dst, src, len > n ? n : len) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      반환;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, int c, size_t len, size_t n,
-	 int max_char)
+do_test (size_t align1, size_t align2, 정수 c, size_t len, size_t n,
+	 정수 max_char)
 {
   size_t i;
   char *s1, *s2;
 
   align1 &= 7;
-  if (align1 + len >= page_size)
-    return;
+  만약 (align1 + len >= page_size)
+    반환;
 
   align2 &= 7;
-  if (align2 + len >= page_size)
-    return;
+  만약 (align2 + len >= page_size)
+    반환;
 
   s1 = (char *) (buf1 + align1);
   s2 = (char *) (buf2 + align2);
 
-  for (i = 0; i < len - 1; ++i)
+  위해 (i = 0; i < len - 1; ++i)
     {
       s1[i] = 32 + 23 * i % (max_char - 32);
-      if (s1[i] == (char) c)
+      만약 (s1[i] == (char) c)
 	--s1[i];
     }
   s1[len - 1] = c;
-  for (i = len; i + align1 < page_size && i < len + 64; ++i)
+  위해 (i = len; i + align1 < page_size && i < len + 64; ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   FOR_EACH_IMPL (impl, 0)
@@ -99,64 +99,64 @@ do_random_tests (void)
   unsigned char *p2 = buf2 + page_size - 512;
   unsigned char *res, c;
 
-  for (n = 0; n < ITERATIONS; n++)
+  위해 (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
       c = random ();
-      if (mode & 1)
+      만약 (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  만약 (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  아니면
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  만약 (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  만약 (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  아니면
 	    len = 512;
-	  if (len >= 512)
+	  만약 (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      아니면
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  만약 (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  아니면
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  만약 (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  만약 (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      만약 (size + j > 512)
 		size = 512 - j - (random() & 31);
 	    }
-	  else
+	  아니면
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  만약 ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      만약 (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      위해 (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  만약 (i == len + align1)
 	    p1[i] = c;
-	  else
+	  아니면
 	    {
 	      p1[i] = random () & 255;
-	      if (i >= align1 && i < len + align1 && p1[i] == c)
+	      만약 (i >= align1 && i < len + align1 && p1[i] == c)
 		p1[i] = (random () & 127) + 3 + c;
 	    }
 	}
@@ -166,20 +166,20 @@ do_random_tests (void)
 	  unsigned char *expect;
 	  memset (p2 - 64, '\1', 512 + 64);
 	  res = CALL (impl, p2 + align2, p1 + align1, (char) c, size);
-	  if (len >= size)
+	  만약 (len >= size)
 	    expect = NULL;
-	  else
+	  아니면
 	    expect = p2 + align2 + len + 1;
 
-	  if (res != expect)
+	  만약 (res != expect)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %d) %p != %p",
 		     n, impl->name, align1, align2, len, size, c, res, expect);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  위해 (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      만약 (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -188,11 +188,11 @@ do_random_tests (void)
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 < j)
+	  만약 (size + align2 < j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  위해 (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      만약 (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -201,9 +201,9 @@ do_random_tests (void)
 		}
 	    }
 	  j = len + 1;
-	  if (size < j)
+	  만약 (size < j)
 	    j = size;
-	  if (memcmp (p1 + align1, p2 + align2, j))
+	  만약 (memcmp (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -213,7 +213,7 @@ do_random_tests (void)
     }
 }
 
-int
+정수
 test_main (void)
 {
   size_t i;
@@ -225,7 +225,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  위해 (i = 1; i < 8; ++i)
     {
       do_test (i, i, 12, 16, 16, 127);
       do_test (i, i, 23, 16, 16, 255);
@@ -237,7 +237,7 @@ test_main (void)
       do_test (2 * i, 8 - i, i, 2 << i, 1 << i, 255);
     }
 
-  for (i = 1; i < 8; ++i)
+  위해 (i = 1; i < 8; ++i)
     {
       do_test (0, 0, i, 4 << i, 8 << i, 127);
       do_test (0, 0, i, 16 << i, 8 << i, 127);
@@ -246,7 +246,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  반환 ret;
 }
 
 #include <support/test-driver.c>

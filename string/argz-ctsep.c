@@ -22,34 +22,34 @@
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (const char *string, 정수 delim, char **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  만약 (nlen > 1)
     {
       const char *rp;
       char *wp;
 
       *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      만약 (*argz == NULL)
+	반환 ENOMEM;
 
       rp = string;
       wp = *argz;
       do
-	if (*rp == delim)
+	만약 (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    만약 (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    아니면
 	      --nlen;
 	  }
-	else
+	아니면
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      동안 (*rp++ != '\0');
 
-      if (nlen == 0)
+      만약 (nlen == 0)
 	{
 	  free (*argz);
 	  *argz = NULL;
@@ -58,12 +58,12 @@ __argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 
       *len = nlen;
     }
-  else
+  아니면
     {
       *argz = NULL;
       *len = 0;
     }
 
-  return 0;
+  반환 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

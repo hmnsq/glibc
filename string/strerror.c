@@ -19,7 +19,7 @@
 #include <locale/localeinfo.h>
 
 char *
-strerror (int errnum)
+strerror (정수 errnum)
 {
-  return __strerror_l (errnum, __libc_tsd_LOCALE);
+  반환 __strerror_l (errnum, __libc_tsd_LOCALE);
 }

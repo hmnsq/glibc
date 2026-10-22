@@ -22,18 +22,18 @@
 char *
 __argz_next (const char *argz, size_t argz_len, const char *entry)
 {
-  if (entry)
+  만약 (entry)
     {
-      if (entry < argz + argz_len)
+      만약 (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      반환 entry >= argz + argz_len ? NULL : (char *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  아니면
+    만약 (argz_len > 0)
+      반환 (char *) argz;
+    아니면
+      반환 NULL;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)

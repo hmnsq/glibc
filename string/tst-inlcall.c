@@ -31,54 +31,54 @@
 #include <fcntl.h>
 
 
-int
+정수
 do_test (void)
 {
-  int status;
-  int errors = 0;
+  정수 status;
+  정수 errors = 0;
   char buf1[1000];
   char *cp;
   char ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  만약 (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  만약 (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  만약 (strchr ("hello world", ch++) == NULL)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
   const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  만약 (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  만약 (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  아니면
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  반환 status;
 }
 
 #include <support/test-driver.c>

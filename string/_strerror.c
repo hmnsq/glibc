@@ -22,16 +22,16 @@
 
 /* Return a string describing the errno code in ERRNUM.  */
 char *
-__strerror_r (int errnum, char *buf, size_t buflen)
+__strerror_r (정수 errnum, char *buf, size_t buflen)
 {
   char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  만약 (__glibc_unlikely (err == NULL))
     {
       __snprintf (buf, buflen, "%s%d", _("Unknown error "), errnum);
-      return buf;
+      반환 buf;
     }
 
-  return _(err);
+  반환 _(err);
 }
 weak_alias (__strerror_r, strerror_r)
 libc_hidden_def (__strerror_r)

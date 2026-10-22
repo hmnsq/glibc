@@ -57,7 +57,7 @@ extern error_t envz_add (char **__restrict __envz,
 extern error_t envz_merge (char **__restrict __envz,
 			   size_t *__restrict __envz_len,
 			   const char *__restrict __envz2,
-			   size_t __envz2_len, int __override) __THROW;
+			   size_t __envz2_len, 정수 __override) __THROW;
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
 extern void envz_remove (char **__restrict __envz,

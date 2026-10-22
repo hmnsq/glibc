@@ -19,10 +19,10 @@
 #include <config.h>
 #endif
 
-#if defined _LIBC || defined  STDC_HEADERS
+#만약 defined _LIBC || defined  STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
+#아니면
 char *malloc ();
 char *memcpy ();
 #endif
@@ -41,10 +41,10 @@ __strdup (const char *s)
   size_t len = strlen (s) + 1;
   void *new = malloc (len);
 
-  if (new == NULL)
-    return NULL;
+  만약 (new == NULL)
+    반환 NULL;
 
-  return (char *) memcpy (new, s, len);
+  반환 (char *) memcpy (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strdup)

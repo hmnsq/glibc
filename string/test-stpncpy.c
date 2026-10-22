@@ -20,7 +20,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpncpy"
-#else
+#아니면
 # define TEST_NAME "wcpncpy"
 #endif /* WIDE */
 #include "test-string.h"
@@ -30,7 +30,7 @@
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#아니면
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
@@ -49,16 +49,16 @@ IMPL (STPNCPY, 1)
 CHAR *
 SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  동안 (n--)
+    만약 ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	위해 (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	반환 dst - 1;
       }
-  return dst;
+  반환 dst;
 }
 
 CHAR *
@@ -67,11 +67,11 @@ STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  위해 (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  위해 (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  반환 dst + nc;
 }
 
 #undef CHAR

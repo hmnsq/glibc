@@ -29,15 +29,15 @@
 error_t
 __argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  만약 (! before)
+    반환 __argz_add (argz, argz_len, entry);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  만약 (before < *argz || before >= *argz + *argz_len)
+    반환 EINVAL;
 
-  if (before > *argz)
+  만약 (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    동안 (before[-1])
       before--;
 
   {
@@ -46,17 +46,17 @@ __argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
     size_t new_argz_len = *argz_len + entry_len;
     char *new_argz = realloc (*argz, new_argz_len);
 
-    if (new_argz)
+    만약 (new_argz)
       {
 	before = new_argz + (before - *argz);
 	memmove (before + entry_len, before, after_before);
 	memmove (before, entry, entry_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	반환 0;
       }
-    else
-      return ENOMEM;
+    아니면
+      반환 ENOMEM;
   }
 }
 weak_alias (__argz_insert, argz_insert)

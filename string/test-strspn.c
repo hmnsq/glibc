@@ -19,7 +19,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strspn"
-#else
+#아니면
 # define TEST_NAME "wcsspn"
 #endif /* WIDE */
 #include "test-string.h"
@@ -33,7 +33,7 @@
 # define STRCHR strchr
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#아니면
 # include <wchar.h>
 # define STRSPN wcsspn
 # define CHAR wchar_t
@@ -56,27 +56,27 @@ SIMPLE_STRSPN (const CHAR *s, const CHAR *acc)
   const CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
+  동안 ((c = *s++) != '\0')
     {
-      for (r = acc; *r != '\0'; ++r)
-	if (*r == c)
+      위해 (r = acc; *r != '\0'; ++r)
+	만약 (*r == c)
 	  break;
-      if (*r == '\0')
-	return s - str - 1;
+      만약 (*r == '\0')
+	반환 s - str - 1;
     }
-  return s - str - 1;
+  반환 s - str - 1;
 }
 
 static void
 do_one_test (impl_t *impl, const CHAR *s, const CHAR *acc, size_t exp_res)
 {
   size_t res = CALL (impl, s, acc);
-  if (res != exp_res)
+  만약 (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     (void *) res, (void *) exp_res);
       ret = 1;
-      return;
+      반환;
     }
 }
 
@@ -87,30 +87,30 @@ do_test (size_t align, size_t pos, size_t len)
   CHAR *acc, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240 || ! len)
-    return;
+  만약 ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240 || ! len)
+    반환;
 
   acc = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  위해 (i = 0; i < len; ++i)
     {
       acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      만약 (!acc[i])
 	acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      만약 (!acc[i])
 	acc[i] = 1 + (random () & SMALL_CHAR);
     }
   acc[len] = '\0';
 
-  for (i = 0; i < pos; ++i)
+  위해 (i = 0; i < pos; ++i)
     s[i] = acc[random () % len];
   s[pos] = random () & BIG_CHAR;
-  if (STRCHR (acc, s[pos]))
+  만약 (STRCHR (acc, s[pos]))
     s[pos] = '\0';
-  else
+  아니면
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      위해 (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
@@ -126,54 +126,54 @@ do_random_tests (void)
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
   UCHAR *acc;
 
-  for (n = 0; n < ITERATIONS; n++)
+  위해 (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
-      if (random () & 1)
+      만약 (random () & 1)
 	alen = random () & 63;
-      else
+      아니면
 	alen = random () & 15;
-      if (!alen)
+      만약 (!alen)
 	pos = 0;
-      else
+      아니면
 	pos = random () & 511;
-      if (pos + align >= 511)
+      만약 (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      만약 (len + align >= 512)
 	len = 511 - align - (random () & 7);
       acc = (UCHAR *) (buf2 + page_size) - alen - 1 - (random () & 7);
-      for (i = 0; i < alen; ++i)
+      위해 (i = 0; i < alen; ++i)
 	{
 	  acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  만약 (!acc[i])
 	    acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  만약 (!acc[i])
 	    acc[i] = 1 + (random () & SMALL_CHAR);
 	}
       acc[i] = '\0';
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      만약 (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      위해 (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  만약 (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  아니면 만약 (i == pos + align)
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) acc, p[i]))
+	      만약 (STRCHR ((CHAR *) acc, p[i]))
 		p[i] = '\0';
 	    }
-	  else if (i < align || i > pos + align)
+	  아니면 만약 (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  아니면
 	    p[i] = acc [random () % alen];
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align),
+	만약 (CALL (impl, (CHAR *) (p + align),
 		  (CHAR *) acc) != (pos < len ? pos : len))
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %zd != %zd",
@@ -185,7 +185,7 @@ do_random_tests (void)
     }
 }
 
-int
+정수
 test_main (void)
 {
   size_t i;
@@ -197,26 +197,26 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 32; ++i)
+  위해 (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  위해 (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  위해 (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  위해 (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  반환 ret;
 }
 
 #include <support/test-driver.c>
