@@ -20,13 +20,13 @@
 #ifndef WIDE
 # ifdef USE_FOR_STRCHRNUL
 #  define TEST_NAME "strchrnul"
-# else
+# បើមិនដូច្នេះ
 #  define TEST_NAME "strchr"
 # endif /* !USE_FOR_STRCHRNUL */
-#else
+#បើមិនដូច្នេះ
 # ifdef USE_FOR_STRCHRNUL
 #  define TEST_NAME "wcschrnul"
-# else
+# បើមិនដូច្នេះ
 #  define TEST_NAME "wcschr"
 # endif /* !USE_FOR_STRCHRNUL */
 #endif /* WIDE */
@@ -35,21 +35,21 @@
 #ifndef WIDE
 # ifdef USE_FOR_STRCHRNUL
 #  define STRCHR strchrnul
-# else
+# បើមិនដូច្នេះ
 #  define STRCHR strchr
 # endif /* !USE_FOR_STRCHRNUL */
 # define STRLEN strlen
-# define CHAR char
+# define CHAR var_na
 # define BIG_CHAR CHAR_MAX
 # define MIDDLE_CHAR 127
 # define SMALL_CHAR 23
-# define UCHAR unsigned char
+# define UCHAR unsigned var_na
 # define L(s) s
-#else
+#បើមិនដូច្នេះ
 # include <wchar.h>
 # ifdef USE_FOR_STRCHRNUL
 #  define STRCHR wcschrnul
-# else
+# បើមិនដូច្នេះ
 #  define STRCHR wcschr
 # endif /* !USE_FOR_STRCHRNUL */
 # define STRLEN wcslen
@@ -63,12 +63,12 @@
 
 #ifdef USE_FOR_STRCHRNUL
 # define NULLRET(endptr) endptr
-#else
+#បើមិនដូច្នេះ
 # define NULLRET(endptr) NULL
 #endif /* !USE_FOR_STRCHRNUL */
 
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+typedef CHAR *(*proto_t) (const CHAR *, ចំនួនគត់);
 
 IMPL (STRCHR, 1)
 
@@ -89,15 +89,15 @@ IMPL (STRCHR, 1)
 #  define STRCHR __strchr_default
 #  include "string/strchr.c"
 #  define STRCHR_DEFAULT STRCHR
-# else
+# បើមិនដូច្នេះ
 #  define STRCHR_DEFAULT STRCHRNUL
 # endif
-#else
+#បើមិនដូច្នេះ
 # ifndef USE_FOR_STRCHRNUL
 #  define WCSCHR __wcschr_default
 #  include "wcsmbs/wcschr.c"
 #  define STRCHR_DEFAULT WCSCHR
-# else
+# បើមិនដូច្នេះ
 #  define WCSCHRNUL __wcschrnul_default
 #  include "wcsmbs/wcschrnul.c"
 #  define STRCHR_DEFAULT WCSCHRNUL
@@ -105,28 +105,28 @@ IMPL (STRCHR, 1)
 #endif
 IMPL (STRCHR_DEFAULT, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s, int c, const CHAR *exp_res)
+static ចំនួនគត់
+check_result (impl_t *impl, const CHAR *s, ចំនួនគត់ c, const CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ប្រសិនបើ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s(%p) %#x %p %p", impl->name, s,
 	     c, res, exp_res);
       ret = 1;
-      return -1;
+      ត្រឡប់ -1;
     }
-  return 0;
+  ត្រឡប់ 0;
 }
 
-static int
-do_one_test (impl_t *impl, const CHAR *s, int c, const CHAR *exp_res)
+static ចំនួនគត់
+do_one_test (impl_t *impl, const CHAR *s, ចំនួនគត់ c, const CHAR *exp_res)
 {
-  return check_result (impl, s, c, exp_res);
+  ត្រឡប់ check_result (impl, s, c, exp_res);
 }
 
 static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+do_test (size_t align, size_t pos, size_t len, ចំនួនគត់ seek_char, ចំនួនគត់ max_char)
 /* For wcschr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
@@ -135,32 +135,32 @@ do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
   CHAR *result;
   CHAR *buf = (CHAR *) buf1;
   align &= 127;
-  if ((align + len) * sizeof (CHAR) >= page_size)
-    return;
+  ប្រសិនបើ ((align + len) * parimaa_na (CHAR) >= page_size)
+    ត្រឡប់;
 
-  for (i = 0; i < len; ++i)
+  សម្រាប់ (i = 0; i < len; ++i)
     {
       buf[align + i] = 32 + 23 * i % max_char;
-      if (buf[align + i] == seek_char)
+      ប្រសិនបើ (buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 1;
-      else if (buf[align + i] == 0)
+      បើមិនដូច្នេះ ប្រសិនបើ (buf[align + i] == 0)
 	buf[align + i] = 1;
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  ប្រសិនបើ (pos < len)
     {
       buf[align + pos] = seek_char;
       result = buf + align + pos;
     }
-  else if (seek_char == 0)
+  បើមិនដូច្នេះ ប្រសិនបើ (seek_char == 0)
     result = buf + align + len;
-  else
+  បើមិនដូច្នេះ
     result = NULLRET (buf + align + len);
 
   FOR_EACH_IMPL (impl, 0)
     {
-      if (do_one_test (impl, buf + align, seek_char, result) != 0)
+      ប្រសិនបើ (do_one_test (impl, buf + align, seek_char, result) != 0)
 	{
 	  error (0, 0,
 		 "\tAlign=%zu, Pos=%zu, Len=%zu, seek=%d, max_char=%d, "
@@ -174,66 +174,66 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
+  ចំនួនគត់ seek_char;
   CHAR *result;
-  UCHAR *p = (UCHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  UCHAR *p = (UCHAR *) (buf1 + page_size - 512 * parimaa_na (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  សម្រាប់ (n = 0; n < ITERATIONS; n++)
     {
       /* For wcschr: align here means align not in bytes, but in wchar_ts,
 	 in bytes it will equal to align * (sizeof (wchar_t)).  */
       align = random () & 15;
       pos = random () & 511;
       seek_char = random () & 255;
-      if (pos + align >= 511)
+      ប្រសិនបើ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
       len = random () & 511;
-      if ((pos == len && seek_char)
+      ប្រសិនបើ ((pos == len && seek_char)
 	  || (pos > len && (random () & 1)))
 	len = pos + 1 + (random () & 7);
-      if (len + align >= 512)
+      ប្រសិនបើ (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      if (pos == len && seek_char)
+      ប្រសិនបើ (pos == len && seek_char)
 	len = pos + 1;
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      ប្រសិនបើ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      សម្រាប់ (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ប្រសិនបើ (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  បើមិនដូច្នេះ ប្រសិនបើ (i == len + align)
 	    p[i] = 0;
-	  else
+	  បើមិនដូច្នេះ
 	    {
 	      p[i] = random () & 255;
-	      if (i < pos + align && p[i] == seek_char)
+	      ប្រសិនបើ (i < pos + align && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      ប្រសិនបើ (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  ប្រសិនបើ (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
+      ប្រសិនបើ (pos <= len)
 	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
+      បើមិនដូច្នេះ ប្រសិនបើ (seek_char == 0)
 	result = (CHAR *) (p + len + align);
-      else
+      បើមិនដូច្នេះ
 	result = NULLRET ((CHAR *) (p + len + align));
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	ប្រសិនបើ (CALL (impl, (CHAR *) (p + align), seek_char) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function \
 		   %s (align in bytes: %zd, seek_char: %d, len: %zd, pos: %zd) %p != %p, p %p",
-		   n, impl->name, align * sizeof (CHAR), seek_char, len, pos,
+		   n, impl->name, align * parimaa_na (CHAR), seek_char, len, pos,
 		   CALL (impl, (CHAR *) (p + align), seek_char), result, p);
 	    ret = 1;
 	  }
@@ -247,7 +247,7 @@ check1 (void)
   CHAR c = L ('\xfe');
 #ifndef USE_FOR_STRCHRNUL
   CHAR *exp_result = NULL;
-#else
+#បើមិនដូច្នេះ
   CHAR *exp_result = s + STRLEN (s);
 #endif
 
@@ -258,15 +258,15 @@ check1 (void)
 static void
 check2 (void)
 {
-  CHAR *s = (CHAR *) (buf1 + getpagesize () - 4 * sizeof (CHAR));
+  CHAR *s = (CHAR *) (buf1 + getpagesize () - 4 * parimaa_na (CHAR));
   CHAR *s_begin = (CHAR *) (buf1 + getpagesize () - 64);
 #ifndef USE_FOR_STRCHRNUL
   CHAR *exp_result = NULL;
-#else
+#បើមិនដូច្នេះ
   CHAR *exp_result = s + 1;
 #endif
   CHAR val = 0x12;
-  for (; s_begin != s; ++s_begin)
+  សម្រាប់ (; s_begin != s; ++s_begin)
     *s_begin = val;
 
   s[0] = val + 1;
@@ -309,7 +309,7 @@ check2 (void)
   s[4] = 0;
 #ifndef USE_FOR_STRCHRNUL
   exp_result = NULL;
-#else
+#បើមិនដូច្នេះ
   exp_result = s + 4;
 #endif
   {
@@ -318,7 +318,7 @@ check2 (void)
   }
 }
 
-int
+ចំនួនគត់
 test_main (void)
 {
   size_t i;
@@ -332,68 +332,68 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  សម្រាប់ (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
       do_test (i, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  សម្រាប់ (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
       do_test (i, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  សម្រាប់ (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, SMALL_CHAR, MIDDLE_CHAR);
       do_test (i, 64, 256, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 0; i < 8; ++i)
+  សម្រាប់ (i = 0; i < 8; ++i)
     {
       do_test (16 * i, 256, 512, SMALL_CHAR, MIDDLE_CHAR);
       do_test (16 * i, 256, 512, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  សម្រាប់ (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, SMALL_CHAR, MIDDLE_CHAR);
       do_test (0, i, i + 1, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  សម្រាប់ (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 0, MIDDLE_CHAR);
       do_test (i, 16 << i, 2048, 0, MIDDLE_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  សម្រាប់ (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4096, 0, MIDDLE_CHAR);
       do_test (i, 16 << i, 4096, 0, MIDDLE_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  សម្រាប់ (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 0, MIDDLE_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 8; ++i)
+  សម្រាប់ (i = 0; i < 8; ++i)
     {
       do_test (16 * i, 256, 512, 0, MIDDLE_CHAR);
       do_test (16 * i, 256, 512, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  សម្រាប់ (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 0, MIDDLE_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 
   do_random_tests ();
-  return ret;
+  ត្រឡប់ ret;
 }
 
 #include <support/test-driver.c>

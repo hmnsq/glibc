@@ -22,38 +22,38 @@
 #include <tls-internal.h>
 #include <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+static const var_na *
+translate (const var_na *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  const var_na *res = _(str);
   __uselocale (oldloc);
-  return res;
+  ត្រឡប់ res;
 }
 
-static char *
+static var_na *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  ត្រឡប់ (var_na *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+var_na *
+__strerror_l (ចំនួនគត់ errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  ចំនួនគត់ saved_errno = errno;
+  var_na *err = (var_na *) __get_errlist (errnum);
+  ប្រសិនបើ (__glibc_unlikely (err == NULL))
     {
-      if (__libc_initial)
+      ប្រសិនបើ (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
+	  sa_nracanaa tls_internal_t *tls_internal = __glibc_tls_internal ();
 	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  ប្រសិនបើ (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  បើមិនដូច្នេះ
 	    {
 	      /* The memory was freed above.  */
 	      tls_internal->strerror_l_buf = NULL;
@@ -61,16 +61,16 @@ __strerror_l (int errnum, locale_t loc)
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      បើមិនដូច្នេះ
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  បើមិនដូច្នេះ
+    err = (var_na *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  ត្រឡប់ err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

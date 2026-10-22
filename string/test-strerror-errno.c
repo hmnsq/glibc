@@ -34,21 +34,21 @@ void
 {
   static void *(*real_malloc) (size_t size);
 
-  if (!real_malloc)
+  ប្រសិនបើ (!real_malloc)
     real_malloc = dlsym (RTLD_NEXT, "malloc");
 
   errno = ENOMEM;
 
-  return (*real_malloc) (size);
+  ត្រឡប់ (*real_malloc) (size);
 }
 
 /* strerror must not change the value of errno.  Unfortunately due to GCC bug
    #88576, this happens when -fmath-errno is used.  This simple test checks
    that it doesn't happen.  */
-static int
+static ចំនួនគត់
 do_test (void)
 {
-  char *msg;
+  var_na *msg;
 
   errno = 0;
   msg = strerror (-3);
@@ -60,7 +60,7 @@ do_test (void)
   (void) msg;
   TEST_COMPARE (errno, 0);
 
-  return 0;
+  ត្រឡប់ 0;
 }
 
 #include <support/test-driver.c>

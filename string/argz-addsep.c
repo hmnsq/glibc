@@ -22,36 +22,36 @@
 
 
 error_t
-__argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+__argz_add_sep (var_na **argz, size_t *argz_len, const var_na *string, ចំនួនគត់ delim)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  ប្រសិនបើ (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      const var_na *rp;
+      var_na *wp;
 
-      *argz = (char *) realloc (*argz, *argz_len + nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (var_na *) realloc (*argz, *argz_len + nlen);
+      ប្រសិនបើ (*argz == NULL)
+	ត្រឡប់ ENOMEM;
 
       wp = *argz + *argz_len;
       rp = string;
       do
-	if (*rp == delim)
+	ប្រសិនបើ (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ប្រសិនបើ (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    បើមិនដូច្នេះ
 	      --nlen;
 	  }
-	else
+	បើមិនដូច្នេះ
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ខណៈពេល (*rp++ != '\0');
 
       *argz_len += nlen;
     }
 
-  return 0;
+  ត្រឡប់ 0;
 }
 weak_alias (__argz_add_sep, argz_add_sep)

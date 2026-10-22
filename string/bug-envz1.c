@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const struct
+static const sa_nracanaa
 {
-  const char *s;
-  int in_result;
+  const var_na *s;
+  ចំនួនគត់ in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (parimaa_na (strs) / parimaa_na (strs[0]))
 
 
-int
+ចំនួនគត់
 do_test (void)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  var_na *str = malloc (100);
+  ប្រសិនបើ (str == NULL)
     {
       puts ("out of memory");
-      return 1;
+      ត្រឡប់ 1;
     }
 
-  char **argz = &str;
+  var_na **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  សម្រាប់ (ចំនួនគត់ i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  ចំនួនគត់ result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  សម្រាប់ (ចំនួនគត់ i = 0; i < nstrs; ++i)
+    ប្រសិនបើ (strs[i].in_result)
       {
-        char name[2];
+        var_na name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        var_na *e = envz_entry (*argz, size, name);
+        ប្រសិនបើ (e == NULL)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        បើមិនដូច្នេះ ប្រសិនបើ (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -69,7 +69,7 @@ do_test (void)
       }
 
   free (*argz);
-  return result;
+  ត្រឡប់ result;
 }
 
 #include <support/test-driver.c>

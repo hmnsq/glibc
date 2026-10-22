@@ -40,10 +40,10 @@ typedef __typeof (TEST_IDENTIFIER) *proto_t;
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
+static ចំនួនគត់
 test_main (void)
 {
-  enum { buffer_length = 256 };
+  ga_nanaa { buffer_length = 256 };
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
 
   test_init ();
@@ -76,47 +76,47 @@ test_main (void)
     The length argument must not be greater than buffer_length -
     start_offset, and the result is the length argument.  */
 
-  struct support_next_to_fault ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
+  sa_nracanaa support_next_to_fault ntf
+    = support_next_to_fault_allocate (buffer_length * parimaa_na (CHAR));
   CHAR *buffer = (CHAR *) ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      សម្រាប់ (size_t i = 0; i < buffer_length; ++i)
         buffer[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      សម្រាប់ (ចំនួនគត់ zero_count = 0; zero_count <= buffer_length; ++zero_count)
         {
-          if (zero_count > 0)
+          ប្រសិនបើ (zero_count > 0)
             buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
+          ចំនួនគត់ a_count = buffer_length - zero_count;
+          សម្រាប់ (ចំនួនគត់ start_offset = 0; start_offset <= buffer_length;
                ++start_offset)
             {
               CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
+              ប្រសិនបើ (start_offset == buffer_length)
                 TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
+              បើមិនដូច្នេះ ប្រសិនបើ (zero_count > 0)
+                សម្រាប់ (ចំនួនគត់ length_argument = 0;
                      length_argument <= 2 * buffer_length;
                      ++length_argument)
                   {
-                    if (test_verbose)
+                    ប្រសិនបើ (test_verbose)
                       printf ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
                               zero_count, a_count, start_offset,
                               length_argument);
-                    if (start_offset < a_count)
+                    ប្រសិនបើ (start_offset < a_count)
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
                                     MIN (a_count - start_offset,
                                          length_argument));
-                    else
+                    បើមិនដូច្នេះ
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
+              បើមិនដូច្នេះ
+                សម្រាប់ (ចំនួនគត់ length_argument = 0;
                      length_argument <= buffer_length - start_offset;
                      ++length_argument)
                   TEST_COMPARE (CALL (impl, start_pointer, length_argument),
@@ -127,7 +127,7 @@ test_main (void)
 
   support_next_to_fault_free (&ntf);
 
-  return 0;
+  ត្រឡប់ 0;
 }
 
 #include <support/test-driver.c>

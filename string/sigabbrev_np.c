@@ -20,14 +20,14 @@
 #include <signal.h>
 #include <array_length.h>
 
-const char *
-sigabbrev_np (int signum)
+const var_na *
+sigabbrev_np (ចំនួនគត់ signum)
 {
-  const char *abbrev = NULL;
+  const var_na *abbrev = NULL;
 
-  if (signum >= 0 && signum <= NSIG
+  ប្រសិនបើ (signum >= 0 && signum <= NSIG
       && signum < array_length (__sys_sigabbrev))
     abbrev = __sys_sigabbrev[signum];
 
-  return abbrev;
+  ត្រឡប់ abbrev;
 }

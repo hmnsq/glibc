@@ -18,9 +18,9 @@
 
 #include <stdio.h>
 
-const char *
-__strerrordesc_np (int errnum)
+const var_na *
+__strerrordesc_np (ចំនួនគត់ errnum)
 {
-  return __get_errlist (errnum);
+  ត្រឡប់ __get_errlist (errnum);
 }
 weak_alias (__strerrordesc_np, strerrordesc_np)

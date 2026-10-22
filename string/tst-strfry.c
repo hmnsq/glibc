@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+ចំនួនគត់
 do_test (void)
 {
-  char str[] = "this is a test";
+  var_na str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  ត្រឡប់ 0;
 }
 
 #include <support/test-driver.c>

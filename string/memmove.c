@@ -29,8 +29,8 @@
 #define	a2const	const
 #undef memmove
 #endif
-#if	!defined(RETURN) || !defined(rettype)
-#define	RETURN(s)	return (s)	/* Return DEST.  */
+#ប្រសិនបើ	!defined(RETURN) || !defined(rettype)
+#define	RETURN(s)	ត្រឡប់ (s)	/* Return DEST.  */
 #define	rettype		void *
 #endif
 
@@ -42,20 +42,20 @@ rettype
 inhibit_loop_to_libcall
 MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
 {
-  unsigned long int dstp = (long int) dest;
-  unsigned long int srcp = (long int) src;
+  unsigned long ចំនួនគត់ dstp = (long ចំនួនគត់) dest;
+  unsigned long ចំនួនគត់ srcp = (long ចំនួនគត់) src;
 
   /* This test makes the forward copying code be used whenever possible.
      Reduces the working set.  */
-  if (dstp - srcp >= len)	/* *Unsigned* compare!  */
+  ប្រសិនបើ (dstp - srcp >= len)	/* *Unsigned* compare!  */
     {
       /* Copy from the beginning to the end.  */
 
-#if MEMCPY_OK_FOR_FWD_MEMMOVE
+#ប្រសិនបើ MEMCPY_OK_FOR_FWD_MEMMOVE
       dest = memcpy (dest, src, len);
-#else
+#បើមិនដូច្នេះ
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      ប្រសិនបើ (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= (-dstp) % OPSIZ;
@@ -80,14 +80,14 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
       BYTE_COPY_FWD (dstp, srcp, len);
 #endif /* MEMCPY_OK_FOR_FWD_MEMMOVE */
     }
-  else
+  បើមិនដូច្នេះ
     {
       /* Copy from the end to the beginning.  */
       srcp += len;
       dstp += len;
 
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      ប្រសិនបើ (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= dstp % OPSIZ;

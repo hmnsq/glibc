@@ -24,29 +24,29 @@
    ARGZ, and the total length in LEN.  If a memory allocation error occurs,
    ENOMEM is returned, otherwise 0.  */
 error_t
-__argz_create (char *const argv[], char **argz, size_t *len)
+__argz_create (var_na *const argv[], var_na **argz, size_t *len)
 {
-  int argc;
+  ចំនួនគត់ argc;
   size_t tlen = 0;
-  char *const *ap;
-  char *p;
+  var_na *const *ap;
+  var_na *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
+  សម្រាប់ (argc = 0; argv[argc] != NULL; ++argc)
     tlen += strlen (argv[argc]) + 1;
 
-  if (tlen == 0)
+  ប្រសិនបើ (tlen == 0)
     *argz = NULL;
-  else
+  បើមិនដូច្នេះ
     {
       *argz = malloc (tlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      ប្រសិនបើ (*argz == NULL)
+	ត្រឡប់ ENOMEM;
 
-      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+      សម្រាប់ (p = *argz, ap = argv; *ap; ++ap, ++p)
 	p = __stpcpy (p, *ap);
     }
   *len = tlen;
 
-  return 0;
+  ត្រឡប់ 0;
 }
 weak_alias (__argz_create, argz_create)

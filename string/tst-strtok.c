@@ -2,24 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+ចំនួនគត់
 do_test (void)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  var_na buf[1] = { 0 };
+  ចំនួនគត់ result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  ប្រសិនបើ (strtok (buf, " ") != NULL)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  បើមិនដូច្នេះ ប្រសិនបើ (strtok (NULL, " ") != NULL)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  ត្រឡប់ result;
 }
 
 #include <support/test-driver.c>
