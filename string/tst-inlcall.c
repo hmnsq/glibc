@@ -31,54 +31,54 @@
 #include <fcntl.h>
 
 
-int
+số_nguyên
 do_test (void)
 {
-  int status;
-  int errors = 0;
+  số_nguyên status;
+  số_nguyên errors = 0;
   char buf1[1000];
   char *cp;
   char ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  nếu (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  nếu (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  nếu (strchr ("hello world", ch++) == NULL)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
   const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  nếu (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  nếu (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  không_thì
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  trả_về status;
 }
 
 #include <support/test-driver.c>

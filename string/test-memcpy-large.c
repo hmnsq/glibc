@@ -23,7 +23,7 @@ static void
 do_random_large_tests (void)
 {
   size_t i, align1, align2, size;
-  for (i = 0; i < 32; ++i)
+  cho (i = 0; i < 32; ++i)
     {
       align1 = random ();
       align2 = random ();
@@ -31,7 +31,7 @@ do_random_large_tests (void)
       do_test1 (align1, align2, size);
     }
 
-  for (i = 0; i < 128; ++i)
+  cho (i = 0; i < 128; ++i)
     {
       align1 = random ();
       align2 = random ();
@@ -40,7 +40,7 @@ do_random_large_tests (void)
     }
 }
 
-int
+số_nguyên
 test_main (void)
 {
   size_t i, j;
@@ -54,9 +54,9 @@ test_main (void)
 
   do_test (0, 0, getpagesize () - 1);
 
-  for (i = 0x200000; i <= 0x2000000; i += i)
+  cho (i = 0x200000; i <= 0x2000000; i += i)
     {
-      for (j = 64; j <= 1024; j <<= 1)
+      cho (j = 64; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -97,7 +97,7 @@ test_main (void)
     }
 
   do_random_large_tests ();
-  return ret;
+  trả_về ret;
 }
 
 #include <support/test-driver.c>

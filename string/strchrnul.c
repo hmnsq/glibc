@@ -31,7 +31,7 @@
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
 char *
-__strchrnul (const char *str, int c_in)
+__strchrnul (const char *str, số_nguyên c_in)
 {
   /* Align pointer to sizeof op_t.  */
   uintptr_t s_int = (uintptr_t) str;
@@ -41,14 +41,14 @@ __strchrnul (const char *str, int c_in)
 
   op_t word = *word_ptr;
   find_t mask = shift_find (find_zero_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
-    return (char *) str + index_first (mask);
+  nếu (mask != 0)
+    trả_về (char *) str + index_first (mask);
 
   do
     word = *++word_ptr;
-  while (! has_zero_eq (word, repeated_c));
+  trong_khi (! has_zero_eq (word, repeated_c));
 
-  return (char *) word_ptr + index_first_zero_eq (word, repeated_c);
+  trả_về (char *) word_ptr + index_first_zero_eq (word, repeated_c);
 }
 #ifndef STRCHRNUL
 libc_hidden_def (__strchrnul)

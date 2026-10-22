@@ -34,20 +34,20 @@ simple_strcasestr (const char *s1, const char *s2)
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  nếu (s2len > s1len)
+    trả_về NULL;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  cho (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
+      cho (j = 0; j < s2len; ++j)
+	nếu (tolower (s1[i + j]) != tolower (s2[j]))
 	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      nếu (j == s2len)
+	trả_về (char *) s1 + i;
     }
 
-  return NULL;
+  trả_về NULL;
 }
 
 
@@ -57,33 +57,33 @@ IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
+static số_nguyên
 check_result (impl_t *impl, const char *s1, const char *s2,
 	      char *exp_result)
 {
   char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  nếu (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
 	     (result == NULL) ? "(null)" : result,
 	     (exp_result == NULL) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      trả_về -1;
     }
-  return 0;
+  trả_về 0;
 }
 
 static void
 do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  nếu (check_result (impl, s1, s2, exp_result) < 0)
+    trả_về;
 }
 
 
 static void
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 số_nguyên fail)
 {
   char *s1 = (char *) (buf1 + align1);
   char *s2 = (char *) (buf2 + align2);
@@ -91,17 +91,17 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
   static const char d[] = "1234567890abcxyz";
 #define dl (sizeof (d) - 1)
   char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  cho (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  nếu (fail)
     {
       char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      cho (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,10 +109,10 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  không_thì
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      cho (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
@@ -133,7 +133,7 @@ check1 (void)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
+static số_nguyên
 test_main (void)
 {
   test_init ();
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  cho (size_t klen = 2; klen < 32; ++klen)
+    cho (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  trả_về ret;
 }
 
 #include <support/test-driver.c>

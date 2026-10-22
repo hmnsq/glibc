@@ -35,51 +35,51 @@ simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
   const char *const last_possible
     = (const char *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  nếu (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    trả_về (void *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  nếu (__glibc_unlikely (haystack_len < needle_len))
+    trả_về NULL;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
+  cho (begin = (const char *) haystack; begin <= last_possible; ++begin)
+    nếu (begin[0] == ((const char *) needle)[0]
         && !memcmp ((const void *) &begin[1],
 		    (const void *) ((const char *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      trả_về (void *) begin;
 
-  return NULL;
+  trả_về NULL;
 }
 
-static int
+static số_nguyên
 check_result (impl_t *impl, const void *haystack, size_t haystack_len,
 	     const void *needle, size_t needle_len, const void *expected)
 {
   void *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  nếu (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      trả_về -1;
     }
 
-  return 0;
+  trả_về 0;
 }
 
 static void
 do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
 	     const void *needle, size_t needle_len, const void *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  nếu (check_result (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    trả_về;
 }
 
 static void
@@ -99,7 +99,7 @@ do_test (const char *str, size_t len, size_t idx)
 static void
 do_random_tests (void)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  cho (size_t n = 0; n < ITERATIONS; ++n)
     {
       char tmpbuf[32];
 
@@ -109,7 +109,7 @@ do_random_tests (void)
       size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
       len = MIN (len, BUF1PAGES * page_size - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      cho (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
 	  char ch = '0' + random () % 10;
@@ -150,7 +150,7 @@ static const char *const strs[] =
   };
 
 
-int
+số_nguyên
 test_main (void)
 {
   size_t i;
@@ -164,11 +164,11 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  cho (i = 0; i < BUF1PAGES * page_size; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  cho (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
+    cho (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
 
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  trả_về ret;
 }
 
 #include <support/test-driver.c>

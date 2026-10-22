@@ -21,7 +21,7 @@
 # define TEST_NAME "__memcmpeq"
 #elif defined WIDE
 # define TEST_NAME "wmemcmp"
-#else
+#không_thì
 # define TEST_NAME "memcmp"
 #endif
 
@@ -39,23 +39,23 @@
 # define CHAR__MIN WCHAR_MIN
 # define CHAR__MAX WCHAR_MAX
 
-int
+số_nguyên
 SIMPLE_MEMCMP (const wchar_t *s1, const wchar_t *s2, size_t n)
 {
-  int ret = 0;
+  số_nguyên ret = 0;
   /* Warning!
 	wmemcmp has to use SIGNED comparison for elements.
 	memcmp has to use UNSIGNED comparison for elements.
   */
-  while (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
-  return ret;
+  trong_khi (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
+  trả_về ret;
 }
-#else
+#không_thì
 # include <limits.h>
 # ifdef TEST_MEMCMPEQ
 #  define MEMCMP __memcmpeq
 #  define SIMPLE_MEMCMP simple_memcmpeq
-# else
+# không_thì
 #  define MEMCMP memcmp
 #  define SIMPLE_MEMCMP simple_memcmp
 # endif
@@ -67,13 +67,13 @@ SIMPLE_MEMCMP (const wchar_t *s1, const wchar_t *s2, size_t n)
 # define CHAR__MIN CHAR_MIN
 # define CHAR__MAX CHAR_MAX
 
-int
+số_nguyên
 SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
 {
-  int ret = 0;
+  số_nguyên ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1++ - *(unsigned char *) s2++) == 0);
-  return ret;
+  trong_khi (n-- && (ret = *(unsigned char *) s1++ - *(unsigned char *) s2++) == 0);
+  trả_về ret;
 }
 #endif
 
@@ -83,61 +83,61 @@ SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
      ((result) > 0 && (expec) <= 0))
 # endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+typedef số_nguyên (*proto_t) (const CHAR *, const CHAR *, size_t);
 
 IMPL (MEMCMP, 1)
 
-static int
+static số_nguyên
 check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	      int exp_result)
+	      số_nguyên exp_result)
 {
-  int result = CALL (impl, s1, s2, len);
-  if (BAD_RESULT(result, exp_result))
+  số_nguyên result = CALL (impl, s1, s2, len);
+  nếu (BAD_RESULT(result, exp_result))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      trả_về -1;
     }
 
-  return 0;
+  trả_về 0;
 }
 
 static void
 do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	     int exp_result)
+	     số_nguyên exp_result)
 {
-  if (check_result (impl, s1, s2, len, exp_result) < 0)
-    return;
+  nếu (check_result (impl, s1, s2, len, exp_result) < 0)
+    trả_về;
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int exp_result)
+do_test (size_t align1, size_t align2, size_t len, số_nguyên exp_result)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= (4096 - CHARBYTES);
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  nếu (align1 + (len + 1) * CHARBYTES >= page_size)
+    trả_về;
 
   align2 &= (4096 - CHARBYTES);
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  nếu (align2 + (len + 1) * CHARBYTES >= page_size)
+    trả_về;
 
   s1 = (CHAR *) (buf1 + align1);
   s2 = (CHAR *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  cho (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % CHAR__MAX;
 
-  if (len)
+  nếu (len)
     {
       s1[len] = align1;
       s2[len] = align2;
       s2[len - 1] -= exp_result;
     }
-  else
+  không_thì
     {
       exp_result = 0;
     }
@@ -150,50 +150,50 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, pos, len;
-  int result;
+  số_nguyên result;
   long r;
   UCHAR *p1 =  (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
   UCHAR *p2 =  (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
 
-  for (n = 0; n < ITERATIONS; n++)
+  cho (n = 0; n < ITERATIONS; n++)
     {
    align1 = random () & 31;
-      if (random () & 1)
+      nếu (random () & 1)
 	align2 = random () & 31;
-      else
+      không_thì
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1;
-      if (align2 > j)
+      nếu (align2 > j)
 	j = align2;
-      if (pos + j >= 512)
+      nếu (pos + j >= 512)
 	pos = 511 - j - (random () & 7);
       len = random () & 511;
-      if (len + j >= 512)
+      nếu (len + j >= 512)
 	len = 511 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512) j = 512;
-      for (i = 0; i < j; ++i)
+      nếu (j > 512) j = 512;
+      cho (i = 0; i < j; ++i)
 	p1[i] = random () & 255;
-      for (i = 0; i < j; ++i)
+      cho (i = 0; i < j; ++i)
 	p2[i] = random () & 255;
 
       result = 0;
-      if (pos >= len)
+      nếu (pos >= len)
 	MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, len);
-      else
+      không_thì
 	{
 	  MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, pos);
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  nếu (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      nếu (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (p1[align1 + pos] < p2[align2 + pos])
+	  nếu (p1[align1 + pos] < p2[align2 + pos])
 	    result = -1;
-	  else
+	  không_thì
 	    result = 1;
 	}
 
@@ -201,7 +201,7 @@ do_random_tests (void)
 	{
 	  r = CALL (impl, (CHAR *) p1 + align1, (const CHAR *) p2 + align2,
 		    len);
-	  if (BAD_RESULT(r, result))
+	  nếu (BAD_RESULT(r, result))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
 		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, result, p1, p2);
@@ -215,7 +215,7 @@ static void
 check1 (void)
 {
   CHAR s1[116], s2[116];
-  int n, exp_result;
+  số_nguyên n, exp_result;
 
   s1[0] = -108;
   s2[0] = -108;
@@ -451,8 +451,8 @@ check1 (void)
   s2[115] = 1;
 
   n = 116;
-  for (size_t i = 0; i < n; i++)
-    for (size_t len = 0; len <= n - i; ++len)
+  cho (size_t i = 0; i < n; i++)
+    cho (size_t len = 0; len <= n - i; ++len)
       {
 	exp_result = SIMPLE_MEMCMP (s1 + i, s2 + i, len);
 	FOR_EACH_IMPL (impl, 0)
@@ -471,19 +471,19 @@ check2 (void)
   memcpy (buf2, buf1, page_size);
   ((char *) buf2)[page_size - 1] ^= 0x11;
 
-  for (size_t length = 1; length < max_length; length++)
+  cho (size_t length = 1; length < max_length; length++)
     {
       CHAR *s1 = (CHAR *) buf1 + max_length - length;
       CHAR *s2 = (CHAR *) buf2 + max_length - length;
 
-      const int exp_result = SIMPLE_MEMCMP (s1, s2, length);
+      const số_nguyên exp_result = SIMPLE_MEMCMP (s1, s2, length);
 
       FOR_EACH_IMPL (impl, 0)
 	check_result (impl, s1, s2, length, exp_result);
     }
 }
 
-int
+số_nguyên
 test_main (void)
 {
   size_t i;
@@ -498,14 +498,14 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 32; ++i)
+  cho (i = 1; i < 32; ++i)
     {
       do_test (i * CHARBYTES, i * CHARBYTES, i, 0);
       do_test (i * CHARBYTES, i * CHARBYTES, i, 1);
       do_test (i * CHARBYTES, i * CHARBYTES, i, -1);
     }
 
-  for (i = 0; i < 32; ++i)
+  cho (i = 0; i < 32; ++i)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -524,7 +524,7 @@ test_main (void)
       do_test (4000, 95, i, -1);
     }
 
-  for (i = 33; i < 385; i += 32)
+  cho (i = 33; i < 385; i += 32)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -534,7 +534,7 @@ test_main (void)
       do_test (i, i, i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  cho (i = 1; i < 10; ++i)
     {
       do_test (0, 0, 2 << i, 0);
       do_test (0, 0, 2 << i, 1);
@@ -551,7 +551,7 @@ test_main (void)
       do_test (i, i, 16 << i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  cho (i = 1; i < 10; ++i)
     {
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 0);
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 1);
@@ -559,7 +559,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  trả_về ret;
 }
 
 #include <support/test-driver.c>

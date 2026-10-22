@@ -43,35 +43,35 @@ __strtok_r (char *s, const char *delim, char **save_ptr)
 {
   char *end;
 
-  if (s == NULL)
+  nếu (s == NULL)
     s = *save_ptr;
 
-  if (*s == '\0')
+  nếu (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      trả_về NULL;
     }
 
   /* Scan leading delimiters.  */
   s += strspn (s, delim);
-  if (*s == '\0')
+  nếu (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      trả_về NULL;
     }
 
   /* Find the end of the token.  */
   end = s + strcspn (s, delim);
-  if (*end == '\0')
+  nếu (*end == '\0')
     {
       *save_ptr = end;
-      return s;
+      trả_về s;
     }
 
   /* Terminate the token and make *SAVE_PTR point past it.  */
   *end = '\0';
   *save_ptr = end + 1;
-  return s;
+  trả_về s;
 }
 #ifdef weak_alias
 libc_hidden_def (__strtok_r)

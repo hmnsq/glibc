@@ -21,14 +21,14 @@
 #include <array_length.h>
 
 const char *
-__sigdescr_np (int signum)
+__sigdescr_np (số_nguyên signum)
 {
   const char *descr = NULL;
 
-  if (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
+  nếu (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
     descr = __sys_siglist[signum];
 
-  return descr;
+  trả_về descr;
 }
 libc_hidden_def (__sigdescr_np)
 weak_alias (__sigdescr_np, sigdescr_np)

@@ -7,7 +7,7 @@
 static const struct
 {
   const char *s;
-  int in_result;
+  số_nguyên in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -25,42 +25,42 @@ static const struct
 #define nstrs (sizeof (strs) / sizeof (strs[0]))
 
 
-int
+số_nguyên
 do_test (void)
 {
 
   size_t size = 0;
   char *str = malloc (100);
-  if (str == NULL)
+  nếu (str == NULL)
     {
       puts ("out of memory");
-      return 1;
+      trả_về 1;
     }
 
   char **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  cho (số_nguyên i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  số_nguyên result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  cho (số_nguyên i = 0; i < nstrs; ++i)
+    nếu (strs[i].in_result)
       {
         char name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
         char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        nếu (e == NULL)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        không_thì nếu (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -69,7 +69,7 @@ do_test (void)
       }
 
   free (*argz);
-  return result;
+  trả_về result;
 }
 
 #include <support/test-driver.c>

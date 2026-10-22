@@ -26,23 +26,23 @@ __strsep (char **stringp, const char *delim)
   char *begin, *end;
 
   begin = *stringp;
-  if (begin == NULL)
-    return NULL;
+  nếu (begin == NULL)
+    trả_về NULL;
 
   /* Find the end of the token.  */
   end = begin + strcspn (begin, delim);
 
-  if (*end)
+  nếu (*end)
     {
       /* Terminate the token and set *STRINGP past NUL character.  */
       *end++ = '\0';
       *stringp = end;
     }
-  else
+  không_thì
     /* No more delimiters; this is the last token.  */
     *stringp = NULL;
 
-  return begin;
+  trả_về begin;
 }
 weak_alias (__strsep, strsep)
 strong_alias (__strsep, __strsep_g)

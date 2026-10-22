@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+số_nguyên
 do_test (void)
 {
   char str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  trả_về 0;
 }
 
 #include <support/test-driver.c>

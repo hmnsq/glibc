@@ -38,7 +38,7 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
+số_nguyên
 __strverscmp (const char *s1, const char *s2)
 {
   const unsigned char *p1 = (const unsigned char *) s1;
@@ -65,19 +65,19 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  nếu (p1 == p2)
+    trả_về 0;
 
   unsigned char c1 = *p1++;
   unsigned char c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  số_nguyên state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  số_nguyên diff;
+  trong_khi ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      nếu (c1 == '\0')
+	trả_về diff;
 
       state = next_state[state];
       c1 = *p1++;
@@ -90,17 +90,17 @@ __strverscmp (const char *s1, const char *s2)
   switch (state)
   {
     case CMP:
-      return diff;
+      trả_về diff;
 
     case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+      trong_khi (isdigit (*p1++))
+	nếu (!isdigit (*p2++))
+	  trả_về 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      trả_về isdigit (*p2) ? -1 : diff;
 
     default:
-      return state;
+      trả_về state;
   }
 }
 libc_hidden_def (__strverscmp)

@@ -23,69 +23,69 @@
 /* An incorrect strcoll optimization resulted in incorrect
    results from strcoll for cs_CZ and da_DK.  */
 
-int
+số_nguyên
 test_cs_CZ (void)
 {
   const char t1[] = "config";
   const char t2[] = "choose";
-  if (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
+  nếu (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
     {
       perror ("setlocale");
-      return 1;
+      trả_về 1;
     }
   /* In Czech the digraph ch sorts after c, therefore we expect
      config to sort before choose.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  số_nguyên a = strcoll (t1, t2);
+  số_nguyên b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  nếu (a < 0 && b > 0)
     {
       puts ("PASS: config < choose");
-      return 0;
+      trả_về 0;
     }
-  else
+  không_thì
     {
       puts ("FAIL: Wrong sorting in cs_CZ.UTF-8.");
-      return 1;
+      trả_về 1;
     }
 }
 
-int
+số_nguyên
 test_da_DK (void)
 {
   const char t1[] = "AS";
   const char t2[] = "AA";
-  if (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
+  nếu (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
     {
       perror ("setlocale");
-      return 1;
+      trả_về 1;
     }
   /* AA should be treated as the last letter of the Danish alphabet,
      hence sorting after AS.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  số_nguyên a = strcoll (t1, t2);
+  số_nguyên b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  nếu (a < 0 && b > 0)
     {
       puts ("PASS: AS < AA");
-      return 0;
+      trả_về 0;
     }
-  else
+  không_thì
     {
       puts ("FAIL: Wrong sorting in da_DK.ISO-8859-1");
-      return 1;
+      trả_về 1;
     }
 }
 
-int
+số_nguyên
 do_test (void)
 {
-  int err = 0;
+  số_nguyên err = 0;
   err |= test_cs_CZ ();
   err |= test_da_DK ();
-  return err;
+  trả_về err;
 }
 
 #include <support/test-driver.c>

@@ -28,109 +28,109 @@
 #include <string.h>
 #include <libc-diag.h>
 
-static int
-signum (int val)
+static số_nguyên
+signum (số_nguyên val)
 {
-  if (val < 0)
-    return -1;
-  if (val > 0)
-    return 1;
-  else
-    return 0;
+  nếu (val < 0)
+    trả_về -1;
+  nếu (val > 0)
+    trả_về 1;
+  không_thì
+    trả_về 0;
 }
 
 static size_t
 max_size_t (size_t left, size_t right)
 {
-  if (left > right)
-    return left;
-  else
-    return right;
+  nếu (left > right)
+    trả_về left;
+  không_thì
+    trả_về right;
 }
 
 /* Wrappers for strncmp and strncasecmp which determine the maximum
    string length in some, either based on the input string length, or
    using fixed constants.  */
 
-static int
+static số_nguyên
 strncmp_no_terminator (const char *left, const char *right)
 {
   size_t left_len = strlen (left);
   size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  trả_về strncmp (left, right, max_size_t (left_len, right_len));
 }
 
-static int
+static số_nguyên
 strncasecmp_no_terminator (const char *left, const char *right)
 {
   size_t left_len = strlen (left);
   size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  trả_về strncasecmp (left, right, max_size_t (left_len, right_len));
 }
 
-static int
+static số_nguyên
 strncmp_terminator (const char *left, const char *right)
 {
   size_t left_len = strlen (left);
   size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  trả_về strncmp (left, right, max_size_t (left_len, right_len));
 }
 
-static int
+static số_nguyên
 strncasecmp_terminator (const char *left, const char *right)
 {
   size_t left_len = strlen (left);
   size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  trả_về strncasecmp (left, right, max_size_t (left_len, right_len));
 }
 
-static int
+static số_nguyên
 strncmp_64 (const char *left, const char *right)
 {
-  return strncmp (left, right, 64);
+  trả_về strncmp (left, right, 64);
 }
 
-static int
+static số_nguyên
 strncasecmp_64 (const char *left, const char *right)
 {
-  return strncasecmp (left, right, 64);
+  trả_về strncasecmp (left, right, 64);
 }
 
-static int
+static số_nguyên
 strncmp_max (const char *left, const char *right)
 {
   DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+#nếu __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncmp being larger than
      PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
 #endif
-#if __GNUC_PREREQ (11, 0)
+#nếu __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncmp (left, right, SIZE_MAX);
+  trả_về strncmp (left, right, SIZE_MAX);
   DIAG_POP_NEEDS_COMMENT;
 }
 
-static int
+static số_nguyên
 strncasecmp_max (const char *left, const char *right)
 {
   DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+#nếu __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncasecmp being larger
      than PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
 #endif
-#if __GNUC_PREREQ (11, 0)
+#nếu __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncasecmp (left, right, SIZE_MAX);
+  trả_về strncasecmp (left, right, SIZE_MAX);
   DIAG_POP_NEEDS_COMMENT;
 }
 
-int
+số_nguyên
 do_test (void)
 {
   enum {
@@ -140,16 +140,16 @@ do_test (void)
   size_t blob_size = max_align + max_string_length + 1;
   char *left = memalign (max_align, blob_size);
   char *right = memalign (max_align, blob_size);
-  if (left == NULL || right == NULL)
+  nếu (left == NULL || right == NULL)
     {
       printf ("error: out of memory\n");
-      return 1;
+      trả_về 1;
     }
 
   const struct
   {
     const char *name;
-    int (*implementation) (const char *, const char *);
+    số_nguyên (*implementation) (const char *, const char *);
   } functions[] =
       {
         { "strcmp", strcmp },
@@ -186,28 +186,28 @@ do_test (void)
     { 0, 1, 32, 64, 128, '0', '1', 'e', 'f', 'g', 127, 192, 255 };
 
   bool errors = false;
-  for (int left_idx = 0; strings[left_idx] != NULL; ++left_idx)
-    for (int left_align = 0; left_align < max_align; ++left_align)
-      for (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
+  cho (số_nguyên left_idx = 0; strings[left_idx] != NULL; ++left_idx)
+    cho (số_nguyên left_align = 0; left_align < max_align; ++left_align)
+      cho (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
         {
           memset (left, pads[pad_left], blob_size);
           strcpy (left + left_align, strings[left_idx]);
 
-          for (int right_idx = 0; strings[right_idx] != NULL; ++right_idx)
-            for (unsigned pad_right = 0; pad_right < sizeof (pads);
+          cho (số_nguyên right_idx = 0; strings[right_idx] != NULL; ++right_idx)
+            cho (unsigned pad_right = 0; pad_right < sizeof (pads);
                  ++pad_right)
-              for (int right_align = 0; right_align < max_align;
+              cho (số_nguyên right_align = 0; right_align < max_align;
                    ++right_align)
                 {
                   memset (right, pads[pad_right], blob_size);
                   strcpy (right + right_align, strings[right_idx]);
 
-                  for (int func = 0; functions[func].name != NULL; ++func)
+                  cho (số_nguyên func = 0; functions[func].name != NULL; ++func)
                     {
-                      int expected = left_idx - right_idx;
-                      int actual = functions[func].implementation
+                      số_nguyên expected = left_idx - right_idx;
+                      số_nguyên actual = functions[func].implementation
                         (left + left_align, right + right_align);
-                      if (signum (actual) != signum (expected))
+                      nếu (signum (actual) != signum (expected))
                         {
                           printf ("error: mismatch for %s: %d\n"
                                   "  left:  \"%s\"\n"
@@ -225,7 +225,7 @@ do_test (void)
         }
   free (right);
   free (left);
-  return errors;
+  trả_về errors;
 }
 
 /* The nested loops need a long time to complete on slower

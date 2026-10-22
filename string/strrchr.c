@@ -25,9 +25,9 @@
 
 /* Find the last occurrence of C in S.  */
 char *
-STRRCHR (const char *s, int c)
+STRRCHR (const char *s, số_nguyên c)
 {
-  return __memrchr (s, c, strlen (s) + 1);
+  trả_về __memrchr (s, c, strlen (s) + 1);
 }
 
 #ifdef weak_alias

@@ -22,18 +22,18 @@
 char *
 __argz_next (const char *argz, size_t argz_len, const char *entry)
 {
-  if (entry)
+  nếu (entry)
     {
-      if (entry < argz + argz_len)
+      nếu (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      trả_về entry >= argz + argz_len ? NULL : (char *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  không_thì
+    nếu (argz_len > 0)
+      trả_về (char *) argz;
+    không_thì
+      trả_về NULL;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)

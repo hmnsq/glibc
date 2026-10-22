@@ -29,13 +29,13 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
   size_t new_len = *to_len + buf_len;
   char *new_to = realloc (*to, new_len + 1);
 
-  if (new_to)
+  nếu (new_to)
     {
       *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
       *to = new_to;
       *to_len = new_len;
     }
-  else
+  không_thì
     {
       free (*to);
       *to = NULL;
@@ -51,37 +51,37 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 {
   error_t err = 0;
 
-  if (str && *str)
+  nếu (str && *str)
     {
       char *arg = NULL;
       char *src = *argz;
       size_t src_len = *argz_len;
       char *dst = NULL;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      số_nguyên delayed_copy = 1;	/* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      trong_khi (!err && (arg = argz_next (src, src_len, arg)))
 	{
 	  char *match = strstr (arg, str);
-	  if (match)
+	  nếu (match)
 	    {
 	      char *from = match + str_len;
 	      size_t to_len = match - arg;
 	      char *to = __strndup (arg, to_len);
 
-	      while (to && from)
+	      trong_khi (to && from)
 		{
 		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  nếu (to)
 		    {
 		      match = strstr (from, str);
-		      if (match)
+		      nếu (match)
 			{
 			  str_append (&to, &to_len, from, match - from);
 			  from = match + str_len;
 			}
-		      else
+		      không_thì
 			{
 			  str_append (&to, &to_len, from, strlen (from));
 			  from = NULL;
@@ -89,34 +89,34 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 		    }
 		}
 
-	      if (to)
+	      nếu (to)
 		{
-		  if (delayed_copy)
+		  nếu (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      nếu (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
+		  nếu (! err)
 		    err = __argz_add (&dst, &dst_len, to);
 		  free (to);
 		}
-	      else
+	      không_thì
 		err = ENOMEM;
 
-	      if (replace_count)
+	      nếu (replace_count)
 		(*replace_count)++;
 	    }
-	  else if (! delayed_copy)
+	  không_thì nếu (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      nếu (! err)
 	{
-	  if (! delayed_copy)
+	  nếu (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
 	      free (src);
@@ -124,10 +124,10 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
+      không_thì nếu (dst_len > 0)
 	free (dst);
     }
 
-  return err;
+  trả_về err;
 }
 weak_alias (__argz_replace, argz_replace)

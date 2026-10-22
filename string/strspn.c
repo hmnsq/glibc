@@ -29,13 +29,13 @@
 size_t
 STRSPN (const char *str, const char *accept)
 {
-  if (accept[0] == '\0')
-    return 0;
-  if (__glibc_unlikely (accept[1] == '\0'))
+  nếu (accept[0] == '\0')
+    trả_về 0;
+  nếu (__glibc_unlikely (accept[1] == '\0'))
     {
       const char *a = str;
-      for (; *str == *accept; str++);
-      return str - a;
+      cho (; *str == *accept; str++);
+      trả_về str - a;
     }
 
   /* Use multiple small memsets to enable inlining on most targets.  */
@@ -51,26 +51,26 @@ STRSPN (const char *str, const char *accept)
      be 0 and thus stopping the loop check.  */
   do
     p[*s++] = 1;
-  while (*s);
+  trong_khi (*s);
 
   s = (unsigned char*) str;
-  if (!p[s[0]]) return 0;
-  if (!p[s[1]]) return 1;
-  if (!p[s[2]]) return 2;
-  if (!p[s[3]]) return 3;
+  nếu (!p[s[0]]) trả_về 0;
+  nếu (!p[s[1]]) trả_về 1;
+  nếu (!p[s[2]]) trả_về 2;
+  nếu (!p[s[3]]) trả_về 3;
 
   s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
 
-  unsigned int c0, c1, c2, c3;
+  unsigned số_nguyên c0, c1, c2, c3;
   do {
       s += 4;
       c0 = p[s[0]];
       c1 = p[s[1]];
       c2 = p[s[2]];
       c3 = p[s[3]];
-  } while ((c0 & c1 & c2 & c3) != 0);
+  } trong_khi ((c0 & c1 & c2 & c3) != 0);
 
   size_t count = s - (unsigned char *) str;
-  return (c0 & c1) == 0 ? count + c0 : count + c2 + 2;
+  trả_về (c0 & c1) == 0 ? count + c0 : count + c2 + 2;
 }
 libc_hidden_builtin_def (strspn)

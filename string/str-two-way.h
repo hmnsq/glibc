@@ -66,9 +66,9 @@
    needle, the better the potential performance gain.  On the other
    hand, on non-POSIX systems with CHAR_BIT larger than eight, the
    memory required for the table is prohibitive.  */
-#if CHAR_BIT < 10
+#nếu CHAR_BIT < 10
 # define LONG_NEEDLE_THRESHOLD 32U
-#else
+#không_thì
 # define LONG_NEEDLE_THRESHOLD SIZE_MAX
 #endif
 
@@ -138,29 +138,29 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
   max_suffix = SIZE_MAX;
   j = 0;
   k = p = 1;
-  while (j + k < needle_len)
+  trong_khi (j + k < needle_len)
     {
       a = CANON_ELEMENT (needle[j + k]);
       b = CANON_ELEMENT (needle[max_suffix + k]);
-      if (a < b)
+      nếu (a < b)
 	{
 	  /* Suffix is smaller, period is entire prefix so far.  */
 	  j += k;
 	  k = 1;
 	  p = j - max_suffix;
 	}
-      else if (a == b)
+      không_thì nếu (a == b)
 	{
 	  /* Advance through repetition of the current period.  */
-	  if (k != p)
+	  nếu (k != p)
 	    ++k;
-	  else
+	  không_thì
 	    {
 	      j += p;
 	      k = 1;
 	    }
 	}
-      else /* b < a */
+      không_thì /* b < a */
 	{
 	  /* Suffix is larger, start over from current location.  */
 	  max_suffix = j++;
@@ -173,29 +173,29 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
   max_suffix_rev = SIZE_MAX;
   j = 0;
   k = p = 1;
-  while (j + k < needle_len)
+  trong_khi (j + k < needle_len)
     {
       a = CANON_ELEMENT (needle[j + k]);
       b = CANON_ELEMENT (needle[max_suffix_rev + k]);
-      if (b < a)
+      nếu (b < a)
 	{
 	  /* Suffix is smaller, period is entire prefix so far.  */
 	  j += k;
 	  k = 1;
 	  p = j - max_suffix_rev;
 	}
-      else if (a == b)
+      không_thì nếu (a == b)
 	{
 	  /* Advance through repetition of the current period.  */
-	  if (k != p)
+	  nếu (k != p)
 	    ++k;
-	  else
+	  không_thì
 	    {
 	      j += p;
 	      k = 1;
 	    }
 	}
-      else /* a < b */
+      không_thì /* a < b */
 	{
 	  /* Suffix is larger, start over from current location.  */
 	  max_suffix_rev = j++;
@@ -205,10 +205,10 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
 
   /* Choose the longer suffix.  Return the first byte of the right
      half, rather than the last byte of the left half.  */
-  if (max_suffix_rev + 1 < max_suffix + 1)
-    return max_suffix + 1;
+  nếu (max_suffix_rev + 1 < max_suffix + 1)
+    trả_về max_suffix + 1;
   *period = p;
-  return max_suffix_rev + 1;
+  trả_về max_suffix_rev + 1;
 }
 
 /* Return the first location of non-empty NEEDLE within HAYSTACK, or
@@ -237,14 +237,14 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 
   /* Perform the search.  Each iteration compares the right half
      first.  */
-  if (CMP_FUNC (needle, needle + period, suffix) == 0)
+  nếu (CMP_FUNC (needle, needle + period, suffix) == 0)
     {
       /* Entire needle is periodic; a mismatch can only advance by the
 	 period, so use memory to avoid rescanning known occurrences
 	 of the period.  */
       size_t memory = 0;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      trong_khi (AVAILABLE (haystack, haystack_len, j, needle_len))
 	{
 	  const unsigned char *pneedle;
 	  const unsigned char *phaystack;
@@ -253,33 +253,33 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 	  i = MAX (suffix, memory);
 	  pneedle = &needle[i];
 	  phaystack = &haystack[i + j];
-	  while (i < needle_len && (CANON_ELEMENT (*pneedle++)
+	  trong_khi (i < needle_len && (CANON_ELEMENT (*pneedle++)
 				    == CANON_ELEMENT (*phaystack++)))
 	    ++i;
-	  if (needle_len <= i)
+	  nếu (needle_len <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (memory < i + 1 && (CANON_ELEMENT (*pneedle--)
+	      trong_khi (memory < i + 1 && (CANON_ELEMENT (*pneedle--)
 					== CANON_ELEMENT (*phaystack--)))
 		--i;
-	      if (i + 1 < memory + 1)
-		return (RETURN_TYPE) (haystack + j);
+	      nếu (i + 1 < memory + 1)
+		trả_về (RETURN_TYPE) (haystack + j);
 	      /* No match, so remember how many repetitions of period
 		 on the right half were scanned.  */
 	      j += period;
 	      memory = needle_len - period;
 	    }
-	  else
+	  không_thì
 	    {
 	      j += i - suffix + 1;
 	      memory = 0;
 	    }
 	}
     }
-  else
+  không_thì
     {
       const unsigned char *phaystack;
       /* The comparison always starts from needle[suffix], so cache it
@@ -290,7 +290,7 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 	 required, and any mismatch results in a maximal shift.  */
       period = MAX (suffix, needle_len - suffix) + 1;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      trong_khi (AVAILABLE (haystack, haystack_len, j, needle_len))
 	{
 	  unsigned char haystack_char;
 	  const unsigned char *pneedle;
@@ -298,28 +298,28 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 	  phaystack = &haystack[suffix + j];
 
 #ifdef FASTSEARCH
-	  if (*phaystack++ != needle_suffix)
+	  nếu (*phaystack++ != needle_suffix)
 	    {
 	      phaystack = FASTSEARCH (phaystack, needle_suffix,
 				      haystack_len - needle_len - j);
-	      if (phaystack == NULL)
+	      nếu (phaystack == NULL)
 		goto ret0;
 	      j = phaystack - &haystack[suffix];
 	      phaystack++;
 	    }
-#else
-	  while (needle_suffix
+#không_thì
+	  trong_khi (needle_suffix
 	      != (haystack_char = CANON_ELEMENT (*phaystack++)))
 	    {
 	      RET0_IF_0 (haystack_char);
-# if !CHECK_EOL
+# nếu !CHECK_EOL
 	      ++j;
-	      if (!AVAILABLE (haystack, haystack_len, j, needle_len))
+	      nếu (!AVAILABLE (haystack, haystack_len, j, needle_len))
 		goto ret0;
 # endif
 	    }
 
-# if CHECK_EOL
+# nếu CHECK_EOL
 	  /* Calculate J if it wasn't kept up-to-date in the first-character
 	     loop.  */
 	  j = phaystack - &haystack[suffix] - 1;
@@ -328,9 +328,9 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 	  /* Scan for matches in right half.  */
 	  i = suffix + 1;
 	  pneedle = &needle[i];
-	  while (i < needle_len)
+	  trong_khi (i < needle_len)
 	    {
-	      if (CANON_ELEMENT (*pneedle++)
+	      nếu (CANON_ELEMENT (*pneedle++)
 		  != (haystack_char = CANON_ELEMENT (*phaystack++)))
 		{
 		  RET0_IF_0 (haystack_char);
@@ -338,20 +338,20 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 		}
 	      ++i;
 	    }
-#if CHECK_EOL
+#nếu CHECK_EOL
 	  /* Update minimal length of haystack.  */
-	  if (phaystack > haystack + haystack_len)
+	  nếu (phaystack > haystack + haystack_len)
 	    haystack_len = phaystack - haystack;
 #endif
-	  if (needle_len <= i)
+	  nếu (needle_len <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (i != SIZE_MAX)
+	      trong_khi (i != SIZE_MAX)
 		{
-		  if (CANON_ELEMENT (*pneedle--)
+		  nếu (CANON_ELEMENT (*pneedle--)
 		      != (haystack_char = CANON_ELEMENT (*phaystack--)))
 		    {
 		      RET0_IF_0 (haystack_char);
@@ -359,16 +359,16 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 		    }
 		  --i;
 		}
-	      if (i == SIZE_MAX)
-		return (RETURN_TYPE) (haystack + j);
+	      nếu (i == SIZE_MAX)
+		trả_về (RETURN_TYPE) (haystack + j);
 	      j += period;
 	    }
-	  else
+	  không_thì
 	    j += i - suffix + 1;
 	}
     }
  ret0: __attribute__ ((unused))
-  return NULL;
+  trả_về NULL;
 }
 
 /* Return the first location of non-empty NEEDLE within HAYSTACK, or
@@ -405,14 +405,14 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
      shift_table[c] is the distance from the last occurrence of c to
      the end of NEEDLE, or NEEDLE_LEN if c is absent from the NEEDLE.
      shift_table[NEEDLE[NEEDLE_LEN - 1]] contains the only 0.  */
-  for (i = 0; i < 1U << CHAR_BIT; i++)
+  cho (i = 0; i < 1U << CHAR_BIT; i++)
     shift_table[i] = needle_len;
-  for (i = 0; i < needle_len; i++)
+  cho (i = 0; i < needle_len; i++)
     shift_table[CANON_ELEMENT (needle[i])] = needle_len - i - 1;
 
   /* Perform the search.  Each iteration compares the right half
      first.  */
-  if (CMP_FUNC (needle, needle + period, suffix) == 0)
+  nếu (CMP_FUNC (needle, needle + period, suffix) == 0)
     {
       /* Entire needle is periodic; a mismatch can only advance by the
 	 period, so use memory to avoid rescanning known occurrences
@@ -420,7 +420,7 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
       size_t memory = 0;
       size_t shift;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      trong_khi (AVAILABLE (haystack, haystack_len, j, needle_len))
 	{
 	  const unsigned char *pneedle;
 	  const unsigned char *phaystack;
@@ -428,9 +428,9 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
 	  /* Check the last byte first; if it does not match, then
 	     shift to the next possible match location.  */
 	  shift = shift_table[CANON_ELEMENT (haystack[j + needle_len - 1])];
-	  if (0 < shift)
+	  nếu (0 < shift)
 	    {
-	      if (memory && shift < period)
+	      nếu (memory && shift < period)
 		{
 		  /* Since needle is periodic, but the last period has
 		     a byte out of place, there can be no match until
@@ -446,40 +446,40 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
 	  i = MAX (suffix, memory);
 	  pneedle = &needle[i];
 	  phaystack = &haystack[i + j];
-	  while (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
+	  trong_khi (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
 					== CANON_ELEMENT (*phaystack++)))
 	    ++i;
-	  if (needle_len - 1 <= i)
+	  nếu (needle_len - 1 <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (memory < i + 1 && (CANON_ELEMENT (*pneedle--)
+	      trong_khi (memory < i + 1 && (CANON_ELEMENT (*pneedle--)
 					== CANON_ELEMENT (*phaystack--)))
 		--i;
-	      if (i + 1 < memory + 1)
-		return (RETURN_TYPE) (haystack + j);
+	      nếu (i + 1 < memory + 1)
+		trả_về (RETURN_TYPE) (haystack + j);
 	      /* No match, so remember how many repetitions of period
 		 on the right half were scanned.  */
 	      j += period;
 	      memory = needle_len - period;
 	    }
-	  else
+	  không_thì
 	    {
 	      j += i - suffix + 1;
 	      memory = 0;
 	    }
 	}
     }
-  else
+  không_thì
     {
       /* The two halves of needle are distinct; no extra memory is
 	 required, and any mismatch results in a maximal shift.  */
       size_t shift;
       period = MAX (suffix, needle_len - suffix) + 1;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      trong_khi (AVAILABLE (haystack, haystack_len, j, needle_len))
 	{
 	  const unsigned char *pneedle;
 	  const unsigned char *phaystack;
@@ -487,7 +487,7 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
 	  /* Check the last byte first; if it does not match, then
 	     shift to the next possible match location.  */
 	  shift = shift_table[CANON_ELEMENT (haystack[j + needle_len - 1])];
-	  if (0 < shift)
+	  nếu (0 < shift)
 	    {
 	      j += shift;
 	      continue;
@@ -497,27 +497,27 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
 	  i = suffix;
 	  pneedle = &needle[i];
 	  phaystack = &haystack[i + j];
-	  while (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
+	  trong_khi (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
 					== CANON_ELEMENT (*phaystack++)))
 	    ++i;
-	  if (needle_len - 1 <= i)
+	  nếu (needle_len - 1 <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (i != SIZE_MAX && (CANON_ELEMENT (*pneedle--)
+	      trong_khi (i != SIZE_MAX && (CANON_ELEMENT (*pneedle--)
 				       == CANON_ELEMENT (*phaystack--)))
 		--i;
-	      if (i == SIZE_MAX)
-		return (RETURN_TYPE) (haystack + j);
+	      nếu (i == SIZE_MAX)
+		trả_về (RETURN_TYPE) (haystack + j);
 	      j += period;
 	    }
-	  else
+	  không_thì
 	    j += i - suffix + 1;
 	}
     }
-  return NULL;
+  trả_về NULL;
 }
 
 #undef AVAILABLE

@@ -22,8 +22,8 @@ memfrob (void *s, size_t n)
 {
   char *p = (char *) s;
 
-  while (n-- > 0)
+  trong_khi (n-- > 0)
     *p++ ^= 42;
 
-  return s;
+  trả_về s;
 }

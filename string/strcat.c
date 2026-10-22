@@ -28,6 +28,6 @@ char *
 STRCAT (char *dest, const char *src)
 {
   strcpy (dest + strlen (dest), src);
-  return dest;
+  trả_về dest;
 }
 libc_hidden_builtin_def (strcat)

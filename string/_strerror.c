@@ -22,16 +22,16 @@
 
 /* Return a string describing the errno code in ERRNUM.  */
 char *
-__strerror_r (int errnum, char *buf, size_t buflen)
+__strerror_r (số_nguyên errnum, char *buf, size_t buflen)
 {
   char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  nếu (__glibc_unlikely (err == NULL))
     {
       __snprintf (buf, buflen, "%s%d", _("Unknown error "), errnum);
-      return buf;
+      trả_về buf;
     }
 
-  return _(err);
+  trả_về _(err);
 }
 weak_alias (__strerror_r, strerror_r)
 libc_hidden_def (__strerror_r)

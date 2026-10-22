@@ -27,8 +27,8 @@ char *
 STRNCPY (char *s1, const char *s2, size_t n)
 {
   size_t size = __strnlen (s2, n);
-  if (size != n)
+  nếu (size != n)
     memset (s1 + size, '\0', n - size);
-  return memcpy (s1, s2, size);
+  trả_về memcpy (s1, s2, size);
 }
 libc_hidden_builtin_def (strncpy)

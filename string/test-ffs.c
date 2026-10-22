@@ -20,36 +20,36 @@
 #include <string.h>
 #include <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+void try (const char *name, long long số_nguyên param, số_nguyên value, số_nguyên expected)
 {
-  if (value != expected)
+  nếu (value != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
 	      name, param, expected, value);
       support_record_failure ();
     }
-  else
+  không_thì
     printf ("%s(%#llx) as expected %d\n", name, param, value);
 }
 
-int
+số_nguyên
 do_test (void)
 {
-  int i;
+  số_nguyên i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  cho (i=0 ; i < 8 * sizeof (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  cho (i=0 ; i < 8 * sizeof (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, số_nguyên);
+  TEST (ffsl, long số_nguyên);
+  TEST (ffsll, long long số_nguyên);
 
-  return 0;
+  trả_về 0;
 }
 
 #include <support/test-driver.c>
