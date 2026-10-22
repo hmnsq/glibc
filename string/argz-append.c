@@ -16,33 +16,33 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#অন্তর্ভাৱ <argz.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <stdlib.h>
 
 /* Add BUF, of length BUF_LEN to the argz vector in ARGZ & ARGZ_LEN.  */
 error_t
-__argz_append (char **argz, size_t *argz_len, const char *buf, size_t buf_len)
+__argz_append (ৱর্ণ **argz, size_t *argz_len, ধ্রুৱ ৱর্ণ *buf, size_t buf_len)
 {
   size_t new_argz_len = *argz_len + buf_len;
-  char *new_argz = realloc (*argz, new_argz_len);
-  if (new_argz)
+  ৱর্ণ *new_argz = realloc (*argz, new_argz_len);
+  যদি (new_argz)
     {
       memcpy (new_argz + *argz_len, buf, buf_len);
       *argz = new_argz;
       *argz_len = new_argz_len;
-      return 0;
+      ঘূৰাই 0;
     }
-  else
-    return ENOMEM;
+  অন্যথা
+    ঘূৰাই ENOMEM;
 }
 weak_alias (__argz_append, argz_append)
 
 /* Add STR to the argz vector in ARGZ & ARGZ_LEN.  This should be moved into
    argz.c in libshouldbelibc.  */
 error_t
-__argz_add (char **argz, size_t *argz_len, const char *str)
+__argz_add (ৱর্ণ **argz, size_t *argz_len, ধ্রুৱ ৱর্ণ *str)
 {
-  return __argz_append (argz, argz_len, str, strlen (str) + 1);
+  ঘূৰাই __argz_append (argz, argz_len, str, strlen (str) + 1);
 }
 weak_alias (__argz_add, argz_add)

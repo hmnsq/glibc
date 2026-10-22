@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <random-bits.h>
-#include <unistd.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <random-bits.h>
+#অন্তর্ভাৱ <unistd.h>
 
-char *
-strfry (char *string)
+ৱর্ণ *
+strfry (ৱর্ণ *string)
 {
-  static int init;
-  static struct random_data rdata;
+  স্থির পূর্ণাঙ্ক init;
+  স্থির সংরচনা random_data rdata;
 
-  if (!init)
+  যদি (!init)
     {
-      static char state[32];
-      rdata.state = NULL;
+      স্থির ৱর্ণ state[32];
+      rdata.state = রিক্ত;
       __initstate_r (random_bits (),
-		     state, sizeof (state), &rdata);
+		     state, পরিমাণ (state), &rdata);
       init = 1;
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  যদি (len > 0)
+    বাবে (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
 	j = j % (len - i) + i;
 
-	char c = string[i];
+	ৱর্ণ c = string[i];
 	string[i] = string[j];
 	string[j] = c;
       }
 
-  return string;
+  ঘূৰাই string;
 }

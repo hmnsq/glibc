@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <stdio.h>
+#অন্তর্ভাৱ <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_সাৰি_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+স্থির পূর্ণাঙ্ক
+compare (ধ্রুৱ শূন্য *p1, ধ্রুৱ শূন্য *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  ঘূৰাই strverscmp (*((ৱর্ণ **) p1), *((ৱর্ণ **) p2));
 }
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  ৱর্ণ সাৰি[MAX_সাৰি_SIZE + 1];
+  ৱর্ণ *str[MAX_STRINGS];
+  পূর্ণাঙ্ক  গুনতি = 0;
+  পূর্ণাঙ্ক  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  যেতিয়ালৈ (গুনতি < MAX_STRINGS && fgets (সাৰি, MAX_সাৰি_SIZE, stdin) != রিক্ত)
     {
-      n = strlen (line) - 1;
+      n = strlen (সাৰি) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      যদি (সাৰি[n] == '\n')
+        সাৰি[n] = '\0';
 
-      str[count] = strdup (line);
+      str[গুনতি] = strdup (সাৰি);
 
-      if (str[count] == NULL)
+      যদি (str[গুনতি] == রিক্ত)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++গুনতি;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, গুনতি, পরিমাণ (ৱর্ণ *), compare);
 
-  for (i = 0; i < count; ++i)
+  বাবে (i = 0; i < গুনতি; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  ঘূৰাই EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

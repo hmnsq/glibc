@@ -16,19 +16,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <signal.h>
+#অন্তর্ভাৱ <array_length.h>
 
-const char *
-__sigdescr_np (int signum)
+ধ্রুৱ ৱর্ণ *
+__sigdescr_np (পূর্ণাঙ্ক signum)
 {
-  const char *descr = NULL;
+  ধ্রুৱ ৱর্ণ *descr = রিক্ত;
 
-  if (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
+  যদি (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
     descr = __sys_siglist[signum];
 
-  return descr;
+  ঘূৰাই descr;
 }
 libc_hidden_def (__sigdescr_np)
 weak_alias (__sigdescr_np, sigdescr_np)

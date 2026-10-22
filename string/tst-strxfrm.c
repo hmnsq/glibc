@@ -1,49 +1,49 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাৱ <locale.h>
+#অন্তর্ভাৱ <stdio.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <string.h>
 
 
-char const string[] = "";
+ৱর্ণ ধ্রুৱ string[] = "";
 
 
-static int
-test (const char *locale)
+স্থির পূর্ণাঙ্ক
+test (ধ্রুৱ ৱর্ণ *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  ৱর্ণ *buf;
   locale_t loc;
-  int result = 0;
+  পূর্ণাঙ্ক result = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  যদি (setlocale (LC_COLLATE, locale) == রিক্ত)
     {
       printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      ঘূৰাই 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
+  bufsize = strxfrm (রিক্ত, string, 0) + 1;
   buf = malloc (bufsize);
-  if (buf == NULL)
+  যদি (buf == রিক্ত)
     {
       printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      ঘূৰাই 1;
     }
   r = strxfrm (buf, string, bufsize);
   l = strlen (buf);
-  if (r != l)
+  যদি (r != l)
     {
        printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
        result = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, রিক্ত);
 
   r = strxfrm_l (buf, string, bufsize, loc);
   l = strlen (buf);
-  if (r != l)
+  যদি (r != l)
     {
        printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -52,22 +52,22 @@ test (const char *locale)
 
   freelocale (loc);
 
-  free (buf);
+  মুক্ত (buf);
 
-  return result;
+  ঘূৰাই result;
 }
 
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  int result = 0;
+  পূর্ণাঙ্ক result = 0;
 
   result |= test ("C");
   result |= test ("en_US.ISO-8859-1");
   result |= test ("de_DE.UTF-8");
 
-  return result;
+  ঘূৰাই result;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

@@ -25,9 +25,9 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define STRNLEN wcsnlen
-#else
-# define CHAR char
-# define UCHAR unsigned char
+#অন্যথা
+# define CHAR ৱর্ণ
+# define UCHAR unsigned ৱর্ণ
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
 # define MEMCMP memcmp
@@ -41,14 +41,14 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strncpy"
-# else
+# অন্যথা
 #  define TEST_NAME "wcsncpy"
 # endif /* WIDE */
 # include "test-string.h"
 # ifndef WIDE
 #  define SIMPLE_STRNCPY simple_strncpy
 #  define STRNCPY strncpy
-# else
+# অন্যথা
 #  define SIMPLE_STRNCPY simple_wcsncpy
 #  define STRNCPY wcsncpy
 # endif /* WIDE */
@@ -58,57 +58,57 @@ IMPL (STRNCPY, 1)
 
 /* Naive implementation to verify results.  */
 CHAR *
-SIMPLE_STRNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STRNCPY (CHAR *dst, ধ্রুৱ CHAR *src, size_t n)
 {
   CHAR *ret = dst;
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  যেতিয়ালৈ (n--)
+    যদি ((*dst++ = *src++) == '\0')
       {
-	while (n--)
+	যেতিয়ালৈ (n--)
 	  *dst++ = '\0';
-	return ret;
+	ঘূৰাই ret;
       }
-  return ret;
+  ঘূৰাই ret;
 }
 
 #endif /* !STRNCPY_RESULT */
 
-typedef CHAR *(*proto_t) (CHAR *, const CHAR *, size_t);
+প্রকারনির্দেশ CHAR *(*proto_t) (CHAR *, ধ্রুৱ CHAR *, size_t);
 
-static void
-do_one_test (impl_t *impl, CHAR *dst, const CHAR *src, size_t len, size_t n)
+স্থির শূন্য
+do_one_test (impl_t *impl, CHAR *dst, ধ্রুৱ CHAR *src, size_t len, size_t n)
 {
-  if (CALL (impl, dst, src, n) != STRNCPY_RESULT (dst, len, n))
+  যদি (CALL (impl, dst, src, n) != STRNCPY_RESULT (dst, len, n))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, n), dst);
       ret = 1;
-      return;
+      ঘূৰাই;
     }
 
-  if (memcmp (dst, src, (len > n ? n : len) * sizeof (CHAR)) != 0)
+  যদি (memcmp (dst, src, (len > n ? n : len) * পরিমাণ (CHAR)) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      ঘূৰাই;
     }
 
-  if (n > len)
+  যদি (n > len)
     {
       size_t i;
 
-      for (i = len; i < n; ++i)
-	if (dst [i] != '\0')
+      বাবে (i = len; i < n; ++i)
+	যদি (dst [i] != '\0')
 	  {
 	    error (0, 0, "Wrong result in function %s", impl->name);
 	    ret = 1;
-	    return;
+	    ঘূৰাই;
 	  }
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+স্থির শূন্য
+do_test (size_t align1, size_t align2, size_t len, size_t n, পূর্ণাঙ্ক max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -116,20 +116,20 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
 /* For wcsncpy: align1 and align2 here mean alignment not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t)).  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  যদি ((align1 + len) * পরিমাণ (CHAR) >= page_size)
+    ঘূৰাই;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  যদি ((align2 + len) * পরিমাণ (CHAR) >= page_size)
+    ঘূৰাই;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len; ++i)
+  বাবে (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (CHAR) < page_size && i < len + 64;
+  বাবে (i = len + 1; (i + align1) * পরিমাণ (CHAR) < page_size && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
@@ -137,17 +137,17 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
     do_one_test (impl, s2, s1, len, n);
 }
 
-static void
-do_page_tests (void)
+স্থির শূন্য
+do_page_tests (শূন্য)
 {
   CHAR *s1, *s2;
-  const size_t maxoffset = 64;
+  ধ্রুৱ size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (CHAR *) buf1 + BUF1PAGES * page_size / sizeof(CHAR) - maxoffset;
+  s1 = (CHAR *) buf1 + BUF1PAGES * page_size / পরিমাণ(CHAR) - maxoffset;
   /* s2 needs room to put a string with size of maxoffset + 1 at s2 +
      (maxoffset - 1).  */
-  s2 = (CHAR *) buf2 + page_size / sizeof(CHAR) - maxoffset * 2;
+  s2 = (CHAR *) buf2 + page_size / পরিমাণ(CHAR) - maxoffset * 2;
 
   MEMSET (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -160,9 +160,9 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
+  বাবে (size_t off1 = 0; off1 < maxoffset; off1++)
     {
-      for (size_t off2 = 0; off2 < maxoffset; off2++)
+      বাবে (size_t off2 = 0; off2 < maxoffset; off2++)
 	{
 	  FOR_EACH_IMPL (impl, 0)
 	    do_one_test (impl, s2 + off2, s1 + off1, maxoffset - off1 - 1,
@@ -171,75 +171,75 @@ do_page_tests (void)
     }
 }
 
-static void
-do_random_tests (void)
+স্থির শূন্য
+do_random_tests (শূন্য)
 {
   size_t i, j, n, align1, align2, len, size, mode;
   UCHAR *p1 = (UCHAR *) (buf1 + page_size) - 512;
   UCHAR *p2 = (UCHAR *) (buf2 + page_size) - 512;
   UCHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  বাবে (n = 0; n < ITERATIONS; n++)
     {
       /* For wcsncpy: align1 and align2 here mean align not in bytes,
 	 but in wchar_ts, in bytes it will equal to align * (sizeof
 	 (wchar_t)).  */
 
       mode = random ();
-      if (mode & 1)
+      যদি (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  যদি (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  অন্যথা
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  যদি (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  যদি (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  অন্যথা
 	    len = 512;
-	  if (len >= 512)
+	  যদি (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      অন্যথা
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  যদি (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  অন্যথা
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  যদি (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  যদি (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      যদি (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  অন্যথা
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  যদি ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      যদি (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      বাবে (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  যদি (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  অন্যথা
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      যদি (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -249,48 +249,48 @@ do_random_tests (void)
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = (UCHAR *) CALL (impl, (CHAR *) (p2 + align2),
 				(CHAR *) (p1 + align1), size);
-	  if (res != STRNCPY_RESULT (p2 + align2, len, size))
+	  যদি (res != STRNCPY_RESULT (p2 + align2, len, size))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res,
 		     STRNCPY_RESULT (p2 + align2, len, size));
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  বাবে (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      যদি (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ভঙ্গ;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 > j)
+	  যদি (size + align2 > j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  বাবে (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      যদি (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ভঙ্গ;
 		}
 	    }
-	  for (j = align2 + len + 1; j < align2 + size; ++j)
-	    if (p2[j])
+	  বাবে (j = align2 + len + 1; j < align2 + size; ++j)
+	    যদি (p2[j])
 	      {
 		error (0, 0, "Iteration %zd - garbage after size, %s (%zd, %zd, %zd)",
 		       n, impl->name, align1, align2, len);
 		ret = 1;
-		break;
+		ভঙ্গ;
 	      }
 	  j = len + 1;
-	  if (size < j)
+	  যদি (size < j)
 	    j = size;
-	  if (MEMCMP (p1 + align1, p2 + align2, j))
+	  যদি (MEMCMP (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -300,8 +300,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+পূর্ণাঙ্ক
+test_main (শূন্য)
 {
   size_t i;
 
@@ -312,7 +312,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  বাবে (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, SMALL_CHAR);
       do_test (i, i, 16, 16, BIG_CHAR);
@@ -324,7 +324,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  বাবে (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, SMALL_CHAR);
       do_test (0, 0, 16 << i, 8 << i, SMALL_CHAR);
@@ -334,7 +334,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  ঘূৰাই ret;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

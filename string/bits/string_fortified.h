@@ -22,27 +22,27 @@
 # error "Never use <bits/string_fortified.h> directly; include <string.h> instead."
 #endif
 
-__fortify_function void *
-__NTH (memcpy (void *__restrict __dest, const void *__restrict __src,
+__fortify_function শূন্য *
+__NTH (memcpy (শূন্য *__restrict __dest, ধ্রুৱ শূন্য *__restrict __src,
 	       size_t __len))
 {
-  return __builtin___memcpy_chk (__dest, __src, __len,
+  ঘূৰাই __builtin___memcpy_chk (__dest, __src, __len,
 				 __glibc_objsize0 (__dest));
 }
 
-__fortify_function void *
-__NTH (memmove (void *__dest, const void *__src, size_t __len))
+__fortify_function শূন্য *
+__NTH (memmove (শূন্য *__dest, ধ্রুৱ শূন্য *__src, size_t __len))
 {
-  return __builtin___memmove_chk (__dest, __src, __len,
+  ঘূৰাই __builtin___memmove_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 
 #ifdef __USE_GNU
-__fortify_function void *
-__NTH (mempcpy (void *__restrict __dest, const void *__restrict __src,
+__fortify_function শূন্য *
+__NTH (mempcpy (শূন্য *__restrict __dest, ধ্রুৱ শূন্য *__restrict __src,
 		size_t __len))
 {
-  return __builtin___mempcpy_chk (__dest, __src, __len,
+  ঘূৰাই __builtin___mempcpy_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 #endif
@@ -53,21 +53,21 @@ __NTH (mempcpy (void *__restrict __dest, const void *__restrict __src,
    especially problematic if the intended fill value is zero.  In this
    case no work is done at all.  We detect these problems by referring
    non-existing functions.  */
-__fortify_function void *
-__NTH (memset (void *__dest, int __ch, size_t __len))
+__fortify_function শূন্য *
+__NTH (memset (শূন্য *__dest, পূর্ণাঙ্ক __ch, size_t __len))
 {
-  return __builtin___memset_chk (__dest, __ch, __len,
+  ঘূৰাই __builtin___memset_chk (__dest, __ch, __len,
 				 __glibc_objsize0 (__dest));
 }
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
-void *__memset_explicit_chk (void *__s, int __c, size_t __n, size_t __destlen)
+#যদি defined __USE_MISC || __GLIBC_USE (ISOC23)
+শূন্য *__memset_explicit_chk (শূন্য *__s, পূর্ণাঙ্ক __c, size_t __n, size_t __destlen)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
 
-__fortify_function void *
-__NTH (memset_explicit (void *__dest, int __ch, size_t __len))
+__fortify_function শূন্য *
+__NTH (memset_explicit (শূন্য *__dest, পূর্ণাঙ্ক __ch, size_t __len))
 {
-  return __memset_explicit_chk (__dest, __ch, __len,
+  ঘূৰাই __memset_explicit_chk (__dest, __ch, __len,
 				__glibc_objsize0 (__dest));
 }
 #endif
@@ -75,127 +75,127 @@ __NTH (memset_explicit (void *__dest, int __ch, size_t __len))
 #ifdef __USE_MISC
 # include <bits/strings_fortified.h>
 
-void __explicit_bzero_chk (void *__dest, size_t __len, size_t __destlen)
+শূন্য __explicit_bzero_chk (শূন্য *__dest, size_t __len, size_t __destlen)
   __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 2);
 
-__fortify_function void
-__NTH (explicit_bzero (void *__dest, size_t __len))
+__fortify_function শূন্য
+__NTH (explicit_bzero (শূন্য *__dest, size_t __len))
 {
   __explicit_bzero_chk (__dest, __len, __glibc_objsize0 (__dest));
 }
 #endif
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-	       const char *__restrict __src))
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (strcpy (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+	       ধ্রুৱ ৱর্ণ *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strcpy_chk (__dest, __src, __glibc_objsize (__dest));
+  ঘূৰাই __builtin___strcpy_chk (__dest, __src, __glibc_objsize (__dest));
 }
 
 #ifdef __USE_XOPEN2K8
-__fortify_function __attribute_overloadable__ char *
-__NTH (stpcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-	       const char *__restrict __src))
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (stpcpy (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+	       ধ্রুৱ ৱর্ণ *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___stpcpy_chk (__dest, __src, __glibc_objsize (__dest));
+  ঘূৰাই __builtin___stpcpy_chk (__dest, __src, __glibc_objsize (__dest));
 }
 #endif
 
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strncpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __len))
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (strncpy (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+		ধ্রুৱ ৱর্ণ *__restrict __src, size_t __len))
      __fortify_clang_warn_if_dest_too_small (__dest, __len)
 {
-  return __builtin___strncpy_chk (__dest, __src, __len,
+  ঘূৰাই __builtin___strncpy_chk (__dest, __src, __len,
 				  __glibc_objsize (__dest));
 }
 
 #ifdef __USE_XOPEN2K8
-# if __GNUC_PREREQ (4, 7) || __glibc_clang_prereq (2, 6)
-__fortify_function __attribute_overloadable__ char *
-__NTH (stpncpy (__fortify_clang_overload_arg (char *, ,__dest),
-		const char *__src, size_t __n))
+# যদি __GNUC_PREREQ (4, 7) || __glibc_clang_prereq (2, 6)
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (stpncpy (__fortify_clang_overload_arg (ৱর্ণ *, ,__dest),
+		ধ্রুৱ ৱর্ণ *__src, size_t __n))
      __fortify_clang_warn_if_dest_too_small (__dest, __n)
 {
-  return __builtin___stpncpy_chk (__dest, __src, __n,
+  ঘূৰাই __builtin___stpncpy_chk (__dest, __src, __n,
 				  __glibc_objsize (__dest));
 }
-# else
-extern char *__stpncpy_chk (char *__dest, const char *__src, size_t __n,
+# অন্যথা
+বাহ্য ৱর্ণ *__stpncpy_chk (ৱর্ণ *__dest, ধ্রুৱ ৱর্ণ *__src, size_t __n,
 			    size_t __destlen) __THROW
   __fortified_attr_access (__write_only__, 1, 3)
   __attr_access ((__read_only__, 2));
-extern char *__REDIRECT_NTH (__stpncpy_alias, (char *__dest, const char *__src,
+বাহ্য ৱর্ণ *__REDIRECT_NTH (__stpncpy_alias, (ৱর্ণ *__dest, ধ্রুৱ ৱর্ণ *__src,
 					       size_t __n), stpncpy);
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (stpncpy (__fortify_clang_overload_arg (char *, ,__dest),
-		const char *__src, size_t __n))
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (stpncpy (__fortify_clang_overload_arg (ৱর্ণ *, ,__dest),
+		ধ্রুৱ ৱর্ণ *__src, size_t __n))
 {
-  if (__bos (__dest) != (size_t) -1
+  যদি (__bos (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n) || __n > __bos (__dest)))
-    return __stpncpy_chk (__dest, __src, __n, __bos (__dest));
-  return __stpncpy_alias (__dest, __src, __n);
+    ঘূৰাই __stpncpy_chk (__dest, __src, __n, __bos (__dest));
+  ঘূৰাই __stpncpy_alias (__dest, __src, __n);
 }
 # endif
 #endif
 
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strcat (__fortify_clang_overload_arg (char *, __restrict, __dest),
-	       const char *__restrict __src))
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (strcat (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+	       ধ্রুৱ ৱর্ণ *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strcat_chk (__dest, __src, __glibc_objsize (__dest));
+  ঘূৰাই __builtin___strcat_chk (__dest, __src, __glibc_objsize (__dest));
 }
 
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strncat (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __len))
+__fortify_function __attribute_overloadable__ ৱর্ণ *
+__NTH (strncat (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+		ধ্রুৱ ৱর্ণ *__restrict __src, size_t __len))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strncat_chk (__dest, __src, __len,
+  ঘূৰাই __builtin___strncat_chk (__dest, __src, __len,
 				  __glibc_objsize (__dest));
 }
 
 #ifdef __USE_MISC
-extern size_t __strlcpy_chk (char *__dest, const char *__src, size_t __n,
+বাহ্য size_t __strlcpy_chk (ৱর্ণ *__dest, ধ্রুৱ ৱর্ণ *__src, size_t __n,
 			     size_t __destlen) __THROW;
-extern size_t __REDIRECT_NTH (__strlcpy_alias,
-			      (char *__dest, const char *__src, size_t __n),
+বাহ্য size_t __REDIRECT_NTH (__strlcpy_alias,
+			      (ৱর্ণ *__dest, ধ্রুৱ ৱর্ণ *__src, size_t __n),
 			      strlcpy);
 
 __fortify_function __attribute_overloadable__ size_t
-__NTH (strlcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __n))
+__NTH (strlcpy (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+		ধ্রুৱ ৱর্ণ *__restrict __src, size_t __n))
      __fortify_clang_warn_if_dest_too_small (__dest, __n)
 {
-  if (__glibc_objsize (__dest) != (size_t) -1
+  যদি (__glibc_objsize (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n > __glibc_objsize (__dest))
 	  || __n > __glibc_objsize (__dest)))
-    return __strlcpy_chk (__dest, __src, __n, __glibc_objsize (__dest));
-  return __strlcpy_alias (__dest, __src, __n);
+    ঘূৰাই __strlcpy_chk (__dest, __src, __n, __glibc_objsize (__dest));
+  ঘূৰাই __strlcpy_alias (__dest, __src, __n);
 }
 
-extern size_t __strlcat_chk (char *__dest, const char *__src, size_t __n,
+বাহ্য size_t __strlcat_chk (ৱর্ণ *__dest, ধ্রুৱ ৱর্ণ *__src, size_t __n,
 			     size_t __destlen) __THROW;
-extern size_t __REDIRECT_NTH (__strlcat_alias,
-			      (char *__dest, const char *__src, size_t __n),
+বাহ্য size_t __REDIRECT_NTH (__strlcat_alias,
+			      (ৱর্ণ *__dest, ধ্রুৱ ৱর্ণ *__src, size_t __n),
 			      strlcat);
 
 __fortify_function __attribute_overloadable__ size_t
-__NTH (strlcat (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __n))
+__NTH (strlcat (__fortify_clang_overload_arg (ৱর্ণ *, __restrict, __dest),
+		ধ্রুৱ ৱর্ণ *__restrict __src, size_t __n))
 {
-  if (__glibc_objsize (__dest) != (size_t) -1
+  যদি (__glibc_objsize (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n > __glibc_objsize (__dest))
 	  || __n > __glibc_objsize (__dest)))
-    return __strlcat_chk (__dest, __src, __n, __glibc_objsize (__dest));
-  return __strlcat_alias (__dest, __src, __n);
+    ঘূৰাই __strlcat_chk (__dest, __src, __n, __glibc_objsize (__dest));
+  ঘূৰাই __strlcat_alias (__dest, __src, __n);
 }
 #endif /* __USE_MISC */
 

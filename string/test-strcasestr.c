@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#অন্তর্ভাৱ "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#অন্তর্ভাৱ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+স্থির ৱর্ণ *
+simple_strcasestr (ধ্রুৱ ৱর্ণ *s1, ধ্রুৱ ৱর্ণ *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  যদি (s2len > s1len)
+    ঘূৰাই রিক্ত;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  বাবে (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      বাবে (j = 0; j < s2len; ++j)
+	যদি (tolower (s1[i + j]) != tolower (s2[j]))
+	  ভঙ্গ;
+      যদি (j == s2len)
+	ঘূৰাই (ৱর্ণ *) s1 + i;
     }
 
-  return NULL;
+  ঘূৰাই রিক্ত;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+প্রকারনির্দেশ ৱর্ণ *(*proto_t) (ধ্রুৱ ৱর্ণ *, ধ্রুৱ ৱর্ণ *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+স্থির পূর্ণাঙ্ক
+check_result (impl_t *impl, ধ্রুৱ ৱর্ণ *s1, ধ্রুৱ ৱর্ণ *s2,
+	      ৱর্ণ *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  ৱর্ণ *result = CALL (impl, s1, s2);
+  যদি (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == রিক্ত) ? "(null)" : result,
+	     (exp_result == রিক্ত) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      ঘূৰাই -1;
     }
-  return 0;
+  ঘূৰাই 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+স্থির শূন্য
+do_one_test (impl_t *impl, ধ্রুৱ ৱর্ণ *s1, ধ্রুৱ ৱর্ণ *s2, ৱর্ণ *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  যদি (check_result (impl, s1, s2, exp_result) < 0)
+    ঘূৰাই;
 }
 
 
-static void
+স্থির শূন্য
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 পূর্ণাঙ্ক fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  ৱর্ণ *s1 = (ৱর্ণ *) (buf1 + align1);
+  ৱর্ণ *s2 = (ৱর্ণ *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  স্থির ধ্রুৱ ৱর্ণ d[] = "1234567890abcxyz";
+#define dl (পরিমাণ (d) - 1)
+  ৱর্ণ *ss2 = s2;
+  বাবে (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  যদি (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      ৱর্ণ *ss1 = s1;
+      বাবে (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  অন্যথা
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      বাবে (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? রিক্ত : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+স্থির শূন্য
+check1 (শূন্য)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ধ্রুৱ ৱর্ণ s1[] = "AOKB";
+  ধ্রুৱ ৱর্ণ s2[] = "OK";
+  ৱর্ণ *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+স্থির পূর্ণাঙ্ক
+test_main (শূন্য)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  বাবে (size_t klen = 2; klen < 32; ++klen)
+    বাবে (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  ঘূৰাই ret;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

@@ -15,21 +15,21 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/support.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <stdio.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <support/support.h>
 
-static int
-do_test (void)
+স্থির পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  char *mem, *memp;
-  char *rand_mem;
-  char *lo_around, *hi_around;
-  int size, max_size;
-  int src_off, dst_off;
-  int i;
-  int space_around = 10;
+  ৱর্ণ *mem, *memp;
+  ৱর্ণ *rand_mem;
+  ৱর্ণ *lo_around, *hi_around;
+  পূর্ণাঙ্ক size, max_size;
+  পূর্ণাঙ্ক src_off, dst_off;
+  পূর্ণাঙ্ক i;
+  পূর্ণাঙ্ক space_around = 10;
 
   max_size = 256;
 
@@ -40,38 +40,38 @@ do_test (void)
   memp = mem + space_around;
 
   /* Fill RAND_MEM with random bytes, each non-zero.  */
-  for (i = 0; i < max_size; i++)
+  বাবে (i = 0; i < max_size; i++)
     {
-      int x;
-      do
+      পূর্ণাঙ্ক x;
+      কৰা
 	x = random ();
-      while (x == 0);
+      যেতিয়ালৈ (x == 0);
       rand_mem[i] = x;
     }
 
-  for (size = 0; size < max_size; size++)
+  বাবে (size = 0; size < max_size; size++)
     {
       printf("phase %d\n", size);
-      for (src_off = 0; src_off <= 16; src_off++)
+      বাবে (src_off = 0; src_off <= 16; src_off++)
 	{
-	  for (dst_off = 0; dst_off <= 16; dst_off++)
+	  বাবে (dst_off = 0; dst_off <= 16; dst_off++)
 	    {
 	      /* Put zero around the intended destination, to check
 		 that it's not clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      বাবে (i = 1; i < space_around; i++)
 		{
 		  memp[dst_off - i] = 0;
 		  memp[dst_off + size - 1 + i] = 0;
 		}
 
 	      /* Fill the source area with known contents.  */
-	      for (i = 0; i < size; i++)
+	      বাবে (i = 0; i < size; i++)
 		memp[src_off + i] = rand_mem[i];
 
 	      /* Remember the contents around the destination area.
 		 (It might not be what we wrote some lines above, since
 		 the src area and the dst area overlap.)  */
-	      for (i = 1; i < space_around; i++)
+	      বাবে (i = 1; i < space_around; i++)
 		{
 		  lo_around[i] = memp[dst_off - i];
 		  hi_around[i] = memp[dst_off + size - 1 + i];
@@ -81,19 +81,19 @@ do_test (void)
 
 	      /* Check that the destination area has the same
 		 contents we wrote to the source area.  */
-	      for (i = 0; i < size; i++)
+	      বাবে (i = 0; i < size; i++)
 		{
-		  if (memp[dst_off + i] != rand_mem[i])
+		  যদি (memp[dst_off + i] != rand_mem[i])
 		    abort ();
 		}
 
 	      /* Check that the area around the destination is not
 		 clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      বাবে (i = 1; i < space_around; i++)
 		{
-		  if (memp[dst_off - i] != lo_around[i])
+		  যদি (memp[dst_off - i] != lo_around[i])
 		    abort ();
-		  if (memp[dst_off + size - 1 + i] != hi_around[i])
+		  যদি (memp[dst_off + size - 1 + i] != hi_around[i])
 		    abort ();
 		}
 	    }
@@ -102,7 +102,7 @@ do_test (void)
 
   puts ("Test succeeded.");
 
-  return 0;
+  ঘূৰাই 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

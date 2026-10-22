@@ -25,16 +25,16 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#অন্তর্ভাৱ <array_length.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <support/check.h>
+#অন্তর্ভাৱ <support/next_to_fault.h>
+#অন্তর্ভাৱ <support/test-driver.h>
+#অন্তর্ভাৱ <sys/param.h>
+#অন্তর্ভাৱ <unistd.h>
 
 /* Much shorter than test-Xnlen-nonarray.c because of deeply nested loops.  */
-enum { buffer_length = 80 };
+গণনা { buffer_length = 80 };
 
 /* The test buffer layout follows what is described test-Xnlen-nonarray.c,
    except that there two buffers, left and right.  The variables
@@ -42,108 +42,108 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+স্থির পূর্ণাঙ্ক
+string_length (পূর্ণাঙ্ক a_গুনতি, পূর্ণাঙ্ক start_offset)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  যদি (start_offset == buffer_length || start_offset >= a_গুনতি)
+    ঘূৰাই 0;
+  অন্যথা
+    ঘূৰাই a_গুনতি - start_offset;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+স্থির পূর্ণাঙ্ক
+maximum_length (পূর্ণাঙ্ক start_offset, পূর্ণাঙ্ক zero_গুনতি)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  যদি (start_offset == buffer_length)
+    ঘূৰাই 0;
+  অন্যথা যদি (zero_গুনতি > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    ঘূৰাই buffer_length + 32;
+  অন্যথা
+    ঘূৰাই buffer_length - start_offset;
 }
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+প্রকারনির্দেশ __typeof (TEST_IDENTIFIER) *proto_t;
 
 #define TEST_MAIN
-#include "test-string.h"
+#অন্তর্ভাৱ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+স্থির পূর্ণাঙ্ক
+test_main (শূন্য)
 {
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
   test_init ();
 
-  struct support_next_to_fault left_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *right_buffer = (CHAR *) right_ntf.buffer;
+  সংরচনা support_next_to_fault বাম_ntf
+    = support_next_to_fault_allocate (buffer_length * পরিমাণ (CHAR));
+  CHAR *বাম_buffer = (CHAR *) বাম_ntf.buffer;
+  সংরচনা support_next_to_fault ডান_ntf
+    = support_next_to_fault_allocate (buffer_length * পরিমাণ (CHAR));
+  CHAR *ডান_buffer = (CHAR *) ডান_ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        left_buffer[i] = 'A';
+      বাবে (size_t i = 0; i < buffer_length; ++i)
+        বাম_buffer[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
-           ++left_zero_count)
+      বাবে (পূর্ণাঙ্ক বাম_zero_গুনতি = 0; বাম_zero_গুনতি <= buffer_length;
+           ++বাম_zero_গুনতি)
         {
-          if (left_zero_count > 0)
-            left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
-            right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
-               ++right_zero_count)
+          যদি (বাম_zero_গুনতি > 0)
+            বাম_buffer[buffer_length - বাম_zero_গুনতি] = 0;
+          পূর্ণাঙ্ক বাম_a_গুনতি = buffer_length - বাম_zero_গুনতি;
+          বাবে (size_t i = 0; i < buffer_length; ++i)
+            ডান_buffer[i] = 'A';
+          বাবে (পূর্ণাঙ্ক ডান_zero_গুনতি = 0; ডান_zero_গুনতি <= buffer_length;
+               ++ডান_zero_গুনতি)
             {
-              if (right_zero_count > 0)
-                right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
-                   left_start_offset <= buffer_length;
-                   ++left_start_offset)
+              যদি (ডান_zero_গুনতি > 0)
+                ডান_buffer[buffer_length - ডান_zero_গুনতি] = 0;
+              পূর্ণাঙ্ক ডান_a_গুনতি = buffer_length - ডান_zero_গুনতি;
+              বাবে (পূর্ণাঙ্ক বাম_start_offset = 0;
+                   বাম_start_offset <= buffer_length;
+                   ++বাম_start_offset)
                 {
-                  CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
-                    = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
-                    = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
-                       right_start_offset <= buffer_length;
-                       ++right_start_offset)
+                  CHAR *বাম_start_pointer = বাম_buffer + বাম_start_offset;
+                  পূর্ণাঙ্ক বাম_maxlen
+                    = maximum_length (বাম_start_offset, বাম_zero_গুনতি);
+                  পূর্ণাঙ্ক বাম_length
+                    = string_length (বাম_a_গুনতি, বাম_start_offset);
+                  বাবে (পূর্ণাঙ্ক ডান_start_offset = 0;
+                       ডান_start_offset <= buffer_length;
+                       ++ডান_start_offset)
                     {
-                      CHAR *right_start_pointer
-                        = right_buffer + right_start_offset;
-                      int right_maxlen
-                        = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
-                        = string_length (right_a_count, right_start_offset);
+                      CHAR *ডান_start_pointer
+                        = ডান_buffer + ডান_start_offset;
+                      পূর্ণাঙ্ক ডান_maxlen
+                        = maximum_length (ডান_start_offset, ডান_zero_গুনতি);
+                      পূর্ণাঙ্ক ডান_length
+                        = string_length (ডান_a_গুনতি, ডান_start_offset);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      পূর্ণাঙ্ক maxlen = MIN (বাম_maxlen, ডান_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
+                      বাবে (পূর্ণাঙ্ক length_argument = 0; length_argument <= maxlen;
                            ++length_argument)
                         {
-                          if (test_verbose)
+                          যদি (test_verbose)
                             {
                               printf ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      left_zero_count, left_a_count,
-                                      left_start_offset);
+                                      বাম_zero_গুনতি, বাম_a_গুনতি,
+                                      বাম_start_offset);
                               printf ("right: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      right_zero_count, right_a_count,
-                                      right_start_offset);
+                                      ডান_zero_গুনতি, ডান_a_গুনতি,
+                                      ডান_start_offset);
                               printf ("length argument: %d\n",
                                       length_argument);
                             }
@@ -151,24 +151,24 @@ test_main (void)
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
-                            = MIN (left_length, length_argument);
-                          int right_effective
-                            = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          পূর্ণাঙ্ক বাম_effective
+                            = MIN (বাম_length, length_argument);
+                          পূর্ণাঙ্ক ডান_effective
+                            = MIN (ডান_length, length_argument);
+                          যদি (বাম_effective == ডান_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                বাম_start_pointer,
+                                                ডান_start_pointer,
                                                 length_argument), 0);
-                          else if (left_effective < right_effective)
+                          অন্যথা যদি (বাম_effective < ডান_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                বাম_start_pointer,
+                                                ডান_start_pointer,
                                                 length_argument) < 0, 1);
-                          else
+                          অন্যথা
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                বাম_start_pointer,
+                                                ডান_start_pointer,
                                                 length_argument) > 0, 1);
                         }
                     }
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  ঘূৰাই 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

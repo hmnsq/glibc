@@ -16,76 +16,76 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#অন্তর্ভাৱ <stdio.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <locale.h>
 
 /* An incorrect strcoll optimization resulted in incorrect
    results from strcoll for cs_CZ and da_DK.  */
 
-int
-test_cs_CZ (void)
+পূর্ণাঙ্ক
+test_cs_CZ (শূন্য)
 {
-  const char t1[] = "config";
-  const char t2[] = "choose";
-  if (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
+  ধ্রুৱ ৱর্ণ t1[] = "config";
+  ধ্রুৱ ৱর্ণ t2[] = "choose";
+  যদি (setlocale (LC_ALL, "cs_CZ.UTF-8") == রিক্ত)
     {
       perror ("setlocale");
-      return 1;
+      ঘূৰাই 1;
     }
   /* In Czech the digraph ch sorts after c, therefore we expect
      config to sort before choose.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  পূর্ণাঙ্ক a = strcoll (t1, t2);
+  পূর্ণাঙ্ক b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  যদি (a < 0 && b > 0)
     {
       puts ("PASS: config < choose");
-      return 0;
+      ঘূৰাই 0;
     }
-  else
+  অন্যথা
     {
       puts ("FAIL: Wrong sorting in cs_CZ.UTF-8.");
-      return 1;
+      ঘূৰাই 1;
     }
 }
 
-int
-test_da_DK (void)
+পূর্ণাঙ্ক
+test_da_DK (শূন্য)
 {
-  const char t1[] = "AS";
-  const char t2[] = "AA";
-  if (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
+  ধ্রুৱ ৱর্ণ t1[] = "AS";
+  ধ্রুৱ ৱর্ণ t2[] = "AA";
+  যদি (setlocale (LC_ALL, "da_DK.ISO-8859-1") == রিক্ত)
     {
       perror ("setlocale");
-      return 1;
+      ঘূৰাই 1;
     }
   /* AA should be treated as the last letter of the Danish alphabet,
      hence sorting after AS.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  পূর্ণাঙ্ক a = strcoll (t1, t2);
+  পূর্ণাঙ্ক b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  যদি (a < 0 && b > 0)
     {
       puts ("PASS: AS < AA");
-      return 0;
+      ঘূৰাই 0;
     }
-  else
+  অন্যথা
     {
       puts ("FAIL: Wrong sorting in da_DK.ISO-8859-1");
-      return 1;
+      ঘূৰাই 1;
     }
 }
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  int err = 0;
+  পূর্ণাঙ্ক err = 0;
   err |= test_cs_CZ ();
   err |= test_da_DK ();
-  return err;
+  ঘূৰাই err;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

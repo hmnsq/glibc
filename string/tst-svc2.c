@@ -1,61 +1,61 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাৱ <stdio.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <string.h>
 
 
-static struct
+স্থির সংরচনা
 {
-  const char *str1;
-  const char *str2;
+  ধ্রুৱ ৱর্ণ *str1;
+  ধ্রুৱ ৱর্ণ *str2;
 } tests[] =
   {
     { "B0075022800016.gbp.corp.com", "B007502280067.gbp.corp.com" },
     { "B0075022800016.gbp.corp.com", "B007502357019.GBP.CORP.COM" },
     { "B007502280067.gbp.corp.com", "B007502357019.GBP.CORP.COM" }
   };
-#define ntests (sizeof (tests) / sizeof (tests[0]))
+#define ntests (পরিমাণ (tests) / পরিমাণ (tests[0]))
 
 
-int
-compare (const char *str1, const char *str2, int exp)
+পূর্ণাঙ্ক
+compare (ধ্রুৱ ৱর্ণ *str1, ধ্রুৱ ৱর্ণ *str2, পূর্ণাঙ্ক exp)
 {
-  int c = strverscmp (str1, str2);
-  if (c != 0)
+  পূর্ণাঙ্ক c = strverscmp (str1, str2);
+  যদি (c != 0)
     c /= abs (c);
-  return c != exp;
+  ঘূৰাই c != exp;
 }
 
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
-  int res = 0;
-  for (int i = 0; i < ntests; ++i)
+  পূর্ণাঙ্ক res = 0;
+  বাবে (পূর্ণাঙ্ক i = 0; i < ntests; ++i)
     {
-      if (compare (tests[i].str1, tests[i].str2, -1))
+      যদি (compare (tests[i].str1, tests[i].str2, -1))
 	{
 	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
 	  res = 1;
 	}
-      if (compare (tests[i].str2, tests[i].str1, +1))
+      যদি (compare (tests[i].str2, tests[i].str1, +1))
 	{
 	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
 	  res = 1;
 	}
-      char *copy1 = strdupa (tests[i].str1);
-      if (compare (tests[i].str1, copy1, 0))
+      ৱর্ণ *copy1 = strdupa (tests[i].str1);
+      যদি (compare (tests[i].str1, copy1, 0))
 	{
 	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
 	  res = 1;
 	}
-      char *copy2 = strdupa (tests[i].str2);
-      if (compare (tests[i].str2, copy2, 0))
+      ৱর্ণ *copy2 = strdupa (tests[i].str2);
+      যদি (compare (tests[i].str2, copy2, 0))
 	{
 	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
 	  res = 1;
 	}
     }
-  return res;
+  ঘূৰাই res;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

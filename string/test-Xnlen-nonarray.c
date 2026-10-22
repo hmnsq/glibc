@@ -25,25 +25,25 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#অন্তর্ভাৱ <array_length.h>
+#অন্তর্ভাৱ <string.h>
+#অন্তর্ভাৱ <support/check.h>
+#অন্তর্ভাৱ <support/next_to_fault.h>
+#অন্তর্ভাৱ <support/test-driver.h>
+#অন্তর্ভাৱ <sys/param.h>
+#অন্তর্ভাৱ <unistd.h>
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+প্রকারনির্দেশ __typeof (TEST_IDENTIFIER) *proto_t;
 
 #define TEST_MAIN
-#include "test-string.h"
+#অন্তর্ভাৱ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+স্থির পূর্ণাঙ্ক
+test_main (শূন্য)
 {
-  enum { buffer_length = 256 };
+  গণনা { buffer_length = 256 };
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
 
   test_init ();
@@ -76,47 +76,47 @@ test_main (void)
     The length argument must not be greater than buffer_length -
     start_offset, and the result is the length argument.  */
 
-  struct support_next_to_fault ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
+  সংরচনা support_next_to_fault ntf
+    = support_next_to_fault_allocate (buffer_length * পরিমাণ (CHAR));
   CHAR *buffer = (CHAR *) ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      বাবে (size_t i = 0; i < buffer_length; ++i)
         buffer[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      বাবে (পূর্ণাঙ্ক zero_গুনতি = 0; zero_গুনতি <= buffer_length; ++zero_গুনতি)
         {
-          if (zero_count > 0)
-            buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
+          যদি (zero_গুনতি > 0)
+            buffer[buffer_length - zero_গুনতি] = 0;
+          পূর্ণাঙ্ক a_গুনতি = buffer_length - zero_গুনতি;
+          বাবে (পূর্ণাঙ্ক start_offset = 0; start_offset <= buffer_length;
                ++start_offset)
             {
               CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
+              যদি (start_offset == buffer_length)
                 TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
+              অন্যথা যদি (zero_গুনতি > 0)
+                বাবে (পূর্ণাঙ্ক length_argument = 0;
                      length_argument <= 2 * buffer_length;
                      ++length_argument)
                   {
-                    if (test_verbose)
+                    যদি (test_verbose)
                       printf ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
-                              zero_count, a_count, start_offset,
+                              zero_গুনতি, a_গুনতি, start_offset,
                               length_argument);
-                    if (start_offset < a_count)
+                    যদি (start_offset < a_গুনতি)
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                    MIN (a_count - start_offset,
+                                    MIN (a_গুনতি - start_offset,
                                          length_argument));
-                    else
+                    অন্যথা
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
+              অন্যথা
+                বাবে (পূর্ণাঙ্ক length_argument = 0;
                      length_argument <= buffer_length - start_offset;
                      ++length_argument)
                   TEST_COMPARE (CALL (impl, start_pointer, length_argument),
@@ -127,7 +127,7 @@ test_main (void)
 
   support_next_to_fault_free (&ntf);
 
-  return 0;
+  ঘূৰাই 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

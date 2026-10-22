@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাৱ <stdio.h>
+#অন্তর্ভাৱ <envz.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <string.h>
 
-static const struct
+স্থির ধ্রুৱ সংরচনা
 {
-  const char *s;
-  int in_result;
+  ধ্রুৱ ৱর্ণ *s;
+  পূর্ণাঙ্ক in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (পরিমাণ (strs) / পরিমাণ (strs[0]))
 
 
-int
-do_test (void)
+পূর্ণাঙ্ক
+do_test (শূন্য)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  ৱর্ণ *str = malloc (100);
+  যদি (str == রিক্ত)
     {
       puts ("out of memory");
-      return 1;
+      ঘূৰাই 1;
     }
 
-  char **argz = &str;
+  ৱর্ণ **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  বাবে (পূর্ণাঙ্ক i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  পূর্ণাঙ্ক result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  বাবে (পূর্ণাঙ্ক i = 0; i < nstrs; ++i)
+    যদি (strs[i].in_result)
       {
-        char name[2];
+        ৱর্ণ name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        ৱর্ণ *e = envz_entry (*argz, size, name);
+        যদি (e == রিক্ত)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        অন্যথা যদি (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -68,8 +68,8 @@ do_test (void)
           }
       }
 
-  free (*argz);
-  return result;
+  মুক্ত (*argz);
+  ঘূৰাই result;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাৱ <support/test-driver.c>

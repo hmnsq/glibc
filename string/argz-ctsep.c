@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাৱ <argz.h>
+#অন্তর্ভাৱ <errno.h>
+#অন্তর্ভাৱ <stdlib.h>
+#অন্তর্ভাৱ <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (ধ্রুৱ ৱর্ণ *string, পূর্ণাঙ্ক delim, ৱর্ণ **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  যদি (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ধ্রুৱ ৱর্ণ *rp;
+      ৱর্ণ *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (ৱর্ণ *) malloc (nlen);
+      যদি (*argz == রিক্ত)
+	ঘূৰাই ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      কৰা
+	যদি (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    যদি (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    অন্যথা
 	      --nlen;
 	  }
-	else
+	অন্যথা
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      যেতিয়ালৈ (*rp++ != '\0');
 
-      if (nlen == 0)
+      যদি (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  মুক্ত (*argz);
+	  *argz = রিক্ত;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  অন্যথা
     {
-      *argz = NULL;
+      *argz = রিক্ত;
       *len = 0;
     }
 
-  return 0;
+  ঘূৰাই 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)
