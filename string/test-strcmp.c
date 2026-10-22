@@ -16,19 +16,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_LEN (getpagesize () * 3)
-#define MIN_PAGE_SIZE (TEST_LEN + 2 * getpagesize ())
+#تعریف_کرو TEST_LEN (getpagesize () * 3)
+#تعریف_کرو MIN_ورقہ_ناپ (TEST_LEN + 2 * getpagesize ())
 
-#define TEST_MAIN
-#ifdef WIDE
+#تعریف_کرو TEST_MAIN
+#جے_تعریف_شدہ WIDE
 # define TEST_NAME "wcscmp"
-#else
+#وإلا
 # define TEST_NAME "strcmp"
-#endif
-#include "test-string.h"
-#include <support/test-driver.h>
+#جے_انت
+#ضمن "test-string.h"
+#ضمن <support/test-driver.h>
 
-#ifdef WIDE
+#جے_تعریف_شدہ WIDE
 # include <wchar.h>
 
 # define L(str) L##str
@@ -50,33 +50,33 @@
 /* Wcscmp uses signed semantics for comparison, not unsigned */
 /* Avoid using subtraction since possible overflow */
 
-int
-simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
+صحيح
+simple_wcscmp (ثابت wchar_t *s1, ثابت wchar_t *s2)
 {
   wchar_t c1, c2;
-  do
+  افعل
     {
       c1 = *s1++;
       c2 = *s2++;
-      if (c2 == L'\0')
-      return c1 - c2;
+      إذا (c2 == L'\0')
+      أرجع c1 - c2;
     }
-  while (c1 == c2);
+  طالما (c1 == c2);
 
-  return c1 < c2 ? -1 : 1;
+  أرجع c1 < c2 ? -1 : 1;
 }
 
-#else
+#وإلا
 # include <limits.h>
 
 # define L(str) str
 # define STRCMP strcmp
 # define STRCPY strcpy
-# define STRLEN strlen
-# define MEMCPY memcpy
+# define STRLEN لڑی_لمبائی
+# define MEMCPY حافظہ_نقل
 # define SIMPLE_STRCMP simple_strcmp
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR حرف
+# define UCHAR بنانشانی حرف
 # define CHARBYTES 1
 # define CHARBYTESLOG 0
 # define CHARALIGN 1
@@ -86,119 +86,119 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 # define CHAR__MIN CHAR_MIN
 
 /* Strcmp uses unsigned semantics for comparison. */
-int
-simple_strcmp (const char *s1, const char *s2)
+صحيح
+simple_strcmp (ثابت حرف *s1, ثابت حرف *s2)
 {
-  int ret;
+  صحيح ret;
 
-  while ((ret = *(unsigned char *) s1 - *(unsigned char*) s2++) == 0 && *s1++);
-  return ret;
+  طالما ((ret = *(بنانشانی حرف *) s1 - *(بنانشانی حرف*) s2++) == 0 && *s1++);
+  أرجع ret;
 }
 
-#endif
+#جے_انت
 
-typedef int (*proto_t) (const CHAR *, const CHAR *);
+تعريفنوع صحيح (*proto_t) (ثابت CHAR *, ثابت CHAR *);
 
 IMPL (STRCMP, 1)
 
 /* Also check the default implementation.  */
-#undef STRCMP
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef weak_alias
-#define weak_alias(a, b)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#تعریف_رد STRCMP
+#تعریف_رد libc_hidden_builtin_def
+#تعریف_کرو libc_hidden_builtin_def(a)
+#تعریف_رد libc_hidden_def
+#تعریف_کرو libc_hidden_def(a)
+#تعریف_رد weak_alias
+#تعریف_کرو weak_alias(a, b)
+#تعریف_رد attribute_hidden
+#تعریف_کرو attribute_hidden
+#جے_بنا_تعریف WIDE
 # define STRCMP __strcmp_default
 # include "string/strcmp.c"
 # define STRCMP_DEFAULT STRCMP
-#else
+#وإلا
 # define WCSCMP __wcscmp_default
 # include "wcsmbs/wcscmp.c"
 # define STRCMP_DEFAULT WCSCMP
-#endif
+#جے_انت
 IMPL (STRCMP_DEFAULT, 1)
 
 
-static int
-check_result (impl_t *impl,
-	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+ساكن صحيح
+check_نتیجہ (impl_t *impl,
+	     ثابت CHAR *s1, ثابت CHAR *s2,
+	     صحيح exp_نتیجہ)
 {
-  int result = CALL (impl, s1, s2);
-  if ((exp_result == 0 && result != 0)
-      || (exp_result < 0 && result >= 0)
-      || (exp_result > 0 && result <= 0))
+  صحيح نتیجہ = CALL (impl, s1, s2);
+  إذا ((exp_نتیجہ == 0 && نتیجہ != 0)
+      || (exp_نتیجہ < 0 && نتیجہ >= 0)
+      || (exp_نتیجہ > 0 && نتیجہ <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
-	     result, exp_result);
+	     نتیجہ, exp_نتیجہ);
       ret = 1;
-      return -1;
+      أرجع -1;
     }
 
-  return 0;
+  أرجع 0;
 }
 
-static void
+ساكن فراغ
 do_one_test (impl_t *impl,
-	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+	     ثابت CHAR *s1, ثابت CHAR *s2,
+	     صحيح exp_نتیجہ)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  إذا (check_نتیجہ (impl, s1, s2, exp_نتیجہ) < 0)
+    أرجع;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char,
-         int exp_result)
+ساكن فراغ
+do_test (size_t align1, size_t align2, size_t len, صحيح max_char,
+         صحيح exp_نتیجہ)
 {
   size_t i;
 
   CHAR *s1, *s2;
 
-  if (len == 0)
-    return;
+  إذا (len == 0)
+    أرجع;
 
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  إذا (align1 + (len + 1) * CHARBYTES >= ورقہ_ناپ)
+    أرجع;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  إذا (align2 + (len + 1) * CHARBYTES >= ورقہ_ناپ)
+    أرجع;
 
   /* Put them close to the end of page.  */
   i = align1 + CHARBYTES * (len + 2);
-  s1 = (CHAR *)(buf1 + ((page_size - i) / 16 * 16) + align1);
+  s1 = (CHAR *)(buf1 + ((ورقہ_ناپ - i) / 16 * 16) + align1);
   i = align2 + CHARBYTES * (len + 2);
-  s2 = (CHAR *)(buf2 + ((page_size - i) / 16 * 16) + align2);
+  s2 = (CHAR *)(buf2 + ((ورقہ_ناپ - i) / 16 * 16) + align2);
 
-  for (i = 0; i < len; i++)
+  لكل (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % max_char;
 
   s1[len] = s2[len] = 0;
   s1[len + 1] = 23;
-  s2[len + 1] = 24 + exp_result;
-  s2[len - 1] -= exp_result;
+  s2[len + 1] = 24 + exp_نتیجہ;
+  s2[len - 1] -= exp_نتیجہ;
 
   FOR_EACH_IMPL (impl, 0)
-  do_one_test (impl, s1, s2, exp_result);
+  do_one_test (impl, s1, s2, exp_نتیجہ);
 }
 
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
-	UCHAR *p1 = (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
-	UCHAR *p2 = (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
+	UCHAR *p1 = (UCHAR *) (buf1 + ورقہ_ناپ - 512 * CHARBYTES);
+	UCHAR *p2 = (UCHAR *) (buf2 + ورقہ_ناپ - 512 * CHARBYTES);
 
-	for (size_t n = 0; n < ITERATIONS; n++)
+	لكل (size_t n = 0; n < ITERATIONS; n++)
 	  {
 	    /* for wcscmp case align1 and align2 mean here alignment
 	       in wchar_t symbols, it equal 4*k alignment in bytes, we
@@ -207,87 +207,87 @@ do_random_tests (void)
 	       because it's wrong using of wchar_t type.  */
 	    size_t align1 = random () & 31;
 	    size_t align2;
-	    if (random () & 1)
+	    إذا (random () & 1)
 	      align2 = random () & 31;
-	    else
+	    وإلا
 	      align2 = align1 + (random () & 24);
 	    size_t pos = random () & 511;
 	    size_t j = align1 > align2 ? align1 : align2;
-	    if (pos + j >= 511)
+	    إذا (pos + j >= 511)
 	      pos = 510 - j - (random () & 7);
 	    size_t len1 = random () & 511;
-	    if (pos >= len1 && (random () & 1))
+	    إذا (pos >= len1 && (random () & 1))
 	      len1 = pos + (random () & 7);
-	    if (len1 + j >= 512)
+	    إذا (len1 + j >= 512)
 	      len1 = 511 - j - (random () & 7);
 	    size_t len2;
-	    if (pos >= len1)
+	    إذا (pos >= len1)
 	      len2 = len1;
-	    else
+	    وإلا
 	      len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
 	    j = (pos > len2 ? pos : len2) + align1 + 64;
-	    if (j > 512)
+	    إذا (j > 512)
 	      j = 512;
-	    for (size_t i = 0; i < j; ++i)
+	    لكل (size_t i = 0; i < j; ++i)
 	      {
 		p1[i] = random () & 255;
-		if (i < len1 + align1 && !p1[i])
+		إذا (i < len1 + align1 && !p1[i])
 		  {
 		    p1[i] = random () & 255;
-		    if (!p1[i])
+		    إذا (!p1[i])
 		      p1[i] = 1 + (random () & 127);
 		  }
 	      }
-	    for (size_t i = 0; i < j; ++i)
+	    لكل (size_t i = 0; i < j; ++i)
 	      {
 		p2[i] = random () & 255;
-		if (i < len2 + align2 && !p2[i])
+		إذا (i < len2 + align2 && !p2[i])
 		  {
 		    p2[i] = random () & 255;
-		    if (!p2[i])
+		    إذا (!p2[i])
 		      p2[i] = 1 + (random () & 127);
 		  }
 	      }
 
-	    int result = 0;
+	    صحيح نتیجہ = 0;
 	    MEMCPY (p2 + align2, p1 + align1, pos);
-	    if (pos < len1)
+	    إذا (pos < len1)
 	      {
-		if (p2[align2 + pos] == p1[align1 + pos])
+		إذا (p2[align2 + pos] == p1[align1 + pos])
 		  {
 		    p2[align2 + pos] = random () & 255;
-		    if (p2[align2 + pos] == p1[align1 + pos])
+		    إذا (p2[align2 + pos] == p1[align1 + pos])
 		      p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 		  }
 
-		if (p1[align1 + pos] < p2[align2 + pos])
-		  result = -1;
-		else
-		  result = 1;
+		إذا (p1[align1 + pos] < p2[align2 + pos])
+		  نتیجہ = -1;
+		وإلا
+		  نتیجہ = 1;
 	      }
 	    p1[len1 + align1] = 0;
 	    p2[len2 + align2] = 0;
 
 	    FOR_EACH_IMPL (impl, 1)
 	      {
-		int r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
+		صحيح r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
 		/* Test whether on 64-bit architectures where ABI requires
 		   callee to promote has the promotion been done.  */
 		asm ("" : "=g" (r) : "0" (r));
-		if ((r == 0 && result)
-		    || (r < 0 && result >= 0)
-		    || (r > 0 && result <= 0))
+		إذا ((r == 0 && نتیجہ)
+		    || (r < 0 && نتیجہ >= 0)
+		    || (r > 0 && نتیجہ <= 0))
 		  {
 		    error (0, 0, "Iteration %zd - wrong result in function %s (align in bytes: %zd, align in bytes: %zd, len1:  %zd, len2: %zd, pos: %zd) %d != %d, p1 %p p2 %p",
-			   n, impl->name, (size_t) (p1 + align1) & 63, (size_t) (p1 + align2) & 63, len1, len2, pos, r, result, p1, p2);
+			   n, impl->name, (size_t) (p1 + align1) & 63, (size_t) (p1 + align2) & 63, len1, len2, pos, r, نتیجہ, p1, p2);
 		    ret = 1;
 		  }
 	      }
      }
 }
 
-static void
-check (void)
+ساكن فراغ
+check (فراغ)
 {
   CHAR *s1 = (CHAR *) (buf1 + 0xb2c);
   CHAR *s2 = (CHAR *) (buf1 + 0xfd8);
@@ -314,29 +314,29 @@ check (void)
   size_t l1 = STRLEN (s1);
   size_t l2 = STRLEN (s2);
 
-  for (size_t i1 = 0; i1 < l1; i1++)
-    for (size_t i2 = 0; i2 < l2; i2++)
+  لكل (size_t i1 = 0; i1 < l1; i1++)
+    لكل (size_t i2 = 0; i2 < l2; i2++)
       {
-		int exp_result = SIMPLE_STRCMP (s1 + i1, s2 + i2);
+		صحيح exp_نتیجہ = SIMPLE_STRCMP (s1 + i1, s2 + i2);
 		FOR_EACH_IMPL (impl, 0)
-		check_result (impl, s1 + i1, s2 + i2, exp_result);
+		check_نتیجہ (impl, s1 + i1, s2 + i2, exp_نتیجہ);
       }
 
   /* Test cases where there are multiple zero bytes after the first.  */
 
-  for (size_t i = 0; i < 16 + 1; i++)
+  لكل (size_t i = 0; i < 16 + 1; i++)
     {
       s1[i] = 0x00;
       s2[i] = 0x00;
     }
 
-  for (size_t i = 0; i < 16; i++)
+  لكل (size_t i = 0; i < 16; i++)
     {
-      int exp_result;
+      صحيح exp_نتیجہ;
 
-      for (int val = 0x01; val < 0x100; val++)
+      لكل (صحيح val = 0x01; val < 0x100; val++)
 	{
-	  for (size_t j = 0; j < i; j++)
+	  لكل (size_t j = 0; j < i; j++)
 	    {
 	      s1[j] = val;
 	      s2[j] = val;
@@ -344,95 +344,95 @@ check (void)
 
 	  s2[i] = val;
 
-	  exp_result = SIMPLE_STRCMP (s1, s2);
+	  exp_نتیجہ = SIMPLE_STRCMP (s1, s2);
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1, s2, exp_result);
+	    check_نتیجہ (impl, s1, s2, exp_نتیجہ);
 	}
     }
 }
 
-static void
-check2 (void)
+ساكن فراغ
+check2 (فراغ)
 {
   /* To trigger bug 25933, we need a size that is equal to the vector
      length times 4. In the case of AVX2 for Intel, we need 32 * 4.  We
      make this test generic and run it for all architectures as additional
      boundary testing for such related algorithms.  */
-  size_t size = 32 * 4;
-  CHAR *s1 = (CHAR *) (buf1 + (BUF1PAGES - 1) * page_size);
-  CHAR *s2 = (CHAR *) (buf2 + (BUF1PAGES - 1) * page_size);
-  int exp_result;
+  size_t ناپ = 32 * 4;
+  CHAR *s1 = (CHAR *) (buf1 + (BUF1_ورقے - 1) * ورقہ_ناپ);
+  CHAR *s2 = (CHAR *) (buf2 + (BUF1_ورقے - 1) * ورقہ_ناپ);
+  صحيح exp_نتیجہ;
 
-  memset (s1, 'a', page_size);
-  memset (s2, 'a', page_size);
-  s1[(page_size / CHARBYTES) - 1] = (CHAR) 0;
-  s2[(page_size / CHARBYTES) - 1] = (CHAR) 0;
+  memset (s1, 'a', ورقہ_ناپ);
+  memset (s2, 'a', ورقہ_ناپ);
+  s1[(ورقہ_ناپ / CHARBYTES) - 1] = (CHAR) 0;
+  s2[(ورقہ_ناپ / CHARBYTES) - 1] = (CHAR) 0;
 
   /* Iterate over a size that is just below where we expect the bug to
      trigger up to the size we expect will trigger the bug e.g. [99-128].
      Likewise iterate the start of two strings between 30 and 31 bytes
      away from the boundary to simulate alignment changes.  */
-  for (size_t s = 99; s <= size; s++)
-    for (size_t s1a = 30; s1a < 32; s1a++)
-      for (size_t s2a = 30; s2a < 32; s2a++)
+  لكل (size_t s = 99; s <= ناپ; s++)
+    لكل (size_t s1a = 30; s1a < 32; s1a++)
+      لكل (size_t s2a = 30; s2a < 32; s2a++)
 	{
-	  CHAR *s1p = s1 + (page_size / CHARBYTES - s) - s1a;
-	  CHAR *s2p = s2 + (page_size / CHARBYTES - s) - s2a;
-	  exp_result = SIMPLE_STRCMP (s1p, s2p);
+	  CHAR *s1p = s1 + (ورقہ_ناپ / CHARBYTES - s) - s1a;
+	  CHAR *s2p = s2 + (ورقہ_ناپ / CHARBYTES - s) - s2a;
+	  exp_نتیجہ = SIMPLE_STRCMP (s1p, s2p);
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1p, s2p, exp_result);
+	    check_نتیجہ (impl, s1p, s2p, exp_نتیجہ);
 	}
 }
 
-static void
-check3 (void)
+ساكن فراغ
+check3 (فراغ)
 {
-  size_t size = 0xd000 + 0x4000;
+  size_t ناپ = 0xd000 + 0x4000;
   CHAR *s1, *s2;
-  CHAR *buffer1 = mmap (NULL, size, PROT_READ | PROT_WRITE,
-			MAP_PRIVATE | MAP_ANON, -1, 0);
-  CHAR *buffer2 = mmap (NULL, size, PROT_READ | PROT_WRITE,
-			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
+  CHAR *buffer1 = mmap (عدم, ناپ, PROT_READ | PROT_WRITE,
+			MAP_نجی | MAP_ANON, -1, 0);
+  CHAR *buffer2 = mmap (عدم, ناپ, PROT_READ | PROT_WRITE,
+			MAP_نجی | MAP_ANON, -1, 0);
+  إذا (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  s1 = (CHAR *) (buffer1 + 0x8f8 / sizeof (CHAR));
-  s2 = (CHAR *) (buffer2 + 0xcff3 / sizeof (CHAR));
+  s1 = (CHAR *) (buffer1 + 0x8f8 / حجم (CHAR));
+  s2 = (CHAR *) (buffer2 + 0xcff3 / حجم (CHAR));
 
   STRCPY(s1, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/util/PathDocFileFactory.java"));
   STRCPY(s2, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/taglets/ThrowsTaglet.java"));
 
-  int exp_result = SIMPLE_STRCMP (s1, s2);
+  صحيح exp_نتیجہ = SIMPLE_STRCMP (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_نتیجہ (impl, s1, s2, exp_نتیجہ);
 
-  munmap ((void *) buffer1, size);
-  munmap ((void *) buffer2, size);
+  munmap ((فراغ *) buffer1, ناپ);
+  munmap ((فراغ *) buffer2, ناپ);
 }
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i, j, k;
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
+  ثابت size_t test_len = MIN(TEST_LEN, 3 * 4096);
   test_init ();
   check();
   check2 ();
   check3 ();
 
-  printf ("%23s", "");
+  لکھو ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-  for (i = 1; i < 32; ++i)
+  لكل (i = 1; i < 32; ++i)
     {
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, 0);
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, 1);
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, -1);
     }
 
-  for (i = 1; i < 10 + CHARBYTESLOG; ++i)
+  لكل (i = 1; i < 10 + CHARBYTESLOG; ++i)
     {
       do_test (0, 0, 2 << i, MIDCHAR, 0);
       do_test (0, 0, 2 << i, LARGECHAR, 0);
@@ -444,7 +444,7 @@ test_main (void)
       do_test (CHARBYTES * i, CHARBYTES * (i + 1), 2 << i, LARGECHAR, 1);
     }
 
-  for (i = 1; i < 8; ++i)
+  لكل (i = 1; i < 8; ++i)
     {
       do_test (CHARBYTES * i, 2 * CHARBYTES * i, 8 << i, MIDCHAR, 0);
       do_test (2 * CHARBYTES * i, CHARBYTES * i, 8 << i, LARGECHAR, 0);
@@ -454,9 +454,9 @@ test_main (void)
       do_test (2 * CHARBYTES * i, CHARBYTES * i, 8 << i, LARGECHAR, -1);
     }
 
-  for (j = 0; j < 160; ++j)
+  لكل (j = 0; j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      لكل (i = 0; i < test_len;)
         {
           do_test (getpagesize () - j - 1, 0, i, 127, 0);
           do_test (getpagesize () - j - 1, 0, i, 127, 1);
@@ -474,7 +474,7 @@ test_main (void)
           do_test (j, getpagesize () - j - 1, i, 127, 1);
           do_test (j, getpagesize () - j - 1, i, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          لكل (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i, 127, 0);
               do_test (getpagesize () - k - 1, getpagesize () - j - 1, i, 127,
@@ -487,29 +487,29 @@ test_main (void)
                        -1);
             }
 
-          if (i < 32)
+          إذا (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          وإلا إذا (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          وإلا إذا (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              إذا (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          وإلا إذا (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          وإلا
             {
               i += 1;
             }
@@ -517,7 +517,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  أرجع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

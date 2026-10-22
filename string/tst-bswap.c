@@ -15,60 +15,60 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <byteswap.h>
-#include <stdio.h>
+#ضمن <byteswap.h>
+#ضمن <stdio.h>
 
-extern unsigned long long int wash (unsigned long long int a);
+خارجي بنانشانی لما لما صحيح wash (بنانشانی لما لما صحيح a);
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  int result = 0;
+  صحيح نتیجہ = 0;
 
   /* Test the functions with constant arguments.  */
-  if (bswap_16 (0x1234) != 0x3412)
+  إذا (bswap_16 (0x1234) != 0x3412)
     {
       puts ("bswap_16 (constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_32 (0x12345678) != 0x78563412)
+  إذا (bswap_32 (0x12345678) != 0x78563412)
     {
       puts ("bswap_32 (constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
+  إذا (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
 
   /* Test the functions with non-constant arguments.  */
-  if (bswap_16 (wash (0x1234)) != 0x3412)
+  إذا (bswap_16 (wash (0x1234)) != 0x3412)
     {
       puts ("bswap_16 (non-constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_32 (wash (0x12345678)) != 0x78563412)
+  إذا (bswap_32 (wash (0x12345678)) != 0x78563412)
     {
       puts ("bswap_32 (non-constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
+  إذا (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (non-constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
 
-  return result;
+  أرجع نتیجہ;
 }
 
 
-unsigned long long int
-wash (unsigned long long int a)
+بنانشانی لما لما صحيح
+wash (بنانشانی لما لما صحيح a)
 {
   /* Do nothing.  This function simply exists to avoid that the compiler
      regards the argument to the bswap_*() functions as constant.  */
-  return a + 0;
+  أرجع a + 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

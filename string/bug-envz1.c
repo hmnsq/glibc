@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#ضمن <stdio.h>
+#ضمن <envz.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
 
-static const struct
+ساكن ثابت بنية
 {
-  const char *s;
-  int in_result;
+  ثابت حرف *s;
+  صحيح وچ_نتیجہ;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,54 +22,54 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#تعریف_کرو nstrs (حجم (strs) / حجم (strs[0]))
 
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
 
-  size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  size_t ناپ = 0;
+  حرف *str = حافظہ_دیو (100);
+  إذا (str == عدم)
     {
       puts ("out of memory");
-      return 1;
+      أرجع 1;
     }
 
-  char **argz = &str;
+  حرف **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
-    argz_add_sep (argz, &size, strs[i].s, '\0');
+  لكل (صحيح i = 0; i < nstrs; ++i)
+    argz_جوڑو_sep (argz, &ناپ, strs[i].s, '\0');
 
-  printf ("calling envz_strip with size=%zu\n", size);
-  envz_strip (argz, &size);
+  لکھو ("calling envz_strip with size=%zu\n", ناپ);
+  envz_strip (argz, &ناپ);
 
-  int result = 0;
-  printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  صحيح نتیجہ = 0;
+  لکھو ("new size=%zu\n", ناپ);
+  لكل (صحيح i = 0; i < nstrs; ++i)
+    إذا (strs[i].وچ_نتیجہ)
       {
-        char name[2];
+        حرف name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        حرف *e = envz_اندراج (*argz, ناپ, name);
+        إذا (e == عدم)
           {
-            printf ("entry '%s' not found\n", name);
-            result = 1;
+            لکھو ("entry '%s' not found\n", name);
+            نتیجہ = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        وإلا إذا (strcmp (e, strs[i].s) != 0)
           {
-            printf ("entry '%s' does not match: is '%s', expected '%s'\n",
+            لکھو ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
-            result = 1;
+            نتیجہ = 1;
           }
       }
 
-  free (*argz);
-  return result;
+  حرر (*argz);
+  أرجع نتیجہ;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

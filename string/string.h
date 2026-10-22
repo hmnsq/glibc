@@ -19,60 +19,60 @@
  *	ISO C99 Standard: 7.21 String handling	<string.h>
  */
 
-#ifndef	_STRING_H
-#define	_STRING_H	1
+#جے_بنا_تعریف	_STRING_H
+#تعریف_کرو	_STRING_H	1
 
-#define __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
-#include <bits/libc-header-start.h>
+#تعریف_کرو __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
+#ضمن <bits/libc-header-start.h>
 
 __BEGIN_DECLS
 
-#if __GLIBC_USE (ISOC23)
+#إذا __GLIBC_USE (ISOC23)
 # define __STDC_VERSION_STRING_H__ 202311L
-#endif
+#جے_انت
 
 /* Get size_t and NULL from <stddef.h>.  */
-#define	__need_size_t
-#define	__need_NULL
-#include <stddef.h>
+#تعریف_کرو	__need_size_t
+#تعریف_کرو	__need_NULL
+#ضمن <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && (__GNUC_PREREQ (4, 4) \
+#إذا defined __cplusplus && (__GNUC_PREREQ (4, 4) \
 			    || __glibc_clang_prereq (3, 5))
 # define __CORRECT_ISO_CPP_STRING_H_PROTO
-#endif
+#جے_انت
 
 
 /* Copy N bytes of SRC to DEST.  */
-extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+خارجي فراغ *حافظہ_نقل (فراغ *__restrict __dest, ثابت فراغ *__restrict __src,
 		     size_t __n) __THROW __nonnull ((1, 2));
 /* Copy N bytes of SRC to DEST, guaranteeing
    correct behavior for overlapping strings.  */
-extern void *memmove (void *__dest, const void *__src, size_t __n)
+خارجي فراغ *memmove (فراغ *__dest, ثابت فراغ *__src, size_t __n)
      __THROW __nonnull ((1, 2));
 
 /* Copy no more than N bytes of SRC to DEST, stopping when C is found.
    Return the position in DEST one byte past where C was copied,
    or NULL if C was not found in the first N bytes of SRC.  */
-#if defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
-extern void *memccpy (void *__restrict __dest, const void *__restrict __src,
-		      int __c, size_t __n)
+#إذا defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
+خارجي فراغ *memccpy (فراغ *__restrict __dest, ثابت فراغ *__restrict __src,
+		      صحيح __c, size_t __n)
     __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 4));
-#endif /* Misc || X/Open.  */
+#جے_انت /* Misc || X/Open.  */
 
 
 /* Set N bytes of S to C.  */
-extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+خارجي فراغ *memset (فراغ *__s, صحيح __c, size_t __n) __THROW __nonnull ((1));
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
+#إذا defined __USE_MISC || __GLIBC_USE (ISOC23)
 /* Like memset, but the compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void *memset_explicit (void *__s, int __c, size_t __n)
+خارجي فراغ *memset_explicit (فراغ *__s, صحيح __c, size_t __n)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
-#endif
+#جے_انت
 
 /* Compare N bytes of S1 and S2.  */
-extern int memcmp (const void *__s1, const void *__s2, size_t __n)
+خارجي صحيح memcmp (ثابت فراغ *__s1, ثابت فراغ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare N bytes of S1 and S2.  Return zero if S1 and S2 are equal.
@@ -88,368 +88,368 @@ extern int memcmp (const void *__s1, const void *__s2, size_t __n)
 
    __memcmpeq is declared only for use by compilers.  Programs should
    continue to use memcmp.  */
-extern int __memcmpeq (const void *__s1, const void *__s2, size_t __n)
+خارجي صحيح __memcmpeq (ثابت فراغ *__s1, ثابت فراغ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Search N bytes of S for C.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#جے_تعریف_شدہ __CORRECT_ISO_CPP_STRING_H_PROTO
+خارجي "C++"
 {
-extern void *memchr (void *__s, int __c, size_t __n)
+خارجي فراغ *memchr (فراغ *__s, صحيح __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
-extern const void *memchr (const void *__s, int __c, size_t __n)
+خارجي ثابت فراغ *memchr (ثابت فراغ *__s, صحيح __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline void *
-memchr (void *__s, int __c, size_t __n) __THROW
+__extern_always_inline فراغ *
+memchr (فراغ *__s, صحيح __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  أرجع __builtin_memchr (__s, __c, __n);
 }
 
-__extern_always_inline const void *
-memchr (const void *__s, int __c, size_t __n) __THROW
+__extern_always_inline ثابت فراغ *
+memchr (ثابت فراغ *__s, صحيح __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  أرجع __builtin_memchr (__s, __c, __n);
 }
 # endif
 }
-#else
-extern void *memchr (const void *__s, int __c, size_t __n)
+#وإلا
+خارجي فراغ *memchr (ثابت فراغ *__s, صحيح __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# إذا __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define memchr(S, C, N)					\
-  __glibc_const_generic (S, const void *, memchr (S, C, N))
+  __glibc_const_generic (S, ثابت فراغ *, memchr (S, C, N))
 # endif
-#endif
+#جے_انت
 
-#ifdef __USE_GNU
+#جے_تعریف_شدہ __USE_GNU
 /* Search in S for C.  This is similar to `memchr' but there is no
    length limit.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *rawmemchr (void *__s, int __c)
+خارجي "C++" فراغ *rawmemchr (فراغ *__s, صحيح __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-extern "C++" const void *rawmemchr (const void *__s, int __c)
+خارجي "C++" ثابت فراغ *rawmemchr (ثابت فراغ *__s, صحيح __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-# else
-extern void *rawmemchr (const void *__s, int __c)
+# وإلا
+خارجي فراغ *rawmemchr (ثابت فراغ *__s, صحيح __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Search N bytes of S for the final occurrence of C.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *memrchr (void *__s, int __c, size_t __n)
+خارجي "C++" فراغ *memrchr (فراغ *__s, صحيح __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-extern "C++" const void *memrchr (const void *__s, int __c, size_t __n)
+خارجي "C++" ثابت فراغ *memrchr (ثابت فراغ *__s, صحيح __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-# else
-extern void *memrchr (const void *__s, int __c, size_t __n)
+# وإلا
+خارجي فراغ *memrchr (ثابت فراغ *__s, صحيح __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
 # endif
-#endif
+#جے_انت
 
 
 /* Copy SRC to DEST.  */
-extern char *strcpy (char *__restrict __dest, const char *__restrict __src)
+خارجي حرف *strcpy (حرف *__restrict __dest, ثابت حرف *__restrict __src)
      __THROW __nonnull ((1, 2));
 /* Copy no more than N characters of SRC to DEST.  */
-extern char *strncpy (char *__restrict __dest,
-		      const char *__restrict __src, size_t __n)
+خارجي حرف *strncpy (حرف *__restrict __dest,
+		      ثابت حرف *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
 
 /* Append SRC onto DEST.  */
-extern char *strcat (char *__restrict __dest, const char *__restrict __src)
+خارجي حرف *strcat (حرف *__restrict __dest, ثابت حرف *__restrict __src)
      __THROW __nonnull ((1, 2));
 /* Append no more than N characters from SRC onto DEST.  */
-extern char *strncat (char *__restrict __dest, const char *__restrict __src,
+خارجي حرف *strncat (حرف *__restrict __dest, ثابت حرف *__restrict __src,
 		      size_t __n) __THROW __nonnull ((1, 2));
 
 /* Compare S1 and S2.  */
-extern int strcmp (const char *__s1, const char *__s2)
+خارجي صحيح strcmp (ثابت حرف *__s1, ثابت حرف *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Compare N characters of S1 and S2.  */
-extern int strncmp (const char *__s1, const char *__s2, size_t __n)
+خارجي صحيح لڑی_مقابلہ (ثابت حرف *__s1, ثابت حرف *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare the collated forms of S1 and S2.  */
-extern int strcoll (const char *__s1, const char *__s2)
+خارجي صحيح strcoll (ثابت حرف *__s1, ثابت حرف *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Put a transformation of SRC into no more than N bytes of DEST.  */
-extern size_t strxfrm (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+خارجي size_t strxfrm (حرف *__restrict __dest,
+		       ثابت حرف *__restrict __src, size_t __n)
     __THROW __nonnull ((2)) __attr_access ((__write_only__, 1, 3));
 
-#ifdef __USE_XOPEN2K8
+#جے_تعریف_شدہ __USE_XOPEN2K8
 /* POSIX.1-2008 extended locale interface (see locale.h).  */
 # include <bits/types/locale_t.h>
 
 /* Compare the collated forms of S1 and S2, using sorting rules from L.  */
-extern int strcoll_l (const char *__s1, const char *__s2, locale_t __l)
+خارجي صحيح strcoll_l (ثابت حرف *__s1, ثابت حرف *__s2, locale_t __l)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 /* Put a transformation of SRC into no more than N bytes of DEST,
    using sorting rules from L.  */
-extern size_t strxfrm_l (char *__dest, const char *__src, size_t __n,
+خارجي size_t strxfrm_l (حرف *__dest, ثابت حرف *__src, size_t __n,
 			 locale_t __l) __THROW __nonnull ((2, 4))
      __attr_access ((__write_only__, 1, 3));
-#endif
+#جے_انت
 
-#if (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
+#إذا (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
      || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23))
 /* Duplicate S, returning an identical malloc'd string.  */
-extern char *strdup (const char *__s)
+خارجي حرف *strdup (ثابت حرف *__s)
      __THROW __attribute_malloc__ __nonnull ((1));
-#endif
+#جے_انت
 
 /* Return a malloc'd copy of at most N bytes of STRING.  The
    resultant string is terminated even if no null terminator
    appears before STRING[N].  */
-#if defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
-extern char *strndup (const char *__string, size_t __n)
+#إذا defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
+خارجي حرف *strndup (ثابت حرف *__string, size_t __n)
      __THROW __attribute_malloc__ __nonnull ((1));
-#endif
+#جے_انت
 
-#if defined __USE_GNU && defined __GNUC__
+#إذا defined __USE_GNU && defined __GNUC__
 /* Duplicate S, returning an identical alloca'd string.  */
 # define strdupa(s)							      \
   (__extension__							      \
     ({									      \
-      const char *__old = (s);						      \
-      size_t __len = strlen (__old) + 1;				      \
-      char *__new = (char *) __builtin_alloca (__len);			      \
-      (char *) memcpy (__new, __old, __len);				      \
+      ثابت حرف *__old = (s);						      \
+      size_t __len = لڑی_لمبائی (__old) + 1;				      \
+      حرف *__new = (حرف *) __builtin_alloca (__len);			      \
+      (حرف *) حافظہ_نقل (__new, __old, __len);				      \
     }))
 
 /* Return an alloca'd copy of at most N bytes of string.  */
 # define strndupa(s, n)							      \
   (__extension__							      \
     ({									      \
-      const char *__old = (s);						      \
+      ثابت حرف *__old = (s);						      \
       size_t __len = strnlen (__old, (n));				      \
-      char *__new = (char *) __builtin_alloca (__len + 1);		      \
+      حرف *__new = (حرف *) __builtin_alloca (__len + 1);		      \
       __new[__len] = '\0';						      \
-      (char *) memcpy (__new, __old, __len);				      \
+      (حرف *) حافظہ_نقل (__new, __old, __len);				      \
     }))
-#endif
+#جے_انت
 
 /* Find the first occurrence of C in S.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#جے_تعریف_شدہ __CORRECT_ISO_CPP_STRING_H_PROTO
+خارجي "C++"
 {
-extern char *strchr (char *__s, int __c)
+خارجي حرف *strchr (حرف *__s, صحيح __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
-extern const char *strchr (const char *__s, int __c)
+خارجي ثابت حرف *strchr (ثابت حرف *__s, صحيح __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strchr (char *__s, int __c) __THROW
+__extern_always_inline حرف *
+strchr (حرف *__s, صحيح __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  أرجع __builtin_strchr (__s, __c);
 }
 
-__extern_always_inline const char *
-strchr (const char *__s, int __c) __THROW
+__extern_always_inline ثابت حرف *
+strchr (ثابت حرف *__s, صحيح __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  أرجع __builtin_strchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strchr (const char *__s, int __c)
+#وإلا
+خارجي حرف *strchr (ثابت حرف *__s, صحيح __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# إذا __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strchr(S, C)						\
-  __glibc_const_generic (S, const char *, strchr (S, C))
+  __glibc_const_generic (S, ثابت حرف *, strchr (S, C))
 # endif
-#endif
+#جے_انت
 /* Find the last occurrence of C in S.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#جے_تعریف_شدہ __CORRECT_ISO_CPP_STRING_H_PROTO
+خارجي "C++"
 {
-extern char *strrchr (char *__s, int __c)
+خارجي حرف *strrchr (حرف *__s, صحيح __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
-extern const char *strrchr (const char *__s, int __c)
+خارجي ثابت حرف *strrchr (ثابت حرف *__s, صحيح __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strrchr (char *__s, int __c) __THROW
+__extern_always_inline حرف *
+strrchr (حرف *__s, صحيح __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  أرجع __builtin_strrchr (__s, __c);
 }
 
-__extern_always_inline const char *
-strrchr (const char *__s, int __c) __THROW
+__extern_always_inline ثابت حرف *
+strrchr (ثابت حرف *__s, صحيح __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  أرجع __builtin_strrchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strrchr (const char *__s, int __c)
+#وإلا
+خارجي حرف *strrchr (ثابت حرف *__s, صحيح __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# إذا __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strrchr(S, C)						\
-  __glibc_const_generic (S, const char *, strrchr (S, C))
+  __glibc_const_generic (S, ثابت حرف *, strrchr (S, C))
 # endif
-#endif
+#جے_انت
 
-#ifdef __USE_MISC
+#جے_تعریف_شدہ __USE_MISC
 /* This function is similar to `strchr'.  But it returns a pointer to
    the closing NUL byte in case C is not found in S.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strchrnul (char *__s, int __c)
+خارجي "C++" حرف *strchrnul (حرف *__s, صحيح __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-extern "C++" const char *strchrnul (const char *__s, int __c)
+خارجي "C++" ثابت حرف *strchrnul (ثابت حرف *__s, صحيح __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-# else
-extern char *strchrnul (const char *__s, int __c)
+# وإلا
+خارجي حرف *strchrnul (ثابت حرف *__s, صحيح __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
-#endif
+#جے_انت
 
 /* Return the length of the initial segment of S which
    consists entirely of characters not in REJECT.  */
-extern size_t strcspn (const char *__s, const char *__reject)
+خارجي size_t strcspn (ثابت حرف *__s, ثابت حرف *__reject)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Return the length of the initial segment of S which
    consists entirely of characters in ACCEPT.  */
-extern size_t strspn (const char *__s, const char *__accept)
+خارجي size_t strspn (ثابت حرف *__s, ثابت حرف *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Find the first occurrence in S of any character in ACCEPT.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#جے_تعریف_شدہ __CORRECT_ISO_CPP_STRING_H_PROTO
+خارجي "C++"
 {
-extern char *strpbrk (char *__s, const char *__accept)
+خارجي حرف *strpbrk (حرف *__s, ثابت حرف *__accept)
      __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
-extern const char *strpbrk (const char *__s, const char *__accept)
+خارجي ثابت حرف *strpbrk (ثابت حرف *__s, ثابت حرف *__accept)
      __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strpbrk (char *__s, const char *__accept) __THROW
+__extern_always_inline حرف *
+strpbrk (حرف *__s, ثابت حرف *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  أرجع __builtin_strpbrk (__s, __accept);
 }
 
-__extern_always_inline const char *
-strpbrk (const char *__s, const char *__accept) __THROW
+__extern_always_inline ثابت حرف *
+strpbrk (ثابت حرف *__s, ثابت حرف *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  أرجع __builtin_strpbrk (__s, __accept);
 }
 # endif
 }
-#else
-extern char *strpbrk (const char *__s, const char *__accept)
+#وإلا
+خارجي حرف *strpbrk (ثابت حرف *__s, ثابت حرف *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# إذا __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strpbrk(S, ACCEPT)					\
-  __glibc_const_generic (S, const char *, strpbrk (S, ACCEPT))
+  __glibc_const_generic (S, ثابت حرف *, strpbrk (S, ACCEPT))
 # endif
-#endif
+#جے_انت
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#جے_تعریف_شدہ __CORRECT_ISO_CPP_STRING_H_PROTO
+خارجي "C++"
 {
-extern char *strstr (char *__haystack, const char *__needle)
+خارجي حرف *لڑی_کھوج (حرف *__haystack, ثابت حرف *__needle)
      __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
-extern const char *strstr (const char *__haystack, const char *__needle)
+خارجي ثابت حرف *لڑی_کھوج (ثابت حرف *__haystack, ثابت حرف *__needle)
      __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strstr (char *__haystack, const char *__needle) __THROW
+__extern_always_inline حرف *
+لڑی_کھوج (حرف *__haystack, ثابت حرف *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  أرجع __builtin_strstr (__haystack, __needle);
 }
 
-__extern_always_inline const char *
-strstr (const char *__haystack, const char *__needle) __THROW
+__extern_always_inline ثابت حرف *
+لڑی_کھوج (ثابت حرف *__haystack, ثابت حرف *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  أرجع __builtin_strstr (__haystack, __needle);
 }
 # endif
 }
-#else
-extern char *strstr (const char *__haystack, const char *__needle)
+#وإلا
+خارجي حرف *لڑی_کھوج (ثابت حرف *__haystack, ثابت حرف *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
-#  define strstr(HAYSTACK, NEEDLE)			\
-  __glibc_const_generic (HAYSTACK, const char *,	\
-			 strstr (HAYSTACK, NEEDLE))
+# إذا __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+#  define لڑی_کھوج(HAYSTACK, NEEDLE)			\
+  __glibc_const_generic (HAYSTACK, ثابت حرف *,	\
+			 لڑی_کھوج (HAYSTACK, NEEDLE))
 # endif
-#endif
+#جے_انت
 
 
 /* Divide S into tokens separated by characters in DELIM.  */
-extern char *strtok (char *__restrict __s, const char *__restrict __delim)
+خارجي حرف *strtok (حرف *__restrict __s, ثابت حرف *__restrict __delim)
      __THROW __nonnull ((2));
 
 /* Divide S into tokens separated by characters in DELIM.  Information
    passed between calls are stored in SAVE_PTR.  */
-extern char *__strtok_r (char *__restrict __s,
-			 const char *__restrict __delim,
-			 char **__restrict __save_ptr)
+خارجي حرف *__strtok_r (حرف *__restrict __s,
+			 ثابت حرف *__restrict __delim,
+			 حرف **__restrict __save_ptr)
      __THROW __nonnull ((2, 3));
-#ifdef __USE_POSIX
-extern char *strtok_r (char *__restrict __s, const char *__restrict __delim,
-		       char **__restrict __save_ptr)
+#جے_تعریف_شدہ __USE_POSIX
+خارجي حرف *strtok_r (حرف *__restrict __s, ثابت حرف *__restrict __delim,
+		       حرف **__restrict __save_ptr)
      __THROW __nonnull ((2, 3));
-#endif
+#جے_انت
 
-#ifdef __USE_MISC
+#جے_تعریف_شدہ __USE_MISC
 /* Similar to `strstr' but this function ignores the case of both strings.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strcasestr (char *__haystack, const char *__needle)
+خارجي "C++" حرف *strcasestr (حرف *__haystack, ثابت حرف *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-extern "C++" const char *strcasestr (const char *__haystack,
-				     const char *__needle)
+خارجي "C++" ثابت حرف *strcasestr (ثابت حرف *__haystack,
+				     ثابت حرف *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-# else
-extern char *strcasestr (const char *__haystack, const char *__needle)
+# وإلا
+خارجي حرف *strcasestr (ثابت حرف *__haystack, ثابت حرف *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 # endif
-#endif
+#جے_انت
 
-#ifdef __USE_MISC
+#جے_تعریف_شدہ __USE_MISC
 /* Find the first occurrence of NEEDLE in HAYSTACK.
    NEEDLE is NEEDLELEN bytes long;
    HAYSTACK is HAYSTACKLEN bytes long.  */
-extern void *memmem (const void *__haystack, size_t __haystacklen,
-		     const void *__needle, size_t __needlelen)
+خارجي فراغ *memmem (ثابت فراغ *__haystack, size_t __haystacklen,
+		     ثابت فراغ *__needle, size_t __needlelen)
      __THROW __attribute_pure__ __nonnull ((1, 3))
     __attr_access ((__read_only__, 1, 2))
     __attr_access ((__read_only__, 3, 4));
 
 /* Copy N bytes of SRC to DEST, return pointer to bytes after the
    last written byte.  */
-extern void *__mempcpy (void *__restrict __dest,
-			const void *__restrict __src, size_t __n)
+خارجي فراغ *__mempcpy (فراغ *__restrict __dest,
+			ثابت فراغ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-extern void *mempcpy (void *__restrict __dest,
-		      const void *__restrict __src, size_t __n)
+خارجي فراغ *mempcpy (فراغ *__restrict __dest,
+		      ثابت فراغ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-#endif
+#جے_انت
 
 
 /* Return the length of S.  */
-extern size_t strlen (const char *__s)
+خارجي size_t لڑی_لمبائی (ثابت حرف *__s)
      __THROW __attribute_pure__ __nonnull ((1));
 
-#ifdef	__USE_XOPEN2K8
+#جے_تعریف_شدہ	__USE_XOPEN2K8
 /* Find the length of STRING, but scan at most MAXLEN characters.
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
-extern size_t strnlen (const char *__string, size_t __maxlen)
+خارجي size_t strnlen (ثابت حرف *__string, size_t __maxlen)
      __THROW __attribute_pure__ __nonnull ((1));
-#endif
+#جے_انت
 
 
 /* Return a string describing the meaning of the `errno' code in ERRNUM.  */
-extern char *strerror (int __errnum) __THROW;
-#ifdef __USE_XOPEN2K
+خارجي حرف *strerror (صحيح __errnum) __THROW;
+#جے_تعریف_شدہ __USE_XOPEN2K
 /* Reentrant version of `strerror'.
    There are 2 flavors of `strerror_r', GNU which returns the string
    and may or may not use the supplied temporary buffer and POSIX one
@@ -457,105 +457,105 @@ extern char *strerror (int __errnum) __THROW;
    To use the POSIX version, -D_XOPEN_SOURCE=600 or -D_POSIX_C_SOURCE=200112L
    without -D_GNU_SOURCE is needed, otherwise the GNU version is
    preferred.  */
-# if defined __USE_XOPEN2K && !defined __USE_GNU
+# إذا defined __USE_XOPEN2K && !defined __USE_GNU
 /* Fill BUF with a string describing the meaning of the `errno' code in
    ERRNUM.  */
 #  ifdef __REDIRECT_NTH
-extern int __REDIRECT_NTH (strerror_r,
-			   (int __errnum, char *__buf, size_t __buflen),
+خارجي صحيح __REDIRECT_NTH (strerror_r,
+			   (صحيح __errnum, حرف *__buf, size_t __buflen),
 			   __xpg_strerror_r) __nonnull ((2))
     __attr_access ((__write_only__, 2, 3));
-#  else
-extern int __xpg_strerror_r (int __errnum, char *__buf, size_t __buflen)
+#  وإلا
+خارجي صحيح __xpg_strerror_r (صحيح __errnum, حرف *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __attr_access ((__write_only__, 2, 3));
 #   define strerror_r __xpg_strerror_r
 #  endif
-# else
+# وإلا
 /* If a temporary buffer is required, at most BUFLEN bytes of BUF will be
    used.  */
-extern char *strerror_r (int __errnum, char *__buf, size_t __buflen)
+خارجي حرف *strerror_r (صحيح __errnum, حرف *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __wur  __attr_access ((__write_only__, 2, 3));
 # endif
 
 # ifdef __USE_GNU
 /* Return a string describing the meaning of tthe error in ERR.  */
-extern const char *strerrordesc_np (int __err) __THROW;
+خارجي ثابت حرف *strerrordesc_np (صحيح __err) __THROW;
 /* Return a string with the error name in ERR.  */
-extern const char *strerrorname_np (int __err) __THROW;
+خارجي ثابت حرف *strerrorname_np (صحيح __err) __THROW;
 # endif
-#endif
+#جے_انت
 
-#ifdef __USE_XOPEN2K8
+#جے_تعریف_شدہ __USE_XOPEN2K8
 /* Translate error number to string according to the locale L.  */
-extern char *strerror_l (int __errnum, locale_t __l) __THROW;
-#endif
+خارجي حرف *strerror_l (صحيح __errnum, locale_t __l) __THROW;
+#جے_انت
 
-#ifdef __USE_MISC
+#جے_تعریف_شدہ __USE_MISC
 # include <strings.h>
 
 /* Set N bytes of S to 0.  The compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void explicit_bzero (void *__s, size_t __n) __THROW __nonnull ((1))
+خارجي فراغ explicit_bzero (فراغ *__s, size_t __n) __THROW __nonnull ((1))
     __fortified_attr_access (__write_only__, 1, 2);
 
 /* Return the next DELIM-delimited token from *STRINGP,
    terminating it with a '\0', and update *STRINGP to point past it.  */
-extern char *strsep (char **__restrict __stringp,
-		     const char *__restrict __delim)
+خارجي حرف *strsep (حرف **__restrict __stringp,
+		     ثابت حرف *__restrict __delim)
      __THROW __nonnull ((1, 2));
-#endif
+#جے_انت
 
-#ifdef	__USE_XOPEN2K8
+#جے_تعریف_شدہ	__USE_XOPEN2K8
 /* Return a string describing the meaning of the signal number in SIG.  */
-extern char *strsignal (int __sig) __THROW;
+خارجي حرف *strsignal (صحيح __sig) __THROW;
 
 # ifdef __USE_GNU
 /* Return an abbreviation string for the signal number SIG.  */
-extern const char *sigabbrev_np (int __sig) __THROW;
+خارجي ثابت حرف *sigabbrev_np (صحيح __sig) __THROW;
 /* Return a string describing the meaning of the signal number in SIG,
    the result is not translated.  */
-extern const char *sigdescr_np (int __sig) __THROW;
+خارجي ثابت حرف *sigdescr_np (صحيح __sig) __THROW;
 # endif
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-extern char *__stpcpy (char *__restrict __dest, const char *__restrict __src)
+خارجي حرف *__stpcpy (حرف *__restrict __dest, ثابت حرف *__restrict __src)
      __THROW __nonnull ((1, 2));
-extern char *stpcpy (char *__restrict __dest, const char *__restrict __src)
+خارجي حرف *stpcpy (حرف *__restrict __dest, ثابت حرف *__restrict __src)
      __THROW __nonnull ((1, 2));
 
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the last character written into DEST.  */
-extern char *__stpncpy (char *__restrict __dest,
-			const char *__restrict __src, size_t __n)
+خارجي حرف *__stpncpy (حرف *__restrict __dest,
+			ثابت حرف *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-extern char *stpncpy (char *__restrict __dest,
-		      const char *__restrict __src, size_t __n)
+خارجي حرف *stpncpy (حرف *__restrict __dest,
+		      ثابت حرف *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-#endif
+#جے_انت
 
-#ifdef __USE_MISC
+#جے_تعریف_شدہ __USE_MISC
 /* Copy at most N - 1 characters from SRC to DEST.  */
-extern size_t strlcpy (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+خارجي size_t strlcpy (حرف *__restrict __dest,
+		       ثابت حرف *__restrict __src, size_t __n)
   __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 3));
 
 /* Append SRC to DEST, possibly with truncation to keep the total size
    below N.  */
-extern size_t strlcat (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+خارجي size_t strlcat (حرف *__restrict __dest,
+		       ثابت حرف *__restrict __src, size_t __n)
   __THROW __nonnull ((1, 2))  __attr_access ((__read_write__, 1, 3));
-#endif
+#جے_انت
 
-#ifdef	__USE_GNU
+#جے_تعریف_شدہ	__USE_GNU
 /* Compare S1 and S2 as strings holding name & indices/version numbers.  */
-extern int strverscmp (const char *__s1, const char *__s2)
+خارجي صحيح strverscmp (ثابت حرف *__s1, ثابت حرف *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Sautee STRING briskly.  */
-extern char *strfry (char *__string) __THROW __nonnull ((1));
+خارجي حرف *strfry (حرف *__string) __THROW __nonnull ((1));
 
 /* Frobnicate N bytes of S.  */
-extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
+خارجي فراغ *memfrob (فراغ *__s, size_t __n) __THROW __nonnull ((1))
     __attr_access ((__read_write__, 1, 2));
 
 # ifndef basename
@@ -564,23 +564,23 @@ extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
    in <libgen.h>) which makes the XPG version of this function
    available.  */
 #  ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *basename (char *__filename)
+خارجي "C++" حرف *basename (حرف *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-extern "C++" const char *basename (const char *__filename)
+خارجي "C++" ثابت حرف *basename (ثابت حرف *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-#  else
-extern char *basename (const char *__filename) __THROW __nonnull ((1));
+#  وإلا
+خارجي حرف *basename (ثابت حرف *__filename) __THROW __nonnull ((1));
 #  endif
 # endif
-#endif
+#جے_انت
 
-#if __GNUC_PREREQ (3,4)
-# if __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
+#إذا __GNUC_PREREQ (3,4)
+# إذا __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
 /* Functions with security checks.  */
 #  include <bits/string_fortified.h>
 # endif
-#endif
+#جے_انت
 
 __END_DECLS
 
-#endif /* string.h  */
+#جے_انت /* string.h  */

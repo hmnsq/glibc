@@ -16,291 +16,291 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_BCOPY
+#تعریف_کرو TEST_MAIN
+#جے_تعریف_شدہ TEST_BCOPY
 # define TEST_NAME "bcopy"
-#else
+#وإلا
 # define TEST_NAME "memmove"
-#endif
-#include "test-string.h"
-#include <support/test-driver.h>
+#جے_انت
+#ضمن "test-string.h"
+#ضمن <support/test-driver.h>
 
-char *simple_memmove (char *, const char *, size_t);
+حرف *simple_memmove (حرف *, ثابت حرف *, size_t);
 
-#ifdef TEST_BCOPY
-typedef void (*proto_t) (const char *, char *, size_t);
+#جے_تعریف_شدہ TEST_BCOPY
+تعريفنوع فراغ (*proto_t) (ثابت حرف *, حرف *, size_t);
 
 IMPL (bcopy, 1)
 
 /* Naive implementation to verify results.  */
-void
-simple_bcopy (const char *src, char *dst, size_t n)
+فراغ
+simple_bcopy (ثابت حرف *src, حرف *dst, size_t n)
 {
   simple_memmove (dst, src, n);
 }
 
-#else
-typedef char *(*proto_t) (char *, const char *, size_t);
+#وإلا
+تعريفنوع حرف *(*proto_t) (حرف *, ثابت حرف *, size_t);
 
 IMPL (memmove, 1)
-#endif
+#جے_انت
 
 /* Naive implementation to verify results.  */
-char *
-test_cc_inhibit_loop_to_libcall
-simple_memmove (char *dst, const char *src, size_t n)
+حرف *
+test_cc_inhibit_loop_منزل_libcall
+simple_memmove (حرف *dst, ثابت حرف *src, size_t n)
 {
-  char *ret = dst;
-  if (src < dst)
+  حرف *ret = dst;
+  إذا (src < dst)
     {
       dst += n;
       src += n;
-      while (n--)
+      طالما (n--)
 	*--dst = *--src;
     }
-  else
-    while (n--)
+  وإلا
+    طالما (n--)
       *dst++ = *src++;
-  return ret;
+  أرجع ret;
 }
 
-static void
-do_one_test (impl_t *impl, char *dst, char *src, const char *orig_src,
+ساكن فراغ
+do_one_test (impl_t *impl, حرف *dst, حرف *src, ثابت حرف *orig_src,
 	     size_t len)
 {
   /* This also clears the destination buffer set by the previous run.  */
-  memcpy (src, orig_src, len);
-#ifdef TEST_BCOPY
+  حافظہ_نقل (src, orig_src, len);
+#جے_تعریف_شدہ TEST_BCOPY
   CALL (impl, src, dst, len);
-#else
-  char *res;
+#وإلا
+  حرف *res;
 
   res = CALL (impl, dst, src, len);
-  if (res != dst)
+  إذا (res != dst)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, dst);
       ret = 1;
-      return;
+      أرجع;
     }
-#endif
+#جے_انت
 
-  if (memcmp (dst, orig_src, len) != 0)
+  إذا (memcmp (dst, orig_src, len) != 0)
     {
       error (0, 0, "Wrong result in function %s dst \"%s\" src \"%s\"",
 	     impl->name, dst, src);
       ret = 1;
-      return;
+      أرجع;
     }
 }
 
-static void
+ساكن فراغ
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  حرف *s1, *s2;
 
   align1 &= (getpagesize() - 1);
-  if (align1 + len >= page_size)
-    return;
+  إذا (align1 + len >= ورقہ_ناپ)
+    أرجع;
 
   align2 &= (getpagesize() - 1);
-  if (align2 + len >= page_size)
-    return;
+  إذا (align2 + len >= ورقہ_ناپ)
+    أرجع;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (حرف *) (buf1 + align1);
+  s2 = (حرف *) (buf2 + align2);
 
-  for (i = 0, j = 1; i < len; i++, j += 23)
+  لكل (i = 0, j = 1; i < len; i++, j += 23)
     s1[i] = j;
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s2, (char *) (buf2 + align1), s1, len);
+    do_one_test (impl, s2, (حرف *) (buf2 + align1), s1, len);
 }
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
-  size_t i, n, align1, align2, len, size;
+  size_t i, n, align1, align2, len, ناپ;
   size_t srcstart, srcend, dststart, dstend;
-  int c;
-  unsigned char *p1, *p2;
-#ifndef TEST_BCOPY
-  unsigned char *res;
-#endif
+  صحيح c;
+  بنانشانی حرف *p1, *p2;
+#جے_بنا_تعریف TEST_BCOPY
+  بنانشانی حرف *res;
+#جے_انت
 
-  for (n = 0; n < ITERATIONS; n++)
+  لكل (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 255) == 0)
-	size = 65536;
-      else
-	size = 512;
-      if (size > page_size)
-	size = page_size;
-      if ((random () & 3) == 0)
+      إذا ((random () & 255) == 0)
+	ناپ = 65536;
+      وإلا
+	ناپ = 512;
+      إذا (ناپ > ورقہ_ناپ)
+	ناپ = ورقہ_ناپ;
+      إذا ((random () & 3) == 0)
 	{
-	  len = random () & (size - 1);
-	  align1 = size - len - (random () & 31);
-	  align2 = size - len - (random () & 31);
-	  if (align1 > size)
+	  len = random () & (ناپ - 1);
+	  align1 = ناپ - len - (random () & 31);
+	  align2 = ناپ - len - (random () & 31);
+	  إذا (align1 > ناپ)
 	    align1 = 0;
-	  if (align2 > size)
+	  إذا (align2 > ناپ)
 	    align2 = 0;
 	}
-      else
+      وإلا
 	{
-	  align1 = random () & (size / 2 - 1);
-	  align2 = random () & (size / 2 - 1);
-	  len = random () & (size - 1);
-	  if (align1 + len > size)
-	    align1 = size - len;
-	  if (align2 + len > size)
-	    align2 = size - len;
+	  align1 = random () & (ناپ / 2 - 1);
+	  align2 = random () & (ناپ / 2 - 1);
+	  len = random () & (ناپ - 1);
+	  إذا (align1 + len > ناپ)
+	    align1 = ناپ - len;
+	  إذا (align2 + len > ناپ)
+	    align2 = ناپ - len;
 	}
 
-      p1 = buf1 + page_size - size;
-      p2 = buf2 + page_size - size;
+      p1 = buf1 + ورقہ_ناپ - ناپ;
+      p2 = buf2 + ورقہ_ناپ - ناپ;
       c = random () & 255;
       srcend = align1 + len + 256;
-      if (srcend > size)
-	srcend = size;
-      if (align1 > 256)
+      إذا (srcend > ناپ)
+	srcend = ناپ;
+      إذا (align1 > 256)
 	srcstart = align1 - 256;
-      else
+      وإلا
 	srcstart = 0;
-      for (i = srcstart; i < srcend; ++i)
+      لكل (i = srcstart; i < srcend; ++i)
 	p1[i] = random () & 255;
       dstend = align2 + len + 256;
-      if (dstend > size)
-	dstend = size;
-      if (align2 > 256)
+      إذا (dstend > ناپ)
+	dstend = ناپ;
+      إذا (align2 > 256)
 	dststart = align2 - 256;
-      else
+      وإلا
 	dststart = 0;
 
       FOR_EACH_IMPL (impl, 1)
 	{
 	  memset (p2 + dststart, c, dstend - dststart);
-	  memcpy (p2 + srcstart, p1 + srcstart, srcend - srcstart);
-#ifdef TEST_BCOPY
-	  CALL (impl, (char *) (p2 + align1), (char *) (p2 + align2), len);
-#else
-	  res = (unsigned char *) CALL (impl,
-					(char *) (p2 + align2),
-					(char *) (p2 + align1), len);
-	  if (res != p2 + align2)
+	  حافظہ_نقل (p2 + srcstart, p1 + srcstart, srcend - srcstart);
+#جے_تعریف_شدہ TEST_BCOPY
+	  CALL (impl, (حرف *) (p2 + align1), (حرف *) (p2 + align2), len);
+#وإلا
+	  res = (بنانشانی حرف *) CALL (impl,
+					(حرف *) (p2 + align2),
+					(حرف *) (p2 + align1), len);
+	  إذا (res != p2 + align2)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res, p2 + align2);
 	      ret = 1;
 	    }
-#endif
-	  if (memcmp (p1 + align1, p2 + align2, len))
+#جے_انت
+	  إذا (memcmp (p1 + align1, p2 + align2, len))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
 	    }
-	  for (i = dststart; i < dstend; ++i)
+	  لكل (i = dststart; i < dstend; ++i)
 	    {
-	      if (i >= align2 && i < align2 + len)
+	      إذا (i >= align2 && i < align2 + len)
 		{
 		  i = align2 + len - 1;
-		  continue;
+		  استمر;
 		}
-	      if (i >= srcstart && i < srcend)
+	      إذا (i >= srcstart && i < srcend)
 		{
 		  i = srcend - 1;
-		  continue;
+		  استمر;
 		}
-	      if (p2[i] != c)
+	      إذا (p2[i] != c)
 		{
 		  error (0, 0, "Iteration %zd - garbage in memset area, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  اكسر;
 		}
 	    }
 
-	  if (srcstart < align2
+	  إذا (srcstart < align2
 	      && memcmp (p2 + srcstart, p1 + srcstart,
 			 (srcend > align2 ? align2 : srcend) - srcstart))
 	    {
 	      error (0, 0, "Iteration %zd - garbage before dst, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
-	      break;
+	      اكسر;
 	    }
 
 	  i = srcstart > align2 + len ? srcstart : align2 + len;
-	  if (srcend > align2 + len
+	  إذا (srcend > align2 + len
 	      && memcmp (p2 + i, p1 + i, srcend - i))
 	    {
 	      error (0, 0, "Iteration %zd - garbage after dst, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
-	      break;
+	      اكسر;
 	    }
 	}
     }
 }
 
-static void
-do_test2 (size_t offset)
+ساكن فراغ
+do_test2 (size_t وتھ)
 {
-  size_t size = 0x20000000;
+  size_t ناپ = 0x20000000;
   uint32_t * large_buf;
 
-  large_buf = mmap ((void*) 0x70000000, size, PROT_READ | PROT_WRITE,
-		    MAP_PRIVATE | MAP_ANON, -1, 0);
+  large_buf = mmap ((فراغ*) 0x70000000, ناپ, PROT_READ | PROT_WRITE,
+		    MAP_نجی | MAP_ANON, -1, 0);
 
-  if (large_buf == MAP_FAILED)
+  إذا (large_buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "Large mmap failed");
 
-  if ((uintptr_t) large_buf > 0x80000000 - 128
+  إذا ((uintptr_t) large_buf > 0x80000000 - 128
       || 0x80000000 - (uintptr_t) large_buf > 0x20000000)
     {
       error (0, 0, "Large mmap allocated improperly");
       ret = EXIT_UNSUPPORTED;
-      munmap ((void *) large_buf, size);
-      return;
+      munmap ((فراغ *) large_buf, ناپ);
+      أرجع;
     }
 
-  size_t bytes_move = 0x80000000 - (uintptr_t) large_buf;
-  if (bytes_move + offset * sizeof (uint32_t) > size)
+  size_t بائٹاں_move = 0x80000000 - (uintptr_t) large_buf;
+  إذا (بائٹاں_move + وتھ * حجم (uint32_t) > ناپ)
     {
-      munmap ((void *) large_buf, size);
-      return;
+      munmap ((فراغ *) large_buf, ناپ);
+      أرجع;
     }
-  size_t arr_size = bytes_move / sizeof (uint32_t);
+  size_t arr_ناپ = بائٹاں_move / حجم (uint32_t);
   size_t i;
   size_t repeats;
   uint32_t * src = large_buf;
-  uint32_t * dst = &large_buf[offset];
-  for (repeats = 0; repeats < 2; ++repeats)
+  uint32_t * dst = &large_buf[وتھ];
+  لكل (repeats = 0; repeats < 2; ++repeats)
     {
       FOR_EACH_IMPL (impl, 0)
         {
-          for (i = 0; i < arr_size; i++)
+          لكل (i = 0; i < arr_ناپ; i++)
             src[i] = (uint32_t) i;
 
 
-#ifdef TEST_BCOPY
-          CALL (impl, (char *) src, (char *) dst, bytes_move);
-#else
-          CALL (impl, (char *) dst, (char *) src, bytes_move);
-#endif
+#جے_تعریف_شدہ TEST_BCOPY
+          CALL (impl, (حرف *) src, (حرف *) dst, بائٹاں_move);
+#وإلا
+          CALL (impl, (حرف *) dst, (حرف *) src, بائٹاں_move);
+#جے_انت
 
-          for (i = 0; i < arr_size; i++)
+          لكل (i = 0; i < arr_ناپ; i++)
 	    {
-	      if (dst[i] != (uint32_t) i)
+	      إذا (dst[i] != (uint32_t) i)
 		{
 		  error (0, 0,
 			 "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
 			 impl->name, dst, src, i);
 		  ret = 1;
-		  munmap ((void *) large_buf, size);
-		  return;
+		  munmap ((فراغ *) large_buf, ناپ);
+		  أرجع;
 		}
 	    }
 	}
@@ -308,111 +308,111 @@ do_test2 (size_t offset)
       dst = large_buf;
     }
 
-  munmap ((void *) large_buf, size);
+  munmap ((فراغ *) large_buf, ناپ);
 }
 
-static void
-do_test3 (size_t bytes_move, size_t offset)
+ساكن فراغ
+do_test3 (size_t بائٹاں_move, size_t وتھ)
 {
-  size_t size = bytes_move * 3;
+  size_t ناپ = بائٹاں_move * 3;
   uint32_t *buf;
 
-  buf = mmap (NULL, size, PROT_READ | PROT_WRITE,
-	      MAP_PRIVATE | MAP_ANON, -1, 0);
+  buf = mmap (عدم, ناپ, PROT_READ | PROT_WRITE,
+	      MAP_نجی | MAP_ANON, -1, 0);
 
-  if (buf == MAP_FAILED)
+  إذا (buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  size_t arr_size = bytes_move / sizeof (uint32_t);
+  size_t arr_ناپ = بائٹاں_move / حجم (uint32_t);
   size_t i;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      for (i = 0; i < arr_size; i++)
+      لكل (i = 0; i < arr_ناپ; i++)
         buf[i] = (uint32_t) i;
 
-      uint32_t *dst = &buf[arr_size + offset];
+      uint32_t *dst = &buf[arr_ناپ + وتھ];
 
-#ifdef TEST_BCOPY
-      CALL (impl, (char *) buf, (char *) dst, bytes_move);
-#else
-      CALL (impl, (char *) dst, (char *) buf, bytes_move);
-#endif
+#جے_تعریف_شدہ TEST_BCOPY
+      CALL (impl, (حرف *) buf, (حرف *) dst, بائٹاں_move);
+#وإلا
+      CALL (impl, (حرف *) dst, (حرف *) buf, بائٹاں_move);
+#جے_انت
 
-      for (i = 0; i < arr_size; i++)
+      لكل (i = 0; i < arr_ناپ; i++)
 	{
-	  if (dst[i] != (uint32_t) i)
+	  إذا (dst[i] != (uint32_t) i)
 	    {
 	      error (0, 0,
 		     "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
 		     impl->name, dst, buf, i);
 	      ret = 1;
-	      break;
+	      اكسر;
 	    }
 	}
     }
 
-  munmap ((void *) buf, size);
+  munmap ((فراغ *) buf, ناپ);
 }
 
-static void
-do_test4 (size_t bytes_move, size_t offset1, size_t offset2)
+ساكن فراغ
+do_test4 (size_t بائٹاں_move, size_t offset1, size_t offset2)
 {
-  size_t size, repeats, i;
+  size_t ناپ, repeats, i;
   uint8_t *buf, *dst, *src;
 
-  size = bytes_move + MAX(offset1, offset2);
-  buf  = mmap(NULL, size, PROT_READ | PROT_WRITE,
-             MAP_PRIVATE | MAP_ANON, -1, 0);
+  ناپ = بائٹاں_move + MAX(offset1, offset2);
+  buf  = mmap(عدم, ناپ, PROT_READ | PROT_WRITE,
+             MAP_نجی | MAP_ANON, -1, 0);
 
-  if (buf == MAP_FAILED)
+  إذا (buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
   dst = &buf[offset1];
   src = &buf[offset2];
-  for (repeats = 0; repeats < 2; ++repeats)
+  لكل (repeats = 0; repeats < 2; ++repeats)
     {
       FOR_EACH_IMPL (impl, 0)
         {
-          for (i = 0; i < bytes_move; i++)
+          لكل (i = 0; i < بائٹاں_move; i++)
               src[i] = (uint8_t) i;
-#ifdef TEST_BCOPY
-          CALL (impl, (char *) src, (char *) dst, bytes_move);
-#else
-          CALL (impl, (char *) dst, (char *) src, bytes_move);
-#endif
-          for (i = 0; i < bytes_move; i++)
+#جے_تعریف_شدہ TEST_BCOPY
+          CALL (impl, (حرف *) src, (حرف *) dst, بائٹاں_move);
+#وإلا
+          CALL (impl, (حرف *) dst, (حرف *) src, بائٹاں_move);
+#جے_انت
+          لكل (i = 0; i < بائٹاں_move; i++)
             {
-              if (dst[i] != (uint8_t) i)
+              إذا (dst[i] != (uint8_t) i)
                 {
                   error (0, 0,
                          "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
                          impl->name, dst, buf, i);
                   ret = 1;
-                  break;
+                  اكسر;
                 }
             }
         }
       dst = &buf[offset2];
       src = &buf[offset1];
     }
-  munmap ((void *) buf, size);
+  munmap ((فراغ *) buf, ناپ);
 }
 
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%23s", "");
+  لکھو ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-  for (i = 0; i < 14; ++i)
+  لكل (i = 0; i < 14; ++i)
     {
       do_test (0, 32, 1 << i);
       do_test (32, 0, 1 << i);
@@ -420,7 +420,7 @@ test_main (void)
       do_test (i, 0, 1 << i);
     }
 
-  for (i = 0; i < 32; ++i)
+  لكل (i = 0; i < 32; ++i)
     {
       do_test (0, 32, i);
       do_test (32, 0, i);
@@ -428,10 +428,10 @@ test_main (void)
       do_test (i, 0, i);
     }
 
-  for (i = 3; i < 32; ++i)
+  لكل (i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
-	continue;
+      إذا ((i & (i - 1)) == 0)
+	استمر;
       do_test (0, 32, 16 * i);
       do_test (32, 0, 16 * i);
       do_test (0, i, 16 * i);
@@ -454,7 +454,7 @@ test_main (void)
 
   /* Copy 16KB data.  */
   do_test3 (16384, 3);
-  for (i = 4096; i <= 16384; i <<= 1)
+  لكل (i = 4096; i <= 16384; i <<= 1)
     {
       do_test4 (i, 0, i);
       do_test4 (i, 0, i - 1);
@@ -474,7 +474,7 @@ test_main (void)
     }
 
 
-  return ret;
+  أرجع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
-#undef strpbrk
+#تعریف_رد strpbrk
 
-#ifndef STRPBRK
-#define STRPBRK strpbrk
-#endif
+#جے_بنا_تعریف STRPBRK
+#تعریف_کرو STRPBRK strpbrk
+#جے_انت
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
-char *
-STRPBRK (const char *s, const char *accept)
+حرف *
+STRPBRK (ثابت حرف *s, ثابت حرف *accept)
 {
   s += strcspn (s, accept);
-  return *s ? (char *)s : NULL;
+  أرجع *s ? (حرف *)s : عدم;
 }
 libc_hidden_builtin_def (strpbrk)

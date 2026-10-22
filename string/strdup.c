@@ -15,40 +15,40 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#جے_تعریف_شدہ HAVE_CONFIG_H
+#ضمن <config.h>
+#جے_انت
 
-#if defined _LIBC || defined  STDC_HEADERS
+#إذا defined _LIBC || defined  STDC_سرخیاں
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
-#endif
+#وإلا
+حرف *حافظہ_دیو ();
+حرف *حافظہ_نقل ();
+#جے_انت
 
-#undef __strdup
-#undef strdup
+#تعریف_رد __strdup
+#تعریف_رد strdup
 
-#ifndef weak_alias
+#جے_بنا_تعریف weak_alias
 # define __strdup strdup
-#endif
+#جے_انت
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+حرف *
+__strdup (ثابت حرف *s)
 {
-  size_t len = strlen (s) + 1;
-  void *new = malloc (len);
+  size_t len = لڑی_لمبائی (s) + 1;
+  فراغ *new = حافظہ_دیو (len);
 
-  if (new == NULL)
-    return NULL;
+  إذا (new == عدم)
+    أرجع عدم;
 
-  return (char *) memcpy (new, s, len);
+  أرجع (حرف *) حافظہ_نقل (new, s, len);
 }
-#ifdef libc_hidden_def
+#جے_تعریف_شدہ libc_hidden_def
 libc_hidden_def (__strdup)
-#endif
-#ifdef weak_alias
+#جے_انت
+#جے_تعریف_شدہ weak_alias
 weak_alias (__strdup, strdup)
-#endif
+#جے_انت

@@ -17,50 +17,50 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <dlfcn.h>
-#include <errno.h>
-#include <string.h>
+#ضمن <dlfcn.h>
+#ضمن <errno.h>
+#ضمن <string.h>
 
-#include <support/check.h>
-#include <support/support.h>
+#ضمن <support/check.h>
+#ضمن <support/support.h>
 
 /* malloc is allowed to change errno to a value different than 0, even when
    there is no actual error.  This happens for example when the memory
    allocation through sbrk fails.  Simulate this by interposing our own
    malloc implementation which sets errno to ENOMEM and calls the original
    malloc.  */
-void
-*malloc (size_t size)
+فراغ
+*حافظہ_دیو (size_t ناپ)
 {
-  static void *(*real_malloc) (size_t size);
+  ساكن فراغ *(*real_malloc) (size_t ناپ);
 
-  if (!real_malloc)
-    real_malloc = dlsym (RTLD_NEXT, "malloc");
+  إذا (!real_malloc)
+    real_malloc = dlsym (RTLD_اگلا, "malloc");
 
   errno = ENOMEM;
 
-  return (*real_malloc) (size);
+  أرجع (*real_malloc) (ناپ);
 }
 
 /* strerror must not change the value of errno.  Unfortunately due to GCC bug
    #88576, this happens when -fmath-errno is used.  This simple test checks
    that it doesn't happen.  */
-static int
-do_test (void)
+ساكن صحيح
+do_test (فراغ)
 {
-  char *msg;
+  حرف *پیغام;
 
   errno = 0;
-  msg = strerror (-3);
-  (void) msg;
+  پیغام = strerror (-3);
+  (فراغ) پیغام;
   TEST_COMPARE (errno, 0);
 
-  locale_t l = xnewlocale (LC_ALL_MASK, "C", NULL);
-  msg = strerror_l (-3, l);
-  (void) msg;
+  locale_t l = xnewlocale (LC_ALL_MASK, "C", عدم);
+  پیغام = strerror_l (-3, l);
+  (فراغ) پیغام;
   TEST_COMPARE (errno, 0);
 
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

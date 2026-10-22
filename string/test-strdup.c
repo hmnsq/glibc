@@ -16,9 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#ضمن <support/check.h>
 
-#ifdef WIDE
+#جے_تعریف_شدہ WIDE
 # include <wchar.h>
 # define CHAR wchar_t
 # define sfmt "ls"
@@ -28,8 +28,8 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define TCS TEST_COMPARE_STRING_WIDE
-#else
-# define CHAR char
+#وإلا
+# define CHAR حرف
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
@@ -37,56 +37,56 @@
 # define MEMCMP memcmp
 # define MEMSET memset
 # define TCS TEST_COMPARE_STRING
-#endif
+#جے_انت
 
-#ifndef STRDUP_RESULT
-# define STRDUP_RESULT(dst, len) dst
+#جے_بنا_تعریف STRDUP_نتیجہ
+# define STRDUP_نتیجہ(dst, len) dst
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strdup"
-# else
+# وإلا
 #  define TEST_NAME "wcsdup"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRDUP strdup
-# else
+# وإلا
 #  define STRDUP wcsdup
 # endif
-#endif
+#جے_انت
 
-typedef CHAR *(*proto_t) (const CHAR *);
+تعريفنوع CHAR *(*proto_t) (ثابت CHAR *);
 
-static void
-do_zero_len_test (void)
+ساكن فراغ
+do_zero_len_test (فراغ)
 {
   CHAR src[1] = { '\0' };
   CHAR *dst = STRDUP (src);
 
   TCS (dst, src);
-  free (dst);
+  حرر (dst);
 }
 
-static void
-do_one_test (const CHAR *src,
-	     size_t len __attribute__((unused)))
+ساكن فراغ
+do_one_test (ثابت CHAR *src,
+	     size_t len __attribute__((بن_ورتیا)))
 {
   CHAR *dst = STRDUP (src);
 
-  if (STRCMP (dst, src) != 0)
+  إذا (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     TEST_NAME, dst, src);
       ret = 1;
-      free (dst);
-      return;
+      حرر (dst);
+      أرجع;
     }
-  free (dst);
+  حرر (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+ساكن فراغ
+do_test (size_t align1, size_t align2, size_t len, صحيح max_char)
 {
   size_t i;
   CHAR *s1;
@@ -94,30 +94,30 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  إذا ((align1 + len) * حجم (CHAR) >= ورقہ_ناپ)
+    أرجع;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  إذا ((align2 + len) * حجم (CHAR) >= ورقہ_ناپ)
+    أرجع;
 
   s1 = (CHAR *) (buf1) + align1;
 
-  for (i = 0; i < len; i++)
+  لكل (i = 0; i < len; i++)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
   do_one_test (s1, len);
 }
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
   size_t i, j, n, align1, align2, len;
-  CHAR *p1 = (CHAR *)(buf1 + page_size) - 512;
+  CHAR *p1 = (CHAR *)(buf1 + ورقہ_ناپ) - 512;
   CHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  لكل (n = 0; n < ITERATIONS; n++)
     {
       /* align1 and align2 are expressed as wchar_t and not in bytes for wide
      char test, and thus it will be equal to align times wchar_t size.
@@ -126,51 +126,51 @@ do_random_tests (void)
      since some assembly implementations have separate prolog for alignments
      more 48.  */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / حجم (CHAR));
+      إذا (random () & 1)
+	align2 = random () & (63 / حجم (CHAR));
+      وإلا
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      إذا (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      إذا (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      إذا (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      لكل (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  إذا (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  وإلا
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      إذا (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
 
       res =  STRDUP(p1 + align1);
       TCS (res, (p1 + align1));
-      free (res);
+      حرر (res);
     }
 }
 
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%23s", "");
-  printf ("\t%s", TEST_NAME);
-  putchar ('\n');
+  لکھو ("%23s", "");
+  لکھو ("\t%s", TEST_NAME);
+  حرف_لکھو ('\n');
 
-  for (i = 0; i < 16; ++i)
+  لكل (i = 0; i < 16; ++i)
     {
       do_test (0, 0, i, SMALL_CHAR);
       do_test (0, 0, i, BIG_CHAR);
@@ -178,13 +178,13 @@ test_main (void)
       do_test (i, 0, i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  لكل (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, SMALL_CHAR);
       do_test (8 - i, 2 * i, 8 << i, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  لكل (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, SMALL_CHAR);
       do_test (2 * i, i, 8 << i, BIG_CHAR);
@@ -195,7 +195,7 @@ test_main (void)
   do_zero_len_test ();
   do_random_tests ();
 
-  return ret;
+  أرجع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

@@ -21,18 +21,18 @@
    Architecture-specific implementations also need to define
    __explicit_bzero_chk.  */
 
-#include <string.h>
+#ضمن <string.h>
 
 /* glibc-internal users use __explicit_bzero_chk, and explicit_bzero
    redirects to that.  */
-#undef explicit_bzero
+#تعریف_رد explicit_bzero
 
 /* Set LEN bytes of S to 0.  The compiler will not delete a call to
    this function, even if S is dead after the call.  */
-void
-explicit_bzero (void *s, size_t len)
+فراغ
+explicit_bzero (فراغ *s, size_t len)
 {
   memset (s, '\0', len);
   /* Compiler barrier.  */
-  asm volatile ("" ::: "memory");
+  asm متطاير ("" ::: "memory");
 }

@@ -26,71 +26,71 @@
  * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de	*/
 
 /* Specification.  */
-#include <string.h>
+#ضمن <string.h>
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <strings.h>
+#ضمن <ctype.h>
+#ضمن <stdbool.h>
+#ضمن <strings.h>
 
-#define TOLOWER(Ch) tolower (Ch)
+#تعریف_کرو TOLOWER(Ch) tolower (Ch)
 
 /* Two-Way algorithm.  */
-#define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
+#تعریف_کرو RETURN_TYPE حرف *
+#تعریف_کرو دستیاب(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((فراغ*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#define CHECK_EOL (1)
-#define RET0_IF_0(a) if (!a) goto ret0
-#define CANON_ELEMENT(c) TOLOWER (c)
-#define CMP_FUNC(p1, p2, l)				\
-  __strncasecmp ((const char *) (p1), (const char *) (p2), l)
-#include "str-two-way.h"
+#تعریف_کرو CHECK_EOL (1)
+#تعریف_کرو RET0_IF_0(a) إذا (!a) اذهب ret0
+#تعریف_کرو CANON_ELEMENT(c) TOLOWER (c)
+#تعریف_کرو CMP_FUNC(p1, p2, l)				\
+  __strncasecmp ((ثابت حرف *) (p1), (ثابت حرف *) (p2), l)
+#ضمن "str-two-way.h"
 
-#undef strcasestr
-#undef __strcasestr
+#تعریف_رد strcasestr
+#تعریف_رد __strcasestr
 
-#ifndef STRCASESTR
-#define STRCASESTR __strcasestr
-#endif
+#جے_بنا_تعریف STRCASESTR
+#تعریف_کرو STRCASESTR __strcasestr
+#جے_انت
 
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using
    case-insensitive comparison.  This function gives unspecified
    results in multibyte locales.  */
-char *
-STRCASESTR (const char *haystack, const char *needle)
+حرف *
+STRCASESTR (ثابت حرف *haystack, ثابت حرف *needle)
 {
   size_t needle_len; /* Length of NEEDLE.  */
   size_t haystack_len; /* Known minimum length of HAYSTACK.  */
 
   /* Handle empty NEEDLE special case.  */
-  if (needle[0] == '\0')
-    return (char *) haystack;
+  إذا (needle[0] == '\0')
+    أرجع (حرف *) haystack;
 
   /* Ensure HAYSTACK length is at least as long as NEEDLE length.
      Since a match may occur early on in a huge HAYSTACK, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  needle_len = strlen (needle);
+  needle_len = لڑی_لمبائی (needle);
   haystack_len = __strnlen (haystack, needle_len + 256);
-  if (haystack_len < needle_len)
-    return NULL;
+  إذا (haystack_len < needle_len)
+    أرجع عدم;
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See
      ISO C 99 section 6.2.6.1.  */
-  if (needle_len < LONG_NEEDLE_THRESHOLD)
-    return two_way_short_needle ((const unsigned char *) haystack,
+  إذا (needle_len < LONG_NEEDLE_حد)
+    أرجع two_way_short_needle ((ثابت بنانشانی حرف *) haystack,
 				 haystack_len,
-				 (const unsigned char *) needle,
+				 (ثابت بنانشانی حرف *) needle,
 				 needle_len);
-  return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
-			      (const unsigned char *) needle,
+  أرجع two_way_long_needle ((ثابت بنانشانی حرف *) haystack, haystack_len,
+			      (ثابت بنانشانی حرف *) needle,
 			      needle_len);
 }
 
-#undef LONG_NEEDLE_THRESHOLD
+#تعریف_رد LONG_NEEDLE_حد
 
-#ifndef NO_ALIAS
+#جے_بنا_تعریف NO_ALIAS
 weak_alias (__strcasestr, strcasestr)
-#endif
+#جے_انت

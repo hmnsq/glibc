@@ -16,46 +16,46 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRCPY_RESULT(dst, len) ((dst) + (len))
-#define TEST_MAIN
-#ifndef WIDE
+#تعریف_کرو STRCPY_نتیجہ(dst, len) ((dst) + (len))
+#تعریف_کرو TEST_MAIN
+#جے_بنا_تعریف WIDE
 # define TEST_NAME "stpcpy"
-#else
+#وإلا
 # define TEST_NAME "wcpcpy"
-#endif /* !WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#جے_انت /* !WIDE */
+#ضمن "test-string.h"
+#جے_بنا_تعریف WIDE
+# define CHAR حرف
 # define STPCPY stpcpy
-#else
+#وإلا
 # include <wchar.h>
 # define CHAR wchar_t
 # define STPCPY wcpcpy
-#endif /* !WIDE */
+#جے_انت /* !WIDE */
 
 IMPL (STPCPY, 1)
 
 /* Also check the generic implementation.  */
-#undef STPCPY
-#undef weak_alias
-#define weak_alias(a, b)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#تعریف_رد STPCPY
+#تعریف_رد weak_alias
+#تعریف_کرو weak_alias(a, b)
+#تعریف_رد libc_hidden_def
+#تعریف_کرو libc_hidden_def(a)
+#تعریف_رد libc_hidden_builtin_def
+#تعریف_کرو libc_hidden_builtin_def(a)
+#تعریف_رد attribute_hidden
+#تعریف_کرو attribute_hidden
+#جے_بنا_تعریف WIDE
 # define STPCPY __stpcpy_default
 # include "string/stpcpy.c"
 IMPL (__stpcpy_default, 1)
-#else
+#وإلا
 # define __wcslen wcslen
 # define __wmemcpy wmemcpy
 # define WCPCPY __wcpcpy_default
 # include "wcsmbs/wcpcpy.c"
 IMPL (__wcpcpy_default, 1)
-#endif
+#جے_انت
 
-#undef CHAR
-#include "test-strcpy.c"
+#تعریف_رد CHAR
+#ضمن "test-strcpy.c"

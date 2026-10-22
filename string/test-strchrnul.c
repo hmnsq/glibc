@@ -17,5 +17,5 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define USE_FOR_STRCHRNUL 1
-#include "test-strchr.c"
+#تعریف_کرو USE_FOR_STRCHRNUL 1
+#ضمن "test-strchr.c"
