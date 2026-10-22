@@ -23,69 +23,69 @@
 /* An incorrect strcoll optimization resulted in incorrect
    results from strcoll for cs_CZ and da_DK.  */
 
-int
+整数
 test_cs_CZ (void)
 {
   const char t1[] = "config";
   const char t2[] = "choose";
-  if (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
+  もし (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
     {
       perror ("setlocale");
-      return 1;
+      戻る 1;
     }
   /* In Czech the digraph ch sorts after c, therefore we expect
      config to sort before choose.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  整数 a = strcoll (t1, t2);
+  整数 b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  もし (a < 0 && b > 0)
     {
       puts ("PASS: config < choose");
-      return 0;
+      戻る 0;
     }
-  else
+  否则
     {
       puts ("FAIL: Wrong sorting in cs_CZ.UTF-8.");
-      return 1;
+      戻る 1;
     }
 }
 
-int
+整数
 test_da_DK (void)
 {
   const char t1[] = "AS";
   const char t2[] = "AA";
-  if (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
+  もし (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
     {
       perror ("setlocale");
-      return 1;
+      戻る 1;
     }
   /* AA should be treated as the last letter of the Danish alphabet,
      hence sorting after AS.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  整数 a = strcoll (t1, t2);
+  整数 b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  もし (a < 0 && b > 0)
     {
       puts ("PASS: AS < AA");
-      return 0;
+      戻る 0;
     }
-  else
+  否则
     {
       puts ("FAIL: Wrong sorting in da_DK.ISO-8859-1");
-      return 1;
+      戻る 1;
     }
 }
 
-int
+整数
 do_test (void)
 {
-  int err = 0;
+  整数 err = 0;
   err |= test_cs_CZ ();
   err |= test_da_DK ();
-  return err;
+  戻る err;
 }
 
 #include <support/test-driver.c>

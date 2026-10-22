@@ -19,7 +19,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlen"
-#else
+#否则
 # define TEST_NAME "wcslen"
 #endif
 #include "test-string.h"
@@ -28,7 +28,7 @@
 # define STRLEN strlen
 # define CHAR char
 # define MAX_CHAR CHAR_MAX
-#else
+#否则
 # include <wchar.h>
 # define STRLEN wcslen
 # define CHAR wchar_t
@@ -49,7 +49,7 @@ IMPL (STRLEN, 1)
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 IMPL (__strlen_default, 1)
-#else
+#否则
 # define WCSLEN __wcslen_default
 # include "wcsmbs/wcslen.c"
 IMPL (__wcslen_default, 1)
@@ -60,12 +60,12 @@ static void
 do_one_test (impl_t *impl, const CHAR *s, size_t exp_len)
 {
   size_t len = CALL (impl, s);
-  if (len != exp_len)
+  もし (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      戻る;
     }
 }
 
@@ -75,12 +75,12 @@ do_test (size_t align, size_t len)
   size_t i;
 
   align &= (getpagesize () / sizeof (CHAR)) - 1;
-  if (align + sizeof (CHAR) * len >= page_size)
-    return;
+  もし (align + sizeof (CHAR) * len >= page_size)
+    戻る;
 
   CHAR *buf = (CHAR *) (buf1);
 
-  for (i = 0; i < len; ++i)
+  ために (i = 0; i < len; ++i)
     buf[align + i] = 1 + 11111 * i % MAX_CHAR;
   buf[align + len] = 0;
 
@@ -94,30 +94,30 @@ do_random_tests (void)
   size_t i, j, n, align, len;
   CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  ために (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      もし (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      もし (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      ために (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  もし (i == len + align)
 	    p[i] = 0;
-	  else
+	  否则
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      もし (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align)) != len)
+	もし (CALL (impl, (CHAR *) (p + align)) != len)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd) %zd != %zd, p %p",
 		   n, impl->name, align, CALL (impl, (CHAR *) (p + align)),
@@ -127,7 +127,7 @@ do_random_tests (void)
     }
 }
 
-int
+整数
 test_main (void)
 {
   size_t i;
@@ -141,13 +141,13 @@ test_main (void)
 
   /* Checking with only 4 * N alignments for wcslen, other alignments are wrong for wchar_t type arrays*/
 
-  for (i = 1; i < 8; ++i)
+  ために (i = 1; i < 8; ++i)
   {
     do_test (sizeof (CHAR) * i, i);
     do_test (0, i);
   }
 
-  for (i = 2; i <= 12; ++i)
+  ために (i = 2; i <= 12; ++i)
     {
       do_test (0, 1 << i);
       do_test (sizeof (CHAR) * 7, 1 << i);
@@ -160,7 +160,7 @@ test_main (void)
   size_t maxlength = 64 / sizeof (CHAR) - 1;
   size_t pagesize = getpagesize () / sizeof (CHAR);
 
-  for (i = maxlength ; i > 1; --i)
+  ために (i = maxlength ; i > 1; --i)
     {
       /* String stays on the same page.  */
       do_test (pagesize - i, i - 1);
@@ -169,7 +169,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  戻る ret;
 }
 
 #include <support/test-driver.c>

@@ -44,7 +44,7 @@
 /* Track status while looking for sequences in a string.  */
 typedef struct
 {
-  int len;			/* Length of the current sequence.  */
+  整数 len;			/* Length of the current sequence.  */
   size_t val;			/* Position of the sequence relative to the
 				   previous non-ignored sequence.  */
   size_t idxmax;		/* Maximum index in sequences.  */
@@ -62,13 +62,13 @@ typedef struct
 
 /* Get next sequence.  Traverse the string as required.  */
 static __always_inline void
-get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
+get_next_seq (coll_seq *seq, 整数 nrules, const unsigned char *rulesets,
 	      const USTRING_TYPE *weights, const int32_t *table,
 	      const USTRING_TYPE *extra, const int32_t *indirect,
-	      int pass)
+	      整数 pass)
 {
   size_t val = seq->val = 0;
-  int len = seq->len;
+  整数 len = seq->len;
   size_t backw_stop = seq->backw_stop;
   size_t backw = seq->backw;
   size_t idxcnt = seq->idxcnt;
@@ -76,22 +76,22 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
   int32_t idx = seq->idx;
   const USTRING_TYPE *us = seq->us;
 
-  while (len == 0)
+  ながら (len == 0)
     {
       ++val;
-      if (backw_stop != ~0ul)
+      もし (backw_stop != ~0ul)
 	{
 	  /* There is something pushed.  */
-	  if (backw == backw_stop)
+	  もし (backw == backw_stop)
 	    {
 	      /* The last pushed character was handled.  Continue
 		 with forward characters.  */
-	      if (idxcnt < idxmax)
+	      もし (idxcnt < idxmax)
 		{
 		  idx = seq->save_idx;
 		  backw_stop = ~0ul;
 		}
-	      else
+	      否则
 		{
 		  /* Nothing anymore.  The backward sequence ended with
 		     the last sequence in the string.  Note that len is
@@ -100,14 +100,14 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 		  break;
 	        }
 	    }
-	  else
+	  否则
 	    {
 	      /* XXX Traverse BACKW sequences from the beginning of
 		 BACKW_STOP to get the next sequence.  Is there a quicker way
 	         to do this?  */
 	      size_t i = backw_stop;
 	      us = seq->back_us;
-	      while (i < backw)
+	      ながら (i < backw)
 		{
 		  int32_t tmp = findidx (table, indirect, extra, &us, -1);
 		  idx = tmp & 0xffffff;
@@ -117,12 +117,12 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 	      us = seq->us;
 	    }
 	}
-      else
+      否则
 	{
 	  backw_stop = idxmax;
 	  int32_t prev_idx = idx;
 
-	  while (*us != L('\0'))
+	  ながら (*us != L('\0'))
 	    {
 	      int32_t tmp = findidx (table, indirect, extra, &us, -1);
 	      unsigned char rule = tmp >> 24;
@@ -131,26 +131,26 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 	      idxcnt = idxmax++;
 
 	      /* Save the rule for the first sequence.  */
-	      if (__glibc_unlikely (idxcnt == 0))
+	      もし (__glibc_unlikely (idxcnt == 0))
 	        seq->rule = rule;
 
-	      if ((rulesets[rule * nrules + pass]
+	      もし ((rulesets[rule * nrules + pass]
 		   & sort_backward) == 0)
 		/* No more backward characters to push.  */
 		break;
 	      ++idxcnt;
 	    }
 
-	  if (backw_stop >= idxcnt)
+	  もし (backw_stop >= idxcnt)
 	    {
 	      /* No sequence at all or just one.  */
-	      if (idxcnt == idxmax || backw_stop > idxcnt)
+	      もし (idxcnt == idxmax || backw_stop > idxcnt)
 		/* Note that len is still zero.  */
 		break;
 
 	      backw_stop = ~0ul;
 	    }
-	  else
+	  否则
 	    {
 	      /* We pushed backward sequences.  If the stream ended with the
 		 backward sequence, then we process the last sequence we
@@ -159,13 +159,13 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 	      seq->back_us = seq->us;
 	      seq->us = us;
 	      backw = idxcnt;
-	      if (idxmax > idxcnt)
+	      もし (idxmax > idxcnt)
 		{
 		  backw--;
 		  seq->save_idx = idx;
 		  idx = prev_idx;
 		}
-	      if (backw > backw_stop)
+	      もし (backw > backw_stop)
 		backw--;
 	    }
 	}
@@ -184,7 +184,7 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
       len = weights[idx++];
       DIAG_POP_NEEDS_COMMENT;
       /* Skip over indices of previous levels.  */
-      for (int i = 0; i < pass; i++)
+      ために (整数 i = 0; i < pass; i++)
 	{
 	  idx += len;
 	  len = weights[idx];
@@ -204,20 +204,20 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 }
 
 /* Compare two sequences.  */
-static __always_inline int
-do_compare (coll_seq *seq1, coll_seq *seq2, int position,
+static __always_inline 整数
+do_compare (coll_seq *seq1, coll_seq *seq2, 整数 position,
 	    const USTRING_TYPE *weights)
 {
-  int seq1len = seq1->len;
-  int seq2len = seq2->len;
+  整数 seq1len = seq1->len;
+  整数 seq2len = seq2->len;
   size_t val1 = seq1->val;
   size_t val2 = seq2->val;
-  int idx1 = seq1->idx;
-  int idx2 = seq2->idx;
-  int result = 0;
+  整数 idx1 = seq1->idx;
+  整数 idx2 = seq2->idx;
+  整数 result = 0;
 
   /* Test for position if necessary.  */
-  if (position && val1 != val2)
+  もし (position && val1 != val2)
     {
       result = val1 > val2 ? 1 : -1;
       goto out;
@@ -226,7 +226,7 @@ do_compare (coll_seq *seq1, coll_seq *seq2, int position,
   /* Compare the two sequences.  */
   do
     {
-      if (weights[idx1] != weights[idx2])
+      もし (weights[idx1] != weights[idx2])
 	{
 	  /* The sequences differ.  */
 	  result = weights[idx1] - weights[idx2];
@@ -240,9 +240,9 @@ do_compare (coll_seq *seq1, coll_seq *seq2, int position,
       --seq1len;
       --seq2len;
     }
-  while (seq1len > 0 && seq2len > 0);
+  ながら (seq1len > 0 && seq2len > 0);
 
-  if (position && seq1len != seq2len)
+  もし (position && seq1len != seq2len)
     result = seq1len - seq2len;
 
 out:
@@ -250,10 +250,10 @@ out:
   seq2->len = seq2len;
   seq1->idx = idx1;
   seq2->idx = idx2;
-  return result;
+  戻る result;
 }
 
-int
+整数
 STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
 {
   struct __locale_data *current = l->__locales[LC_COLLATE];
@@ -266,12 +266,12 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
   const USTRING_TYPE *extra;
   const int32_t *indirect;
 
-  if (nrules == 0)
-    return STRCMP (s1, s2);
+  もし (nrules == 0)
+    戻る STRCMP (s1, s2);
 
   /* Catch empty strings.  */
-  if (__glibc_unlikely (*s1 == '\0') || __glibc_unlikely (*s2 == '\0'))
-    return (*s1 != '\0') - (*s2 != '\0');
+  もし (__glibc_unlikely (*s1 == '\0') || __glibc_unlikely (*s2 == '\0'))
+    戻る (*s1 != '\0') - (*s2 != '\0');
 
   rulesets = (const unsigned char *)
     current->values[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
@@ -289,7 +289,7 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
   assert (((uintptr_t) extra) % __alignof__ (extra[0]) == 0);
   assert (((uintptr_t) indirect) % __alignof__ (indirect[0]) == 0);
 
-  int result = 0, rule = 0;
+  整数 result = 0, rule = 0;
 
   /* With GCC 7 when compiling with -Os the compiler warns that
      seq1.back_us and seq2.back_us might be used uninitialized.
@@ -308,7 +308,7 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
   seq2.len = 0;
   seq2.idxmax = 0;
 
-  for (int pass = 0; pass < nrules; ++pass)
+  ために (整数 pass = 0; pass < nrules; ++pass)
     {
       seq1.idxcnt = 0;
       seq1.idx = 0;
@@ -328,43 +328,43 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
 	 this is true for all of them.  Please note that the localedef programs
 	 makes sure that `position' is not used at the first level.  */
 
-      int position = rulesets[rule * nrules + pass] & sort_position;
+      整数 position = rulesets[rule * nrules + pass] & sort_position;
 
-      while (1)
+      ながら (1)
 	{
 	  get_next_seq (&seq1, nrules, rulesets, weights, table,
 				    extra, indirect, pass);
 	  get_next_seq (&seq2, nrules, rulesets, weights, table,
 				    extra, indirect, pass);
 	  /* See whether any or both strings are empty.  */
-	  if (seq1.len == 0 || seq2.len == 0)
+	  もし (seq1.len == 0 || seq2.len == 0)
 	    {
-	      if (seq1.len == seq2.len)
+	      もし (seq1.len == seq2.len)
 		{
 		  /* Both strings ended and are equal at this level.  Do a
 		     byte-level comparison to ensure that we don't waste time
 		     going through multiple passes for totally equal strings
 		     before proceeding to subsequent passes.  */
-		  if (pass == 0 && STRCMP (s1, s2) == 0)
-		    return result;
-		  else
+		  もし (pass == 0 && STRCMP (s1, s2) == 0)
+		    戻る result;
+		  否则
 		    break;
 	        }
 
 	      /* This means one string is shorter than the other.  Find out
 		 which one and return an appropriate value.  */
-	      return seq1.len == 0 ? -1 : 1;
+	      戻る seq1.len == 0 ? -1 : 1;
 	    }
 
 	  result = do_compare (&seq1, &seq2, position, weights);
-	  if (result != 0)
-	    return result;
+	  もし (result != 0)
+	    戻る result;
 	}
 
       rule = seq1.rule;
     }
 
-  return result;
+  戻る result;
 }
 libc_hidden_def (STRCOLL)
 

@@ -29,15 +29,15 @@
 error_t
 __argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  もし (! before)
+    戻る __argz_add (argz, argz_len, entry);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  もし (before < *argz || before >= *argz + *argz_len)
+    戻る EINVAL;
 
-  if (before > *argz)
+  もし (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    ながら (before[-1])
       before--;
 
   {
@@ -46,17 +46,17 @@ __argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
     size_t new_argz_len = *argz_len + entry_len;
     char *new_argz = realloc (*argz, new_argz_len);
 
-    if (new_argz)
+    もし (new_argz)
       {
 	before = new_argz + (before - *argz);
 	memmove (before + entry_len, before, after_before);
 	memmove (before, entry, entry_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	戻る 0;
       }
-    else
-      return ENOMEM;
+    否则
+      戻る ENOMEM;
   }
 }
 weak_alias (__argz_insert, argz_insert)

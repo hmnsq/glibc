@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <libc-diag.h>
 
-int
-main (void)
+整数
+メインページ (void)
 {
   const char *a = "abc";
   const char *b = a;
@@ -19,8 +19,8 @@ main (void)
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strpbrk (b++, "");
   DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  もし (b != a + 1)
+    戻る 1;
 
-  return 0;
+  戻る 0;
 }

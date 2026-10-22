@@ -32,13 +32,13 @@ static volatile bool fail_malloc;
 void *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  もし (fail_malloc)
+    戻る NULL;
 
   static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  もし (original_malloc == NULL)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  戻る original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
@@ -65,13 +65,13 @@ test_strerror_l (void *closure)
   freelocale (loc);
 }
 
-static int
+static 整数
 do_test (void)
 {
   support_isolate_in_subprocess (test_strerror, NULL);
   support_isolate_in_subprocess (test_strerror_l, NULL);
 
-  return 0;
+  戻る 0;
 }
 
 #include <support/test-driver.c>

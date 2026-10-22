@@ -26,27 +26,27 @@
 error_t
 __argz_create (char *const argv[], char **argz, size_t *len)
 {
-  int argc;
+  整数 argc;
   size_t tlen = 0;
   char *const *ap;
   char *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
+  ために (argc = 0; argv[argc] != NULL; ++argc)
     tlen += strlen (argv[argc]) + 1;
 
-  if (tlen == 0)
+  もし (tlen == 0)
     *argz = NULL;
-  else
+  否则
     {
       *argz = malloc (tlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      もし (*argz == NULL)
+	戻る ENOMEM;
 
-      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+      ために (p = *argz, ap = argv; *ap; ++ap, ++p)
 	p = __stpcpy (p, *ap);
     }
   *len = tlen;
 
-  return 0;
+  戻る 0;
 }
 weak_alias (__argz_create, argz_create)

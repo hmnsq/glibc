@@ -28,9 +28,9 @@ IMPL (mempcpy, 1)
 char *
 simple_mempcpy (char *dst, const char *src, size_t n)
 {
-  while (n--)
+  ながら (n--)
     *dst++ = *src++;
-  return dst;
+  戻る dst;
 }
 
 #include "test-memcpy.c"

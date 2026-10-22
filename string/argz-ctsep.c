@@ -22,34 +22,34 @@
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (const char *string, 整数 delim, char **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  もし (nlen > 1)
     {
       const char *rp;
       char *wp;
 
       *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      もし (*argz == NULL)
+	戻る ENOMEM;
 
       rp = string;
       wp = *argz;
       do
-	if (*rp == delim)
+	もし (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    もし (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    否则
 	      --nlen;
 	  }
-	else
+	否则
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ながら (*rp++ != '\0');
 
-      if (nlen == 0)
+      もし (nlen == 0)
 	{
 	  free (*argz);
 	  *argz = NULL;
@@ -58,12 +58,12 @@ __argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 
       *len = nlen;
     }
-  else
+  否则
     {
       *argz = NULL;
       *len = 0;
     }
 
-  return 0;
+  戻る 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

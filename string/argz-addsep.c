@@ -22,36 +22,36 @@
 
 
 error_t
-__argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+__argz_add_sep (char **argz, size_t *argz_len, const char *string, 整数 delim)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  もし (nlen > 1)
     {
       const char *rp;
       char *wp;
 
       *argz = (char *) realloc (*argz, *argz_len + nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      もし (*argz == NULL)
+	戻る ENOMEM;
 
       wp = *argz + *argz_len;
       rp = string;
       do
-	if (*rp == delim)
+	もし (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    もし (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    否则
 	      --nlen;
 	  }
-	else
+	否则
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ながら (*rp++ != '\0');
 
       *argz_len += nlen;
     }
 
-  return 0;
+  戻る 0;
 }
 weak_alias (__argz_add_sep, argz_add_sep)

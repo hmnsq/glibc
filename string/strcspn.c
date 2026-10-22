@@ -30,9 +30,9 @@
 size_t
 STRCSPN (const char *str, const char *reject)
 {
-  if (__glibc_unlikely (reject[0] == '\0')
+  もし (__glibc_unlikely (reject[0] == '\0')
       || __glibc_unlikely (reject[1] == '\0'))
-    return __strchrnul (str, reject [0]) - str;
+    戻る __strchrnul (str, reject [0]) - str;
 
   /* Use multiple small memsets to enable inlining on most targets.  */
   unsigned char table[256];
@@ -45,17 +45,17 @@ STRCSPN (const char *str, const char *reject)
   unsigned char tmp;
   do
     p[tmp = *s++] = 1;
-  while (tmp);
+  ながら (tmp);
 
   s = (unsigned char*) str;
-  if (p[s[0]]) return 0;
-  if (p[s[1]]) return 1;
-  if (p[s[2]]) return 2;
-  if (p[s[3]]) return 3;
+  もし (p[s[0]]) 戻る 0;
+  もし (p[s[1]]) 戻る 1;
+  もし (p[s[2]]) 戻る 2;
+  もし (p[s[3]]) 戻る 3;
 
   s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
 
-  unsigned int c0, c1, c2, c3;
+  unsigned 整数 c0, c1, c2, c3;
   do
     {
       s += 4;
@@ -64,9 +64,9 @@ STRCSPN (const char *str, const char *reject)
       c2 = p[s[2]];
       c3 = p[s[3]];
     }
-  while ((c0 | c1 | c2 | c3) == 0);
+  ながら ((c0 | c1 | c2 | c3) == 0);
 
   size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  戻る (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
 }
 libc_hidden_builtin_def (strcspn)

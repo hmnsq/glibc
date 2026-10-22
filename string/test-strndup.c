@@ -33,25 +33,25 @@ do_one_test (const char *src, size_t len, size_t n)
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+do_test (size_t align1, size_t align2, size_t len, size_t n, 整数 max_char)
 {
   size_t i;
   char *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  もし ((align1 + len) * sizeof (char) >= page_size)
+    戻る;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  もし ((align2 + len) * sizeof (char) >= page_size)
+    戻る;
 
   s1 = (char *) (buf1) + align1;
 
-  for (i = 0; i < len; ++i)
+  ために (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  ために (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
@@ -78,8 +78,8 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
-    for (size_t off2 = 0; off2 < maxoffset; off2++)
+  ために (size_t off1 = 0; off1 < maxoffset; off1++)
+    ために (size_t off2 = 0; off2 < maxoffset; off2++)
       do_one_test (s1 + off1, maxoffset - off1 - 1,
 		   maxoffset + (maxoffset - off2));
 }
@@ -91,77 +91,77 @@ do_random_tests (void)
   char *p1 = (char *) (buf1 + page_size) - 512;
   char *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ために (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
-      if (mode & 1)
+      もし (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  もし (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  否则
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  もし (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  もし (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  否则
 	    len = 512;
-	  if (len >= 512)
+	  もし (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      否则
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  もし (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  否则
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  もし (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  もし (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      もし (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  否则
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  もし ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      もし (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      ために (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  もし (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  否则
 	    {
 	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      もし (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
 	res = (char *) strndup ((char *) (p1 + align1), size);
 	j = len + 1;
-	if (size < j)
+	もし (size < j)
 	  j = size;
 	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
 	free (res);
     }
 }
 
-int
+整数
 test_main (void)
 {
   size_t i;
@@ -172,7 +172,7 @@ test_main (void)
   printf ("\t%s", "strndup");
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  ために (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, 127);
       do_test (i, i, 16, 16, CHAR_MAX);
@@ -184,7 +184,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, CHAR_MAX);
     }
 
-  for (i = 1; i < 8; ++i)
+  ために (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, 127);
       do_test (0, 0, 16 << i, 8 << i, 127);
@@ -194,7 +194,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  戻る ret;
 }
 
 #include <support/test-driver.c>

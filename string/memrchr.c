@@ -31,10 +31,10 @@
 #endif
 
 void *
-__memrchr (const void *s, int c_in, size_t n)
+__memrchr (const void *s, 整数 c_in, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  もし (__glibc_unlikely (n == 0))
+    戻る NULL;
 
   const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
@@ -48,31 +48,31 @@ __memrchr (const void *s, int c_in, size_t n)
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
   find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  もし (mask != 0)
     {
       char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      戻る ret >= (char *) s ? ret : NULL;
     }
-  if (word_ptr == sword)
-    return NULL;
+  もし (word_ptr == sword)
+    戻る NULL;
   word = *--word_ptr;
 
-  while (word_ptr != sword)
+  ながら (word_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
+      もし (has_eq (word, repeated_c))
+	戻る (char *) word_ptr + index_last_eq (word, repeated_c);
       word = *--word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  もし (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
       char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      もし (ret >= (char *) s)
+	戻る ret;
     }
-  return NULL;
+  戻る NULL;
 }
 #ifndef MEMRCHR
 libc_hidden_def (__memrchr)
