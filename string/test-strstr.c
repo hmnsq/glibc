@@ -19,23 +19,23 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strstr"
-# define TEST_FUNC strstr
-#else
+# define TEST_FUNC म_माला
+#अन्यथा
 # define TEST_NAME "wcsstr"
 # define TEST_FUNC wcsstr
 #endif
 
 #ifndef WIDE
-# define CHAR char
-# define STRLEN strlen
-# define STRCPY strcpy
-# define MEMCPY memcpy
-# define MEMSET memset
+# define CHAR अक्षर
+# define STRLEN म_माप
+# define STRCPY म_नकल
+# define MEMCPY स_नकल
+# define MEMSET स_रखो
 # define MEMPCPY mempcpy
 # define L(s) s
-#else
+#अन्यथा
 # include <wchar.h>
-# define CHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
 # define STRLEN wcslen
 # define STRCPY wcscpy
 # define MEMCPY wmemcpy
@@ -47,7 +47,7 @@
 # define BUF1PAGES 4
 #endif
 
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
 #ifndef WIDE
 # define STRSTR c_strstr
@@ -55,7 +55,7 @@
 # define __strnlen strnlen
 # include "strstr.c"
 # define C_IMPL STRSTR
-#else
+#अन्यथा
 # undef weak_alias
 # define weak_alias(a, b)
 # define WCSSTR c_wcsstr
@@ -67,90 +67,90 @@
 #endif
 
 /* Naive implementation to verify results.  */
-static CHAR *
-simple_strstr (const CHAR *s1, const CHAR *s2)
+स्थिर CHAR *
+simple_strstr (स्थिरांक CHAR *s1, स्थिरांक CHAR *s2)
 {
   ssize_t s1len = STRLEN (s1);
   ssize_t s2len = STRLEN (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  जर (s2len > s1len)
+    परत रिक्त;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  साठी (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
-      size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (s1[i + j] != s2[j])
-	  break;
-      if (j == s2len)
-	return (CHAR *) s1 + i;
+      माप_प्रकार j;
+      साठी (j = 0; j < s2len; ++j)
+	जर (s1[i + j] != s2[j])
+	  थांबा;
+      जर (j == s2len)
+	परत (CHAR *) s1 + i;
     }
 
-  return NULL;
+  परत रिक्त;
 }
 
 
-typedef CHAR *(*proto_t) (const CHAR *, const CHAR *);
+प्रकारव्याख्या CHAR *(*proto_t) (स्थिरांक CHAR *, स्थिरांक CHAR *);
 
 IMPL (C_IMPL, 1)
 IMPL (TEST_FUNC, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s1, const CHAR *s2,
+स्थिर पूर्णांक
+check_result (impl_t *impl, स्थिरांक CHAR *s1, स्थिरांक CHAR *s2,
 	      CHAR *exp_result)
 {
   CHAR *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  जर (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      परत -1;
     }
 
-  return 0;
+  परत 0;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, CHAR *exp_result)
+स्थिर शून्य
+do_one_test (impl_t *impl, स्थिरांक CHAR *s1, स्थिरांक CHAR *s2, CHAR *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  जर (check_result (impl, s1, s2, exp_result) < 0)
+    परत;
 }
 
 
-static void
-do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+स्थिर शून्य
+do_test (माप_प्रकार align1, माप_प्रकार align2, माप_प्रकार len1, माप_प्रकार len2,
+	 पूर्णांक fail)
 {
-  align1 = align1 * sizeof (CHAR);
-  align2 = align2 * sizeof (CHAR);
+  align1 = align1 * आकार (CHAR);
+  align2 = align2 * आकार (CHAR);
 
   CHAR *s1 = (CHAR *) (buf1 + align1);
   CHAR *s2 = (CHAR *) (buf2 + align2);
 
-  static const CHAR d[] = L("1234567890abcdef");
-  const size_t dl = STRLEN (d);
+  स्थिर स्थिरांक CHAR d[] = L("1234567890abcdef");
+  स्थिरांक माप_प्रकार dl = STRLEN (d);
   CHAR *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  साठी (माप_प्रकार l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
-      size_t t = l > dl ? dl : l;
+      माप_प्रकार t = l > dl ? dl : l;
       ss2 = MEMPCPY (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  जर (fail)
     {
       CHAR *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      साठी (माप_प्रकार l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
-	  size_t t = l > dl ? dl : l;
+	  माप_प्रकार t = l > dl ? dl : l;
 	  MEMCPY (ss1, d, t);
 	  ++ss1[len2 > 7 ? 7 : len2 - 1];
 	  ss1 += t;
 	}
     }
-  else
+  अन्यथा
     {
       MEMSET (s1, '0', len1);
       MEMCPY (s1 + len1 - len2, s2, len2);
@@ -158,15 +158,15 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? रिक्त : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+स्थिर शून्य
+check1 (शून्य)
 {
-  const CHAR s1[] =
+  स्थिरांक CHAR s1[] =
     L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD_C3_A7_20_EF_BF_BD");
-  const CHAR s2[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
+  स्थिरांक CHAR s2[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
   CHAR *exp_result;
 
   exp_result = simple_strstr (s1, s2);
@@ -174,86 +174,86 @@ check1 (void)
     check_result (impl, s1, s2, exp_result);
 }
 
-static void
-check2 (void)
+स्थिर शून्य
+check2 (शून्य)
 {
-  const CHAR s1_stack[] = L(", enable_static, \0, enable_shared, ");
-  const size_t s1_char_count = 18;
-  const size_t s1_byte_len = 18 * sizeof (CHAR);
-  const CHAR *s2_stack = &(s1_stack[s1_char_count]);
-  const size_t s2_byte_len = 18 * sizeof (CHAR);
+  स्थिरांक CHAR s1_चळत[] = L(", enable_static, \0, enable_shared, ");
+  स्थिरांक माप_प्रकार s1_char_मोजणी = 18;
+  स्थिरांक माप_प्रकार s1_byte_len = 18 * आकार (CHAR);
+  स्थिरांक CHAR *s2_चळत = &(s1_चळत[s1_char_मोजणी]);
+  स्थिरांक माप_प्रकार s2_byte_len = 18 * आकार (CHAR);
   CHAR *exp_result;
-  const size_t page_size_real = getpagesize ();
+  स्थिरांक माप_प्रकार page_size_real = getpagesize ();
 
   /* Haystack at end of page.  The following page is protected.  */
-  CHAR *s1_page_end = (void *) buf1 + page_size - s1_byte_len;
-  STRCPY (s1_page_end, s1_stack);
+  CHAR *s1_page_end = (शून्य *) buf1 + page_size - s1_byte_len;
+  STRCPY (s1_page_end, s1_चळत);
 
   /* Haystack which crosses a page boundary.
      Note: page_size is at least 2 * getpagesize.  See test_init.  */
-  CHAR *s1_page_cross = (void *) buf1 + page_size_real - 8;
-  STRCPY (s1_page_cross, s1_stack);
+  CHAR *s1_page_cross = (शून्य *) buf1 + page_size_real - 8;
+  STRCPY (s1_page_cross, s1_चळत);
 
   /* Needle at end of page.  The following page is protected.  */
-  CHAR *s2_page_end = (void *) buf2 + page_size - s2_byte_len;
-  STRCPY (s2_page_end, s2_stack);
+  CHAR *s2_page_end = (शून्य *) buf2 + page_size - s2_byte_len;
+  STRCPY (s2_page_end, s2_चळत);
 
   /* Needle which crosses a page boundary.
      Note: page_size is at least 2 * getpagesize.  See test_init.  */
-  CHAR *s2_page_cross = (void *) buf2 + page_size_real - 8;
-  STRCPY (s2_page_cross, s2_stack);
+  CHAR *s2_page_cross = (शून्य *) buf2 + page_size_real - 8;
+  STRCPY (s2_page_cross, s2_चळत);
 
-  exp_result = simple_strstr (s1_stack, s2_stack);
+  exp_result = simple_strstr (s1_चळत, s2_चळत);
   FOR_EACH_IMPL (impl, 0)
     {
-      check_result (impl, s1_stack, s2_stack, exp_result);
-      check_result (impl, s1_stack, s2_page_end, exp_result);
-      check_result (impl, s1_stack, s2_page_cross, exp_result);
+      check_result (impl, s1_चळत, s2_चळत, exp_result);
+      check_result (impl, s1_चळत, s2_page_end, exp_result);
+      check_result (impl, s1_चळत, s2_page_cross, exp_result);
 
-      check_result (impl, s1_page_end, s2_stack, exp_result);
+      check_result (impl, s1_page_end, s2_चळत, exp_result);
       check_result (impl, s1_page_end, s2_page_end, exp_result);
       check_result (impl, s1_page_end, s2_page_cross, exp_result);
 
-      check_result (impl, s1_page_cross, s2_stack, exp_result);
+      check_result (impl, s1_page_cross, s2_चळत, exp_result);
       check_result (impl, s1_page_cross, s2_page_end, exp_result);
       check_result (impl, s1_page_cross, s2_page_cross, exp_result);
     }
 }
 
-static void
-check3 (void)
+स्थिर शून्य
+check3 (शून्य)
 {
   /* Check that a long periodic needle does not cause false positives.  */
   {
-    const CHAR input[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+    स्थिरांक CHAR आदान[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
                             "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
                             "_C3_A7_20_EF_BF_BD");
-    const CHAR need[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
+    स्थिरांक CHAR need[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, input, need, NULL);
+      check_result (impl, आदान, need, रिक्त);
   }
 
   {
-    const CHAR input[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+    स्थिरांक CHAR आदान[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
 			   "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
 			   "_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20"
 			   "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
-    const CHAR need[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
+    स्थिरांक CHAR need[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, input, need, (CHAR *) input + 115);
+      check_result (impl, आदान, need, (CHAR *) आदान + 115);
   }
 }
 
 
 #define N 1024
 
-static void
-pr23637 (void)
+स्थिर शून्य
+pr23637 (शून्य)
 {
   CHAR *h = (CHAR*) buf1;
   CHAR *n = (CHAR*) buf2;
 
-  for (int i = 0; i < N; i++)
+  साठी (पूर्णांक i = 0; i < N; i++)
     {
       n[i] = 'x';
       h[i] = ' ';
@@ -271,17 +271,17 @@ pr23637 (void)
     check_result (impl, h, n, exp_result);
 }
 
-static void
-pr23865 (void)
+स्थिर शून्य
+pr23865 (शून्य)
 {
   /* Check that a very long haystack is handled quickly if the needle is
      short and occurs near the beginning.  */
   {
-    size_t m = 1000000;
-    const CHAR *needle =
+    माप_प्रकार m = 1000000;
+    स्थिरांक CHAR *needle =
       L("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    CHAR *haystack = xmalloc ((m + 1) * sizeof (CHAR));
+    CHAR *haystack = xmalloc ((m + 1) * आकार (CHAR));
     MEMSET (haystack, L('A'), m);
     haystack[0] = L('B');
     haystack[m] = L('\0');
@@ -289,31 +289,31 @@ pr23865 (void)
     FOR_EACH_IMPL (impl, 0)
       check_result (impl, haystack, needle, haystack + 1);
 
-    free (haystack);
+    मुक्त (haystack);
   }
 
   /* Check that a very long needle is discarded quickly if the haystack is
      short.  */
   {
-    size_t m = 1000000;
-    const CHAR *haystack =
+    माप_प्रकार m = 1000000;
+    स्थिरांक CHAR *haystack =
       L("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 	"ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB");
-    CHAR *needle = xmalloc ((m + 1) * sizeof (CHAR));
+    CHAR *needle = xmalloc ((m + 1) * आकार (CHAR));
     MEMSET (needle, L'A', m);
     needle[m] = L('\0');
 
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, haystack, needle, NULL);
+      check_result (impl, haystack, needle, रिक्त);
 
-    free (needle);
+    मुक्त (needle);
   }
 
   /* Check that the asymptotic worst-case complexity is not quadratic.  */
   {
-    size_t m = 1000000;
-    CHAR *haystack = xmalloc ((2 * m + 2) * sizeof (CHAR));
-    CHAR *needle = xmalloc ((m + 2) * sizeof (CHAR));
+    माप_प्रकार m = 1000000;
+    CHAR *haystack = xmalloc ((2 * m + 2) * आकार (CHAR));
+    CHAR *needle = xmalloc ((m + 2) * आकार (CHAR));
 
     MEMSET (haystack, L('A'), 2 * m);
     haystack[2 * m] = L('B');
@@ -326,14 +326,14 @@ pr23865 (void)
     FOR_EACH_IMPL (impl, 0)
       check_result (impl, haystack, needle, haystack + m);
 
-    free (needle);
-    free (haystack);
+    मुक्त (needle);
+    मुक्त (haystack);
   }
 
   {
     /* Ensure that with a barely periodic "short" needle, STRSTR's
        search does not mistakenly skip just past the match point.  */
-    const CHAR *haystack =
+    स्थिरांक CHAR *haystack =
       L("\n"
        "with_build_libsubdir\n"
        "with_local_prefix\n"
@@ -368,7 +368,7 @@ pr23865 (void)
        "with_bugurl\n"
        "enable_languages\n"
        "with_multilib_list\n");
-    const CHAR *needle =
+    स्थिरांक CHAR *needle =
       L("\n"
        "with_gnu_ld\n");
 
@@ -378,8 +378,8 @@ pr23865 (void)
 
   {
     /* Same bug, shorter trigger.  */
-    const CHAR *haystack = L("..wi.d.");
-    const CHAR *needle = L(".d.");
+    स्थिरांक CHAR *haystack = L("..wi.d.");
+    स्थिरांक CHAR *needle = L(".d.");
     FOR_EACH_IMPL (impl, 0)
       check_result (impl, haystack, needle, (CHAR*) haystack + 4);
   }
@@ -387,17 +387,17 @@ pr23865 (void)
   /* Test case from Yves Bastide.
      <https://www.openwall.com/lists/musl/2014/04/18/2>  */
   {
-    const CHAR *input = L("playing play play play always");
-    const CHAR *needle = L("play play play");
+    स्थिरांक CHAR *आदान = L("playing play play play always");
+    स्थिरांक CHAR *needle = L("play play play");
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, input, needle, (CHAR*) input + 8);
+      check_result (impl, आदान, needle, (CHAR*) आदान + 8);
   }
 
   /* Test long needles.  */
   {
-    size_t m = 1024;
-    CHAR *haystack = xmalloc ((2 * m + 1) * sizeof (CHAR));
-    CHAR *needle = xmalloc ((m + 1) * sizeof (CHAR));
+    माप_प्रकार m = 1024;
+    CHAR *haystack = xmalloc ((2 * m + 1) * आकार (CHAR));
+    CHAR *needle = xmalloc ((m + 1) * आकार (CHAR));
     haystack[0] = L('x');
     MEMSET (haystack + 1, L(' '), m - 1);
     MEMSET (haystack + m, L('x'), m);
@@ -408,13 +408,13 @@ pr23865 (void)
     FOR_EACH_IMPL (impl, 0)
       check_result (impl, haystack, needle, haystack + m);
 
-    free (needle);
-    free (haystack);
+    मुक्त (needle);
+    मुक्त (haystack);
   }
 }
 
-static int
-test_main (void)
+स्थिर पूर्णांक
+test_main (शून्य)
 {
   test_init ();
 
@@ -424,13 +424,13 @@ test_main (void)
   pr23637 ();
   pr23865 ();
 
-  printf ("%23s", "");
+  म_लिखो ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  साठी (माप_प्रकार klen = 2; klen < 32; ++klen)
+    साठी (माप_प्रकार hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -475,7 +475,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  परत ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

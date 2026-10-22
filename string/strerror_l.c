@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libintl.h>
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#अन्तर्भाव <libintl.h>
+#अन्तर्भाव <locale.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <tls-internal.h>
+#अन्तर्भाव <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+स्थिर स्थिरांक अक्षर *
+translate (स्थिरांक अक्षर *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  स्थिरांक अक्षर *res = _(str);
   __uselocale (oldloc);
-  return res;
+  परत res;
 }
 
-static char *
+स्थिर अक्षर *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  परत (अक्षर *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+अक्षर *
+__strerror_l (पूर्णांक errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  पूर्णांक saved_errno = त्रुटि_सं;
+  अक्षर *err = (अक्षर *) __get_errlist (errnum);
+  जर (__glibc_unlikely (err == रिक्त))
     {
-      if (__libc_initial)
+      जर (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  संरचना tls_internal_t *tls_internal = __glibc_tls_internal ();
+	  मुक्त (tls_internal->strerror_l_buf);
+	  जर (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  अन्यथा
 	    {
 	      /* The memory was freed above.  */
-	      tls_internal->strerror_l_buf = NULL;
+	      tls_internal->strerror_l_buf = रिक्त;
 	      /* Provide a fallback translation.  */
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      अन्यथा
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  अन्यथा
+    err = (अक्षर *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  परत err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

@@ -16,92 +16,92 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <libc-diag.h>
 
-void *vp;
-const void *cvp;
-int *ip;
-const int *cip;
-char *cp;
-const char *ccp;
-int c;
-size_t sz;
+शून्य *vp;
+स्थिरांक शून्य *cvp;
+पूर्णांक *ip;
+स्थिरांक पूर्णांक *cip;
+अक्षर *cp;
+स्थिरांक अक्षर *ccp;
+पूर्णांक c;
+माप_प्रकार sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#define CHECK_TYPE(अभिव्यक्ती, TYPE)					\
+  _Static_assert (_Generic (अभिव्यक्ती, TYPE: 1), "type check")
 
-static int
-do_test (void)
+स्थिर पूर्णांक
+do_test (शून्य)
 {
   /* This is a compilation test.  */
-  CHECK_TYPE (memchr (vp, c, sz), void *);
-  CHECK_TYPE (memchr (cvp, c, sz), const void *);
-  CHECK_TYPE (memchr (ip, c, sz), void *);
-  CHECK_TYPE (memchr (cip, c, sz), const void *);
-  CHECK_TYPE (memchr (cp, c, sz), void *);
-  CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (स_प्रथम (vp, c, sz), शून्य *);
+  CHECK_TYPE (स_प्रथम (cvp, c, sz), स्थिरांक शून्य *);
+  CHECK_TYPE (स_प्रथम (ip, c, sz), शून्य *);
+  CHECK_TYPE (स_प्रथम (cip, c, sz), स्थिरांक शून्य *);
+  CHECK_TYPE (स_प्रथम (cp, c, sz), शून्य *);
+  CHECK_TYPE (स_प्रथम (ccp, c, sz), स्थिरांक शून्य *);
+  DIAG_ढकला_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (memchr (0, c, sz), void *);
-  CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((memchr) (cvp, c, sz), void *);
-  CHECK_TYPE (strchr (vp, c), char *);
-  CHECK_TYPE (strchr (cvp, c), const char *);
-  CHECK_TYPE (strchr (cp, c), char *);
-  CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (स_प्रथम (0, c, sz), शून्य *);
+  CHECK_TYPE (स_प्रथम ((शून्य *) 0, c, sz), शून्य *);
+  DIAG_काढा_NEEDS_COMMENT;
+  CHECK_TYPE ((स_प्रथम) (cvp, c, sz), शून्य *);
+  CHECK_TYPE (म_अक्षर (vp, c), अक्षर *);
+  CHECK_TYPE (म_अक्षर (cvp, c), स्थिरांक अक्षर *);
+  CHECK_TYPE (म_अक्षर (cp, c), अक्षर *);
+  CHECK_TYPE (म_अक्षर (ccp, c), स्थिरांक अक्षर *);
+  DIAG_ढकला_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strchr (0, c), char *);
-  CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strchr) (ccp, c), char *);
-  CHECK_TYPE (strpbrk (vp, vp), char *);
-  CHECK_TYPE (strpbrk (vp, cvp), char *);
-  CHECK_TYPE (strpbrk (cvp, vp), const char *);
-  CHECK_TYPE (strpbrk (cvp, cvp), const char *);
-  CHECK_TYPE (strpbrk (cp, cp), char *);
-  CHECK_TYPE (strpbrk (cp, ccp), char *);
-  CHECK_TYPE (strpbrk (ccp, cp), const char *);
-  CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (म_अक्षर (0, c), अक्षर *);
+  CHECK_TYPE (म_अक्षर ((शून्य *) 0, c), अक्षर *);
+  DIAG_काढा_NEEDS_COMMENT;
+  CHECK_TYPE ((म_अक्षर) (ccp, c), अक्षर *);
+  CHECK_TYPE (strpbrk (vp, vp), अक्षर *);
+  CHECK_TYPE (strpbrk (vp, cvp), अक्षर *);
+  CHECK_TYPE (strpbrk (cvp, vp), स्थिरांक अक्षर *);
+  CHECK_TYPE (strpbrk (cvp, cvp), स्थिरांक अक्षर *);
+  CHECK_TYPE (strpbrk (cp, cp), अक्षर *);
+  CHECK_TYPE (strpbrk (cp, ccp), अक्षर *);
+  CHECK_TYPE (strpbrk (ccp, cp), स्थिरांक अक्षर *);
+  CHECK_TYPE (strpbrk (ccp, ccp), स्थिरांक अक्षर *);
+  DIAG_ढकला_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strpbrk (0, cp), char *);
-  CHECK_TYPE (strpbrk (0, ccp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
-  CHECK_TYPE (strrchr (vp, c), char *);
-  CHECK_TYPE (strrchr (cvp, c), const char *);
-  CHECK_TYPE (strrchr (cp, c), char *);
-  CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strpbrk (0, cp), अक्षर *);
+  CHECK_TYPE (strpbrk (0, ccp), अक्षर *);
+  CHECK_TYPE (strpbrk ((शून्य *) 0, cp), अक्षर *);
+  CHECK_TYPE (strpbrk ((शून्य *) 0, ccp), अक्षर *);
+  DIAG_काढा_NEEDS_COMMENT;
+  CHECK_TYPE ((strpbrk) (ccp, ccp), अक्षर *);
+  CHECK_TYPE (म_खोजप (vp, c), अक्षर *);
+  CHECK_TYPE (म_खोजप (cvp, c), स्थिरांक अक्षर *);
+  CHECK_TYPE (म_खोजप (cp, c), अक्षर *);
+  CHECK_TYPE (म_खोजप (ccp, c), स्थिरांक अक्षर *);
+  DIAG_ढकला_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strrchr (0, c), char *);
-  CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strrchr) (ccp, c), char *);
-  CHECK_TYPE (strstr (vp, vp), char *);
-  CHECK_TYPE (strstr (vp, cvp), char *);
-  CHECK_TYPE (strstr (cvp, vp), const char *);
-  CHECK_TYPE (strstr (cvp, cvp), const char *);
-  CHECK_TYPE (strstr (cp, cp), char *);
-  CHECK_TYPE (strstr (cp, ccp), char *);
-  CHECK_TYPE (strstr (ccp, cp), const char *);
-  CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (म_खोजप (0, c), अक्षर *);
+  CHECK_TYPE (म_खोजप ((शून्य *) 0, c), अक्षर *);
+  DIAG_काढा_NEEDS_COMMENT;
+  CHECK_TYPE ((म_खोजप) (ccp, c), अक्षर *);
+  CHECK_TYPE (म_माला (vp, vp), अक्षर *);
+  CHECK_TYPE (म_माला (vp, cvp), अक्षर *);
+  CHECK_TYPE (म_माला (cvp, vp), स्थिरांक अक्षर *);
+  CHECK_TYPE (म_माला (cvp, cvp), स्थिरांक अक्षर *);
+  CHECK_TYPE (म_माला (cp, cp), अक्षर *);
+  CHECK_TYPE (म_माला (cp, ccp), अक्षर *);
+  CHECK_TYPE (म_माला (ccp, cp), स्थिरांक अक्षर *);
+  CHECK_TYPE (म_माला (ccp, ccp), स्थिरांक अक्षर *);
+  DIAG_ढकला_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strstr (0, cp), char *);
-  CHECK_TYPE (strstr (0, ccp), char *);
-  CHECK_TYPE (strstr ((void *) 0, cp), char *);
-  CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  CHECK_TYPE (म_माला (0, cp), अक्षर *);
+  CHECK_TYPE (म_माला (0, ccp), अक्षर *);
+  CHECK_TYPE (म_माला ((शून्य *) 0, cp), अक्षर *);
+  CHECK_TYPE (म_माला ((शून्य *) 0, ccp), अक्षर *);
+  DIAG_काढा_NEEDS_COMMENT;
+  CHECK_TYPE ((म_माला) (ccp, ccp), अक्षर *);
+  परत 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

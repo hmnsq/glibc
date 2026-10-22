@@ -15,48 +15,48 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdint.h>
+#अन्तर्भाव <libc-pointer-arith.h>
 
-#undef strcspn
+#undef म_खोज
 
 #ifndef STRCSPN
-# define STRCSPN strcspn
+# define STRCSPN म_खोज
 #endif
 
 /* Return the length of the maximum initial segment of S
    which contains no characters from REJECT.  */
-size_t
-STRCSPN (const char *str, const char *reject)
+माप_प्रकार
+STRCSPN (स्थिरांक अक्षर *str, स्थिरांक अक्षर *reject)
 {
-  if (__glibc_unlikely (reject[0] == '\0')
+  जर (__glibc_unlikely (reject[0] == '\0')
       || __glibc_unlikely (reject[1] == '\0'))
-    return __strchrnul (str, reject [0]) - str;
+    परत __strchrnul (str, reject [0]) - str;
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
-  memset (p + 64, 0, 64);
-  memset (p + 128, 0, 64);
-  memset (p + 192, 0, 64);
+  अचिन्हित अक्षर table[256];
+  अचिन्हित अक्षर *p = स_रखो (table, 0, 64);
+  स_रखो (p + 64, 0, 64);
+  स_रखो (p + 128, 0, 64);
+  स_रखो (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) reject;
-  unsigned char tmp;
-  do
+  अचिन्हित अक्षर *s = (अचिन्हित अक्षर*) reject;
+  अचिन्हित अक्षर tmp;
+  करा
     p[tmp = *s++] = 1;
-  while (tmp);
+  पर्यंत (tmp);
 
-  s = (unsigned char*) str;
-  if (p[s[0]]) return 0;
-  if (p[s[1]]) return 1;
-  if (p[s[2]]) return 2;
-  if (p[s[3]]) return 3;
+  s = (अचिन्हित अक्षर*) str;
+  जर (p[s[0]]) परत 0;
+  जर (p[s[1]]) परत 1;
+  जर (p[s[2]]) परत 2;
+  जर (p[s[3]]) परत 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (अचिन्हित अक्षर *) PTR_ALIGN_DOWN (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do
+  अचिन्हित पूर्णांक c0, c1, c2, c3;
+  करा
     {
       s += 4;
       c0 = p[s[0]];
@@ -64,9 +64,9 @@ STRCSPN (const char *str, const char *reject)
       c2 = p[s[2]];
       c3 = p[s[3]];
     }
-  while ((c0 | c1 | c2 | c3) == 0);
+  पर्यंत ((c0 | c1 | c2 | c3) == 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  माप_प्रकार मोजणी = s - (अचिन्हित अक्षर *) str;
+  परत (c0 | c1) != 0 ? मोजणी - c0 + 1 : मोजणी - c2 + 3;
 }
-libc_hidden_builtin_def (strcspn)
+libc_hidden_builtin_def (म_खोज)

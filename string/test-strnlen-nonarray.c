@@ -1,4 +1,4 @@
 #define TEST_IDENTIFIER strnlen
 #define TEST_NAME "strnlen"
-typedef char CHAR;
-#include "test-Xnlen-nonarray.c"
+प्रकारव्याख्या अक्षर CHAR;
+#अन्तर्भाव "test-Xnlen-nonarray.c"

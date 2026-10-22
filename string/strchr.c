@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#undef strchr
+#undef म_अक्षर
 #undef index
 
 #ifdef STRCHR
-# define strchr STRCHR
+# define म_अक्षर STRCHR
 #endif
 
 /* Find the first occurrence of C in S.  */
-char *
-strchr (const char *s, int c_in)
+अक्षर *
+म_अक्षर (स्थिरांक अक्षर *s, पूर्णांक c_in)
 {
-  char *r = __strchrnul (s, c_in);
-  return (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
+  अक्षर *r = __strchrnul (s, c_in);
+  परत (*(अचिन्हित अक्षर *)r == (अचिन्हित अक्षर)c_in) ? r : रिक्त;
 }
 #ifndef STRCHR
-weak_alias (strchr, index)
-libc_hidden_builtin_def (strchr)
+weak_alias (म_अक्षर, index)
+libc_hidden_builtin_def (म_अक्षर)
 #endif

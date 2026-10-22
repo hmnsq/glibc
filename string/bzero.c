@@ -15,13 +15,13 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
 /* Set N bytes of S to 0.  */
-void
-__bzero (void *s, size_t len)
+शून्य
+__bzero (शून्य *s, माप_प्रकार len)
 {
-  memset (s, '\0', len);
+  स_रखो (s, '\0', len);
 }
 #ifndef __bzero
 weak_alias (__bzero, bzero)

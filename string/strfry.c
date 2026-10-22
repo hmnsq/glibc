@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <random-bits.h>
-#include <unistd.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <random-bits.h>
+#अन्तर्भाव <unistd.h>
 
-char *
-strfry (char *string)
+अक्षर *
+strfry (अक्षर *string)
 {
-  static int init;
-  static struct random_data rdata;
+  स्थिर पूर्णांक init;
+  स्थिर संरचना random_data rdata;
 
-  if (!init)
+  जर (!init)
     {
-      static char state[32];
-      rdata.state = NULL;
+      स्थिर अक्षर state[32];
+      rdata.state = रिक्त;
       __initstate_r (random_bits (),
-		     state, sizeof (state), &rdata);
+		     state, आकार (state), &rdata);
       init = 1;
     }
 
-  size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  माप_प्रकार len = म_माप (string);
+  जर (len > 0)
+    साठी (माप_प्रकार i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
 	j = j % (len - i) + i;
 
-	char c = string[i];
+	अक्षर c = string[i];
 	string[i] = string[j];
 	string[j] = c;
       }
 
-  return string;
+  परत string;
 }

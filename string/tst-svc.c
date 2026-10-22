@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_ओळ_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+स्थिर पूर्णांक
+compare (स्थिरांक शून्य *p1, स्थिरांक शून्य *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  परत strverscmp (*((अक्षर **) p1), *((अक्षर **) p2));
 }
 
-int
-do_test (void)
+पूर्णांक
+do_test (शून्य)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  अक्षर ओळ[MAX_ओळ_SIZE + 1];
+  अक्षर *str[MAX_STRINGS];
+  पूर्णांक  मोजणी = 0;
+  पूर्णांक  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  पर्यंत (मोजणी < MAX_STRINGS && ख_माला_लो (ओळ, MAX_ओळ_SIZE, मानक_निवेश) != रिक्त)
     {
-      n = strlen (line) - 1;
+      n = म_माप (ओळ) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      जर (ओळ[n] == '\n')
+        ओळ[n] = '\0';
 
-      str[count] = strdup (line);
+      str[मोजणी] = strdup (ओळ);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      जर (str[मोजणी] == रिक्त)
+        निकास (निकास_त्रुटि);
 
-      ++count;
+      ++मोजणी;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  क्विक (str, मोजणी, आकार (अक्षर *), compare);
 
-  for (i = 0; i < count; ++i)
-    puts (str[i]);
+  साठी (i = 0; i < मोजणी; ++i)
+    माला_दो (str[i]);
 
-  return EXIT_SUCCESS;
+  परत निकास_सफल;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

@@ -17,13 +17,13 @@
    <https://www.gnu.org/licenses/>.  */
 
 /* test-memcpy-support.h contains all test functions.  */
-#include "test-memcpy-support.h"
+#अन्तर्भाव "test-memcpy-support.h"
 
-static void
-do_random_large_tests (void)
+स्थिर शून्य
+do_random_large_tests (शून्य)
 {
-  size_t i, align1, align2, size;
-  for (i = 0; i < 32; ++i)
+  माप_प्रकार i, align1, align2, size;
+  साठी (i = 0; i < 32; ++i)
     {
       align1 = random ();
       align2 = random ();
@@ -31,7 +31,7 @@ do_random_large_tests (void)
       do_test1 (align1, align2, size);
     }
 
-  for (i = 0; i < 128; ++i)
+  साठी (i = 0; i < 128; ++i)
     {
       align1 = random ();
       align2 = random ();
@@ -40,23 +40,23 @@ do_random_large_tests (void)
     }
 }
 
-int
-test_main (void)
+पूर्णांक
+test_main (शून्य)
 {
-  size_t i, j;
+  माप_प्रकार i, j;
 
   test_init ();
 
-  printf ("%23s", "");
+  म_लिखो ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-  printf ("\t%s", impl->name);
-  putchar ('\n');
+  म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
   do_test (0, 0, getpagesize () - 1);
 
-  for (i = 0x200000; i <= 0x2000000; i += i)
+  साठी (i = 0x200000; i <= 0x2000000; i += i)
     {
-      for (j = 64; j <= 1024; j <<= 1)
+      साठी (j = 64; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -97,7 +97,7 @@ test_main (void)
     }
 
   do_random_large_tests ();
-  return ret;
+  परत ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

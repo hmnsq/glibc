@@ -15,28 +15,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
 #ifndef STRNCAT
-# undef strncat
-# define STRNCAT  strncat
+# undef म_जोड़न
+# define STRNCAT  म_जोड़न
 # define STRNCAT_PRIMARY
 #endif
 
-char *
-STRNCAT (char *s1, const char *s2, size_t n)
+अक्षर *
+STRNCAT (अक्षर *s1, स्थिरांक अक्षर *s2, माप_प्रकार n)
 {
-  char *s = s1;
+  अक्षर *s = s1;
 
   /* Find the end of S1.  */
-  s1 += strlen (s1);
+  s1 += म_माप (s1);
 
-  size_t ss = __strnlen (s2, n);
+  माप_प्रकार ss = __strnlen (s2, n);
 
   s1[ss] = '\0';
-  memcpy (s1, s2, ss);
+  स_नकल (s1, s2, ss);
 
-  return s;
+  परत s;
 }
 #ifdef STRNCAT_PRIMARY
 strong_alias (STRNCAT, __strncat)

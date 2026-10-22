@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#अन्तर्भाव <argz.h>
+#अन्तर्भाव <errno.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (स्थिरांक अक्षर *string, पूर्णांक delim, अक्षर **argz, माप_प्रकार *len)
 {
-  size_t nlen = strlen (string) + 1;
+  माप_प्रकार nlen = म_माप (string) + 1;
 
-  if (nlen > 1)
+  जर (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      स्थिरांक अक्षर *rp;
+      अक्षर *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (अक्षर *) दो_स्मृति (nlen);
+      जर (*argz == रिक्त)
+	परत ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      करा
+	जर (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    जर (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    अन्यथा
 	      --nlen;
 	  }
-	else
+	अन्यथा
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      पर्यंत (*rp++ != '\0');
 
-      if (nlen == 0)
+      जर (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  मुक्त (*argz);
+	  *argz = रिक्त;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  अन्यथा
     {
-      *argz = NULL;
+      *argz = रिक्त;
       *len = 0;
     }
 
-  return 0;
+  परत 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

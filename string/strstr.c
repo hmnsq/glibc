@@ -20,46 +20,46 @@
 # include <config.h>
 #endif
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#define RETURN_TYPE char *
+#define RETURN_TYPE अक्षर *
 #define AVAILABLE(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((शून्य*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#include "str-two-way.h"
+#अन्तर्भाव "str-two-way.h"
 
-#undef strstr
+#undef म_माला
 
 #ifndef STRSTR
-#define STRSTR strstr
+#define STRSTR म_माला
 #endif
 
-static inline char *
-strstr2 (const unsigned char *hs, const unsigned char *ne)
+स्थिर ओळीत अक्षर *
+strstr2 (स्थिरांक अचिन्हित अक्षर *hs, स्थिरांक अचिन्हित अक्षर *ne)
 {
   uint32_t h1 = (ne[0] << 16) | ne[1];
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  साठी (पूर्णांक c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 << 16) | c;
-  return h1 == h2 ? (char *)hs - 2 : NULL;
+  परत h1 == h2 ? (अक्षर *)hs - 2 : रिक्त;
 }
 
-static inline char *
-strstr3 (const unsigned char *hs, const unsigned char *ne)
+स्थिर ओळीत अक्षर *
+strstr3 (स्थिरांक अचिन्हित अक्षर *hs, स्थिरांक अचिन्हित अक्षर *ne)
 {
   uint32_t h1 = ((uint32_t)ne[0] << 24) | (ne[1] << 16) | (ne[2] << 8);
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  साठी (पूर्णांक c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 | c) << 8;
-  return h1 == h2 ? (char *)hs - 3 : NULL;
+  परत h1 == h2 ? (अक्षर *)hs - 3 : रिक्त;
 }
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#define hash2(p) (((माप_प्रकार)(p)[0] - ((माप_प्रकार)(p)[-1] << 3)) % आकार (shift))
 
 /* Fast strstr algorithm with guaranteed linear-time performance.
    Small needles up to size 3 use a dedicated linear search.  Longer needles
@@ -72,84 +72,84 @@ strstr3 (const unsigned char *hs, const unsigned char *ne)
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-char *
-STRSTR (const char *haystack, const char *needle)
+अक्षर *
+STRSTR (स्थिरांक अक्षर *haystack, स्थिरांक अक्षर *needle)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  स्थिरांक अचिन्हित अक्षर *hs = (स्थिरांक अचिन्हित अक्षर *) haystack;
+  स्थिरांक अचिन्हित अक्षर *ne = (स्थिरांक अचिन्हित अक्षर *) needle;
 
   /* Handle short needle special cases first.  */
-  if (ne[0] == '\0')
-    return (char *)hs;
-  hs = (const unsigned char *)strchr ((const char*)hs, ne[0]);
-  if (hs == NULL || ne[1] == '\0')
-    return (char*)hs;
-  if (ne[2] == '\0')
-    return strstr2 (hs, ne);
-  if (ne[3] == '\0')
-    return strstr3 (hs, ne);
+  जर (ne[0] == '\0')
+    परत (अक्षर *)hs;
+  hs = (स्थिरांक अचिन्हित अक्षर *)म_अक्षर ((स्थिरांक अक्षर*)hs, ne[0]);
+  जर (hs == रिक्त || ne[1] == '\0')
+    परत (अक्षर*)hs;
+  जर (ne[2] == '\0')
+    परत strstr2 (hs, ne);
+  जर (ne[3] == '\0')
+    परत strstr3 (hs, ne);
 
   /* Ensure haystack length is at least as long as needle length.
      Since a match may occur early on in a huge haystack, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  size_t ne_len = strlen ((const char*)ne);
-  size_t hs_len = __strnlen ((const char*)hs, ne_len | 512);
-  if (hs_len < ne_len)
-    return NULL;
+  माप_प्रकार ne_len = म_माप ((स्थिरांक अक्षर*)ne);
+  माप_प्रकार hs_len = __strnlen ((स्थिरांक अक्षर*)hs, ne_len | 512);
+  जर (hs_len < ne_len)
+    परत रिक्त;
 
   /* Check whether we have a match.  This improves performance since we
      avoid initialization overheads.  */
-  if (memcmp (hs, ne, ne_len) == 0)
-    return (char *) hs;
+  जर (स_भेद (hs, ne, ne_len) == 0)
+    परत (अक्षर *) hs;
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__glibc_unlikely (ne_len > 256))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  जर (__glibc_unlikely (ne_len > 256))
+    परत two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  स्थिरांक अचिन्हित अक्षर *end = hs + hs_len - ne_len;
   uint8_t shift[256];
-  size_t tmp, shift1;
-  size_t m1 = ne_len - 1;
-  size_t offset = 0;
+  माप_प्रकार tmp, shift1;
+  माप_प्रकार m1 = ne_len - 1;
+  माप_प्रकार offset = 0;
 
   /* Initialize bad character shift hash table.  */
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
+  स_रखो (shift, 0, आकार (shift));
+  साठी (पूर्णांक i = 1; i < m1; i++)
     shift[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
   shift1 = m1 - shift[hash2 (ne + m1)];
   shift[hash2 (ne + m1)] = m1;
 
-  while (1)
+  पर्यंत (1)
     {
-      if (__glibc_unlikely (hs > end))
+      जर (__glibc_unlikely (hs > end))
 	{
-	  end += __strnlen ((const char*)end + m1 + 1, 2048);
-	  if (hs > end)
-	    return NULL;
+	  end += __strnlen ((स्थिरांक अक्षर*)end + m1 + 1, 2048);
+	  जर (hs > end)
+	    परत रिक्त;
 	}
 
       /* Skip past character pairs not in the needle.  */
-      do
+      करा
 	{
 	  hs += m1;
 	  tmp = shift[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      पर्यंत (tmp == 0 && hs <= end);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      जर (tmp < m1)
+	सुरूठेवा;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      जर (m1 < 15 || स_भेद (hs + offset, ne + offset, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  जर (स_भेद (hs, ne, m1) == 0)
+	    परत (शून्य *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
 	  offset = (offset >= 8 ? offset : m1) - 8;
@@ -159,4 +159,4 @@ STRSTR (const char *haystack, const char *needle)
       hs += shift1;
     }
 }
-libc_hidden_builtin_def (strstr)
+libc_hidden_builtin_def (म_माला)

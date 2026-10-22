@@ -19,14 +19,14 @@
 # include "config.h"
 #endif
 
-#include <stdio.h>
-#include <sys/types.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#जर defined _LIBC || defined STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
+#अन्यथा
+अक्षर *दो_स्मृति ();
 #endif
 
 #undef __strndup
@@ -36,17 +36,17 @@ char *malloc ();
 # define __strndup strndup
 #endif
 
-char *
-__strndup (const char *s, size_t n)
+अक्षर *
+__strndup (स्थिरांक अक्षर *s, माप_प्रकार n)
 {
-  size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  माप_प्रकार len = __strnlen (s, n);
+  अक्षर *new = (अक्षर *) दो_स्मृति (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  जर (new == रिक्त)
+    परत रिक्त;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  परत (अक्षर *) स_नकल (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strndup)

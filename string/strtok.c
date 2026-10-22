@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
 
 /* Parse S into tokens separated by characters in DELIM.
@@ -27,9 +27,9 @@
 	x = strtok(NULL, "=");		// x = NULL
 		// s = "abc\0=-def\0"
 */
-char *
-strtok (char *s, const char *delim)
+अक्षर *
+म_मोहर (अक्षर *s, स्थिरांक अक्षर *delim)
 {
-  static char *olds;
-  return __strtok_r (s, delim, &olds);
+  स्थिर अक्षर *olds;
+  परत __strtok_r (s, delim, &olds);
 }

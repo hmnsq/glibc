@@ -17,50 +17,50 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <dlfcn.h>
-#include <errno.h>
-#include <string.h>
+#अन्तर्भाव <dlfcn.h>
+#अन्तर्भाव <errno.h>
+#अन्तर्भाव <string.h>
 
-#include <support/check.h>
-#include <support/support.h>
+#अन्तर्भाव <support/check.h>
+#अन्तर्भाव <support/support.h>
 
 /* malloc is allowed to change errno to a value different than 0, even when
    there is no actual error.  This happens for example when the memory
    allocation through sbrk fails.  Simulate this by interposing our own
    malloc implementation which sets errno to ENOMEM and calls the original
    malloc.  */
-void
-*malloc (size_t size)
+शून्य
+*दो_स्मृति (माप_प्रकार size)
 {
-  static void *(*real_malloc) (size_t size);
+  स्थिर शून्य *(*real_malloc) (माप_प्रकार size);
 
-  if (!real_malloc)
+  जर (!real_malloc)
     real_malloc = dlsym (RTLD_NEXT, "malloc");
 
-  errno = ENOMEM;
+  त्रुटि_सं = ENOMEM;
 
-  return (*real_malloc) (size);
+  परत (*real_malloc) (size);
 }
 
 /* strerror must not change the value of errno.  Unfortunately due to GCC bug
    #88576, this happens when -fmath-errno is used.  This simple test checks
    that it doesn't happen.  */
-static int
-do_test (void)
+स्थिर पूर्णांक
+do_test (शून्य)
 {
-  char *msg;
+  अक्षर *संदेश;
 
-  errno = 0;
-  msg = strerror (-3);
-  (void) msg;
-  TEST_COMPARE (errno, 0);
+  त्रुटि_सं = 0;
+  संदेश = म_त्रुटि (-3);
+  (शून्य) संदेश;
+  TEST_COMPARE (त्रुटि_सं, 0);
 
-  locale_t l = xnewlocale (LC_ALL_MASK, "C", NULL);
-  msg = strerror_l (-3, l);
-  (void) msg;
-  TEST_COMPARE (errno, 0);
+  locale_t l = xnewlocale (LC_ALL_MASK, "C", रिक्त);
+  संदेश = strerror_l (-3, l);
+  (शून्य) संदेश;
+  TEST_COMPARE (त्रुटि_सं, 0);
 
-  return 0;
+  परत 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

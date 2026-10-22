@@ -2,56 +2,56 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <string.h>
 
-int
-do_test (void)
+पूर्णांक
+do_test (शून्य)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  स्थिर स्थिरांक माप_प्रकार lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
-  size_t base;
+  अक्षर basebuf[24 + 32];
+  माप_प्रकार base;
 
-  for (base = 0; base < 32; ++base)
+  साठी (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      अक्षर *buf = basebuf + base;
+      माप_प्रकार शब्द;
 
-      for (words = 0; words < 4; ++words)
+      साठी (शब्द = 0; शब्द < 4; ++शब्द)
 	{
-	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  माप_प्रकार last;
+	  स_रखो (buf, 'a', शब्द * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  साठी (last = 0; last < 16; ++last)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[शब्द * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
+	      buf[शब्द * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
+	      buf[शब्द * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
+	      buf[शब्द * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
+	      buf[शब्द * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      जर (म_माप (buf) != शब्द * 4 + lens[last])
 		{
-		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  म_लिखो ("\
+म_माप failed साठी base=%zu, शब्द=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, शब्द, last,
+			  म_माप (buf), शब्द * 4 + lens[last]);
+		  परत 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      जर (strnlen (buf, -1) != शब्द * 4 + lens[last])
 		{
-		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  म_लिखो ("\
+strnlen failed साठी base=%zu, शब्द=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, शब्द, last,
+			  strnlen (buf, -1), शब्द * 4 + lens[last]);
+		  परत 1;
 		}
 	    }
 	}
     }
-  return 0;
+  परत 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

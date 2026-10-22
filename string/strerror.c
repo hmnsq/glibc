@@ -15,11 +15,11 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <locale/localeinfo.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <locale/localeinfo.h>
 
-char *
-strerror (int errnum)
+अक्षर *
+म_त्रुटि (पूर्णांक errnum)
 {
-  return __strerror_l (errnum, __libc_tsd_LOCALE);
+  परत __strerror_l (errnum, __libc_tsd_LOCALE);
 }

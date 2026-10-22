@@ -1,44 +1,44 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdio.h>
 
-int
-do_test (void)
+पूर्णांक
+do_test (शून्य)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  स्थिरांक अक्षर str[] = "axaaba";
+  अक्षर *token;
+  अक्षर *cp;
+  अक्षर *l;
+  पूर्णांक result = 0;
 
-  puts ("test strtok");
+  माला_दो ("test strtok");
   cp = strdupa (str);
-  printf ("cp = %p, len = %zu\n", cp, strlen (cp));
-  token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
-  token = strtok(0, "ab");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
-  token = strtok(0, "a");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  म_लिखो ("cp = %p, len = %zu\n", cp, म_माप (cp));
+  token = म_मोहर (cp, "ab");
+  result |= token == रिक्त || म_भेद (token, "x");
+  म_लिखो ("token: %s (%d)\n", token ? token : "NULL", result);
+  token = म_मोहर(0, "ab");
+  result |= token != रिक्त;
+  म_लिखो ("token: %s (%d)\n", token ? token : "NULL", result);
+  token = म_मोहर(0, "a");
+  result |= token != रिक्त;
+  म_लिखो ("token: %s (%d)\n", token ? token : "NULL", result);
 
-  puts ("test strtok_r");
+  माला_दो ("test strtok_r");
   cp = strdupa (str);
-  size_t len = strlen (cp);
-  printf ("cp = %p, len = %zu\n", cp, len);
+  माप_प्रकार len = म_माप (cp);
+  म_लिखो ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  result |= token == रिक्त || म_भेद (token, "x");
+  म_लिखो ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  result |= token != रिक्त || l != cp + len;
+  म_लिखो ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
+  result |= token != रिक्त || l != cp + len;
+  म_लिखो ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
 
-  return result;
+  परत result;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

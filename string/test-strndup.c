@@ -16,58 +16,58 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#अन्तर्भाव <support/check.h>
 
 #define TEST_MAIN
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
-static void
-do_one_test (const char *src, size_t len, size_t n)
+स्थिर शून्य
+do_one_test (स्थिरांक अक्षर *src, माप_प्रकार len, माप_प्रकार n)
 {
-  char *dst = strndup (src, n);
-  size_t s = (len > n ? n: len) * sizeof (char);
+  अक्षर *dst = strndup (src, n);
+  माप_प्रकार s = (len > n ? n: len) * आकार (अक्षर);
 
   TEST_COMPARE_BLOB (dst, s, src, s);
 
-  free (dst);
+  मुक्त (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+स्थिर शून्य
+do_test (माप_प्रकार align1, माप_प्रकार align2, माप_प्रकार len, माप_प्रकार n, पूर्णांक max_char)
 {
-  size_t i;
-  char *s1;
+  माप_प्रकार i;
+  अक्षर *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  जर ((align1 + len) * आकार (अक्षर) >= page_size)
+    परत;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  जर ((align2 + len) * आकार (अक्षर) >= page_size)
+    परत;
 
-  s1 = (char *) (buf1) + align1;
+  s1 = (अक्षर *) (buf1) + align1;
 
-  for (i = 0; i < len; ++i)
+  साठी (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  साठी (i = len + 1; (i + align1) * आकार (अक्षर) < page_size && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   do_one_test (s1, len, n);
 }
 
-static void
-do_page_tests (void)
+स्थिर शून्य
+do_page_tests (शून्य)
 {
-  char *s1;
-  const size_t maxoffset = 64;
+  अक्षर *s1;
+  स्थिरांक माप_प्रकार maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (char *) buf1 + BUF1PAGES * page_size / sizeof (char) - maxoffset;
+  s1 = (अक्षर *) buf1 + BUF1PAGES * page_size / आकार (अक्षर) - maxoffset;
 
-  memset (s1, 'a', maxoffset - 1);
+  स_रखो (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
 
   /* Both strings are bounded to a page with read/write access and the next
@@ -78,113 +78,113 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
-    for (size_t off2 = 0; off2 < maxoffset; off2++)
+  साठी (माप_प्रकार off1 = 0; off1 < maxoffset; off1++)
+    साठी (माप_प्रकार off2 = 0; off2 < maxoffset; off2++)
       do_one_test (s1 + off1, maxoffset - off1 - 1,
 		   maxoffset + (maxoffset - off2));
 }
 
-static void
-do_random_tests (void)
+स्थिर शून्य
+do_random_tests (शून्य)
 {
-  size_t i, j, n, align1, align2, len, size, mode;
-  char *p1 = (char *) (buf1 + page_size) - 512;
-  char *res;
+  माप_प्रकार i, j, n, align1, align2, len, size, mode;
+  अक्षर *p1 = (अक्षर *) (buf1 + page_size) - 512;
+  अक्षर *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  साठी (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
-      if (mode & 1)
+      जर (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  जर (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  अन्यथा
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  जर (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  जर (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  अन्यथा
 	    len = 512;
-	  if (len >= 512)
+	  जर (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      अन्यथा
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  जर (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  अन्यथा
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  जर (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  जर (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      जर (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  अन्यथा
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  जर ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      जर (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      साठी (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  जर (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  अन्यथा
 	    {
-	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      p1[i] = random () & अक्षर_उच्च;
+	      जर (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
-	res = (char *) strndup ((char *) (p1 + align1), size);
+	res = (अक्षर *) strndup ((अक्षर *) (p1 + align1), size);
 	j = len + 1;
-	if (size < j)
+	जर (size < j)
 	  j = size;
-	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
-	free (res);
+	TEST_COMPARE_BLOB (res, j, (अक्षर *) (p1 + align1), j);
+	मुक्त (res);
     }
 }
 
-int
-test_main (void)
+पूर्णांक
+test_main (शून्य)
 {
-  size_t i;
+  माप_प्रकार i;
 
   test_init ();
 
-  printf ("%28s", "");
-  printf ("\t%s", "strndup");
-  putchar ('\n');
+  म_लिखो ("%28s", "");
+  म_लिखो ("\t%s", "strndup");
+  अक्षर_दो ('\n');
 
-  for (i = 1; i < 8; ++i)
+  साठी (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, 127);
-      do_test (i, i, 16, 16, CHAR_MAX);
+      do_test (i, i, 16, 16, अक्षर_उच्च);
       do_test (i, 2 * i, 16, 16, 127);
-      do_test (2 * i, i, 16, 16, CHAR_MAX);
+      do_test (2 * i, i, 16, 16, अक्षर_उच्च);
       do_test (8 - i, 2 * i, 1 << i, 2 << i, 127);
       do_test (2 * i, 8 - i, 2 << i, 1 << i, 127);
-      do_test (8 - i, 2 * i, 1 << i, 2 << i, CHAR_MAX);
-      do_test (2 * i, 8 - i, 2 << i, 1 << i, CHAR_MAX);
+      do_test (8 - i, 2 * i, 1 << i, 2 << i, अक्षर_उच्च);
+      do_test (2 * i, 8 - i, 2 << i, 1 << i, अक्षर_उच्च);
     }
 
-  for (i = 1; i < 8; ++i)
+  साठी (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, 127);
       do_test (0, 0, 16 << i, 8 << i, 127);
@@ -194,7 +194,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  परत ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>
