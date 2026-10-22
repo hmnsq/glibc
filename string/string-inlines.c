@@ -19,203 +19,203 @@
    formerly defined as "extern inline" in string.h; it's conceivable
    that old binaries contain references to them.  */
 
-#define __NO_STRING_INLINES
-#include <string.h>
+#నిర్వచించు __NO_STRING_INLINES
+#అన్తర్భావ <string.h>
 
-#include "shlib-compat.h"
+#అన్తర్భావ "shlib-compat.h"
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
+#ఒకవేళ SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
 /* These functions were removed from string.h in glibc 2.25.  */
 
-char *
-__old_strtok_r_1c (char *__s, char __sep, char **__nextp)
+అక్షరం *
+__old_strtok_r_1c (అక్షరం *__s, అక్షరం __sep, అక్షరం **__nextp)
 {
-  char *__result;
-  if (__s == NULL)
+  అక్షరం *__result;
+  ఒకవేళ (__s == ఖాళీ)
     __s = *__nextp;
-  while (*__s == __sep)
+  అయితే (*__s == __sep)
     ++__s;
-  __result = NULL;
-  if (*__s != '\0')
+  __result = ఖాళీ;
+  ఒకవేళ (*__s != '\0')
     {
       __result = __s++;
-      while (*__s != '\0')
-	if (*__s++ == __sep)
+      అయితే (*__s != '\0')
+	ఒకవేళ (*__s++ == __sep)
 	  {
 	    __s[-1] = '\0';
-	    break;
+	    ఆపు;
 	  }
     }
   *__nextp = __s;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
 
-char *
-__old_strsep_1c (char **__s, char __reject)
+అక్షరం *
+__old_strsep_1c (అక్షరం **__s, అక్షరం __reject)
 {
-  char *__retval = *__s;
-  if (__retval != NULL && (*__s = strchr (__retval, __reject)) != NULL)
+  అక్షరం *__retval = *__s;
+  ఒకవేళ (__retval != ఖాళీ && (*__s = strchr (__retval, __reject)) != ఖాళీ)
     *(*__s)++ = '\0';
-  return __retval;
+  తిరిగి __retval;
 }
-compat_symbol (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
 
-char *
-__old_strsep_2c (char **__s, char __reject1, char __reject2)
+అక్షరం *
+__old_strsep_2c (అక్షరం **__s, అక్షరం __reject1, అక్షరం __reject2)
 {
-  char *__retval = *__s;
-  if (__retval != NULL)
+  అక్షరం *__retval = *__s;
+  ఒకవేళ (__retval != ఖాళీ)
     {
-      char *__cp = __retval;
-      while (1)
+      అక్షరం *__cp = __retval;
+      అయితే (1)
 	{
-	  if (*__cp == '\0')
+	  ఒకవేళ (*__cp == '\0')
 	    {
-	      __cp = NULL;
-	      break;
+	      __cp = ఖాళీ;
+	      ఆపు;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2)
+	  ఒకవేళ (*__cp == __reject1 || *__cp == __reject2)
 	    {
 	      *__cp++ = '\0';
-	      break;
+	      ఆపు;
 	    }
 	  ++__cp;
 	}
       *__s = __cp;
     }
-  return __retval;
+  తిరిగి __retval;
 }
-compat_symbol (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
 
-char *
-__old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
+అక్షరం *
+__old_strsep_3c (అక్షరం **__s, అక్షరం __reject1, అక్షరం __reject2, అక్షరం __reject3)
 {
-  char *__retval = *__s;
-  if (__retval != NULL)
+  అక్షరం *__retval = *__s;
+  ఒకవేళ (__retval != ఖాళీ)
     {
-      char *__cp = __retval;
-      while (1)
+      అక్షరం *__cp = __retval;
+      అయితే (1)
 	{
-	  if (*__cp == '\0')
+	  ఒకవేళ (*__cp == '\0')
 	    {
-	      __cp = NULL;
-	      break;
+	      __cp = ఖాళీ;
+	      ఆపు;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
+	  ఒకవేళ (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
 	    {
 	      *__cp++ = '\0';
-	      break;
+	      ఆపు;
 	    }
 	  ++__cp;
 	}
       *__s = __cp;
     }
-  return __retval;
+  తిరిగి __retval;
 }
-compat_symbol (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
-#endif
+compat_చిహ్నం (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
+#అయితే_ముగింపు
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
+#ఒకవేళ SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
 /* These functions were removed from string.h in glibc 2.24.  */
 
 size_t
-__old_strcspn_c1 (const char *__s, int __reject)
+__old_strcspn_c1 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __reject)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject)
+  అయితే (__s[__result] != '\0' && __s[__result] != __reject)
     ++__result;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
 
 size_t
-__old_strcspn_c2 (const char *__s, int __reject1, int __reject2)
+__old_strcspn_c2 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __reject1, పూర్ణాంకం __reject2)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  అయితే (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2)
     ++__result;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
 
 size_t
-__old_strcspn_c3 (const char *__s, int __reject1, int __reject2,
-	      int __reject3)
+__old_strcspn_c3 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __reject1, పూర్ణాంకం __reject2,
+	      పూర్ణాంకం __reject3)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  అయితే (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2 && __s[__result] != __reject3)
     ++__result;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c1 (const char *__s, int __accept)
+__old_strspn_c1 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __accept)
 {
   size_t __result = 0;
   /* Please note that __accept never can be '\0'.  */
-  while (__s[__result] == __accept)
+  అయితే (__s[__result] == __accept)
     ++__result;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c2 (const char *__s, int __accept1, int __accept2)
+__old_strspn_c2 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __accept1, పూర్ణాంకం __accept2)
 {
   size_t __result = 0;
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2)
+  అయితే (__s[__result] == __accept1 || __s[__result] == __accept2)
     ++__result;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c3 (const char *__s, int __accept1, int __accept2,
-		 int __accept3)
+__old_strspn_c3 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __accept1, పూర్ణాంకం __accept2,
+		 పూర్ణాంకం __accept3)
 {
   size_t __result = 0;
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2
+  అయితే (__s[__result] == __accept1 || __s[__result] == __accept2
 	 || __s[__result] == __accept3)
     ++__result;
-  return __result;
+  తిరిగి __result;
 }
-compat_symbol (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
 
-char *
-__old_strpbrk_c2 (const char *__s, int __accept1, int __accept2)
+అక్షరం *
+__old_strpbrk_c2 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __accept1, పూర్ణాంకం __accept2)
 {
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
+  అయితే (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  తిరిగి *__s == '\0' ? ఖాళీ : (అక్షరం *) (size_t) __s;
 }
-compat_symbol (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
 
-char *
-__old_strpbrk_c3 (const char *__s, int __accept1, int __accept2, int __accept3)
+అక్షరం *
+__old_strpbrk_c3 (స్థిరరాశి అక్షరం *__s, పూర్ణాంకం __accept1, పూర్ణాంకం __accept2, పూర్ణాంకం __accept3)
 {
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2
+  అయితే (*__s != '\0' && *__s != __accept1 && *__s != __accept2
 	 && *__s != __accept3)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  తిరిగి *__s == '\0' ? ఖాళీ : (అక్షరం *) (size_t) __s;
 }
-compat_symbol (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
 
-# if defined __mc68020__ || defined __s390__ || defined __i386__
+# ఒకవేళ defined __mc68020__ || defined __s390__ || defined __i386__
 #  define _STRING_INLINE_unaligned 1
-# else
+# లేకపోతే
 #  define _STRING_INLINE_unaligned 0
 /* These are a few types we need for the optimizations if we cannot
    use unaligned memory accesses.  */
 #  define __STRING2_COPY_TYPE(N) \
-  typedef struct { unsigned char __arr[N]; }				      \
+  రకనిర్వచనం నిర్మాణం { గుర్తులేని అక్షరం __arr[N]; }				      \
     __attribute__ ((__packed__)) __STRING2_COPY_ARR##N
 __STRING2_COPY_TYPE (2);
 __STRING2_COPY_TYPE (3);
@@ -227,81 +227,81 @@ __STRING2_COPY_TYPE (8);
 #  undef __STRING2_COPY_TYPE
 # endif
 
-# if _STRING_INLINE_unaligned
-void *
-__old_mempcpy_small (void *__dest1,
-		     char __src0_1, char __src2_1, char __src4_1, char __src6_1,
+# ఒకవేళ _STRING_INLINE_unaligned
+శూన్య *
+__old_mempcpy_small (శూన్య *__dest1,
+		     అక్షరం __src0_1, అక్షరం __src2_1, అక్షరం __src4_1, అక్షరం __src6_1,
 		     __uint16_t __src0_2, __uint16_t __src4_2,
 		     __uint32_t __src0_4, __uint32_t __src4_4,
 		     size_t __srclen)
 {
-  union {
+  సంఘం {
     __uint32_t __ui;
     __uint16_t __usi;
-    unsigned char __uc;
-    unsigned char __c;
+    గుర్తులేని అక్షరం __uc;
+    గుర్తులేని అక్షరం __c;
   } *__u = __dest1;
-  switch ((unsigned int) __srclen)
+  ఎంపిక ((గుర్తులేని పూర్ణాంకం) __srclen)
     {
-    case 1:
+    స్థితి 1:
       __u->__c = __src0_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 2:
+      __u = __extension__ ((శూన్య *) __u + 1);
+      ఆపు;
+    స్థితి 2:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
-      break;
-    case 3:
+      __u = __extension__ ((శూన్య *) __u + 2);
+      ఆపు;
+    స్థితి 3:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((శూన్య *) __u + 2);
       __u->__c = __src2_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 4:
+      __u = __extension__ ((శూన్య *) __u + 1);
+      ఆపు;
+    స్థితి 4:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
-      break;
-    case 5:
+      __u = __extension__ ((శూన్య *) __u + 4);
+      ఆపు;
+    స్థితి 5:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__c = __src4_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 6:
+      __u = __extension__ ((శూన్య *) __u + 1);
+      ఆపు;
+    స్థితి 6:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
-      break;
-    case 7:
+      __u = __extension__ ((శూన్య *) __u + 2);
+      ఆపు;
+    స్థితి 7:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((శూన్య *) __u + 2);
       __u->__c = __src6_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 8:
+      __u = __extension__ ((శూన్య *) __u + 1);
+      ఆపు;
+    స్థితి 8:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__ui = __src4_4;
-      __u = __extension__ ((void *) __u + 4);
-      break;
+      __u = __extension__ ((శూన్య *) __u + 4);
+      ఆపు;
     }
-  return (void *) __u;
+  తిరిగి (శూన్య *) __u;
 }
 
-# else
+# లేకపోతే
 
-void *
-__old_mempcpy_small (void *__dest, char __src1,
+శూన్య *
+__old_mempcpy_small (శూన్య *__dest, అక్షరం __src1,
 		     __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		     __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		     __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
 		     __STRING2_COPY_ARR8 __src8, size_t __srclen)
 {
-  union {
-    char __c;
+  సంఘం {
+    అక్షరం __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -310,103 +310,103 @@ __old_mempcpy_small (void *__dest, char __src1,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = __dest;
-  switch ((unsigned int) __srclen)
+  ఎంపిక ((గుర్తులేని పూర్ణాంకం) __srclen)
     {
-    case 1:
+    స్థితి 1:
       __u->__c = __src1;
-      break;
-    case 2:
+      ఆపు;
+    స్థితి 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      ఆపు;
+    స్థితి 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      ఆపు;
+    స్థితి 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      ఆపు;
+    స్థితి 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      ఆపు;
+    స్థితి 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      ఆపు;
+    స్థితి 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      ఆపు;
+    స్థితి 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      ఆపు;
     }
-  return __extension__ ((void *) __u + __srclen);
+  తిరిగి __extension__ ((శూన్య *) __u + __srclen);
 }
 # endif
-compat_symbol (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
-char *
-__old_strcpy_small (char *__dest,
+# ఒకవేళ _STRING_INLINE_unaligned
+అక్షరం *
+__old_strcpy_small (అక్షరం *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
 		    __uint32_t __src0_4, __uint32_t __src4_4,
 		    size_t __srclen)
 {
-  union {
+  సంఘం {
     __uint32_t __ui;
     __uint16_t __usi;
-    unsigned char __uc;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+    గుర్తులేని అక్షరం __uc;
+  } *__u = (శూన్య *) __dest;
+  ఎంపిక ((గుర్తులేని పూర్ణాంకం) __srclen)
     {
-    case 1:
+    స్థితి 1:
       __u->__uc = '\0';
-      break;
-    case 2:
+      ఆపు;
+    స్థితి 2:
       __u->__usi = __src0_2;
-      break;
-    case 3:
+      ఆపు;
+    స్థితి 3:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((శూన్య *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 4:
+      ఆపు;
+    స్థితి 4:
       __u->__ui = __src0_4;
-      break;
-    case 5:
+      ఆపు;
+    స్థితి 5:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__uc = '\0';
-      break;
-    case 6:
+      ఆపు;
+    స్థితి 6:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__usi = __src4_2;
-      break;
-    case 7:
+      ఆపు;
+    స్థితి 7:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((శూన్య *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 8:
+      ఆపు;
+    స్థితి 8:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__ui = __src4_4;
-      break;
+      ఆపు;
     }
-  return __dest;
+  తిరిగి __dest;
 }
 
-# else
+# లేకపోతే
 
-char *
-__old_strcpy_small (char *__dest,
+అక్షరం *
+__old_strcpy_small (అక్షరం *__dest,
 		    __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		    __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		    __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
 		    __STRING2_COPY_ARR8 __src8, size_t __srclen)
 {
-  union {
-    char __c;
+  సంఘం {
+    అక్షరం __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -414,109 +414,109 @@ __old_strcpy_small (char *__dest,
     __STRING2_COPY_ARR6 __sca6;
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  } *__u = (శూన్య *) __dest;
+  ఎంపిక ((గుర్తులేని పూర్ణాంకం) __srclen)
     {
-    case 1:
+    స్థితి 1:
       __u->__c = '\0';
-      break;
-    case 2:
+      ఆపు;
+    స్థితి 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      ఆపు;
+    స్థితి 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      ఆపు;
+    స్థితి 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      ఆపు;
+    స్థితి 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      ఆపు;
+    స్థితి 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      ఆపు;
+    స్థితి 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      ఆపు;
+    స్థితి 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      ఆపు;
   }
-  return __dest;
+  తిరిగి __dest;
 }
 # endif
-compat_symbol (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
-char *
-__old_stpcpy_small (char *__dest,
+# ఒకవేళ _STRING_INLINE_unaligned
+అక్షరం *
+__old_stpcpy_small (అక్షరం *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
 		    __uint32_t __src0_4, __uint32_t __src4_4,
 		    size_t __srclen)
 {
-  union {
-    unsigned int __ui;
-    unsigned short int __usi;
-    unsigned char __uc;
-    char __c;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  సంఘం {
+    గుర్తులేని పూర్ణాంకం __ui;
+    గుర్తులేని పొట్టి పూర్ణాంకం __usi;
+    గుర్తులేని అక్షరం __uc;
+    అక్షరం __c;
+  } *__u = (శూన్య *) __dest;
+  ఎంపిక ((గుర్తులేని పూర్ణాంకం) __srclen)
     {
-    case 1:
+    స్థితి 1:
       __u->__uc = '\0';
-      break;
-    case 2:
+      ఆపు;
+    స్థితి 2:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 3:
+      __u = __extension__ ((శూన్య *) __u + 1);
+      ఆపు;
+    స్థితి 3:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((శూన్య *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 4:
+      ఆపు;
+    స్థితి 4:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 3);
-      break;
-    case 5:
+      __u = __extension__ ((శూన్య *) __u + 3);
+      ఆపు;
+    స్థితి 5:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__uc = '\0';
-      break;
-    case 6:
+      ఆపు;
+    స్థితి 6:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 7:
+      __u = __extension__ ((శూన్య *) __u + 1);
+      ఆపు;
+    స్థితి 7:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((శూన్య *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 8:
+      ఆపు;
+    స్థితి 8:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((శూన్య *) __u + 4);
       __u->__ui = __src4_4;
-      __u = __extension__ ((void *) __u + 3);
-      break;
+      __u = __extension__ ((శూన్య *) __u + 3);
+      ఆపు;
     }
-  return &__u->__c;
+  తిరిగి &__u->__c;
 }
 
-# else
+# లేకపోతే
 
-char *
-__old_stpcpy_small (char *__dest,
+అక్షరం *
+__old_stpcpy_small (అక్షరం *__dest,
 		    __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		    __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		    __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
 		    __STRING2_COPY_ARR8 __src8, size_t __srclen)
 {
-  union {
-    char __c;
+  సంఘం {
+    అక్షరం __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -524,37 +524,37 @@ __old_stpcpy_small (char *__dest,
     __STRING2_COPY_ARR6 __sca6;
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  } *__u = (శూన్య *) __dest;
+  ఎంపిక ((గుర్తులేని పూర్ణాంకం) __srclen)
     {
-    case 1:
+    స్థితి 1:
       __u->__c = '\0';
-      break;
-    case 2:
+      ఆపు;
+    స్థితి 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      ఆపు;
+    స్థితి 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      ఆపు;
+    స్థితి 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      ఆపు;
+    స్థితి 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      ఆపు;
+    స్థితి 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      ఆపు;
+    స్థితి 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      ఆపు;
+    స్థితి 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      ఆపు;
   }
-  return __dest + __srclen - 1;
+  తిరిగి __dest + __srclen - 1;
 }
 # endif
-compat_symbol (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);
+compat_చిహ్నం (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);
 
-#endif
+#అయితే_ముగింపు

@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#అన్తర్భావ <endian.h>
+#అన్తర్భావ <stddef.h>
 
-int i;
+పూర్ణాంకం i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = పరిమాణం (htobe16 (i));
+size_t s1 = పరిమాణం (htole16 (i));
+size_t s2 = పరిమాణం (be16toh (i));
+size_t s3 = పరిమాణం (le16toh (i));
+size_t s4 = పరిమాణం (htobe32 (i));
+size_t s5 = పరిమాణం (htole32 (i));
+size_t s6 = పరిమాణం (be32toh (i));
+size_t s7 = పరిమాణం (le32toh (i));
+size_t s8 = పరిమాణం (htobe64 (i));
+size_t s9 = పరిమాణం (htole64 (i));
+size_t s10 = పరిమాణం (be64toh (i));
+size_t s11 = పరిమాణం (le64toh (i));
 
-static int
-do_test (void)
+స్థిర పూర్ణాంకం
+do_test (శూన్య)
 {
   /* This is a compilation test.  */
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

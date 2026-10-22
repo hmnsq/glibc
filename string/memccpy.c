@@ -15,28 +15,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#undef __memccpy
-#undef memccpy
+#నిర్వచనం_రద్దు __memccpy
+#నిర్వచనం_రద్దు memccpy
 
-#ifdef MEMCCPY
+#నిర్వచితమైతే MEMCCPY
 # define __memccpy MEMCCPY
-#endif
+#అయితే_ముగింపు
 
 /* Copy no more than N bytes of SRC to DEST, stopping when C is found.
    Return the position in DEST one byte past where C was copied, or
    NULL if C was not found in the first N bytes of SRC.  */
-void *
-__memccpy (void *dest, const void *src, int c, size_t n)
+శూన్య *
+__memccpy (శూన్య *dest, స్థిరరాశి శూన్య *src, పూర్ణాంకం c, size_t n)
 {
-  void *p = memchr (src, c, n);
+  శూన్య *p = memchr (src, c, n);
 
-  if (p != NULL)
-    return __mempcpy (dest, src, p - src + 1);
+  ఒకవేళ (p != ఖాళీ)
+    తిరిగి __mempcpy (dest, src, p - src + 1);
 
-  memcpy (dest, src, n);
-  return NULL;
+  జ్ఞాపకం_నకలు (dest, src, n);
+  తిరిగి ఖాళీ;
 }
 
 weak_alias (__memccpy, memccpy)

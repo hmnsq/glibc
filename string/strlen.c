@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#అన్తర్భావ <libc-pointer-arith.h>
+#అన్తర్భావ <string-fzb.h>
+#అన్తర్భావ <string-fzc.h>
+#అన్తర్భావ <string-fzi.h>
+#అన్తర్భావ <string-shift.h>
+#అన్తర్భావ <string.h>
 
-#ifdef STRLEN
+#నిర్వచితమైతే STRLEN
 # define __strlen STRLEN
-#endif
+#అయితే_ముగింపు
 
 /* Return the length of the null-terminated string STR.  Scan for
    the null terminator quickly by testing four bytes at a time.  */
 size_t
-__strlen (const char *str)
+__strlen (స్థిరరాశి అక్షరం *str)
 {
   /* Align pointer to sizeof op_t.  */
-  const uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t*) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  స్థిరరాశి uintptr_t s_int = (uintptr_t) str;
+  స్థిరరాశి op_t *మాట_ptr = (స్థిరరాశి op_t*) PTR_ALIGN_కిందికి (str, పరిమాణం (op_t));
 
-  op_t word = *word_ptr;
-  find_t mask = shift_find (find_zero_all (word), s_int);
-  if (mask != 0)
-    return index_first (mask);
+  op_t మాట = *మాట_ptr;
+  కనుగొను_t ముసుగు = జరుపు_కనుగొను (కనుగొను_zero_all (మాట), s_int);
+  ఒకవేళ (ముసుగు != 0)
+    తిరిగి సూచీ_మొదటి (ముసుగు);
 
-  do
-    word = *++word_ptr;
-  while (! has_zero (word));
+  చేయి
+    మాట = *++మాట_ptr;
+  అయితే (! has_zero (మాట));
 
-  return ((const char *) word_ptr) + index_first_zero (word) - str;
+  తిరిగి ((స్థిరరాశి అక్షరం *) మాట_ptr) + సూచీ_మొదటి_zero (మాట) - str;
 }
-#ifndef STRLEN
-weak_alias (__strlen, strlen)
-libc_hidden_builtin_def (strlen)
-#endif
+#నిర్వచితం_కాకపోతే STRLEN
+weak_alias (__strlen, అక్షరశ్రేణి_పొడవు)
+libc_hidden_builtin_def (అక్షరశ్రేణి_పొడవు)
+#అయితే_ముగింపు

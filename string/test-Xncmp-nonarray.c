@@ -25,16 +25,16 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#అన్తర్భావ <array_length.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <support/check.h>
+#అన్తర్భావ <support/next_to_fault.h>
+#అన్తర్భావ <support/test-driver.h>
+#అన్తర్భావ <sys/param.h>
+#అన్తర్భావ <unistd.h>
 
 /* Much shorter than test-Xnlen-nonarray.c because of deeply nested loops.  */
-enum { buffer_length = 80 };
+గణన { బఫరు_నిడివి = 80 };
 
 /* The test buffer layout follows what is described test-Xnlen-nonarray.c,
    except that there two buffers, left and right.  The variables
@@ -42,134 +42,134 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+స్థిర పూర్ణాంకం
+string_నిడివి (పూర్ణాంకం a_లెక్క, పూర్ణాంకం ప్రారంభం_స్థానభ్రంశం)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  ఒకవేళ (ప్రారంభం_స్థానభ్రంశం == బఫరు_నిడివి || ప్రారంభం_స్థానభ్రంశం >= a_లెక్క)
+    తిరిగి 0;
+  లేకపోతే
+    తిరిగి a_లెక్క - ప్రారంభం_స్థానభ్రంశం;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+స్థిర పూర్ణాంకం
+గరిష్ఠ_నిడివి (పూర్ణాంకం ప్రారంభం_స్థానభ్రంశం, పూర్ణాంకం zero_లెక్క)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  ఒకవేళ (ప్రారంభం_స్థానభ్రంశం == బఫరు_నిడివి)
+    తిరిగి 0;
+  లేకపోతే ఒకవేళ (zero_లెక్క > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    తిరిగి బఫరు_నిడివి + 32;
+  లేకపోతే
+    తిరిగి బఫరు_నిడివి - ప్రారంభం_స్థానభ్రంశం;
 }
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+రకనిర్వచనం __typeof (TEST_IDENTIFIER) *proto_t;
 
-#define TEST_MAIN
-#include "test-string.h"
+#నిర్వచించు TEST_MAIN
+#అన్తర్భావ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+స్థిర పూర్ణాంకం
+test_main (శూన్య)
 {
-  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
+  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= బఫరు_నిడివి);
   test_init ();
 
-  struct support_next_to_fault left_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *right_buffer = (CHAR *) right_ntf.buffer;
+  నిర్మాణం support_తదుపరి_గమ్యం_fault ఎడమ_ntf
+    = support_తదుపరి_గమ్యం_fault_allocate (బఫరు_నిడివి * పరిమాణం (CHAR));
+  CHAR *ఎడమ_బఫరు = (CHAR *) ఎడమ_ntf.బఫరు;
+  నిర్మాణం support_తదుపరి_గమ్యం_fault కుడి_ntf
+    = support_తదుపరి_గమ్యం_fault_allocate (బఫరు_నిడివి * పరిమాణం (CHAR));
+  CHAR *కుడి_బఫరు = (CHAR *) కుడి_ntf.బఫరు;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        left_buffer[i] = 'A';
+      రాయి ("info: testing %s\n", impl->name);
+      కొరకు (size_t i = 0; i < బఫరు_నిడివి; ++i)
+        ఎడమ_బఫరు[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
-           ++left_zero_count)
+      కొరకు (పూర్ణాంకం ఎడమ_zero_లెక్క = 0; ఎడమ_zero_లెక్క <= బఫరు_నిడివి;
+           ++ఎడమ_zero_లెక్క)
         {
-          if (left_zero_count > 0)
-            left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
-            right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
-               ++right_zero_count)
+          ఒకవేళ (ఎడమ_zero_లెక్క > 0)
+            ఎడమ_బఫరు[బఫరు_నిడివి - ఎడమ_zero_లెక్క] = 0;
+          పూర్ణాంకం ఎడమ_a_లెక్క = బఫరు_నిడివి - ఎడమ_zero_లెక్క;
+          కొరకు (size_t i = 0; i < బఫరు_నిడివి; ++i)
+            కుడి_బఫరు[i] = 'A';
+          కొరకు (పూర్ణాంకం కుడి_zero_లెక్క = 0; కుడి_zero_లెక్క <= బఫరు_నిడివి;
+               ++కుడి_zero_లెక్క)
             {
-              if (right_zero_count > 0)
-                right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
-                   left_start_offset <= buffer_length;
-                   ++left_start_offset)
+              ఒకవేళ (కుడి_zero_లెక్క > 0)
+                కుడి_బఫరు[బఫరు_నిడివి - కుడి_zero_లెక్క] = 0;
+              పూర్ణాంకం కుడి_a_లెక్క = బఫరు_నిడివి - కుడి_zero_లెక్క;
+              కొరకు (పూర్ణాంకం ఎడమ_ప్రారంభం_స్థానభ్రంశం = 0;
+                   ఎడమ_ప్రారంభం_స్థానభ్రంశం <= బఫరు_నిడివి;
+                   ++ఎడమ_ప్రారంభం_స్థానభ్రంశం)
                 {
-                  CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
-                    = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
-                    = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
-                       right_start_offset <= buffer_length;
-                       ++right_start_offset)
+                  CHAR *ఎడమ_ప్రారంభం_సూచిక = ఎడమ_బఫరు + ఎడమ_ప్రారంభం_స్థానభ్రంశం;
+                  పూర్ణాంకం ఎడమ_maxlen
+                    = గరిష్ఠ_నిడివి (ఎడమ_ప్రారంభం_స్థానభ్రంశం, ఎడమ_zero_లెక్క);
+                  పూర్ణాంకం ఎడమ_నిడివి
+                    = string_నిడివి (ఎడమ_a_లెక్క, ఎడమ_ప్రారంభం_స్థానభ్రంశం);
+                  కొరకు (పూర్ణాంకం కుడి_ప్రారంభం_స్థానభ్రంశం = 0;
+                       కుడి_ప్రారంభం_స్థానభ్రంశం <= బఫరు_నిడివి;
+                       ++కుడి_ప్రారంభం_స్థానభ్రంశం)
                     {
-                      CHAR *right_start_pointer
-                        = right_buffer + right_start_offset;
-                      int right_maxlen
-                        = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
-                        = string_length (right_a_count, right_start_offset);
+                      CHAR *కుడి_ప్రారంభం_సూచిక
+                        = కుడి_బఫరు + కుడి_ప్రారంభం_స్థానభ్రంశం;
+                      పూర్ణాంకం కుడి_maxlen
+                        = గరిష్ఠ_నిడివి (కుడి_ప్రారంభం_స్థానభ్రంశం, కుడి_zero_లెక్క);
+                      పూర్ణాంకం కుడి_నిడివి
+                        = string_నిడివి (కుడి_a_లెక్క, కుడి_ప్రారంభం_స్థానభ్రంశం);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      పూర్ణాంకం maxlen = MIN (ఎడమ_maxlen, కుడి_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
-                           ++length_argument)
+                      కొరకు (పూర్ణాంకం నిడివి_వాదం = 0; నిడివి_వాదం <= maxlen;
+                           ++నిడివి_వాదం)
                         {
-                          if (test_verbose)
+                          ఒకవేళ (test_verbose)
                             {
-                              printf ("left: zero_count=%d"
+                              రాయి ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      left_zero_count, left_a_count,
-                                      left_start_offset);
-                              printf ("right: zero_count=%d"
+                                      ఎడమ_zero_లెక్క, ఎడమ_a_లెక్క,
+                                      ఎడమ_ప్రారంభం_స్థానభ్రంశం);
+                              రాయి ("right: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      right_zero_count, right_a_count,
-                                      right_start_offset);
-                              printf ("length argument: %d\n",
-                                      length_argument);
+                                      కుడి_zero_లెక్క, కుడి_a_లెక్క,
+                                      కుడి_ప్రారంభం_స్థానభ్రంశం);
+                              రాయి ("length argument: %d\n",
+                                      నిడివి_వాదం);
                             }
 
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
-                            = MIN (left_length, length_argument);
-                          int right_effective
-                            = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          పూర్ణాంకం ఎడమ_effective
+                            = MIN (ఎడమ_నిడివి, నిడివి_వాదం);
+                          పూర్ణాంకం కుడి_effective
+                            = MIN (కుడి_నిడివి, నిడివి_వాదం);
+                          ఒకవేళ (ఎడమ_effective == కుడి_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument), 0);
-                          else if (left_effective < right_effective)
+                                                ఎడమ_ప్రారంభం_సూచిక,
+                                                కుడి_ప్రారంభం_సూచిక,
+                                                నిడివి_వాదం), 0);
+                          లేకపోతే ఒకవేళ (ఎడమ_effective < కుడి_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument) < 0, 1);
-                          else
+                                                ఎడమ_ప్రారంభం_సూచిక,
+                                                కుడి_ప్రారంభం_సూచిక,
+                                                నిడివి_వాదం) < 0, 1);
+                          లేకపోతే
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument) > 0, 1);
+                                                ఎడమ_ప్రారంభం_సూచిక,
+                                                కుడి_ప్రారంభం_సూచిక,
+                                                నిడివి_వాదం) > 0, 1);
                         }
                     }
                 }
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

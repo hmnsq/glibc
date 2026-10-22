@@ -15,28 +15,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _LIBC
+#నిర్వచితం_కాకపోతే _LIBC
 # include <config.h>
-#endif
+#అయితే_ముగింపు
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#ifndef _LIBC
+#నిర్వచితం_కాకపోతే _LIBC
 # define __memmem	memmem
-#endif
+#అయితే_ముగింపు
 
-#define RETURN_TYPE void *
-#define AVAILABLE(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
-#define FASTSEARCH(S,C,N) (void*) memchr ((void *)(S), (C), (N))
-#include "str-two-way.h"
+#నిర్వచించు RETURN_TYPE శూన్య *
+#నిర్వచించు అందుబాటు(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
+#నిర్వచించు FASTSEARCH(S,C,N) (శూన్య*) memchr ((శూన్య *)(S), (C), (N))
+#అన్తర్భావ "str-two-way.h"
 
-#undef memmem
+#నిర్వచనం_రద్దు memmem
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#నిర్వచించు hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % పరిమాణం (జరుపు))
 
 /* Fast memmem algorithm with guaranteed linear-time performance.
    Small needles up to size 2 use a dedicated linear search.  Longer needles
@@ -49,80 +49,80 @@
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-void *
-__memmem (const void *haystack, size_t hs_len,
-	  const void *needle, size_t ne_len)
+శూన్య *
+__memmem (స్థిరరాశి శూన్య *haystack, size_t hs_len,
+	  స్థిరరాశి శూన్య *needle, size_t ne_len)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  స్థిరరాశి గుర్తులేని అక్షరం *hs = (స్థిరరాశి గుర్తులేని అక్షరం *) haystack;
+  స్థిరరాశి గుర్తులేని అక్షరం *ne = (స్థిరరాశి గుర్తులేని అక్షరం *) needle;
 
-  if (ne_len == 0)
-    return (void *) hs;
-  if (ne_len == 1)
-    return (void *) memchr (hs, ne[0], hs_len);
+  ఒకవేళ (ne_len == 0)
+    తిరిగి (శూన్య *) hs;
+  ఒకవేళ (ne_len == 1)
+    తిరిగి (శూన్య *) memchr (hs, ne[0], hs_len);
 
   /* Ensure haystack length is >= needle length.  */
-  if (hs_len < ne_len)
-    return NULL;
+  ఒకవేళ (hs_len < ne_len)
+    తిరిగి ఖాళీ;
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  స్థిరరాశి గుర్తులేని అక్షరం *చివర = hs + hs_len - ne_len;
 
-  if (ne_len == 2)
+  ఒకవేళ (ne_len == 2)
     {
       uint32_t nw = ne[0] << 16 | ne[1], hw = hs[0] << 16 | hs[1];
-      for (hs++; hs <= end && hw != nw; )
+      కొరకు (hs++; hs <= చివర && hw != nw; )
 	hw = hw << 16 | *++hs;
-      return hw == nw ? (void *)hs - 1 : NULL;
+      తిరిగి hw == nw ? (శూన్య *)hs - 1 : ఖాళీ;
     }
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__builtin_expect (ne_len > 256, 0))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  ఒకవేళ (__builtin_expect (ne_len > 256, 0))
+    తిరిగి two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  uint8_t shift[256];
+  uint8_t జరుపు[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
-  size_t offset = 0;
+  size_t స్థానభ్రంశం = 0;
 
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
-    shift[hash2 (ne + i)] = i;
+  memset (జరుపు, 0, పరిమాణం (జరుపు));
+  కొరకు (పూర్ణాంకం i = 1; i < m1; i++)
+    జరుపు[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
-  shift1 = m1 - shift[hash2 (ne + m1)];
-  shift[hash2 (ne + m1)] = m1;
+  shift1 = m1 - జరుపు[hash2 (ne + m1)];
+  జరుపు[hash2 (ne + m1)] = m1;
 
-  for ( ; hs <= end; )
+  కొరకు ( ; hs <= చివర; )
     {
       /* Skip past character pairs not in the needle.  */
-      do
+      చేయి
 	{
 	  hs += m1;
-	  tmp = shift[hash2 (hs)];
+	  tmp = జరుపు[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      అయితే (tmp == 0 && hs <= చివర);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      ఒకవేళ (tmp < m1)
+	కొనసాగు;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      ఒకవేళ (m1 < 15 || memcmp (hs + స్థానభ్రంశం, ne + స్థానభ్రంశం, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  ఒకవేళ (memcmp (hs, ne, m1) == 0)
+	    తిరిగి (శూన్య *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
-	  offset = (offset >= 8 ? offset : m1) - 8;
+	  స్థానభ్రంశం = (స్థానభ్రంశం >= 8 ? స్థానభ్రంశం : m1) - 8;
 	}
 
       /* Skip based on matching the hash of the needle end.  */
       hs += shift1;
     }
-  return NULL;
+  తిరిగి ఖాళీ;
 }
 libc_hidden_def (__memmem)
 static_weak_alias (__memmem, memmem)

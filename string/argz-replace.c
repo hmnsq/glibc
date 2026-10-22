@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+స్థిర శూన్య
+str_append (అక్షరం **గమ్యం, size_t *గమ్యం_len, స్థిరరాశి అక్షరం *buf, స్థిరరాశి size_t buf_len)
 {
-  size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  size_t new_len = *గమ్యం_len + buf_len;
+  అక్షరం *new_గమ్యం = realloc (*గమ్యం, new_len + 1);
 
-  if (new_to)
+  ఒకవేళ (new_గమ్యం)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
-      *to = new_to;
-      *to_len = new_len;
+      *((అక్షరం *) __mempcpy (new_గమ్యం + *గమ్యం_len, buf, buf_len)) = '\0';
+      *గమ్యం = new_గమ్యం;
+      *గమ్యం_len = new_len;
     }
-  else
+  లేకపోతే
     {
-      free (*to);
-      *to = NULL;
+      విడుదల (*గమ్యం);
+      *గమ్యం = ఖాళీ;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (అక్షరం **argz, size_t *argz_len, స్థిరరాశి అక్షరం *str, స్థిరరాశి అక్షరం *with,
+		గుర్తులేని *replace_లెక్క)
 {
   error_t err = 0;
 
-  if (str && *str)
+  ఒకవేళ (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      అక్షరం *arg = ఖాళీ;
+      అక్షరం *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      అక్షరం *dst = ఖాళీ;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
-      size_t str_len = strlen (str), with_len = strlen (with);
+      పూర్ణాంకం delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      size_t str_len = అక్షరశ్రేణి_పొడవు (str), with_len = అక్షరశ్రేణి_పొడవు (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      అయితే (!err && (arg = argz_తదుపరి (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  అక్షరం *సరిపోలిక = అక్షరశ్రేణి_శోధన (arg, str);
+	  ఒకవేళ (సరిపోలిక)
 	    {
-	      char *from = match + str_len;
-	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      అక్షరం *from = సరిపోలిక + str_len;
+	      size_t గమ్యం_len = సరిపోలిక - arg;
+	      అక్షరం *గమ్యం = __strndup (arg, గమ్యం_len);
 
-	      while (to && from)
+	      అయితే (గమ్యం && from)
 		{
-		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  str_append (&గమ్యం, &గమ్యం_len, with, with_len);
+		  ఒకవేళ (గమ్యం)
 		    {
-		      match = strstr (from, str);
-		      if (match)
+		      సరిపోలిక = అక్షరశ్రేణి_శోధన (from, str);
+		      ఒకవేళ (సరిపోలిక)
 			{
-			  str_append (&to, &to_len, from, match - from);
-			  from = match + str_len;
+			  str_append (&గమ్యం, &గమ్యం_len, from, సరిపోలిక - from);
+			  from = సరిపోలిక + str_len;
 			}
-		      else
+		      లేకపోతే
 			{
-			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  str_append (&గమ్యం, &గమ్యం_len, from, అక్షరశ్రేణి_పొడవు (from));
+			  from = ఖాళీ;
 			}
 		    }
 		}
 
-	      if (to)
+	      ఒకవేళ (గమ్యం)
 		{
-		  if (delayed_copy)
+		  ఒకవేళ (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      ఒకవేళ (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
-		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  ఒకవేళ (! err)
+		    err = __argz_add (&dst, &dst_len, గమ్యం);
+		  విడుదల (గమ్యం);
 		}
-	      else
+	      లేకపోతే
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      ఒకవేళ (replace_లెక్క)
+		(*replace_లెక్క)++;
 	    }
-	  else if (! delayed_copy)
+	  లేకపోతే ఒకవేళ (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      ఒకవేళ (! err)
 	{
-	  if (! delayed_copy)
+	  ఒకవేళ (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      విడుదల (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      లేకపోతే ఒకవేళ (dst_len > 0)
+	విడుదల (dst);
     }
 
-  return err;
+  తిరిగి err;
 }
 weak_alias (__argz_replace, argz_replace)

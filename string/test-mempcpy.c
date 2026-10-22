@@ -16,21 +16,21 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define MEMCPY_RESULT(dst, len) (dst) + (len)
-#define MIN_PAGE_SIZE 131072
-#define TEST_MAIN
-#define TEST_NAME "mempcpy"
-#include "test-string.h"
+#నిర్వచించు MEMCPY_ఫలితం(dst, len) (dst) + (len)
+#నిర్వచించు MIN_పుట_కొలత 131072
+#నిర్వచించు TEST_MAIN
+#నిర్వచించు TEST_NAME "mempcpy"
+#అన్తర్భావ "test-string.h"
 
 IMPL (mempcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_mempcpy (char *dst, const char *src, size_t n)
+అక్షరం *
+simple_mempcpy (అక్షరం *dst, స్థిరరాశి అక్షరం *src, size_t n)
 {
-  while (n--)
+  అయితే (n--)
     *dst++ = *src++;
-  return dst;
+  తిరిగి dst;
 }
 
-#include "test-memcpy.c"
+#అన్తర్భావ "test-memcpy.c"

@@ -16,46 +16,46 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <sys/cdefs.h>
-#include <support/support.h>
+#అన్తర్భావ <sys/cdefs.h>
+#అన్తర్భావ <support/support.h>
 
-typedef struct
+రకనిర్వచనం నిర్మాణం
 {
-  const char *name;
-  void (*fn) (void);
-  long test;
+  స్థిరరాశి అక్షరం *name;
+  శూన్య (*fn) (శూన్య);
+  దీర్ఘ test;
 } impl_t;
-extern impl_t __start_impls[], __stop_impls[];
+బాహ్య impl_t __start_impls[], __stop_impls[];
 
-#define IMPL(name, test) \
+#నిర్వచించు IMPL(name, test) \
   impl_t tst_ ## name							\
-  __attribute__ ((section ("impls"), aligned (sizeof (void *))))	\
-       = { __STRING (name), (void (*) (void))name, test };
+  __attribute__ ((section ("impls"), aligned (పరిమాణం (శూన్య *))))	\
+       = { __STRING (name), (శూన్య (*) (శూన్య))name, test };
 
-#ifdef TEST_MAIN
+#నిర్వచితమైతే TEST_MAIN
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#నిర్వచితం_కాకపోతే GNU_ఆధారం
+#నిర్వచించు GNU_ఆధారం
+#అయితే_ముగింపు
 
-#undef __USE_STRING_INLINES
+#నిర్వచనం_రద్దు __USE_STRING_INLINES
 
-#include <libc-misc.h>
-#include <getopt.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/mman.h>
-#include <sys/param.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <error.h>
-#include <errno.h>
-#include <time.h>
-#include <ifunc-impl-list.h>
-#define GL(x) _##x
-#define GLRO(x) _##x
+#అన్తర్భావ <libc-misc.h>
+#అన్తర్భావ <getopt.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <sys/mman.h>
+#అన్తర్భావ <sys/param.h>
+#అన్తర్భావ <unistd.h>
+#అన్తర్భావ <fcntl.h>
+#అన్తర్భావ <error.h>
+#అన్తర్భావ <errno.h>
+#అన్తర్భావ <time.h>
+#అన్తర్భావ <ifunc-impl-list.h>
+#నిర్వచించు GL(x) _##x
+#నిర్వచించు GLRO(x) _##x
 
 
 # define TEST_FUNCTION test_main
@@ -64,149 +64,149 @@ extern impl_t __start_impls[], __stop_impls[];
 # endif
 # define OPT_ITERATIONS 10000
 # define OPT_RANDOM 10001
-# define OPT_SEED 10002
+# define OPT_విత్తనం 10002
 
-unsigned char *buf1, *buf2;
-int ret, do_srandom;
-unsigned int seed;
-size_t page_size;
+గుర్తులేని అక్షరం *buf1, *buf2;
+పూర్ణాంకం ret, do_srandom;
+గుర్తులేని పూర్ణాంకం విత్తనం;
+size_t పుట_కొలత;
 
 # ifndef ITERATIONS
 size_t iterations = 100000;
 #  define ITERATIONS_OPTIONS \
-  { "iterations", required_argument, NULL, OPT_ITERATIONS },
+  { "iterations", required_వాదం, ఖాళీ, OPT_ITERATIONS },
 #  define ITERATIONS_PROCESS \
-  case OPT_ITERATIONS:				\
-    iterations = strtoul (optarg, NULL, 0);	\
-    break;
+  స్థితి OPT_ITERATIONS:				\
+    iterations = strtoul (optarg, ఖాళీ, 0);	\
+    ఆపు;
 #  define ITERATIONS iterations
-# else
+# లేకపోతే
 #  define ITERATIONS_OPTIONS
 #  define ITERATIONS_PROCESS
 # endif
 
 # define CMDLINE_OPTIONS ITERATIONS_OPTIONS \
-  { "random", no_argument, NULL, OPT_RANDOM },	\
-  { "seed", required_argument, NULL, OPT_SEED },
+  { "random", no_వాదం, ఖాళీ, OPT_RANDOM },	\
+  { "seed", required_వాదం, ఖాళీ, OPT_విత్తనం },
 
-static void __attribute__ ((used))
-cmdline_process_function (int c)
+స్థిర శూన్య __attribute__ ((వాడిన))
+cmdline_process_function (పూర్ణాంకం c)
 {
-  switch (c)
+  ఎంపిక (c)
     {
       ITERATIONS_PROCESS
-      case OPT_RANDOM:
+      స్థితి OPT_RANDOM:
         {
-          int fdr = open ("/dev/urandom", O_RDONLY);
-          if (fdr < 0 || read (fdr, &seed, sizeof (seed)) != sizeof (seed))
-            seed = time (NULL);
-          if (fdr >= 0)
+          పూర్ణాంకం fdr = open ("/dev/urandom", O_RDONLY);
+          ఒకవేళ (fdr < 0 || పఠ (fdr, &విత్తనం, పరిమాణం (విత్తనం)) != పరిమాణం (విత్తనం))
+            విత్తనం = time (ఖాళీ);
+          ఒకవేళ (fdr >= 0)
             close (fdr);
           do_srandom = 1;
-          break;
+          ఆపు;
         }
 
-      case OPT_SEED:
-        seed = strtoul (optarg, NULL, 0);
+      స్థితి OPT_విత్తనం:
+        విత్తనం = strtoul (optarg, ఖాళీ, 0);
         do_srandom = 1;
-        break;
+        ఆపు;
     }
 }
 # define CMDLINE_PROCESS cmdline_process_function
 
-#define CALL(impl, ...)	\
+#నిర్వచించు CALL(impl, ...)	\
   (* (proto_t) (impl)->fn) (__VA_ARGS__)
 
-#ifdef TEST_NAME
+#నిర్వచితమైతే TEST_NAME
 /* Increase size of FUNC_LIST if assert is triggered at run-time.  */
-static struct libc_ifunc_impl func_list[32];
-static int func_count;
-static int impl_count __attribute__ ((unused)) = -1;
-static impl_t *impl_array __attribute__ ((unused));
+స్థిర నిర్మాణం libc_ifunc_impl func_list[32];
+స్థిర పూర్ణాంకం func_లెక్క;
+స్థిర పూర్ణాంకం impl_లెక్క __attribute__ ((వాడని)) = -1;
+స్థిర impl_t *impl_array __attribute__ ((వాడని));
 
 # define FOR_EACH_IMPL(impl, notall) \
   impl_t *impl;								\
-  int count;								\
-  if (impl_count == -1)							\
+  పూర్ణాంకం లెక్క;								\
+  ఒకవేళ (impl_లెక్క == -1)							\
     {									\
-      impl_count = 0;							\
-      if (func_count != 0)						\
+      impl_లెక్క = 0;							\
+      ఒకవేళ (func_లెక్క != 0)						\
 	{								\
-	  int f;							\
-	  impl_t *skip = NULL, *a;					\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (strcmp (impl->name, TEST_NAME) == 0)			\
+	  పూర్ణాంకం f;							\
+	  impl_t *skip = ఖాళీ, *a;					\
+	  కొరకు (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    ఒకవేళ (strcmp (impl->name, TEST_NAME) == 0)			\
 	      skip = impl;						\
-	    else							\
-	      impl_count++;						\
-	  a = impl_array = xmalloc ((impl_count + func_count) *		\
-				    sizeof (impl_t));			\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (impl != skip)						\
+	    లేకపోతే							\
+	      impl_లెక్క++;						\
+	  a = impl_array = xmalloc ((impl_లెక్క + func_లెక్క) *		\
+				    పరిమాణం (impl_t));			\
+	  కొరకు (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    ఒకవేళ (impl != skip)						\
 	      *a++ = *impl;						\
-	  for (f = 0; f < func_count; f++)				\
-	    if (func_list[f].usable)					\
+	  కొరకు (f = 0; f < func_లెక్క; f++)				\
+	    ఒకవేళ (func_list[f].usable)					\
 	      {								\
 		a->name = func_list[f].name;				\
 		a->fn = func_list[f].fn;				\
 		a->test = 1;						\
 		a++;							\
 	      }								\
-	  impl_count = a - impl_array;					\
+	  impl_లెక్క = a - impl_array;					\
 	}								\
-      else								\
+      లేకపోతే								\
         {								\
-	  impl_count = __stop_impls - __start_impls;			\
+	  impl_లెక్క = __stop_impls - __start_impls;			\
 	  impl_array = __start_impls;					\
         }								\
     }									\
   impl = impl_array;							\
-  for (count = 0; count < impl_count; ++count, ++impl)			\
-    if (!notall || impl->test)
-#else
+  కొరకు (లెక్క = 0; లెక్క < impl_లెక్క; ++లెక్క, ++impl)			\
+    ఒకవేళ (!notall || impl->test)
+#లేకపోతే
 # define FOR_EACH_IMPL(impl, notall) \
-  for (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
-    if (!notall || impl->test)
-#endif
+  కొరకు (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
+    ఒకవేళ (!notall || impl->test)
+#అయితే_ముగింపు
 
-#ifndef BUF1PAGES
-# define BUF1PAGES 1
-#endif
+#నిర్వచితం_కాకపోతే BUF1_పుటలు
+# define BUF1_పుటలు 1
+#అయితే_ముగింపు
 
-static void
-test_init (void)
+స్థిర శూన్య
+test_init (శూన్య)
 {
-#ifdef TEST_NAME
-  func_count = __libc_ifunc_impl_list (TEST_NAME, func_list,
-				       (sizeof func_list
-					/ sizeof func_list[0]));
-#endif
+#నిర్వచితమైతే TEST_NAME
+  func_లెక్క = __libc_ifunc_impl_list (TEST_NAME, func_list,
+				       (పరిమాణం func_list
+					/ పరిమాణం func_list[0]));
+#అయితే_ముగింపు
 
-  page_size = 2 * getpagesize ();
-#ifdef MIN_PAGE_SIZE
-  if (page_size < MIN_PAGE_SIZE)
-    page_size = MIN_PAGE_SIZE;
-#endif
-  buf1 = mmap (0, (BUF1PAGES + 1) * page_size, PROT_READ | PROT_WRITE,
-	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf1 == MAP_FAILED)
+  పుట_కొలత = 2 * getpagesize ();
+#నిర్వచితమైతే MIN_పుట_కొలత
+  ఒకవేళ (పుట_కొలత < MIN_పుట_కొలత)
+    పుట_కొలత = MIN_పుట_కొలత;
+#అయితే_ముగింపు
+  buf1 = mmap (0, (BUF1_పుటలు + 1) * పుట_కొలత, PROT_READ | PROT_WRITE,
+	       MAP_వ్యక్తిగత | MAP_ANON, -1, 0);
+  ఒకవేళ (buf1 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf1 + BUF1PAGES * page_size, page_size, PROT_NONE))
+  ఒకవేళ (mprotect (buf1 + BUF1_పుటలు * పుట_కొలత, పుట_కొలత, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
-  buf2 = mmap (0, 2 * page_size, PROT_READ | PROT_WRITE,
-	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf2 == MAP_FAILED)
+  buf2 = mmap (0, 2 * పుట_కొలత, PROT_READ | PROT_WRITE,
+	       MAP_వ్యక్తిగత | MAP_ANON, -1, 0);
+  ఒకవేళ (buf2 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf2 + page_size, page_size, PROT_NONE))
+  ఒకవేళ (mprotect (buf2 + పుట_కొలత, పుట_కొలత, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
-  if (do_srandom)
+  ఒకవేళ (do_srandom)
     {
-      printf ("Setting seed to 0x%x\n", seed);
-      srandom (seed);
+      రాయి ("Setting seed to 0x%x\n", విత్తనం);
+      srandom (విత్తనం);
     }
 
-  memset (buf1, 0xa5, BUF1PAGES * page_size);
-  memset (buf2, 0x5a, page_size);
+  memset (buf1, 0xa5, BUF1_పుటలు * పుట_కొలత);
+  memset (buf2, 0x5a, పుట_కొలత);
 }
 
-#endif
+#అయితే_ముగింపు

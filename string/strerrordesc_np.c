@@ -16,11 +16,11 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
+#అన్తర్భావ <stdio.h>
 
-const char *
-__strerrordesc_np (int errnum)
+స్థిరరాశి అక్షరం *
+__strerrordesc_np (పూర్ణాంకం errnum)
 {
-  return __get_errlist (errnum);
+  తిరిగి __get_errlist (errnum);
 }
 weak_alias (__strerrordesc_np, strerrordesc_np)

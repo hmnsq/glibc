@@ -15,34 +15,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#undef __strsep
-#undef strsep
+#నిర్వచనం_రద్దు __strsep
+#నిర్వచనం_రద్దు strsep
 
-char *
-__strsep (char **stringp, const char *delim)
+అక్షరం *
+__strsep (అక్షరం **stringp, స్థిరరాశి అక్షరం *delim)
 {
-  char *begin, *end;
+  అక్షరం *begin, *చివర;
 
   begin = *stringp;
-  if (begin == NULL)
-    return NULL;
+  ఒకవేళ (begin == ఖాళీ)
+    తిరిగి ఖాళీ;
 
   /* Find the end of the token.  */
-  end = begin + strcspn (begin, delim);
+  చివర = begin + strcspn (begin, delim);
 
-  if (*end)
+  ఒకవేళ (*చివర)
     {
       /* Terminate the token and set *STRINGP past NUL character.  */
-      *end++ = '\0';
-      *stringp = end;
+      *చివర++ = '\0';
+      *stringp = చివర;
     }
-  else
+  లేకపోతే
     /* No more delimiters; this is the last token.  */
-    *stringp = NULL;
+    *stringp = ఖాళీ;
 
-  return begin;
+  తిరిగి begin;
 }
 weak_alias (__strsep, strsep)
 strong_alias (__strsep, __strsep_g)

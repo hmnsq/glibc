@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <signal.h>
+#అన్తర్భావ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#అన్తర్భావ <support/support.h>
+#అన్తర్భావ <support/check.h>
 
-static const struct test_t
+స్థిర స్థిరరాశి నిర్మాణం test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  పూర్ణాంకం errno;
+  స్థిరరాశి అక్షరం *abbrev;
+  స్థిరరాశి అక్షరం *descr;
 } tests[] =
 {
-#define N_(name)                      name
-#define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
-#undef init_sig
+#నిర్వచించు N_(name)                      name
+#నిర్వచించు init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
+#అన్తర్భావ <siglist.h>
+#నిర్వచనం_రద్దు init_sig
 };
 
-static int
-do_test (void)
+స్థిర పూర్ణాంకం
+do_test (శూన్య)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  కొరకు (size_t i = 0; i < array_నిడివి (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

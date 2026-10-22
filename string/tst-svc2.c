@@ -1,61 +1,61 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
 
 
-static struct
+స్థిర నిర్మాణం
 {
-  const char *str1;
-  const char *str2;
+  స్థిరరాశి అక్షరం *str1;
+  స్థిరరాశి అక్షరం *str2;
 } tests[] =
   {
     { "B0075022800016.gbp.corp.com", "B007502280067.gbp.corp.com" },
     { "B0075022800016.gbp.corp.com", "B007502357019.GBP.CORP.COM" },
     { "B007502280067.gbp.corp.com", "B007502357019.GBP.CORP.COM" }
   };
-#define ntests (sizeof (tests) / sizeof (tests[0]))
+#నిర్వచించు ntests (పరిమాణం (tests) / పరిమాణం (tests[0]))
 
 
-int
-compare (const char *str1, const char *str2, int exp)
+పూర్ణాంకం
+compare (స్థిరరాశి అక్షరం *str1, స్థిరరాశి అక్షరం *str2, పూర్ణాంకం ఘాతాంకం)
 {
-  int c = strverscmp (str1, str2);
-  if (c != 0)
-    c /= abs (c);
-  return c != exp;
+  పూర్ణాంకం c = strverscmp (str1, str2);
+  ఒకవేళ (c != 0)
+    c /= నిరపేక్ష (c);
+  తిరిగి c != ఘాతాంకం;
 }
 
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  int res = 0;
-  for (int i = 0; i < ntests; ++i)
+  పూర్ణాంకం res = 0;
+  కొరకు (పూర్ణాంకం i = 0; i < ntests; ++i)
     {
-      if (compare (tests[i].str1, tests[i].str2, -1))
+      ఒకవేళ (compare (tests[i].str1, tests[i].str2, -1))
 	{
-	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
+	  రాయి ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
 	  res = 1;
 	}
-      if (compare (tests[i].str2, tests[i].str1, +1))
+      ఒకవేళ (compare (tests[i].str2, tests[i].str1, +1))
 	{
-	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
+	  రాయి ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
 	  res = 1;
 	}
-      char *copy1 = strdupa (tests[i].str1);
-      if (compare (tests[i].str1, copy1, 0))
+      అక్షరం *copy1 = strdupa (tests[i].str1);
+      ఒకవేళ (compare (tests[i].str1, copy1, 0))
 	{
-	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
+	  రాయి ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
 	  res = 1;
 	}
-      char *copy2 = strdupa (tests[i].str2);
-      if (compare (tests[i].str2, copy2, 0))
+      అక్షరం *copy2 = strdupa (tests[i].str2);
+      ఒకవేళ (compare (tests[i].str2, copy2, 0))
 	{
-	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
+	  రాయి ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
 	  res = 1;
 	}
     }
-  return res;
+  తిరిగి res;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

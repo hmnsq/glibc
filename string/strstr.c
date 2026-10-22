@@ -16,50 +16,50 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _LIBC
+#నిర్వచితం_కాకపోతే _LIBC
 # include <config.h>
-#endif
+#అయితే_ముగింపు
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
+#నిర్వచించు RETURN_TYPE అక్షరం *
+#నిర్వచించు అందుబాటు(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((శూన్య*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#include "str-two-way.h"
+#అన్తర్భావ "str-two-way.h"
 
-#undef strstr
+#నిర్వచనం_రద్దు అక్షరశ్రేణి_శోధన
 
-#ifndef STRSTR
-#define STRSTR strstr
-#endif
+#నిర్వచితం_కాకపోతే STRSTR
+#నిర్వచించు STRSTR అక్షరశ్రేణి_శోధన
+#అయితే_ముగింపు
 
-static inline char *
-strstr2 (const unsigned char *hs, const unsigned char *ne)
+స్థిర అంతఃవరుస అక్షరం *
+strstr2 (స్థిరరాశి గుర్తులేని అక్షరం *hs, స్థిరరాశి గుర్తులేని అక్షరం *ne)
 {
   uint32_t h1 = (ne[0] << 16) | ne[1];
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  కొరకు (పూర్ణాంకం c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 << 16) | c;
-  return h1 == h2 ? (char *)hs - 2 : NULL;
+  తిరిగి h1 == h2 ? (అక్షరం *)hs - 2 : ఖాళీ;
 }
 
-static inline char *
-strstr3 (const unsigned char *hs, const unsigned char *ne)
+స్థిర అంతఃవరుస అక్షరం *
+strstr3 (స్థిరరాశి గుర్తులేని అక్షరం *hs, స్థిరరాశి గుర్తులేని అక్షరం *ne)
 {
   uint32_t h1 = ((uint32_t)ne[0] << 24) | (ne[1] << 16) | (ne[2] << 8);
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  కొరకు (పూర్ణాంకం c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 | c) << 8;
-  return h1 == h2 ? (char *)hs - 3 : NULL;
+  తిరిగి h1 == h2 ? (అక్షరం *)hs - 3 : ఖాళీ;
 }
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#నిర్వచించు hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % పరిమాణం (జరుపు))
 
 /* Fast strstr algorithm with guaranteed linear-time performance.
    Small needles up to size 3 use a dedicated linear search.  Longer needles
@@ -72,91 +72,91 @@ strstr3 (const unsigned char *hs, const unsigned char *ne)
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-char *
-STRSTR (const char *haystack, const char *needle)
+అక్షరం *
+STRSTR (స్థిరరాశి అక్షరం *haystack, స్థిరరాశి అక్షరం *needle)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  స్థిరరాశి గుర్తులేని అక్షరం *hs = (స్థిరరాశి గుర్తులేని అక్షరం *) haystack;
+  స్థిరరాశి గుర్తులేని అక్షరం *ne = (స్థిరరాశి గుర్తులేని అక్షరం *) needle;
 
   /* Handle short needle special cases first.  */
-  if (ne[0] == '\0')
-    return (char *)hs;
-  hs = (const unsigned char *)strchr ((const char*)hs, ne[0]);
-  if (hs == NULL || ne[1] == '\0')
-    return (char*)hs;
-  if (ne[2] == '\0')
-    return strstr2 (hs, ne);
-  if (ne[3] == '\0')
-    return strstr3 (hs, ne);
+  ఒకవేళ (ne[0] == '\0')
+    తిరిగి (అక్షరం *)hs;
+  hs = (స్థిరరాశి గుర్తులేని అక్షరం *)strchr ((స్థిరరాశి అక్షరం*)hs, ne[0]);
+  ఒకవేళ (hs == ఖాళీ || ne[1] == '\0')
+    తిరిగి (అక్షరం*)hs;
+  ఒకవేళ (ne[2] == '\0')
+    తిరిగి strstr2 (hs, ne);
+  ఒకవేళ (ne[3] == '\0')
+    తిరిగి strstr3 (hs, ne);
 
   /* Ensure haystack length is at least as long as needle length.
      Since a match may occur early on in a huge haystack, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  size_t ne_len = strlen ((const char*)ne);
-  size_t hs_len = __strnlen ((const char*)hs, ne_len | 512);
-  if (hs_len < ne_len)
-    return NULL;
+  size_t ne_len = అక్షరశ్రేణి_పొడవు ((స్థిరరాశి అక్షరం*)ne);
+  size_t hs_len = __strnlen ((స్థిరరాశి అక్షరం*)hs, ne_len | 512);
+  ఒకవేళ (hs_len < ne_len)
+    తిరిగి ఖాళీ;
 
   /* Check whether we have a match.  This improves performance since we
      avoid initialization overheads.  */
-  if (memcmp (hs, ne, ne_len) == 0)
-    return (char *) hs;
+  ఒకవేళ (memcmp (hs, ne, ne_len) == 0)
+    తిరిగి (అక్షరం *) hs;
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__glibc_unlikely (ne_len > 256))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  ఒకవేళ (__glibc_unlikely (ne_len > 256))
+    తిరిగి two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  const unsigned char *end = hs + hs_len - ne_len;
-  uint8_t shift[256];
+  స్థిరరాశి గుర్తులేని అక్షరం *చివర = hs + hs_len - ne_len;
+  uint8_t జరుపు[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
-  size_t offset = 0;
+  size_t స్థానభ్రంశం = 0;
 
   /* Initialize bad character shift hash table.  */
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
-    shift[hash2 (ne + i)] = i;
+  memset (జరుపు, 0, పరిమాణం (జరుపు));
+  కొరకు (పూర్ణాంకం i = 1; i < m1; i++)
+    జరుపు[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
-  shift1 = m1 - shift[hash2 (ne + m1)];
-  shift[hash2 (ne + m1)] = m1;
+  shift1 = m1 - జరుపు[hash2 (ne + m1)];
+  జరుపు[hash2 (ne + m1)] = m1;
 
-  while (1)
+  అయితే (1)
     {
-      if (__glibc_unlikely (hs > end))
+      ఒకవేళ (__glibc_unlikely (hs > చివర))
 	{
-	  end += __strnlen ((const char*)end + m1 + 1, 2048);
-	  if (hs > end)
-	    return NULL;
+	  చివర += __strnlen ((స్థిరరాశి అక్షరం*)చివర + m1 + 1, 2048);
+	  ఒకవేళ (hs > చివర)
+	    తిరిగి ఖాళీ;
 	}
 
       /* Skip past character pairs not in the needle.  */
-      do
+      చేయి
 	{
 	  hs += m1;
-	  tmp = shift[hash2 (hs)];
+	  tmp = జరుపు[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      అయితే (tmp == 0 && hs <= చివర);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      ఒకవేళ (tmp < m1)
+	కొనసాగు;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      ఒకవేళ (m1 < 15 || memcmp (hs + స్థానభ్రంశం, ne + స్థానభ్రంశం, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  ఒకవేళ (memcmp (hs, ne, m1) == 0)
+	    తిరిగి (శూన్య *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
-	  offset = (offset >= 8 ? offset : m1) - 8;
+	  స్థానభ్రంశం = (స్థానభ్రంశం >= 8 ? స్థానభ్రంశం : m1) - 8;
 	}
 
       /* Skip based on matching the hash of the needle end.  */
       hs += shift1;
     }
 }
-libc_hidden_builtin_def (strstr)
+libc_hidden_builtin_def (అక్షరశ్రేణి_శోధన)

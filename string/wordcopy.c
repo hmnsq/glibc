@@ -18,8 +18,8 @@
 
 /* BE VERY CAREFUL IF YOU CHANGE THIS CODE...!  */
 
-#include <stddef.h>
-#include <libc-diag.h>
+#అన్తర్భావ <stddef.h>
+#అన్తర్భావ <libc-diag.h>
 /* Compiling with -O1 might warn that 'a2' and 'a3' may be used
    uninitialized.  There are only two ways to arrive at labels 'do4', 'do3'
    or 'do1', all of which use 'a2' or 'a3' in the MERGE macro: either from
@@ -28,81 +28,81 @@
 
    Since the usage is within the MERGE macro we disable the
    warning in the definition, but only in this file.  */
-DIAG_PUSH_NEEDS_COMMENT;
+DIAG_నెట్టు_NEEDS_COMMENT;
 DIAG_IGNORE_NEEDS_COMMENT_GCC (6, "-Wmaybe-uninitialized");
-#include <memcopy.h>
-DIAG_POP_NEEDS_COMMENT;
+#అన్తర్భావ <memcopy.h>
+DIAG_తీయి_NEEDS_COMMENT;
 
 /* _wordcopy_fwd_aligned -- Copy block beginning at SRCP to
    block beginning at DSTP with LEN `op_t' words (not LEN bytes!).
    Both SRCP and DSTP should be aligned for memory operations on `op_t's.  */
 
-#ifndef WORDCOPY_FWD_ALIGNED
+#నిర్వచితం_కాకపోతే WORDCOPY_FWD_ALIGNED
 # define WORDCOPY_FWD_ALIGNED _wordcopy_fwd_aligned
-#endif
+#అయితే_ముగింపు
 
-void
-WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
+శూన్య
+WORDCOPY_FWD_ALIGNED (దీర్ఘ పూర్ణాంకం dstp, దీర్ఘ పూర్ణాంకం srcp, size_t len)
 {
   op_t a0, a1;
 
-  switch (len % 8)
+  ఎంపిక (len % 8)
     {
-    case 2:
+    స్థితి 2:
       a0 = ((op_t *) srcp)[0];
       srcp -= 6 * OPSIZ;
       dstp -= 7 * OPSIZ;
       len += 6;
-      goto do1;
-    case 3:
+      వెళ్ళు do1;
+    స్థితి 3:
       a1 = ((op_t *) srcp)[0];
       srcp -= 5 * OPSIZ;
       dstp -= 6 * OPSIZ;
       len += 5;
-      goto do2;
-    case 4:
+      వెళ్ళు do2;
+    స్థితి 4:
       a0 = ((op_t *) srcp)[0];
       srcp -= 4 * OPSIZ;
       dstp -= 5 * OPSIZ;
       len += 4;
-      goto do3;
-    case 5:
+      వెళ్ళు do3;
+    స్థితి 5:
       a1 = ((op_t *) srcp)[0];
       srcp -= 3 * OPSIZ;
       dstp -= 4 * OPSIZ;
       len += 3;
-      goto do4;
-    case 6:
+      వెళ్ళు do4;
+    స్థితి 6:
       a0 = ((op_t *) srcp)[0];
       srcp -= 2 * OPSIZ;
       dstp -= 3 * OPSIZ;
       len += 2;
-      goto do5;
-    case 7:
+      వెళ్ళు do5;
+    స్థితి 7:
       a1 = ((op_t *) srcp)[0];
       srcp -= 1 * OPSIZ;
       dstp -= 2 * OPSIZ;
       len += 1;
-      goto do6;
+      వెళ్ళు do6;
 
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    స్థితి 0:
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	తిరిగి;
       a0 = ((op_t *) srcp)[0];
       srcp -= 0 * OPSIZ;
       dstp -= 1 * OPSIZ;
-      goto do7;
-    case 1:
+      వెళ్ళు do7;
+    స్థితి 1:
       a1 = ((op_t *) srcp)[0];
       srcp -=-1 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do8;			/* No-op.  */
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	వెళ్ళు do0;
+      వెళ్ళు do8;			/* No-op.  */
     }
 
-  do
+  చేయి
     {
     do8:
       a0 = ((op_t *) srcp)[0];
@@ -111,10 +111,10 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
 	 do-while loop iteration or directly via the earlier switch 'case 1:'
 	 case. The switch case always sets 'a1' and all previous loop
 	 iterations will also have set 'a1' before the use.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_నెట్టు_NEEDS_COMMENT;
       DIAG_IGNORE_NEEDS_COMMENT_GCC (6, "-Wmaybe-uninitialized");
       ((op_t *) dstp)[0] = a1;
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_తీయి_NEEDS_COMMENT;
     do7:
       a1 = ((op_t *) srcp)[1];
       ((op_t *) dstp)[1] = a0;
@@ -141,7 +141,7 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  అయితే (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -154,15 +154,15 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
    DSTP should be aligned for memory operations on `op_t's, but SRCP must
    *not* be aligned.  */
 
-#ifndef WORDCOPY_FWD_DEST_ALIGNED
+#నిర్వచితం_కాకపోతే WORDCOPY_FWD_DEST_ALIGNED
 # define WORDCOPY_FWD_DEST_ALIGNED _wordcopy_fwd_dest_aligned
-#endif
+#అయితే_ముగింపు
 
-void
-WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+శూన్య
+WORDCOPY_FWD_DEST_ALIGNED (దీర్ఘ పూర్ణాంకం dstp, దీర్ఘ పూర్ణాంకం srcp, size_t len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  పూర్ణాంకం sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -174,67 +174,67 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
      it points in the middle of.  */
   srcp &= -OPSIZ;
 
-  switch (len % 4)
+  ఎంపిక (len % 4)
     {
-    case 2:
+    స్థితి 2:
       a1 = ((op_t *) srcp)[0];
       a2 = ((op_t *) srcp)[1];
       srcp -= 1 * OPSIZ;
       dstp -= 3 * OPSIZ;
       len += 2;
-      goto do1;
-    case 3:
+      వెళ్ళు do1;
+    స్థితి 3:
       a0 = ((op_t *) srcp)[0];
       a1 = ((op_t *) srcp)[1];
       srcp -= 0 * OPSIZ;
       dstp -= 2 * OPSIZ;
       len += 1;
-      goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      వెళ్ళు do2;
+    స్థితి 0:
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	తిరిగి;
       a3 = ((op_t *) srcp)[0];
       a0 = ((op_t *) srcp)[1];
       srcp -=-1 * OPSIZ;
       dstp -= 1 * OPSIZ;
       len += 0;
-      goto do3;
-    case 1:
+      వెళ్ళు do3;
+    స్థితి 1:
       a2 = ((op_t *) srcp)[0];
       a3 = ((op_t *) srcp)[1];
       srcp -=-2 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do4;			/* No-op.  */
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	వెళ్ళు do0;
+      వెళ్ళు do4;			/* No-op.  */
     }
 
-  do
+  చేయి
     {
     do4:
       a0 = ((op_t *) srcp)[0];
-      ((op_t *) dstp)[0] = MERGE (a2, sh_1, a3, sh_2);
+      ((op_t *) dstp)[0] = విలీనం (a2, sh_1, a3, sh_2);
     do3:
       a1 = ((op_t *) srcp)[1];
-      ((op_t *) dstp)[1] = MERGE (a3, sh_1, a0, sh_2);
+      ((op_t *) dstp)[1] = విలీనం (a3, sh_1, a0, sh_2);
     do2:
       a2 = ((op_t *) srcp)[2];
-      ((op_t *) dstp)[2] = MERGE (a0, sh_1, a1, sh_2);
+      ((op_t *) dstp)[2] = విలీనం (a0, sh_1, a1, sh_2);
     do1:
       a3 = ((op_t *) srcp)[3];
-      ((op_t *) dstp)[3] = MERGE (a1, sh_1, a2, sh_2);
+      ((op_t *) dstp)[3] = విలీనం (a1, sh_1, a2, sh_2);
 
       srcp += 4 * OPSIZ;
       dstp += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  అయితే (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
-  ((op_t *) dstp)[0] = MERGE (a2, sh_1, a3, sh_2);
+  ((op_t *) dstp)[0] = విలీనం (a2, sh_1, a3, sh_2);
 }
 
 /* _wordcopy_bwd_aligned -- Copy block finishing right before
@@ -242,80 +242,80 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
    (not LEN bytes!).  Both SRCP and DSTP should be aligned for memory
    operations on `op_t's.  */
 
-#ifndef WORDCOPY_BWD_ALIGNED
+#నిర్వచితం_కాకపోతే WORDCOPY_BWD_ALIGNED
 # define WORDCOPY_BWD_ALIGNED _wordcopy_bwd_aligned
-#endif
+#అయితే_ముగింపు
 
-void
-WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
+శూన్య
+WORDCOPY_BWD_ALIGNED (దీర్ఘ పూర్ణాంకం dstp, దీర్ఘ పూర్ణాంకం srcp, size_t len)
 {
   op_t a0, a1;
 
-  switch (len % 8)
+  ఎంపిక (len % 8)
     {
-    case 2:
+    స్థితి 2:
       srcp -= 2 * OPSIZ;
       dstp -= 1 * OPSIZ;
       a0 = ((op_t *) srcp)[1];
       len += 6;
-      goto do1;
-    case 3:
+      వెళ్ళు do1;
+    స్థితి 3:
       srcp -= 3 * OPSIZ;
       dstp -= 2 * OPSIZ;
       a1 = ((op_t *) srcp)[2];
       len += 5;
-      goto do2;
-    case 4:
+      వెళ్ళు do2;
+    స్థితి 4:
       srcp -= 4 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[3];
       len += 4;
-      goto do3;
-    case 5:
+      వెళ్ళు do3;
+    స్థితి 5:
       srcp -= 5 * OPSIZ;
       dstp -= 4 * OPSIZ;
       a1 = ((op_t *) srcp)[4];
       len += 3;
-      goto do4;
-    case 6:
+      వెళ్ళు do4;
+    స్థితి 6:
       srcp -= 6 * OPSIZ;
       dstp -= 5 * OPSIZ;
       a0 = ((op_t *) srcp)[5];
       len += 2;
-      goto do5;
-    case 7:
+      వెళ్ళు do5;
+    స్థితి 7:
       srcp -= 7 * OPSIZ;
       dstp -= 6 * OPSIZ;
       a1 = ((op_t *) srcp)[6];
       len += 1;
-      goto do6;
+      వెళ్ళు do6;
 
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    స్థితి 0:
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	తిరిగి;
       srcp -= 8 * OPSIZ;
       dstp -= 7 * OPSIZ;
       a0 = ((op_t *) srcp)[7];
-      goto do7;
-    case 1:
+      వెళ్ళు do7;
+    స్థితి 1:
       srcp -= 9 * OPSIZ;
       dstp -= 8 * OPSIZ;
       a1 = ((op_t *) srcp)[8];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do8;			/* No-op.  */
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	వెళ్ళు do0;
+      వెళ్ళు do8;			/* No-op.  */
     }
 
-  do
+  చేయి
     {
     do8:
       a0 = ((op_t *) srcp)[7];
       /* Check the comment on WORDCOPY_FWD_ALIGNED.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_నెట్టు_NEEDS_COMMENT;
       DIAG_IGNORE_NEEDS_COMMENT_GCC (6, "-Wmaybe-uninitialized");
       ((op_t *) dstp)[7] = a1;
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_తీయి_NEEDS_COMMENT;
     do7:
       a1 = ((op_t *) srcp)[6];
       ((op_t *) dstp)[6] = a0;
@@ -342,7 +342,7 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  అయితే (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -355,15 +355,15 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
    words (not LEN bytes!).  DSTP should be aligned for memory
    operations on `op_t', but SRCP must *not* be aligned.  */
 
-#ifndef WORDCOPY_BWD_DEST_ALIGNED
+#నిర్వచితం_కాకపోతే WORDCOPY_BWD_DEST_ALIGNED
 # define WORDCOPY_BWD_DEST_ALIGNED _wordcopy_bwd_dest_aligned
-#endif
+#అయితే_ముగింపు
 
-void
-WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+శూన్య
+WORDCOPY_BWD_DEST_ALIGNED (దీర్ఘ పూర్ణాంకం dstp, దీర్ఘ పూర్ణాంకం srcp, size_t len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  పూర్ణాంకం sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -376,64 +376,64 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
   srcp &= -OPSIZ;
   srcp += OPSIZ;
 
-  switch (len % 4)
+  ఎంపిక (len % 4)
     {
-    case 2:
+    స్థితి 2:
       srcp -= 3 * OPSIZ;
       dstp -= 1 * OPSIZ;
       a2 = ((op_t *) srcp)[2];
       a1 = ((op_t *) srcp)[1];
       len += 2;
-      goto do1;
-    case 3:
+      వెళ్ళు do1;
+    స్థితి 3:
       srcp -= 4 * OPSIZ;
       dstp -= 2 * OPSIZ;
       a3 = ((op_t *) srcp)[3];
       a2 = ((op_t *) srcp)[2];
       len += 1;
-      goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      వెళ్ళు do2;
+    స్థితి 0:
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	తిరిగి;
       srcp -= 5 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[4];
       a3 = ((op_t *) srcp)[3];
-      goto do3;
-    case 1:
+      వెళ్ళు do3;
+    స్థితి 1:
       srcp -= 6 * OPSIZ;
       dstp -= 4 * OPSIZ;
       a1 = ((op_t *) srcp)[5];
       a0 = ((op_t *) srcp)[4];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do4;			/* No-op.  */
+      ఒకవేళ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	వెళ్ళు do0;
+      వెళ్ళు do4;			/* No-op.  */
     }
 
-  do
+  చేయి
     {
     do4:
       a3 = ((op_t *) srcp)[3];
-      ((op_t *) dstp)[3] = MERGE (a0, sh_1, a1, sh_2);
+      ((op_t *) dstp)[3] = విలీనం (a0, sh_1, a1, sh_2);
     do3:
       a2 = ((op_t *) srcp)[2];
-      ((op_t *) dstp)[2] = MERGE (a3, sh_1, a0, sh_2);
+      ((op_t *) dstp)[2] = విలీనం (a3, sh_1, a0, sh_2);
     do2:
       a1 = ((op_t *) srcp)[1];
-      ((op_t *) dstp)[1] = MERGE (a2, sh_1, a3, sh_2);
+      ((op_t *) dstp)[1] = విలీనం (a2, sh_1, a3, sh_2);
     do1:
       a0 = ((op_t *) srcp)[0];
-      ((op_t *) dstp)[0] = MERGE (a1, sh_1, a2, sh_2);
+      ((op_t *) dstp)[0] = విలీనం (a1, sh_1, a2, sh_2);
 
       srcp -= 4 * OPSIZ;
       dstp -= 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  అయితే (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
-  ((op_t *) dstp)[3] = MERGE (a0, sh_1, a1, sh_2);
+  ((op_t *) dstp)[3] = విలీనం (a0, sh_1, a1, sh_2);
 }

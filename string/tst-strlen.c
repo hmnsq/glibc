@@ -1,57 +1,57 @@
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#undef __USE_STRING_INLINES
+#నిర్వచనం_రద్దు __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <string.h>
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  స్థిర స్థిరరాశి size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
-  size_t base;
+  అక్షరం basebuf[24 + 32];
+  size_t పునాది;
 
-  for (base = 0; base < 32; ++base)
+  కొరకు (పునాది = 0; పునాది < 32; ++పునాది)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      అక్షరం *buf = basebuf + పునాది;
+      size_t పదాలు;
 
-      for (words = 0; words < 4; ++words)
+      కొరకు (పదాలు = 0; పదాలు < 4; ++పదాలు)
 	{
-	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  size_t చివరి;
+	  memset (buf, 'a', పదాలు * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  కొరకు (చివరి = 0; చివరి < 16; ++చివరి)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[పదాలు * 4 + 0] = (చివరి & 1) != 0 ? 'b' : '\0';
+	      buf[పదాలు * 4 + 1] = (చివరి & 2) != 0 ? 'c' : '\0';
+	      buf[పదాలు * 4 + 2] = (చివరి & 4) != 0 ? 'd' : '\0';
+	      buf[పదాలు * 4 + 3] = (చివరి & 8) != 0 ? 'e' : '\0';
+	      buf[పదాలు * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      ఒకవేళ (అక్షరశ్రేణి_పొడవు (buf) != పదాలు * 4 + lens[చివరి])
 		{
-		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  రాయి ("\
+అక్షరశ్రేణి_పొడవు failed కొరకు పునాది=%zu, పదాలు=%zu, and చివరి=%zu (is %zd, expected %zd)\n",
+			  పునాది, పదాలు, చివరి,
+			  అక్షరశ్రేణి_పొడవు (buf), పదాలు * 4 + lens[చివరి]);
+		  తిరిగి 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      ఒకవేళ (strnlen (buf, -1) != పదాలు * 4 + lens[చివరి])
 		{
-		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  రాయి ("\
+strnlen failed కొరకు పునాది=%zu, పదాలు=%zu, and చివరి=%zu (is %zd, expected %zd)\n",
+			  పునాది, పదాలు, చివరి,
+			  strnlen (buf, -1), పదాలు * 4 + lens[చివరి]);
+		  తిరిగి 1;
 		}
 	    }
 	}
     }
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

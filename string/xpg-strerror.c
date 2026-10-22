@@ -15,32 +15,32 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/param.h>
+#అన్తర్భావ <assert.h>
+#అన్తర్భావ <errno.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <sys/param.h>
 
 
 /* Fill buf with a string describing the errno code in ERRNUM.  */
-int
-__xpg_strerror_r (int errnum, char *buf, size_t buflen)
+పూర్ణాంకం
+__xpg_strerror_r (పూర్ణాంకం errnum, అక్షరం *buf, size_t buflen)
 {
-  const char *estr = __strerror_r (errnum, buf, buflen);
+  స్థిరరాశి అక్షరం *estr = __strerror_r (errnum, buf, buflen);
 
   /* We know that __strerror_r returns buf (with a dynamically computed
      string) if errnum is invalid, otherwise it returns a string whose
      storage has indefinite extent.  */
-  if (estr == buf)
-    return EINVAL;
-  else
+  ఒకవేళ (estr == buf)
+    తిరిగి EINVAL;
+  లేకపోతే
     {
-      size_t estrlen = strlen (estr);
+      size_t estrlen = అక్షరశ్రేణి_పొడవు (estr);
 
       /* Terminate the string in any case.  */
-      if (buflen > 0)
-	*((char *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
+      ఒకవేళ (buflen > 0)
+	*((అక్షరం *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
 
-      return buflen <= estrlen ? ERANGE : 0;
+      తిరిగి buflen <= estrlen ? ERANGE : 0;
     }
 }

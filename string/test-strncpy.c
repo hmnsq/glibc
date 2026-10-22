@@ -16,7 +16,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef WIDE
+#నిర్వచితమైతే WIDE
 # include <wchar.h>
 # define CHAR wchar_t
 # define UCHAR wchar_t
@@ -25,30 +25,30 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define STRNLEN wcsnlen
-#else
-# define CHAR char
-# define UCHAR unsigned char
+#లేకపోతే
+# define CHAR అక్షరం
+# define UCHAR గుర్తులేని అక్షరం
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
 # define MEMCMP memcmp
 # define MEMSET memset
 # define STRNLEN strnlen
-#endif /* !WIDE */
+#అయితే_ముగింపు /* !WIDE */
 
 
-#ifndef STRNCPY_RESULT
-# define STRNCPY_RESULT(dst, len, n) dst
+#నిర్వచితం_కాకపోతే STRNCPY_ఫలితం
+# define STRNCPY_ఫలితం(dst, len, n) dst
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strncpy"
-# else
+# లేకపోతే
 #  define TEST_NAME "wcsncpy"
 # endif /* WIDE */
 # include "test-string.h"
 # ifndef WIDE
 #  define SIMPLE_STRNCPY simple_strncpy
 #  define STRNCPY strncpy
-# else
+# లేకపోతే
 #  define SIMPLE_STRNCPY simple_wcsncpy
 #  define STRNCPY wcsncpy
 # endif /* WIDE */
@@ -58,57 +58,57 @@ IMPL (STRNCPY, 1)
 
 /* Naive implementation to verify results.  */
 CHAR *
-SIMPLE_STRNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STRNCPY (CHAR *dst, స్థిరరాశి CHAR *src, size_t n)
 {
   CHAR *ret = dst;
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  అయితే (n--)
+    ఒకవేళ ((*dst++ = *src++) == '\0')
       {
-	while (n--)
+	అయితే (n--)
 	  *dst++ = '\0';
-	return ret;
+	తిరిగి ret;
       }
-  return ret;
+  తిరిగి ret;
 }
 
-#endif /* !STRNCPY_RESULT */
+#అయితే_ముగింపు /* !STRNCPY_RESULT */
 
-typedef CHAR *(*proto_t) (CHAR *, const CHAR *, size_t);
+రకనిర్వచనం CHAR *(*proto_t) (CHAR *, స్థిరరాశి CHAR *, size_t);
 
-static void
-do_one_test (impl_t *impl, CHAR *dst, const CHAR *src, size_t len, size_t n)
+స్థిర శూన్య
+do_one_test (impl_t *impl, CHAR *dst, స్థిరరాశి CHAR *src, size_t len, size_t n)
 {
-  if (CALL (impl, dst, src, n) != STRNCPY_RESULT (dst, len, n))
+  ఒకవేళ (CALL (impl, dst, src, n) != STRNCPY_ఫలితం (dst, len, n))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, n), dst);
       ret = 1;
-      return;
+      తిరిగి;
     }
 
-  if (memcmp (dst, src, (len > n ? n : len) * sizeof (CHAR)) != 0)
+  ఒకవేళ (memcmp (dst, src, (len > n ? n : len) * పరిమాణం (CHAR)) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      తిరిగి;
     }
 
-  if (n > len)
+  ఒకవేళ (n > len)
     {
       size_t i;
 
-      for (i = len; i < n; ++i)
-	if (dst [i] != '\0')
+      కొరకు (i = len; i < n; ++i)
+	ఒకవేళ (dst [i] != '\0')
 	  {
 	    error (0, 0, "Wrong result in function %s", impl->name);
 	    ret = 1;
-	    return;
+	    తిరిగి;
 	  }
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+స్థిర శూన్య
+do_test (size_t align1, size_t align2, size_t len, size_t n, పూర్ణాంకం max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -116,20 +116,20 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
 /* For wcsncpy: align1 and align2 here mean alignment not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t)).  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ఒకవేళ ((align1 + len) * పరిమాణం (CHAR) >= పుట_కొలత)
+    తిరిగి;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ఒకవేళ ((align2 + len) * పరిమాణం (CHAR) >= పుట_కొలత)
+    తిరిగి;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len; ++i)
+  కొరకు (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (CHAR) < page_size && i < len + 64;
+  కొరకు (i = len + 1; (i + align1) * పరిమాణం (CHAR) < పుట_కొలత && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
@@ -137,17 +137,17 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
     do_one_test (impl, s2, s1, len, n);
 }
 
-static void
-do_page_tests (void)
+స్థిర శూన్య
+do_పుట_tests (శూన్య)
 {
   CHAR *s1, *s2;
-  const size_t maxoffset = 64;
+  స్థిరరాశి size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (CHAR *) buf1 + BUF1PAGES * page_size / sizeof(CHAR) - maxoffset;
+  s1 = (CHAR *) buf1 + BUF1_పుటలు * పుట_కొలత / పరిమాణం(CHAR) - maxoffset;
   /* s2 needs room to put a string with size of maxoffset + 1 at s2 +
      (maxoffset - 1).  */
-  s2 = (CHAR *) buf2 + page_size / sizeof(CHAR) - maxoffset * 2;
+  s2 = (CHAR *) buf2 + పుట_కొలత / పరిమాణం(CHAR) - maxoffset * 2;
 
   MEMSET (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -160,9 +160,9 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
+  కొరకు (size_t off1 = 0; off1 < maxoffset; off1++)
     {
-      for (size_t off2 = 0; off2 < maxoffset; off2++)
+      కొరకు (size_t off2 = 0; off2 < maxoffset; off2++)
 	{
 	  FOR_EACH_IMPL (impl, 0)
 	    do_one_test (impl, s2 + off2, s1 + off1, maxoffset - off1 - 1,
@@ -171,75 +171,75 @@ do_page_tests (void)
     }
 }
 
-static void
-do_random_tests (void)
+స్థిర శూన్య
+do_random_tests (శూన్య)
 {
-  size_t i, j, n, align1, align2, len, size, mode;
-  UCHAR *p1 = (UCHAR *) (buf1 + page_size) - 512;
-  UCHAR *p2 = (UCHAR *) (buf2 + page_size) - 512;
+  size_t i, j, n, align1, align2, len, కొలత, బహుళకం;
+  UCHAR *p1 = (UCHAR *) (buf1 + పుట_కొలత) - 512;
+  UCHAR *p2 = (UCHAR *) (buf2 + పుట_కొలత) - 512;
   UCHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  కొరకు (n = 0; n < ITERATIONS; n++)
     {
       /* For wcsncpy: align1 and align2 here mean align not in bytes,
 	 but in wchar_ts, in bytes it will equal to align * (sizeof
 	 (wchar_t)).  */
 
-      mode = random ();
-      if (mode & 1)
+      బహుళకం = random ();
+      ఒకవేళ (బహుళకం & 1)
 	{
-	  size = random () & 255;
-	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  కొలత = random () & 255;
+	  align1 = 512 - కొలత - (random () & 15);
+	  ఒకవేళ (బహుళకం & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  లేకపోతే
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  ఒకవేళ (బహుళకం & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
-	    len = size - (random () & 31);
-	  else
+	  ఒకవేళ (బహుళకం & 8)
+	    len = కొలత - (random () & 31);
+	  లేకపోతే
 	    len = 512;
-	  if (len >= 512)
+	  ఒకవేళ (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      లేకపోతే
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  ఒకవేళ (బహుళకం & 2)
 	    align2 = random () & 31;
-	  else
+	  లేకపోతే
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  ఒకవేళ (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  ఒకవేళ (బహుళకం & 4)
 	    {
-	      size = random () & 511;
-	      if (size + j > 512)
-		size = 512 - j - (random () & 31);
+	      కొలత = random () & 511;
+	      ఒకవేళ (కొలత + j > 512)
+		కొలత = 512 - j - (random () & 31);
 	    }
-	  else
-	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  లేకపోతే
+	    కొలత = 512 - j;
+	  ఒకవేళ ((బహుళకం & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      ఒకవేళ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      కొరకు (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ఒకవేళ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  లేకపోతే
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      ఒకవేళ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -248,49 +248,49 @@ do_random_tests (void)
 	{
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = (UCHAR *) CALL (impl, (CHAR *) (p2 + align2),
-				(CHAR *) (p1 + align1), size);
-	  if (res != STRNCPY_RESULT (p2 + align2, len, size))
+				(CHAR *) (p1 + align1), కొలత);
+	  ఒకవేళ (res != STRNCPY_ఫలితం (p2 + align2, len, కొలత))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res,
-		     STRNCPY_RESULT (p2 + align2, len, size));
+		     STRNCPY_ఫలితం (p2 + align2, len, కొలత));
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  కొరకు (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ఒకవేళ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ఆపు;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 > j)
-	    j = size + align2;
-	  for (; j < 512; ++j)
+	  ఒకవేళ (కొలత + align2 > j)
+	    j = కొలత + align2;
+	  కొరకు (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ఒకవేళ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ఆపు;
 		}
 	    }
-	  for (j = align2 + len + 1; j < align2 + size; ++j)
-	    if (p2[j])
+	  కొరకు (j = align2 + len + 1; j < align2 + కొలత; ++j)
+	    ఒకవేళ (p2[j])
 	      {
 		error (0, 0, "Iteration %zd - garbage after size, %s (%zd, %zd, %zd)",
 		       n, impl->name, align1, align2, len);
 		ret = 1;
-		break;
+		ఆపు;
 	      }
 	  j = len + 1;
-	  if (size < j)
-	    j = size;
-	  if (MEMCMP (p1 + align1, p2 + align2, j))
+	  ఒకవేళ (కొలత < j)
+	    j = కొలత;
+	  ఒకవేళ (MEMCMP (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -300,19 +300,19 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%28s", "");
+  రాయి ("%28s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, SMALL_CHAR);
       do_test (i, i, 16, 16, BIG_CHAR);
@@ -324,7 +324,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, SMALL_CHAR);
       do_test (0, 0, 16 << i, 8 << i, SMALL_CHAR);
@@ -333,8 +333,8 @@ test_main (void)
     }
 
   do_random_tests ();
-  do_page_tests ();
-  return ret;
+  do_పుట_tests ();
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#అన్తర్భావ <locale.h>
+#అన్తర్భావ <stdbool.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <support/check.h>
+#అన్తర్భావ <support/namespace.h>
+#అన్తర్భావ <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+స్థిర అస్థిర bool fail_malloc;
 
-void *
-malloc (size_t size)
+శూన్య *
+జ్ఞాపకం_ఇవ్వు (size_t కొలత)
 {
-  if (fail_malloc)
-    return NULL;
+  ఒకవేళ (fail_malloc)
+    తిరిగి ఖాళీ;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
-    original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  స్థిర శూన్య *(*original_malloc) (size_t);
+  ఒకవేళ (original_malloc == ఖాళీ)
+    original_malloc = xdlsym (RTLD_తదుపరి, "malloc");
+  తిరిగి original_malloc (కొలత);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+స్థిర శూన్య
+test_strerror (శూన్య *సంవృతం)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  స్థిరరాశి అక్షరం *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+స్థిర శూన్య
+test_strerror_l (శూన్య *సంవృతం)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  స్థిరరాశి అక్షరం *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+స్థిర పూర్ణాంకం
+do_test (శూన్య)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_లోపల_subprocess (test_strerror, ఖాళీ);
+  support_isolate_లోపల_subprocess (test_strerror_l, ఖాళీ);
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

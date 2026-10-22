@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#undef strchr
-#undef index
+#నిర్వచనం_రద్దు strchr
+#నిర్వచనం_రద్దు సూచీ
 
-#ifdef STRCHR
+#నిర్వచితమైతే STRCHR
 # define strchr STRCHR
-#endif
+#అయితే_ముగింపు
 
 /* Find the first occurrence of C in S.  */
-char *
-strchr (const char *s, int c_in)
+అక్షరం *
+strchr (స్థిరరాశి అక్షరం *s, పూర్ణాంకం c_లోపల)
 {
-  char *r = __strchrnul (s, c_in);
-  return (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
+  అక్షరం *r = __strchrnul (s, c_లోపల);
+  తిరిగి (*(గుర్తులేని అక్షరం *)r == (గుర్తులేని అక్షరం)c_లోపల) ? r : ఖాళీ;
 }
-#ifndef STRCHR
-weak_alias (strchr, index)
+#నిర్వచితం_కాకపోతే STRCHR
+weak_alias (strchr, సూచీ)
 libc_hidden_builtin_def (strchr)
-#endif
+#అయితే_ముగింపు

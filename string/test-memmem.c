@@ -16,133 +16,133 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "memmem"
-#define BUF1PAGES 20
-#define ITERATIONS 500
-#include "test-string.h"
+#నిర్వచించు TEST_MAIN
+#నిర్వచించు TEST_NAME "memmem"
+#నిర్వచించు BUF1_పుటలు 20
+#నిర్వచించు ITERATIONS 500
+#అన్తర్భావ "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+రకనిర్వచనం అక్షరం *(*proto_t) (స్థిరరాశి శూన్య *, size_t, స్థిరరాశి శూన్య *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+శూన్య *
+simple_memmem (స్థిరరాశి శూన్య *haystack, size_t haystack_len, స్థిరరాశి శూన్య *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  స్థిరరాశి అక్షరం *begin;
+  స్థిరరాశి అక్షరం *స్థిరరాశి చివరి_possible
+    = (స్థిరరాశి అక్షరం *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  ఒకవేళ (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    తిరిగి (శూన్య *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  ఒకవేళ (__glibc_unlikely (haystack_len < needle_len))
+    తిరిగి ఖాళీ;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  కొరకు (begin = (స్థిరరాశి అక్షరం *) haystack; begin <= చివరి_possible; ++begin)
+    ఒకవేళ (begin[0] == ((స్థిరరాశి అక్షరం *) needle)[0]
+        && !memcmp ((స్థిరరాశి శూన్య *) &begin[1],
+		    (స్థిరరాశి శూన్య *) ((స్థిరరాశి అక్షరం *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      తిరిగి (శూన్య *) begin;
 
-  return NULL;
+  తిరిగి ఖాళీ;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+స్థిర పూర్ణాంకం
+check_ఫలితం (impl_t *impl, స్థిరరాశి శూన్య *haystack, size_t haystack_len,
+	     స్థిరరాశి శూన్య *needle, size_t needle_len, స్థిరరాశి శూన్య *expected)
 {
-  void *res;
+  శూన్య *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  ఒకవేళ (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      తిరిగి -1;
     }
 
-  return 0;
+  తిరిగి 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+స్థిర శూన్య
+do_one_test (impl_t *impl, స్థిరరాశి శూన్య *haystack, size_t haystack_len,
+	     స్థిరరాశి శూన్య *needle, size_t needle_len, స్థిరరాశి శూన్య *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  ఒకవేళ (check_ఫలితం (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    తిరిగి;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+స్థిర శూన్య
+do_test (స్థిరరాశి అక్షరం *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  అక్షరం tmpbuf[len];
 
-  memcpy (tmpbuf, buf1 + idx, len);
-  memcpy (buf1 + idx, str, len);
+  జ్ఞాపకం_నకలు (tmpbuf, buf1 + idx, len);
+  జ్ఞాపకం_నకలు (buf1 + idx, str, len);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, buf1, BUF1PAGES * page_size, str, len, buf1 + idx);
+    do_one_test (impl, buf1, BUF1_పుటలు * పుట_కొలత, str, len, buf1 + idx);
 
-  memcpy (buf1 + idx, tmpbuf, len);
+  జ్ఞాపకం_నకలు (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+స్థిర శూన్య
+do_random_tests (శూన్య)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  కొరకు (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      అక్షరం tmpbuf[32];
 
-      size_t shift = random () % 11;
-      size_t rel = random () % ((2 << (shift + 1)) * 64);
-      size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
-      len = MIN (len, BUF1PAGES * page_size - idx - 1);
-      memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      size_t జరుపు = random () % 11;
+      size_t rel = random () % ((2 << (జరుపు + 1)) * 64);
+      size_t idx = MIN ((2 << జరుపు) * 64 + rel, BUF1_పుటలు * పుట_కొలత - 2);
+      size_t len = random () % (పరిమాణం (tmpbuf) - 1) + 1;
+      len = MIN (len, BUF1_పుటలు * పుట_కొలత - idx - 1);
+      జ్ఞాపకం_నకలు (tmpbuf, buf1 + idx, len);
+      కొరకు (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  అక్షరం ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
 
       FOR_EACH_IMPL (impl, 0)
-	do_one_test (impl, buf1, BUF1PAGES * page_size, buf1 + idx, len,
+	do_one_test (impl, buf1, BUF1_పుటలు * పుట_కొలత, buf1 + idx, len,
 		     buf1 + idx);
 
-      memcpy (buf1 + idx, tmpbuf, len);
+      జ్ఞాపకం_నకలు (buf1 + idx, tmpbuf, len);
     }
 }
 
-static void
-check1 (void)
+స్థిర శూన్య
+check1 (శూన్య)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  స్థిరరాశి అక్షరం శోధన_buf_దత్తాంశం[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  స్థిరరాశి అక్షరం నమూనా[2] = { 0x78, 0x56 };
+  శూన్య *శోధన_buf = (శూన్య *) buf1 + పుట_కొలత - పరిమాణం శోధన_buf_దత్తాంశం;
+  శూన్య *exp_ఫలితం;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  జ్ఞాపకం_నకలు (శోధన_buf, శోధన_buf_దత్తాంశం, పరిమాణం శోధన_buf_దత్తాంశం);
+  exp_ఫలితం = simple_memmem (శోధన_buf, పరిమాణం శోధన_buf_దత్తాంశం,
+			      నమూనా, పరిమాణం నమూనా);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_ఫలితం (impl, శోధన_buf, పరిమాణం శోధన_buf_దత్తాంశం,
+		  నమూనా, పరిమాణం నమూనా, exp_ఫలితం);
 }
 
-static const char *const strs[] =
+స్థిర స్థిరరాశి అక్షరం *స్థిరరాశి strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
   size_t i;
 
@@ -159,24 +159,24 @@ test_main (void)
 
   check1 ();
 
-  printf ("%23s", "");
+  రాయి ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  కొరకు (i = 0; i < BUF1_పుటలు * పుట_కొలత; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  కొరకు (i = 0; i < పరిమాణం (strs) / పరిమాణం (strs[0]); ++i)
+    కొరకు (size_t j = 0; j < 120; j += 7)
       {
-	size_t len = strlen (strs[i]);
+	size_t len = అక్షరశ్రేణి_పొడవు (strs[i]);
 
 	do_test (strs[i], len, j);
       }
 
   do_random_tests ();
-  return ret;
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

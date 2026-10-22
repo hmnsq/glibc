@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#undef strcat
+#నిర్వచనం_రద్దు strcat
 
-#ifndef STRCAT
+#నిర్వచితం_కాకపోతే STRCAT
 # define STRCAT strcat
-#endif
+#అయితే_ముగింపు
 
 /* Append SRC on the end of DEST.  */
-char *
-STRCAT (char *dest, const char *src)
+అక్షరం *
+STRCAT (అక్షరం *dest, స్థిరరాశి అక్షరం *src)
 {
-  strcpy (dest + strlen (dest), src);
-  return dest;
+  strcpy (dest + అక్షరశ్రేణి_పొడవు (dest), src);
+  తిరిగి dest;
 }
 libc_hidden_builtin_def (strcat)

@@ -16,33 +16,33 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <string.h>
 
 size_t
-__strlcat (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcat (అక్షరం *__restrict dest, స్థిరరాశి అక్షరం *__restrict src, size_t కొలత)
 {
-  size_t src_length = strlen (src);
+  size_t src_నిడివి = అక్షరశ్రేణి_పొడవు (src);
 
   /* Our implementation strlcat supports dest == NULL if size == 0
      (for consistency with snprintf and strlcpy), but strnlen does
      not, so we have to cover this case explicitly.  */
-  if (size == 0)
-    return src_length;
+  ఒకవేళ (కొలత == 0)
+    తిరిగి src_నిడివి;
 
-  size_t dest_length = __strnlen (dest, size);
-  if (dest_length != size)
+  size_t dest_నిడివి = __strnlen (dest, కొలత);
+  ఒకవేళ (dest_నిడివి != కొలత)
     {
       /* Copy at most the remaining number of characters in the
 	 destination buffer.  Leave for the NUL terminator.  */
-      size_t to_copy = size - dest_length - 1;
+      size_t గమ్యం_copy = కొలత - dest_నిడివి - 1;
       /* But not more than what is available in the source string.  */
-      if (to_copy > src_length)
-	to_copy = src_length;
+      ఒకవేళ (గమ్యం_copy > src_నిడివి)
+	గమ్యం_copy = src_నిడివి;
 
-      char *target = dest + dest_length;
-      memcpy (target, src, to_copy);
-      target[to_copy] = '\0';
+      అక్షరం *లక్ష్యం = dest + dest_నిడివి;
+      జ్ఞాపకం_నకలు (లక్ష్యం, src, గమ్యం_copy);
+      లక్ష్యం[గమ్యం_copy] = '\0';
     }
 
   /* If the sum wraps around, we have more than SIZE_MAX + 2 bytes in
@@ -51,9 +51,9 @@ __strlcat (char *__restrict dest, const char *__restrict src, size_t size)
      (which the static_assert checks), then by the pigeonhole
      principle, the two input strings must overlap, which is
      undefined.  */
-  _Static_assert (sizeof (uintptr_t) == sizeof (size_t),
+  _Static_assert (పరిమాణం (uintptr_t) == పరిమాణం (size_t),
 		  "theoretical maximum object size covers address space");
-  return dest_length + src_length;
+  తిరిగి dest_నిడివి + src_నిడివి;
 }
 libc_hidden_def (__strlcat)
 weak_alias (__strlcat, strlcat)

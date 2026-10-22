@@ -16,137 +16,137 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "strcasestr"
-#include "test-string.h"
+#నిర్వచించు TEST_MAIN
+#నిర్వచించు TEST_NAME "strcasestr"
+#అన్తర్భావ "test-string.h"
 
 
-#define STRCASESTR c_strcasestr
-#define NO_ALIAS
-#define __strncasecmp strncasecmp
-#define __strnlen strnlen
-#include "strcasestr.c"
+#నిర్వచించు STRCASESTR c_strcasestr
+#నిర్వచించు NO_ALIAS
+#నిర్వచించు __strncasecmp strncasecmp
+#నిర్వచించు __strnlen strnlen
+#అన్తర్భావ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+స్థిర అక్షరం *
+simple_strcasestr (స్థిరరాశి అక్షరం *s1, స్థిరరాశి అక్షరం *s2)
 {
-  ssize_t s1len = strlen (s1);
-  ssize_t s2len = strlen (s2);
+  ssize_t s1len = అక్షరశ్రేణి_పొడవు (s1);
+  ssize_t s2len = అక్షరశ్రేణి_పొడవు (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ఒకవేళ (s2len > s1len)
+    తిరిగి ఖాళీ;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  కొరకు (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      కొరకు (j = 0; j < s2len; ++j)
+	ఒకవేళ (tolower (s1[i + j]) != tolower (s2[j]))
+	  ఆపు;
+      ఒకవేళ (j == s2len)
+	తిరిగి (అక్షరం *) s1 + i;
     }
 
-  return NULL;
+  తిరిగి ఖాళీ;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+రకనిర్వచనం అక్షరం *(*proto_t) (స్థిరరాశి అక్షరం *, స్థిరరాశి అక్షరం *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+స్థిర పూర్ణాంకం
+check_ఫలితం (impl_t *impl, స్థిరరాశి అక్షరం *s1, స్థిరరాశి అక్షరం *s2,
+	      అక్షరం *exp_ఫలితం)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  అక్షరం *ఫలితం = CALL (impl, s1, s2);
+  ఒకవేళ (ఫలితం != exp_ఫలితం)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (ఫలితం == ఖాళీ) ? "(null)" : ఫలితం,
+	     (exp_ఫలితం == ఖాళీ) ? "(null)" : exp_ఫలితం);
       ret = 1;
-      return -1;
+      తిరిగి -1;
     }
-  return 0;
+  తిరిగి 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+స్థిర శూన్య
+do_one_test (impl_t *impl, స్థిరరాశి అక్షరం *s1, స్థిరరాశి అక్షరం *s2, అక్షరం *exp_ఫలితం)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ఒకవేళ (check_ఫలితం (impl, s1, s2, exp_ఫలితం) < 0)
+    తిరిగి;
 }
 
 
-static void
+స్థిర శూన్య
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 పూర్ణాంకం fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  అక్షరం *s1 = (అక్షరం *) (buf1 + align1);
+  అక్షరం *s2 = (అక్షరం *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  స్థిర స్థిరరాశి అక్షరం d[] = "1234567890abcxyz";
+#నిర్వచించు dl (పరిమాణం (d) - 1)
+  అక్షరం *ss2 = s2;
+  కొరకు (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ఒకవేళ (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      అక్షరం *ss1 = s1;
+      కొరకు (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
-	  memcpy (ss1, d, t);
+	  జ్ఞాపకం_నకలు (ss1, d, t);
 	  ++ss1[len2 > 7 ? 7 : len2 - 1];
 	  ss1 += t;
 	}
     }
-  else
+  లేకపోతే
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
-	s1[len1 - len2 + i] = toupper (s2[i]);
+      కొరకు (size_t i = 0; i < len2; ++i)
+	s1[len1 - len2 + i] = పెద్ద_అక్షరం (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? ఖాళీ : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+స్థిర శూన్య
+check1 (శూన్య)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  స్థిరరాశి అక్షరం s1[] = "AOKB";
+  స్థిరరాశి అక్షరం s2[] = "OK";
+  అక్షరం *exp_ఫలితం;
 
-  exp_result = simple_strcasestr (s1, s2);
+  exp_ఫలితం = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_ఫలితం (impl, s1, s2, exp_ఫలితం);
 }
 
-static int
-test_main (void)
+స్థిర పూర్ణాంకం
+test_main (శూన్య)
 {
   test_init ();
 
   check1 ();
 
-  printf ("%23s", "");
+  రాయి ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  కొరకు (size_t klen = 2; klen < 32; ++klen)
+    కొరకు (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -185,10 +185,10 @@ test_main (void)
 	do_test (15, 15, hlen, klen, 1);
       }
 
-  do_test (0, 0, page_size - 1, 16, 0);
-  do_test (0, 0, page_size - 1, 16, 1);
+  do_test (0, 0, పుట_కొలత - 1, 16, 0);
+  do_test (0, 0, పుట_కొలత - 1, 16, 1);
 
-  return ret;
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

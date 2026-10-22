@@ -15,60 +15,60 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <byteswap.h>
-#include <stdio.h>
+#అన్తర్భావ <byteswap.h>
+#అన్తర్భావ <stdio.h>
 
-extern unsigned long long int wash (unsigned long long int a);
+బాహ్య గుర్తులేని దీర్ఘ దీర్ఘ పూర్ణాంకం wash (గుర్తులేని దీర్ఘ దీర్ఘ పూర్ణాంకం a);
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  int result = 0;
+  పూర్ణాంకం ఫలితం = 0;
 
   /* Test the functions with constant arguments.  */
-  if (bswap_16 (0x1234) != 0x3412)
+  ఒకవేళ (bswap_16 (0x1234) != 0x3412)
     {
       puts ("bswap_16 (constant) flunked");
-      result = 1;
+      ఫలితం = 1;
     }
-  if (bswap_32 (0x12345678) != 0x78563412)
+  ఒకవేళ (bswap_32 (0x12345678) != 0x78563412)
     {
       puts ("bswap_32 (constant) flunked");
-      result = 1;
+      ఫలితం = 1;
     }
-  if (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
+  ఒకవేళ (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (constant) flunked");
-      result = 1;
+      ఫలితం = 1;
     }
 
   /* Test the functions with non-constant arguments.  */
-  if (bswap_16 (wash (0x1234)) != 0x3412)
+  ఒకవేళ (bswap_16 (wash (0x1234)) != 0x3412)
     {
       puts ("bswap_16 (non-constant) flunked");
-      result = 1;
+      ఫలితం = 1;
     }
-  if (bswap_32 (wash (0x12345678)) != 0x78563412)
+  ఒకవేళ (bswap_32 (wash (0x12345678)) != 0x78563412)
     {
       puts ("bswap_32 (non-constant) flunked");
-      result = 1;
+      ఫలితం = 1;
     }
-  if (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
+  ఒకవేళ (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (non-constant) flunked");
-      result = 1;
+      ఫలితం = 1;
     }
 
-  return result;
+  తిరిగి ఫలితం;
 }
 
 
-unsigned long long int
-wash (unsigned long long int a)
+గుర్తులేని దీర్ఘ దీర్ఘ పూర్ణాంకం
+wash (గుర్తులేని దీర్ఘ దీర్ఘ పూర్ణాంకం a)
 {
   /* Do nothing.  This function simply exists to avoid that the compiler
      regards the argument to the bswap_*() functions as constant.  */
-  return a + 0;
+  తిరిగి a + 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

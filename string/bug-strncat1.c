@@ -1,40 +1,40 @@
-#undef __USE_STRING_INLINES
-#define __USE_STRING_INLINES
-#include <sys/cdefs.h>
-#include <libc-diag.h>
-#if __GNUC_PREREQ (8, 0)
+#నిర్వచనం_రద్దు __USE_STRING_INLINES
+#నిర్వచించు __USE_STRING_INLINES
+#అన్తర్భావ <sys/cdefs.h>
+#అన్తర్భావ <libc-diag.h>
+#ఒకవేళ __GNUC_PREREQ (8, 0)
 /* GCC warns about strncat truncating output; this is deliberately
    tested here.  If fortify is enabled, it is also triggered by the
    wrappers. */
 DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-truncation");
-#endif
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#అయితే_ముగింపు
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
 
-char d[3] = "\0\1\2";
+అక్షరం d[3] = "\0\1\2";
 
-int
-main (void)
+పూర్ణాంకం
+ప్రధాన (శూన్య)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_నెట్టు_NEEDS_COMMENT;
   strncat (d, "\5\6", 1);
-  DIAG_POP_NEEDS_COMMENT;
-  if (d[0] != '\5')
+  DIAG_తీయి_NEEDS_COMMENT;
+  ఒకవేళ (d[0] != '\5')
     {
       puts ("d[0] != '\\5'");
-      exit (1);
+      నిష్క్రమించు (1);
     }
-  if (d[1] != '\0')
+  ఒకవేళ (d[1] != '\0')
     {
       puts ("d[1] != '\\0'");
-      exit (1);
+      నిష్క్రమించు (1);
     }
-  if (d[2] != '\2')
+  ఒకవేళ (d[2] != '\2')
     {
       puts ("d[2] != '\\2'");
-      exit (1);
+      నిష్క్రమించు (1);
     }
 
-  return 0;
+  తిరిగి 0;
 }

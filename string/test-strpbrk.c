@@ -16,14 +16,14 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef WIDE
-# define CHAR char
-# define UCHAR unsigned char
-# define STRLEN strlen
+#నిర్వచితం_కాకపోతే WIDE
+# define CHAR అక్షరం
+# define UCHAR గుర్తులేని అక్షరం
+# define STRLEN అక్షరశ్రేణి_పొడవు
 # define STRCHR strchr
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#లేకపోతే
 # include <wchar.h>
 # define CHAR wchar_t
 # define UCHAR wchar_t
@@ -31,15 +31,15 @@
 # define STRCHR wcschr
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#endif /* WIDE */
+#అయితే_ముగింపు /* WIDE */
 
-#ifndef STRPBRK_RESULT
-# define STRPBRK_RESULT(s, pos) ((s)[(pos)] ? (s) + (pos) : NULL)
+#నిర్వచితం_కాకపోతే STRPBRK_ఫలితం
+# define STRPBRK_ఫలితం(s, pos) ((s)[(pos)] ? (s) + (pos) : ఖాళీ)
 # define RES_TYPE CHAR *
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strpbrk"
-# else
+# లేకపోతే
 #  define TEST_NAME "wcspbrk"
 # endif /* WIDE */
 # include "test-string.h"
@@ -47,203 +47,203 @@
 # ifndef WIDE
 #  define STRPBRK strpbrk
 #  define SIMPLE_STRPBRK simple_strpbrk
-# else
+# లేకపోతే
 #  include <wchar.h>
 #  define STRPBRK wcspbrk
 #  define SIMPLE_STRPBRK simple_wcspbrk
 # endif /* WIDE */
 
-typedef CHAR *(*proto_t) (const CHAR *, const CHAR *);
+రకనిర్వచనం CHAR *(*proto_t) (స్థిరరాశి CHAR *, స్థిరరాశి CHAR *);
 
 IMPL (STRPBRK, 1)
 
 /* Naive implementation to verify results.  */
 CHAR *
-SIMPLE_STRPBRK (const CHAR *s, const CHAR *rej)
+SIMPLE_STRPBRK (స్థిరరాశి CHAR *s, స్థిరరాశి CHAR *rej)
 {
-  const CHAR *r;
+  స్థిరరాశి CHAR *r;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-       return (CHAR *) s - 1;
-  return NULL;
+  అయితే ((c = *s++) != '\0')
+    కొరకు (r = rej; *r != '\0'; ++r)
+      ఒకవేళ (*r == c)
+       తిరిగి (CHAR *) s - 1;
+  తిరిగి ఖాళీ;
 }
 
-#endif /* !STRPBRK_RESULT */
+#అయితే_ముగింపు /* !STRPBRK_RESULT */
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, const CHAR *rej, RES_TYPE exp_res)
+స్థిర శూన్య
+do_one_test (impl_t *impl, స్థిరరాశి CHAR *s, స్థిరరాశి CHAR *rej, RES_TYPE exp_res)
 {
   RES_TYPE res = CALL (impl, s, rej);
-  if (res != exp_res)
+  ఒకవేళ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-	     (void *) res, (void *) exp_res);
+	     (శూన్య *) res, (శూన్య *) exp_res);
       ret = 1;
-      return;
+      తిరిగి;
     }
 }
 
-static void
+స్థిర శూన్య
 do_test (size_t align, size_t pos, size_t len)
 {
   size_t i;
-  int c;
-  RES_TYPE result;
+  పూర్ణాంకం c;
+  RES_TYPE ఫలితం;
   CHAR *rej, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240)
-    return;
+  ఒకవేళ ((align + pos + 10) * పరిమాణం (CHAR) >= పుట_కొలత || len > 240)
+    తిరిగి;
 
   rej = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  కొరకు (i = 0; i < len; ++i)
     {
       rej[i] = random () & BIG_CHAR;
-      if (!rej[i])
+      ఒకవేళ (!rej[i])
 	rej[i] = random () & BIG_CHAR;
-      if (!rej[i])
+      ఒకవేళ (!rej[i])
 	rej[i] = 1 + (random () & SMALL_CHAR);
     }
   rej[len] = '\0';
-  for (c = 1; c <= BIG_CHAR; ++c)
-    if (STRCHR (rej, c) == NULL)
-      break;
+  కొరకు (c = 1; c <= BIG_CHAR; ++c)
+    ఒకవేళ (STRCHR (rej, c) == ఖాళీ)
+      ఆపు;
 
-  for (i = 0; i < pos; ++i)
+  కొరకు (i = 0; i < pos; ++i)
     {
       s[i] = random () & BIG_CHAR;
-      if (STRCHR (rej, s[i]))
+      ఒకవేళ (STRCHR (rej, s[i]))
 	{
 	  s[i] = random () & BIG_CHAR;
-	  if (STRCHR (rej, s[i]))
+	  ఒకవేళ (STRCHR (rej, s[i]))
 	    s[i] = c;
 	}
     }
   s[pos] = rej[random () % (len + 1)];
-  if (s[pos])
+  ఒకవేళ (s[pos])
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      కొరకు (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
-  result = STRPBRK_RESULT (s, pos);
+  ఫలితం = STRPBRK_ఫలితం (s, pos);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s, rej, result);
+    do_one_test (impl, s, rej, ఫలితం);
 }
 
-static void
-do_random_tests (void)
+స్థిర శూన్య
+do_random_tests (శూన్య)
 {
   size_t i, j, n, align, pos, len, rlen;
-  RES_TYPE result;
-  int c;
-  UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
+  RES_TYPE ఫలితం;
+  పూర్ణాంకం c;
+  UCHAR *p = (UCHAR *) (buf1 + పుట_కొలత) - 512;
   UCHAR *rej;
 
-  for (n = 0; n < ITERATIONS; n++)
+  కొరకు (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 511)
+      ఒకవేళ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (pos >= len && (random () & 1))
+      ఒకవేళ (pos >= len && (random () & 1))
 	len = pos + 1 + (random () & 7);
-      if (len + align >= 512)
+      ఒకవేళ (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      if (random () & 1)
+      ఒకవేళ (random () & 1)
 	rlen = random () & 63;
-      else
+      లేకపోతే
 	rlen = random () & 15;
-      rej = (UCHAR *) (buf2 + page_size) - rlen - 1 - (random () & 7);
-      for (i = 0; i < rlen; ++i)
+      rej = (UCHAR *) (buf2 + పుట_కొలత) - rlen - 1 - (random () & 7);
+      కొరకు (i = 0; i < rlen; ++i)
 	{
 	  rej[i] = random () & BIG_CHAR;
-	  if (!rej[i])
+	  ఒకవేళ (!rej[i])
 	    rej[i] = random () & BIG_CHAR;
-	  if (!rej[i])
+	  ఒకవేళ (!rej[i])
 	    rej[i] = 1 + (random () & SMALL_CHAR);
 	}
       rej[i] = '\0';
-      for (c = 1; c <= BIG_CHAR; ++c)
-	if (STRCHR ((CHAR *) rej, c) == NULL)
-	  break;
+      కొరకు (c = 1; c <= BIG_CHAR; ++c)
+	ఒకవేళ (STRCHR ((CHAR *) rej, c) == ఖాళీ)
+	  ఆపు;
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      ఒకవేళ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      కొరకు (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  ఒకవేళ (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  లేకపోతే ఒకవేళ (i == pos + align)
 	    p[i] = rej[random () % (rlen + 1)];
-	  else if (i < align || i > pos + align)
+	  లేకపోతే ఒకవేళ (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  లేకపోతే
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) rej, p[i]))
+	      ఒకవేళ (STRCHR ((CHAR *) rej, p[i]))
 		{
 		  p[i] = random () & BIG_CHAR;
-		  if (STRCHR ((CHAR *) rej, p[i]))
+		  ఒకవేళ (STRCHR ((CHAR *) rej, p[i]))
 		    p[i] = c;
 		}
 	    }
 	}
 
-      result = STRPBRK_RESULT ((CHAR *) (p + align), pos < len ? pos : len);
+      ఫలితం = STRPBRK_ఫలితం ((CHAR *) (p + align), pos < len ? pos : len);
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), (CHAR *) rej) != result)
+	ఒకవేళ (CALL (impl, (CHAR *) (p + align), (CHAR *) rej) != ఫలితం)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %p != %p",
 		   n, impl->name, align, rej, rlen, pos, len,
-		   (void *) CALL (impl, (CHAR *) (p + align), (CHAR *) rej),
-		   (void *) result);
+		   (శూన్య *) CALL (impl, (CHAR *) (p + align), (CHAR *) rej),
+		   (శూన్య *) ఫలితం);
 	    ret = 1;
 	  }
     }
 }
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%32s", "");
+  రాయి ("%32s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (i = 0; i < 32; ++i)
+  కొరకు (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  కొరకు (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

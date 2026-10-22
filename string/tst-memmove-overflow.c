@@ -23,152 +23,152 @@
    the allocation are unshared, and contain a specific non-repeating
    bit pattern.  */
 
-#include <array_length.h>
-#include <libc-diag.h>
-#include <stdint.h>
-#include <string.h>
-#include <support/blob_repeat.h>
-#include <support/check.h>
-#include <support/xunistd.h>
-#include <sys/mman.h>
-#include <unistd.h>
+#అన్తర్భావ <array_length.h>
+#అన్తర్భావ <libc-diag.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <support/blob_repeat.h>
+#అన్తర్భావ <support/check.h>
+#అన్తర్భావ <support/xunistd.h>
+#అన్తర్భావ <sys/mman.h>
+#అన్తర్భావ <unistd.h>
 
-#define TEST_MAIN
-#define TEST_NAME "memmove"
-#include "test-string.h"
-#include <support/test-driver.h>
+#నిర్వచించు TEST_MAIN
+#నిర్వచించు TEST_NAME "memmove"
+#అన్తర్భావ "test-string.h"
+#అన్తర్భావ <support/test-driver.h>
 
 IMPL (memmove, 1)
 
 /* Size of the part of the allocation which is not shared, at the
    start and the end of the overall allocation.  4 MiB.  */
-enum { unshared_size = (size_t) 4U << 20 };
+గణన { unshared_కొలత = (size_t) 4U << 20 };
 
 /* The allocation is 2 GiB plus 8 MiB.  This should work with all page
    sizes that occur in practice.  */
-enum { allocation_size = ((size_t) 2U << 30) + 2 * unshared_size };
+గణన { కేటాయింపు_కొలత = ((size_t) 2U << 30) + 2 * unshared_కొలత };
 
 /* Compute the expected byte at the given index.  This is used to
    produce a non-repeating pattern.  */
-static inline unsigned char
-expected_value (size_t index)
+స్థిర అంతఃవరుస గుర్తులేని అక్షరం
+expected_విలువ (size_t సూచీ)
 {
-  uint32_t randomized = 0x9e3779b9 * index; /* Based on golden ratio.  */
-  return randomized >> 25;	/* Result is in the range [0, 127].  */
+  uint32_t randomized = 0x9e3779b9 * సూచీ; /* Based on golden ratio.  */
+  తిరిగి randomized >> 25;	/* Result is in the range [0, 127].  */
 }
 
 /* Used to count mismatches up to a limit, to avoid creating a huge
    test output file.  */
-static unsigned int mismatch_count;
+స్థిర గుర్తులేని పూర్ణాంకం mismatch_లెక్క;
 
 /* Check ACTUAL == EXPECTED.  Use INDEX for error reporting.  Exit the
    process after too many errors.  */
-static inline void
-check_one_index (size_t index, unsigned char actual, unsigned char expected)
+స్థిర అంతఃవరుస శూన్య
+check_one_సూచీ (size_t సూచీ, గుర్తులేని అక్షరం actual, గుర్తులేని అక్షరం expected)
 {
-  if (actual != expected)
+  ఒకవేళ (actual != expected)
     {
-      printf ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
-	      index, actual, expected);
-      ++mismatch_count;
-      if (mismatch_count > 200)
+      రాయి ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
+	      సూచీ, actual, expected);
+      ++mismatch_లెక్క;
+      ఒకవేళ (mismatch_లెక్క > 200)
 	FAIL_EXIT1 ("bailing out due to too many errors");
     }
 }
 
-static int
-test_main (void)
+స్థిర పూర్ణాంకం
+test_main (శూన్య)
 {
   test_init ();
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
+      రాయి ("info: testing %s\n", impl->name);
 
       /* Check that the allocation sizes are multiples of the page
 	 size.  */
-      TEST_COMPARE (allocation_size % xsysconf (_SC_PAGESIZE), 0);
-      TEST_COMPARE (unshared_size % xsysconf (_SC_PAGESIZE), 0);
+      TEST_COMPARE (కేటాయింపు_కొలత % xsysconf (_SC_PAGESIZE), 0);
+      TEST_COMPARE (unshared_కొలత % xsysconf (_SC_PAGESIZE), 0);
 
       /* The repeating pattern has the MSB set in all bytes.  */
-      unsigned char repeating_pattern[128];
-      for (unsigned int i = 0; i < array_length (repeating_pattern); ++i)
-	repeating_pattern[i] = 0x80 | i;
+      గుర్తులేని అక్షరం repeating_నమూనా[128];
+      కొరకు (గుర్తులేని పూర్ణాంకం i = 0; i < array_నిడివి (repeating_నమూనా); ++i)
+	repeating_నమూనా[i] = 0x80 | i;
 
-      struct support_blob_repeat repeat
-	= support_blob_repeat_allocate_shared (repeating_pattern,
-					       sizeof (repeating_pattern),
-					       (allocation_size
-						/ sizeof (repeating_pattern)));
-      if (repeat.start == NULL)
+      నిర్మాణం support_blob_repeat repeat
+	= support_blob_repeat_allocate_shared (repeating_నమూనా,
+					       పరిమాణం (repeating_నమూనా),
+					       (కేటాయింపు_కొలత
+						/ పరిమాణం (repeating_నమూనా)));
+      ఒకవేళ (repeat.ప్రారంభం == ఖాళీ)
 	FAIL_UNSUPPORTED ("repeated blob allocation failed: %m");
-      TEST_COMPARE (repeat.size, allocation_size);
+      TEST_COMPARE (repeat.కొలత, కేటాయింపు_కొలత);
 
       /* Unshared the start and the end of the allocation.  */
-      unsigned char *start = repeat.start;
-      xmmap (start, unshared_size,
+      గుర్తులేని అక్షరం *ప్రారంభం = repeat.ప్రారంభం;
+      xmmap (ప్రారంభం, unshared_కొలత,
 	     PROT_READ | PROT_WRITE,
-	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
-      xmmap (start + allocation_size - unshared_size, unshared_size,
+	     MAP_వ్యక్తిగత | MAP_ANONYMOUS | MAP_FIXED, -1);
+      xmmap (ప్రారంభం + కేటాయింపు_కొలత - unshared_కొలత, unshared_కొలత,
 	     PROT_READ | PROT_WRITE,
-	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
+	     MAP_వ్యక్తిగత | MAP_ANONYMOUS | MAP_FIXED, -1);
 
       /* Initialize the non-repeating pattern.  */
-      for (size_t i = 0; i < unshared_size; ++i)
-	start[i] = expected_value (i);
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      కొరకు (size_t i = 0; i < unshared_కొలత; ++i)
+	ప్రారంభం[i] = expected_విలువ (i);
+      కొరకు (size_t i = కేటాయింపు_కొలత - unshared_కొలత; i < కేటాయింపు_కొలత;
 	   ++i)
-	start[i] = expected_value (i);
+	ప్రారంభం[i] = expected_విలువ (i);
 
       /* Make sure that there was really no sharing.  */
-      asm volatile ("" ::: "memory");
-      for (size_t i = 0; i < unshared_size; ++i)
-	TEST_COMPARE (start[i], expected_value (i));
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      asm అస్థిర ("" ::: "memory");
+      కొరకు (size_t i = 0; i < unshared_కొలత; ++i)
+	TEST_COMPARE (ప్రారంభం[i], expected_విలువ (i));
+      కొరకు (size_t i = కేటాయింపు_కొలత - unshared_కొలత; i < కేటాయింపు_కొలత;
 	   ++i)
-	TEST_COMPARE (start[i], expected_value (i));
+	TEST_COMPARE (ప్రారంభం[i], expected_విలువ (i));
 
       /* Used for a nicer error diagnostic using
 	 TEST_COMPARE_BLOB.  */
-      unsigned char expected_start[128];
-      memcpy (expected_start, start + 1, sizeof (expected_start));
-      unsigned char expected_end[128];
-      memcpy (expected_end,
-	      start + allocation_size - sizeof (expected_end),
-	      sizeof (expected_end));
+      గుర్తులేని అక్షరం expected_ప్రారంభం[128];
+      జ్ఞాపకం_నకలు (expected_ప్రారంభం, ప్రారంభం + 1, పరిమాణం (expected_ప్రారంభం));
+      గుర్తులేని అక్షరం expected_చివర[128];
+      జ్ఞాపకం_నకలు (expected_చివర,
+	      ప్రారంభం + కేటాయింపు_కొలత - పరిమాణం (expected_చివర),
+	      పరిమాణం (expected_చివర));
 
       /* Move the entire allocation forward by one byte.  */
-      DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (8, 0)
+      DIAG_నెట్టు_NEEDS_COMMENT;
+#ఒకవేళ __GNUC_PREREQ (8, 0)
       /* GCC 8 warns about string function argument overflows.  */
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-overflow");
-#endif
-      memmove (start, start + 1, allocation_size - 1);
-      DIAG_POP_NEEDS_COMMENT;
+#అయితే_ముగింపు
+      memmove (ప్రారంభం, ప్రారంభం + 1, కేటాయింపు_కొలత - 1);
+      DIAG_తీయి_NEEDS_COMMENT;
 
       /* Check that the unshared of the memory region have been
 	 shifted as expected.  The TEST_COMPARE_BLOB checks are
 	 redundant, but produce nicer diagnostics.  */
-      asm volatile ("" ::: "memory");
-      TEST_COMPARE_BLOB (expected_start, sizeof (expected_start),
-			 start, sizeof (expected_start));
-      TEST_COMPARE_BLOB (expected_end, sizeof (expected_end),
-			 start + allocation_size - sizeof (expected_end) - 1,
-			 sizeof (expected_end));
-      for (size_t i = 0; i < unshared_size - 1; ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+      asm అస్థిర ("" ::: "memory");
+      TEST_COMPARE_BLOB (expected_ప్రారంభం, పరిమాణం (expected_ప్రారంభం),
+			 ప్రారంభం, పరిమాణం (expected_ప్రారంభం));
+      TEST_COMPARE_BLOB (expected_చివర, పరిమాణం (expected_చివర),
+			 ప్రారంభం + కేటాయింపు_కొలత - పరిమాణం (expected_చివర) - 1,
+			 పరిమాణం (expected_చివర));
+      కొరకు (size_t i = 0; i < unshared_కొలత - 1; ++i)
+	check_one_సూచీ (i, ప్రారంభం[i], expected_విలువ (i + 1));
       /* The gap between the checked start and end area of the mapping
 	 has shared mappings at unspecified boundaries, so do not
 	 check the expected values in the middle.  */
-      for (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
+      కొరకు (size_t i = కేటాయింపు_కొలత - unshared_కొలత; i < కేటాయింపు_కొలత - 1;
 	   ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+	check_one_సూచీ (i, ప్రారంభం[i], expected_విలువ (i + 1));
 
       support_blob_repeat_free (&repeat);
     }
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

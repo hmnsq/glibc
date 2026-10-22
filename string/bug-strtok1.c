@@ -1,44 +1,44 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <stdio.h>
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  స్థిరరాశి అక్షరం str[] = "axaaba";
+  అక్షరం *token;
+  అక్షరం *cp;
+  అక్షరం *l;
+  పూర్ణాంకం ఫలితం = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
-  printf ("cp = %p, len = %zu\n", cp, strlen (cp));
+  రాయి ("cp = %p, len = %zu\n", cp, అక్షరశ్రేణి_పొడవు (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  ఫలితం |= token == ఖాళీ || strcmp (token, "x");
+  రాయి ("token: %s (%d)\n", token ? token : "NULL", ఫలితం);
   token = strtok(0, "ab");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  ఫలితం |= token != ఖాళీ;
+  రాయి ("token: %s (%d)\n", token ? token : "NULL", ఫలితం);
   token = strtok(0, "a");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  ఫలితం |= token != ఖాళీ;
+  రాయి ("token: %s (%d)\n", token ? token : "NULL", ఫలితం);
 
   puts ("test strtok_r");
   cp = strdupa (str);
-  size_t len = strlen (cp);
-  printf ("cp = %p, len = %zu\n", cp, len);
+  size_t len = అక్షరశ్రేణి_పొడవు (cp);
+  రాయి ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  ఫలితం |= token == ఖాళీ || strcmp (token, "x");
+  రాయి ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, ఫలితం);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  ఫలితం |= token != ఖాళీ || l != cp + len;
+  రాయి ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, ఫలితం);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
+  ఫలితం |= token != ఖాళీ || l != cp + len;
+  రాయి ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, ఫలితం);
 
-  return result;
+  తిరిగి ఫలితం;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

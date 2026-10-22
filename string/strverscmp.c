@@ -17,20 +17,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <ctype.h>
 
 /* states: S_N: normal, S_I: comparing integral part, S_F: comparing
            fractionnal parts, S_Z: idem but with leading Zeroes only */
-#define  S_N    0x0
-#define  S_I    0x3
-#define  S_F    0x6
-#define  S_Z    0x9
+#నిర్వచించు  S_N    0x0
+#నిర్వచించు  S_I    0x3
+#నిర్వచించు  S_F    0x6
+#నిర్వచించు  S_Z    0x9
 
 /* result_type: CMP: return diff; LEN: compare using len_diff/diff */
-#define  CMP    2
-#define  LEN    3
+#నిర్వచించు  CMP    2
+#నిర్వచించు  LEN    3
 
 
 /* Compare S1 and S2 as strings holding indices/version numbers,
@@ -38,15 +38,15 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
-__strverscmp (const char *s1, const char *s2)
+పూర్ణాంకం
+__strverscmp (స్థిరరాశి అక్షరం *s1, స్థిరరాశి అక్షరం *s2)
 {
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
+  స్థిరరాశి గుర్తులేని అక్షరం *p1 = (స్థిరరాశి గుర్తులేని అక్షరం *) s1;
+  స్థిరరాశి గుర్తులేని అక్షరం *p2 = (స్థిరరాశి గుర్తులేని అక్షరం *) s2;
 
   /* Symbol(s)    0       [1-9]   others
      Transition   (10) 0  (01) d  (00) x   */
-  static const uint8_t next_state[] =
+  స్థిర స్థిరరాశి uint8_t తదుపరి_state[] =
   {
       /* state    x    d    0  */
       /* S_N */  S_N, S_I, S_Z,
@@ -55,7 +55,7 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  S_N, S_F, S_Z
   };
 
-  static const int8_t result_type[] =
+  స్థిర స్థిరరాశి int8_t ఫలితం_type[] =
   {
       /* state   x/x  x/d  x/0  d/x  d/d  d/0  0/x  0/d  0/0  */
 
@@ -65,42 +65,42 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  ఒకవేళ (p1 == p2)
+    తిరిగి 0;
 
-  unsigned char c1 = *p1++;
-  unsigned char c2 = *p2++;
+  గుర్తులేని అక్షరం c1 = *p1++;
+  గుర్తులేని అక్షరం c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  పూర్ణాంకం state = S_N + ((c1 == '0') + (అంకెనా (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  పూర్ణాంకం diff;
+  అయితే ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      ఒకవేళ (c1 == '\0')
+	తిరిగి diff;
 
-      state = next_state[state];
+      state = తదుపరి_state[state];
       c1 = *p1++;
       c2 = *p2++;
-      state += (c1 == '0') + (isdigit (c1) != 0);
+      state += (c1 == '0') + (అంకెనా (c1) != 0);
     }
 
-  state = result_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
+  state = ఫలితం_type[state * 3 + (((c2 == '0') + (అంకెనా (c2) != 0)))];
 
-  switch (state)
+  ఎంపిక (state)
   {
-    case CMP:
-      return diff;
+    స్థితి CMP:
+      తిరిగి diff;
 
-    case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+    స్థితి LEN:
+      అయితే (అంకెనా (*p1++))
+	ఒకవేళ (!అంకెనా (*p2++))
+	  తిరిగి 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      తిరిగి అంకెనా (*p2) ? -1 : diff;
 
-    default:
-      return state;
+    అప్రమేయ:
+      తిరిగి state;
   }
 }
 libc_hidden_def (__strverscmp)

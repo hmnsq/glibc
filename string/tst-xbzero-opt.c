@@ -38,19 +38,19 @@
    printf, but we know the OS won't erase it, so we can do all the
    checks and printing from the normal stack.  */
 
-#define _GNU_SOURCE 1
+#నిర్వచించు GNU_ఆధారం 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#అన్తర్భావ <errno.h>
+#అన్తర్భావ <signal.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <ucontext.h>
+#అన్తర్భావ <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+స్థిర స్థిరరాశి గుర్తులేని అక్షరం test_నమూనా[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,9 +60,9 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
-#define PATTERN_REPS 32
-#define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
+#నిర్వచించు నమూనా_కొలత (పరిమాణం test_నమూనా)
+#నిర్వచించు నమూనా_REPS 32
+#నిర్వచించు TEST_బఫరు_కొలత (నమూనా_కొలత * నమూనా_REPS)
 
 /* There are three subtests, two of which are sanity checks.
    Each test follows this sequence:
@@ -70,16 +70,16 @@ static const unsigned char test_pattern[16] =
      main                      coroutine
      ----                      --------
      advance cur_subtest
-     swap
+మార్పిడి
                                call setup function
                                  prepare test buffer
-                                 swap
+మార్పిడి
      verify that buffer
      was filled in
-     swap
+మార్పిడి
                                  possibly clear buffer
                                  return
-                               swap
+మార్పిడి
      check buffer again,
      according to test
      expectation
@@ -95,100 +95,100 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+స్థిర ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+స్థిర __attribute_optimization_barrier__ పూర్ణాంకం
+use_test_బఫరు (గుర్తులేని అక్షరం *buf)
 {
-  unsigned int sum = 0;
+  గుర్తులేని పూర్ణాంకం కూడిక = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    sum += buf[i * PATTERN_SIZE];
+  కొరకు (గుర్తులేని పూర్ణాంకం i = 0; i < నమూనా_REPS; i++)
+    కూడిక += buf[i * నమూనా_కొలత];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  తిరిగి (కూడిక == 2 * నమూనా_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#ఒకవేళ defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#లేకపోతే
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
-#endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+#అయితే_ముగింపు
+స్థిర అంతఃవరుస ALWAYS_INLINE శూన్య
+prepare_test_బఫరు (గుర్తులేని అక్షరం *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
+  కొరకు (గుర్తులేని పూర్ణాంకం i = 0; i < నమూనా_REPS; i++)
+    జ్ఞాపకం_నకలు (buf + i*నమూనా_కొలత, test_నమూనా, నమూనా_కొలత);
 
-  if (swapcontext (&uc_co, &uc_main))
+  ఒకవేళ (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  ఒకవేళ (use_test_బఫరు (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+స్థిర శూన్య
+అమరిక_no_clear (శూన్య)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  గుర్తులేని అక్షరం buf[TEST_బఫరు_కొలత];
+  prepare_test_బఫరు (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+స్థిర శూన్య
+అమరిక_ordinary_clear (శూన్య)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-  memset (buf, 0, TEST_BUFFER_SIZE);
+  గుర్తులేని అక్షరం buf[TEST_బఫరు_కొలత];
+  prepare_test_బఫరు (buf);
+  memset (buf, 0, TEST_బఫరు_కొలత);
 }
 
-static void
-setup_explicit_clear (void)
+స్థిర శూన్య
+అమరిక_explicit_clear (శూన్య)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-#ifdef TEST_MEMSET_EXPLICIT
-  memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
-  explicit_bzero (buf, TEST_BUFFER_SIZE);
-#endif
+  గుర్తులేని అక్షరం buf[TEST_బఫరు_కొలత];
+  prepare_test_బఫరు (buf);
+#నిర్వచితమైతే TEST_MEMSET_EXPLICIT
+  memset_explicit (buf, 0, TEST_బఫరు_కొలత);
+#లేకపోతే
+  explicit_bzero (buf, TEST_బఫరు_కొలత);
+#అయితే_ముగింపు
 }
 
-enum test_expectation
+గణన test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+నిర్మాణం subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  శూన్య (*అమరిక_subtest) (శూన్య);
+  స్థిరరాశి అక్షరం *label;
+  గణన test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+స్థిర స్థిరరాశి నిర్మాణం subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+స్థిర స్థిరరాశి నిర్మాణం subtest subtests[] =
 {
-  { setup_no_clear,       "no clear",       EXPECT_SOME },
+  { అమరిక_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
      optimizations.  */
-  { setup_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
-  { setup_explicit_clear, "explicit clear", EXPECT_NONE },
+  { అమరిక_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
+  { అమరిక_explicit_clear, "explicit clear", EXPECT_NONE },
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+స్థిర శూన్య
+test_coroutine (శూన్య)
 {
-  while (cur_subtest->setup_subtest)
+  అయితే (cur_subtest->అమరిక_subtest)
     {
-      cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      cur_subtest->అమరిక_subtest ();
+      ఒకవేళ (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+స్థిర పూర్ణాంకం test_స్థితి;
+స్థిర గుర్తులేని అక్షరం *co_దొంతర_బఫరు;
+స్థిర size_t co_దొంతర_కొలత;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+స్థిర గుర్తులేని పూర్ణాంకం
+లెక్క_test_patterns (గుర్తులేని అక్షరం *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  గుర్తులేని అక్షరం *మొదటి = memmem (buf, bufsiz, test_నమూనా, నమూనా_కొలత);
+  ఒకవేళ (!మొదటి)
+    తిరిగి 0;
+  గుర్తులేని పూర్ణాంకం cnt = 0;
+  కొరకు (గుర్తులేని పూర్ణాంకం i = 0; i < నమూనా_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      గుర్తులేని అక్షరం *p = మొదటి + i*నమూనా_కొలత;
+      ఒకవేళ (p + నమూనా_కొలత - buf > bufsiz)
+	ఆపు;
+      ఒకవేళ (memcmp (p, test_నమూనా, నమూనా_కొలత) == 0)
 	cnt++;
     }
-  return cnt;
+  తిరిగి cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+స్థిర శూన్య
+check_test_బఫరు (గణన test_expectation expected,
+		   స్థిరరాశి అక్షరం *label, స్థిరరాశి అక్షరం *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  గుర్తులేని పూర్ణాంకం cnt = లెక్క_test_patterns (co_దొంతర_బఫరు, co_దొంతర_కొలత);
+  ఎంపిక (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
-	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+    స్థితి EXPECT_NONE:
+      ఒకవేళ (cnt == 0)
+	రాయి ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
+      లేకపోతే
 	{
-	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
-	  test_status = 1;
+	  రాయి ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
+	  test_స్థితి = 1;
 	}
-      break;
+      ఆపు;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
-	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+    స్థితి EXPECT_SOME:
+      ఒకవేళ (cnt > 0)
+	రాయి ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
+      లేకపోతే
 	{
-	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
-	  test_status = 1;
+	  రాయి ("FAIL: %s/%s: expected some got 0\n", label, stage);
+	  test_స్థితి = 1;
 	}
-      break;
+      ఆపు;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
-	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
-		PATTERN_REPS, cnt);
-      else
+     స్థితి EXPECT_ALL:
+      ఒకవేళ (cnt == నమూనా_REPS)
+	రాయి ("PASS: %s/%s: expected %d got %d\n", label, stage,
+		నమూనా_REPS, cnt);
+      లేకపోతే
 	{
-	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
-		  PATTERN_REPS, cnt);
-	  test_status = 1;
+	  రాయి ("FAIL: %s/%s: expected %d got %d\n", label, stage,
+		  నమూనా_REPS, cnt);
+	  test_స్థితి = 1;
 	}
-      break;
+      ఆపు;
 
-    case NO_EXPECTATIONS:
-      printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
+    స్థితి NO_EXPECTATIONS:
+      రాయి ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      ఆపు;
 
-    default:
-      printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
-      test_status = 1;
+    అప్రమేయ:
+      రాయి ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
+	      label, stage, (పూర్ణాంకం)expected);
+      test_స్థితి = 1;
     }
 }
 
-static void
-test_loop (void)
+స్థిర శూన్య
+test_loop (శూన్య)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  అయితే (cur_subtest->అమరిక_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      ఒకవేళ (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      check_test_బఫరు (EXPECT_ALL, cur_subtest->label, "prepare");
+      ఒకవేళ (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
+      check_test_బఫరు (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  ఒకవేళ (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  size_t పుట_alignment = sysconf (_SC_PAGESIZE);
+  ఒకవేళ (పుట_alignment < పరిమాణం (శూన్య *))
+    పుట_alignment = పరిమాణం (శూన్య *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_దొంతర_కొలత = SIGSTKSZ + TEST_బఫరు_కొలత;
+  ఒకవేళ (co_దొంతర_కొలత < పుట_alignment * 4)
+    co_దొంతర_కొలత = పుట_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  శూన్య *p;
+  పూర్ణాంకం err = posix_memalign (&p, పుట_alignment, co_దొంతర_కొలత);
+  ఒకవేళ (err || !p)
     {
-      printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      రాయి ("ERROR: allocating alt stack: %s\n", strerror (err));
+      తిరిగి 2;
     }
-  co_stack_buffer = p;
+  co_దొంతర_బఫరు = p;
 
-  if (getcontext (&uc_co))
+  ఒకవేళ (getcontext (&uc_co))
     {
-      printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      రాయి ("ERROR: allocating coroutine context: %s\n", strerror (err));
+      తిరిగి 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_దొంతర_బఫరు;
+  uc_co.uc_stack.ss_size = co_దొంతర_కొలత;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  తిరిగి test_స్థితి;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

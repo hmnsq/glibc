@@ -15,24 +15,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#ifndef STRING_TYPE
-# define STRING_TYPE char
+#నిర్వచితం_కాకపోతే STRING_TYPE
+# define STRING_TYPE అక్షరం
 # define STRCOLL strcoll
 # define STRCOLL_L __strcoll_l
 # define USE_HIDDEN_DEF
-#endif
+#అయితే_ముగింపు
 
-#include "../locale/localeinfo.h"
+#అన్తర్భావ "../locale/localeinfo.h"
 
 
-int
-STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2)
+పూర్ణాంకం
+STRCOLL (స్థిరరాశి STRING_TYPE *s1, స్థిరరాశి STRING_TYPE *s2)
 {
-  return STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
+  తిరిగి STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
 }
 
-#ifdef USE_HIDDEN_DEF
+#నిర్వచితమైతే USE_HIDDEN_DEF
 libc_hidden_def (STRCOLL)
-#endif
+#అయితే_ముగింపు

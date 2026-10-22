@@ -15,204 +15,204 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <langinfo.h>
-#include <locale.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/param.h>
+#అన్తర్భావ <assert.h>
+#అన్తర్భావ <langinfo.h>
+#అన్తర్భావ <locale.h>
+#అన్తర్భావ <stddef.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <sys/param.h>
 
-#ifndef STRING_TYPE
-# define STRING_TYPE char
-# define USTRING_TYPE unsigned char
+#నిర్వచితం_కాకపోతే STRING_TYPE
+# define STRING_TYPE అక్షరం
+# define USTRING_TYPE గుర్తులేని అక్షరం
 # define STRXFRM __strxfrm_l
-# define STRLEN strlen
+# define STRLEN అక్షరశ్రేణి_పొడవు
 # define STPNCPY __stpncpy
-# define WEIGHT_H "../locale/weight.h"
+# define బరువు_H "../locale/weight.h"
 # define SUFFIX	MB
 # define L(arg) arg
-#endif
+#అయితే_ముగింపు
 
-#define CONCAT(a,b) CONCAT1(a,b)
-#define CONCAT1(a,b) a##b
+#నిర్వచించు CONCAT(a,b) CONCAT1(a,b)
+#నిర్వచించు CONCAT1(a,b) a##b
 
 /* Maximum string size that is calculated with cached indices.  Right now this
    is an arbitrary value open to optimizations.  SMALL_STR_SIZE * 4 has to be
    lower than __MAX_ALLOCA_CUTOFF.  Keep localedata/xfrm-test.c in sync.  */
-#define SMALL_STR_SIZE 4095
+#నిర్వచించు SMALL_STR_కొలత 4095
 
-#include "../locale/localeinfo.h"
-#include WEIGHT_H
+#అన్తర్భావ "../locale/localeinfo.h"
+#అన్తర్భావ బరువు_H
 
 /* Group locale data for shorter parameter lists.  */
-typedef struct
+రకనిర్వచనం నిర్మాణం
 {
   uint32_t nrules;
-  unsigned char *rulesets;
+  గుర్తులేని అక్షరం *rulesets;
   USTRING_TYPE *weights;
-  int32_t *table;
+  int32_t *పట్టిక;
   USTRING_TYPE *extra;
-  int32_t *indirect;
-} locale_data_t;
+  int32_t *పరోక్ష;
+} locale_దత్తాంశం_t;
 
-#ifndef WIDE_CHAR_VERSION
+#నిర్వచితం_కాకపోతే WIDE_CHAR_సంస్కరణ
 
 /* We need UTF-8 encoding of numbers.  */
-static int
-utf8_encode (char *buf, int val)
+స్థిర పూర్ణాంకం
+utf8_encode (అక్షరం *buf, పూర్ణాంకం val)
 {
-  int retval;
+  పూర్ణాంకం retval;
 
-  if (val < 0x80)
+  ఒకవేళ (val < 0x80)
     {
-      *buf++ = (char) val;
+      *buf++ = (అక్షరం) val;
       retval = 1;
     }
-  else
+  లేకపోతే
     {
-      int step;
+      పూర్ణాంకం అడుగు;
 
-      for (step = 2; step < 6; ++step)
-	if ((val & (~(uint32_t)0 << (5 * step + 1))) == 0)
-	  break;
-      retval = step;
+      కొరకు (అడుగు = 2; అడుగు < 6; ++అడుగు)
+	ఒకవేళ ((val & (~(uint32_t)0 << (5 * అడుగు + 1))) == 0)
+	  ఆపు;
+      retval = అడుగు;
 
-      *buf = (unsigned char) (~0xff >> step);
-      --step;
-      do
+      *buf = (గుర్తులేని అక్షరం) (~0xff >> అడుగు);
+      --అడుగు;
+      చేయి
 	{
-	  buf[step] = 0x80 | (val & 0x3f);
+	  buf[అడుగు] = 0x80 | (val & 0x3f);
 	  val >>= 6;
 	}
-      while (--step > 0);
+      అయితే (--అడుగు > 0);
       *buf |= val;
     }
 
-  return retval;
+  తిరిగి retval;
 }
-#endif
+#అయితే_ముగింపు
 
 /* Find next weight and rule index.  Inlined since called for every char.  */
-static __always_inline size_t
-find_idx (const USTRING_TYPE **us, int32_t *weight_idx,
-	  unsigned char *rule_idx, const locale_data_t *l_data, const int pass)
+స్థిర __always_inline size_t
+కనుగొను_idx (స్థిరరాశి USTRING_TYPE **us, int32_t *బరువు_idx,
+	  గుర్తులేని అక్షరం *నియమం_idx, స్థిరరాశి locale_దత్తాంశం_t *l_దత్తాంశం, స్థిరరాశి పూర్ణాంకం pass)
 {
-  int32_t tmp = findidx (l_data->table, l_data->indirect, l_data->extra, us,
+  int32_t tmp = findidx (l_దత్తాంశం->పట్టిక, l_దత్తాంశం->పరోక్ష, l_దత్తాంశం->extra, us,
 			 -1);
-  *rule_idx = tmp >> 24;
+  *నియమం_idx = tmp >> 24;
   int32_t idx = tmp & 0xffffff;
-  size_t len = l_data->weights[idx++];
+  size_t len = l_దత్తాంశం->weights[idx++];
 
   /* Skip over indices of previous levels.  */
-  for (int i = 0; i < pass; i++)
+  కొరకు (పూర్ణాంకం i = 0; i < pass; i++)
     {
       idx += len;
-      len = l_data->weights[idx++];
+      len = l_దత్తాంశం->weights[idx++];
     }
 
-  *weight_idx = idx;
-  return len;
+  *బరువు_idx = idx;
+  తిరిగి len;
 }
 
-static int
-find_position (const USTRING_TYPE *us, const locale_data_t *l_data,
-	       const int pass)
+స్థిర పూర్ణాంకం
+కనుగొను_position (స్థిరరాశి USTRING_TYPE *us, స్థిరరాశి locale_దత్తాంశం_t *l_దత్తాంశం,
+	       స్థిరరాశి పూర్ణాంకం pass)
 {
-  int32_t weight_idx;
-  unsigned char rule_idx;
-  const USTRING_TYPE *usrc = us;
+  int32_t బరువు_idx;
+  గుర్తులేని అక్షరం నియమం_idx;
+  స్థిరరాశి USTRING_TYPE *usrc = us;
 
-  find_idx (&usrc, &weight_idx, &rule_idx, l_data, pass);
-  return l_data->rulesets[rule_idx * l_data->nrules + pass] & sort_position;
+  కనుగొను_idx (&usrc, &బరువు_idx, &నియమం_idx, l_దత్తాంశం, pass);
+  తిరిగి l_దత్తాంశం->rulesets[నియమం_idx * l_దత్తాంశం->nrules + pass] & క్రమీకరించు_position;
 }
 
 /* Do the transformation.  */
-static size_t
-do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
-	 const locale_data_t *l_data)
+స్థిర size_t
+do_xfrm (స్థిరరాశి USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
+	 స్థిరరాశి locale_దత్తాంశం_t *l_దత్తాంశం)
 {
-  int32_t weight_idx;
-  unsigned char rule_idx;
+  int32_t బరువు_idx;
+  గుర్తులేని అక్షరం నియమం_idx;
   uint32_t pass;
   size_t needed = 0;
-  size_t last_needed;
+  size_t చివరి_needed;
 
   /* Now the passes over the weights.  */
-  for (pass = 0; pass < l_data->nrules; ++pass)
+  కొరకు (pass = 0; pass < l_దత్తాంశం->nrules; ++pass)
     {
       size_t backw_len = 0;
-      last_needed = needed;
-      const USTRING_TYPE *cur = usrc;
-      const USTRING_TYPE *backw_start = NULL;
+      చివరి_needed = needed;
+      స్థిరరాశి USTRING_TYPE *cur = usrc;
+      స్థిరరాశి USTRING_TYPE *backw_ప్రారంభం = ఖాళీ;
 
        /* We assume that if a rule has defined `position' in one section
          this is true for all of them.  */
-      int position = find_position (cur, l_data, pass);
+      పూర్ణాంకం position = కనుగొను_position (cur, l_దత్తాంశం, pass);
 
-      if (position == 0)
+      ఒకవేళ (position == 0)
 	{
-	  while (*cur != L('\0'))
+	  అయితే (*cur != L('\0'))
 	    {
-	      const USTRING_TYPE *pos = cur;
-	      size_t len = find_idx (&cur, &weight_idx, &rule_idx, l_data,
+	      స్థిరరాశి USTRING_TYPE *pos = cur;
+	      size_t len = కనుగొను_idx (&cur, &బరువు_idx, &నియమం_idx, l_దత్తాంశం,
 				     pass);
-	      int rule = l_data->rulesets[rule_idx * l_data->nrules + pass];
+	      పూర్ణాంకం నియమం = l_దత్తాంశం->rulesets[నియమం_idx * l_దత్తాంశం->nrules + pass];
 
-	      if ((rule & sort_forward) != 0)
+	      ఒకవేళ ((నియమం & క్రమీకరించు_forward) != 0)
 		{
 		  /* Handle the pushed backward sequence.  */
-		  if (backw_start != NULL)
+		  ఒకవేళ (backw_ప్రారంభం != ఖాళీ)
 		    {
-		      for (size_t i = backw_len; i > 0; )
+		      కొరకు (size_t i = backw_len; i > 0; )
 			{
-			  int32_t weight_idx;
-			  unsigned char rule_idx;
-			  size_t len = find_idx (&backw_start, &weight_idx,
-						 &rule_idx, l_data, pass);
-			  if (needed + i < n)
-			    for (size_t j = len; j > 0; j--)
+			  int32_t బరువు_idx;
+			  గుర్తులేని అక్షరం నియమం_idx;
+			  size_t len = కనుగొను_idx (&backw_ప్రారంభం, &బరువు_idx,
+						 &నియమం_idx, l_దత్తాంశం, pass);
+			  ఒకవేళ (needed + i < n)
+			    కొరకు (size_t j = len; j > 0; j--)
 			      dest[needed + i - j] =
-				l_data->weights[weight_idx++];
+				l_దత్తాంశం->weights[బరువు_idx++];
 
 			  i -= len;
 			}
 
 		      needed += backw_len;
-		      backw_start = NULL;
+		      backw_ప్రారంభం = ఖాళీ;
 		      backw_len = 0;
 		    }
 
 		  /* Now handle the forward element.  */
-		  if (needed + len < n)
-		    while (len-- > 0)
-		      dest[needed++] = l_data->weights[weight_idx++];
-		  else
+		  ఒకవేళ (needed + len < n)
+		    అయితే (len-- > 0)
+		      dest[needed++] = l_దత్తాంశం->weights[బరువు_idx++];
+		  లేకపోతే
 		    /* No more characters fit into the buffer.  */
 		    needed += len;
 		}
-	      else
+	      లేకపోతే
 		{
 		  /* Remember start of the backward sequence & track length.  */
-		  if (backw_start == NULL)
-		    backw_start = pos;
+		  ఒకవేళ (backw_ప్రారంభం == ఖాళీ)
+		    backw_ప్రారంభం = pos;
 		  backw_len += len;
 		}
 	    }
 
 
 	  /* Handle the pushed backward sequence.  */
-	  if (backw_start != NULL)
+	  ఒకవేళ (backw_ప్రారంభం != ఖాళీ)
 	    {
-	      for (size_t i = backw_len; i > 0; )
+	      కొరకు (size_t i = backw_len; i > 0; )
 		{
-		  size_t len = find_idx (&backw_start, &weight_idx, &rule_idx,
-					 l_data, pass);
-		  if (needed + i < n)
-		    for (size_t j = len; j > 0; j--)
+		  size_t len = కనుగొను_idx (&backw_ప్రారంభం, &బరువు_idx, &నియమం_idx,
+					 l_దత్తాంశం, pass);
+		  ఒకవేళ (needed + i < n)
+		    కొరకు (size_t j = len; j > 0; j--)
 		      dest[needed + i - j] =
-			l_data->weights[weight_idx++];
+			l_దత్తాంశం->weights[బరువు_idx++];
 
 		  i -= len;
 		}
@@ -220,157 +220,157 @@ do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
 	      needed += backw_len;
 	    }
 	}
-      else
+      లేకపోతే
 	{
-	  int val = 1;
-#ifndef WIDE_CHAR_VERSION
-	  char buf[7];
+	  పూర్ణాంకం val = 1;
+#నిర్వచితం_కాకపోతే WIDE_CHAR_సంస్కరణ
+	  అక్షరం buf[7];
 	  size_t buflen;
-#endif
+#అయితే_ముగింపు
 	  size_t i;
 
-	  while (*cur != L('\0'))
+	  అయితే (*cur != L('\0'))
 	    {
-	      const USTRING_TYPE *pos = cur;
-	      size_t len = find_idx (&cur, &weight_idx, &rule_idx, l_data,
+	      స్థిరరాశి USTRING_TYPE *pos = cur;
+	      size_t len = కనుగొను_idx (&cur, &బరువు_idx, &నియమం_idx, l_దత్తాంశం,
 				     pass);
-	      int rule = l_data->rulesets[rule_idx * l_data->nrules + pass];
+	      పూర్ణాంకం నియమం = l_దత్తాంశం->rulesets[నియమం_idx * l_దత్తాంశం->nrules + pass];
 
-	      if ((rule & sort_forward) != 0)
+	      ఒకవేళ ((నియమం & క్రమీకరించు_forward) != 0)
 		{
 		  /* Handle the pushed backward sequence.  */
-		  if (backw_start != NULL)
+		  ఒకవేళ (backw_ప్రారంభం != ఖాళీ)
 		    {
-		      for (size_t p = backw_len; p > 0; p--)
+		      కొరకు (size_t p = backw_len; p > 0; p--)
 			{
 			  size_t len;
-			  int32_t weight_idx;
-			  unsigned char rule_idx;
-			  const USTRING_TYPE *backw_cur = backw_start;
+			  int32_t బరువు_idx;
+			  గుర్తులేని అక్షరం నియమం_idx;
+			  స్థిరరాశి USTRING_TYPE *backw_cur = backw_ప్రారంభం;
 
 			  /* To prevent a warning init the used vars.  */
-			  len = find_idx (&backw_cur, &weight_idx,
-					  &rule_idx, l_data, pass);
+			  len = కనుగొను_idx (&backw_cur, &బరువు_idx,
+					  &నియమం_idx, l_దత్తాంశం, pass);
 
-			  for (i = 1; i < p; i++)
-			    len = find_idx (&backw_cur, &weight_idx,
-					    &rule_idx, l_data, pass);
+			  కొరకు (i = 1; i < p; i++)
+			    len = కనుగొను_idx (&backw_cur, &బరువు_idx,
+					    &నియమం_idx, l_దత్తాంశం, pass);
 
-			  if (len != 0)
+			  ఒకవేళ (len != 0)
 			    {
-#ifdef WIDE_CHAR_VERSION
-			      if (needed + 1 + len < n)
+#నిర్వచితమైతే WIDE_CHAR_సంస్కరణ
+			      ఒకవేళ (needed + 1 + len < n)
 				{
 				  dest[needed] = val;
-				  for (i = 0; i < len; ++i)
+				  కొరకు (i = 0; i < len; ++i)
 				    dest[needed + 1 + i] =
-				      l_data->weights[weight_idx + i];
+				      l_దత్తాంశం->weights[బరువు_idx + i];
 				}
 			      needed += 1 + len;
-#else
+#లేకపోతే
 			      buflen = utf8_encode (buf, val);
-			      if (needed + buflen + len < n)
+			      ఒకవేళ (needed + buflen + len < n)
 				{
-				  for (i = 0; i < buflen; ++i)
+				  కొరకు (i = 0; i < buflen; ++i)
 				    dest[needed + i] = buf[i];
-				  for (i = 0; i < len; ++i)
+				  కొరకు (i = 0; i < len; ++i)
 				    dest[needed + buflen + i] =
-				      l_data->weights[weight_idx + i];
+				      l_దత్తాంశం->weights[బరువు_idx + i];
 				}
 			      needed += buflen + len;
-#endif
+#అయితే_ముగింపు
 			      val = 1;
 			    }
-			  else
+			  లేకపోతే
 			    ++val;
 			}
 
-		      backw_start = NULL;
+		      backw_ప్రారంభం = ఖాళీ;
 		      backw_len = 0;
 		    }
 
 		  /* Now handle the forward element.  */
-		  if (len != 0)
+		  ఒకవేళ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1 + len < n)
+#నిర్వచితమైతే WIDE_CHAR_సంస్కరణ
+		      ఒకవేళ (needed + 1 + len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
-			      l_data->weights[weight_idx + i];
+			      l_దత్తాంశం->weights[బరువు_idx + i];
 			}
 		      needed += 1 + len;
-#else
+#లేకపోతే
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ఒకవేళ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  కొరకు (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
-			      l_data->weights[weight_idx + i];
+			      l_దత్తాంశం->weights[బరువు_idx + i];
 			}
 		      needed += buflen + len;
-#endif
+#అయితే_ముగింపు
 		      val = 1;
 		    }
-		  else
+		  లేకపోతే
 		    ++val;
 		}
-	      else
+	      లేకపోతే
 		{
 		  /* Remember start of the backward sequence & track length.  */
-		  if (backw_start == NULL)
-		    backw_start = pos;
+		  ఒకవేళ (backw_ప్రారంభం == ఖాళీ)
+		    backw_ప్రారంభం = pos;
 		  backw_len++;
 		}
 	    }
 
 	  /* Handle the pushed backward sequence.  */
-	  if (backw_start != NULL)
+	  ఒకవేళ (backw_ప్రారంభం != ఖాళీ)
 	    {
-	      for (size_t p = backw_len; p > 0; p--)
+	      కొరకు (size_t p = backw_len; p > 0; p--)
 		{
 		  size_t len;
-		  int32_t weight_idx;
-		  unsigned char rule_idx;
-		  const USTRING_TYPE *backw_cur = backw_start;
+		  int32_t బరువు_idx;
+		  గుర్తులేని అక్షరం నియమం_idx;
+		  స్థిరరాశి USTRING_TYPE *backw_cur = backw_ప్రారంభం;
 
 		  /* To prevent a warning init the used vars.  */
-		  len = find_idx (&backw_cur, &weight_idx,
-				  &rule_idx, l_data, pass);
+		  len = కనుగొను_idx (&backw_cur, &బరువు_idx,
+				  &నియమం_idx, l_దత్తాంశం, pass);
 
-		  for (i = 1; i < p; i++)
-		    len = find_idx (&backw_cur, &weight_idx,
-				    &rule_idx, l_data, pass);
+		  కొరకు (i = 1; i < p; i++)
+		    len = కనుగొను_idx (&backw_cur, &బరువు_idx,
+				    &నియమం_idx, l_దత్తాంశం, pass);
 
-		  if (len != 0)
+		  ఒకవేళ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1 + len < n)
+#నిర్వచితమైతే WIDE_CHAR_సంస్కరణ
+		      ఒకవేళ (needed + 1 + len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
-			      l_data->weights[weight_idx + i];
+			      l_దత్తాంశం->weights[బరువు_idx + i];
 			}
 		      needed += 1 + len;
-#else
+#లేకపోతే
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ఒకవేళ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  కొరకు (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
-			      l_data->weights[weight_idx + i];
+			      l_దత్తాంశం->weights[బరువు_idx + i];
 			}
 		      needed += buflen + len;
-#endif
+#అయితే_ముగింపు
 		      val = 1;
 		    }
-		  else
+		  లేకపోతే
 		    ++val;
 		}
 	    }
@@ -378,8 +378,8 @@ do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
 
       /* Finally store the byte to separate the passes or terminate
 	 the string.  */
-      if (needed < n)
-	dest[needed] = pass + 1 < l_data->nrules ? L('\1') : L('\0');
+      ఒకవేళ (needed < n)
+	dest[needed] = pass + 1 < l_దత్తాంశం->nrules ? L('\1') : L('\0');
       ++needed;
     }
 
@@ -387,63 +387,63 @@ do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
      a `position' rule at the end and if no non-ignored character
      is found the last \1 byte is immediately followed by a \0 byte
      signalling this.  We can avoid the \1 byte(s).  */
-  if (needed > 2 && needed == last_needed + 1)
+  ఒకవేళ (needed > 2 && needed == చివరి_needed + 1)
     {
       /* Remove the \1 byte.  */
-      if (--needed <= n)
+      ఒకవేళ (--needed <= n)
 	dest[needed - 1] = L('\0');
     }
 
   /* Return the number of bytes/words we need, but don't count the NUL
      byte/word at the end.  */
-  return needed - 1;
+  తిరిగి needed - 1;
 }
 
 /* Do the transformation using weight-index and rule cache.  */
-static size_t
-do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
-		size_t idxmax, int32_t *idxarr, const unsigned char *rulearr)
+స్థిర size_t
+do_xfrm_cached (STRING_TYPE *dest, size_t n, స్థిరరాశి locale_దత్తాంశం_t *l_దత్తాంశం,
+		size_t idxmax, int32_t *idxarr, స్థిరరాశి గుర్తులేని అక్షరం *rulearr)
 {
-  uint32_t nrules = l_data->nrules;
-  unsigned char *rulesets = l_data->rulesets;
-  USTRING_TYPE *weights = l_data->weights;
+  uint32_t nrules = l_దత్తాంశం->nrules;
+  గుర్తులేని అక్షరం *rulesets = l_దత్తాంశం->rulesets;
+  USTRING_TYPE *weights = l_దత్తాంశం->weights;
   uint32_t pass;
   size_t needed = 0;
-  size_t last_needed;
+  size_t చివరి_needed;
   size_t idxcnt;
 
   /* Now the passes over the weights.  */
-  for (pass = 0; pass < nrules; ++pass)
+  కొరకు (pass = 0; pass < nrules; ++pass)
     {
       size_t backw_stop = ~0ul;
-      int rule = rulesets[rulearr[0] * nrules + pass];
+      పూర్ణాంకం నియమం = rulesets[rulearr[0] * nrules + pass];
       /* We assume that if a rule has defined `position' in one section
 	 this is true for all of them.  */
-      int position = rule & sort_position;
+      పూర్ణాంకం position = నియమం & క్రమీకరించు_position;
 
-      last_needed = needed;
-      if (position == 0)
+      చివరి_needed = needed;
+      ఒకవేళ (position == 0)
 	{
-	  for (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
+	  కొరకు (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
 	    {
-	      if ((rule & sort_forward) != 0)
+	      ఒకవేళ ((నియమం & క్రమీకరించు_forward) != 0)
 		{
 		  size_t len;
 
-		  if (backw_stop != ~0ul)
+		  ఒకవేళ (backw_stop != ~0ul)
 		    {
 		      /* Handle the pushed elements now.  */
 		      size_t backw;
 
-		      for (backw = idxcnt; backw > backw_stop; )
+		      కొరకు (backw = idxcnt; backw > backw_stop; )
 			{
 			  --backw;
 			  len = weights[idxarr[backw]++];
 
-			  if (needed + len < n)
-			    while (len-- > 0)
+			  ఒకవేళ (needed + len < n)
+			    అయితే (len-- > 0)
 			      dest[needed++] = weights[idxarr[backw]++];
-			  else
+			  లేకపోతే
 			    {
 				/* No more characters fit into the buffer.  */
 			      needed += len;
@@ -456,41 +456,41 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 
 		  /* Now handle the forward element.  */
 		  len = weights[idxarr[idxcnt]++];
-		  if (needed + len < n)
-		    while (len-- > 0)
+		  ఒకవేళ (needed + len < n)
+		    అయితే (len-- > 0)
 		      dest[needed++] = weights[idxarr[idxcnt]++];
-		  else
+		  లేకపోతే
 		    {
 		      /* No more characters fit into the buffer.  */
 		      needed += len;
 		      idxarr[idxcnt] += len;
 		    }
 		}
-	      else
+	      లేకపోతే
 		{
 		  /* Remember where the backwards series started.  */
-		  if (backw_stop == ~0ul)
+		  ఒకవేళ (backw_stop == ~0ul)
 		    backw_stop = idxcnt;
 		}
 
-	      rule = rulesets[rulearr[idxcnt + 1] * nrules + pass];
+	      నియమం = rulesets[rulearr[idxcnt + 1] * nrules + pass];
 	    }
 
 
-	  if (backw_stop != ~0ul)
+	  ఒకవేళ (backw_stop != ~0ul)
 	    {
 	      /* Handle the pushed elements now.  */
 	      size_t backw;
 
 	      backw = idxcnt;
-	      while (backw > backw_stop)
+	      అయితే (backw > backw_stop)
 		{
 		  size_t len = weights[idxarr[--backw]++];
 
-		  if (needed + len < n)
-		    while (len-- > 0)
+		  ఒకవేళ (needed + len < n)
+		    అయితే (len-- > 0)
 		      dest[needed++] = weights[idxarr[backw]++];
-		  else
+		  లేకపోతే
 		    {
 		      /* No more characters fit into the buffer.  */
 		      needed += len;
@@ -499,57 +499,57 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 		}
 	    }
 	}
-      else
+      లేకపోతే
 	{
-	  int val = 1;
-#ifndef WIDE_CHAR_VERSION
-	  char buf[7];
+	  పూర్ణాంకం val = 1;
+#నిర్వచితం_కాకపోతే WIDE_CHAR_సంస్కరణ
+	  అక్షరం buf[7];
 	  size_t buflen;
-#endif
+#అయితే_ముగింపు
 	  size_t i;
 
-	  for (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
+	  కొరకు (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
 	    {
-	      if ((rule & sort_forward) != 0)
+	      ఒకవేళ ((నియమం & క్రమీకరించు_forward) != 0)
 		{
 		  size_t len;
 
-		  if (backw_stop != ~0ul)
+		  ఒకవేళ (backw_stop != ~0ul)
 		    {
 		     /* Handle the pushed elements now.  */
 		      size_t backw;
 
-		      for (backw = idxcnt; backw > backw_stop; )
+		      కొరకు (backw = idxcnt; backw > backw_stop; )
 			{
 			  --backw;
 			  len = weights[idxarr[backw]++];
-			  if (len != 0)
+			  ఒకవేళ (len != 0)
 			    {
-#ifdef WIDE_CHAR_VERSION
-			      if (needed + 1 + len < n)
+#నిర్వచితమైతే WIDE_CHAR_సంస్కరణ
+			      ఒకవేళ (needed + 1 + len < n)
 				{
 				  dest[needed] = val;
-				  for (i = 0; i < len; ++i)
+				  కొరకు (i = 0; i < len; ++i)
 				    dest[needed + 1 + i] =
 				      weights[idxarr[backw] + i];
 				}
 			      needed += 1 + len;
-#else
+#లేకపోతే
 			      buflen = utf8_encode (buf, val);
-			      if (needed + buflen + len < n)
+			      ఒకవేళ (needed + buflen + len < n)
 				{
-				  for (i = 0; i < buflen; ++i)
+				  కొరకు (i = 0; i < buflen; ++i)
 				    dest[needed + i] = buf[i];
-				  for (i = 0; i < len; ++i)
+				  కొరకు (i = 0; i < len; ++i)
 				    dest[needed + buflen + i] =
 				      weights[idxarr[backw] + i];
 				}
 			      needed += buflen + len;
-#endif
+#అయితే_ముగింపు
 			      idxarr[backw] += len;
 			      val = 1;
 			    }
-			  else
+			  లేకపోతే
 			    ++val;
 			}
 
@@ -558,83 +558,83 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 
 		  /* Now handle the forward element.  */
 		  len = weights[idxarr[idxcnt]++];
-		  if (len != 0)
+		  ఒకవేళ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1+ len < n)
+#నిర్వచితమైతే WIDE_CHAR_సంస్కరణ
+		      ఒకవేళ (needed + 1+ len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
 			      weights[idxarr[idxcnt] + i];
 			}
 		      needed += 1 + len;
-#else
+#లేకపోతే
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ఒకవేళ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  కొరకు (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
 			      weights[idxarr[idxcnt] + i];
 			}
 		      needed += buflen + len;
-#endif
+#అయితే_ముగింపు
 		      idxarr[idxcnt] += len;
 		      val = 1;
 		    }
-		  else
+		  లేకపోతే
 		    /* Note that we don't have to increment `idxarr[idxcnt]'
 		       since the length is zero.  */
 		    ++val;
 		}
-	      else
+	      లేకపోతే
 		{
 		  /* Remember where the backwards series started.  */
-		  if (backw_stop == ~0ul)
+		  ఒకవేళ (backw_stop == ~0ul)
 		    backw_stop = idxcnt;
 		}
 
-	      rule = rulesets[rulearr[idxcnt + 1] * nrules + pass];
+	      నియమం = rulesets[rulearr[idxcnt + 1] * nrules + pass];
 	    }
 
-	  if (backw_stop != ~0ul)
+	  ఒకవేళ (backw_stop != ~0ul)
 	    {
 	      /* Handle the pushed elements now.  */
 	      size_t backw;
 
 	      backw = idxmax - 1;
-	      while (backw > backw_stop)
+	      అయితే (backw > backw_stop)
 		{
 		  size_t len = weights[idxarr[--backw]++];
-		  if (len != 0)
+		  ఒకవేళ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1 + len < n)
+#నిర్వచితమైతే WIDE_CHAR_సంస్కరణ
+		      ఒకవేళ (needed + 1 + len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
 			      weights[idxarr[backw] + i];
 			}
 		      needed += 1 + len;
-#else
+#లేకపోతే
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ఒకవేళ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  కొరకు (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  కొరకు (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
 			      weights[idxarr[backw] + i];
 			}
 		      needed += buflen + len;
-#endif
+#అయితే_ముగింపు
 		      idxarr[backw] += len;
 		      val = 1;
 		    }
-		  else
+		  లేకపోతే
 		    ++val;
 		}
 	    }
@@ -642,7 +642,7 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 
       /* Finally store the byte to separate the passes or terminate
 	 the string.  */
-      if (needed < n)
+      ఒకవేళ (needed < n)
 	dest[needed] = pass + 1 < nrules ? L('\1') : L('\0');
       ++needed;
     }
@@ -651,96 +651,96 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
      a `position' rule at the end and if no non-ignored character
      is found the last \1 byte is immediately followed by a \0 byte
      signalling this.  We can avoid the \1 byte(s).  */
-  if (needed > 2 && needed == last_needed + 1)
+  ఒకవేళ (needed > 2 && needed == చివరి_needed + 1)
     {
       /* Remove the \1 byte.  */
-      if (--needed <= n)
+      ఒకవేళ (--needed <= n)
 	dest[needed - 1] = L('\0');
     }
 
   /* Return the number of bytes/words we need, but don't count the NUL
      byte/word at the end.  */
-  return needed - 1;
+  తిరిగి needed - 1;
 }
 
 size_t
-STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n, locale_t l)
+STRXFRM (STRING_TYPE *dest, స్థిరరాశి STRING_TYPE *src, size_t n, locale_t l)
 {
-  locale_data_t l_data;
-  struct __locale_data *current = l->__locales[LC_COLLATE];
-  l_data.nrules = current->values[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
+  locale_దత్తాంశం_t l_దత్తాంశం;
+  నిర్మాణం __locale_data *current = l->__locales[LC_COLLATE];
+  l_దత్తాంశం.nrules = current->విలువలు[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].మాట;
 
   /* Handle byte comparison case.  */
-  if (l_data.nrules == 0)
+  ఒకవేళ (l_దత్తాంశం.nrules == 0)
     {
       size_t srclen = STRLEN (src);
 
-      if (n != 0)
+      ఒకవేళ (n != 0)
 	STPNCPY (dest, src, MIN (srclen + 1, n));
 
-      return srclen;
+      తిరిగి srclen;
     }
 
   /* Handle an empty string, code hereafter relies on strlen (src) > 0.  */
-  if (*src == L('\0'))
+  ఒకవేళ (*src == L('\0'))
     {
-      if (n != 0)
+      ఒకవేళ (n != 0)
 	*dest = L('\0');
-      return 0;
+      తిరిగి 0;
     }
 
   /* Get the locale data.  */
-  l_data.rulesets = (unsigned char *)
-    current->values[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
-  l_data.table = (int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
-  l_data.weights = (USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
-  l_data.extra = (USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
-  l_data.indirect = (int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
+  l_దత్తాంశం.rulesets = (గుర్తులేని అక్షరం *)
+    current->విలువలు[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
+  l_దత్తాంశం.పట్టిక = (int32_t *)
+    current->విలువలు[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_పట్టిక,SUFFIX))].string;
+  l_దత్తాంశం.weights = (USTRING_TYPE *)
+    current->విలువలు[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_బరువు,SUFFIX))].string;
+  l_దత్తాంశం.extra = (USTRING_TYPE *)
+    current->విలువలు[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
+  l_దత్తాంశం.పరోక్ష = (int32_t *)
+    current->విలువలు[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_పరోక్ష,SUFFIX))].string;
 
-  assert (((uintptr_t) l_data.table) % __alignof__ (l_data.table[0]) == 0);
-  assert (((uintptr_t) l_data.weights) % __alignof__ (l_data.weights[0]) == 0);
-  assert (((uintptr_t) l_data.extra) % __alignof__ (l_data.extra[0]) == 0);
-  assert (((uintptr_t) l_data.indirect) % __alignof__ (l_data.indirect[0]) == 0);
+  ప్రతిజ్ఞా (((uintptr_t) l_దత్తాంశం.పట్టిక) % __alignof__ (l_దత్తాంశం.పట్టిక[0]) == 0);
+  ప్రతిజ్ఞా (((uintptr_t) l_దత్తాంశం.weights) % __alignof__ (l_దత్తాంశం.weights[0]) == 0);
+  ప్రతిజ్ఞా (((uintptr_t) l_దత్తాంశం.extra) % __alignof__ (l_దత్తాంశం.extra[0]) == 0);
+  ప్రతిజ్ఞా (((uintptr_t) l_దత్తాంశం.పరోక్ష) % __alignof__ (l_దత్తాంశం.పరోక్ష[0]) == 0);
 
   /* We need the elements of the string as unsigned values since they
      are used as indices.  */
-  const USTRING_TYPE *usrc = (const USTRING_TYPE *) src;
+  స్థిరరాశి USTRING_TYPE *usrc = (స్థిరరాశి USTRING_TYPE *) src;
 
   /* Allocate cache for small strings on the stack and fill it with weight and
      rule indices.  If the cache size is not sufficient, continue with the
      uncached xfrm version.  */
   size_t idxmax = 0;
-  const USTRING_TYPE *cur = usrc;
-  int32_t *idxarr = alloca (SMALL_STR_SIZE * sizeof (int32_t));
-  unsigned char *rulearr = alloca (SMALL_STR_SIZE + 1);
+  స్థిరరాశి USTRING_TYPE *cur = usrc;
+  int32_t *idxarr = alloca (SMALL_STR_కొలత * పరిమాణం (int32_t));
+  గుర్తులేని అక్షరం *rulearr = alloca (SMALL_STR_కొలత + 1);
 
-  do
+  చేయి
     {
-      int32_t tmp = findidx (l_data.table, l_data.indirect, l_data.extra, &cur,
+      int32_t tmp = findidx (l_దత్తాంశం.పట్టిక, l_దత్తాంశం.పరోక్ష, l_దత్తాంశం.extra, &cur,
 			     -1);
       rulearr[idxmax] = tmp >> 24;
       idxarr[idxmax] = tmp & 0xffffff;
 
       ++idxmax;
     }
-  while (*cur != L('\0') && idxmax < SMALL_STR_SIZE);
+  అయితే (*cur != L('\0') && idxmax < SMALL_STR_కొలత);
 
   /* This element is only read, the value never used but to determine
      another value which then is ignored.  */
   rulearr[idxmax] = '\0';
 
   /* Do the transformation.  */
-  if (*cur == L('\0'))
-    return do_xfrm_cached (dest, n, &l_data, idxmax, idxarr, rulearr);
-  else
-    return do_xfrm (usrc, dest, n, &l_data);
+  ఒకవేళ (*cur == L('\0'))
+    తిరిగి do_xfrm_cached (dest, n, &l_దత్తాంశం, idxmax, idxarr, rulearr);
+  లేకపోతే
+    తిరిగి do_xfrm (usrc, dest, n, &l_దత్తాంశం);
 }
 libc_hidden_def (STRXFRM)
 
-#ifndef WIDE_CHAR_VERSION
+#నిర్వచితం_కాకపోతే WIDE_CHAR_సంస్కరణ
 weak_alias (__strxfrm_l, strxfrm_l)
-#endif
+#అయితే_ముగింపు

@@ -16,17 +16,17 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_MEMCMPEQ
+#నిర్వచించు TEST_MAIN
+#నిర్వచితమైతే TEST_MEMCMPEQ
 # define TEST_NAME "__memcmpeq"
-#elif defined WIDE
+#లేదావేళ defined WIDE
 # define TEST_NAME "wmemcmp"
-#else
+#లేకపోతే
 # define TEST_NAME "memcmp"
-#endif
+#అయితే_ముగింపు
 
-#include "test-string.h"
-#ifdef WIDE
+#అన్తర్భావ "test-string.h"
+#నిర్వచితమైతే WIDE
 # include <inttypes.h>
 # include <wchar.h>
 
@@ -39,183 +39,183 @@
 # define CHAR__MIN WCHAR_MIN
 # define CHAR__MAX WCHAR_MAX
 
-int
-SIMPLE_MEMCMP (const wchar_t *s1, const wchar_t *s2, size_t n)
+పూర్ణాంకం
+SIMPLE_MEMCMP (స్థిరరాశి wchar_t *s1, స్థిరరాశి wchar_t *s2, size_t n)
 {
-  int ret = 0;
+  పూర్ణాంకం ret = 0;
   /* Warning!
 	wmemcmp has to use SIGNED comparison for elements.
 	memcmp has to use UNSIGNED comparison for elements.
   */
-  while (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
-  return ret;
+  అయితే (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
+  తిరిగి ret;
 }
-#else
+#లేకపోతే
 # include <limits.h>
 # ifdef TEST_MEMCMPEQ
 #  define MEMCMP __memcmpeq
 #  define SIMPLE_MEMCMP simple_memcmpeq
-# else
+# లేకపోతే
 #  define MEMCMP memcmp
 #  define SIMPLE_MEMCMP simple_memcmp
 # endif
-# define MEMCPY memcpy
-# define CHAR char
+# define MEMCPY జ్ఞాపకం_నకలు
+# define CHAR అక్షరం
 # define MAX_CHAR 255
-# define UCHAR unsigned char
+# define UCHAR గుర్తులేని అక్షరం
 # define CHARBYTES 1
 # define CHAR__MIN CHAR_MIN
 # define CHAR__MAX CHAR_MAX
 
-int
-SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
+పూర్ణాంకం
+SIMPLE_MEMCMP (స్థిరరాశి అక్షరం *s1, స్థిరరాశి అక్షరం *s2, size_t n)
 {
-  int ret = 0;
+  పూర్ణాంకం ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1++ - *(unsigned char *) s2++) == 0);
-  return ret;
+  అయితే (n-- && (ret = *(గుర్తులేని అక్షరం *) s1++ - *(గుర్తులేని అక్షరం *) s2++) == 0);
+  తిరిగి ret;
 }
-#endif
+#అయితే_ముగింపు
 
-#ifndef BAD_RESULT
-# define BAD_RESULT(result, expec)                                      \
-    (((result) == 0 && (expec)) || ((result) < 0 && (expec) >= 0) ||    \
-     ((result) > 0 && (expec) <= 0))
+#నిర్వచితం_కాకపోతే BAD_ఫలితం
+# define BAD_ఫలితం(ఫలితం, expec)                                      \
+    (((ఫలితం) == 0 && (expec)) || ((ఫలితం) < 0 && (expec) >= 0) ||    \
+     ((ఫలితం) > 0 && (expec) <= 0))
 # endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+రకనిర్వచనం పూర్ణాంకం (*proto_t) (స్థిరరాశి CHAR *, స్థిరరాశి CHAR *, size_t);
 
 IMPL (MEMCMP, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	      int exp_result)
+స్థిర పూర్ణాంకం
+check_ఫలితం (impl_t *impl, స్థిరరాశి CHAR *s1, స్థిరరాశి CHAR *s2, size_t len,
+	      పూర్ణాంకం exp_ఫలితం)
 {
-  int result = CALL (impl, s1, s2, len);
-  if (BAD_RESULT(result, exp_result))
+  పూర్ణాంకం ఫలితం = CALL (impl, s1, s2, len);
+  ఒకవేళ (BAD_ఫలితం(ఫలితం, exp_ఫలితం))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
-	     result, exp_result);
+	     ఫలితం, exp_ఫలితం);
       ret = 1;
-      return -1;
+      తిరిగి -1;
     }
 
-  return 0;
+  తిరిగి 0;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	     int exp_result)
+స్థిర శూన్య
+do_one_test (impl_t *impl, స్థిరరాశి CHAR *s1, స్థిరరాశి CHAR *s2, size_t len,
+	     పూర్ణాంకం exp_ఫలితం)
 {
-  if (check_result (impl, s1, s2, len, exp_result) < 0)
-    return;
+  ఒకవేళ (check_ఫలితం (impl, s1, s2, len, exp_ఫలితం) < 0)
+    తిరిగి;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int exp_result)
+స్థిర శూన్య
+do_test (size_t align1, size_t align2, size_t len, పూర్ణాంకం exp_ఫలితం)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= (4096 - CHARBYTES);
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ఒకవేళ (align1 + (len + 1) * CHARBYTES >= పుట_కొలత)
+    తిరిగి;
 
   align2 &= (4096 - CHARBYTES);
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ఒకవేళ (align2 + (len + 1) * CHARBYTES >= పుట_కొలత)
+    తిరిగి;
 
   s1 = (CHAR *) (buf1 + align1);
   s2 = (CHAR *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  కొరకు (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % CHAR__MAX;
 
-  if (len)
+  ఒకవేళ (len)
     {
       s1[len] = align1;
       s2[len] = align2;
-      s2[len - 1] -= exp_result;
+      s2[len - 1] -= exp_ఫలితం;
     }
-  else
+  లేకపోతే
     {
-      exp_result = 0;
+      exp_ఫలితం = 0;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, len, exp_result);
+    do_one_test (impl, s1, s2, len, exp_ఫలితం);
 }
 
-static void
-do_random_tests (void)
+స్థిర శూన్య
+do_random_tests (శూన్య)
 {
   size_t i, j, n, align1, align2, pos, len;
-  int result;
-  long r;
-  UCHAR *p1 =  (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
-  UCHAR *p2 =  (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
+  పూర్ణాంకం ఫలితం;
+  దీర్ఘ r;
+  UCHAR *p1 =  (UCHAR *) (buf1 + పుట_కొలత - 512 * CHARBYTES);
+  UCHAR *p2 =  (UCHAR *) (buf2 + పుట_కొలత - 512 * CHARBYTES);
 
-  for (n = 0; n < ITERATIONS; n++)
+  కొరకు (n = 0; n < ITERATIONS; n++)
     {
    align1 = random () & 31;
-      if (random () & 1)
+      ఒకవేళ (random () & 1)
 	align2 = random () & 31;
-      else
+      లేకపోతే
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1;
-      if (align2 > j)
+      ఒకవేళ (align2 > j)
 	j = align2;
-      if (pos + j >= 512)
+      ఒకవేళ (pos + j >= 512)
 	pos = 511 - j - (random () & 7);
       len = random () & 511;
-      if (len + j >= 512)
+      ఒకవేళ (len + j >= 512)
 	len = 511 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512) j = 512;
-      for (i = 0; i < j; ++i)
+      ఒకవేళ (j > 512) j = 512;
+      కొరకు (i = 0; i < j; ++i)
 	p1[i] = random () & 255;
-      for (i = 0; i < j; ++i)
+      కొరకు (i = 0; i < j; ++i)
 	p2[i] = random () & 255;
 
-      result = 0;
-      if (pos >= len)
-	MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, len);
-      else
+      ఫలితం = 0;
+      ఒకవేళ (pos >= len)
+	MEMCPY ((CHAR *) p2 + align2, (స్థిరరాశి CHAR *) p1 + align1, len);
+      లేకపోతే
 	{
-	  MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, pos);
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  MEMCPY ((CHAR *) p2 + align2, (స్థిరరాశి CHAR *) p1 + align1, pos);
+	  ఒకవేళ (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      ఒకవేళ (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (p1[align1 + pos] < p2[align2 + pos])
-	    result = -1;
-	  else
-	    result = 1;
+	  ఒకవేళ (p1[align1 + pos] < p2[align2 + pos])
+	    ఫలితం = -1;
+	  లేకపోతే
+	    ఫలితం = 1;
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (CHAR *) p1 + align1, (const CHAR *) p2 + align2,
+	  r = CALL (impl, (CHAR *) p1 + align1, (స్థిరరాశి CHAR *) p2 + align2,
 		    len);
-	  if (BAD_RESULT(r, result))
+	  ఒకవేళ (BAD_ఫలితం(r, ఫలితం))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
-		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, result, p1, p2);
+		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, ఫలితం, p1, p2);
 	      ret = 1;
 	    }
 	}
     }
 }
 
-static void
-check1 (void)
+స్థిర శూన్య
+check1 (శూన్య)
 {
   CHAR s1[116], s2[116];
-  int n, exp_result;
+  పూర్ణాంకం n, exp_ఫలితం;
 
   s1[0] = -108;
   s2[0] = -108;
@@ -451,40 +451,40 @@ check1 (void)
   s2[115] = 1;
 
   n = 116;
-  for (size_t i = 0; i < n; i++)
-    for (size_t len = 0; len <= n - i; ++len)
+  కొరకు (size_t i = 0; i < n; i++)
+    కొరకు (size_t len = 0; len <= n - i; ++len)
       {
-	exp_result = SIMPLE_MEMCMP (s1 + i, s2 + i, len);
+	exp_ఫలితం = SIMPLE_MEMCMP (s1 + i, s2 + i, len);
 	FOR_EACH_IMPL (impl, 0)
-	  check_result (impl, s1 + i, s2 + i, len, exp_result);
+	  check_ఫలితం (impl, s1 + i, s2 + i, len, exp_ఫలితం);
       }
 }
 
 /* This test checks that memcmp doesn't overrun buffers.  */
-static void
-check2 (void)
+స్థిర శూన్య
+check2 (శూన్య)
 {
-  size_t max_length = page_size / sizeof (CHAR);
+  size_t max_నిడివి = పుట_కొలత / పరిమాణం (CHAR);
 
   /* Initialize buf2 to the same values as buf1.  The bug requires the
      last compared byte to be different.  */
-  memcpy (buf2, buf1, page_size);
-  ((char *) buf2)[page_size - 1] ^= 0x11;
+  జ్ఞాపకం_నకలు (buf2, buf1, పుట_కొలత);
+  ((అక్షరం *) buf2)[పుట_కొలత - 1] ^= 0x11;
 
-  for (size_t length = 1; length < max_length; length++)
+  కొరకు (size_t నిడివి = 1; నిడివి < max_నిడివి; నిడివి++)
     {
-      CHAR *s1 = (CHAR *) buf1 + max_length - length;
-      CHAR *s2 = (CHAR *) buf2 + max_length - length;
+      CHAR *s1 = (CHAR *) buf1 + max_నిడివి - నిడివి;
+      CHAR *s2 = (CHAR *) buf2 + max_నిడివి - నిడివి;
 
-      const int exp_result = SIMPLE_MEMCMP (s1, s2, length);
+      స్థిరరాశి పూర్ణాంకం exp_ఫలితం = SIMPLE_MEMCMP (s1, s2, నిడివి);
 
       FOR_EACH_IMPL (impl, 0)
-	check_result (impl, s1, s2, length, exp_result);
+	check_ఫలితం (impl, s1, s2, నిడివి, exp_ఫలితం);
     }
 }
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
   size_t i;
 
@@ -493,19 +493,19 @@ test_main (void)
   check1 ();
   check2 ();
 
-  printf ("%23s", "");
+  రాయి ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (i = 1; i < 32; ++i)
+  కొరకు (i = 1; i < 32; ++i)
     {
       do_test (i * CHARBYTES, i * CHARBYTES, i, 0);
       do_test (i * CHARBYTES, i * CHARBYTES, i, 1);
       do_test (i * CHARBYTES, i * CHARBYTES, i, -1);
     }
 
-  for (i = 0; i < 32; ++i)
+  కొరకు (i = 0; i < 32; ++i)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -524,7 +524,7 @@ test_main (void)
       do_test (4000, 95, i, -1);
     }
 
-  for (i = 33; i < 385; i += 32)
+  కొరకు (i = 33; i < 385; i += 32)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -534,7 +534,7 @@ test_main (void)
       do_test (i, i, i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  కొరకు (i = 1; i < 10; ++i)
     {
       do_test (0, 0, 2 << i, 0);
       do_test (0, 0, 2 << i, 1);
@@ -551,7 +551,7 @@ test_main (void)
       do_test (i, i, 16 << i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  కొరకు (i = 1; i < 10; ++i)
     {
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 0);
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 1);
@@ -559,7 +559,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

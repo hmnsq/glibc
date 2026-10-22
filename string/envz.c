@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <malloc.h>
-#include <string.h>
+#అన్తర్భావ <malloc.h>
+#అన్తర్భావ <string.h>
 
-#include <envz.h>
+#అన్తర్భావ <envz.h>
 
 /* The character separating names from values in an envz.  */
-#define SEP '='
+#నిర్వచించు SEP '='
 
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.
    If NAME contains the separator character, only the portion before it is
    used in the comparison.  */
-char *
-envz_entry (const char *envz, size_t envz_len, const char *name)
+అక్షరం *
+envz_నమోదు (స్థిరరాశి అక్షరం *envz, size_t envz_len, స్థిరరాశి అక్షరం *name)
 {
-  while (envz_len)
+  అయితే (envz_len)
     {
-      const char *p = name;
-      const char *entry = envz;	/* Start of this entry. */
+      స్థిరరాశి అక్షరం *p = name;
+      స్థిరరాశి అక్షరం *నమోదు_2 = envz;	/* Start of this entry. */
 
       /* See how far NAME and ENTRY match.  */
-      while (envz_len && *p == *envz && *p && *p != SEP)
+      అయితే (envz_len && *p == *envz && *p && *p != SEP)
 	p++, envz++, envz_len--;
 
-      if ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
+      ఒకవేళ ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
 	/* Bingo! */
-	return (char *) entry;
+	తిరిగి (అక్షరం *) నమోదు_2;
 
       /* No match, skip to the next entry.  */
-      while (envz_len && *envz)
+      అయితే (envz_len && *envz)
 	envz++, envz_len--;
-      if (envz_len)
+      ఒకవేళ (envz_len)
 	envz++, envz_len--;	/* skip '\0' */
     }
 
-  return NULL;
+  తిరిగి ఖాళీ;
 }
-libc_hidden_def (envz_entry)
+libc_hidden_def (envz_నమోదు)
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-char *
-envz_get (const char *envz, size_t envz_len, const char *name)
+అక్షరం *
+envz_get (స్థిరరాశి అక్షరం *envz, size_t envz_len, స్థిరరాశి అక్షరం *name)
 {
-  char *entry = envz_entry (envz, envz_len, name);
-  if (entry)
+  అక్షరం *నమోదు_2 = envz_నమోదు (envz, envz_len, name);
+  ఒకవేళ (నమోదు_2)
     {
-      while (*entry && *entry != SEP)
-	entry++;
-      if (*entry)
-	entry++;
-      else
-	entry = NULL;		/* A null entry.  */
+      అయితే (*నమోదు_2 && *నమోదు_2 != SEP)
+	నమోదు_2++;
+      ఒకవేళ (*నమోదు_2)
+	నమోదు_2++;
+      లేకపోతే
+	నమోదు_2 = ఖాళీ;		/* A null entry.  */
     }
-  return entry;
+  తిరిగి నమోదు_2;
 }
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
-void
-envz_remove (char **envz, size_t *envz_len, const char *name)
+శూన్య
+envz_remove (అక్షరం **envz, size_t *envz_len, స్థిరరాశి అక్షరం *name)
 {
-  char *entry = envz_entry (*envz, *envz_len, name);
-  if (entry)
-    argz_delete (envz, envz_len, entry);
+  అక్షరం *నమోదు_2 = envz_నమోదు (*envz, *envz_len, name);
+  ఒకవేళ (నమోదు_2)
+    argz_delete (envz, envz_len, నమోదు_2);
 }
 libc_hidden_def (envz_remove)
 
@@ -89,56 +89,56 @@ libc_hidden_def (envz_remove)
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
 error_t
-envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
+envz_కూడు (అక్షరం **envz, size_t *envz_len, స్థిరరాశి అక్షరం *name, స్థిరరాశి అక్షరం *విలువ)
 {
   envz_remove (envz, envz_len, name);
 
-  if (value)
+  ఒకవేళ (విలువ)
     /* Add the new value, if there is one.  */
     {
-      size_t name_len = strlen (name);
-      size_t value_len = strlen (value);
+      size_t name_len = అక్షరశ్రేణి_పొడవు (name);
+      size_t విలువ_len = అక్షరశ్రేణి_పొడవు (విలువ);
       size_t old_envz_len = *envz_len;
-      size_t new_envz_len = old_envz_len + name_len + 1 + value_len + 1;
-      char *new_envz = realloc (*envz, new_envz_len);
+      size_t new_envz_len = old_envz_len + name_len + 1 + విలువ_len + 1;
+      అక్షరం *new_envz = realloc (*envz, new_envz_len);
 
-      if (new_envz)
+      ఒకవేళ (new_envz)
 	{
-	  memcpy (new_envz + old_envz_len, name, name_len);
+	  జ్ఞాపకం_నకలు (new_envz + old_envz_len, name, name_len);
 	  new_envz[old_envz_len + name_len] = SEP;
-	  memcpy (new_envz + old_envz_len + name_len + 1, value, value_len);
+	  జ్ఞాపకం_నకలు (new_envz + old_envz_len + name_len + 1, విలువ, విలువ_len);
 	  new_envz[new_envz_len - 1] = 0;
 
 	  *envz = new_envz;
 	  *envz_len = new_envz_len;
 
-	  return 0;
+	  తిరిగి 0;
 	}
-      else
-	return ENOMEM;
+      లేకపోతే
+	తిరిగి ENOMEM;
     }
-  else
+  లేకపోతే
     /* Add a null entry.  */
-    return __argz_add (envz, envz_len, name);
+    తిరిగి __argz_add (envz, envz_len, name);
 }
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
 error_t
-envz_merge (char **envz, size_t *envz_len, const char *envz2,
-	    size_t envz2_len, int override)
+envz_విలీనం (అక్షరం **envz, size_t *envz_len, స్థిరరాశి అక్షరం *envz2,
+	    size_t envz2_len, పూర్ణాంకం override)
 {
   error_t err = 0;
 
-  while (envz2_len && ! err)
+  అయితే (envz2_len && ! err)
     {
-      char *old = envz_entry (*envz, *envz_len, envz2);
-      size_t new_len = strlen (envz2) + 1;
+      అక్షరం *old = envz_నమోదు (*envz, *envz_len, envz2);
+      size_t new_len = అక్షరశ్రేణి_పొడవు (envz2) + 1;
 
-      if (! old)
+      ఒకవేళ (! old)
 	err = __argz_append (envz, envz_len, envz2, new_len);
-      else if (override)
+      లేకపోతే ఒకవేళ (override)
 	{
 	  argz_delete (envz, envz_len, old);
 	  err = __argz_append (envz, envz_len, envz2, new_len);
@@ -148,24 +148,24 @@ envz_merge (char **envz, size_t *envz_len, const char *envz2,
       envz2_len -= new_len;
     }
 
-  return err;
+  తిరిగి err;
 }
 
 /* Remove null entries.  */
-void
-envz_strip (char **envz, size_t *envz_len)
+శూన్య
+envz_strip (అక్షరం **envz, size_t *envz_len)
 {
-  char *entry = *envz;
-  size_t left = *envz_len;
-  while (left)
+  అక్షరం *నమోదు_2 = *envz;
+  size_t ఎడమ = *envz_len;
+  అయితే (ఎడమ)
     {
-      size_t entry_len = strlen (entry) + 1;
-      left -= entry_len;
-      if (! strchr (entry, SEP))
+      size_t నమోదు_len = అక్షరశ్రేణి_పొడవు (నమోదు_2) + 1;
+      ఎడమ -= నమోదు_len;
+      ఒకవేళ (! strchr (నమోదు_2, SEP))
 	/* Null entry. */
-	memmove (entry, entry + entry_len, left);
-      else
-	entry += entry_len;
+	memmove (నమోదు_2, నమోదు_2 + నమోదు_len, ఎడమ);
+      లేకపోతే
+	నమోదు_2 += నమోదు_len;
     }
-  *envz_len = entry - *envz;
+  *envz_len = నమోదు_2 - *envz;
 }

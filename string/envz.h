@@ -16,28 +16,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _ENVZ_H
-#define _ENVZ_H	1
+#నిర్వచితం_కాకపోతే _ENVZ_H
+#నిర్వచించు _ENVZ_H	1
 
-#include <features.h>
+#అన్తర్భావ <features.h>
 
-#include <errno.h>
+#అన్తర్భావ <errno.h>
 
 /* Envz's are argz's too, and should be created etc., using the same
    routines.  */
-#include <argz.h>
+#అన్తర్భావ <argz.h>
 
 __BEGIN_DECLS
 
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.  */
-extern char *envz_entry (const char *__restrict __envz, size_t __envz_len,
-			 const char *__restrict __name)
+బాహ్య అక్షరం *envz_నమోదు (స్థిరరాశి అక్షరం *__restrict __envz, size_t __envz_len,
+			 స్థిరరాశి అక్షరం *__restrict __name)
      __THROW __attribute_pure__;
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-extern char *envz_get (const char *__restrict __envz, size_t __envz_len,
-		       const char *__restrict __name)
+బాహ్య అక్షరం *envz_get (స్థిరరాశి అక్షరం *__restrict __envz, size_t __envz_len,
+		       స్థిరరాశి అక్షరం *__restrict __name)
      __THROW __attribute_pure__;
 
 /* Adds an entry for NAME with value VALUE to ENVZ & ENVZ_LEN.  If an entry
@@ -46,28 +46,28 @@ extern char *envz_get (const char *__restrict __envz, size_t __envz_len,
    return NULL, although envz_entry will still return an entry; this is handy
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
-extern error_t envz_add (char **__restrict __envz,
+బాహ్య error_t envz_కూడు (అక్షరం **__restrict __envz,
 			 size_t *__restrict __envz_len,
-			 const char *__restrict __name,
-			 const char *__restrict __value) __THROW;
+			 స్థిరరాశి అక్షరం *__restrict __name,
+			 స్థిరరాశి అక్షరం *__restrict __value) __THROW;
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
-extern error_t envz_merge (char **__restrict __envz,
+బాహ్య error_t envz_విలీనం (అక్షరం **__restrict __envz,
 			   size_t *__restrict __envz_len,
-			   const char *__restrict __envz2,
-			   size_t __envz2_len, int __override) __THROW;
+			   స్థిరరాశి అక్షరం *__restrict __envz2,
+			   size_t __envz2_len, పూర్ణాంకం __override) __THROW;
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
-extern void envz_remove (char **__restrict __envz,
+బాహ్య శూన్య envz_remove (అక్షరం **__restrict __envz,
 			 size_t *__restrict __envz_len,
-			 const char *__restrict __name) __THROW;
+			 స్థిరరాశి అక్షరం *__restrict __name) __THROW;
 
 /* Remove null entries.  */
-extern void envz_strip (char **__restrict __envz,
+బాహ్య శూన్య envz_strip (అక్షరం **__restrict __envz,
 			size_t *__restrict __envz_len) __THROW;
 
 __END_DECLS
 
-#endif /* envz.h */
+#అయితే_ముగింపు /* envz.h */

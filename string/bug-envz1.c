@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <envz.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
 
-static const struct
+స్థిర స్థిరరాశి నిర్మాణం
 {
-  const char *s;
-  int in_result;
+  స్థిరరాశి అక్షరం *s;
+  పూర్ణాంకం లోపల_ఫలితం;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,54 +22,54 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#నిర్వచించు nstrs (పరిమాణం (strs) / పరిమాణం (strs[0]))
 
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
 
-  size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  size_t కొలత = 0;
+  అక్షరం *str = జ్ఞాపకం_ఇవ్వు (100);
+  ఒకవేళ (str == ఖాళీ)
     {
       puts ("out of memory");
-      return 1;
+      తిరిగి 1;
     }
 
-  char **argz = &str;
+  అక్షరం **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
-    argz_add_sep (argz, &size, strs[i].s, '\0');
+  కొరకు (పూర్ణాంకం i = 0; i < nstrs; ++i)
+    argz_కూడు_sep (argz, &కొలత, strs[i].s, '\0');
 
-  printf ("calling envz_strip with size=%zu\n", size);
-  envz_strip (argz, &size);
+  రాయి ("calling envz_strip with size=%zu\n", కొలత);
+  envz_strip (argz, &కొలత);
 
-  int result = 0;
-  printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  పూర్ణాంకం ఫలితం = 0;
+  రాయి ("new size=%zu\n", కొలత);
+  కొరకు (పూర్ణాంకం i = 0; i < nstrs; ++i)
+    ఒకవేళ (strs[i].లోపల_ఫలితం)
       {
-        char name[2];
+        అక్షరం name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        అక్షరం *e = envz_నమోదు (*argz, కొలత, name);
+        ఒకవేళ (e == ఖాళీ)
           {
-            printf ("entry '%s' not found\n", name);
-            result = 1;
+            రాయి ("entry '%s' not found\n", name);
+            ఫలితం = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        లేకపోతే ఒకవేళ (strcmp (e, strs[i].s) != 0)
           {
-            printf ("entry '%s' does not match: is '%s', expected '%s'\n",
+            రాయి ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
-            result = 1;
+            ఫలితం = 1;
           }
       }
 
-  free (*argz);
-  return result;
+  విడుదల (*argz);
+  తిరిగి ఫలితం;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

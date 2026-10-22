@@ -15,10 +15,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-void
-bcopy (const void *src, void *dest, size_t len)
+శూన్య
+bcopy (స్థిరరాశి శూన్య *src, శూన్య *dest, size_t len)
 {
   memmove (dest, src, len);
 }

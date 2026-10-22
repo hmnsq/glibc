@@ -17,53 +17,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#నిర్వచితమైతే HAVE_CONFIG_H
 # include <config.h>
-#endif
+#అయితే_ముగింపు
 
-#include <string.h>
-#include <ctype.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <ctype.h>
 
-#ifndef weak_alias
+#నిర్వచితం_కాకపోతే weak_alias
 # define __strncasecmp strncasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#లేకపోతే
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_లోపల_EXTENDED_LOCALE_MODEL
 #  define __strncasecmp __strncasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#అయితే_ముగింపు
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#నిర్వచితమైతే USE_లోపల_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#లేకపోతే
 # define LOCALE_PARAM
-#endif
+#అయితే_ముగింపు
 
 /* Compare no more than N characters of S1 and S2,
    ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less
    than, equal to or greater than S2.  */
-int
-__strncasecmp (const char *s1, const char *s2, size_t n LOCALE_PARAM)
+పూర్ణాంకం
+__strncasecmp (స్థిరరాశి అక్షరం *s1, స్థిరరాశి అక్షరం *s2, size_t n LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#ఒకవేళ defined _LIBC && !defined USE_లోపల_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#అయితే_ముగింపు
+  స్థిరరాశి గుర్తులేని అక్షరం *p1 = (స్థిరరాశి గుర్తులేని అక్షరం *) s1;
+  స్థిరరాశి గుర్తులేని అక్షరం *p2 = (స్థిరరాశి గుర్తులేని అక్షరం *) s2;
+  పూర్ణాంకం ఫలితం;
 
-  if (p1 == p2 || n == 0)
-    return 0;
+  ఒకవేళ (p1 == p2 || n == 0)
+    తిరిగి 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0' || --n == 0)
-      break;
+  అయితే ((ఫలితం = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    ఒకవేళ (*p1++ == '\0' || --n == 0)
+      ఆపు;
 
-  return result;
+  తిరిగి ఫలితం;
 }
-#ifndef __strncasecmp
+#నిర్వచితం_కాకపోతే __strncasecmp
 weak_alias (__strncasecmp, strncasecmp)
-#endif
+#అయితే_ముగింపు

@@ -16,92 +16,92 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <libc-diag.h>
 
-void *vp;
-const void *cvp;
-int *ip;
-const int *cip;
-char *cp;
-const char *ccp;
-int c;
+శూన్య *vp;
+స్థిరరాశి శూన్య *cvp;
+పూర్ణాంకం *ip;
+స్థిరరాశి పూర్ణాంకం *cip;
+అక్షరం *cp;
+స్థిరరాశి అక్షరం *ccp;
+పూర్ణాంకం c;
 size_t sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#నిర్వచించు CHECK_TYPE(సమాసం, TYPE)					\
+  _Static_assert (_Generic (సమాసం, TYPE: 1), "type check")
 
-static int
-do_test (void)
+స్థిర పూర్ణాంకం
+do_test (శూన్య)
 {
   /* This is a compilation test.  */
-  CHECK_TYPE (memchr (vp, c, sz), void *);
-  CHECK_TYPE (memchr (cvp, c, sz), const void *);
-  CHECK_TYPE (memchr (ip, c, sz), void *);
-  CHECK_TYPE (memchr (cip, c, sz), const void *);
-  CHECK_TYPE (memchr (cp, c, sz), void *);
-  CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (vp, c, sz), శూన్య *);
+  CHECK_TYPE (memchr (cvp, c, sz), స్థిరరాశి శూన్య *);
+  CHECK_TYPE (memchr (ip, c, sz), శూన్య *);
+  CHECK_TYPE (memchr (cip, c, sz), స్థిరరాశి శూన్య *);
+  CHECK_TYPE (memchr (cp, c, sz), శూన్య *);
+  CHECK_TYPE (memchr (ccp, c, sz), స్థిరరాశి శూన్య *);
+  DIAG_నెట్టు_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (memchr (0, c, sz), void *);
-  CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((memchr) (cvp, c, sz), void *);
-  CHECK_TYPE (strchr (vp, c), char *);
-  CHECK_TYPE (strchr (cvp, c), const char *);
-  CHECK_TYPE (strchr (cp, c), char *);
-  CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (0, c, sz), శూన్య *);
+  CHECK_TYPE (memchr ((శూన్య *) 0, c, sz), శూన్య *);
+  DIAG_తీయి_NEEDS_COMMENT;
+  CHECK_TYPE ((memchr) (cvp, c, sz), శూన్య *);
+  CHECK_TYPE (strchr (vp, c), అక్షరం *);
+  CHECK_TYPE (strchr (cvp, c), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (strchr (cp, c), అక్షరం *);
+  CHECK_TYPE (strchr (ccp, c), స్థిరరాశి అక్షరం *);
+  DIAG_నెట్టు_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strchr (0, c), char *);
-  CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strchr) (ccp, c), char *);
-  CHECK_TYPE (strpbrk (vp, vp), char *);
-  CHECK_TYPE (strpbrk (vp, cvp), char *);
-  CHECK_TYPE (strpbrk (cvp, vp), const char *);
-  CHECK_TYPE (strpbrk (cvp, cvp), const char *);
-  CHECK_TYPE (strpbrk (cp, cp), char *);
-  CHECK_TYPE (strpbrk (cp, ccp), char *);
-  CHECK_TYPE (strpbrk (ccp, cp), const char *);
-  CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strchr (0, c), అక్షరం *);
+  CHECK_TYPE (strchr ((శూన్య *) 0, c), అక్షరం *);
+  DIAG_తీయి_NEEDS_COMMENT;
+  CHECK_TYPE ((strchr) (ccp, c), అక్షరం *);
+  CHECK_TYPE (strpbrk (vp, vp), అక్షరం *);
+  CHECK_TYPE (strpbrk (vp, cvp), అక్షరం *);
+  CHECK_TYPE (strpbrk (cvp, vp), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (strpbrk (cvp, cvp), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (strpbrk (cp, cp), అక్షరం *);
+  CHECK_TYPE (strpbrk (cp, ccp), అక్షరం *);
+  CHECK_TYPE (strpbrk (ccp, cp), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (strpbrk (ccp, ccp), స్థిరరాశి అక్షరం *);
+  DIAG_నెట్టు_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strpbrk (0, cp), char *);
-  CHECK_TYPE (strpbrk (0, ccp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
-  CHECK_TYPE (strrchr (vp, c), char *);
-  CHECK_TYPE (strrchr (cvp, c), const char *);
-  CHECK_TYPE (strrchr (cp, c), char *);
-  CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strpbrk (0, cp), అక్షరం *);
+  CHECK_TYPE (strpbrk (0, ccp), అక్షరం *);
+  CHECK_TYPE (strpbrk ((శూన్య *) 0, cp), అక్షరం *);
+  CHECK_TYPE (strpbrk ((శూన్య *) 0, ccp), అక్షరం *);
+  DIAG_తీయి_NEEDS_COMMENT;
+  CHECK_TYPE ((strpbrk) (ccp, ccp), అక్షరం *);
+  CHECK_TYPE (strrchr (vp, c), అక్షరం *);
+  CHECK_TYPE (strrchr (cvp, c), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (strrchr (cp, c), అక్షరం *);
+  CHECK_TYPE (strrchr (ccp, c), స్థిరరాశి అక్షరం *);
+  DIAG_నెట్టు_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strrchr (0, c), char *);
-  CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strrchr) (ccp, c), char *);
-  CHECK_TYPE (strstr (vp, vp), char *);
-  CHECK_TYPE (strstr (vp, cvp), char *);
-  CHECK_TYPE (strstr (cvp, vp), const char *);
-  CHECK_TYPE (strstr (cvp, cvp), const char *);
-  CHECK_TYPE (strstr (cp, cp), char *);
-  CHECK_TYPE (strstr (cp, ccp), char *);
-  CHECK_TYPE (strstr (ccp, cp), const char *);
-  CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strrchr (0, c), అక్షరం *);
+  CHECK_TYPE (strrchr ((శూన్య *) 0, c), అక్షరం *);
+  DIAG_తీయి_NEEDS_COMMENT;
+  CHECK_TYPE ((strrchr) (ccp, c), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (vp, vp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (vp, cvp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (cvp, vp), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (cvp, cvp), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (cp, cp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (cp, ccp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (ccp, cp), స్థిరరాశి అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (ccp, ccp), స్థిరరాశి అక్షరం *);
+  DIAG_నెట్టు_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strstr (0, cp), char *);
-  CHECK_TYPE (strstr (0, ccp), char *);
-  CHECK_TYPE (strstr ((void *) 0, cp), char *);
-  CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (0, cp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన (0, ccp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన ((శూన్య *) 0, cp), అక్షరం *);
+  CHECK_TYPE (అక్షరశ్రేణి_శోధన ((శూన్య *) 0, ccp), అక్షరం *);
+  DIAG_తీయి_NEEDS_COMMENT;
+  CHECK_TYPE ((అక్షరశ్రేణి_శోధన) (ccp, ccp), అక్షరం *);
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <string.h>
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  char str[] = "this is a test";
+  అక్షరం str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

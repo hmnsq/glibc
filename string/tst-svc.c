@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <string.h>
 
-#define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#నిర్వచించు  MAX_అక్షరశ్రేణులు      256
+#నిర్వచించు  MAX_పంక్తి_కొలత    32
 
-static int
-compare (const void *p1, const void *p2)
+స్థిర పూర్ణాంకం
+compare (స్థిరరాశి శూన్య *p1, స్థిరరాశి శూన్య *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  తిరిగి strverscmp (*((అక్షరం **) p1), *((అక్షరం **) p2));
 }
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  అక్షరం పంక్తి[MAX_పంక్తి_కొలత + 1];
+  అక్షరం *str[MAX_అక్షరశ్రేణులు];
+  పూర్ణాంకం  లెక్క = 0;
+  పూర్ణాంకం  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  అయితే (లెక్క < MAX_అక్షరశ్రేణులు && fgets (పంక్తి, MAX_పంక్తి_కొలత, stdin) != ఖాళీ)
     {
-      n = strlen (line) - 1;
+      n = అక్షరశ్రేణి_పొడవు (పంక్తి) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      ఒకవేళ (పంక్తి[n] == '\n')
+        పంక్తి[n] = '\0';
 
-      str[count] = strdup (line);
+      str[లెక్క] = strdup (పంక్తి);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      ఒకవేళ (str[లెక్క] == ఖాళీ)
+        నిష్క్రమించు (EXIT_FAILURE);
 
-      ++count;
+      ++లెక్క;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, లెక్క, పరిమాణం (అక్షరం *), compare);
 
-  for (i = 0; i < count; ++i)
+  కొరకు (i = 0; i < లెక్క; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  తిరిగి EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

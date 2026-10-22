@@ -17,23 +17,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <memcopy.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <memcopy.h>
 
-#ifndef MEMCPY
-# define MEMCPY memcpy
-#endif
+#నిర్వచితం_కాకపోతే MEMCPY
+# define MEMCPY జ్ఞాపకం_నకలు
+#అయితే_ముగింపు
 
-void *
-MEMCPY (void *dstpp, const void *srcpp, size_t len)
+శూన్య *
+MEMCPY (శూన్య *dstpp, స్థిరరాశి శూన్య *srcpp, size_t len)
 {
-  unsigned long int dstp = (long int) dstpp;
-  unsigned long int srcp = (long int) srcpp;
+  గుర్తులేని దీర్ఘ పూర్ణాంకం dstp = (దీర్ఘ పూర్ణాంకం) dstpp;
+  గుర్తులేని దీర్ఘ పూర్ణాంకం srcp = (దీర్ఘ పూర్ణాంకం) srcpp;
 
   /* Copy from the beginning to the end.  */
 
   /* If there not too few bytes to copy, use word copy.  */
-  if (len >= OP_T_THRES)
+  ఒకవేళ (len >= OP_T_THRES)
     {
       /* Copy just a few bytes to make DSTP aligned.  */
       len -= (-dstp) % OPSIZ;
@@ -42,13 +42,13 @@ MEMCPY (void *dstpp, const void *srcpp, size_t len)
       /* Copy whole pages from SRCP to DSTP by virtual address manipulation,
 	 as much as possible.  */
 
-      PAGE_COPY_FWD_MAYBE (dstp, srcp, len, len);
+      పుట_COPY_FWD_MAYBE (dstp, srcp, len, len);
 
       /* Copy from SRCP to DSTP taking advantage of the known alignment of
 	 DSTP.  Number of bytes remaining is put in the third argument,
 	 i.e. in LEN.  This number may vary from machine to machine.  */
 
-      WORD_COPY_FWD (dstp, srcp, len, len);
+      మాట_COPY_FWD (dstp, srcp, len, len);
 
       /* Fall out and copy the tail.  */
     }
@@ -56,6 +56,6 @@ MEMCPY (void *dstpp, const void *srcpp, size_t len)
   /* There are just a few bytes to copy.  Use byte memory operations.  */
   BYTE_COPY_FWD (dstp, srcp, len);
 
-  return dstpp;
+  తిరిగి dstpp;
 }
 libc_hidden_builtin_def (MEMCPY)

@@ -15,24 +15,24 @@
    License along with the GNU C Library; see the file COPYING.LIB.  If
    not, see <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
 /* Find the length of S, but scan at most MAXLEN characters.  If no
    '\0' terminator is found in that many characters, return MAXLEN.  */
 
-#ifdef STRNLEN
+#నిర్వచితమైతే STRNLEN
 # define __strnlen STRNLEN
-#endif
+#అయితే_ముగింపు
 
 size_t
-__strnlen (const char *str, size_t maxlen)
+__strnlen (స్థిరరాశి అక్షరం *str, size_t maxlen)
 {
-  const char *found = memchr (str, '\0', maxlen);
-  return found ? found - str : maxlen;
+  స్థిరరాశి అక్షరం *దొరికింది = memchr (str, '\0', maxlen);
+  తిరిగి దొరికింది ? దొరికింది - str : maxlen;
 }
 
-#ifndef STRNLEN
+#నిర్వచితం_కాకపోతే STRNLEN
 weak_alias (__strnlen, strnlen)
 libc_hidden_def (__strnlen)
 libc_hidden_def (strnlen)
-#endif
+#అయితే_ముగింపు

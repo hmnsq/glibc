@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stddef.h>
-#include <string.h>
+#అన్తర్భావ <stddef.h>
+#అన్తర్భావ <string.h>
 
-#undef strcpy
+#నిర్వచనం_రద్దు strcpy
 /* Disable internal stpcpy optimization, otherwise the __stpcpy might it
    generate a strcpy call.  */
-#undef __stpcpy
+#నిర్వచనం_రద్దు __stpcpy
 
-#ifndef STRCPY
+#నిర్వచితం_కాకపోతే STRCPY
 # define STRCPY strcpy
-#endif
+#అయితే_ముగింపు
 
 /* Copy SRC to DEST.  */
-char *
-STRCPY (char *dest, const char *src)
+అక్షరం *
+STRCPY (అక్షరం *dest, స్థిరరాశి అక్షరం *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  తిరిగి dest;
 }
 libc_hidden_builtin_def (strcpy)

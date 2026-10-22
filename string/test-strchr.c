@@ -16,257 +16,257 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#నిర్వచించు TEST_MAIN
+#నిర్వచితం_కాకపోతే WIDE
 # ifdef USE_FOR_STRCHRNUL
 #  define TEST_NAME "strchrnul"
-# else
+# లేకపోతే
 #  define TEST_NAME "strchr"
 # endif /* !USE_FOR_STRCHRNUL */
-#else
+#లేకపోతే
 # ifdef USE_FOR_STRCHRNUL
 #  define TEST_NAME "wcschrnul"
-# else
+# లేకపోతే
 #  define TEST_NAME "wcschr"
 # endif /* !USE_FOR_STRCHRNUL */
-#endif /* WIDE */
-#include "test-string.h"
+#అయితే_ముగింపు /* WIDE */
+#అన్తర్భావ "test-string.h"
 
-#ifndef WIDE
+#నిర్వచితం_కాకపోతే WIDE
 # ifdef USE_FOR_STRCHRNUL
 #  define STRCHR strchrnul
-# else
+# లేకపోతే
 #  define STRCHR strchr
 # endif /* !USE_FOR_STRCHRNUL */
-# define STRLEN strlen
-# define CHAR char
+# define STRLEN అక్షరశ్రేణి_పొడవు
+# define CHAR అక్షరం
 # define BIG_CHAR CHAR_MAX
-# define MIDDLE_CHAR 127
+# define మధ్య_CHAR 127
 # define SMALL_CHAR 23
-# define UCHAR unsigned char
+# define UCHAR గుర్తులేని అక్షరం
 # define L(s) s
-#else
+#లేకపోతే
 # include <wchar.h>
 # ifdef USE_FOR_STRCHRNUL
 #  define STRCHR wcschrnul
-# else
+# లేకపోతే
 #  define STRCHR wcschr
 # endif /* !USE_FOR_STRCHRNUL */
 # define STRLEN wcslen
 # define CHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
-# define MIDDLE_CHAR 1121
+# define మధ్య_CHAR 1121
 # define SMALL_CHAR 851
 # define UCHAR wchar_t
 # define L(s) L ## s
-#endif /* WIDE */
+#అయితే_ముగింపు /* WIDE */
 
-#ifdef USE_FOR_STRCHRNUL
+#నిర్వచితమైతే USE_FOR_STRCHRNUL
 # define NULLRET(endptr) endptr
-#else
-# define NULLRET(endptr) NULL
-#endif /* !USE_FOR_STRCHRNUL */
+#లేకపోతే
+# define NULLRET(endptr) ఖాళీ
+#అయితే_ముగింపు /* !USE_FOR_STRCHRNUL */
 
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+రకనిర్వచనం CHAR *(*proto_t) (స్థిరరాశి CHAR *, పూర్ణాంకం);
 
 IMPL (STRCHR, 1)
 
 /* Also check the generic implementation.  */
-#undef STRCHR
-#undef static_weak_alias
-#define static_weak_alias(a, b)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_weak
-#define libc_hidden_weak(a)
-#ifndef WIDE
+#నిర్వచనం_రద్దు STRCHR
+#నిర్వచనం_రద్దు static_weak_alias
+#నిర్వచించు static_weak_alias(a, b)
+#నిర్వచనం_రద్దు libc_hidden_builtin_def
+#నిర్వచించు libc_hidden_builtin_def(a)
+#నిర్వచనం_రద్దు libc_hidden_def
+#నిర్వచించు libc_hidden_def(a)
+#నిర్వచనం_రద్దు libc_hidden_weak
+#నిర్వచించు libc_hidden_weak(a)
+#నిర్వచితం_కాకపోతే WIDE
 # define STRCHRNUL __strchrnul_default
 # include "string/strchrnul.c"
 # ifndef USE_FOR_STRCHRNUL
 #  define STRCHR __strchr_default
 #  include "string/strchr.c"
 #  define STRCHR_DEFAULT STRCHR
-# else
+# లేకపోతే
 #  define STRCHR_DEFAULT STRCHRNUL
 # endif
-#else
+#లేకపోతే
 # ifndef USE_FOR_STRCHRNUL
 #  define WCSCHR __wcschr_default
 #  include "wcsmbs/wcschr.c"
 #  define STRCHR_DEFAULT WCSCHR
-# else
+# లేకపోతే
 #  define WCSCHRNUL __wcschrnul_default
 #  include "wcsmbs/wcschrnul.c"
 #  define STRCHR_DEFAULT WCSCHRNUL
 # endif
-#endif
+#అయితే_ముగింపు
 IMPL (STRCHR_DEFAULT, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s, int c, const CHAR *exp_res)
+స్థిర పూర్ణాంకం
+check_ఫలితం (impl_t *impl, స్థిరరాశి CHAR *s, పూర్ణాంకం c, స్థిరరాశి CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ఒకవేళ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s(%p) %#x %p %p", impl->name, s,
 	     c, res, exp_res);
       ret = 1;
-      return -1;
+      తిరిగి -1;
     }
-  return 0;
+  తిరిగి 0;
 }
 
-static int
-do_one_test (impl_t *impl, const CHAR *s, int c, const CHAR *exp_res)
+స్థిర పూర్ణాంకం
+do_one_test (impl_t *impl, స్థిరరాశి CHAR *s, పూర్ణాంకం c, స్థిరరాశి CHAR *exp_res)
 {
-  return check_result (impl, s, c, exp_res);
+  తిరిగి check_ఫలితం (impl, s, c, exp_res);
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+స్థిర శూన్య
+do_test (size_t align, size_t pos, size_t len, పూర్ణాంకం seek_char, పూర్ణాంకం max_char)
 /* For wcschr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
 {
   size_t i;
-  CHAR *result;
+  CHAR *ఫలితం;
   CHAR *buf = (CHAR *) buf1;
   align &= 127;
-  if ((align + len) * sizeof (CHAR) >= page_size)
-    return;
+  ఒకవేళ ((align + len) * పరిమాణం (CHAR) >= పుట_కొలత)
+    తిరిగి;
 
-  for (i = 0; i < len; ++i)
+  కొరకు (i = 0; i < len; ++i)
     {
       buf[align + i] = 32 + 23 * i % max_char;
-      if (buf[align + i] == seek_char)
+      ఒకవేళ (buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 1;
-      else if (buf[align + i] == 0)
+      లేకపోతే ఒకవేళ (buf[align + i] == 0)
 	buf[align + i] = 1;
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  ఒకవేళ (pos < len)
     {
       buf[align + pos] = seek_char;
-      result = buf + align + pos;
+      ఫలితం = buf + align + pos;
     }
-  else if (seek_char == 0)
-    result = buf + align + len;
-  else
-    result = NULLRET (buf + align + len);
+  లేకపోతే ఒకవేళ (seek_char == 0)
+    ఫలితం = buf + align + len;
+  లేకపోతే
+    ఫలితం = NULLRET (buf + align + len);
 
   FOR_EACH_IMPL (impl, 0)
     {
-      if (do_one_test (impl, buf + align, seek_char, result) != 0)
+      ఒకవేళ (do_one_test (impl, buf + align, seek_char, ఫలితం) != 0)
 	{
 	  error (0, 0,
 		 "\tAlign=%zu, Pos=%zu, Len=%zu, seek=%d, max_char=%d, "
 		 "Buf=%p, Res=%p",
-		 align, pos, len, seek_char, max_char, buf, result);
+		 align, pos, len, seek_char, max_char, buf, ఫలితం);
 	}
     }
 }
 
-static void
-do_random_tests (void)
+స్థిర శూన్య
+do_random_tests (శూన్య)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  CHAR *result;
-  UCHAR *p = (UCHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  పూర్ణాంకం seek_char;
+  CHAR *ఫలితం;
+  UCHAR *p = (UCHAR *) (buf1 + పుట_కొలత - 512 * పరిమాణం (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  కొరకు (n = 0; n < ITERATIONS; n++)
     {
       /* For wcschr: align here means align not in bytes, but in wchar_ts,
 	 in bytes it will equal to align * (sizeof (wchar_t)).  */
       align = random () & 15;
       pos = random () & 511;
       seek_char = random () & 255;
-      if (pos + align >= 511)
+      ఒకవేళ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
       len = random () & 511;
-      if ((pos == len && seek_char)
+      ఒకవేళ ((pos == len && seek_char)
 	  || (pos > len && (random () & 1)))
 	len = pos + 1 + (random () & 7);
-      if (len + align >= 512)
+      ఒకవేళ (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      if (pos == len && seek_char)
+      ఒకవేళ (pos == len && seek_char)
 	len = pos + 1;
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      ఒకవేళ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      కొరకు (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ఒకవేళ (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  లేకపోతే ఒకవేళ (i == len + align)
 	    p[i] = 0;
-	  else
+	  లేకపోతే
 	    {
 	      p[i] = random () & 255;
-	      if (i < pos + align && p[i] == seek_char)
+	      ఒకవేళ (i < pos + align && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      ఒకవేళ (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  ఒకవేళ (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
-	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
-	result = (CHAR *) (p + len + align);
-      else
-	result = NULLRET ((CHAR *) (p + len + align));
+      ఒకవేళ (pos <= len)
+	ఫలితం = (CHAR *) (p + pos + align);
+      లేకపోతే ఒకవేళ (seek_char == 0)
+	ఫలితం = (CHAR *) (p + len + align);
+      లేకపోతే
+	ఫలితం = NULLRET ((CHAR *) (p + len + align));
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	ఒకవేళ (CALL (impl, (CHAR *) (p + align), seek_char) != ఫలితం)
 	  {
-	    error (0, 0, "Iteration %zd - wrong result in function \
-		   %s (align in bytes: %zd, seek_char: %d, len: %zd, pos: %zd) %p != %p, p %p",
-		   n, impl->name, align * sizeof (CHAR), seek_char, len, pos,
-		   CALL (impl, (CHAR *) (p + align), seek_char), result, p);
+	    error (0, 0, "Iteration %zd - wrong ఫలితం లోపల function \
+		   %s (align లోపల బైట్లు: %zd, seek_char: %d, len: %zd, pos: %zd) %p != %p, p %p",
+		   n, impl->name, align * పరిమాణం (CHAR), seek_char, len, pos,
+		   CALL (impl, (CHAR *) (p + align), seek_char), ఫలితం, p);
 	    ret = 1;
 	  }
     }
 }
 
-static void
-check1 (void)
+స్థిర శూన్య
+check1 (శూన్య)
 {
   CHAR s[] __attribute__((aligned(16))) = L ("\xff");
   CHAR c = L ('\xfe');
-#ifndef USE_FOR_STRCHRNUL
-  CHAR *exp_result = NULL;
-#else
-  CHAR *exp_result = s + STRLEN (s);
-#endif
+#నిర్వచితం_కాకపోతే USE_FOR_STRCHRNUL
+  CHAR *exp_ఫలితం = ఖాళీ;
+#లేకపోతే
+  CHAR *exp_ఫలితం = s + STRLEN (s);
+#అయితే_ముగింపు
 
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s, c, exp_result);
+    check_ఫలితం (impl, s, c, exp_ఫలితం);
 }
 
-static void
-check2 (void)
+స్థిర శూన్య
+check2 (శూన్య)
 {
-  CHAR *s = (CHAR *) (buf1 + getpagesize () - 4 * sizeof (CHAR));
+  CHAR *s = (CHAR *) (buf1 + getpagesize () - 4 * పరిమాణం (CHAR));
   CHAR *s_begin = (CHAR *) (buf1 + getpagesize () - 64);
-#ifndef USE_FOR_STRCHRNUL
-  CHAR *exp_result = NULL;
-#else
-  CHAR *exp_result = s + 1;
-#endif
+#నిర్వచితం_కాకపోతే USE_FOR_STRCHRNUL
+  CHAR *exp_ఫలితం = ఖాళీ;
+#లేకపోతే
+  CHAR *exp_ఫలితం = s + 1;
+#అయితే_ముగింపు
   CHAR val = 0x12;
-  for (; s_begin != s; ++s_begin)
+  కొరకు (; s_begin != s; ++s_begin)
     *s_begin = val;
 
   s[0] = val + 1;
@@ -276,24 +276,24 @@ check2 (void)
 
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_ఫలితం (impl, s, val, exp_ఫలితం);
   }
   s[3] = val;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_ఫలితం (impl, s, val, exp_ఫలితం);
   }
-  exp_result = s;
+  exp_ఫలితం = s;
   s[0] = val;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_ఫలితం (impl, s, val, exp_ఫలితం);
   }
 
   s[3] = val + 1;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_ఫలితం (impl, s, val, exp_ఫలితం);
   }
 
   s[0] = val + 1;
@@ -301,25 +301,25 @@ check2 (void)
   s[2] = val + 1;
   s[3] = val + 1;
   s[4] = val;
-  exp_result = s + 4;
+  exp_ఫలితం = s + 4;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_ఫలితం (impl, s, val, exp_ఫలితం);
   }
   s[4] = 0;
-#ifndef USE_FOR_STRCHRNUL
-  exp_result = NULL;
-#else
-  exp_result = s + 4;
-#endif
+#నిర్వచితం_కాకపోతే USE_FOR_STRCHRNUL
+  exp_ఫలితం = ఖాళీ;
+#లేకపోతే
+  exp_ఫలితం = s + 4;
+#అయితే_ముగింపు
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_ఫలితం (impl, s, val, exp_ఫలితం);
   }
 }
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
   size_t i;
 
@@ -327,73 +327,73 @@ test_main (void)
 
   check1 ();
   check2 ();
-  printf ("%20s", "");
+  రాయి ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
-      do_test (i, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, 16 << i, 2048, SMALL_CHAR, మధ్య_CHAR);
+      do_test (i, 16 << i, 2048, SMALL_CHAR, మధ్య_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
-      do_test (i, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, 16 << i, 4096, SMALL_CHAR, మధ్య_CHAR);
+      do_test (i, 16 << i, 4096, SMALL_CHAR, మధ్య_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
-      do_test (i, 64, 256, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (i, 64, 256, SMALL_CHAR, మధ్య_CHAR);
       do_test (i, 64, 256, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 0; i < 8; ++i)
+  కొరకు (i = 0; i < 8; ++i)
     {
-      do_test (16 * i, 256, 512, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (16 * i, 256, 512, SMALL_CHAR, మధ్య_CHAR);
       do_test (16 * i, 256, 512, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  కొరకు (i = 0; i < 32; ++i)
     {
-      do_test (0, i, i + 1, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, i, i + 1, SMALL_CHAR, మధ్య_CHAR);
       do_test (0, i, i + 1, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 2048, 0, MIDDLE_CHAR);
-      do_test (i, 16 << i, 2048, 0, MIDDLE_CHAR);
+      do_test (0, 16 << i, 2048, 0, మధ్య_CHAR);
+      do_test (i, 16 << i, 2048, 0, మధ్య_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 4096, 0, MIDDLE_CHAR);
-      do_test (i, 16 << i, 4096, 0, MIDDLE_CHAR);
+      do_test (0, 16 << i, 4096, 0, మధ్య_CHAR);
+      do_test (i, 16 << i, 4096, 0, మధ్య_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
-      do_test (i, 64, 256, 0, MIDDLE_CHAR);
+      do_test (i, 64, 256, 0, మధ్య_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 8; ++i)
+  కొరకు (i = 0; i < 8; ++i)
     {
-      do_test (16 * i, 256, 512, 0, MIDDLE_CHAR);
+      do_test (16 * i, 256, 512, 0, మధ్య_CHAR);
       do_test (16 * i, 256, 512, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  కొరకు (i = 0; i < 32; ++i)
     {
-      do_test (0, i, i + 1, 0, MIDDLE_CHAR);
+      do_test (0, i, i + 1, 0, మధ్య_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 
   do_random_tests ();
-  return ret;
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

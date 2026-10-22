@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#నిర్వచితం_కాకపోతే GNU_ఆధారం
+#నిర్వచించు GNU_ఆధారం
+#అయితే_ముగింపు
 
 /* Make sure we test the optimized inline functions.  */
-#define __USE_STRING_INLINES	1
+#నిర్వచించు __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#అన్తర్భావ <errno.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <strings.h>
+#అన్తర్భావ <fcntl.h>
 
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  పూర్ణాంకం స్థితి_2;
+  పూర్ణాంకం errors = 0;
+  అక్షరం buf1[1000];
+  అక్షరం *cp;
+  అక్షరం ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  ఒకవేళ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  ఒకవేళ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  ఒకవేళ (strchr ("hello world", ch++) == ఖాళీ)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  స్థిరరాశి అక్షరం * స్థిరరాశి hw = "hello world";
+  ఒకవేళ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  ఒకవేళ (errors == 0)
     {
-      status = EXIT_SUCCESS;
+      స్థితి_2 = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  లేకపోతే
     {
-      status = EXIT_FAILURE;
-      printf ("%d errors.\n", errors);
+      స్థితి_2 = EXIT_FAILURE;
+      రాయి ("%d errors.\n", errors);
     }
-  return status;
+  తిరిగి స్థితి_2;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

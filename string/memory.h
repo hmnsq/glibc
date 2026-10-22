@@ -19,15 +19,15 @@
  * SVID
  */
 
-#ifndef	_MEMORY_H
-#define	_MEMORY_H	1
+#నిర్వచితం_కాకపోతే	జ్ఞాపకం_H
+#నిర్వచించు	జ్ఞాపకం_H	1
 
-#include <features.h>
+#అన్తర్భావ <features.h>
 
 
-#ifndef	_STRING_H
+#నిర్వచితం_కాకపోతే	_STRING_H
 # include <string.h>
-#endif	/* string.h  */
+#అయితే_ముగింపు	/* string.h  */
 
 
-#endif	/* memory.h  */
+#అయితే_ముగింపు	/* memory.h  */

@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
-#include <libc-pointer-arith.h>
+#అన్తర్భావ <string-fzb.h>
+#అన్తర్భావ <string-fzc.h>
+#అన్తర్భావ <string-fzi.h>
+#అన్తర్భావ <string-shift.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <libc-pointer-arith.h>
 
-#undef __memrchr
-#undef memrchr
+#నిర్వచనం_రద్దు __memrchr
+#నిర్వచనం_రద్దు memrchr
 
-#ifdef MEMRCHR
+#నిర్వచితమైతే MEMRCHR
 # define __memrchr MEMRCHR
-#endif
+#అయితే_ముగింపు
 
-void *
-__memrchr (const void *s, int c_in, size_t n)
+శూన్య *
+__memrchr (స్థిరరాశి శూన్య *s, పూర్ణాంకం c_లోపల, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  ఒకవేళ (__glibc_unlikely (n == 0))
+    తిరిగి ఖాళీ;
 
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
+  స్థిరరాశి op_t *మాట_ptr = (స్థిరరాశి op_t *) PTR_ALIGN_పైకి (s + n, పరిమాణం (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
 
-  op_t word = *--word_ptr;
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t మాట = *--మాట_ptr;
+  op_t repeated_c = repeat_బైట్లు (c_లోపల);
 
   /* Compute the address of the word containing the initial byte. */
-  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, sizeof (op_t));
+  స్థిరరాశి op_t *sword = (స్థిరరాశి op_t *) PTR_ALIGN_కిందికి (s, పరిమాణం (op_t));
 
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
-  find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  కనుగొను_t ముసుగు = జరుపు_కనుగొను_చివరి (కనుగొను_eq_all (మాట, repeated_c), s_int);
+  ఒకవేళ (ముసుగు != 0)
     {
-      char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      అక్షరం *ret = (అక్షరం *) మాట_ptr + సూచీ_చివరి (ముసుగు);
+      తిరిగి ret >= (అక్షరం *) s ? ret : ఖాళీ;
     }
-  if (word_ptr == sword)
-    return NULL;
-  word = *--word_ptr;
+  ఒకవేళ (మాట_ptr == sword)
+    తిరిగి ఖాళీ;
+  మాట = *--మాట_ptr;
 
-  while (word_ptr != sword)
+  అయితే (మాట_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
-      word = *--word_ptr;
+      ఒకవేళ (has_eq (మాట, repeated_c))
+	తిరిగి (అక్షరం *) మాట_ptr + సూచీ_చివరి_eq (మాట, repeated_c);
+      మాట = *--మాట_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  ఒకవేళ (has_eq (మాట, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      అక్షరం *ret = (అక్షరం *) మాట_ptr + సూచీ_చివరి_eq (మాట, repeated_c);
+      ఒకవేళ (ret >= (అక్షరం *) s)
+	తిరిగి ret;
     }
-  return NULL;
+  తిరిగి ఖాళీ;
 }
-#ifndef MEMRCHR
+#నిర్వచితం_కాకపోతే MEMRCHR
 libc_hidden_def (__memrchr)
 weak_alias (__memrchr, memrchr)
-#endif
+#అయితే_ముగింపు

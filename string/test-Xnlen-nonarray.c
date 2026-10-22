@@ -25,26 +25,26 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#అన్తర్భావ <array_length.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <support/check.h>
+#అన్తర్భావ <support/next_to_fault.h>
+#అన్తర్భావ <support/test-driver.h>
+#అన్తర్భావ <sys/param.h>
+#అన్తర్భావ <unistd.h>
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+రకనిర్వచనం __typeof (TEST_IDENTIFIER) *proto_t;
 
-#define TEST_MAIN
-#include "test-string.h"
+#నిర్వచించు TEST_MAIN
+#అన్తర్భావ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+స్థిర పూర్ణాంకం
+test_main (శూన్య)
 {
-  enum { buffer_length = 256 };
-  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
+  గణన { బఫరు_నిడివి = 256 };
+  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= బఫరు_నిడివి);
 
   test_init ();
 
@@ -76,58 +76,58 @@ test_main (void)
     The length argument must not be greater than buffer_length -
     start_offset, and the result is the length argument.  */
 
-  struct support_next_to_fault ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *buffer = (CHAR *) ntf.buffer;
+  నిర్మాణం support_తదుపరి_గమ్యం_fault ntf
+    = support_తదుపరి_గమ్యం_fault_allocate (బఫరు_నిడివి * పరిమాణం (CHAR));
+  CHAR *బఫరు = (CHAR *) ntf.బఫరు;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        buffer[i] = 'A';
+      రాయి ("info: testing %s\n", impl->name);
+      కొరకు (size_t i = 0; i < బఫరు_నిడివి; ++i)
+        బఫరు[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      కొరకు (పూర్ణాంకం zero_లెక్క = 0; zero_లెక్క <= బఫరు_నిడివి; ++zero_లెక్క)
         {
-          if (zero_count > 0)
-            buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
-               ++start_offset)
+          ఒకవేళ (zero_లెక్క > 0)
+            బఫరు[బఫరు_నిడివి - zero_లెక్క] = 0;
+          పూర్ణాంకం a_లెక్క = బఫరు_నిడివి - zero_లెక్క;
+          కొరకు (పూర్ణాంకం ప్రారంభం_స్థానభ్రంశం = 0; ప్రారంభం_స్థానభ్రంశం <= బఫరు_నిడివి;
+               ++ప్రారంభం_స్థానభ్రంశం)
             {
-              CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
-                TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
-                     length_argument <= 2 * buffer_length;
-                     ++length_argument)
+              CHAR *ప్రారంభం_సూచిక = బఫరు + ప్రారంభం_స్థానభ్రంశం;
+              ఒకవేళ (ప్రారంభం_స్థానభ్రంశం == బఫరు_నిడివి)
+                TEST_COMPARE (CALL (impl, బఫరు + ప్రారంభం_స్థానభ్రంశం, 0), 0);
+              లేకపోతే ఒకవేళ (zero_లెక్క > 0)
+                కొరకు (పూర్ణాంకం నిడివి_వాదం = 0;
+                     నిడివి_వాదం <= 2 * బఫరు_నిడివి;
+                     ++నిడివి_వాదం)
                   {
-                    if (test_verbose)
-                      printf ("zero_count=%d a_count=%d start_offset=%d"
+                    ఒకవేళ (test_verbose)
+                      రాయి ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
-                              zero_count, a_count, start_offset,
-                              length_argument);
-                    if (start_offset < a_count)
-                      TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                    MIN (a_count - start_offset,
-                                         length_argument));
-                    else
-                      TEST_COMPARE (CALL (impl, start_pointer, length_argument),
+                              zero_లెక్క, a_లెక్క, ప్రారంభం_స్థానభ్రంశం,
+                              నిడివి_వాదం);
+                    ఒకవేళ (ప్రారంభం_స్థానభ్రంశం < a_లెక్క)
+                      TEST_COMPARE (CALL (impl, ప్రారంభం_సూచిక, నిడివి_వాదం),
+                                    MIN (a_లెక్క - ప్రారంభం_స్థానభ్రంశం,
+                                         నిడివి_వాదం));
+                    లేకపోతే
+                      TEST_COMPARE (CALL (impl, ప్రారంభం_సూచిక, నిడివి_వాదం),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
-                     length_argument <= buffer_length - start_offset;
-                     ++length_argument)
-                  TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                length_argument);
+              లేకపోతే
+                కొరకు (పూర్ణాంకం నిడివి_వాదం = 0;
+                     నిడివి_వాదం <= బఫరు_నిడివి - ప్రారంభం_స్థానభ్రంశం;
+                     ++నిడివి_వాదం)
+                  TEST_COMPARE (CALL (impl, ప్రారంభం_సూచిక, నిడివి_వాదం),
+                                నిడివి_వాదం);
             }
         }
     }
 
-  support_next_to_fault_free (&ntf);
+  support_తదుపరి_గమ్యం_fault_free (&ntf);
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

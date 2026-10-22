@@ -20,136 +20,136 @@
    characters in the padding.  It is partly a regression test for bug
    20327.  */
 
-#include <limits.h>
-#include <malloc.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libc-diag.h>
+#అన్తర్భావ <limits.h>
+#అన్తర్భావ <malloc.h>
+#అన్తర్భావ <stdbool.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <libc-diag.h>
 
-static int
-signum (int val)
+స్థిర పూర్ణాంకం
+signum (పూర్ణాంకం val)
 {
-  if (val < 0)
-    return -1;
-  if (val > 0)
-    return 1;
-  else
-    return 0;
+  ఒకవేళ (val < 0)
+    తిరిగి -1;
+  ఒకవేళ (val > 0)
+    తిరిగి 1;
+  లేకపోతే
+    తిరిగి 0;
 }
 
-static size_t
-max_size_t (size_t left, size_t right)
+స్థిర size_t
+max_కొలత_t (size_t ఎడమ, size_t కుడి)
 {
-  if (left > right)
-    return left;
-  else
-    return right;
+  ఒకవేళ (ఎడమ > కుడి)
+    తిరిగి ఎడమ;
+  లేకపోతే
+    తిరిగి కుడి;
 }
 
 /* Wrappers for strncmp and strncasecmp which determine the maximum
    string length in some, either based on the input string length, or
    using fixed constants.  */
 
-static int
-strncmp_no_terminator (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncmp_no_terminator (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t ఎడమ_len = అక్షరశ్రేణి_పొడవు (ఎడమ);
+  size_t కుడి_len = అక్షరశ్రేణి_పొడవు (కుడి);
+  తిరిగి అక్షరశ్రేణి_పోలిక (ఎడమ, కుడి, max_కొలత_t (ఎడమ_len, కుడి_len));
 }
 
-static int
-strncasecmp_no_terminator (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncasecmp_no_terminator (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t ఎడమ_len = అక్షరశ్రేణి_పొడవు (ఎడమ);
+  size_t కుడి_len = అక్షరశ్రేణి_పొడవు (కుడి);
+  తిరిగి strncasecmp (ఎడమ, కుడి, max_కొలత_t (ఎడమ_len, కుడి_len));
 }
 
-static int
-strncmp_terminator (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncmp_terminator (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t ఎడమ_len = అక్షరశ్రేణి_పొడవు (ఎడమ);
+  size_t కుడి_len = అక్షరశ్రేణి_పొడవు (కుడి);
+  తిరిగి అక్షరశ్రేణి_పోలిక (ఎడమ, కుడి, max_కొలత_t (ఎడమ_len, కుడి_len));
 }
 
-static int
-strncasecmp_terminator (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncasecmp_terminator (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t ఎడమ_len = అక్షరశ్రేణి_పొడవు (ఎడమ);
+  size_t కుడి_len = అక్షరశ్రేణి_పొడవు (కుడి);
+  తిరిగి strncasecmp (ఎడమ, కుడి, max_కొలత_t (ఎడమ_len, కుడి_len));
 }
 
-static int
-strncmp_64 (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncmp_64 (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  return strncmp (left, right, 64);
+  తిరిగి అక్షరశ్రేణి_పోలిక (ఎడమ, కుడి, 64);
 }
 
-static int
-strncasecmp_64 (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncasecmp_64 (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  return strncasecmp (left, right, 64);
+  తిరిగి strncasecmp (ఎడమ, కుడి, 64);
 }
 
-static int
-strncmp_max (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncmp_max (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_నెట్టు_NEEDS_COMMENT;
+#ఒకవేళ __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncmp being larger than
      PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
-#endif
-#if __GNUC_PREREQ (11, 0)
+#అయితే_ముగింపు
+#ఒకవేళ __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
-#endif
-  return strncmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+#అయితే_ముగింపు
+  తిరిగి అక్షరశ్రేణి_పోలిక (ఎడమ, కుడి, SIZE_MAX);
+  DIAG_తీయి_NEEDS_COMMENT;
 }
 
-static int
-strncasecmp_max (const char *left, const char *right)
+స్థిర పూర్ణాంకం
+strncasecmp_max (స్థిరరాశి అక్షరం *ఎడమ, స్థిరరాశి అక్షరం *కుడి)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_నెట్టు_NEEDS_COMMENT;
+#ఒకవేళ __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncasecmp being larger
      than PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
-#endif
-#if __GNUC_PREREQ (11, 0)
+#అయితే_ముగింపు
+#ఒకవేళ __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
-#endif
-  return strncasecmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+#అయితే_ముగింపు
+  తిరిగి strncasecmp (ఎడమ, కుడి, SIZE_MAX);
+  DIAG_తీయి_NEEDS_COMMENT;
 }
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  enum {
+  గణన {
     max_align = 64,
-    max_string_length = 33
+    max_string_నిడివి = 33
   };
-  size_t blob_size = max_align + max_string_length + 1;
-  char *left = memalign (max_align, blob_size);
-  char *right = memalign (max_align, blob_size);
-  if (left == NULL || right == NULL)
+  size_t blob_కొలత = max_align + max_string_నిడివి + 1;
+  అక్షరం *ఎడమ = memalign (max_align, blob_కొలత);
+  అక్షరం *కుడి = memalign (max_align, blob_కొలత);
+  ఒకవేళ (ఎడమ == ఖాళీ || కుడి == ఖాళీ)
     {
-      printf ("error: out of memory\n");
-      return 1;
+      రాయి ("error: out of memory\n");
+      తిరిగి 1;
     }
 
-  const struct
+  స్థిరరాశి నిర్మాణం
   {
-    const char *name;
-    int (*implementation) (const char *, const char *);
+    స్థిరరాశి అక్షరం *name;
+    పూర్ణాంకం (*implementation) (స్థిరరాశి అక్షరం *, స్థిరరాశి అక్షరం *);
   } functions[] =
       {
         { "strcmp", strcmp },
@@ -162,9 +162,9 @@ do_test (void)
         { "strncasecmp (length 64)", strncasecmp_64},
         { "strncmp (length SIZE_MAX)", strncmp_max},
         { "strncasecmp (length SIZE_MAX)", strncasecmp_max},
-        { NULL, NULL }
+        { ఖాళీ, ఖాళీ }
       };
-  const char *const strings[] =
+  స్థిరరాశి అక్షరం *స్థిరరాశి అక్షరశ్రేణులు[] =
     {
       "",
       "0",
@@ -180,56 +180,56 @@ do_test (void)
       "23456789abcdef",
       "23456789abcdefg",
       "abcdefghijklmnopqrstuvwxyzABCDEF",
-      NULL
+      ఖాళీ
     };
-  const unsigned char pads[] =
+  స్థిరరాశి గుర్తులేని అక్షరం pads[] =
     { 0, 1, 32, 64, 128, '0', '1', 'e', 'f', 'g', 127, 192, 255 };
 
   bool errors = false;
-  for (int left_idx = 0; strings[left_idx] != NULL; ++left_idx)
-    for (int left_align = 0; left_align < max_align; ++left_align)
-      for (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
+  కొరకు (పూర్ణాంకం ఎడమ_idx = 0; అక్షరశ్రేణులు[ఎడమ_idx] != ఖాళీ; ++ఎడమ_idx)
+    కొరకు (పూర్ణాంకం ఎడమ_align = 0; ఎడమ_align < max_align; ++ఎడమ_align)
+      కొరకు (గుర్తులేని pad_ఎడమ = 0; pad_ఎడమ < పరిమాణం (pads); ++pad_ఎడమ)
         {
-          memset (left, pads[pad_left], blob_size);
-          strcpy (left + left_align, strings[left_idx]);
+          memset (ఎడమ, pads[pad_ఎడమ], blob_కొలత);
+          strcpy (ఎడమ + ఎడమ_align, అక్షరశ్రేణులు[ఎడమ_idx]);
 
-          for (int right_idx = 0; strings[right_idx] != NULL; ++right_idx)
-            for (unsigned pad_right = 0; pad_right < sizeof (pads);
-                 ++pad_right)
-              for (int right_align = 0; right_align < max_align;
-                   ++right_align)
+          కొరకు (పూర్ణాంకం కుడి_idx = 0; అక్షరశ్రేణులు[కుడి_idx] != ఖాళీ; ++కుడి_idx)
+            కొరకు (గుర్తులేని pad_కుడి = 0; pad_కుడి < పరిమాణం (pads);
+                 ++pad_కుడి)
+              కొరకు (పూర్ణాంకం కుడి_align = 0; కుడి_align < max_align;
+                   ++కుడి_align)
                 {
-                  memset (right, pads[pad_right], blob_size);
-                  strcpy (right + right_align, strings[right_idx]);
+                  memset (కుడి, pads[pad_కుడి], blob_కొలత);
+                  strcpy (కుడి + కుడి_align, అక్షరశ్రేణులు[కుడి_idx]);
 
-                  for (int func = 0; functions[func].name != NULL; ++func)
+                  కొరకు (పూర్ణాంకం func = 0; functions[func].name != ఖాళీ; ++func)
                     {
-                      int expected = left_idx - right_idx;
-                      int actual = functions[func].implementation
-                        (left + left_align, right + right_align);
-                      if (signum (actual) != signum (expected))
+                      పూర్ణాంకం expected = ఎడమ_idx - కుడి_idx;
+                      పూర్ణాంకం actual = functions[func].implementation
+                        (ఎడమ + ఎడమ_align, కుడి + కుడి_align);
+                      ఒకవేళ (signum (actual) != signum (expected))
                         {
-                          printf ("error: mismatch for %s: %d\n"
+                          రాయి ("error: mismatch for %s: %d\n"
                                   "  left:  \"%s\"\n"
                                   "  right: \"%s\"\n"
                                   "  pad_left = %u, pad_right = %u,\n"
                                   "  left_align = %d, right_align = %d\n",
                                   functions[func].name, actual,
-                                  strings[left_idx], strings[right_idx],
-                                  pad_left, pad_right,
-                                  left_align, right_align);
+                                  అక్షరశ్రేణులు[ఎడమ_idx], అక్షరశ్రేణులు[కుడి_idx],
+                                  pad_ఎడమ, pad_కుడి,
+                                  ఎడమ_align, కుడి_align);
                           errors = true;
                         }
                     }
                 }
         }
-  free (right);
-  free (left);
-  return errors;
+  విడుదల (కుడి);
+  విడుదల (ఎడమ);
+  తిరిగి errors;
 }
 
 /* The nested loops need a long time to complete on slower
    machines.  */
-#define TIMEOUT 600
+#నిర్వచించు TIMEOUT 600
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

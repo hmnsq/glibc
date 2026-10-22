@@ -16,9 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#అన్తర్భావ <argz.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <stdlib.h>
 
 /* Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
    existing entry in ARGZ; if BEFORE is NULL, ENTRY is appended to the end.
@@ -27,36 +27,36 @@
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
 error_t
-__argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+__argz_insert (అక్షరం **argz, size_t *argz_len, అక్షరం *before, స్థిరరాశి అక్షరం *నమోదు_2)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  ఒకవేళ (! before)
+    తిరిగి __argz_add (argz, argz_len, నమోదు_2);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  ఒకవేళ (before < *argz || before >= *argz + *argz_len)
+    తిరిగి EINVAL;
 
-  if (before > *argz)
+  ఒకవేళ (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    అయితే (before[-1])
       before--;
 
   {
     size_t after_before = *argz_len - (before - *argz);
-    size_t entry_len = strlen  (entry) + 1;
-    size_t new_argz_len = *argz_len + entry_len;
-    char *new_argz = realloc (*argz, new_argz_len);
+    size_t నమోదు_len = అక్షరశ్రేణి_పొడవు  (నమోదు_2) + 1;
+    size_t new_argz_len = *argz_len + నమోదు_len;
+    అక్షరం *new_argz = realloc (*argz, new_argz_len);
 
-    if (new_argz)
+    ఒకవేళ (new_argz)
       {
 	before = new_argz + (before - *argz);
-	memmove (before + entry_len, before, after_before);
-	memmove (before, entry, entry_len);
+	memmove (before + నమోదు_len, before, after_before);
+	memmove (before, నమోదు_2, నమోదు_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	తిరిగి 0;
       }
-    else
-      return ENOMEM;
+    లేకపోతే
+      తిరిగి ENOMEM;
   }
 }
-weak_alias (__argz_insert, argz_insert)
+weak_alias (__argz_insert, argz_చొప్పించు)

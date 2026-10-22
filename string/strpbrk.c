@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#undef strpbrk
+#నిర్వచనం_రద్దు strpbrk
 
-#ifndef STRPBRK
-#define STRPBRK strpbrk
-#endif
+#నిర్వచితం_కాకపోతే STRPBRK
+#నిర్వచించు STRPBRK strpbrk
+#అయితే_ముగింపు
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
-char *
-STRPBRK (const char *s, const char *accept)
+అక్షరం *
+STRPBRK (స్థిరరాశి అక్షరం *s, స్థిరరాశి అక్షరం *accept)
 {
   s += strcspn (s, accept);
-  return *s ? (char *)s : NULL;
+  తిరిగి *s ? (అక్షరం *)s : ఖాళీ;
 }
 libc_hidden_builtin_def (strpbrk)

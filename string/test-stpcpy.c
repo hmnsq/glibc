@@ -16,46 +16,46 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRCPY_RESULT(dst, len) ((dst) + (len))
-#define TEST_MAIN
-#ifndef WIDE
+#నిర్వచించు STRCPY_ఫలితం(dst, len) ((dst) + (len))
+#నిర్వచించు TEST_MAIN
+#నిర్వచితం_కాకపోతే WIDE
 # define TEST_NAME "stpcpy"
-#else
+#లేకపోతే
 # define TEST_NAME "wcpcpy"
-#endif /* !WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#అయితే_ముగింపు /* !WIDE */
+#అన్తర్భావ "test-string.h"
+#నిర్వచితం_కాకపోతే WIDE
+# define CHAR అక్షరం
 # define STPCPY stpcpy
-#else
+#లేకపోతే
 # include <wchar.h>
 # define CHAR wchar_t
 # define STPCPY wcpcpy
-#endif /* !WIDE */
+#అయితే_ముగింపు /* !WIDE */
 
 IMPL (STPCPY, 1)
 
 /* Also check the generic implementation.  */
-#undef STPCPY
-#undef weak_alias
-#define weak_alias(a, b)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#నిర్వచనం_రద్దు STPCPY
+#నిర్వచనం_రద్దు weak_alias
+#నిర్వచించు weak_alias(a, b)
+#నిర్వచనం_రద్దు libc_hidden_def
+#నిర్వచించు libc_hidden_def(a)
+#నిర్వచనం_రద్దు libc_hidden_builtin_def
+#నిర్వచించు libc_hidden_builtin_def(a)
+#నిర్వచనం_రద్దు attribute_hidden
+#నిర్వచించు attribute_hidden
+#నిర్వచితం_కాకపోతే WIDE
 # define STPCPY __stpcpy_default
 # include "string/stpcpy.c"
 IMPL (__stpcpy_default, 1)
-#else
+#లేకపోతే
 # define __wcslen wcslen
 # define __wmemcpy wmemcpy
 # define WCPCPY __wcpcpy_default
 # include "wcsmbs/wcpcpy.c"
 IMPL (__wcpcpy_default, 1)
-#endif
+#అయితే_ముగింపు
 
-#undef CHAR
-#include "test-strcpy.c"
+#నిర్వచనం_రద్దు CHAR
+#అన్తర్భావ "test-strcpy.c"

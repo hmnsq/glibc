@@ -15,42 +15,42 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#నిర్వచితమైతే HAVE_CONFIG_H
 # include "config.h"
-#endif
+#అయితే_ముగింపు
 
-#include <stdio.h>
-#include <sys/types.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#ఒకవేళ defined _LIBC || defined STDC_శీర్షికలు
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-#endif
+#లేకపోతే
+అక్షరం *జ్ఞాపకం_ఇవ్వు ();
+#అయితే_ముగింపు
 
-#undef __strndup
-#undef strndup
+#నిర్వచనం_రద్దు __strndup
+#నిర్వచనం_రద్దు strndup
 
-#ifndef weak_alias
+#నిర్వచితం_కాకపోతే weak_alias
 # define __strndup strndup
-#endif
+#అయితే_ముగింపు
 
-char *
-__strndup (const char *s, size_t n)
+అక్షరం *
+__strndup (స్థిరరాశి అక్షరం *s, size_t n)
 {
   size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  అక్షరం *new = (అక్షరం *) జ్ఞాపకం_ఇవ్వు (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  ఒకవేళ (new == ఖాళీ)
+    తిరిగి ఖాళీ;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  తిరిగి (అక్షరం *) జ్ఞాపకం_నకలు (new, s, len);
 }
-#ifdef libc_hidden_def
+#నిర్వచితమైతే libc_hidden_def
 libc_hidden_def (__strndup)
-#endif
-#ifdef weak_alias
+#అయితే_ముగింపు
+#నిర్వచితమైతే weak_alias
 weak_alias (__strndup, strndup)
-#endif
+#అయితే_ముగింపు

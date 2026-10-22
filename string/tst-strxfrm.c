@@ -1,73 +1,73 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#అన్తర్భావ <locale.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
 
 
-char const string[] = "";
+అక్షరం స్థిరరాశి string[] = "";
 
 
-static int
-test (const char *locale)
+స్థిర పూర్ణాంకం
+test (స్థిరరాశి అక్షరం *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  అక్షరం *buf;
   locale_t loc;
-  int result = 0;
+  పూర్ణాంకం ఫలితం = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  ఒకవేళ (setlocale (LC_COLLATE, locale) == ఖాళీ)
     {
-      printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      రాయి ("cannot set locale \"%s\"\n", locale);
+      తిరిగి 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
-  buf = malloc (bufsize);
-  if (buf == NULL)
+  bufsize = strxfrm (ఖాళీ, string, 0) + 1;
+  buf = జ్ఞాపకం_ఇవ్వు (bufsize);
+  ఒకవేళ (buf == ఖాళీ)
     {
-      printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      రాయి ("cannot allocate %zd bytes\n", bufsize);
+      తిరిగి 1;
     }
   r = strxfrm (buf, string, bufsize);
-  l = strlen (buf);
-  if (r != l)
+  l = అక్షరశ్రేణి_పొడవు (buf);
+  ఒకవేళ (r != l)
     {
-       printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
+       రాయి ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       ఫలితం = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, ఖాళీ);
 
   r = strxfrm_l (buf, string, bufsize, loc);
-  l = strlen (buf);
-  if (r != l)
+  l = అక్షరశ్రేణి_పొడవు (buf);
+  ఒకవేళ (r != l)
     {
-       printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
+       రాయి ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       ఫలితం = 1;
     }
 
   freelocale (loc);
 
-  free (buf);
+  విడుదల (buf);
 
-  return result;
+  తిరిగి ఫలితం;
 }
 
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  int result = 0;
+  పూర్ణాంకం ఫలితం = 0;
 
-  result |= test ("C");
-  result |= test ("en_US.ISO-8859-1");
-  result |= test ("de_DE.UTF-8");
+  ఫలితం |= test ("C");
+  ఫలితం |= test ("en_US.ISO-8859-1");
+  ఫలితం |= test ("de_DE.UTF-8");
 
-  return result;
+  తిరిగి ఫలితం;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

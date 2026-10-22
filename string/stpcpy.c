@@ -15,106 +15,106 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define NO_MEMPCPY_STPCPY_REDIRECT
-#include <string.h>
-#include <stdint.h>
-#include <memcopy.h>
-#include <string-fzb.h>
-#include <string-misc.h>
+#నిర్వచించు NO_MEMPCPY_STPCPY_REDIRECT
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <memcopy.h>
+#అన్తర్భావ <string-fzb.h>
+#అన్తర్భావ <string-misc.h>
 
-#undef __stpcpy
-#undef stpcpy
+#నిర్వచనం_రద్దు __stpcpy
+#నిర్వచనం_రద్దు stpcpy
 
-#ifndef STPCPY
+#నిర్వచితం_కాకపోతే STPCPY
 # define STPCPY __stpcpy
-#endif
+#అయితే_ముగింపు
 
-static __always_inline char *
-write_byte_from_word (op_t *dest, op_t word)
+స్థిర __always_inline అక్షరం *
+write_byte_from_మాట (op_t *dest, op_t మాట)
 {
-  char *d = (char *) dest;
-  for (size_t i = 0; i < OPSIZ; i++, ++d)
+  అక్షరం *d = (అక్షరం *) dest;
+  కొరకు (size_t i = 0; i < OPSIZ; i++, ++d)
     {
-      char c = extractbyte (word, i);
+      అక్షరం c = extractbyte (మాట, i);
       *d = c;
-      if (c == '\0')
-	break;
+      ఒకవేళ (c == '\0')
+	ఆపు;
     }
-  return d;
+  తిరిగి d;
 }
 
-static __always_inline char *
-stpcpy_aligned_loop (op_t *restrict dst, const op_t *restrict src)
+స్థిర __always_inline అక్షరం *
+stpcpy_aligned_loop (op_t *పరిమిత dst, స్థిరరాశి op_t *పరిమిత src)
 {
-  op_t word;
-  while (1)
+  op_t మాట;
+  అయితే (1)
     {
-      word = *src++;
-      if (has_zero (word))
-	break;
-      *dst++ = word;
+      మాట = *src++;
+      ఒకవేళ (has_zero (మాట))
+	ఆపు;
+      *dst++ = మాట;
     }
 
-  return write_byte_from_word (dst, word);
+  తిరిగి write_byte_from_మాట (dst, మాట);
 }
 
-static __always_inline char *
-stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
+స్థిర __always_inline అక్షరం *
+stpcpy_unaligned_loop (op_t *పరిమిత dst, స్థిరరాశి op_t *పరిమిత src,
 		       uintptr_t ofs)
 {
   op_t w2a = *src++;
   uintptr_t sh_1 = ofs * CHAR_BIT;
   uintptr_t sh_2 = OPSIZ * CHAR_BIT - sh_1;
 
-  op_t w2 = MERGE (w2a, sh_1, (op_t)-1, sh_2);
-  if (!has_zero (w2))
+  op_t w2 = విలీనం (w2a, sh_1, (op_t)-1, sh_2);
+  ఒకవేళ (!has_zero (w2))
     {
       op_t w2b;
 
       /* Unaligned loop.  The invariant is that W2B, which is "ahead" of W1,
 	 does not contain end-of-string.  Therefore it is safe (and necessary)
 	 to read another word from each while we do not have a difference.  */
-      while (1)
+      అయితే (1)
 	{
 	  w2b = *src++;
-	  w2 = MERGE (w2a, sh_1, w2b, sh_2);
+	  w2 = విలీనం (w2a, sh_1, w2b, sh_2);
 	  /* Check if there is zero on w2a.  */
-	  if (has_zero (w2))
-	    goto out;
+	  ఒకవేళ (has_zero (w2))
+	    వెళ్ళు బహిర్గతం;
 	  *dst++ = w2;
-	  if (has_zero (w2b))
-	    break;
+	  ఒకవేళ (has_zero (w2b))
+	    ఆపు;
 	  w2a = w2b;
 	}
 
       /* Align the final partial of P2.  */
-      w2 = MERGE (w2b, sh_1, 0, sh_2);
+      w2 = విలీనం (w2b, sh_1, 0, sh_2);
     }
 
-out:
-  return write_byte_from_word (dst, w2);
+బహిర్గతం:
+  తిరిగి write_byte_from_మాట (dst, w2);
 }
 
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-char *
-STPCPY (char *dest, const char *src)
+అక్షరం *
+STPCPY (అక్షరం *dest, స్థిరరాశి అక్షరం *src)
 {
   /* Copy just a few bytes to make DEST aligned.  */
   size_t len = (-(uintptr_t) dest) % OPSIZ;
-  for (; len != 0; len--, ++dest)
+  కొరకు (; len != 0; len--, ++dest)
     {
-      char c = *src++;
+      అక్షరం c = *src++;
       *dest = c;
-      if (c == '\0')
-	return dest;
+      ఒకవేళ (c == '\0')
+	తిరిగి dest;
     }
 
   /* DEST is now aligned to op_t, SRC may or may not be.  */
   uintptr_t ofs = (uintptr_t) src % OPSIZ;
-  return ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (const op_t *) src)
+  తిరిగి ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (స్థిరరాశి op_t *) src)
 		  : stpcpy_unaligned_loop ((op_t*) dest,
-					   (const op_t *) (src - ofs) , ofs);
+					   (స్థిరరాశి op_t *) (src - ofs) , ofs);
 }
 weak_alias (__stpcpy, stpcpy)
 libc_hidden_def (__stpcpy)

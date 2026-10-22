@@ -16,37 +16,37 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <stdlib.h>
-#include <string.h>
+#అన్తర్భావ <argz.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
 
 /* Make a '\0' separated arg vector from a unix argv vector, returning it in
    ARGZ, and the total length in LEN.  If a memory allocation error occurs,
    ENOMEM is returned, otherwise 0.  */
 error_t
-__argz_create (char *const argv[], char **argz, size_t *len)
+__argz_create (అక్షరం *స్థిరరాశి argv[], అక్షరం **argz, size_t *len)
 {
-  int argc;
+  పూర్ణాంకం argc;
   size_t tlen = 0;
-  char *const *ap;
-  char *p;
+  అక్షరం *స్థిరరాశి *ap;
+  అక్షరం *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
-    tlen += strlen (argv[argc]) + 1;
+  కొరకు (argc = 0; argv[argc] != ఖాళీ; ++argc)
+    tlen += అక్షరశ్రేణి_పొడవు (argv[argc]) + 1;
 
-  if (tlen == 0)
-    *argz = NULL;
-  else
+  ఒకవేళ (tlen == 0)
+    *argz = ఖాళీ;
+  లేకపోతే
     {
-      *argz = malloc (tlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = జ్ఞాపకం_ఇవ్వు (tlen);
+      ఒకవేళ (*argz == ఖాళీ)
+	తిరిగి ENOMEM;
 
-      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+      కొరకు (p = *argz, ap = argv; *ap; ++ap, ++p)
 	p = __stpcpy (p, *ap);
     }
   *len = tlen;
 
-  return 0;
+  తిరిగి 0;
 }
 weak_alias (__argz_create, argz_create)

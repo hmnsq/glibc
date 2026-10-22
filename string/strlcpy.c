@@ -16,16 +16,16 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
 size_t
-__strlcpy (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcpy (అక్షరం *__restrict dest, స్థిరరాశి అక్షరం *__restrict src, size_t కొలత)
 {
-  size_t src_length = strlen (src);
+  size_t src_నిడివి = అక్షరశ్రేణి_పొడవు (src);
 
-  if (__glibc_unlikely (src_length >= size))
+  ఒకవేళ (__glibc_unlikely (src_నిడివి >= కొలత))
     {
-      if (size > 0)
+      ఒకవేళ (కొలత > 0)
 	{
 	  /* Copy the leading portion of the string.  The last
 	     character is subsequently overwritten with the NUL
@@ -33,14 +33,14 @@ __strlcpy (char *__restrict dest, const char *__restrict src, size_t size)
 	     multiple of a small power of two, so writing it twice
 	     should be more efficient than copying an odd number of
 	     bytes.  */
-	  memcpy (dest, src, size);
-	  dest[size - 1] = '\0';
+	  జ్ఞాపకం_నకలు (dest, src, కొలత);
+	  dest[కొలత - 1] = '\0';
 	}
     }
-  else
+  లేకపోతే
     /* Copy the string and its terminating NUL character.  */
-    memcpy (dest, src, src_length + 1);
-  return src_length;
+    జ్ఞాపకం_నకలు (dest, src, src_నిడివి + 1);
+  తిరిగి src_నిడివి;
 }
 libc_hidden_def (__strlcpy)
 weak_alias (__strlcpy, strlcpy)

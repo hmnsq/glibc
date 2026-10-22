@@ -15,41 +15,41 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/check.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+శూన్య try (స్థిరరాశి అక్షరం *name, దీర్ఘ దీర్ఘ పూర్ణాంకం param, పూర్ణాంకం విలువ, పూర్ణాంకం expected)
 {
-  if (value != expected)
+  ఒకవేళ (విలువ != expected)
     {
-      printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
-      support_record_failure ();
+      రాయి ("%s(%#llx) expected %d got %d\n",
+	      name, param, expected, విలువ);
+      support_రికార్డు_failure ();
     }
-  else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+  లేకపోతే
+    రాయి ("%s(%#llx) as expected %d\n", name, param, విలువ);
 }
 
-int
-do_test (void)
+పూర్ణాంకం
+do_test (శూన్య)
 {
-  int i;
+  పూర్ణాంకం i;
 
-#define TEST(fct, type) \
+#నిర్వచించు TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  కొరకు (i=0 ; i < 8 * పరిమాణం (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  కొరకు (i=0 ; i < 8 * పరిమాణం (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, పూర్ణాంకం);
+  TEST (ffsl, దీర్ఘ పూర్ణాంకం);
+  TEST (ffsll, దీర్ఘ దీర్ఘ పూర్ణాంకం);
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

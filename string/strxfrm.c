@@ -15,17 +15,17 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <locale/localeinfo.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <locale/localeinfo.h>
 
-#ifndef STRING_TYPE
-# define STRING_TYPE char
+#నిర్వచితం_కాకపోతే STRING_TYPE
+# define STRING_TYPE అక్షరం
 # define STRXFRM strxfrm
 # define STRXFRM_L __strxfrm_l
-#endif
+#అయితే_ముగింపు
 
 size_t
-STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n)
+STRXFRM (STRING_TYPE *dest, స్థిరరాశి STRING_TYPE *src, size_t n)
 {
-  return STRXFRM_L (dest, src, n, _NL_CURRENT_LOCALE);
+  తిరిగి STRXFRM_L (dest, src, n, _NL_CURRENT_LOCALE);
 }

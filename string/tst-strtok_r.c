@@ -16,23 +16,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define BUF1PAGES 1
-#include "test-string.h"
+#నిర్వచించు TEST_MAIN
+#నిర్వచించు BUF1_పుటలు 1
+#అన్తర్భావ "test-string.h"
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
-  char **saveptrp;
-  char *tok;
+  అక్షరం పంక్తి[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  అక్షరం **saveptrp;
+  అక్షరం *tok;
 
   test_init ();
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
-  saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
-  tok = strtok_r (line, " \t", saveptrp);
-  return strcmp (tok, "udf") != 0;
+  saveptrp = (అక్షరం **) (buf1 + పుట_కొలత - పరిమాణం (*saveptrp));
+  tok = strtok_r (పంక్తి, " \t", saveptrp);
+  తిరిగి strcmp (tok, "udf") != 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

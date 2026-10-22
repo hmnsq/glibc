@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRPBRK_RESULT(s, pos) (pos)
-#define RES_TYPE size_t
-#define TEST_MAIN
-#ifndef WIDE
+#నిర్వచించు STRPBRK_ఫలితం(s, pos) (pos)
+#నిర్వచించు RES_TYPE size_t
+#నిర్వచించు TEST_MAIN
+#నిర్వచితం_కాకపోతే WIDE
 # define TEST_NAME "strcspn"
-#else
+#లేకపోతే
 # define TEST_NAME "wcscspn"
-#endif /* WIDE */
-#include "test-string.h"
+#అయితే_ముగింపు /* WIDE */
+#అన్తర్భావ "test-string.h"
 
-#ifndef WIDE
+#నిర్వచితం_కాకపోతే WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR అక్షరం
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
-# define STRLEN strlen
-#else
+# define STRLEN అక్షరశ్రేణి_పొడవు
+#లేకపోతే
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
 # define SIMPLE_STRCSPN simple_wcscspn
 # define STUPID_STRCSPN stupid_wcscspn
 # define STRLEN wcslen
-#endif /* WIDE */
+#అయితే_ముగింపు /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+రకనిర్వచనం size_t (*proto_t) (స్థిరరాశి CHAR *, స్థిరరాశి CHAR *);
+size_t SIMPLE_STRCSPN (స్థిరరాశి CHAR *, స్థిరరాశి CHAR *);
+size_t STUPID_STRCSPN (స్థిరరాశి CHAR *, స్థిరరాశి CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (స్థిరరాశి CHAR *s, స్థిరరాశి CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  స్థిరరాశి CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  అయితే ((c = *s++) != '\0')
+    కొరకు (r = rej; *r != '\0'; ++r)
+      ఒకవేళ (*r == c)
+	తిరిగి s - str - 1;
+  తిరిగి s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (స్థిరరాశి CHAR *s, స్థిరరాశి CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  కొరకు (i = 0; i < ns; ++i)
+    కొరకు (j = 0; j < nrej; ++j)
+      ఒకవేళ (s[i] == rej[j])
+	తిరిగి i;
+  తిరిగి i;
 }
 
-#undef CHAR
-#undef STRLEN
-#include "test-strpbrk.c"
+#నిర్వచనం_రద్దు CHAR
+#నిర్వచనం_రద్దు STRLEN
+#అన్తర్భావ "test-strpbrk.c"

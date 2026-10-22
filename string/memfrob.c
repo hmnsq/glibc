@@ -15,15 +15,15 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-void *
-memfrob (void *s, size_t n)
+శూన్య *
+memfrob (శూన్య *s, size_t n)
 {
-  char *p = (char *) s;
+  అక్షరం *p = (అక్షరం *) s;
 
-  while (n-- > 0)
+  అయితే (n-- > 0)
     *p++ ^= 42;
 
-  return s;
+  తిరిగి s;
 }

@@ -21,143 +21,143 @@
    the tests take a long time to run and splitting them allows for
    simpler parallel testing.  */
 
-#ifndef MEMCPY_RESULT
-#define MEMCPY_RESULT(dst, len) dst
-#define MIN_PAGE_SIZE 131072
-#define TEST_MAIN
-#define TEST_NAME "memcpy"
-#define TIMEOUT (8 * 60)
-#include "test-string.h"
+#నిర్వచితం_కాకపోతే MEMCPY_ఫలితం
+#నిర్వచించు MEMCPY_ఫలితం(dst, len) dst
+#నిర్వచించు MIN_పుట_కొలత 131072
+#నిర్వచించు TEST_MAIN
+#నిర్వచించు TEST_NAME "memcpy"
+#నిర్వచించు TIMEOUT (8 * 60)
+#అన్తర్భావ "test-string.h"
 
-IMPL (memcpy, 1)
+IMPL (జ్ఞాపకం_నకలు, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memcpy (char *dst, const char *src, size_t n)
+అక్షరం *
+simple_memcpy (అక్షరం *dst, స్థిరరాశి అక్షరం *src, size_t n)
 {
-  char *ret = dst;
-  while (n--)
+  అక్షరం *ret = dst;
+  అయితే (n--)
     *dst++ = *src++;
-  return ret;
+  తిరిగి ret;
 }
 
-#endif
-typedef char *(*proto_t) (char *, const char *, size_t);
-typedef uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
+#అయితే_ముగింపు
+రకనిర్వచనం అక్షరం *(*proto_t) (అక్షరం *, స్థిరరాశి అక్షరం *, size_t);
+రకనిర్వచనం uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
 
-static void
-do_one_test (impl_t *impl, char *dst, const char *src, size_t len)
+స్థిర శూన్య
+do_one_test (impl_t *impl, అక్షరం *dst, స్థిరరాశి అక్షరం *src, size_t len)
 {
   size_t i;
 
   /* Must clear the destination buffer set by the previous run.  */
-  for (i = 0; i < len; i++)
+  కొరకు (i = 0; i < len; i++)
     dst[i] = 0;
 
-  if (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
+  ఒకవేళ (CALL (impl, dst, src, len) != MEMCPY_ఫలితం (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-             CALL (impl, dst, src, len), MEMCPY_RESULT (dst, len));
+             CALL (impl, dst, src, len), MEMCPY_ఫలితం (dst, len));
       ret = 1;
-      return;
+      తిరిగి;
     }
 
-  if (memcmp (dst, src, len) != 0)
+  ఒకవేళ (memcmp (dst, src, len) != 0)
     {
       error (0, 0,
              "Wrong result in function %s dst %p \"%.*s\" src %p \"%.*s\" len "
              "%zu",
-             impl->name, dst, (int)len, dst, src, (int)len, src, len);
+             impl->name, dst, (పూర్ణాంకం)len, dst, src, (పూర్ణాంకం)len, src, len);
       ret = 1;
-      return;
+      తిరిగి;
     }
 }
 
-static void
+స్థిర శూన్య
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  అక్షరం *s1, *s2;
 
   align1 &= 4095;
-  if (align1 + len >= page_size)
-    return;
+  ఒకవేళ (align1 + len >= పుట_కొలత)
+    తిరిగి;
 
   align2 &= 4095;
-  if (align2 + len >= page_size)
-    return;
+  ఒకవేళ (align2 + len >= పుట_కొలత)
+    తిరిగి;
 
-  s1 = (char *)(buf1 + align1);
-  s2 = (char *)(buf2 + align2);
-  for (size_t repeats = 0; repeats < 2; ++repeats)
+  s1 = (అక్షరం *)(buf1 + align1);
+  s2 = (అక్షరం *)(buf2 + align2);
+  కొరకు (size_t repeats = 0; repeats < 2; ++repeats)
     {
-      for (i = 0, j = 1; i < len; i++, j += 23)
+      కొరకు (i = 0, j = 1; i < len; i++, j += 23)
         s1[i] = j;
 
       FOR_EACH_IMPL (impl, 0)
       do_one_test (impl, s2, s1, len);
 
-      s1 = (char *) (buf2 + align1);
-      s2 = (char *) (buf1 + align2);
+      s1 = (అక్షరం *) (buf2 + align1);
+      s2 = (అక్షరం *) (buf1 + align2);
     }
 }
 
-static void
-do_test1 (size_t align1, size_t align2, size_t size)
+స్థిర శూన్య
+do_test1 (size_t align1, size_t align2, size_t కొలత)
 {
-  void *large_buf;
-  size_t mmap_size, region_size;
+  శూన్య *large_buf;
+  size_t mmap_కొలత, region_కొలత;
 
-  align1 &= (page_size - 1);
-  if (align1 == 0)
-    align1 = page_size;
+  align1 &= (పుట_కొలత - 1);
+  ఒకవేళ (align1 == 0)
+    align1 = పుట_కొలత;
 
-  align2 &= (page_size - 1);
-  if (align2 == 0)
-    align2 = page_size;
+  align2 &= (పుట_కొలత - 1);
+  ఒకవేళ (align2 == 0)
+    align2 = పుట_కొలత;
 
-  region_size = (size + page_size - 1) & (~(page_size - 1));
+  region_కొలత = (కొలత + పుట_కొలత - 1) & (~(పుట_కొలత - 1));
 
-  mmap_size = region_size * 2 + 3 * page_size;
-  large_buf = mmap (NULL, mmap_size, PROT_READ | PROT_WRITE,
-                    MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (large_buf == MAP_FAILED)
+  mmap_కొలత = region_కొలత * 2 + 3 * పుట_కొలత;
+  large_buf = mmap (ఖాళీ, mmap_కొలత, PROT_READ | PROT_WRITE,
+                    MAP_వ్యక్తిగత | MAP_ANON, -1, 0);
+  ఒకవేళ (large_buf == MAP_FAILED)
     {
       puts ("Failed to allocate large_buf, skipping do_test");
-      return;
+      తిరిగి;
     }
-  if (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
+  ఒకవేళ (mprotect (large_buf + region_కొలత + పుట_కొలత, పుట_కొలత, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
 
-  size_t array_size = size / sizeof (uint32_t);
+  size_t array_కొలత = కొలత / పరిమాణం (uint32_t);
   unaligned_uint32_t *dest = large_buf + align1;
-  unaligned_uint32_t *src = large_buf + region_size + 2 * page_size + align2;
+  unaligned_uint32_t *src = large_buf + region_కొలత + 2 * పుట_కొలత + align2;
   size_t i;
-  for (size_t repeats = 0; repeats < 2; repeats++)
+  కొరకు (size_t repeats = 0; repeats < 2; repeats++)
     {
-      for (i = 0; i < array_size; i++)
+      కొరకు (i = 0; i < array_కొలత; i++)
         src[i] = (uint32_t)i;
       FOR_EACH_IMPL (impl, 0)
 	{
-	  memset (dest, -1, size);
-	  CALL (impl, (char *)dest, (char *)src, size);
-	  if (memcmp (src, dest, size))
+	  memset (dest, -1, కొలత);
+	  CALL (impl, (అక్షరం *)dest, (అక్షరం *)src, కొలత);
+	  ఒకవేళ (memcmp (src, dest, కొలత))
 	    {
-	      for (i = 0; i < array_size; i++)
-		if (dest[i] != src[i])
+	      కొరకు (i = 0; i < array_కొలత; i++)
+		ఒకవేళ (dest[i] != src[i])
 		  {
 		    error (0, 0,
 			   "Wrong result in function %s dst \"%p\" src \"%p\" "
 			   "offset \"%zd\"",
 			   impl->name, dest, src, i);
 		    ret = 1;
-		    munmap ((void *)large_buf, mmap_size);
-		    return;
+		    munmap ((శూన్య *)large_buf, mmap_కొలత);
+		    తిరిగి;
 		  }
 	    }
 	}
-      dest = large_buf + region_size + 2 * page_size + align1;
+      dest = large_buf + region_కొలత + 2 * పుట_కొలత + align1;
       src = large_buf + align2;
     }
-  munmap ((void *)large_buf, mmap_size);
+  munmap ((శూన్య *)large_buf, mmap_కొలత);
 }

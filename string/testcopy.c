@@ -15,85 +15,85 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/support.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <stdio.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <support/support.h>
 
-static int
-do_test (void)
+స్థిర పూర్ణాంకం
+do_test (శూన్య)
 {
-  char *mem, *memp;
-  char *rand_mem;
-  char *lo_around, *hi_around;
-  int size, max_size;
-  int src_off, dst_off;
-  int i;
-  int space_around = 10;
+  అక్షరం *mem, *memp;
+  అక్షరం *rand_mem;
+  అక్షరం *lo_around, *hi_around;
+  పూర్ణాంకం కొలత, max_కొలత;
+  పూర్ణాంకం src_off, dst_off;
+  పూర్ణాంకం i;
+  పూర్ణాంకం space_around = 10;
 
-  max_size = 256;
+  max_కొలత = 256;
 
-  mem = xmalloc (max_size + 2 * max_size + 2 * space_around);
-  rand_mem = xmalloc (max_size);
+  mem = xmalloc (max_కొలత + 2 * max_కొలత + 2 * space_around);
+  rand_mem = xmalloc (max_కొలత);
   lo_around = xmalloc (space_around);
   hi_around = xmalloc (space_around);
   memp = mem + space_around;
 
   /* Fill RAND_MEM with random bytes, each non-zero.  */
-  for (i = 0; i < max_size; i++)
+  కొరకు (i = 0; i < max_కొలత; i++)
     {
-      int x;
-      do
+      పూర్ణాంకం x;
+      చేయి
 	x = random ();
-      while (x == 0);
+      అయితే (x == 0);
       rand_mem[i] = x;
     }
 
-  for (size = 0; size < max_size; size++)
+  కొరకు (కొలత = 0; కొలత < max_కొలత; కొలత++)
     {
-      printf("phase %d\n", size);
-      for (src_off = 0; src_off <= 16; src_off++)
+      రాయి("phase %d\n", కొలత);
+      కొరకు (src_off = 0; src_off <= 16; src_off++)
 	{
-	  for (dst_off = 0; dst_off <= 16; dst_off++)
+	  కొరకు (dst_off = 0; dst_off <= 16; dst_off++)
 	    {
 	      /* Put zero around the intended destination, to check
 		 that it's not clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      కొరకు (i = 1; i < space_around; i++)
 		{
 		  memp[dst_off - i] = 0;
-		  memp[dst_off + size - 1 + i] = 0;
+		  memp[dst_off + కొలత - 1 + i] = 0;
 		}
 
 	      /* Fill the source area with known contents.  */
-	      for (i = 0; i < size; i++)
+	      కొరకు (i = 0; i < కొలత; i++)
 		memp[src_off + i] = rand_mem[i];
 
 	      /* Remember the contents around the destination area.
 		 (It might not be what we wrote some lines above, since
 		 the src area and the dst area overlap.)  */
-	      for (i = 1; i < space_around; i++)
+	      కొరకు (i = 1; i < space_around; i++)
 		{
 		  lo_around[i] = memp[dst_off - i];
-		  hi_around[i] = memp[dst_off + size - 1 + i];
+		  hi_around[i] = memp[dst_off + కొలత - 1 + i];
 		}
 
-	      memmove (memp + dst_off, memp + src_off, size);
+	      memmove (memp + dst_off, memp + src_off, కొలత);
 
 	      /* Check that the destination area has the same
 		 contents we wrote to the source area.  */
-	      for (i = 0; i < size; i++)
+	      కొరకు (i = 0; i < కొలత; i++)
 		{
-		  if (memp[dst_off + i] != rand_mem[i])
+		  ఒకవేళ (memp[dst_off + i] != rand_mem[i])
 		    abort ();
 		}
 
 	      /* Check that the area around the destination is not
 		 clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      కొరకు (i = 1; i < space_around; i++)
 		{
-		  if (memp[dst_off - i] != lo_around[i])
+		  ఒకవేళ (memp[dst_off - i] != lo_around[i])
 		    abort ();
-		  if (memp[dst_off + size - 1 + i] != hi_around[i])
+		  ఒకవేళ (memp[dst_off + కొలత - 1 + i] != hi_around[i])
 		    abort ();
 		}
 	    }
@@ -102,7 +102,7 @@ do_test (void)
 
   puts ("Test succeeded.");
 
-  return 0;
+  తిరిగి 0;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>

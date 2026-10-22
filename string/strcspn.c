@@ -15,48 +15,48 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#అన్తర్భావ <string.h>
+#అన్తర్భావ <stdint.h>
+#అన్తర్భావ <libc-pointer-arith.h>
 
-#undef strcspn
+#నిర్వచనం_రద్దు strcspn
 
-#ifndef STRCSPN
+#నిర్వచితం_కాకపోతే STRCSPN
 # define STRCSPN strcspn
-#endif
+#అయితే_ముగింపు
 
 /* Return the length of the maximum initial segment of S
    which contains no characters from REJECT.  */
 size_t
-STRCSPN (const char *str, const char *reject)
+STRCSPN (స్థిరరాశి అక్షరం *str, స్థిరరాశి అక్షరం *reject)
 {
-  if (__glibc_unlikely (reject[0] == '\0')
+  ఒకవేళ (__glibc_unlikely (reject[0] == '\0')
       || __glibc_unlikely (reject[1] == '\0'))
-    return __strchrnul (str, reject [0]) - str;
+    తిరిగి __strchrnul (str, reject [0]) - str;
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
+  గుర్తులేని అక్షరం పట్టిక[256];
+  గుర్తులేని అక్షరం *p = memset (పట్టిక, 0, 64);
   memset (p + 64, 0, 64);
   memset (p + 128, 0, 64);
   memset (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) reject;
-  unsigned char tmp;
-  do
+  గుర్తులేని అక్షరం *s = (గుర్తులేని అక్షరం*) reject;
+  గుర్తులేని అక్షరం tmp;
+  చేయి
     p[tmp = *s++] = 1;
-  while (tmp);
+  అయితే (tmp);
 
-  s = (unsigned char*) str;
-  if (p[s[0]]) return 0;
-  if (p[s[1]]) return 1;
-  if (p[s[2]]) return 2;
-  if (p[s[3]]) return 3;
+  s = (గుర్తులేని అక్షరం*) str;
+  ఒకవేళ (p[s[0]]) తిరిగి 0;
+  ఒకవేళ (p[s[1]]) తిరిగి 1;
+  ఒకవేళ (p[s[2]]) తిరిగి 2;
+  ఒకవేళ (p[s[3]]) తిరిగి 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (గుర్తులేని అక్షరం *) PTR_ALIGN_కిందికి (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do
+  గుర్తులేని పూర్ణాంకం c0, c1, c2, c3;
+  చేయి
     {
       s += 4;
       c0 = p[s[0]];
@@ -64,9 +64,9 @@ STRCSPN (const char *str, const char *reject)
       c2 = p[s[2]];
       c3 = p[s[3]];
     }
-  while ((c0 | c1 | c2 | c3) == 0);
+  అయితే ((c0 | c1 | c2 | c3) == 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  size_t లెక్క = s - (గుర్తులేని అక్షరం *) str;
+  తిరిగి (c0 | c1) != 0 ? లెక్క - c0 + 1 : లెక్క - c2 + 3;
 }
 libc_hidden_builtin_def (strcspn)

@@ -16,63 +16,63 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRNCPY_RESULT(dst, len, n) ((dst) + ((len) > (n) ? (n) : (len)))
-#define TEST_MAIN
-#ifndef WIDE
+#నిర్వచించు STRNCPY_ఫలితం(dst, len, n) ((dst) + ((len) > (n) ? (n) : (len)))
+#నిర్వచించు TEST_MAIN
+#నిర్వచితం_కాకపోతే WIDE
 # define TEST_NAME "stpncpy"
-#else
+#లేకపోతే
 # define TEST_NAME "wcpncpy"
-#endif /* WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#అయితే_ముగింపు /* WIDE */
+#అన్తర్భావ "test-string.h"
+#నిర్వచితం_కాకపోతే WIDE
+# define CHAR అక్షరం
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#లేకపోతే
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
 # define STUPID_STPNCPY stupid_wcpncpy
 # define STPNCPY wcpncpy
 # define STRNLEN wcsnlen
-#endif /* WIDE */
+#అయితే_ముగింపు /* WIDE */
 
-CHAR *SIMPLE_STPNCPY (CHAR *, const CHAR *, size_t);
-CHAR *STUPID_STPNCPY (CHAR *, const CHAR *, size_t);
+CHAR *SIMPLE_STPNCPY (CHAR *, స్థిరరాశి CHAR *, size_t);
+CHAR *STUPID_STPNCPY (CHAR *, స్థిరరాశి CHAR *, size_t);
 
 IMPL (STUPID_STPNCPY, 0)
 IMPL (SIMPLE_STPNCPY, 0)
 IMPL (STPNCPY, 1)
 
 CHAR *
-SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STPNCPY (CHAR *dst, స్థిరరాశి CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  అయితే (n--)
+    ఒకవేళ ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	కొరకు (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	తిరిగి dst - 1;
       }
-  return dst;
+  తిరిగి dst;
 }
 
 CHAR *
-STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+STUPID_STPNCPY (CHAR *dst, స్థిరరాశి CHAR *src, size_t n)
 {
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  కొరకు (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  కొరకు (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  తిరిగి dst + nc;
 }
 
-#undef CHAR
-#include "test-strncpy.c"
+#నిర్వచనం_రద్దు CHAR
+#అన్తర్భావ "test-strncpy.c"

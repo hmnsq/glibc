@@ -15,30 +15,30 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#అన్తర్భావ <string.h>
 
-#ifndef STRNCAT
+#నిర్వచితం_కాకపోతే STRNCAT
 # undef strncat
 # define STRNCAT  strncat
 # define STRNCAT_PRIMARY
-#endif
+#అయితే_ముగింపు
 
-char *
-STRNCAT (char *s1, const char *s2, size_t n)
+అక్షరం *
+STRNCAT (అక్షరం *s1, స్థిరరాశి అక్షరం *s2, size_t n)
 {
-  char *s = s1;
+  అక్షరం *s = s1;
 
   /* Find the end of S1.  */
-  s1 += strlen (s1);
+  s1 += అక్షరశ్రేణి_పొడవు (s1);
 
   size_t ss = __strnlen (s2, n);
 
   s1[ss] = '\0';
-  memcpy (s1, s2, ss);
+  జ్ఞాపకం_నకలు (s1, s2, ss);
 
-  return s;
+  తిరిగి s;
 }
-#ifdef STRNCAT_PRIMARY
+#నిర్వచితమైతే STRNCAT_PRIMARY
 strong_alias (STRNCAT, __strncat)
 libc_hidden_def (__strncat)
-#endif
+#అయితే_ముగింపు

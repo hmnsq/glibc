@@ -16,21 +16,21 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef __STRINGS_FORTIFIED
+#నిర్వచితం_కాకపోతే __STRINGS_FORTIFIED
 # define __STRINGS_FORTIFIED 1
 
-__fortify_function void
-__NTH (bcopy (const void *__src, void *__dest, size_t __len))
+__fortify_function శూన్య
+__NTH (bcopy (స్థిరరాశి శూన్య *__src, శూన్య *__dest, size_t __len))
 {
-  (void) __builtin___memmove_chk (__dest, __src, __len,
+  (శూన్య) __builtin___memmove_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 
-__fortify_function void
-__NTH (bzero (void *__dest, size_t __len))
+__fortify_function శూన్య
+__NTH (bzero (శూన్య *__dest, size_t __len))
 {
-  (void) __builtin___memset_chk (__dest, '\0', __len,
+  (శూన్య) __builtin___memset_chk (__dest, '\0', __len,
 				 __glibc_objsize0 (__dest));
 }
 
-#endif
+#అయితే_ముగింపు

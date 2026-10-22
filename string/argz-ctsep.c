@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#అన్తర్భావ <argz.h>
+#అన్తర్భావ <errno.h>
+#అన్తర్భావ <stdlib.h>
+#అన్తర్భావ <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (స్థిరరాశి అక్షరం *string, పూర్ణాంకం delim, అక్షరం **argz, size_t *len)
 {
-  size_t nlen = strlen (string) + 1;
+  size_t nlen = అక్షరశ్రేణి_పొడవు (string) + 1;
 
-  if (nlen > 1)
+  ఒకవేళ (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      స్థిరరాశి అక్షరం *rp;
+      అక్షరం *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (అక్షరం *) జ్ఞాపకం_ఇవ్వు (nlen);
+      ఒకవేళ (*argz == ఖాళీ)
+	తిరిగి ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      చేయి
+	ఒకవేళ (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ఒకవేళ (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    లేకపోతే
 	      --nlen;
 	  }
-	else
+	లేకపోతే
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      అయితే (*rp++ != '\0');
 
-      if (nlen == 0)
+      ఒకవేళ (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  విడుదల (*argz);
+	  *argz = ఖాళీ;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  లేకపోతే
     {
-      *argz = NULL;
+      *argz = ఖాళీ;
       *len = 0;
     }
 
-  return 0;
+  తిరిగి 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

@@ -16,44 +16,44 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef WIDE
+#నిర్వచించు TEST_MAIN
+#నిర్వచితమైతే WIDE
 # define TEST_NAME "wcsrchr"
-#else
+#లేకపోతే
 # define TEST_NAME "strrchr"
-#endif
-#include "test-string.h"
+#అయితే_ముగింపు
+#అన్తర్భావ "test-string.h"
 
-#ifdef WIDE
+#నిర్వచితమైతే WIDE
 # include <wchar.h>
 # define STRRCHR wcsrchr
 # define CHAR wchar_t
 # define UCHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#else
+#లేకపోతే
 # define STRRCHR strrchr
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR అక్షరం
+# define UCHAR గుర్తులేని అక్షరం
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#endif
+#అయితే_ముగింపు
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+రకనిర్వచనం CHAR *(*proto_t) (స్థిరరాశి CHAR *, పూర్ణాంకం);
 
 IMPL (STRRCHR, 1)
 
 /* Also check the generic implementation.  */
-#undef STRRCHR
-#undef weak_alias
-#define weak_alias(a, b)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_weak
-#define libc_hidden_weak(a)
-#ifndef WIDE
+#నిర్వచనం_రద్దు STRRCHR
+#నిర్వచనం_రద్దు weak_alias
+#నిర్వచించు weak_alias(a, b)
+#నిర్వచనం_రద్దు libc_hidden_builtin_def
+#నిర్వచించు libc_hidden_builtin_def(a)
+#నిర్వచనం_రద్దు libc_hidden_def
+#నిర్వచించు libc_hidden_def(a)
+#నిర్వచనం_రద్దు libc_hidden_weak
+#నిర్వచించు libc_hidden_weak(a)
+#నిర్వచితం_కాకపోతే WIDE
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 # define MEMRCHR __memrchr_default
@@ -61,193 +61,193 @@ IMPL (STRRCHR, 1)
 # define STRRCHR __strrchr_default
 # include "string/strrchr.c"
 # define STRRCHR_DEFAULT __strrchr_default
-#else
+#లేకపోతే
 # define WCSRCHR __wcsrchr_default
 # include "wcsmbs/wcsrchr.c"
 # define STRRCHR_DEFAULT __wcsrchr_default
-#endif
+#అయితే_ముగింపు
 IMPL (STRRCHR_DEFAULT, 1)
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, int c, CHAR *exp_res)
+స్థిర శూన్య
+do_one_test (impl_t *impl, స్థిరరాశి CHAR *s, పూర్ణాంకం c, CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ఒకవేళ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      తిరిగి;
     }
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+స్థిర శూన్య
+do_test (size_t align, size_t pos, size_t len, పూర్ణాంకం seek_char, పూర్ణాంకం max_char)
 /* For wcsrchr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
 {
   size_t i;
-  CHAR *result;
+  CHAR *ఫలితం;
   CHAR *buf = (CHAR *) buf1;
 
   align &= 7;
-  if ( (align + len) * sizeof (CHAR) >= page_size)
-    return;
+  ఒకవేళ ( (align + len) * పరిమాణం (CHAR) >= పుట_కొలత)
+    తిరిగి;
 
-  for (i = 0; i < len; ++i)
+  కొరకు (i = 0; i < len; ++i)
     {
       buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      ఒకవేళ (!buf[align + i])
 	buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      ఒకవేళ (!buf[align + i])
 	buf[align + i] = 1;
-      if ((i > pos || pos >= len) && buf[align + i] == seek_char)
+      ఒకవేళ ((i > pos || pos >= len) && buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 10 + (random () & 15);
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  ఒకవేళ (pos < len)
     {
       buf[align + pos] = seek_char;
-      result = (CHAR *) (buf + align + pos);
+      ఫలితం = (CHAR *) (buf + align + pos);
     }
-  else if (seek_char == 0)
-    result = (CHAR *) (buf + align + len);
-  else
-    result = NULL;
+  లేకపోతే ఒకవేళ (seek_char == 0)
+    ఫలితం = (CHAR *) (buf + align + len);
+  లేకపోతే
+    ఫలితం = ఖాళీ;
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (CHAR *) (buf + align), seek_char, result);
+    do_one_test (impl, (CHAR *) (buf + align), seek_char, ఫలితం);
 }
 
-static void
-do_random_tests (void)
+స్థిర శూన్య
+do_random_tests (శూన్య)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  CHAR *result;
-  UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
+  పూర్ణాంకం seek_char;
+  CHAR *ఫలితం;
+  UCHAR *p = (UCHAR *) (buf1 + పుట_కొలత) - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  కొరకు (n = 0; n < ITERATIONS; n++)
     {
-      align = random () & (63 / sizeof (CHAR));
+      align = random () & (63 / పరిమాణం (CHAR));
       /* For wcsrchr: align here means align not in bytes, but in wchar_ts,
 	 in bytes it will equal to align * (sizeof (wchar_t)).
 	 For strrchr we need to check all alignments from 0 to 63 since
 	 some assembly implementations have separate prolog for alignments
 	 more 48. */
       pos = random () & 511;
-      if (pos + align >= 511)
+      ఒకవేళ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
-      if (pos >= len)
+      ఒకవేళ (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      ఒకవేళ (len + align >= 512)
 	len = 511 - align - (random () & 7);
       seek_char = random () & 255;
-      if (seek_char && pos == len)
+      ఒకవేళ (seek_char && pos == len)
 	{
-	  if (pos)
+	  ఒకవేళ (pos)
 	    --pos;
-	  else
+	  లేకపోతే
 	    ++len;
 	}
       j = len + align + 64;
-      if (j > 512)
+      ఒకవేళ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      కొరకు (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ఒకవేళ (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  లేకపోతే ఒకవేళ (i == len + align)
 	    p[i] = 0;
-	  else
+	  లేకపోతే
 	    {
 	      p[i] = random () & 255;
-	      if (((i > pos + align && i < len + align) || pos > len)
+	      ఒకవేళ (((i > pos + align && i < len + align) || pos > len)
 		  && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      ఒకవేళ (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  ఒకవేళ (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
-	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
-	result = (CHAR *) (p + len + align);
-      else
-	result = NULL;
+      ఒకవేళ (pos <= len)
+	ఫలితం = (CHAR *) (p + pos + align);
+      లేకపోతే ఒకవేళ (seek_char == 0)
+	ఫలితం = (CHAR *) (p + len + align);
+      లేకపోతే
+	ఫలితం = ఖాళీ;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	ఒకవేళ (CALL (impl, (CHAR *) (p + align), seek_char) != ఫలితం)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (CHAR *) (p + align), seek_char), result, p);
+		   CALL (impl, (CHAR *) (p + align), seek_char), ఫలితం, p);
 	    ret = 1;
 	  }
     }
 }
 
-int
-test_main (void)
+పూర్ణాంకం
+test_main (శూన్య)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%20s", "");
+  రాయి ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    రాయి ("\t%s", impl->name);
+  అక్షరం_రాయి ('\n');
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 23, SMALL_CHAR);
       do_test (i, 16 << i, 2048, 23, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 23, SMALL_CHAR);
       do_test (i, 64, 256, 23, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  కొరకు (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23, SMALL_CHAR);
       do_test (0, i, i + 1, 23, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 0, SMALL_CHAR);
       do_test (i, 16 << i, 2048, 0, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  కొరకు (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 0, SMALL_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  కొరకు (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 0, SMALL_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 
   do_random_tests ();
-  return ret;
+  తిరిగి ret;
 }
 
-#include <support/test-driver.c>
+#అన్తర్భావ <support/test-driver.c>
