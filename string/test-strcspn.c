@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRPBRK_RESULT(s, pos) (pos)
-#define RES_TYPE size_t
-#define TEST_MAIN
-#ifndef WIDE
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRPBRK_ਨਤੀਜਾ(s, pos) (pos)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ RES_TYPE size_t
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_MAIN
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
 # define TEST_NAME "strcspn"
-#else
+#ਨਹੀਂਤਾਂ
 # define TEST_NAME "wcscspn"
-#endif /* WIDE */
-#include "test-string.h"
+#ਜੇ_ਅੰਤ /* WIDE */
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-string.h"
 
-#ifndef WIDE
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR ਅੱਖਰ
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
-# define STRLEN strlen
-#else
+# define STRLEN ਲੜੀ_ਲੰਬਾਈ
+#ਨਹੀਂਤਾਂ
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
 # define SIMPLE_STRCSPN simple_wcscspn
 # define STUPID_STRCSPN stupid_wcscspn
 # define STRLEN wcslen
-#endif /* WIDE */
+#ਜੇ_ਅੰਤ /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+ਕਿਸਮਪਰਿਭਾਸ਼ਾ size_t (*proto_t) (ਅਚਲ CHAR *, ਅਚਲ CHAR *);
+size_t SIMPLE_STRCSPN (ਅਚਲ CHAR *, ਅਚਲ CHAR *);
+size_t STUPID_STRCSPN (ਅਚਲ CHAR *, ਅਚਲ CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (ਅਚਲ CHAR *s, ਅਚਲ CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  ਅਚਲ CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  ਜਦੋਂ ((c = *s++) != '\0')
+    ਲਈ (r = rej; *r != '\0'; ++r)
+      ਜੇ (*r == c)
+	ਵਾਪਸ s - str - 1;
+  ਵਾਪਸ s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (ਅਚਲ CHAR *s, ਅਚਲ CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  ਲਈ (i = 0; i < ns; ++i)
+    ਲਈ (j = 0; j < nrej; ++j)
+      ਜੇ (s[i] == rej[j])
+	ਵਾਪਸ i;
+  ਵਾਪਸ i;
 }
 
-#undef CHAR
-#undef STRLEN
-#include "test-strpbrk.c"
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ CHAR
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ STRLEN
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-strpbrk.c"

@@ -1,57 +1,57 @@
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#undef __USE_STRING_INLINES
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ਸਥਿਰ ਅਚਲ size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
-  size_t base;
+  ਅੱਖਰ basebuf[24 + 32];
+  size_t ਅਧਾਰ;
 
-  for (base = 0; base < 32; ++base)
+  ਲਈ (ਅਧਾਰ = 0; ਅਧਾਰ < 32; ++ਅਧਾਰ)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      ਅੱਖਰ *buf = basebuf + ਅਧਾਰ;
+      size_t ਸ਼ਬਦ_2;
 
-      for (words = 0; words < 4; ++words)
+      ਲਈ (ਸ਼ਬਦ_2 = 0; ਸ਼ਬਦ_2 < 4; ++ਸ਼ਬਦ_2)
 	{
-	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  size_t ਆਖਰੀ;
+	  memset (buf, 'a', ਸ਼ਬਦ_2 * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  ਲਈ (ਆਖਰੀ = 0; ਆਖਰੀ < 16; ++ਆਖਰੀ)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[ਸ਼ਬਦ_2 * 4 + 0] = (ਆਖਰੀ & 1) != 0 ? 'b' : '\0';
+	      buf[ਸ਼ਬਦ_2 * 4 + 1] = (ਆਖਰੀ & 2) != 0 ? 'c' : '\0';
+	      buf[ਸ਼ਬਦ_2 * 4 + 2] = (ਆਖਰੀ & 4) != 0 ? 'd' : '\0';
+	      buf[ਸ਼ਬਦ_2 * 4 + 3] = (ਆਖਰੀ & 8) != 0 ? 'e' : '\0';
+	      buf[ਸ਼ਬਦ_2 * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      ਜੇ (ਲੜੀ_ਲੰਬਾਈ (buf) != ਸ਼ਬਦ_2 * 4 + lens[ਆਖਰੀ])
 		{
-		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  ਲਿਖੋ ("\
+ਲੜੀ_ਲੰਬਾਈ failed ਲਈ ਅਧਾਰ=%zu, ਸ਼ਬਦ_2=%zu, and ਆਖਰੀ=%zu (is %zd, expected %zd)\n",
+			  ਅਧਾਰ, ਸ਼ਬਦ_2, ਆਖਰੀ,
+			  ਲੜੀ_ਲੰਬਾਈ (buf), ਸ਼ਬਦ_2 * 4 + lens[ਆਖਰੀ]);
+		  ਵਾਪਸ 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      ਜੇ (strnlen (buf, -1) != ਸ਼ਬਦ_2 * 4 + lens[ਆਖਰੀ])
 		{
-		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  ਲਿਖੋ ("\
+strnlen failed ਲਈ ਅਧਾਰ=%zu, ਸ਼ਬਦ_2=%zu, and ਆਖਰੀ=%zu (is %zd, expected %zd)\n",
+			  ਅਧਾਰ, ਸ਼ਬਦ_2, ਆਖਰੀ,
+			  strnlen (buf, -1), ਸ਼ਬਦ_2 * 4 + lens[ਆਖਰੀ]);
+		  ਵਾਪਸ 1;
 		}
 	    }
 	}
     }
-  return 0;
+  ਵਾਪਸ 0;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

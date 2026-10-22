@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ GNU_ਸਰੋਤ
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ GNU_ਸਰੋਤ
+#ਜੇ_ਅੰਤ
 
 /* Make sure we test the optimized inline functions.  */
-#define __USE_STRING_INLINES	1
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <errno.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <strings.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <fcntl.h>
 
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  ਪੂਰਨ ਸਥਿਤੀ;
+  ਪੂਰਨ errors = 0;
+  ਅੱਖਰ buf1[1000];
+  ਅੱਖਰ *cp;
+  ਅੱਖਰ ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  ਜੇ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  ਜੇ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  ਜੇ (strchr ("hello world", ch++) == ਨਿਰਾ)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ਅਚਲ ਅੱਖਰ * ਅਚਲ hw = "hello world";
+  ਜੇ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  ਜੇ (errors == 0)
     {
-      status = EXIT_SUCCESS;
+      ਸਥਿਤੀ = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  ਨਹੀਂਤਾਂ
     {
-      status = EXIT_FAILURE;
-      printf ("%d errors.\n", errors);
+      ਸਥਿਤੀ = EXIT_FAILURE;
+      ਲਿਖੋ ("%d errors.\n", errors);
     }
-  return status;
+  ਵਾਪਸ ਸਥਿਤੀ;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

@@ -38,19 +38,19 @@
    printf, but we know the OS won't erase it, so we can do all the
    checks and printing from the normal stack.  */
 
-#define _GNU_SOURCE 1
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ GNU_ਸਰੋਤ 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <errno.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <signal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <ucontext.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+ਸਥਿਰ ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ test_ਨਮੂਨਾ[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,9 +60,9 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
-#define PATTERN_REPS 32
-#define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ ਨਮੂਨਾ_ਮਾਪ (ਆਕਾਰ test_ਨਮੂਨਾ)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ ਨਮੂਨਾ_REPS 32
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_ਬਫਰ_ਮਾਪ (ਨਮੂਨਾ_ਮਾਪ * ਨਮੂਨਾ_REPS)
 
 /* There are three subtests, two of which are sanity checks.
    Each test follows this sequence:
@@ -70,16 +70,16 @@ static const unsigned char test_pattern[16] =
      main                      coroutine
      ----                      --------
      advance cur_subtest
-     swap
+ਅਦਲਾ_ਬਦਲੀ
                                call setup function
                                  prepare test buffer
-                                 swap
+ਅਦਲਾ_ਬਦਲੀ
      verify that buffer
      was filled in
-     swap
+ਅਦਲਾ_ਬਦਲੀ
                                  possibly clear buffer
                                  return
-                               swap
+ਅਦਲਾ_ਬਦਲੀ
      check buffer again,
      according to test
      expectation
@@ -95,100 +95,100 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+ਸਥਿਰ ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+ਸਥਿਰ __attribute_optimization_barrier__ ਪੂਰਨ
+use_test_ਬਫਰ (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *buf)
 {
-  unsigned int sum = 0;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ ਜੋੜ = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    sum += buf[i * PATTERN_SIZE];
+  ਲਈ (ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ i = 0; i < ਨਮੂਨਾ_REPS; i++)
+    ਜੋੜ += buf[i * ਨਮੂਨਾ_ਮਾਪ];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  ਵਾਪਸ (ਜੋੜ == 2 * ਨਮੂਨਾ_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#ਜੇ defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#ਨਹੀਂਤਾਂ
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
-#endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+#ਜੇ_ਅੰਤ
+ਸਥਿਰ ਸਤਰਅੰਦਰ ALWAYS_INLINE ਖਾਲੀ
+prepare_test_ਬਫਰ (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
+  ਲਈ (ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ i = 0; i < ਨਮੂਨਾ_REPS; i++)
+    ਸਮ੍ਰਿਤੀ_ਨਕਲ (buf + i*ਨਮੂਨਾ_ਮਾਪ, test_ਨਮੂਨਾ, ਨਮੂਨਾ_ਮਾਪ);
 
-  if (swapcontext (&uc_co, &uc_main))
+  ਜੇ (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  ਜੇ (use_test_ਬਫਰ (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+ਸਥਿਰ ਖਾਲੀ
+ਤਿਆਰੀ_no_clear (ਖਾਲੀ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ buf[TEST_ਬਫਰ_ਮਾਪ];
+  prepare_test_ਬਫਰ (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+ਸਥਿਰ ਖਾਲੀ
+ਤਿਆਰੀ_ordinary_clear (ਖਾਲੀ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-  memset (buf, 0, TEST_BUFFER_SIZE);
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ buf[TEST_ਬਫਰ_ਮਾਪ];
+  prepare_test_ਬਫਰ (buf);
+  memset (buf, 0, TEST_ਬਫਰ_ਮਾਪ);
 }
 
-static void
-setup_explicit_clear (void)
+ਸਥਿਰ ਖਾਲੀ
+ਤਿਆਰੀ_explicit_clear (ਖਾਲੀ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-#ifdef TEST_MEMSET_EXPLICIT
-  memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
-  explicit_bzero (buf, TEST_BUFFER_SIZE);
-#endif
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ buf[TEST_ਬਫਰ_ਮਾਪ];
+  prepare_test_ਬਫਰ (buf);
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ TEST_MEMSET_EXPLICIT
+  memset_explicit (buf, 0, TEST_ਬਫਰ_ਮਾਪ);
+#ਨਹੀਂਤਾਂ
+  explicit_bzero (buf, TEST_ਬਫਰ_ਮਾਪ);
+#ਜੇ_ਅੰਤ
 }
 
-enum test_expectation
+ਗਿਣਤੀ test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+ਬਣਤਰ subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  ਖਾਲੀ (*ਤਿਆਰੀ_subtest) (ਖਾਲੀ);
+  ਅਚਲ ਅੱਖਰ *label;
+  ਗਿਣਤੀ test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+ਸਥਿਰ ਅਚਲ ਬਣਤਰ subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+ਸਥਿਰ ਅਚਲ ਬਣਤਰ subtest subtests[] =
 {
-  { setup_no_clear,       "no clear",       EXPECT_SOME },
+  { ਤਿਆਰੀ_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
      optimizations.  */
-  { setup_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
-  { setup_explicit_clear, "explicit clear", EXPECT_NONE },
+  { ਤਿਆਰੀ_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
+  { ਤਿਆਰੀ_explicit_clear, "explicit clear", EXPECT_NONE },
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+ਸਥਿਰ ਖਾਲੀ
+test_coroutine (ਖਾਲੀ)
 {
-  while (cur_subtest->setup_subtest)
+  ਜਦੋਂ (cur_subtest->ਤਿਆਰੀ_subtest)
     {
-      cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      cur_subtest->ਤਿਆਰੀ_subtest ();
+      ਜੇ (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+ਸਥਿਰ ਪੂਰਨ test_ਸਥਿਤੀ;
+ਸਥਿਰ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *co_ਢੇਰ_ਬਫਰ;
+ਸਥਿਰ size_t co_ਢੇਰ_ਮਾਪ;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+ਸਥਿਰ ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ
+ਗਿਣਤੀ_test_patterns (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *ਪਹਿਲਾ = memmem (buf, bufsiz, test_ਨਮੂਨਾ, ਨਮੂਨਾ_ਮਾਪ);
+  ਜੇ (!ਪਹਿਲਾ)
+    ਵਾਪਸ 0;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ cnt = 0;
+  ਲਈ (ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ i = 0; i < ਨਮੂਨਾ_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *p = ਪਹਿਲਾ + i*ਨਮੂਨਾ_ਮਾਪ;
+      ਜੇ (p + ਨਮੂਨਾ_ਮਾਪ - buf > bufsiz)
+	ਰੋਕੋ;
+      ਜੇ (memcmp (p, test_ਨਮੂਨਾ, ਨਮੂਨਾ_ਮਾਪ) == 0)
 	cnt++;
     }
-  return cnt;
+  ਵਾਪਸ cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+ਸਥਿਰ ਖਾਲੀ
+check_test_ਬਫਰ (ਗਿਣਤੀ test_expectation expected,
+		   ਅਚਲ ਅੱਖਰ *label, ਅਚਲ ਅੱਖਰ *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ cnt = ਗਿਣਤੀ_test_patterns (co_ਢੇਰ_ਬਫਰ, co_ਢੇਰ_ਮਾਪ);
+  ਚੋਣ (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
-	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+    ਹਾਲਤ EXPECT_NONE:
+      ਜੇ (cnt == 0)
+	ਲਿਖੋ ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
+      ਨਹੀਂਤਾਂ
 	{
-	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
-	  test_status = 1;
+	  ਲਿਖੋ ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
+	  test_ਸਥਿਤੀ = 1;
 	}
-      break;
+      ਰੋਕੋ;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
-	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+    ਹਾਲਤ EXPECT_SOME:
+      ਜੇ (cnt > 0)
+	ਲਿਖੋ ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
+      ਨਹੀਂਤਾਂ
 	{
-	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
-	  test_status = 1;
+	  ਲਿਖੋ ("FAIL: %s/%s: expected some got 0\n", label, stage);
+	  test_ਸਥਿਤੀ = 1;
 	}
-      break;
+      ਰੋਕੋ;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
-	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
-		PATTERN_REPS, cnt);
-      else
+     ਹਾਲਤ EXPECT_ALL:
+      ਜੇ (cnt == ਨਮੂਨਾ_REPS)
+	ਲਿਖੋ ("PASS: %s/%s: expected %d got %d\n", label, stage,
+		ਨਮੂਨਾ_REPS, cnt);
+      ਨਹੀਂਤਾਂ
 	{
-	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
-		  PATTERN_REPS, cnt);
-	  test_status = 1;
+	  ਲਿਖੋ ("FAIL: %s/%s: expected %d got %d\n", label, stage,
+		  ਨਮੂਨਾ_REPS, cnt);
+	  test_ਸਥਿਤੀ = 1;
 	}
-      break;
+      ਰੋਕੋ;
 
-    case NO_EXPECTATIONS:
-      printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
+    ਹਾਲਤ NO_EXPECTATIONS:
+      ਲਿਖੋ ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      ਰੋਕੋ;
 
-    default:
-      printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
-      test_status = 1;
+    ਮੂਲ:
+      ਲਿਖੋ ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
+	      label, stage, (ਪੂਰਨ)expected);
+      test_ਸਥਿਤੀ = 1;
     }
 }
 
-static void
-test_loop (void)
+ਸਥਿਰ ਖਾਲੀ
+test_loop (ਖਾਲੀ)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  ਜਦੋਂ (cur_subtest->ਤਿਆਰੀ_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      ਜੇ (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      check_test_ਬਫਰ (EXPECT_ALL, cur_subtest->label, "prepare");
+      ਜੇ (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
+      check_test_ਬਫਰ (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  ਜੇ (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  size_t ਪੰਨਾ_alignment = sysconf (_SC_PAGESIZE);
+  ਜੇ (ਪੰਨਾ_alignment < ਆਕਾਰ (ਖਾਲੀ *))
+    ਪੰਨਾ_alignment = ਆਕਾਰ (ਖਾਲੀ *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_ਢੇਰ_ਮਾਪ = SIGSTKSZ + TEST_ਬਫਰ_ਮਾਪ;
+  ਜੇ (co_ਢੇਰ_ਮਾਪ < ਪੰਨਾ_alignment * 4)
+    co_ਢੇਰ_ਮਾਪ = ਪੰਨਾ_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  ਖਾਲੀ *p;
+  ਪੂਰਨ err = posix_memalign (&p, ਪੰਨਾ_alignment, co_ਢੇਰ_ਮਾਪ);
+  ਜੇ (err || !p)
     {
-      printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      ਲਿਖੋ ("ERROR: allocating alt stack: %s\n", strerror (err));
+      ਵਾਪਸ 2;
     }
-  co_stack_buffer = p;
+  co_ਢੇਰ_ਬਫਰ = p;
 
-  if (getcontext (&uc_co))
+  ਜੇ (getcontext (&uc_co))
     {
-      printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      ਲਿਖੋ ("ERROR: allocating coroutine context: %s\n", strerror (err));
+      ਵਾਪਸ 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_ਢੇਰ_ਬਫਰ;
+  uc_co.uc_stack.ss_size = co_ਢੇਰ_ਮਾਪ;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  ਵਾਪਸ test_ਸਥਿਤੀ;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

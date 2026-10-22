@@ -15,43 +15,43 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <argz.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <errno.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
 
 error_t
-__argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+__argz_add_sep (ਅੱਖਰ **argz, size_t *argz_len, ਅਚਲ ਅੱਖਰ *string, ਪੂਰਨ delim)
 {
-  size_t nlen = strlen (string) + 1;
+  size_t nlen = ਲੜੀ_ਲੰਬਾਈ (string) + 1;
 
-  if (nlen > 1)
+  ਜੇ (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ਅਚਲ ਅੱਖਰ *rp;
+      ਅੱਖਰ *wp;
 
-      *argz = (char *) realloc (*argz, *argz_len + nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (ਅੱਖਰ *) realloc (*argz, *argz_len + nlen);
+      ਜੇ (*argz == ਨਿਰਾ)
+	ਵਾਪਸ ENOMEM;
 
       wp = *argz + *argz_len;
       rp = string;
-      do
-	if (*rp == delim)
+      ਕਰੋ
+	ਜੇ (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ਜੇ (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    ਨਹੀਂਤਾਂ
 	      --nlen;
 	  }
-	else
+	ਨਹੀਂਤਾਂ
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ਜਦੋਂ (*rp++ != '\0');
 
       *argz_len += nlen;
     }
 
-  return 0;
+  ਵਾਪਸ 0;
 }
-weak_alias (__argz_add_sep, argz_add_sep)
+weak_alias (__argz_add_sep, argz_ਜੋੜੋ_sep)

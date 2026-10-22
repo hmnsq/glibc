@@ -15,30 +15,30 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#ifndef STRNCAT
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ STRNCAT
 # undef strncat
 # define STRNCAT  strncat
 # define STRNCAT_PRIMARY
-#endif
+#ਜੇ_ਅੰਤ
 
-char *
-STRNCAT (char *s1, const char *s2, size_t n)
+ਅੱਖਰ *
+STRNCAT (ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2, size_t n)
 {
-  char *s = s1;
+  ਅੱਖਰ *s = s1;
 
   /* Find the end of S1.  */
-  s1 += strlen (s1);
+  s1 += ਲੜੀ_ਲੰਬਾਈ (s1);
 
   size_t ss = __strnlen (s2, n);
 
   s1[ss] = '\0';
-  memcpy (s1, s2, ss);
+  ਸਮ੍ਰਿਤੀ_ਨਕਲ (s1, s2, ss);
 
-  return s;
+  ਵਾਪਸ s;
 }
-#ifdef STRNCAT_PRIMARY
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ STRNCAT_PRIMARY
 strong_alias (STRNCAT, __strncat)
 libc_hidden_def (__strncat)
-#endif
+#ਜੇ_ਅੰਤ

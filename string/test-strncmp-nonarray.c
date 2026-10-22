@@ -1,4 +1,4 @@
-#define TEST_IDENTIFIER strncmp
-#define TEST_NAME "strncmp"
-typedef char CHAR;
-#include "test-Xncmp-nonarray.c"
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_IDENTIFIER ਲੜੀ_ਤੁਲਨਾ
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_NAME "strncmp"
+ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਅੱਖਰ CHAR;
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-Xncmp-nonarray.c"

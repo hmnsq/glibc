@@ -15,44 +15,44 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libintl.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <signal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libintl.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <tls-internal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libc-internal.h>
 
 /* Return a string describing the meaning of the signal number SIGNUM.  */
-char *
-strsignal (int signum)
+ਅੱਖਰ *
+strsignal (ਪੂਰਨ signum)
 {
-  const char *desc = __sigdescr_np (signum);
-  if (desc != NULL)
-    return _(desc);
+  ਅਚਲ ਅੱਖਰ *desc = __sigdescr_np (signum);
+  ਜੇ (desc != ਨਿਰਾ)
+    ਵਾਪਸ _(desc);
 
-  if (__libc_initial)
+  ਜੇ (__libc_initial)
     {
-      struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-      free (tls_internal->strsignal_buf);
+      ਬਣਤਰ tls_ਅੰਦਰੂਨੀ_t *tls_ਅੰਦਰੂਨੀ = __glibc_tls_internal ();
+      ਮੁਕਤ (tls_ਅੰਦਰੂਨੀ->strsignal_buf);
 
-      int r;
-#ifdef SIGRTMIN
-      if (signum >= SIGRTMIN && signum <= SIGRTMAX)
-	r = __asprintf (&tls_internal->strsignal_buf, _("Real-time signal %d"),
+      ਪੂਰਨ r;
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ SIGRTMIN
+      ਜੇ (signum >= SIGRTMIN && signum <= SIGRTMAX)
+	r = __asprintf (&tls_ਅੰਦਰੂਨੀ->strsignal_buf, _("Real-time signal %d"),
 			signum - SIGRTMIN);
-      else
-#endif
-	r = __asprintf (&tls_internal->strsignal_buf, _("Unknown signal %d"),
+      ਨਹੀਂਤਾਂ
+#ਜੇ_ਅੰਤ
+	r = __asprintf (&tls_ਅੰਦਰੂਨੀ->strsignal_buf, _("Unknown signal %d"),
 			signum);
 
-      if (r >= 0)
-	return tls_internal->strsignal_buf;
-      else
-	tls_internal->strsignal_buf = NULL;
+      ਜੇ (r >= 0)
+	ਵਾਪਸ tls_ਅੰਦਰੂਨੀ->strsignal_buf;
+      ਨਹੀਂਤਾਂ
+	tls_ਅੰਦਰੂਨੀ->strsignal_buf = ਨਿਰਾ;
     }
   /* Fall through on asprintf error, and for !__libc_initial:
      secondary namespaces use a different malloc and cannot
      participate in the buffer management.  */
-  return _("Unknown signal");
+  ਵਾਪਸ _("Unknown signal");
 }

@@ -15,42 +15,42 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ HAVE_CONFIG_H
 # include "config.h"
-#endif
+#ਜੇ_ਅੰਤ
 
-#include <stdio.h>
-#include <sys/types.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#ਜੇ defined _LIBC || defined STDC_ਸਿਰਲੇਖਾਂ
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-#endif
+#ਨਹੀਂਤਾਂ
+ਅੱਖਰ *ਸਮ੍ਰਿਤੀ_ਦਿਓ ();
+#ਜੇ_ਅੰਤ
 
-#undef __strndup
-#undef strndup
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ __strndup
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ strndup
 
-#ifndef weak_alias
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ weak_alias
 # define __strndup strndup
-#endif
+#ਜੇ_ਅੰਤ
 
-char *
-__strndup (const char *s, size_t n)
+ਅੱਖਰ *
+__strndup (ਅਚਲ ਅੱਖਰ *s, size_t n)
 {
   size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  ਅੱਖਰ *new = (ਅੱਖਰ *) ਸਮ੍ਰਿਤੀ_ਦਿਓ (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  ਜੇ (new == ਨਿਰਾ)
+    ਵਾਪਸ ਨਿਰਾ;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  ਵਾਪਸ (ਅੱਖਰ *) ਸਮ੍ਰਿਤੀ_ਨਕਲ (new, s, len);
 }
-#ifdef libc_hidden_def
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ libc_hidden_def
 libc_hidden_def (__strndup)
-#endif
-#ifdef weak_alias
+#ਜੇ_ਅੰਤ
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ weak_alias
 weak_alias (__strndup, strndup)
-#endif
+#ਜੇ_ਅੰਤ

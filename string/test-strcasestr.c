@@ -16,137 +16,137 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "strcasestr"
-#include "test-string.h"
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_MAIN
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_NAME "strcasestr"
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-string.h"
 
 
-#define STRCASESTR c_strcasestr
-#define NO_ALIAS
-#define __strncasecmp strncasecmp
-#define __strnlen strnlen
-#include "strcasestr.c"
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRCASESTR c_strcasestr
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ NO_ALIAS
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ __strncasecmp strncasecmp
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ __strnlen strnlen
+#ਅਨ੍ਤਰ੍ਭਾਵ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+ਸਥਿਰ ਅੱਖਰ *
+simple_strcasestr (ਅਚਲ ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2)
 {
-  ssize_t s1len = strlen (s1);
-  ssize_t s2len = strlen (s2);
+  ssize_t s1len = ਲੜੀ_ਲੰਬਾਈ (s1);
+  ssize_t s2len = ਲੜੀ_ਲੰਬਾਈ (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ਜੇ (s2len > s1len)
+    ਵਾਪਸ ਨਿਰਾ;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  ਲਈ (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      ਲਈ (j = 0; j < s2len; ++j)
+	ਜੇ (tolower (s1[i + j]) != tolower (s2[j]))
+	  ਰੋਕੋ;
+      ਜੇ (j == s2len)
+	ਵਾਪਸ (ਅੱਖਰ *) s1 + i;
     }
 
-  return NULL;
+  ਵਾਪਸ ਨਿਰਾ;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਅੱਖਰ *(*proto_t) (ਅਚਲ ਅੱਖਰ *, ਅਚਲ ਅੱਖਰ *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+ਸਥਿਰ ਪੂਰਨ
+check_ਨਤੀਜਾ (impl_t *impl, ਅਚਲ ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2,
+	      ਅੱਖਰ *exp_ਨਤੀਜਾ)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  ਅੱਖਰ *ਨਤੀਜਾ = CALL (impl, s1, s2);
+  ਜੇ (ਨਤੀਜਾ != exp_ਨਤੀਜਾ)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (ਨਤੀਜਾ == ਨਿਰਾ) ? "(null)" : ਨਤੀਜਾ,
+	     (exp_ਨਤੀਜਾ == ਨਿਰਾ) ? "(null)" : exp_ਨਤੀਜਾ);
       ret = 1;
-      return -1;
+      ਵਾਪਸ -1;
     }
-  return 0;
+  ਵਾਪਸ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+ਸਥਿਰ ਖਾਲੀ
+do_one_test (impl_t *impl, ਅਚਲ ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2, ਅੱਖਰ *exp_ਨਤੀਜਾ)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ਜੇ (check_ਨਤੀਜਾ (impl, s1, s2, exp_ਨਤੀਜਾ) < 0)
+    ਵਾਪਸ;
 }
 
 
-static void
+ਸਥਿਰ ਖਾਲੀ
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 ਪੂਰਨ fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  ਅੱਖਰ *s1 = (ਅੱਖਰ *) (buf1 + align1);
+  ਅੱਖਰ *s2 = (ਅੱਖਰ *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  ਸਥਿਰ ਅਚਲ ਅੱਖਰ d[] = "1234567890abcxyz";
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ dl (ਆਕਾਰ (d) - 1)
+  ਅੱਖਰ *ss2 = s2;
+  ਲਈ (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ਜੇ (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      ਅੱਖਰ *ss1 = s1;
+      ਲਈ (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
-	  memcpy (ss1, d, t);
+	  ਸਮ੍ਰਿਤੀ_ਨਕਲ (ss1, d, t);
 	  ++ss1[len2 > 7 ? 7 : len2 - 1];
 	  ss1 += t;
 	}
     }
-  else
+  ਨਹੀਂਤਾਂ
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
-	s1[len1 - len2 + i] = toupper (s2[i]);
+      ਲਈ (size_t i = 0; i < len2; ++i)
+	s1[len1 - len2 + i] = ਵੱਡਾ_ਅੱਖਰ (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? ਨਿਰਾ : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+ਸਥਿਰ ਖਾਲੀ
+check1 (ਖਾਲੀ)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ਅਚਲ ਅੱਖਰ s1[] = "AOKB";
+  ਅਚਲ ਅੱਖਰ s2[] = "OK";
+  ਅੱਖਰ *exp_ਨਤੀਜਾ;
 
-  exp_result = simple_strcasestr (s1, s2);
+  exp_ਨਤੀਜਾ = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_ਨਤੀਜਾ (impl, s1, s2, exp_ਨਤੀਜਾ);
 }
 
-static int
-test_main (void)
+ਸਥਿਰ ਪੂਰਨ
+test_main (ਖਾਲੀ)
 {
   test_init ();
 
   check1 ();
 
-  printf ("%23s", "");
+  ਲਿਖੋ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ਲਿਖੋ ("\t%s", impl->name);
+  ਅੱਖਰ_ਲਿਖੋ ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  ਲਈ (size_t klen = 2; klen < 32; ++klen)
+    ਲਈ (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -185,10 +185,10 @@ test_main (void)
 	do_test (15, 15, hlen, klen, 1);
       }
 
-  do_test (0, 0, page_size - 1, 16, 0);
-  do_test (0, 0, page_size - 1, 16, 1);
+  do_test (0, 0, ਪੰਨਾ_ਮਾਪ - 1, 16, 0);
+  do_test (0, 0, ਪੰਨਾ_ਮਾਪ - 1, 16, 1);
 
-  return ret;
+  ਵਾਪਸ ret;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

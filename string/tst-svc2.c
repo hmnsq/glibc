@@ -1,61 +1,61 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
 
-static struct
+ਸਥਿਰ ਬਣਤਰ
 {
-  const char *str1;
-  const char *str2;
+  ਅਚਲ ਅੱਖਰ *str1;
+  ਅਚਲ ਅੱਖਰ *str2;
 } tests[] =
   {
     { "B0075022800016.gbp.corp.com", "B007502280067.gbp.corp.com" },
     { "B0075022800016.gbp.corp.com", "B007502357019.GBP.CORP.COM" },
     { "B007502280067.gbp.corp.com", "B007502357019.GBP.CORP.COM" }
   };
-#define ntests (sizeof (tests) / sizeof (tests[0]))
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ ntests (ਆਕਾਰ (tests) / ਆਕਾਰ (tests[0]))
 
 
-int
-compare (const char *str1, const char *str2, int exp)
+ਪੂਰਨ
+compare (ਅਚਲ ਅੱਖਰ *str1, ਅਚਲ ਅੱਖਰ *str2, ਪੂਰਨ ਘਾਤਾਂਕ)
 {
-  int c = strverscmp (str1, str2);
-  if (c != 0)
-    c /= abs (c);
-  return c != exp;
+  ਪੂਰਨ c = strverscmp (str1, str2);
+  ਜੇ (c != 0)
+    c /= ਨਿਰਪੇਖ (c);
+  ਵਾਪਸ c != ਘਾਤਾਂਕ;
 }
 
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  int res = 0;
-  for (int i = 0; i < ntests; ++i)
+  ਪੂਰਨ res = 0;
+  ਲਈ (ਪੂਰਨ i = 0; i < ntests; ++i)
     {
-      if (compare (tests[i].str1, tests[i].str2, -1))
+      ਜੇ (compare (tests[i].str1, tests[i].str2, -1))
 	{
-	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
+	  ਲਿਖੋ ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
 	  res = 1;
 	}
-      if (compare (tests[i].str2, tests[i].str1, +1))
+      ਜੇ (compare (tests[i].str2, tests[i].str1, +1))
 	{
-	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
+	  ਲਿਖੋ ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
 	  res = 1;
 	}
-      char *copy1 = strdupa (tests[i].str1);
-      if (compare (tests[i].str1, copy1, 0))
+      ਅੱਖਰ *copy1 = strdupa (tests[i].str1);
+      ਜੇ (compare (tests[i].str1, copy1, 0))
 	{
-	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
+	  ਲਿਖੋ ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
 	  res = 1;
 	}
-      char *copy2 = strdupa (tests[i].str2);
-      if (compare (tests[i].str2, copy2, 0))
+      ਅੱਖਰ *copy2 = strdupa (tests[i].str2);
+      ਜੇ (compare (tests[i].str2, copy2, 0))
 	{
-	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
+	  ਲਿਖੋ ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
 	  res = 1;
 	}
     }
-  return res;
+  ਵਾਪਸ res;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

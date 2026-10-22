@@ -16,63 +16,63 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRNCPY_RESULT(dst, len, n) ((dst) + ((len) > (n) ? (n) : (len)))
-#define TEST_MAIN
-#ifndef WIDE
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRNCPY_ਨਤੀਜਾ(dst, len, n) ((dst) + ((len) > (n) ? (n) : (len)))
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_MAIN
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
 # define TEST_NAME "stpncpy"
-#else
+#ਨਹੀਂਤਾਂ
 # define TEST_NAME "wcpncpy"
-#endif /* WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#ਜੇ_ਅੰਤ /* WIDE */
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-string.h"
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
+# define CHAR ਅੱਖਰ
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#ਨਹੀਂਤਾਂ
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
 # define STUPID_STPNCPY stupid_wcpncpy
 # define STPNCPY wcpncpy
 # define STRNLEN wcsnlen
-#endif /* WIDE */
+#ਜੇ_ਅੰਤ /* WIDE */
 
-CHAR *SIMPLE_STPNCPY (CHAR *, const CHAR *, size_t);
-CHAR *STUPID_STPNCPY (CHAR *, const CHAR *, size_t);
+CHAR *SIMPLE_STPNCPY (CHAR *, ਅਚਲ CHAR *, size_t);
+CHAR *STUPID_STPNCPY (CHAR *, ਅਚਲ CHAR *, size_t);
 
 IMPL (STUPID_STPNCPY, 0)
 IMPL (SIMPLE_STPNCPY, 0)
 IMPL (STPNCPY, 1)
 
 CHAR *
-SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STPNCPY (CHAR *dst, ਅਚਲ CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  ਜਦੋਂ (n--)
+    ਜੇ ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	ਲਈ (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	ਵਾਪਸ dst - 1;
       }
-  return dst;
+  ਵਾਪਸ dst;
 }
 
 CHAR *
-STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+STUPID_STPNCPY (CHAR *dst, ਅਚਲ CHAR *src, size_t n)
 {
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  ਲਈ (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  ਲਈ (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  ਵਾਪਸ dst + nc;
 }
 
-#undef CHAR
-#include "test-strncpy.c"
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ CHAR
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-strncpy.c"

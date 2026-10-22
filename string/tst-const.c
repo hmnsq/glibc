@@ -16,92 +16,92 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libc-diag.h>
 
-void *vp;
-const void *cvp;
-int *ip;
-const int *cip;
-char *cp;
-const char *ccp;
-int c;
+ਖਾਲੀ *vp;
+ਅਚਲ ਖਾਲੀ *cvp;
+ਪੂਰਨ *ip;
+ਅਚਲ ਪੂਰਨ *cip;
+ਅੱਖਰ *cp;
+ਅਚਲ ਅੱਖਰ *ccp;
+ਪੂਰਨ c;
 size_t sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CHECK_TYPE(ਵਿਅੰਜਕ, TYPE)					\
+  _Static_assert (_Generic (ਵਿਅੰਜਕ, TYPE: 1), "type check")
 
-static int
-do_test (void)
+ਸਥਿਰ ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
   /* This is a compilation test.  */
-  CHECK_TYPE (memchr (vp, c, sz), void *);
-  CHECK_TYPE (memchr (cvp, c, sz), const void *);
-  CHECK_TYPE (memchr (ip, c, sz), void *);
-  CHECK_TYPE (memchr (cip, c, sz), const void *);
-  CHECK_TYPE (memchr (cp, c, sz), void *);
-  CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (vp, c, sz), ਖਾਲੀ *);
+  CHECK_TYPE (memchr (cvp, c, sz), ਅਚਲ ਖਾਲੀ *);
+  CHECK_TYPE (memchr (ip, c, sz), ਖਾਲੀ *);
+  CHECK_TYPE (memchr (cip, c, sz), ਅਚਲ ਖਾਲੀ *);
+  CHECK_TYPE (memchr (cp, c, sz), ਖਾਲੀ *);
+  CHECK_TYPE (memchr (ccp, c, sz), ਅਚਲ ਖਾਲੀ *);
+  DIAG_ਧੱਕੋ_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (memchr (0, c, sz), void *);
-  CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((memchr) (cvp, c, sz), void *);
-  CHECK_TYPE (strchr (vp, c), char *);
-  CHECK_TYPE (strchr (cvp, c), const char *);
-  CHECK_TYPE (strchr (cp, c), char *);
-  CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (0, c, sz), ਖਾਲੀ *);
+  CHECK_TYPE (memchr ((ਖਾਲੀ *) 0, c, sz), ਖਾਲੀ *);
+  DIAG_ਕੱਢੋ_NEEDS_COMMENT;
+  CHECK_TYPE ((memchr) (cvp, c, sz), ਖਾਲੀ *);
+  CHECK_TYPE (strchr (vp, c), ਅੱਖਰ *);
+  CHECK_TYPE (strchr (cvp, c), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (strchr (cp, c), ਅੱਖਰ *);
+  CHECK_TYPE (strchr (ccp, c), ਅਚਲ ਅੱਖਰ *);
+  DIAG_ਧੱਕੋ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strchr (0, c), char *);
-  CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strchr) (ccp, c), char *);
-  CHECK_TYPE (strpbrk (vp, vp), char *);
-  CHECK_TYPE (strpbrk (vp, cvp), char *);
-  CHECK_TYPE (strpbrk (cvp, vp), const char *);
-  CHECK_TYPE (strpbrk (cvp, cvp), const char *);
-  CHECK_TYPE (strpbrk (cp, cp), char *);
-  CHECK_TYPE (strpbrk (cp, ccp), char *);
-  CHECK_TYPE (strpbrk (ccp, cp), const char *);
-  CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strchr (0, c), ਅੱਖਰ *);
+  CHECK_TYPE (strchr ((ਖਾਲੀ *) 0, c), ਅੱਖਰ *);
+  DIAG_ਕੱਢੋ_NEEDS_COMMENT;
+  CHECK_TYPE ((strchr) (ccp, c), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (vp, vp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (vp, cvp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (cvp, vp), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (cvp, cvp), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (cp, cp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (cp, ccp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (ccp, cp), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (ccp, ccp), ਅਚਲ ਅੱਖਰ *);
+  DIAG_ਧੱਕੋ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strpbrk (0, cp), char *);
-  CHECK_TYPE (strpbrk (0, ccp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
-  CHECK_TYPE (strrchr (vp, c), char *);
-  CHECK_TYPE (strrchr (cvp, c), const char *);
-  CHECK_TYPE (strrchr (cp, c), char *);
-  CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strpbrk (0, cp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk (0, ccp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk ((ਖਾਲੀ *) 0, cp), ਅੱਖਰ *);
+  CHECK_TYPE (strpbrk ((ਖਾਲੀ *) 0, ccp), ਅੱਖਰ *);
+  DIAG_ਕੱਢੋ_NEEDS_COMMENT;
+  CHECK_TYPE ((strpbrk) (ccp, ccp), ਅੱਖਰ *);
+  CHECK_TYPE (strrchr (vp, c), ਅੱਖਰ *);
+  CHECK_TYPE (strrchr (cvp, c), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (strrchr (cp, c), ਅੱਖਰ *);
+  CHECK_TYPE (strrchr (ccp, c), ਅਚਲ ਅੱਖਰ *);
+  DIAG_ਧੱਕੋ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strrchr (0, c), char *);
-  CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strrchr) (ccp, c), char *);
-  CHECK_TYPE (strstr (vp, vp), char *);
-  CHECK_TYPE (strstr (vp, cvp), char *);
-  CHECK_TYPE (strstr (cvp, vp), const char *);
-  CHECK_TYPE (strstr (cvp, cvp), const char *);
-  CHECK_TYPE (strstr (cp, cp), char *);
-  CHECK_TYPE (strstr (cp, ccp), char *);
-  CHECK_TYPE (strstr (ccp, cp), const char *);
-  CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strrchr (0, c), ਅੱਖਰ *);
+  CHECK_TYPE (strrchr ((ਖਾਲੀ *) 0, c), ਅੱਖਰ *);
+  DIAG_ਕੱਢੋ_NEEDS_COMMENT;
+  CHECK_TYPE ((strrchr) (ccp, c), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (vp, vp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (vp, cvp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (cvp, vp), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (cvp, cvp), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (cp, cp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (cp, ccp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (ccp, cp), ਅਚਲ ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (ccp, ccp), ਅਚਲ ਅੱਖਰ *);
+  DIAG_ਧੱਕੋ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strstr (0, cp), char *);
-  CHECK_TYPE (strstr (0, ccp), char *);
-  CHECK_TYPE (strstr ((void *) 0, cp), char *);
-  CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (0, cp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ (0, ccp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ ((ਖਾਲੀ *) 0, cp), ਅੱਖਰ *);
+  CHECK_TYPE (ਲੜੀ_ਖੋਜ ((ਖਾਲੀ *) 0, ccp), ਅੱਖਰ *);
+  DIAG_ਕੱਢੋ_NEEDS_COMMENT;
+  CHECK_TYPE ((ਲੜੀ_ਖੋਜ) (ccp, ccp), ਅੱਖਰ *);
+  ਵਾਪਸ 0;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

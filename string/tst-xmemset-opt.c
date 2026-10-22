@@ -1,2 +1,2 @@
-#define TEST_MEMSET_EXPLICIT 1
-#include "tst-xbzero-opt.c"
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_MEMSET_EXPLICIT 1
+#ਅਨ੍ਤਰ੍ਭਾਵ "tst-xbzero-opt.c"

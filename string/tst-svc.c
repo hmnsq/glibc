@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ  MAX_ਲੜੀਆਂ      256
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ  MAX_ਸਤਰ_ਮਾਪ    32
 
-static int
-compare (const void *p1, const void *p2)
+ਸਥਿਰ ਪੂਰਨ
+compare (ਅਚਲ ਖਾਲੀ *p1, ਅਚਲ ਖਾਲੀ *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  ਵਾਪਸ strverscmp (*((ਅੱਖਰ **) p1), *((ਅੱਖਰ **) p2));
 }
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  ਅੱਖਰ ਸਤਰ[MAX_ਸਤਰ_ਮਾਪ + 1];
+  ਅੱਖਰ *str[MAX_ਲੜੀਆਂ];
+  ਪੂਰਨ  ਗਿਣਤੀ_2 = 0;
+  ਪੂਰਨ  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  ਜਦੋਂ (ਗਿਣਤੀ_2 < MAX_ਲੜੀਆਂ && fgets (ਸਤਰ, MAX_ਸਤਰ_ਮਾਪ, stdin) != ਨਿਰਾ)
     {
-      n = strlen (line) - 1;
+      n = ਲੜੀ_ਲੰਬਾਈ (ਸਤਰ) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      ਜੇ (ਸਤਰ[n] == '\n')
+        ਸਤਰ[n] = '\0';
 
-      str[count] = strdup (line);
+      str[ਗਿਣਤੀ_2] = strdup (ਸਤਰ);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      ਜੇ (str[ਗਿਣਤੀ_2] == ਨਿਰਾ)
+        ਬਾਹਰ_ਨਿਕਲੋ (EXIT_FAILURE);
 
-      ++count;
+      ++ਗਿਣਤੀ_2;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, ਗਿਣਤੀ_2, ਆਕਾਰ (ਅੱਖਰ *), compare);
 
-  for (i = 0; i < count; ++i)
+  ਲਈ (i = 0; i < ਗਿਣਤੀ_2; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  ਵਾਪਸ EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

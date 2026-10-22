@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libintl.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libintl.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_r (int errnum, char *buf, size_t buflen)
+ਅੱਖਰ *
+__strerror_r (ਪੂਰਨ errnum, ਅੱਖਰ *buf, size_t buflen)
 {
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  ਅੱਖਰ *err = (ਅੱਖਰ *) __get_errlist (errnum);
+  ਜੇ (__glibc_unlikely (err == ਨਿਰਾ))
     {
       __snprintf (buf, buflen, "%s%d", _("Unknown error "), errnum);
-      return buf;
+      ਵਾਪਸ buf;
     }
 
-  return _(err);
+  ਵਾਪਸ _(err);
 }
 weak_alias (__strerror_r, strerror_r)
 libc_hidden_def (__strerror_r)

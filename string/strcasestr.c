@@ -26,71 +26,71 @@
  * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de	*/
 
 /* Specification.  */
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <strings.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <ctype.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdbool.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <strings.h>
 
-#define TOLOWER(Ch) tolower (Ch)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TOLOWER(Ch) tolower (Ch)
 
 /* Two-Way algorithm.  */
-#define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ RETURN_TYPE ਅੱਖਰ *
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ ਉਪਲਬਧ(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((ਖਾਲੀ*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#define CHECK_EOL (1)
-#define RET0_IF_0(a) if (!a) goto ret0
-#define CANON_ELEMENT(c) TOLOWER (c)
-#define CMP_FUNC(p1, p2, l)				\
-  __strncasecmp ((const char *) (p1), (const char *) (p2), l)
-#include "str-two-way.h"
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CHECK_EOL (1)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ RET0_IF_0(a) ਜੇ (!a) ਜਾਓ ret0
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CANON_ELEMENT(c) TOLOWER (c)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CMP_FUNC(p1, p2, l)				\
+  __strncasecmp ((ਅਚਲ ਅੱਖਰ *) (p1), (ਅਚਲ ਅੱਖਰ *) (p2), l)
+#ਅਨ੍ਤਰ੍ਭਾਵ "str-two-way.h"
 
-#undef strcasestr
-#undef __strcasestr
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ strcasestr
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ __strcasestr
 
-#ifndef STRCASESTR
-#define STRCASESTR __strcasestr
-#endif
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ STRCASESTR
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRCASESTR __strcasestr
+#ਜੇ_ਅੰਤ
 
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using
    case-insensitive comparison.  This function gives unspecified
    results in multibyte locales.  */
-char *
-STRCASESTR (const char *haystack, const char *needle)
+ਅੱਖਰ *
+STRCASESTR (ਅਚਲ ਅੱਖਰ *haystack, ਅਚਲ ਅੱਖਰ *needle)
 {
   size_t needle_len; /* Length of NEEDLE.  */
   size_t haystack_len; /* Known minimum length of HAYSTACK.  */
 
   /* Handle empty NEEDLE special case.  */
-  if (needle[0] == '\0')
-    return (char *) haystack;
+  ਜੇ (needle[0] == '\0')
+    ਵਾਪਸ (ਅੱਖਰ *) haystack;
 
   /* Ensure HAYSTACK length is at least as long as NEEDLE length.
      Since a match may occur early on in a huge HAYSTACK, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  needle_len = strlen (needle);
+  needle_len = ਲੜੀ_ਲੰਬਾਈ (needle);
   haystack_len = __strnlen (haystack, needle_len + 256);
-  if (haystack_len < needle_len)
-    return NULL;
+  ਜੇ (haystack_len < needle_len)
+    ਵਾਪਸ ਨਿਰਾ;
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See
      ISO C 99 section 6.2.6.1.  */
-  if (needle_len < LONG_NEEDLE_THRESHOLD)
-    return two_way_short_needle ((const unsigned char *) haystack,
+  ਜੇ (needle_len < LONG_NEEDLE_ਹੱਦ)
+    ਵਾਪਸ two_way_short_needle ((ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) haystack,
 				 haystack_len,
-				 (const unsigned char *) needle,
+				 (ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) needle,
 				 needle_len);
-  return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
-			      (const unsigned char *) needle,
+  ਵਾਪਸ two_way_long_needle ((ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) haystack, haystack_len,
+			      (ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) needle,
 			      needle_len);
 }
 
-#undef LONG_NEEDLE_THRESHOLD
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ LONG_NEEDLE_ਹੱਦ
 
-#ifndef NO_ALIAS
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ NO_ALIAS
 weak_alias (__strcasestr, strcasestr)
-#endif
+#ਜੇ_ਅੰਤ

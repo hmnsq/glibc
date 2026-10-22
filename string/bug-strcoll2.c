@@ -16,76 +16,76 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <locale.h>
 
 /* An incorrect strcoll optimization resulted in incorrect
    results from strcoll for cs_CZ and da_DK.  */
 
-int
-test_cs_CZ (void)
+ਪੂਰਨ
+test_cs_CZ (ਖਾਲੀ)
 {
-  const char t1[] = "config";
-  const char t2[] = "choose";
-  if (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
+  ਅਚਲ ਅੱਖਰ t1[] = "config";
+  ਅਚਲ ਅੱਖਰ t2[] = "choose";
+  ਜੇ (setlocale (LC_ALL, "cs_CZ.UTF-8") == ਨਿਰਾ)
     {
       perror ("setlocale");
-      return 1;
+      ਵਾਪਸ 1;
     }
   /* In Czech the digraph ch sorts after c, therefore we expect
      config to sort before choose.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
-  printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
-  printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  ਪੂਰਨ a = strcoll (t1, t2);
+  ਪੂਰਨ b = strcoll (t2, t1);
+  ਲਿਖੋ ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
+  ਲਿਖੋ ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
+  ਜੇ (a < 0 && b > 0)
     {
       puts ("PASS: config < choose");
-      return 0;
+      ਵਾਪਸ 0;
     }
-  else
+  ਨਹੀਂਤਾਂ
     {
       puts ("FAIL: Wrong sorting in cs_CZ.UTF-8.");
-      return 1;
+      ਵਾਪਸ 1;
     }
 }
 
-int
-test_da_DK (void)
+ਪੂਰਨ
+test_da_DK (ਖਾਲੀ)
 {
-  const char t1[] = "AS";
-  const char t2[] = "AA";
-  if (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
+  ਅਚਲ ਅੱਖਰ t1[] = "AS";
+  ਅਚਲ ਅੱਖਰ t2[] = "AA";
+  ਜੇ (setlocale (LC_ALL, "da_DK.ISO-8859-1") == ਨਿਰਾ)
     {
       perror ("setlocale");
-      return 1;
+      ਵਾਪਸ 1;
     }
   /* AA should be treated as the last letter of the Danish alphabet,
      hence sorting after AS.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
-  printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
-  printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  ਪੂਰਨ a = strcoll (t1, t2);
+  ਪੂਰਨ b = strcoll (t2, t1);
+  ਲਿਖੋ ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
+  ਲਿਖੋ ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
+  ਜੇ (a < 0 && b > 0)
     {
       puts ("PASS: AS < AA");
-      return 0;
+      ਵਾਪਸ 0;
     }
-  else
+  ਨਹੀਂਤਾਂ
     {
       puts ("FAIL: Wrong sorting in da_DK.ISO-8859-1");
-      return 1;
+      ਵਾਪਸ 1;
     }
 }
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  int err = 0;
+  ਪੂਰਨ err = 0;
   err |= test_cs_CZ ();
   err |= test_da_DK ();
-  return err;
+  ਵਾਪਸ err;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

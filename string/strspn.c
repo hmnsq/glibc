@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdint.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libc-pointer-arith.h>
 
-#undef strspn
-#ifndef STRSPN
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ strspn
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ STRSPN
 # define STRSPN strspn
-#endif
+#ਜੇ_ਅੰਤ
 
 /* Return the length of the maximum initial segment
    of S which contains only characters in ACCEPT.  */
 size_t
-STRSPN (const char *str, const char *accept)
+STRSPN (ਅਚਲ ਅੱਖਰ *str, ਅਚਲ ਅੱਖਰ *accept)
 {
-  if (accept[0] == '\0')
-    return 0;
-  if (__glibc_unlikely (accept[1] == '\0'))
+  ਜੇ (accept[0] == '\0')
+    ਵਾਪਸ 0;
+  ਜੇ (__glibc_unlikely (accept[1] == '\0'))
     {
-      const char *a = str;
-      for (; *str == *accept; str++);
-      return str - a;
+      ਅਚਲ ਅੱਖਰ *a = str;
+      ਲਈ (; *str == *accept; str++);
+      ਵਾਪਸ str - a;
     }
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ ਸਾਰਣੀ[256];
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *p = memset (ਸਾਰਣੀ, 0, 64);
   memset (p + 64, 0, 64);
   memset (p + 128, 0, 64);
   memset (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) accept;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *s = (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ*) accept;
   /* Different from strcspn it does not add the NULL on the table
      so can avoid check if str[i] is NULL, since table['\0'] will
      be 0 and thus stopping the loop check.  */
-  do
+  ਕਰੋ
     p[*s++] = 1;
-  while (*s);
+  ਜਦੋਂ (*s);
 
-  s = (unsigned char*) str;
-  if (!p[s[0]]) return 0;
-  if (!p[s[1]]) return 1;
-  if (!p[s[2]]) return 2;
-  if (!p[s[3]]) return 3;
+  s = (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ*) str;
+  ਜੇ (!p[s[0]]) ਵਾਪਸ 0;
+  ਜੇ (!p[s[1]]) ਵਾਪਸ 1;
+  ਜੇ (!p[s[2]]) ਵਾਪਸ 2;
+  ਜੇ (!p[s[3]]) ਵਾਪਸ 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) PTR_ALIGN_ਥੱਲੇ (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do {
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਪੂਰਨ c0, c1, c2, c3;
+  ਕਰੋ {
       s += 4;
       c0 = p[s[0]];
       c1 = p[s[1]];
       c2 = p[s[2]];
       c3 = p[s[3]];
-  } while ((c0 & c1 & c2 & c3) != 0);
+  } ਜਦੋਂ ((c0 & c1 & c2 & c3) != 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 & c1) == 0 ? count + c0 : count + c2 + 2;
+  size_t ਗਿਣਤੀ_2 = s - (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) str;
+  ਵਾਪਸ (c0 & c1) == 0 ? ਗਿਣਤੀ_2 + c0 : ਗਿਣਤੀ_2 + c2 + 2;
 }
 libc_hidden_builtin_def (strspn)

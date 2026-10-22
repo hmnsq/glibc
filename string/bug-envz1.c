@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <envz.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-static const struct
+ਸਥਿਰ ਅਚਲ ਬਣਤਰ
 {
-  const char *s;
-  int in_result;
+  ਅਚਲ ਅੱਖਰ *s;
+  ਪੂਰਨ ਵਿੱਚ_ਨਤੀਜਾ;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,54 +22,54 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ nstrs (ਆਕਾਰ (strs) / ਆਕਾਰ (strs[0]))
 
 
-int
-do_test (void)
+ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
 
-  size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  size_t ਮਾਪ = 0;
+  ਅੱਖਰ *str = ਸਮ੍ਰਿਤੀ_ਦਿਓ (100);
+  ਜੇ (str == ਨਿਰਾ)
     {
       puts ("out of memory");
-      return 1;
+      ਵਾਪਸ 1;
     }
 
-  char **argz = &str;
+  ਅੱਖਰ **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
-    argz_add_sep (argz, &size, strs[i].s, '\0');
+  ਲਈ (ਪੂਰਨ i = 0; i < nstrs; ++i)
+    argz_ਜੋੜੋ_sep (argz, &ਮਾਪ, strs[i].s, '\0');
 
-  printf ("calling envz_strip with size=%zu\n", size);
-  envz_strip (argz, &size);
+  ਲਿਖੋ ("calling envz_strip with size=%zu\n", ਮਾਪ);
+  envz_strip (argz, &ਮਾਪ);
 
-  int result = 0;
-  printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  ਪੂਰਨ ਨਤੀਜਾ = 0;
+  ਲਿਖੋ ("new size=%zu\n", ਮਾਪ);
+  ਲਈ (ਪੂਰਨ i = 0; i < nstrs; ++i)
+    ਜੇ (strs[i].ਵਿੱਚ_ਨਤੀਜਾ)
       {
-        char name[2];
+        ਅੱਖਰ name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        ਅੱਖਰ *e = envz_ਇੰਦਰਾਜ (*argz, ਮਾਪ, name);
+        ਜੇ (e == ਨਿਰਾ)
           {
-            printf ("entry '%s' not found\n", name);
-            result = 1;
+            ਲਿਖੋ ("entry '%s' not found\n", name);
+            ਨਤੀਜਾ = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        ਨਹੀਂਤਾਂ ਜੇ (strcmp (e, strs[i].s) != 0)
           {
-            printf ("entry '%s' does not match: is '%s', expected '%s'\n",
+            ਲਿਖੋ ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
-            result = 1;
+            ਨਤੀਜਾ = 1;
           }
       }
 
-  free (*argz);
-  return result;
+  ਮੁਕਤ (*argz);
+  ਵਾਪਸ ਨਤੀਜਾ;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

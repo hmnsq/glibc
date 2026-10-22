@@ -15,204 +15,204 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <langinfo.h>
-#include <locale.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/param.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <assert.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <langinfo.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <locale.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stddef.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdint.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <sys/param.h>
 
-#ifndef STRING_TYPE
-# define STRING_TYPE char
-# define USTRING_TYPE unsigned char
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ STRING_TYPE
+# define STRING_TYPE ਅੱਖਰ
+# define USTRING_TYPE ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ
 # define STRXFRM __strxfrm_l
-# define STRLEN strlen
+# define STRLEN ਲੜੀ_ਲੰਬਾਈ
 # define STPNCPY __stpncpy
-# define WEIGHT_H "../locale/weight.h"
+# define ਭਾਰ_H "../locale/weight.h"
 # define SUFFIX	MB
 # define L(arg) arg
-#endif
+#ਜੇ_ਅੰਤ
 
-#define CONCAT(a,b) CONCAT1(a,b)
-#define CONCAT1(a,b) a##b
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CONCAT(a,b) CONCAT1(a,b)
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ CONCAT1(a,b) a##b
 
 /* Maximum string size that is calculated with cached indices.  Right now this
    is an arbitrary value open to optimizations.  SMALL_STR_SIZE * 4 has to be
    lower than __MAX_ALLOCA_CUTOFF.  Keep localedata/xfrm-test.c in sync.  */
-#define SMALL_STR_SIZE 4095
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ SMALL_STR_ਮਾਪ 4095
 
-#include "../locale/localeinfo.h"
-#include WEIGHT_H
+#ਅਨ੍ਤਰ੍ਭਾਵ "../locale/localeinfo.h"
+#ਅਨ੍ਤਰ੍ਭਾਵ ਭਾਰ_H
 
 /* Group locale data for shorter parameter lists.  */
-typedef struct
+ਕਿਸਮਪਰਿਭਾਸ਼ਾ ਬਣਤਰ
 {
   uint32_t nrules;
-  unsigned char *rulesets;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *rulesets;
   USTRING_TYPE *weights;
-  int32_t *table;
+  int32_t *ਸਾਰਣੀ;
   USTRING_TYPE *extra;
-  int32_t *indirect;
-} locale_data_t;
+  int32_t *ਅਸਿੱਧਾ;
+} locale_ਅੰਕੜੇ_t;
 
-#ifndef WIDE_CHAR_VERSION
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
 
 /* We need UTF-8 encoding of numbers.  */
-static int
-utf8_encode (char *buf, int val)
+ਸਥਿਰ ਪੂਰਨ
+utf8_encode (ਅੱਖਰ *buf, ਪੂਰਨ val)
 {
-  int retval;
+  ਪੂਰਨ retval;
 
-  if (val < 0x80)
+  ਜੇ (val < 0x80)
     {
-      *buf++ = (char) val;
+      *buf++ = (ਅੱਖਰ) val;
       retval = 1;
     }
-  else
+  ਨਹੀਂਤਾਂ
     {
-      int step;
+      ਪੂਰਨ ਕਦਮ;
 
-      for (step = 2; step < 6; ++step)
-	if ((val & (~(uint32_t)0 << (5 * step + 1))) == 0)
-	  break;
-      retval = step;
+      ਲਈ (ਕਦਮ = 2; ਕਦਮ < 6; ++ਕਦਮ)
+	ਜੇ ((val & (~(uint32_t)0 << (5 * ਕਦਮ + 1))) == 0)
+	  ਰੋਕੋ;
+      retval = ਕਦਮ;
 
-      *buf = (unsigned char) (~0xff >> step);
-      --step;
-      do
+      *buf = (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ) (~0xff >> ਕਦਮ);
+      --ਕਦਮ;
+      ਕਰੋ
 	{
-	  buf[step] = 0x80 | (val & 0x3f);
+	  buf[ਕਦਮ] = 0x80 | (val & 0x3f);
 	  val >>= 6;
 	}
-      while (--step > 0);
+      ਜਦੋਂ (--ਕਦਮ > 0);
       *buf |= val;
     }
 
-  return retval;
+  ਵਾਪਸ retval;
 }
-#endif
+#ਜੇ_ਅੰਤ
 
 /* Find next weight and rule index.  Inlined since called for every char.  */
-static __always_inline size_t
-find_idx (const USTRING_TYPE **us, int32_t *weight_idx,
-	  unsigned char *rule_idx, const locale_data_t *l_data, const int pass)
+ਸਥਿਰ __always_inline size_t
+ਲੱਭੋ_idx (ਅਚਲ USTRING_TYPE **us, int32_t *ਭਾਰ_idx,
+	  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *ਨਿਯਮ_idx, ਅਚਲ locale_ਅੰਕੜੇ_t *l_ਅੰਕੜੇ, ਅਚਲ ਪੂਰਨ pass)
 {
-  int32_t tmp = findidx (l_data->table, l_data->indirect, l_data->extra, us,
+  int32_t tmp = findidx (l_ਅੰਕੜੇ->ਸਾਰਣੀ, l_ਅੰਕੜੇ->ਅਸਿੱਧਾ, l_ਅੰਕੜੇ->extra, us,
 			 -1);
-  *rule_idx = tmp >> 24;
+  *ਨਿਯਮ_idx = tmp >> 24;
   int32_t idx = tmp & 0xffffff;
-  size_t len = l_data->weights[idx++];
+  size_t len = l_ਅੰਕੜੇ->weights[idx++];
 
   /* Skip over indices of previous levels.  */
-  for (int i = 0; i < pass; i++)
+  ਲਈ (ਪੂਰਨ i = 0; i < pass; i++)
     {
       idx += len;
-      len = l_data->weights[idx++];
+      len = l_ਅੰਕੜੇ->weights[idx++];
     }
 
-  *weight_idx = idx;
-  return len;
+  *ਭਾਰ_idx = idx;
+  ਵਾਪਸ len;
 }
 
-static int
-find_position (const USTRING_TYPE *us, const locale_data_t *l_data,
-	       const int pass)
+ਸਥਿਰ ਪੂਰਨ
+ਲੱਭੋ_position (ਅਚਲ USTRING_TYPE *us, ਅਚਲ locale_ਅੰਕੜੇ_t *l_ਅੰਕੜੇ,
+	       ਅਚਲ ਪੂਰਨ pass)
 {
-  int32_t weight_idx;
-  unsigned char rule_idx;
-  const USTRING_TYPE *usrc = us;
+  int32_t ਭਾਰ_idx;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ ਨਿਯਮ_idx;
+  ਅਚਲ USTRING_TYPE *usrc = us;
 
-  find_idx (&usrc, &weight_idx, &rule_idx, l_data, pass);
-  return l_data->rulesets[rule_idx * l_data->nrules + pass] & sort_position;
+  ਲੱਭੋ_idx (&usrc, &ਭਾਰ_idx, &ਨਿਯਮ_idx, l_ਅੰਕੜੇ, pass);
+  ਵਾਪਸ l_ਅੰਕੜੇ->rulesets[ਨਿਯਮ_idx * l_ਅੰਕੜੇ->nrules + pass] & ਛਾਂਟੋ_position;
 }
 
 /* Do the transformation.  */
-static size_t
-do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
-	 const locale_data_t *l_data)
+ਸਥਿਰ size_t
+do_xfrm (ਅਚਲ USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
+	 ਅਚਲ locale_ਅੰਕੜੇ_t *l_ਅੰਕੜੇ)
 {
-  int32_t weight_idx;
-  unsigned char rule_idx;
+  int32_t ਭਾਰ_idx;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ ਨਿਯਮ_idx;
   uint32_t pass;
   size_t needed = 0;
-  size_t last_needed;
+  size_t ਆਖਰੀ_needed;
 
   /* Now the passes over the weights.  */
-  for (pass = 0; pass < l_data->nrules; ++pass)
+  ਲਈ (pass = 0; pass < l_ਅੰਕੜੇ->nrules; ++pass)
     {
       size_t backw_len = 0;
-      last_needed = needed;
-      const USTRING_TYPE *cur = usrc;
-      const USTRING_TYPE *backw_start = NULL;
+      ਆਖਰੀ_needed = needed;
+      ਅਚਲ USTRING_TYPE *cur = usrc;
+      ਅਚਲ USTRING_TYPE *backw_ਸ਼ੁਰੂ = ਨਿਰਾ;
 
        /* We assume that if a rule has defined `position' in one section
          this is true for all of them.  */
-      int position = find_position (cur, l_data, pass);
+      ਪੂਰਨ position = ਲੱਭੋ_position (cur, l_ਅੰਕੜੇ, pass);
 
-      if (position == 0)
+      ਜੇ (position == 0)
 	{
-	  while (*cur != L('\0'))
+	  ਜਦੋਂ (*cur != L('\0'))
 	    {
-	      const USTRING_TYPE *pos = cur;
-	      size_t len = find_idx (&cur, &weight_idx, &rule_idx, l_data,
+	      ਅਚਲ USTRING_TYPE *pos = cur;
+	      size_t len = ਲੱਭੋ_idx (&cur, &ਭਾਰ_idx, &ਨਿਯਮ_idx, l_ਅੰਕੜੇ,
 				     pass);
-	      int rule = l_data->rulesets[rule_idx * l_data->nrules + pass];
+	      ਪੂਰਨ ਨਿਯਮ = l_ਅੰਕੜੇ->rulesets[ਨਿਯਮ_idx * l_ਅੰਕੜੇ->nrules + pass];
 
-	      if ((rule & sort_forward) != 0)
+	      ਜੇ ((ਨਿਯਮ & ਛਾਂਟੋ_forward) != 0)
 		{
 		  /* Handle the pushed backward sequence.  */
-		  if (backw_start != NULL)
+		  ਜੇ (backw_ਸ਼ੁਰੂ != ਨਿਰਾ)
 		    {
-		      for (size_t i = backw_len; i > 0; )
+		      ਲਈ (size_t i = backw_len; i > 0; )
 			{
-			  int32_t weight_idx;
-			  unsigned char rule_idx;
-			  size_t len = find_idx (&backw_start, &weight_idx,
-						 &rule_idx, l_data, pass);
-			  if (needed + i < n)
-			    for (size_t j = len; j > 0; j--)
+			  int32_t ਭਾਰ_idx;
+			  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ ਨਿਯਮ_idx;
+			  size_t len = ਲੱਭੋ_idx (&backw_ਸ਼ੁਰੂ, &ਭਾਰ_idx,
+						 &ਨਿਯਮ_idx, l_ਅੰਕੜੇ, pass);
+			  ਜੇ (needed + i < n)
+			    ਲਈ (size_t j = len; j > 0; j--)
 			      dest[needed + i - j] =
-				l_data->weights[weight_idx++];
+				l_ਅੰਕੜੇ->weights[ਭਾਰ_idx++];
 
 			  i -= len;
 			}
 
 		      needed += backw_len;
-		      backw_start = NULL;
+		      backw_ਸ਼ੁਰੂ = ਨਿਰਾ;
 		      backw_len = 0;
 		    }
 
 		  /* Now handle the forward element.  */
-		  if (needed + len < n)
-		    while (len-- > 0)
-		      dest[needed++] = l_data->weights[weight_idx++];
-		  else
+		  ਜੇ (needed + len < n)
+		    ਜਦੋਂ (len-- > 0)
+		      dest[needed++] = l_ਅੰਕੜੇ->weights[ਭਾਰ_idx++];
+		  ਨਹੀਂਤਾਂ
 		    /* No more characters fit into the buffer.  */
 		    needed += len;
 		}
-	      else
+	      ਨਹੀਂਤਾਂ
 		{
 		  /* Remember start of the backward sequence & track length.  */
-		  if (backw_start == NULL)
-		    backw_start = pos;
+		  ਜੇ (backw_ਸ਼ੁਰੂ == ਨਿਰਾ)
+		    backw_ਸ਼ੁਰੂ = pos;
 		  backw_len += len;
 		}
 	    }
 
 
 	  /* Handle the pushed backward sequence.  */
-	  if (backw_start != NULL)
+	  ਜੇ (backw_ਸ਼ੁਰੂ != ਨਿਰਾ)
 	    {
-	      for (size_t i = backw_len; i > 0; )
+	      ਲਈ (size_t i = backw_len; i > 0; )
 		{
-		  size_t len = find_idx (&backw_start, &weight_idx, &rule_idx,
-					 l_data, pass);
-		  if (needed + i < n)
-		    for (size_t j = len; j > 0; j--)
+		  size_t len = ਲੱਭੋ_idx (&backw_ਸ਼ੁਰੂ, &ਭਾਰ_idx, &ਨਿਯਮ_idx,
+					 l_ਅੰਕੜੇ, pass);
+		  ਜੇ (needed + i < n)
+		    ਲਈ (size_t j = len; j > 0; j--)
 		      dest[needed + i - j] =
-			l_data->weights[weight_idx++];
+			l_ਅੰਕੜੇ->weights[ਭਾਰ_idx++];
 
 		  i -= len;
 		}
@@ -220,157 +220,157 @@ do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
 	      needed += backw_len;
 	    }
 	}
-      else
+      ਨਹੀਂਤਾਂ
 	{
-	  int val = 1;
-#ifndef WIDE_CHAR_VERSION
-	  char buf[7];
+	  ਪੂਰਨ val = 1;
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+	  ਅੱਖਰ buf[7];
 	  size_t buflen;
-#endif
+#ਜੇ_ਅੰਤ
 	  size_t i;
 
-	  while (*cur != L('\0'))
+	  ਜਦੋਂ (*cur != L('\0'))
 	    {
-	      const USTRING_TYPE *pos = cur;
-	      size_t len = find_idx (&cur, &weight_idx, &rule_idx, l_data,
+	      ਅਚਲ USTRING_TYPE *pos = cur;
+	      size_t len = ਲੱਭੋ_idx (&cur, &ਭਾਰ_idx, &ਨਿਯਮ_idx, l_ਅੰਕੜੇ,
 				     pass);
-	      int rule = l_data->rulesets[rule_idx * l_data->nrules + pass];
+	      ਪੂਰਨ ਨਿਯਮ = l_ਅੰਕੜੇ->rulesets[ਨਿਯਮ_idx * l_ਅੰਕੜੇ->nrules + pass];
 
-	      if ((rule & sort_forward) != 0)
+	      ਜੇ ((ਨਿਯਮ & ਛਾਂਟੋ_forward) != 0)
 		{
 		  /* Handle the pushed backward sequence.  */
-		  if (backw_start != NULL)
+		  ਜੇ (backw_ਸ਼ੁਰੂ != ਨਿਰਾ)
 		    {
-		      for (size_t p = backw_len; p > 0; p--)
+		      ਲਈ (size_t p = backw_len; p > 0; p--)
 			{
 			  size_t len;
-			  int32_t weight_idx;
-			  unsigned char rule_idx;
-			  const USTRING_TYPE *backw_cur = backw_start;
+			  int32_t ਭਾਰ_idx;
+			  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ ਨਿਯਮ_idx;
+			  ਅਚਲ USTRING_TYPE *backw_cur = backw_ਸ਼ੁਰੂ;
 
 			  /* To prevent a warning init the used vars.  */
-			  len = find_idx (&backw_cur, &weight_idx,
-					  &rule_idx, l_data, pass);
+			  len = ਲੱਭੋ_idx (&backw_cur, &ਭਾਰ_idx,
+					  &ਨਿਯਮ_idx, l_ਅੰਕੜੇ, pass);
 
-			  for (i = 1; i < p; i++)
-			    len = find_idx (&backw_cur, &weight_idx,
-					    &rule_idx, l_data, pass);
+			  ਲਈ (i = 1; i < p; i++)
+			    len = ਲੱਭੋ_idx (&backw_cur, &ਭਾਰ_idx,
+					    &ਨਿਯਮ_idx, l_ਅੰਕੜੇ, pass);
 
-			  if (len != 0)
+			  ਜੇ (len != 0)
 			    {
-#ifdef WIDE_CHAR_VERSION
-			      if (needed + 1 + len < n)
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+			      ਜੇ (needed + 1 + len < n)
 				{
 				  dest[needed] = val;
-				  for (i = 0; i < len; ++i)
+				  ਲਈ (i = 0; i < len; ++i)
 				    dest[needed + 1 + i] =
-				      l_data->weights[weight_idx + i];
+				      l_ਅੰਕੜੇ->weights[ਭਾਰ_idx + i];
 				}
 			      needed += 1 + len;
-#else
+#ਨਹੀਂਤਾਂ
 			      buflen = utf8_encode (buf, val);
-			      if (needed + buflen + len < n)
+			      ਜੇ (needed + buflen + len < n)
 				{
-				  for (i = 0; i < buflen; ++i)
+				  ਲਈ (i = 0; i < buflen; ++i)
 				    dest[needed + i] = buf[i];
-				  for (i = 0; i < len; ++i)
+				  ਲਈ (i = 0; i < len; ++i)
 				    dest[needed + buflen + i] =
-				      l_data->weights[weight_idx + i];
+				      l_ਅੰਕੜੇ->weights[ਭਾਰ_idx + i];
 				}
 			      needed += buflen + len;
-#endif
+#ਜੇ_ਅੰਤ
 			      val = 1;
 			    }
-			  else
+			  ਨਹੀਂਤਾਂ
 			    ++val;
 			}
 
-		      backw_start = NULL;
+		      backw_ਸ਼ੁਰੂ = ਨਿਰਾ;
 		      backw_len = 0;
 		    }
 
 		  /* Now handle the forward element.  */
-		  if (len != 0)
+		  ਜੇ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1 + len < n)
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+		      ਜੇ (needed + 1 + len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
-			      l_data->weights[weight_idx + i];
+			      l_ਅੰਕੜੇ->weights[ਭਾਰ_idx + i];
 			}
 		      needed += 1 + len;
-#else
+#ਨਹੀਂਤਾਂ
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ਜੇ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  ਲਈ (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
-			      l_data->weights[weight_idx + i];
+			      l_ਅੰਕੜੇ->weights[ਭਾਰ_idx + i];
 			}
 		      needed += buflen + len;
-#endif
+#ਜੇ_ਅੰਤ
 		      val = 1;
 		    }
-		  else
+		  ਨਹੀਂਤਾਂ
 		    ++val;
 		}
-	      else
+	      ਨਹੀਂਤਾਂ
 		{
 		  /* Remember start of the backward sequence & track length.  */
-		  if (backw_start == NULL)
-		    backw_start = pos;
+		  ਜੇ (backw_ਸ਼ੁਰੂ == ਨਿਰਾ)
+		    backw_ਸ਼ੁਰੂ = pos;
 		  backw_len++;
 		}
 	    }
 
 	  /* Handle the pushed backward sequence.  */
-	  if (backw_start != NULL)
+	  ਜੇ (backw_ਸ਼ੁਰੂ != ਨਿਰਾ)
 	    {
-	      for (size_t p = backw_len; p > 0; p--)
+	      ਲਈ (size_t p = backw_len; p > 0; p--)
 		{
 		  size_t len;
-		  int32_t weight_idx;
-		  unsigned char rule_idx;
-		  const USTRING_TYPE *backw_cur = backw_start;
+		  int32_t ਭਾਰ_idx;
+		  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ ਨਿਯਮ_idx;
+		  ਅਚਲ USTRING_TYPE *backw_cur = backw_ਸ਼ੁਰੂ;
 
 		  /* To prevent a warning init the used vars.  */
-		  len = find_idx (&backw_cur, &weight_idx,
-				  &rule_idx, l_data, pass);
+		  len = ਲੱਭੋ_idx (&backw_cur, &ਭਾਰ_idx,
+				  &ਨਿਯਮ_idx, l_ਅੰਕੜੇ, pass);
 
-		  for (i = 1; i < p; i++)
-		    len = find_idx (&backw_cur, &weight_idx,
-				    &rule_idx, l_data, pass);
+		  ਲਈ (i = 1; i < p; i++)
+		    len = ਲੱਭੋ_idx (&backw_cur, &ਭਾਰ_idx,
+				    &ਨਿਯਮ_idx, l_ਅੰਕੜੇ, pass);
 
-		  if (len != 0)
+		  ਜੇ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1 + len < n)
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+		      ਜੇ (needed + 1 + len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
-			      l_data->weights[weight_idx + i];
+			      l_ਅੰਕੜੇ->weights[ਭਾਰ_idx + i];
 			}
 		      needed += 1 + len;
-#else
+#ਨਹੀਂਤਾਂ
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ਜੇ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  ਲਈ (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
-			      l_data->weights[weight_idx + i];
+			      l_ਅੰਕੜੇ->weights[ਭਾਰ_idx + i];
 			}
 		      needed += buflen + len;
-#endif
+#ਜੇ_ਅੰਤ
 		      val = 1;
 		    }
-		  else
+		  ਨਹੀਂਤਾਂ
 		    ++val;
 		}
 	    }
@@ -378,8 +378,8 @@ do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
 
       /* Finally store the byte to separate the passes or terminate
 	 the string.  */
-      if (needed < n)
-	dest[needed] = pass + 1 < l_data->nrules ? L('\1') : L('\0');
+      ਜੇ (needed < n)
+	dest[needed] = pass + 1 < l_ਅੰਕੜੇ->nrules ? L('\1') : L('\0');
       ++needed;
     }
 
@@ -387,63 +387,63 @@ do_xfrm (const USTRING_TYPE *usrc, STRING_TYPE *dest, size_t n,
      a `position' rule at the end and if no non-ignored character
      is found the last \1 byte is immediately followed by a \0 byte
      signalling this.  We can avoid the \1 byte(s).  */
-  if (needed > 2 && needed == last_needed + 1)
+  ਜੇ (needed > 2 && needed == ਆਖਰੀ_needed + 1)
     {
       /* Remove the \1 byte.  */
-      if (--needed <= n)
+      ਜੇ (--needed <= n)
 	dest[needed - 1] = L('\0');
     }
 
   /* Return the number of bytes/words we need, but don't count the NUL
      byte/word at the end.  */
-  return needed - 1;
+  ਵਾਪਸ needed - 1;
 }
 
 /* Do the transformation using weight-index and rule cache.  */
-static size_t
-do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
-		size_t idxmax, int32_t *idxarr, const unsigned char *rulearr)
+ਸਥਿਰ size_t
+do_xfrm_cached (STRING_TYPE *dest, size_t n, ਅਚਲ locale_ਅੰਕੜੇ_t *l_ਅੰਕੜੇ,
+		size_t idxmax, int32_t *idxarr, ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *rulearr)
 {
-  uint32_t nrules = l_data->nrules;
-  unsigned char *rulesets = l_data->rulesets;
-  USTRING_TYPE *weights = l_data->weights;
+  uint32_t nrules = l_ਅੰਕੜੇ->nrules;
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *rulesets = l_ਅੰਕੜੇ->rulesets;
+  USTRING_TYPE *weights = l_ਅੰਕੜੇ->weights;
   uint32_t pass;
   size_t needed = 0;
-  size_t last_needed;
+  size_t ਆਖਰੀ_needed;
   size_t idxcnt;
 
   /* Now the passes over the weights.  */
-  for (pass = 0; pass < nrules; ++pass)
+  ਲਈ (pass = 0; pass < nrules; ++pass)
     {
       size_t backw_stop = ~0ul;
-      int rule = rulesets[rulearr[0] * nrules + pass];
+      ਪੂਰਨ ਨਿਯਮ = rulesets[rulearr[0] * nrules + pass];
       /* We assume that if a rule has defined `position' in one section
 	 this is true for all of them.  */
-      int position = rule & sort_position;
+      ਪੂਰਨ position = ਨਿਯਮ & ਛਾਂਟੋ_position;
 
-      last_needed = needed;
-      if (position == 0)
+      ਆਖਰੀ_needed = needed;
+      ਜੇ (position == 0)
 	{
-	  for (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
+	  ਲਈ (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
 	    {
-	      if ((rule & sort_forward) != 0)
+	      ਜੇ ((ਨਿਯਮ & ਛਾਂਟੋ_forward) != 0)
 		{
 		  size_t len;
 
-		  if (backw_stop != ~0ul)
+		  ਜੇ (backw_stop != ~0ul)
 		    {
 		      /* Handle the pushed elements now.  */
 		      size_t backw;
 
-		      for (backw = idxcnt; backw > backw_stop; )
+		      ਲਈ (backw = idxcnt; backw > backw_stop; )
 			{
 			  --backw;
 			  len = weights[idxarr[backw]++];
 
-			  if (needed + len < n)
-			    while (len-- > 0)
+			  ਜੇ (needed + len < n)
+			    ਜਦੋਂ (len-- > 0)
 			      dest[needed++] = weights[idxarr[backw]++];
-			  else
+			  ਨਹੀਂਤਾਂ
 			    {
 				/* No more characters fit into the buffer.  */
 			      needed += len;
@@ -456,41 +456,41 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 
 		  /* Now handle the forward element.  */
 		  len = weights[idxarr[idxcnt]++];
-		  if (needed + len < n)
-		    while (len-- > 0)
+		  ਜੇ (needed + len < n)
+		    ਜਦੋਂ (len-- > 0)
 		      dest[needed++] = weights[idxarr[idxcnt]++];
-		  else
+		  ਨਹੀਂਤਾਂ
 		    {
 		      /* No more characters fit into the buffer.  */
 		      needed += len;
 		      idxarr[idxcnt] += len;
 		    }
 		}
-	      else
+	      ਨਹੀਂਤਾਂ
 		{
 		  /* Remember where the backwards series started.  */
-		  if (backw_stop == ~0ul)
+		  ਜੇ (backw_stop == ~0ul)
 		    backw_stop = idxcnt;
 		}
 
-	      rule = rulesets[rulearr[idxcnt + 1] * nrules + pass];
+	      ਨਿਯਮ = rulesets[rulearr[idxcnt + 1] * nrules + pass];
 	    }
 
 
-	  if (backw_stop != ~0ul)
+	  ਜੇ (backw_stop != ~0ul)
 	    {
 	      /* Handle the pushed elements now.  */
 	      size_t backw;
 
 	      backw = idxcnt;
-	      while (backw > backw_stop)
+	      ਜਦੋਂ (backw > backw_stop)
 		{
 		  size_t len = weights[idxarr[--backw]++];
 
-		  if (needed + len < n)
-		    while (len-- > 0)
+		  ਜੇ (needed + len < n)
+		    ਜਦੋਂ (len-- > 0)
 		      dest[needed++] = weights[idxarr[backw]++];
-		  else
+		  ਨਹੀਂਤਾਂ
 		    {
 		      /* No more characters fit into the buffer.  */
 		      needed += len;
@@ -499,57 +499,57 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 		}
 	    }
 	}
-      else
+      ਨਹੀਂਤਾਂ
 	{
-	  int val = 1;
-#ifndef WIDE_CHAR_VERSION
-	  char buf[7];
+	  ਪੂਰਨ val = 1;
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+	  ਅੱਖਰ buf[7];
 	  size_t buflen;
-#endif
+#ਜੇ_ਅੰਤ
 	  size_t i;
 
-	  for (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
+	  ਲਈ (idxcnt = 0; idxcnt < idxmax; ++idxcnt)
 	    {
-	      if ((rule & sort_forward) != 0)
+	      ਜੇ ((ਨਿਯਮ & ਛਾਂਟੋ_forward) != 0)
 		{
 		  size_t len;
 
-		  if (backw_stop != ~0ul)
+		  ਜੇ (backw_stop != ~0ul)
 		    {
 		     /* Handle the pushed elements now.  */
 		      size_t backw;
 
-		      for (backw = idxcnt; backw > backw_stop; )
+		      ਲਈ (backw = idxcnt; backw > backw_stop; )
 			{
 			  --backw;
 			  len = weights[idxarr[backw]++];
-			  if (len != 0)
+			  ਜੇ (len != 0)
 			    {
-#ifdef WIDE_CHAR_VERSION
-			      if (needed + 1 + len < n)
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+			      ਜੇ (needed + 1 + len < n)
 				{
 				  dest[needed] = val;
-				  for (i = 0; i < len; ++i)
+				  ਲਈ (i = 0; i < len; ++i)
 				    dest[needed + 1 + i] =
 				      weights[idxarr[backw] + i];
 				}
 			      needed += 1 + len;
-#else
+#ਨਹੀਂਤਾਂ
 			      buflen = utf8_encode (buf, val);
-			      if (needed + buflen + len < n)
+			      ਜੇ (needed + buflen + len < n)
 				{
-				  for (i = 0; i < buflen; ++i)
+				  ਲਈ (i = 0; i < buflen; ++i)
 				    dest[needed + i] = buf[i];
-				  for (i = 0; i < len; ++i)
+				  ਲਈ (i = 0; i < len; ++i)
 				    dest[needed + buflen + i] =
 				      weights[idxarr[backw] + i];
 				}
 			      needed += buflen + len;
-#endif
+#ਜੇ_ਅੰਤ
 			      idxarr[backw] += len;
 			      val = 1;
 			    }
-			  else
+			  ਨਹੀਂਤਾਂ
 			    ++val;
 			}
 
@@ -558,83 +558,83 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 
 		  /* Now handle the forward element.  */
 		  len = weights[idxarr[idxcnt]++];
-		  if (len != 0)
+		  ਜੇ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1+ len < n)
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+		      ਜੇ (needed + 1+ len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
 			      weights[idxarr[idxcnt] + i];
 			}
 		      needed += 1 + len;
-#else
+#ਨਹੀਂਤਾਂ
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ਜੇ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  ਲਈ (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
 			      weights[idxarr[idxcnt] + i];
 			}
 		      needed += buflen + len;
-#endif
+#ਜੇ_ਅੰਤ
 		      idxarr[idxcnt] += len;
 		      val = 1;
 		    }
-		  else
+		  ਨਹੀਂਤਾਂ
 		    /* Note that we don't have to increment `idxarr[idxcnt]'
 		       since the length is zero.  */
 		    ++val;
 		}
-	      else
+	      ਨਹੀਂਤਾਂ
 		{
 		  /* Remember where the backwards series started.  */
-		  if (backw_stop == ~0ul)
+		  ਜੇ (backw_stop == ~0ul)
 		    backw_stop = idxcnt;
 		}
 
-	      rule = rulesets[rulearr[idxcnt + 1] * nrules + pass];
+	      ਨਿਯਮ = rulesets[rulearr[idxcnt + 1] * nrules + pass];
 	    }
 
-	  if (backw_stop != ~0ul)
+	  ਜੇ (backw_stop != ~0ul)
 	    {
 	      /* Handle the pushed elements now.  */
 	      size_t backw;
 
 	      backw = idxmax - 1;
-	      while (backw > backw_stop)
+	      ਜਦੋਂ (backw > backw_stop)
 		{
 		  size_t len = weights[idxarr[--backw]++];
-		  if (len != 0)
+		  ਜੇ (len != 0)
 		    {
-#ifdef WIDE_CHAR_VERSION
-		      if (needed + 1 + len < n)
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
+		      ਜੇ (needed + 1 + len < n)
 			{
 			  dest[needed] = val;
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + 1 + i] =
 			      weights[idxarr[backw] + i];
 			}
 		      needed += 1 + len;
-#else
+#ਨਹੀਂਤਾਂ
 		      buflen = utf8_encode (buf, val);
-		      if (needed + buflen + len < n)
+		      ਜੇ (needed + buflen + len < n)
 			{
-			  for (i = 0; i < buflen; ++i)
+			  ਲਈ (i = 0; i < buflen; ++i)
 			    dest[needed + i] = buf[i];
-			  for (i = 0; i < len; ++i)
+			  ਲਈ (i = 0; i < len; ++i)
 			    dest[needed + buflen + i] =
 			      weights[idxarr[backw] + i];
 			}
 		      needed += buflen + len;
-#endif
+#ਜੇ_ਅੰਤ
 		      idxarr[backw] += len;
 		      val = 1;
 		    }
-		  else
+		  ਨਹੀਂਤਾਂ
 		    ++val;
 		}
 	    }
@@ -642,7 +642,7 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
 
       /* Finally store the byte to separate the passes or terminate
 	 the string.  */
-      if (needed < n)
+      ਜੇ (needed < n)
 	dest[needed] = pass + 1 < nrules ? L('\1') : L('\0');
       ++needed;
     }
@@ -651,96 +651,96 @@ do_xfrm_cached (STRING_TYPE *dest, size_t n, const locale_data_t *l_data,
      a `position' rule at the end and if no non-ignored character
      is found the last \1 byte is immediately followed by a \0 byte
      signalling this.  We can avoid the \1 byte(s).  */
-  if (needed > 2 && needed == last_needed + 1)
+  ਜੇ (needed > 2 && needed == ਆਖਰੀ_needed + 1)
     {
       /* Remove the \1 byte.  */
-      if (--needed <= n)
+      ਜੇ (--needed <= n)
 	dest[needed - 1] = L('\0');
     }
 
   /* Return the number of bytes/words we need, but don't count the NUL
      byte/word at the end.  */
-  return needed - 1;
+  ਵਾਪਸ needed - 1;
 }
 
 size_t
-STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n, locale_t l)
+STRXFRM (STRING_TYPE *dest, ਅਚਲ STRING_TYPE *src, size_t n, locale_t l)
 {
-  locale_data_t l_data;
-  struct __locale_data *current = l->__locales[LC_COLLATE];
-  l_data.nrules = current->values[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
+  locale_ਅੰਕੜੇ_t l_ਅੰਕੜੇ;
+  ਬਣਤਰ __locale_data *current = l->__locales[LC_COLLATE];
+  l_ਅੰਕੜੇ.nrules = current->ਮੁੱਲਾਂ[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].ਸ਼ਬਦ;
 
   /* Handle byte comparison case.  */
-  if (l_data.nrules == 0)
+  ਜੇ (l_ਅੰਕੜੇ.nrules == 0)
     {
       size_t srclen = STRLEN (src);
 
-      if (n != 0)
+      ਜੇ (n != 0)
 	STPNCPY (dest, src, MIN (srclen + 1, n));
 
-      return srclen;
+      ਵਾਪਸ srclen;
     }
 
   /* Handle an empty string, code hereafter relies on strlen (src) > 0.  */
-  if (*src == L('\0'))
+  ਜੇ (*src == L('\0'))
     {
-      if (n != 0)
+      ਜੇ (n != 0)
 	*dest = L('\0');
-      return 0;
+      ਵਾਪਸ 0;
     }
 
   /* Get the locale data.  */
-  l_data.rulesets = (unsigned char *)
-    current->values[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
-  l_data.table = (int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
-  l_data.weights = (USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
-  l_data.extra = (USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
-  l_data.indirect = (int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
+  l_ਅੰਕੜੇ.rulesets = (ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *)
+    current->ਮੁੱਲਾਂ[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
+  l_ਅੰਕੜੇ.ਸਾਰਣੀ = (int32_t *)
+    current->ਮੁੱਲਾਂ[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_ਸਾਰਣੀ,SUFFIX))].string;
+  l_ਅੰਕੜੇ.weights = (USTRING_TYPE *)
+    current->ਮੁੱਲਾਂ[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_ਭਾਰ,SUFFIX))].string;
+  l_ਅੰਕੜੇ.extra = (USTRING_TYPE *)
+    current->ਮੁੱਲਾਂ[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
+  l_ਅੰਕੜੇ.ਅਸਿੱਧਾ = (int32_t *)
+    current->ਮੁੱਲਾਂ[_NL_ITEM_INDEX (CONCAT(NL_COLLATE_ਅਸਿੱਧਾ,SUFFIX))].string;
 
-  assert (((uintptr_t) l_data.table) % __alignof__ (l_data.table[0]) == 0);
-  assert (((uintptr_t) l_data.weights) % __alignof__ (l_data.weights[0]) == 0);
-  assert (((uintptr_t) l_data.extra) % __alignof__ (l_data.extra[0]) == 0);
-  assert (((uintptr_t) l_data.indirect) % __alignof__ (l_data.indirect[0]) == 0);
+  ਪ੍ਰਤਿਜ੍ਞਾ (((uintptr_t) l_ਅੰਕੜੇ.ਸਾਰਣੀ) % __alignof__ (l_ਅੰਕੜੇ.ਸਾਰਣੀ[0]) == 0);
+  ਪ੍ਰਤਿਜ੍ਞਾ (((uintptr_t) l_ਅੰਕੜੇ.weights) % __alignof__ (l_ਅੰਕੜੇ.weights[0]) == 0);
+  ਪ੍ਰਤਿਜ੍ਞਾ (((uintptr_t) l_ਅੰਕੜੇ.extra) % __alignof__ (l_ਅੰਕੜੇ.extra[0]) == 0);
+  ਪ੍ਰਤਿਜ੍ਞਾ (((uintptr_t) l_ਅੰਕੜੇ.ਅਸਿੱਧਾ) % __alignof__ (l_ਅੰਕੜੇ.ਅਸਿੱਧਾ[0]) == 0);
 
   /* We need the elements of the string as unsigned values since they
      are used as indices.  */
-  const USTRING_TYPE *usrc = (const USTRING_TYPE *) src;
+  ਅਚਲ USTRING_TYPE *usrc = (ਅਚਲ USTRING_TYPE *) src;
 
   /* Allocate cache for small strings on the stack and fill it with weight and
      rule indices.  If the cache size is not sufficient, continue with the
      uncached xfrm version.  */
   size_t idxmax = 0;
-  const USTRING_TYPE *cur = usrc;
-  int32_t *idxarr = alloca (SMALL_STR_SIZE * sizeof (int32_t));
-  unsigned char *rulearr = alloca (SMALL_STR_SIZE + 1);
+  ਅਚਲ USTRING_TYPE *cur = usrc;
+  int32_t *idxarr = alloca (SMALL_STR_ਮਾਪ * ਆਕਾਰ (int32_t));
+  ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *rulearr = alloca (SMALL_STR_ਮਾਪ + 1);
 
-  do
+  ਕਰੋ
     {
-      int32_t tmp = findidx (l_data.table, l_data.indirect, l_data.extra, &cur,
+      int32_t tmp = findidx (l_ਅੰਕੜੇ.ਸਾਰਣੀ, l_ਅੰਕੜੇ.ਅਸਿੱਧਾ, l_ਅੰਕੜੇ.extra, &cur,
 			     -1);
       rulearr[idxmax] = tmp >> 24;
       idxarr[idxmax] = tmp & 0xffffff;
 
       ++idxmax;
     }
-  while (*cur != L('\0') && idxmax < SMALL_STR_SIZE);
+  ਜਦੋਂ (*cur != L('\0') && idxmax < SMALL_STR_ਮਾਪ);
 
   /* This element is only read, the value never used but to determine
      another value which then is ignored.  */
   rulearr[idxmax] = '\0';
 
   /* Do the transformation.  */
-  if (*cur == L('\0'))
-    return do_xfrm_cached (dest, n, &l_data, idxmax, idxarr, rulearr);
-  else
-    return do_xfrm (usrc, dest, n, &l_data);
+  ਜੇ (*cur == L('\0'))
+    ਵਾਪਸ do_xfrm_cached (dest, n, &l_ਅੰਕੜੇ, idxmax, idxarr, rulearr);
+  ਨਹੀਂਤਾਂ
+    ਵਾਪਸ do_xfrm (usrc, dest, n, &l_ਅੰਕੜੇ);
 }
 libc_hidden_def (STRXFRM)
 
-#ifndef WIDE_CHAR_VERSION
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE_CHAR_ਸੰਸਕਰਣ
 weak_alias (__strxfrm_l, strxfrm_l)
-#endif
+#ਜੇ_ਅੰਤ

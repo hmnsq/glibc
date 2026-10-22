@@ -15,20 +15,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#undef strncpy
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ strncpy
 
-#ifndef STRNCPY
- #define STRNCPY strncpy
-#endif
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ STRNCPY
+ #ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRNCPY strncpy
+#ਜੇ_ਅੰਤ
 
-char *
-STRNCPY (char *s1, const char *s2, size_t n)
+ਅੱਖਰ *
+STRNCPY (ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2, size_t n)
 {
-  size_t size = __strnlen (s2, n);
-  if (size != n)
-    memset (s1 + size, '\0', n - size);
-  return memcpy (s1, s2, size);
+  size_t ਮਾਪ = __strnlen (s2, n);
+  ਜੇ (ਮਾਪ != n)
+    memset (s1 + ਮਾਪ, '\0', n - ਮਾਪ);
+  ਵਾਪਸ ਸਮ੍ਰਿਤੀ_ਨਕਲ (s1, s2, ਮਾਪ);
 }
 libc_hidden_builtin_def (strncpy)

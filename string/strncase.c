@@ -17,53 +17,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#ਜੇ_ਅੰਤ
 
-#include <string.h>
-#include <ctype.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <ctype.h>
 
-#ifndef weak_alias
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ weak_alias
 # define __strncasecmp strncasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#ਨਹੀਂਤਾਂ
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_ਵਿੱਚ_EXTENDED_LOCALE_MODEL
 #  define __strncasecmp __strncasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#ਜੇ_ਅੰਤ
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ USE_ਵਿੱਚ_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#ਨਹੀਂਤਾਂ
 # define LOCALE_PARAM
-#endif
+#ਜੇ_ਅੰਤ
 
 /* Compare no more than N characters of S1 and S2,
    ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less
    than, equal to or greater than S2.  */
-int
-__strncasecmp (const char *s1, const char *s2, size_t n LOCALE_PARAM)
+ਪੂਰਨ
+__strncasecmp (ਅਚਲ ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2, size_t n LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#ਜੇ defined _LIBC && !defined USE_ਵਿੱਚ_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#ਜੇ_ਅੰਤ
+  ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *p1 = (ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) s1;
+  ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *p2 = (ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) s2;
+  ਪੂਰਨ ਨਤੀਜਾ;
 
-  if (p1 == p2 || n == 0)
-    return 0;
+  ਜੇ (p1 == p2 || n == 0)
+    ਵਾਪਸ 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0' || --n == 0)
-      break;
+  ਜਦੋਂ ((ਨਤੀਜਾ = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    ਜੇ (*p1++ == '\0' || --n == 0)
+      ਰੋਕੋ;
 
-  return result;
+  ਵਾਪਸ ਨਤੀਜਾ;
 }
-#ifndef __strncasecmp
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ __strncasecmp
 weak_alias (__strncasecmp, strncasecmp)
-#endif
+#ਜੇ_ਅੰਤ

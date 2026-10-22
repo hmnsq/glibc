@@ -16,33 +16,33 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdint.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
 size_t
-__strlcat (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcat (ਅੱਖਰ *__restrict dest, ਅਚਲ ਅੱਖਰ *__restrict src, size_t ਮਾਪ)
 {
-  size_t src_length = strlen (src);
+  size_t src_ਲੰਮਾਈ = ਲੜੀ_ਲੰਬਾਈ (src);
 
   /* Our implementation strlcat supports dest == NULL if size == 0
      (for consistency with snprintf and strlcpy), but strnlen does
      not, so we have to cover this case explicitly.  */
-  if (size == 0)
-    return src_length;
+  ਜੇ (ਮਾਪ == 0)
+    ਵਾਪਸ src_ਲੰਮਾਈ;
 
-  size_t dest_length = __strnlen (dest, size);
-  if (dest_length != size)
+  size_t dest_ਲੰਮਾਈ = __strnlen (dest, ਮਾਪ);
+  ਜੇ (dest_ਲੰਮਾਈ != ਮਾਪ)
     {
       /* Copy at most the remaining number of characters in the
 	 destination buffer.  Leave for the NUL terminator.  */
-      size_t to_copy = size - dest_length - 1;
+      size_t ਮੰਜ਼ਿਲ_copy = ਮਾਪ - dest_ਲੰਮਾਈ - 1;
       /* But not more than what is available in the source string.  */
-      if (to_copy > src_length)
-	to_copy = src_length;
+      ਜੇ (ਮੰਜ਼ਿਲ_copy > src_ਲੰਮਾਈ)
+	ਮੰਜ਼ਿਲ_copy = src_ਲੰਮਾਈ;
 
-      char *target = dest + dest_length;
-      memcpy (target, src, to_copy);
-      target[to_copy] = '\0';
+      ਅੱਖਰ *ਨਿਸ਼ਾਨਾ = dest + dest_ਲੰਮਾਈ;
+      ਸਮ੍ਰਿਤੀ_ਨਕਲ (ਨਿਸ਼ਾਨਾ, src, ਮੰਜ਼ਿਲ_copy);
+      ਨਿਸ਼ਾਨਾ[ਮੰਜ਼ਿਲ_copy] = '\0';
     }
 
   /* If the sum wraps around, we have more than SIZE_MAX + 2 bytes in
@@ -51,9 +51,9 @@ __strlcat (char *__restrict dest, const char *__restrict src, size_t size)
      (which the static_assert checks), then by the pigeonhole
      principle, the two input strings must overlap, which is
      undefined.  */
-  _Static_assert (sizeof (uintptr_t) == sizeof (size_t),
+  _Static_assert (ਆਕਾਰ (uintptr_t) == ਆਕਾਰ (size_t),
 		  "theoretical maximum object size covers address space");
-  return dest_length + src_length;
+  ਵਾਪਸ dest_ਲੰਮਾਈ + src_ਲੰਮਾਈ;
 }
 libc_hidden_def (__strlcat)
 weak_alias (__strlcat, strlcat)

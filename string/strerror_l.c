@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libintl.h>
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libintl.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <locale.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdio.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <tls-internal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+ਸਥਿਰ ਅਚਲ ਅੱਖਰ *
+translate (ਅਚਲ ਅੱਖਰ *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  ਅਚਲ ਅੱਖਰ *res = _(str);
   __uselocale (oldloc);
-  return res;
+  ਵਾਪਸ res;
 }
 
-static char *
+ਸਥਿਰ ਅੱਖਰ *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  ਵਾਪਸ (ਅੱਖਰ *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+ਅੱਖਰ *
+__strerror_l (ਪੂਰਨ errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  ਪੂਰਨ saved_errno = errno;
+  ਅੱਖਰ *err = (ਅੱਖਰ *) __get_errlist (errnum);
+  ਜੇ (__glibc_unlikely (err == ਨਿਰਾ))
     {
-      if (__libc_initial)
+      ਜੇ (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  ਬਣਤਰ tls_ਅੰਦਰੂਨੀ_t *tls_ਅੰਦਰੂਨੀ = __glibc_tls_internal ();
+	  ਮੁਕਤ (tls_ਅੰਦਰੂਨੀ->strerror_l_buf);
+	  ਜੇ (__asprintf (&tls_ਅੰਦਰੂਨੀ->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
-	    err = tls_internal->strerror_l_buf;
-	  else
+	    err = tls_ਅੰਦਰੂਨੀ->strerror_l_buf;
+	  ਨਹੀਂਤਾਂ
 	    {
 	      /* The memory was freed above.  */
-	      tls_internal->strerror_l_buf = NULL;
+	      tls_ਅੰਦਰੂਨੀ->strerror_l_buf = ਨਿਰਾ;
 	      /* Provide a fallback translation.  */
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      ਨਹੀਂਤਾਂ
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  ਨਹੀਂਤਾਂ
+    err = (ਅੱਖਰ *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  ਵਾਪਸ err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

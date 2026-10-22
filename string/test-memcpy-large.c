@@ -17,46 +17,46 @@
    <https://www.gnu.org/licenses/>.  */
 
 /* test-memcpy-support.h contains all test functions.  */
-#include "test-memcpy-support.h"
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-memcpy-support.h"
 
-static void
-do_random_large_tests (void)
+ਸਥਿਰ ਖਾਲੀ
+do_random_large_tests (ਖਾਲੀ)
 {
-  size_t i, align1, align2, size;
-  for (i = 0; i < 32; ++i)
+  size_t i, align1, align2, ਮਾਪ;
+  ਲਈ (i = 0; i < 32; ++i)
     {
       align1 = random ();
       align2 = random ();
-      size = (random () % 0x1000000) + 0x200000;
-      do_test1 (align1, align2, size);
+      ਮਾਪ = (random () % 0x1000000) + 0x200000;
+      do_test1 (align1, align2, ਮਾਪ);
     }
 
-  for (i = 0; i < 128; ++i)
+  ਲਈ (i = 0; i < 128; ++i)
     {
       align1 = random ();
       align2 = random ();
-      size = (random () % 32768) + 4096;
-      do_test1 (align1, align2, size);
+      ਮਾਪ = (random () % 32768) + 4096;
+      do_test1 (align1, align2, ਮਾਪ);
     }
 }
 
-int
-test_main (void)
+ਪੂਰਨ
+test_main (ਖਾਲੀ)
 {
   size_t i, j;
 
   test_init ();
 
-  printf ("%23s", "");
+  ਲਿਖੋ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-  printf ("\t%s", impl->name);
-  putchar ('\n');
+  ਲਿਖੋ ("\t%s", impl->name);
+  ਅੱਖਰ_ਲਿਖੋ ('\n');
 
   do_test (0, 0, getpagesize () - 1);
 
-  for (i = 0x200000; i <= 0x2000000; i += i)
+  ਲਈ (i = 0x200000; i <= 0x2000000; i += i)
     {
-      for (j = 64; j <= 1024; j <<= 1)
+      ਲਈ (j = 64; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -97,7 +97,7 @@ test_main (void)
     }
 
   do_random_large_tests ();
-  return ret;
+  ਵਾਪਸ ret;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

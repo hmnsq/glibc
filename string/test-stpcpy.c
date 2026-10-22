@@ -16,46 +16,46 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRCPY_RESULT(dst, len) ((dst) + (len))
-#define TEST_MAIN
-#ifndef WIDE
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRCPY_ਨਤੀਜਾ(dst, len) ((dst) + (len))
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ TEST_MAIN
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
 # define TEST_NAME "stpcpy"
-#else
+#ਨਹੀਂਤਾਂ
 # define TEST_NAME "wcpcpy"
-#endif /* !WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#ਜੇ_ਅੰਤ /* !WIDE */
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-string.h"
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
+# define CHAR ਅੱਖਰ
 # define STPCPY stpcpy
-#else
+#ਨਹੀਂਤਾਂ
 # include <wchar.h>
 # define CHAR wchar_t
 # define STPCPY wcpcpy
-#endif /* !WIDE */
+#ਜੇ_ਅੰਤ /* !WIDE */
 
 IMPL (STPCPY, 1)
 
 /* Also check the generic implementation.  */
-#undef STPCPY
-#undef weak_alias
-#define weak_alias(a, b)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ STPCPY
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ weak_alias
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ weak_alias(a, b)
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ libc_hidden_def
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ libc_hidden_def(a)
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ libc_hidden_builtin_def
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ libc_hidden_builtin_def(a)
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ attribute_hidden
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ attribute_hidden
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ WIDE
 # define STPCPY __stpcpy_default
 # include "string/stpcpy.c"
 IMPL (__stpcpy_default, 1)
-#else
+#ਨਹੀਂਤਾਂ
 # define __wcslen wcslen
 # define __wmemcpy wmemcpy
 # define WCPCPY __wcpcpy_default
 # include "wcsmbs/wcpcpy.c"
 IMPL (__wcpcpy_default, 1)
-#endif
+#ਜੇ_ਅੰਤ
 
-#undef CHAR
-#include "test-strcpy.c"
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ CHAR
+#ਅਨ੍ਤਰ੍ਭਾਵ "test-strcpy.c"

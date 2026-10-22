@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
-#include <libc-pointer-arith.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-fzb.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-fzc.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-fzi.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-shift.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libc-pointer-arith.h>
 
-#undef __memrchr
-#undef memrchr
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ __memrchr
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ memrchr
 
-#ifdef MEMRCHR
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ MEMRCHR
 # define __memrchr MEMRCHR
-#endif
+#ਜੇ_ਅੰਤ
 
-void *
-__memrchr (const void *s, int c_in, size_t n)
+ਖਾਲੀ *
+__memrchr (ਅਚਲ ਖਾਲੀ *s, ਪੂਰਨ c_ਵਿੱਚ, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  ਜੇ (__glibc_unlikely (n == 0))
+    ਵਾਪਸ ਨਿਰਾ;
 
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
+  ਅਚਲ op_t *ਸ਼ਬਦ_ptr = (ਅਚਲ op_t *) PTR_ALIGN_ਉੱਪਰ (s + n, ਆਕਾਰ (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
 
-  op_t word = *--word_ptr;
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t ਸ਼ਬਦ = *--ਸ਼ਬਦ_ptr;
+  op_t repeated_c = repeat_ਬਾਈਟਾਂ (c_ਵਿੱਚ);
 
   /* Compute the address of the word containing the initial byte. */
-  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ਅਚਲ op_t *sword = (ਅਚਲ op_t *) PTR_ALIGN_ਥੱਲੇ (s, ਆਕਾਰ (op_t));
 
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
-  find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ਲੱਭੋ_t ਨਕਾਬ = ਖਿਸਕਾਓ_ਲੱਭੋ_ਆਖਰੀ (ਲੱਭੋ_eq_all (ਸ਼ਬਦ, repeated_c), s_int);
+  ਜੇ (ਨਕਾਬ != 0)
     {
-      char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      ਅੱਖਰ *ret = (ਅੱਖਰ *) ਸ਼ਬਦ_ptr + ਸੂਚਕਾਂਕ_ਆਖਰੀ (ਨਕਾਬ);
+      ਵਾਪਸ ret >= (ਅੱਖਰ *) s ? ret : ਨਿਰਾ;
     }
-  if (word_ptr == sword)
-    return NULL;
-  word = *--word_ptr;
+  ਜੇ (ਸ਼ਬਦ_ptr == sword)
+    ਵਾਪਸ ਨਿਰਾ;
+  ਸ਼ਬਦ = *--ਸ਼ਬਦ_ptr;
 
-  while (word_ptr != sword)
+  ਜਦੋਂ (ਸ਼ਬਦ_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
-      word = *--word_ptr;
+      ਜੇ (has_eq (ਸ਼ਬਦ, repeated_c))
+	ਵਾਪਸ (ਅੱਖਰ *) ਸ਼ਬਦ_ptr + ਸੂਚਕਾਂਕ_ਆਖਰੀ_eq (ਸ਼ਬਦ, repeated_c);
+      ਸ਼ਬਦ = *--ਸ਼ਬਦ_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  ਜੇ (has_eq (ਸ਼ਬਦ, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      ਅੱਖਰ *ret = (ਅੱਖਰ *) ਸ਼ਬਦ_ptr + ਸੂਚਕਾਂਕ_ਆਖਰੀ_eq (ਸ਼ਬਦ, repeated_c);
+      ਜੇ (ret >= (ਅੱਖਰ *) s)
+	ਵਾਪਸ ret;
     }
-  return NULL;
+  ਵਾਪਸ ਨਿਰਾ;
 }
-#ifndef MEMRCHR
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ MEMRCHR
 libc_hidden_def (__memrchr)
 weak_alias (__memrchr, memrchr)
-#endif
+#ਜੇ_ਅੰਤ

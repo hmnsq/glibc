@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <locale.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdbool.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/check.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/namespace.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+ਸਥਿਰ ਅਸਥਿਰ bool fail_malloc;
 
-void *
-malloc (size_t size)
+ਖਾਲੀ *
+ਸਮ੍ਰਿਤੀ_ਦਿਓ (size_t ਮਾਪ)
 {
-  if (fail_malloc)
-    return NULL;
+  ਜੇ (fail_malloc)
+    ਵਾਪਸ ਨਿਰਾ;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
-    original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  ਸਥਿਰ ਖਾਲੀ *(*original_malloc) (size_t);
+  ਜੇ (original_malloc == ਨਿਰਾ)
+    original_malloc = xdlsym (RTLD_ਅਗਲਾ, "malloc");
+  ਵਾਪਸ original_malloc (ਮਾਪ);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+ਸਥਿਰ ਖਾਲੀ
+test_strerror (ਖਾਲੀ *ਘੇਰਾ)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  ਅਚਲ ਅੱਖਰ *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+ਸਥਿਰ ਖਾਲੀ
+test_strerror_l (ਖਾਲੀ *ਘੇਰਾ)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  ਅਚਲ ਅੱਖਰ *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+ਸਥਿਰ ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_ਵਿੱਚ_subprocess (test_strerror, ਨਿਰਾ);
+  support_isolate_ਵਿੱਚ_subprocess (test_strerror_l, ਨਿਰਾ);
 
-  return 0;
+  ਵਾਪਸ 0;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

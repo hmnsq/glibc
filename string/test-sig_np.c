@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <signal.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/support.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/check.h>
 
-static const struct test_t
+ਸਥਿਰ ਅਚਲ ਬਣਤਰ test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  ਪੂਰਨ errno;
+  ਅਚਲ ਅੱਖਰ *abbrev;
+  ਅਚਲ ਅੱਖਰ *descr;
 } tests[] =
 {
-#define N_(name)                      name
-#define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
-#undef init_sig
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ N_(name)                      name
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
+#ਅਨ੍ਤਰ੍ਭਾਵ <siglist.h>
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ init_sig
 };
 
-static int
-do_test (void)
+ਸਥਿਰ ਪੂਰਨ
+do_test (ਖਾਲੀ)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  ਲਈ (size_t i = 0; i < array_ਲੰਮਾਈ (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  ਵਾਪਸ 0;
 }
 
-#include <support/test-driver.c>
+#ਅਨ੍ਤਰ੍ਭਾਵ <support/test-driver.c>

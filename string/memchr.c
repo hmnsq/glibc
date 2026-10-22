@@ -16,73 +16,73 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <libc-pointer-arith.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-fzb.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-fzc.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-fzi.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string-shift.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#undef memchr
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ memchr
 
-#ifdef MEMCHR
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ MEMCHR
 # define __memchr MEMCHR
-#endif
+#ਜੇ_ਅੰਤ
 
-static __always_inline const char *
+ਸਥਿਰ __always_inline ਅਚਲ ਅੱਖਰ *
 sadd (uintptr_t x, uintptr_t y)
 {
-  return (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
+  ਵਾਪਸ (ਅਚਲ ਅੱਖਰ *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
 }
 
 /* Search no more than N bytes of S for C.  */
-void *
-__memchr (void const *s, int c_in, size_t n)
+ਖਾਲੀ *
+__memchr (ਖਾਲੀ ਅਚਲ *s, ਪੂਰਨ c_ਵਿੱਚ, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  ਜੇ (__glibc_unlikely (n == 0))
+    ਵਾਪਸ ਨਿਰਾ;
 
   /* Read the first word, but munge it so that bytes before the array
      will not match goal.  */
-  const op_t *word_ptr = PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ਅਚਲ op_t *ਸ਼ਬਦ_ptr = PTR_ALIGN_ਥੱਲੇ (s, ਆਕਾਰ (op_t));
   uintptr_t s_int = (uintptr_t) s;
 
-  op_t word = *word_ptr;
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t ਸ਼ਬਦ = *ਸ਼ਬਦ_ptr;
+  op_t repeated_c = repeat_ਬਾਈਟਾਂ (c_ਵਿੱਚ);
   /* Compute the address of the last byte taking in consideration possible
      overflow.  */
-  const char *lbyte = sadd (s_int, n - 1);
+  ਅਚਲ ਅੱਖਰ *lbyte = sadd (s_int, n - 1);
   /* And also the address of the word containing the last byte. */
-  const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, sizeof (op_t));
+  ਅਚਲ op_t *lword = (ਅਚਲ op_t *) PTR_ALIGN_ਥੱਲੇ (lbyte, ਆਕਾਰ (op_t));
 
-  find_t mask = shift_find (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ਲੱਭੋ_t ਨਕਾਬ = ਖਿਸਕਾਓ_ਲੱਭੋ (ਲੱਭੋ_eq_all (ਸ਼ਬਦ, repeated_c), s_int);
+  ਜੇ (ਨਕਾਬ != 0)
     {
-      char *ret = (char *) s + index_first (mask);
-      return (ret <= lbyte) ? ret : NULL;
+      ਅੱਖਰ *ret = (ਅੱਖਰ *) s + ਸੂਚਕਾਂਕ_ਪਹਿਲਾ (ਨਕਾਬ);
+      ਵਾਪਸ (ret <= lbyte) ? ret : ਨਿਰਾ;
     }
-  if (word_ptr == lword)
-    return NULL;
+  ਜੇ (ਸ਼ਬਦ_ptr == lword)
+    ਵਾਪਸ ਨਿਰਾ;
 
-  word = *++word_ptr;
-  while (word_ptr != lword)
+  ਸ਼ਬਦ = *++ਸ਼ਬਦ_ptr;
+  ਜਦੋਂ (ਸ਼ਬਦ_ptr != lword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_first_eq (word, repeated_c);
-      word = *++word_ptr;
+      ਜੇ (has_eq (ਸ਼ਬਦ, repeated_c))
+	ਵਾਪਸ (ਅੱਖਰ *) ਸ਼ਬਦ_ptr + ਸੂਚਕਾਂਕ_ਪਹਿਲਾ_eq (ਸ਼ਬਦ, repeated_c);
+      ਸ਼ਬਦ = *++ਸ਼ਬਦ_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  ਜੇ (has_eq (ਸ਼ਬਦ, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_first_eq (word, repeated_c);
-      if (ret <= lbyte)
-	return ret;
+      ਅੱਖਰ *ret = (ਅੱਖਰ *) ਸ਼ਬਦ_ptr + ਸੂਚਕਾਂਕ_ਪਹਿਲਾ_eq (ਸ਼ਬਦ, repeated_c);
+      ਜੇ (ret <= lbyte)
+	ਵਾਪਸ ret;
     }
-  return NULL;
+  ਵਾਪਸ ਨਿਰਾ;
 }
-#ifndef MEMCHR
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ MEMCHR
 weak_alias (__memchr, memchr)
 libc_hidden_builtin_def (memchr)
-#endif
+#ਜੇ_ਅੰਤ

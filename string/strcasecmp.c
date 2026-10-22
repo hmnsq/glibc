@@ -15,53 +15,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#ਜੇ_ਅੰਤ
 
-#include <ctype.h>
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <ctype.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#ifndef _LIBC
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#ਨਹੀਂਤਾਂ
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_ਵਿੱਚ_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#ਜੇ_ਅੰਤ
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ USE_ਵਿੱਚ_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#ਨਹੀਂਤਾਂ
 # define LOCALE_PARAM
-#endif
+#ਜੇ_ਅੰਤ
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+ਪੂਰਨ
+__strcasecmp (ਅਚਲ ਅੱਖਰ *s1, ਅਚਲ ਅੱਖਰ *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#ਜੇ defined _LIBC && !defined USE_ਵਿੱਚ_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#ਜੇ_ਅੰਤ
+  ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *p1 = (ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) s1;
+  ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *p2 = (ਅਚਲ ਬਿਨਾਨਿਸ਼ਾਨੀ ਅੱਖਰ *) s2;
+  ਪੂਰਨ ਨਤੀਜਾ;
 
-  if (p1 == p2)
-    return 0;
+  ਜੇ (p1 == p2)
+    ਵਾਪਸ 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  ਜਦੋਂ ((ਨਤੀਜਾ = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    ਜੇ (*p1++ == '\0')
+      ਰੋਕੋ;
 
-  return result;
+  ਵਾਪਸ ਨਤੀਜਾ;
 }
-#ifndef __strcasecmp
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ __strcasecmp
 libc_hidden_def (__strcasecmp)
 weak_alias (__strcasecmp, strcasecmp)
-#endif
+#ਜੇ_ਅੰਤ

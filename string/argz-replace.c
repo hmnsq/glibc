@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <stdlib.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+ਸਥਿਰ ਖਾਲੀ
+str_append (ਅੱਖਰ **ਮੰਜ਼ਿਲ, size_t *ਮੰਜ਼ਿਲ_len, ਅਚਲ ਅੱਖਰ *buf, ਅਚਲ size_t buf_len)
 {
-  size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  size_t new_len = *ਮੰਜ਼ਿਲ_len + buf_len;
+  ਅੱਖਰ *new_ਮੰਜ਼ਿਲ = realloc (*ਮੰਜ਼ਿਲ, new_len + 1);
 
-  if (new_to)
+  ਜੇ (new_ਮੰਜ਼ਿਲ)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
-      *to = new_to;
-      *to_len = new_len;
+      *((ਅੱਖਰ *) __mempcpy (new_ਮੰਜ਼ਿਲ + *ਮੰਜ਼ਿਲ_len, buf, buf_len)) = '\0';
+      *ਮੰਜ਼ਿਲ = new_ਮੰਜ਼ਿਲ;
+      *ਮੰਜ਼ਿਲ_len = new_len;
     }
-  else
+  ਨਹੀਂਤਾਂ
     {
-      free (*to);
-      *to = NULL;
+      ਮੁਕਤ (*ਮੰਜ਼ਿਲ);
+      *ਮੰਜ਼ਿਲ = ਨਿਰਾ;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (ਅੱਖਰ **argz, size_t *argz_len, ਅਚਲ ਅੱਖਰ *str, ਅਚਲ ਅੱਖਰ *with,
+		ਬਿਨਾਨਿਸ਼ਾਨੀ *replace_ਗਿਣਤੀ)
 {
   error_t err = 0;
 
-  if (str && *str)
+  ਜੇ (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      ਅੱਖਰ *arg = ਨਿਰਾ;
+      ਅੱਖਰ *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      ਅੱਖਰ *dst = ਨਿਰਾ;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
-      size_t str_len = strlen (str), with_len = strlen (with);
+      ਪੂਰਨ delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      size_t str_len = ਲੜੀ_ਲੰਬਾਈ (str), with_len = ਲੜੀ_ਲੰਬਾਈ (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      ਜਦੋਂ (!err && (arg = argz_ਅਗਲਾ (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  ਅੱਖਰ *ਮੇਲ = ਲੜੀ_ਖੋਜ (arg, str);
+	  ਜੇ (ਮੇਲ)
 	    {
-	      char *from = match + str_len;
-	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      ਅੱਖਰ *from = ਮੇਲ + str_len;
+	      size_t ਮੰਜ਼ਿਲ_len = ਮੇਲ - arg;
+	      ਅੱਖਰ *ਮੰਜ਼ਿਲ = __strndup (arg, ਮੰਜ਼ਿਲ_len);
 
-	      while (to && from)
+	      ਜਦੋਂ (ਮੰਜ਼ਿਲ && from)
 		{
-		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  str_append (&ਮੰਜ਼ਿਲ, &ਮੰਜ਼ਿਲ_len, with, with_len);
+		  ਜੇ (ਮੰਜ਼ਿਲ)
 		    {
-		      match = strstr (from, str);
-		      if (match)
+		      ਮੇਲ = ਲੜੀ_ਖੋਜ (from, str);
+		      ਜੇ (ਮੇਲ)
 			{
-			  str_append (&to, &to_len, from, match - from);
-			  from = match + str_len;
+			  str_append (&ਮੰਜ਼ਿਲ, &ਮੰਜ਼ਿਲ_len, from, ਮੇਲ - from);
+			  from = ਮੇਲ + str_len;
 			}
-		      else
+		      ਨਹੀਂਤਾਂ
 			{
-			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  str_append (&ਮੰਜ਼ਿਲ, &ਮੰਜ਼ਿਲ_len, from, ਲੜੀ_ਲੰਬਾਈ (from));
+			  from = ਨਿਰਾ;
 			}
 		    }
 		}
 
-	      if (to)
+	      ਜੇ (ਮੰਜ਼ਿਲ)
 		{
-		  if (delayed_copy)
+		  ਜੇ (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      ਜੇ (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
-		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  ਜੇ (! err)
+		    err = __argz_add (&dst, &dst_len, ਮੰਜ਼ਿਲ);
+		  ਮੁਕਤ (ਮੰਜ਼ਿਲ);
 		}
-	      else
+	      ਨਹੀਂਤਾਂ
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      ਜੇ (replace_ਗਿਣਤੀ)
+		(*replace_ਗਿਣਤੀ)++;
 	    }
-	  else if (! delayed_copy)
+	  ਨਹੀਂਤਾਂ ਜੇ (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      ਜੇ (! err)
 	{
-	  if (! delayed_copy)
+	  ਜੇ (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      ਮੁਕਤ (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      ਨਹੀਂਤਾਂ ਜੇ (dst_len > 0)
+	ਮੁਕਤ (dst);
     }
 
-  return err;
+  ਵਾਪਸ err;
 }
 weak_alias (__argz_replace, argz_replace)

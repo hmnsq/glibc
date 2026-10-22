@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <string.h>
 
-#undef strpbrk
+#ਪਰਿਭਾਸ਼ਾ_ਰੱਦ strpbrk
 
-#ifndef STRPBRK
-#define STRPBRK strpbrk
-#endif
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ STRPBRK
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ STRPBRK strpbrk
+#ਜੇ_ਅੰਤ
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
-char *
-STRPBRK (const char *s, const char *accept)
+ਅੱਖਰ *
+STRPBRK (ਅਚਲ ਅੱਖਰ *s, ਅਚਲ ਅੱਖਰ *accept)
 {
   s += strcspn (s, accept);
-  return *s ? (char *)s : NULL;
+  ਵਾਪਸ *s ? (ਅੱਖਰ *)s : ਨਿਰਾ;
 }
 libc_hidden_builtin_def (strpbrk)

@@ -15,134 +15,134 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef	_STRINGS_H
-#define	_STRINGS_H	1
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ	_STRINGS_H
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ	_STRINGS_H	1
 
-#include <features.h>
-#define __need_size_t
-#include <stddef.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <features.h>
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ __need_size_t
+#ਅਨ੍ਤਰ੍ਭਾਵ <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && __GNUC_PREREQ (4, 4)
+#ਜੇ defined __cplusplus && __GNUC_PREREQ (4, 4)
 # define __CORRECT_ISO_CPP_STRINGS_H_PROTO
-#endif
+#ਜੇ_ਅੰਤ
 
 __BEGIN_DECLS
 
-#if defined __USE_MISC || !defined __USE_XOPEN2K8
+#ਜੇ defined __USE_MISC || !defined __USE_XOPEN2K8
 /* Compare N bytes of S1 and S2 (same as memcmp).  */
-extern int bcmp (const void *__s1, const void *__s2, size_t __n)
+ਬਾਹਰੀ ਪੂਰਨ bcmp (ਅਚਲ ਖਾਲੀ *__s1, ਅਚਲ ਖਾਲੀ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Copy N bytes of SRC to DEST (like memmove, but args reversed).  */
-extern void bcopy (const void *__src, void *__dest, size_t __n)
+ਬਾਹਰੀ ਖਾਲੀ bcopy (ਅਚਲ ਖਾਲੀ *__src, ਖਾਲੀ *__dest, size_t __n)
   __THROW __nonnull ((1, 2));
 
 /* Set N bytes of S to 0.  */
-extern void bzero (void *__s, size_t __n) __THROW __nonnull ((1));
+ਬਾਹਰੀ ਖਾਲੀ bzero (ਖਾਲੀ *__s, size_t __n) __THROW __nonnull ((1));
 
 /* Find the first occurrence of C in S (same as strchr).  */
 # ifdef __CORRECT_ISO_CPP_STRINGS_H_PROTO
-extern "C++"
+ਬਾਹਰੀ "C++"
 {
-extern char *index (char *__s, int __c)
+ਬਾਹਰੀ ਅੱਖਰ *ਸੂਚਕਾਂਕ (ਅੱਖਰ *__s, ਪੂਰਨ __c)
      __THROW __asm ("index") __attribute_pure__ __nonnull ((1));
-extern const char *index (const char *__s, int __c)
+ਬਾਹਰੀ ਅਚਲ ਅੱਖਰ *ਸੂਚਕਾਂਕ (ਅਚਲ ਅੱਖਰ *__s, ਪੂਰਨ __c)
      __THROW __asm ("index") __attribute_pure__ __nonnull ((1));
 
-#  if defined __OPTIMIZE__
-__extern_always_inline char *
-index (char *__s, int __c) __THROW
+#  ਜੇ defined __OPTIMIZE__
+__extern_always_inline ਅੱਖਰ *
+ਸੂਚਕਾਂਕ (ਅੱਖਰ *__s, ਪੂਰਨ __c) __THROW
 {
-  return __builtin_index (__s, __c);
+  ਵਾਪਸ __builtin_index (__s, __c);
 }
 
-__extern_always_inline const char *
-index (const char *__s, int __c) __THROW
+__extern_always_inline ਅਚਲ ਅੱਖਰ *
+ਸੂਚਕਾਂਕ (ਅਚਲ ਅੱਖਰ *__s, ਪੂਰਨ __c) __THROW
 {
-  return __builtin_index (__s, __c);
+  ਵਾਪਸ __builtin_index (__s, __c);
 }
 #  endif
 }
-# else
-extern char *index (const char *__s, int __c)
+# ਨਹੀਂਤਾਂ
+ਬਾਹਰੀ ਅੱਖਰ *ਸੂਚਕਾਂਕ (ਅਚਲ ਅੱਖਰ *__s, ਪੂਰਨ __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Find the last occurrence of C in S (same as strrchr).  */
 # ifdef __CORRECT_ISO_CPP_STRINGS_H_PROTO
-extern "C++"
+ਬਾਹਰੀ "C++"
 {
-extern char *rindex (char *__s, int __c)
+ਬਾਹਰੀ ਅੱਖਰ *rindex (ਅੱਖਰ *__s, ਪੂਰਨ __c)
      __THROW __asm ("rindex") __attribute_pure__ __nonnull ((1));
-extern const char *rindex (const char *__s, int __c)
+ਬਾਹਰੀ ਅਚਲ ਅੱਖਰ *rindex (ਅਚਲ ਅੱਖਰ *__s, ਪੂਰਨ __c)
      __THROW __asm ("rindex") __attribute_pure__ __nonnull ((1));
 
-#  if defined __OPTIMIZE__
-__extern_always_inline char *
-rindex (char *__s, int __c) __THROW
+#  ਜੇ defined __OPTIMIZE__
+__extern_always_inline ਅੱਖਰ *
+rindex (ਅੱਖਰ *__s, ਪੂਰਨ __c) __THROW
 {
-  return __builtin_rindex (__s, __c);
+  ਵਾਪਸ __builtin_rindex (__s, __c);
 }
 
-__extern_always_inline const char *
-rindex (const char *__s, int __c) __THROW
+__extern_always_inline ਅਚਲ ਅੱਖਰ *
+rindex (ਅਚਲ ਅੱਖਰ *__s, ਪੂਰਨ __c) __THROW
 {
-  return __builtin_rindex (__s, __c);
+  ਵਾਪਸ __builtin_rindex (__s, __c);
 }
 #  endif
 }
-# else
-extern char *rindex (const char *__s, int __c)
+# ਨਹੀਂਤਾਂ
+ਬਾਹਰੀ ਅੱਖਰ *rindex (ਅਚਲ ਅੱਖਰ *__s, ਪੂਰਨ __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
-#endif
+#ਜੇ_ਅੰਤ
 
-#if defined __USE_MISC || !defined __USE_XOPEN2K8 || defined __USE_XOPEN2K8XSI
+#ਜੇ defined __USE_MISC || !defined __USE_XOPEN2K8 || defined __USE_XOPEN2K8XSI
 /* Return the position of the first bit set in I, or 0 if none are set.
    The least-significant bit is position 1, the most-significant 32.  */
-extern int ffs (int __i) __THROW __attribute_const__;
-#endif
+ਬਾਹਰੀ ਪੂਰਨ ffs (ਪੂਰਨ __i) __THROW __attribute_const__;
+#ਜੇ_ਅੰਤ
 
 /* The following two functions are non-standard but necessary for non-32 bit
    platforms.  */
 # ifdef	__USE_MISC
-extern int ffsl (long int __l) __THROW __attribute_const__;
-__extension__ extern int ffsll (long long int __ll)
+ਬਾਹਰੀ ਪੂਰਨ ffsl (ਲੰਮਾ ਪੂਰਨ __l) __THROW __attribute_const__;
+__extension__ ਬਾਹਰੀ ਪੂਰਨ ffsll (ਲੰਮਾ ਲੰਮਾ ਪੂਰਨ __ll)
      __THROW __attribute_const__;
 # endif
 
 /* Compare S1 and S2, ignoring case.  */
-extern int strcasecmp (const char *__s1, const char *__s2)
+ਬਾਹਰੀ ਪੂਰਨ strcasecmp (ਅਚਲ ਅੱਖਰ *__s1, ਅਚਲ ਅੱਖਰ *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare no more than N chars of S1 and S2, ignoring case.  */
-extern int strncasecmp (const char *__s1, const char *__s2, size_t __n)
+ਬਾਹਰੀ ਪੂਰਨ strncasecmp (ਅਚਲ ਅੱਖਰ *__s1, ਅਚਲ ਅੱਖਰ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
-#ifdef	__USE_XOPEN2K8
+#ਜੇ_ਪਰਿਭਾਸ਼ਿਤ	__USE_XOPEN2K8
 /* POSIX.1-2008 extended locale interface (see locale.h).  */
 # include <bits/types/locale_t.h>
 
 /* Compare S1 and S2, ignoring case, using collation rules from LOC.  */
-extern int strcasecmp_l (const char *__s1, const char *__s2, locale_t __loc)
+ਬਾਹਰੀ ਪੂਰਨ strcasecmp_l (ਅਚਲ ਅੱਖਰ *__s1, ਅਚਲ ਅੱਖਰ *__s2, locale_t __loc)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 
 /* Compare no more than N chars of S1 and S2, ignoring case, using
    collation rules from LOC.  */
-extern int strncasecmp_l (const char *__s1, const char *__s2,
+ਬਾਹਰੀ ਪੂਰਨ strncasecmp_l (ਅਚਲ ਅੱਖਰ *__s1, ਅਚਲ ਅੱਖਰ *__s2,
 			  size_t __n, locale_t __loc)
      __THROW __attribute_pure__ __nonnull ((1, 2, 4));
-#endif
+#ਜੇ_ਅੰਤ
 
 __END_DECLS
 
-#if __GNUC_PREREQ (3,4) && __USE_FORTIFY_LEVEL > 0 \
+#ਜੇ __GNUC_PREREQ (3,4) && __USE_FORTIFY_LEVEL > 0 \
     && defined __fortify_function
 /* Functions with security checks.  */
-# if defined __USE_MISC || !defined __USE_XOPEN2K8
+# ਜੇ defined __USE_MISC || !defined __USE_XOPEN2K8
 #  include <bits/strings_fortified.h>
 # endif
-#endif
+#ਜੇ_ਅੰਤ
 
-#endif	/* strings.h  */
+#ਜੇ_ਅੰਤ	/* strings.h  */

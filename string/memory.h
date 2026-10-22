@@ -19,15 +19,15 @@
  * SVID
  */
 
-#ifndef	_MEMORY_H
-#define	_MEMORY_H	1
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ	ਸਮ੍ਰਿਤੀ_H
+#ਪਰਿਭਾਸ਼ਿਤ_ਕਰੋ	ਸਮ੍ਰਿਤੀ_H	1
 
-#include <features.h>
+#ਅਨ੍ਤਰ੍ਭਾਵ <features.h>
 
 
-#ifndef	_STRING_H
+#ਜੇ_ਅਪਰਿਭਾਸ਼ਿਤ	_STRING_H
 # include <string.h>
-#endif	/* string.h  */
+#ਜੇ_ਅੰਤ	/* string.h  */
 
 
-#endif	/* memory.h  */
+#ਜੇ_ਅੰਤ	/* memory.h  */
