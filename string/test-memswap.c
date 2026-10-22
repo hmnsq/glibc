@@ -24,12 +24,12 @@
 #define BUF1PAGES 3
 #include "test-string.h"
 
-static unsigned char *ref1;
-static unsigned char *ref2;
+static unsigned var_na *ref1;
+static unsigned var_na *ref2;
 
 static void
-do_one_test (unsigned char *p1, unsigned char *ref1, unsigned char *p2,
-	     unsigned char *ref2, size_t len)
+do_one_test (unsigned var_na *p1, unsigned var_na *ref1, unsigned var_na *p2,
+	     unsigned var_na *ref2, size_t len)
 {
   __memswap (p1, p2, len);
 
@@ -37,19 +37,19 @@ do_one_test (unsigned char *p1, unsigned char *ref1, unsigned char *p2,
   TEST_COMPARE_BLOB (p2, len, ref1, len);
 }
 
-static inline void
+static anta_hstha void
 do_test (size_t align1, size_t align2, size_t len)
 {
   align1 &= page_size;
-  if (align1 + len >= page_size)
-    return;
+  ᮚᮦᮔ᮪ (align1 + len >= page_size)
+    ᮝᮜᮤ;
 
   align2 &= page_size;
-  if (align2 + len >= page_size)
-    return;
+  ᮚᮦᮔ᮪ (align2 + len >= page_size)
+    ᮝᮜᮤ;
 
-  unsigned char *p1 = buf1 + align1;
-  unsigned char *p2 = buf2 + align2;
+  unsigned var_na *p1 = buf1 + align1;
+  unsigned var_na *p2 = buf2 + align2;
   for (size_t repeats = 0; repeats < 2; ++repeats)
     {
       size_t i, j;
@@ -70,7 +70,7 @@ do_random_tests (void)
     {
       size_t len, size, size1, size2, align1, align2;
 
-      if (n == 0)
+      ᮚᮦᮔ᮪ (n == 0)
         {
           len = getpagesize ();
           size = len + 512;
@@ -79,54 +79,54 @@ do_random_tests (void)
           align1 = 512;
           align2 = 512;
         }
-      else
+      ᮜᮤᮚ
         {
-          if ((random () & 255) == 0)
+          ᮚᮦᮔ᮪ ((random () & 255) == 0)
             size = 65536;
-          else
+          ᮜᮤᮚ
             size = 768;
-          if (size > page_size)
+          ᮚᮦᮔ᮪ (size > page_size)
             size = page_size;
           size1 = size;
           size2 = size;
           size_t i = random ();
-          if (i & 3)
+          ᮚᮦᮔ᮪ (i & 3)
             size -= 256;
-          if (i & 1)
+          ᮚᮦᮔ᮪ (i & 1)
             size1 -= 256;
-          if (i & 2)
+          ᮚᮦᮔ᮪ (i & 2)
             size2 -= 256;
-          if (i & 4)
+          ᮚᮦᮔ᮪ (i & 4)
             {
               len = random () % size;
               align1 = size1 - len - (random () & 31);
               align2 = size2 - len - (random () & 31);
-              if (align1 > size1)
+              ᮚᮦᮔ᮪ (align1 > size1)
                 align1 = 0;
-              if (align2 > size2)
+              ᮚᮦᮔ᮪ (align2 > size2)
                 align2 = 0;
             }
-          else
+          ᮜᮤᮚ
             {
               align1 = random () & 63;
               align2 = random () & 63;
               len = random () % size;
-              if (align1 + len > size1)
+              ᮚᮦᮔ᮪ (align1 + len > size1)
                 align1 = size1 - len;
-              if (align2 + len > size2)
+              ᮚᮦᮔ᮪ (align2 + len > size2)
                 align2 = size2 - len;
             }
         }
-      unsigned char *p1 = buf1 + page_size - size1;
-      unsigned char *p2 = buf2 + page_size - size2;
+      unsigned var_na *p1 = buf1 + page_size - size1;
+      unsigned var_na *p2 = buf2 + page_size - size2;
       size_t j = align1 + len + 256;
-      if (j > size1)
+      ᮚᮦᮔ᮪ (j > size1)
         j = size1;
       for (size_t i = 0; i < j; ++i)
 	ref1[i] = p1[i] = random () & 255;
 
       j = align2 + len + 256;
-      if (j > size2)
+      ᮚᮦᮔ᮪ (j > size2)
 	j = size2;
 
       for (size_t i = 0; i < j; ++i)
@@ -136,7 +136,7 @@ do_random_tests (void)
     }
 }
 
-static int
+static puur_naa_nka
 test_main (void)
 {
   test_init ();
@@ -166,7 +166,7 @@ test_main (void)
 
   for (size_t i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
+      ᮚᮦᮔ᮪ ((i & (i - 1)) == 0)
         continue;
       do_test (0, 0, 16 * i);
       do_test (i, 0, 16 * i);
@@ -186,7 +186,7 @@ test_main (void)
 
   do_random_tests ();
 
-  return 0;
+  ᮝᮜᮤ 0;
 }
 
 #include <support/test-driver.c>

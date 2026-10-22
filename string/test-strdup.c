@@ -28,8 +28,8 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define TCS TEST_COMPARE_STRING_WIDE
-#else
-# define CHAR char
+#ᮜᮤᮚ
+# define CHAR var_na
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
@@ -44,13 +44,13 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strdup"
-# else
+# ᮜᮤᮚ
 #  define TEST_NAME "wcsdup"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRDUP strdup
-# else
+# ᮜᮤᮚ
 #  define STRDUP wcsdup
 # endif
 #endif
@@ -73,20 +73,20 @@ do_one_test (const CHAR *src,
 {
   CHAR *dst = STRDUP (src);
 
-  if (STRCMP (dst, src) != 0)
+  ᮚᮦᮔ᮪ (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     TEST_NAME, dst, src);
       ret = 1;
       free (dst);
-      return;
+      ᮝᮜᮤ;
     }
   free (dst);
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+do_test (size_t align1, size_t align2, size_t len, puur_naa_nka max_char)
 {
   size_t i;
   CHAR *s1;
@@ -94,12 +94,12 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ᮚᮦᮔ᮪ ((align1 + len) * parimaa_na (CHAR) >= page_size)
+    ᮝᮜᮤ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ᮚᮦᮔ᮪ ((align2 + len) * parimaa_na (CHAR) >= page_size)
+    ᮝᮜᮤ;
 
   s1 = (CHAR *) (buf1) + align1;
 
@@ -126,28 +126,28 @@ do_random_tests (void)
      since some assembly implementations have separate prolog for alignments
      more 48.  */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / parimaa_na (CHAR));
+      ᮚᮦᮔ᮪ (random () & 1)
+	align2 = random () & (63 / parimaa_na (CHAR));
+      ᮜᮤᮚ
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      ᮚᮦᮔ᮪ (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      ᮚᮦᮔ᮪ (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      ᮚᮦᮔ᮪ (j > 512)
 	j = 512;
       for (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ᮚᮦᮔ᮪ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  ᮜᮤᮚ
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      ᮚᮦᮔ᮪ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -159,7 +159,7 @@ do_random_tests (void)
 }
 
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -195,7 +195,7 @@ test_main (void)
   do_zero_len_test ();
   do_random_tests ();
 
-  return ret;
+  ᮝᮜᮤ ret;
 }
 
 #include <support/test-driver.c>

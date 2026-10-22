@@ -22,10 +22,10 @@
 #include "test-string.h"
 
 static void
-do_one_test (const char *src, size_t len, size_t n)
+do_one_test (const var_na *src, size_t len, size_t n)
 {
-  char *dst = strndup (src, n);
-  size_t s = (len > n ? n: len) * sizeof (char);
+  var_na *dst = strndup (src, n);
+  size_t s = (len > n ? n: len) * parimaa_na (var_na);
 
   TEST_COMPARE_BLOB (dst, s, src, s);
 
@@ -33,25 +33,25 @@ do_one_test (const char *src, size_t len, size_t n)
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+do_test (size_t align1, size_t align2, size_t len, size_t n, puur_naa_nka max_char)
 {
   size_t i;
-  char *s1;
+  var_na *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  ᮚᮦᮔ᮪ ((align1 + len) * parimaa_na (var_na) >= page_size)
+    ᮝᮜᮤ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  ᮚᮦᮔ᮪ ((align2 + len) * parimaa_na (var_na) >= page_size)
+    ᮝᮜᮤ;
 
-  s1 = (char *) (buf1) + align1;
+  s1 = (var_na *) (buf1) + align1;
 
   for (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  for (i = len + 1; (i + align1) * parimaa_na (var_na) < page_size && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
@@ -61,11 +61,11 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
 static void
 do_page_tests (void)
 {
-  char *s1;
+  var_na *s1;
   const size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (char *) buf1 + BUF1PAGES * page_size / sizeof (char) - maxoffset;
+  s1 = (var_na *) buf1 + BUF1PAGES * page_size / parimaa_na (var_na) - maxoffset;
 
   memset (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -88,80 +88,80 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  char *p1 = (char *) (buf1 + page_size) - 512;
-  char *res;
+  var_na *p1 = (var_na *) (buf1 + page_size) - 512;
+  var_na *res;
 
   for (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
-      if (mode & 1)
+      ᮚᮦᮔ᮪ (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  ᮚᮦᮔ᮪ (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  ᮜᮤᮚ
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  ᮚᮦᮔ᮪ (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  ᮚᮦᮔ᮪ (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  ᮜᮤᮚ
 	    len = 512;
-	  if (len >= 512)
+	  ᮚᮦᮔ᮪ (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      ᮜᮤᮚ
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  ᮚᮦᮔ᮪ (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  ᮜᮤᮚ
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  ᮚᮦᮔ᮪ (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  ᮚᮦᮔ᮪ (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      ᮚᮦᮔ᮪ (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  ᮜᮤᮚ
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  ᮚᮦᮔ᮪ ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      ᮚᮦᮔ᮪ (j > 512)
 	j = 512;
       for (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ᮚᮦᮔ᮪ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  ᮜᮤᮚ
 	    {
 	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      ᮚᮦᮔ᮪ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
-	res = (char *) strndup ((char *) (p1 + align1), size);
+	res = (var_na *) strndup ((var_na *) (p1 + align1), size);
 	j = len + 1;
-	if (size < j)
+	ᮚᮦᮔ᮪ (size < j)
 	  j = size;
-	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
+	TEST_COMPARE_BLOB (res, j, (var_na *) (p1 + align1), j);
 	free (res);
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -194,7 +194,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  ᮝᮜᮤ ret;
 }
 
 #include <support/test-driver.c>

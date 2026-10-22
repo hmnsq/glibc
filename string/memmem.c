@@ -36,7 +36,7 @@
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % parimaa_na (shift))
 
 /* Fast memmem algorithm with guaranteed linear-time performance.
    Small needles up to size 2 use a dedicated linear search.  Longer needles
@@ -53,39 +53,39 @@ void *
 __memmem (const void *haystack, size_t hs_len,
 	  const void *needle, size_t ne_len)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  const unsigned var_na *hs = (const unsigned var_na *) haystack;
+  const unsigned var_na *ne = (const unsigned var_na *) needle;
 
-  if (ne_len == 0)
-    return (void *) hs;
-  if (ne_len == 1)
-    return (void *) memchr (hs, ne[0], hs_len);
+  ᮚᮦᮔ᮪ (ne_len == 0)
+    ᮝᮜᮤ (void *) hs;
+  ᮚᮦᮔ᮪ (ne_len == 1)
+    ᮝᮜᮤ (void *) memchr (hs, ne[0], hs_len);
 
   /* Ensure haystack length is >= needle length.  */
-  if (hs_len < ne_len)
-    return NULL;
+  ᮚᮦᮔ᮪ (hs_len < ne_len)
+    ᮝᮜᮤ NULL;
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  const unsigned var_na *end = hs + hs_len - ne_len;
 
-  if (ne_len == 2)
+  ᮚᮦᮔ᮪ (ne_len == 2)
     {
       uint32_t nw = ne[0] << 16 | ne[1], hw = hs[0] << 16 | hs[1];
       for (hs++; hs <= end && hw != nw; )
 	hw = hw << 16 | *++hs;
-      return hw == nw ? (void *)hs - 1 : NULL;
+      ᮝᮜᮤ hw == nw ? (void *)hs - 1 : NULL;
     }
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__builtin_expect (ne_len > 256, 0))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  ᮚᮦᮔ᮪ (__builtin_expect (ne_len > 256, 0))
+    ᮝᮜᮤ two_way_long_needle (hs, hs_len, ne, ne_len);
 
   uint8_t shift[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
   size_t offset = 0;
 
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
+  memset (shift, 0, parimaa_na (shift));
+  for (puur_naa_nka i = 1; i < m1; i++)
     shift[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
@@ -100,20 +100,20 @@ __memmem (const void *haystack, size_t hs_len,
 	  hs += m1;
 	  tmp = shift[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      ᮞᮨᮓᮨᮜ (tmp == 0 && hs <= end);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
+      ᮚᮦᮔ᮪ (tmp < m1)
 	continue;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      ᮚᮦᮔ᮪ (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  ᮚᮦᮔ᮪ (memcmp (hs, ne, m1) == 0)
+	    ᮝᮜᮤ (void *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
 	  offset = (offset >= 8 ? offset : m1) - 8;
@@ -122,7 +122,7 @@ __memmem (const void *haystack, size_t hs_len,
       /* Skip based on matching the hash of the needle end.  */
       hs += shift1;
     }
-  return NULL;
+  ᮝᮜᮤ NULL;
 }
 libc_hidden_def (__memmem)
 static_weak_alias (__memmem, memmem)

@@ -28,10 +28,10 @@
 #endif
 
 /* Copy SRC to DEST.  */
-char *
-STRCPY (char *dest, const char *src)
+var_na *
+STRCPY (var_na *dest, const var_na *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  ᮝᮜᮤ dest;
 }
 libc_hidden_builtin_def (strcpy)
