@@ -15,85 +15,85 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/support.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <support/support.h>
 
-static int
-do_test (void)
+স্থির পূর্ণসংখ্যা
+do_test (শূন্য)
 {
-  char *mem, *memp;
-  char *rand_mem;
-  char *lo_around, *hi_around;
-  int size, max_size;
-  int src_off, dst_off;
-  int i;
-  int space_around = 10;
+  অক্ষর *mem, *memp;
+  অক্ষর *rand_mem;
+  অক্ষর *lo_around, *hi_around;
+  পূর্ণসংখ্যা আকার_2, max_আকার;
+  পূর্ণসংখ্যা src_off, dst_off;
+  পূর্ণসংখ্যা i;
+  পূর্ণসংখ্যা space_around = 10;
 
-  max_size = 256;
+  max_আকার = 256;
 
-  mem = xmalloc (max_size + 2 * max_size + 2 * space_around);
-  rand_mem = xmalloc (max_size);
+  mem = xmalloc (max_আকার + 2 * max_আকার + 2 * space_around);
+  rand_mem = xmalloc (max_আকার);
   lo_around = xmalloc (space_around);
   hi_around = xmalloc (space_around);
   memp = mem + space_around;
 
   /* Fill RAND_MEM with random bytes, each non-zero.  */
-  for (i = 0; i < max_size; i++)
+  জন্য (i = 0; i < max_আকার; i++)
     {
-      int x;
-      do
+      পূর্ণসংখ্যা x;
+      করো
 	x = random ();
-      while (x == 0);
+      যখন (x == 0);
       rand_mem[i] = x;
     }
 
-  for (size = 0; size < max_size; size++)
+  জন্য (আকার_2 = 0; আকার_2 < max_আকার; আকার_2++)
     {
-      printf("phase %d\n", size);
-      for (src_off = 0; src_off <= 16; src_off++)
+      printf("phase %d\n", আকার_2);
+      জন্য (src_off = 0; src_off <= 16; src_off++)
 	{
-	  for (dst_off = 0; dst_off <= 16; dst_off++)
+	  জন্য (dst_off = 0; dst_off <= 16; dst_off++)
 	    {
 	      /* Put zero around the intended destination, to check
 		 that it's not clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      জন্য (i = 1; i < space_around; i++)
 		{
 		  memp[dst_off - i] = 0;
-		  memp[dst_off + size - 1 + i] = 0;
+		  memp[dst_off + আকার_2 - 1 + i] = 0;
 		}
 
 	      /* Fill the source area with known contents.  */
-	      for (i = 0; i < size; i++)
+	      জন্য (i = 0; i < আকার_2; i++)
 		memp[src_off + i] = rand_mem[i];
 
 	      /* Remember the contents around the destination area.
 		 (It might not be what we wrote some lines above, since
 		 the src area and the dst area overlap.)  */
-	      for (i = 1; i < space_around; i++)
+	      জন্য (i = 1; i < space_around; i++)
 		{
 		  lo_around[i] = memp[dst_off - i];
-		  hi_around[i] = memp[dst_off + size - 1 + i];
+		  hi_around[i] = memp[dst_off + আকার_2 - 1 + i];
 		}
 
-	      memmove (memp + dst_off, memp + src_off, size);
+	      memmove (memp + dst_off, memp + src_off, আকার_2);
 
 	      /* Check that the destination area has the same
 		 contents we wrote to the source area.  */
-	      for (i = 0; i < size; i++)
+	      জন্য (i = 0; i < আকার_2; i++)
 		{
-		  if (memp[dst_off + i] != rand_mem[i])
+		  যদি (memp[dst_off + i] != rand_mem[i])
 		    abort ();
 		}
 
 	      /* Check that the area around the destination is not
 		 clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      জন্য (i = 1; i < space_around; i++)
 		{
-		  if (memp[dst_off - i] != lo_around[i])
+		  যদি (memp[dst_off - i] != lo_around[i])
 		    abort ();
-		  if (memp[dst_off + size - 1 + i] != hi_around[i])
+		  যদি (memp[dst_off + আকার_2 - 1 + i] != hi_around[i])
 		    abort ();
 		}
 	    }
@@ -102,7 +102,7 @@ do_test (void)
 
   puts ("Test succeeded.");
 
-  return 0;
+  ফেরত 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

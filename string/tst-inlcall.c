@@ -23,62 +23,62 @@
 /* Make sure we test the optimized inline functions.  */
 #define __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#অন্তর্ভাব <errno.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <strings.h>
+#অন্তর্ভাব <fcntl.h>
 
 
-int
-do_test (void)
+পূর্ণসংখ্যা
+do_test (শূন্য)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  পূর্ণসংখ্যা status;
+  পূর্ণসংখ্যা errors = 0;
+  অক্ষর buf1[1000];
+  অক্ষর *cp;
+  অক্ষর ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  যদি (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  যদি (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  যদি (strchr ("hello world", ch++) == ফাঁকা)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ধ্রুবক অক্ষর * ধ্রুবক hw = "hello world";
+  যদি (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  যদি (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  অন্যথা
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  ফেরত status;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

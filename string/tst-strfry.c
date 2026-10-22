@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <string.h>
 
-int
-do_test (void)
+পূর্ণসংখ্যা
+do_test (শূন্য)
 {
-  char str[] = "this is a test";
+  অক্ষর str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  ফেরত 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

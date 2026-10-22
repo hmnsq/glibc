@@ -15,34 +15,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <memcopy.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <memcopy.h>
 
 #ifndef MEMSET
 # define MEMSET memset
 #endif
 
-void *
+শূন্য *
 inhibit_loop_to_libcall
-MEMSET (void *dstpp, int c, size_t len)
+MEMSET (শূন্য *dstpp, পূর্ণসংখ্যা c, size_t len)
 {
-  long int dstp = (long int) dstpp;
+  long পূর্ণসংখ্যা dstp = (long পূর্ণসংখ্যা) dstpp;
 
-  if (len >= 8)
+  যদি (len >= 8)
     {
       size_t xlen;
       op_t cccc;
 
-      cccc = (unsigned char) c;
+      cccc = (unsigned অক্ষর) c;
       cccc |= cccc << 8;
       cccc |= cccc << 16;
-      if (OPSIZ > 4)
+      যদি (OPSIZ > 4)
 	/* Do the shift in two steps to avoid warning if long has 32 bits.  */
 	cccc |= (cccc << 16) << 16;
 
       /* There are at least some bytes to set.
 	 No need to test for LEN == 0 in this alignment loop.  */
-      while (dstp % OPSIZ != 0)
+      যখন (dstp % OPSIZ != 0)
 	{
 	  ((byte *) dstp)[0] = c;
 	  dstp += 1;
@@ -51,7 +51,7 @@ MEMSET (void *dstpp, int c, size_t len)
 
       /* Write 8 `op_t' per iteration until less than 8 `op_t' remain.  */
       xlen = len / (OPSIZ * 8);
-      while (xlen > 0)
+      যখন (xlen > 0)
 	{
 	  ((op_t *) dstp)[0] = cccc;
 	  ((op_t *) dstp)[1] = cccc;
@@ -68,7 +68,7 @@ MEMSET (void *dstpp, int c, size_t len)
 
       /* Write 1 `op_t' per iteration until less than OPSIZ bytes remain.  */
       xlen = len / OPSIZ;
-      while (xlen > 0)
+      যখন (xlen > 0)
 	{
 	  ((op_t *) dstp)[0] = cccc;
 	  dstp += OPSIZ;
@@ -78,13 +78,13 @@ MEMSET (void *dstpp, int c, size_t len)
     }
 
   /* Write the last few bytes.  */
-  while (len > 0)
+  যখন (len > 0)
     {
       ((byte *) dstp)[0] = c;
       dstp += 1;
       len -= 1;
     }
 
-  return dstpp;
+  ফেরত dstpp;
 }
 libc_hidden_builtin_def (MEMSET)

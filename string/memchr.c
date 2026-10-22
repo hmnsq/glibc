@@ -16,12 +16,12 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#অন্তর্ভাব <libc-pointer-arith.h>
+#অন্তর্ভাব <string-fzb.h>
+#অন্তর্ভাব <string-fzc.h>
+#অন্তর্ভাব <string-fzi.h>
+#অন্তর্ভাব <string-shift.h>
+#অন্তর্ভাব <string.h>
 
 #undef memchr
 
@@ -29,58 +29,58 @@
 # define __memchr MEMCHR
 #endif
 
-static __always_inline const char *
+স্থির __always_inline ধ্রুবক অক্ষর *
 sadd (uintptr_t x, uintptr_t y)
 {
-  return (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
+  ফেরত (ধ্রুবক অক্ষর *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
 }
 
 /* Search no more than N bytes of S for C.  */
-void *
-__memchr (void const *s, int c_in, size_t n)
+শূন্য *
+__memchr (শূন্য ধ্রুবক *s, পূর্ণসংখ্যা c_in, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  যদি (__glibc_unlikely (n == 0))
+    ফেরত ফাঁকা;
 
   /* Read the first word, but munge it so that bytes before the array
      will not match goal.  */
-  const op_t *word_ptr = PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ধ্রুবক op_t *word_ptr = PTR_ALIGN_DOWN (s, আকার (op_t));
   uintptr_t s_int = (uintptr_t) s;
 
   op_t word = *word_ptr;
   op_t repeated_c = repeat_bytes (c_in);
   /* Compute the address of the last byte taking in consideration possible
      overflow.  */
-  const char *lbyte = sadd (s_int, n - 1);
+  ধ্রুবক অক্ষর *lbyte = sadd (s_int, n - 1);
   /* And also the address of the word containing the last byte. */
-  const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, sizeof (op_t));
+  ধ্রুবক op_t *lword = (ধ্রুবক op_t *) PTR_ALIGN_DOWN (lbyte, আকার (op_t));
 
   find_t mask = shift_find (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  যদি (mask != 0)
     {
-      char *ret = (char *) s + index_first (mask);
-      return (ret <= lbyte) ? ret : NULL;
+      অক্ষর *ret = (অক্ষর *) s + সূচক_first (mask);
+      ফেরত (ret <= lbyte) ? ret : ফাঁকা;
     }
-  if (word_ptr == lword)
-    return NULL;
+  যদি (word_ptr == lword)
+    ফেরত ফাঁকা;
 
   word = *++word_ptr;
-  while (word_ptr != lword)
+  যখন (word_ptr != lword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_first_eq (word, repeated_c);
+      যদি (has_eq (word, repeated_c))
+	ফেরত (অক্ষর *) word_ptr + সূচক_first_eq (word, repeated_c);
       word = *++word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  যদি (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_first_eq (word, repeated_c);
-      if (ret <= lbyte)
-	return ret;
+      অক্ষর *ret = (অক্ষর *) word_ptr + সূচক_first_eq (word, repeated_c);
+      যদি (ret <= lbyte)
+	ফেরত ret;
     }
-  return NULL;
+  ফেরত ফাঁকা;
 }
 #ifndef MEMCHR
 weak_alias (__memchr, memchr)

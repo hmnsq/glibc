@@ -20,129 +20,129 @@
 #define TEST_NAME "memmem"
 #define BUF1PAGES 20
 #define ITERATIONS 500
-#include "test-string.h"
+#অন্তর্ভাব "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+প্রকারলেখ অক্ষর *(*proto_t) (ধ্রুবক শূন্য *, size_t, ধ্রুবক শূন্য *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+শূন্য *
+simple_memmem (ধ্রুবক শূন্য *haystack, size_t haystack_len, ধ্রুবক শূন্য *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  ধ্রুবক অক্ষর *begin;
+  ধ্রুবক অক্ষর *ধ্রুবক last_possible
+    = (ধ্রুবক অক্ষর *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  যদি (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    ফেরত (শূন্য *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  যদি (__glibc_unlikely (haystack_len < needle_len))
+    ফেরত ফাঁকা;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  জন্য (begin = (ধ্রুবক অক্ষর *) haystack; begin <= last_possible; ++begin)
+    যদি (begin[0] == ((ধ্রুবক অক্ষর *) needle)[0]
+        && !memcmp ((ধ্রুবক শূন্য *) &begin[1],
+		    (ধ্রুবক শূন্য *) ((ধ্রুবক অক্ষর *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      ফেরত (শূন্য *) begin;
 
-  return NULL;
+  ফেরত ফাঁকা;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+স্থির পূর্ণসংখ্যা
+check_ফলাফল (impl_t *impl, ধ্রুবক শূন্য *haystack, size_t haystack_len,
+	     ধ্রুবক শূন্য *needle, size_t needle_len, ধ্রুবক শূন্য *expected)
 {
-  void *res;
+  শূন্য *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  যদি (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      ফেরত -1;
     }
 
-  return 0;
+  ফেরত 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+স্থির শূন্য
+do_one_test (impl_t *impl, ধ্রুবক শূন্য *haystack, size_t haystack_len,
+	     ধ্রুবক শূন্য *needle, size_t needle_len, ধ্রুবক শূন্য *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  যদি (check_ফলাফল (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    ফেরত;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+স্থির শূন্য
+do_test (ধ্রুবক অক্ষর *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  অক্ষর tmpbuf[len];
 
   memcpy (tmpbuf, buf1 + idx, len);
   memcpy (buf1 + idx, str, len);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, buf1, BUF1PAGES * page_size, str, len, buf1 + idx);
+    do_one_test (impl, buf1, BUF1PAGES * page_আকার, str, len, buf1 + idx);
 
   memcpy (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+স্থির শূন্য
+do_random_tests (শূন্য)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  জন্য (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      অক্ষর tmpbuf[32];
 
       size_t shift = random () % 11;
       size_t rel = random () % ((2 << (shift + 1)) * 64);
-      size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
-      len = MIN (len, BUF1PAGES * page_size - idx - 1);
+      size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_আকার - 2);
+      size_t len = random () % (আকার (tmpbuf) - 1) + 1;
+      len = MIN (len, BUF1PAGES * page_আকার - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      জন্য (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  অক্ষর ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
 
       FOR_EACH_IMPL (impl, 0)
-	do_one_test (impl, buf1, BUF1PAGES * page_size, buf1 + idx, len,
+	do_one_test (impl, buf1, BUF1PAGES * page_আকার, buf1 + idx, len,
 		     buf1 + idx);
 
       memcpy (buf1 + idx, tmpbuf, len);
     }
 }
 
-static void
-check1 (void)
+স্থির শূন্য
+check1 (শূন্য)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  ধ্রুবক অক্ষর অনুসন্ধান_buf_তথ্য[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  ধ্রুবক অক্ষর pattern[2] = { 0x78, 0x56 };
+  শূন্য *অনুসন্ধান_buf = (শূন্য *) buf1 + page_আকার - আকার অনুসন্ধান_buf_তথ্য;
+  শূন্য *exp_ফলাফল;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  memcpy (অনুসন্ধান_buf, অনুসন্ধান_buf_তথ্য, আকার অনুসন্ধান_buf_তথ্য);
+  exp_ফলাফল = simple_memmem (অনুসন্ধান_buf, আকার অনুসন্ধান_buf_তথ্য,
+			      pattern, আকার pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_ফলাফল (impl, অনুসন্ধান_buf, আকার অনুসন্ধান_buf_তথ্য,
+		  pattern, আকার pattern, exp_ফলাফল);
 }
 
-static const char *const strs[] =
+স্থির ধ্রুবক অক্ষর *ধ্রুবক strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+পূর্ণসংখ্যা
+test_main (শূন্য)
 {
   size_t i;
 
@@ -164,11 +164,11 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  জন্য (i = 0; i < BUF1PAGES * page_আকার; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  জন্য (i = 0; i < আকার (strs) / আকার (strs[0]); ++i)
+    জন্য (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
 
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  ফেরত ret;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

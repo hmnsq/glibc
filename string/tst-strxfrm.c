@@ -1,73 +1,73 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাব <locale.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
 
 
-char const string[] = "";
+অক্ষর ধ্রুবক string[] = "";
 
 
-static int
-test (const char *locale)
+স্থির পূর্ণসংখ্যা
+test (ধ্রুবক অক্ষর *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  অক্ষর *buf;
   locale_t loc;
-  int result = 0;
+  পূর্ণসংখ্যা ফলাফল = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  যদি (setlocale (LC_COLLATE, locale) == ফাঁকা)
     {
       printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      ফেরত 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
+  bufsize = strxfrm (ফাঁকা, string, 0) + 1;
   buf = malloc (bufsize);
-  if (buf == NULL)
+  যদি (buf == ফাঁকা)
     {
       printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      ফেরত 1;
     }
   r = strxfrm (buf, string, bufsize);
   l = strlen (buf);
-  if (r != l)
+  যদি (r != l)
     {
        printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       ফলাফল = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, ফাঁকা);
 
   r = strxfrm_l (buf, string, bufsize, loc);
   l = strlen (buf);
-  if (r != l)
+  যদি (r != l)
     {
        printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       ফলাফল = 1;
     }
 
   freelocale (loc);
 
-  free (buf);
+  মুক্ত (buf);
 
-  return result;
+  ফেরত ফলাফল;
 }
 
 
-int
-do_test (void)
+পূর্ণসংখ্যা
+do_test (শূন্য)
 {
-  int result = 0;
+  পূর্ণসংখ্যা ফলাফল = 0;
 
-  result |= test ("C");
-  result |= test ("en_US.ISO-8859-1");
-  result |= test ("de_DE.UTF-8");
+  ফলাফল |= test ("C");
+  ফলাফল |= test ("en_US.ISO-8859-1");
+  ফলাফল |= test ("de_DE.UTF-8");
 
-  return result;
+  ফেরত ফলাফল;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

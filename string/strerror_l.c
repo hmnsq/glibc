@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libintl.h>
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#অন্তর্ভাব <libintl.h>
+#অন্তর্ভাব <locale.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <tls-internal.h>
+#অন্তর্ভাব <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+স্থির ধ্রুবক অক্ষর *
+translate (ধ্রুবক অক্ষর *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  ধ্রুবক অক্ষর *res = _(str);
   __uselocale (oldloc);
-  return res;
+  ফেরত res;
 }
 
-static char *
+স্থির অক্ষর *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  ফেরত (অক্ষর *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+অক্ষর *
+__strerror_l (পূর্ণসংখ্যা errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  পূর্ণসংখ্যা saved_errno = errno;
+  অক্ষর *err = (অক্ষর *) __get_errlist (errnum);
+  যদি (__glibc_unlikely (err == ফাঁকা))
     {
-      if (__libc_initial)
+      যদি (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  কাঠামো tls_internal_t *tls_internal = __glibc_tls_internal ();
+	  মুক্ত (tls_internal->strerror_l_buf);
+	  যদি (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  অন্যথা
 	    {
 	      /* The memory was freed above.  */
-	      tls_internal->strerror_l_buf = NULL;
+	      tls_internal->strerror_l_buf = ফাঁকা;
 	      /* Provide a fallback translation.  */
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      অন্যথা
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  অন্যথা
+    err = (অক্ষর *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  ফেরত err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

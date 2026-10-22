@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#অন্তর্ভাব <string.h>
 
 #undef strrchr
 
@@ -24,10 +24,10 @@
 #endif
 
 /* Find the last occurrence of C in S.  */
-char *
-STRRCHR (const char *s, int c)
+অক্ষর *
+STRRCHR (ধ্রুবক অক্ষর *s, পূর্ণসংখ্যা c)
 {
-  return __memrchr (s, c, strlen (s) + 1);
+  ফেরত __memrchr (s, c, strlen (s) + 1);
 }
 
 #ifdef weak_alias

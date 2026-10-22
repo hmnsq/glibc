@@ -16,16 +16,16 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#অন্তর্ভাব <string.h>
 
 size_t
-__strlcpy (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcpy (অক্ষর *__restrict dest, ধ্রুবক অক্ষর *__restrict src, size_t আকার_2)
 {
-  size_t src_length = strlen (src);
+  size_t src_দৈর্ঘ্য = strlen (src);
 
-  if (__glibc_unlikely (src_length >= size))
+  যদি (__glibc_unlikely (src_দৈর্ঘ্য >= আকার_2))
     {
-      if (size > 0)
+      যদি (আকার_2 > 0)
 	{
 	  /* Copy the leading portion of the string.  The last
 	     character is subsequently overwritten with the NUL
@@ -33,14 +33,14 @@ __strlcpy (char *__restrict dest, const char *__restrict src, size_t size)
 	     multiple of a small power of two, so writing it twice
 	     should be more efficient than copying an odd number of
 	     bytes.  */
-	  memcpy (dest, src, size);
-	  dest[size - 1] = '\0';
+	  memcpy (dest, src, আকার_2);
+	  dest[আকার_2 - 1] = '\0';
 	}
     }
-  else
+  অন্যথা
     /* Copy the string and its terminating NUL character.  */
-    memcpy (dest, src, src_length + 1);
-  return src_length;
+    memcpy (dest, src, src_দৈর্ঘ্য + 1);
+  ফেরত src_দৈর্ঘ্য;
 }
 libc_hidden_def (__strlcpy)
 weak_alias (__strlcpy, strlcpy)

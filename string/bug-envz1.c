@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <envz.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
 
-static const struct
+স্থির ধ্রুবক কাঠামো
 {
-  const char *s;
-  int in_result;
+  ধ্রুবক অক্ষর *s;
+  পূর্ণসংখ্যা in_ফলাফল;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,54 +22,54 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (আকার (strs) / আকার (strs[0]))
 
 
-int
-do_test (void)
+পূর্ণসংখ্যা
+do_test (শূন্য)
 {
 
-  size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  size_t আকার_2 = 0;
+  অক্ষর *str = malloc (100);
+  যদি (str == ফাঁকা)
     {
       puts ("out of memory");
-      return 1;
+      ফেরত 1;
     }
 
-  char **argz = &str;
+  অক্ষর **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
-    argz_add_sep (argz, &size, strs[i].s, '\0');
+  জন্য (পূর্ণসংখ্যা i = 0; i < nstrs; ++i)
+    argz_add_sep (argz, &আকার_2, strs[i].s, '\0');
 
-  printf ("calling envz_strip with size=%zu\n", size);
-  envz_strip (argz, &size);
+  printf ("calling envz_strip with size=%zu\n", আকার_2);
+  envz_strip (argz, &আকার_2);
 
-  int result = 0;
-  printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  পূর্ণসংখ্যা ফলাফল = 0;
+  printf ("new size=%zu\n", আকার_2);
+  জন্য (পূর্ণসংখ্যা i = 0; i < nstrs; ++i)
+    যদি (strs[i].in_ফলাফল)
       {
-        char name[2];
+        অক্ষর name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        অক্ষর *e = envz_entry (*argz, আকার_2, name);
+        যদি (e == ফাঁকা)
           {
             printf ("entry '%s' not found\n", name);
-            result = 1;
+            ফলাফল = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        অন্যথা যদি (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
-            result = 1;
+            ফলাফল = 1;
           }
       }
 
-  free (*argz);
-  return result;
+  মুক্ত (*argz);
+  ফেরত ফলাফল;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

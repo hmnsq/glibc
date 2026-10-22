@@ -40,17 +40,17 @@
 
 #define _GNU_SOURCE 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#অন্তর্ভাব <errno.h>
+#অন্তর্ভাব <signal.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <ucontext.h>
+#অন্তর্ভাব <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+স্থির ধ্রুবক unsigned অক্ষর test_pattern[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,9 +60,9 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
+#define PATTERN_আকার (আকার test_pattern)
 #define PATTERN_REPS 32
-#define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
+#define TEST_বাফার_আকার (PATTERN_আকার * PATTERN_REPS)
 
 /* There are three subtests, two of which are sanity checks.
    Each test follows this sequence:
@@ -95,84 +95,84 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+স্থির ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+স্থির __attribute_optimization_barrier__ পূর্ণসংখ্যা
+use_test_বাফার (unsigned অক্ষর *buf)
 {
-  unsigned int sum = 0;
+  unsigned পূর্ণসংখ্যা যোগ = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    sum += buf[i * PATTERN_SIZE];
+  জন্য (unsigned পূর্ণসংখ্যা i = 0; i < PATTERN_REPS; i++)
+    যোগ += buf[i * PATTERN_আকার];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  ফেরত (যোগ == 2 * PATTERN_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#যদি defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#অন্যথা
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
 #endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+স্থির অন্তঃরেখ ALWAYS_INLINE শূন্য
+prepare_test_বাফার (unsigned অক্ষর *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
+  জন্য (unsigned পূর্ণসংখ্যা i = 0; i < PATTERN_REPS; i++)
+    memcpy (buf + i*PATTERN_আকার, test_pattern, PATTERN_আকার);
 
-  if (swapcontext (&uc_co, &uc_main))
+  যদি (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  যদি (use_test_বাফার (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+স্থির শূন্য
+setup_no_clear (শূন্য)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  unsigned অক্ষর buf[TEST_বাফার_আকার];
+  prepare_test_বাফার (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+স্থির শূন্য
+setup_ordinary_clear (শূন্য)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-  memset (buf, 0, TEST_BUFFER_SIZE);
+  unsigned অক্ষর buf[TEST_বাফার_আকার];
+  prepare_test_বাফার (buf);
+  memset (buf, 0, TEST_বাফার_আকার);
 }
 
-static void
-setup_explicit_clear (void)
+স্থির শূন্য
+setup_explicit_clear (শূন্য)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  unsigned অক্ষর buf[TEST_বাফার_আকার];
+  prepare_test_বাফার (buf);
 #ifdef TEST_MEMSET_EXPLICIT
-  memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
-  explicit_bzero (buf, TEST_BUFFER_SIZE);
+  memset_explicit (buf, 0, TEST_বাফার_আকার);
+#অন্যথা
+  explicit_bzero (buf, TEST_বাফার_আকার);
 #endif
 }
 
-enum test_expectation
+গণনা test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+কাঠামো subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  শূন্য (*setup_subtest) (শূন্য);
+  ধ্রুবক অক্ষর *label;
+  গণনা test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+স্থির ধ্রুবক কাঠামো subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+স্থির ধ্রুবক কাঠামো subtest subtests[] =
 {
   { setup_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
@@ -182,13 +182,13 @@ static const struct subtest subtests[] =
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+স্থির শূন্য
+test_coroutine (শূন্য)
 {
-  while (cur_subtest->setup_subtest)
+  যখন (cur_subtest->setup_subtest)
     {
       cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      যদি (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+স্থির পূর্ণসংখ্যা test_status;
+স্থির unsigned অক্ষর *co_স্তূপ_বাফার;
+স্থির size_t co_স্তূপ_আকার;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+স্থির unsigned পূর্ণসংখ্যা
+গুনতি_test_patterns (unsigned অক্ষর *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  unsigned অক্ষর *first = memmem (buf, bufsiz, test_pattern, PATTERN_আকার);
+  যদি (!first)
+    ফেরত 0;
+  unsigned পূর্ণসংখ্যা cnt = 0;
+  জন্য (unsigned পূর্ণসংখ্যা i = 0; i < PATTERN_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      unsigned অক্ষর *p = first + i*PATTERN_আকার;
+      যদি (p + PATTERN_আকার - buf > bufsiz)
+	বিরতি;
+      যদি (memcmp (p, test_pattern, PATTERN_আকার) == 0)
 	cnt++;
     }
-  return cnt;
+  ফেরত cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+স্থির শূন্য
+check_test_বাফার (গণনা test_expectation expected,
+		   ধ্রুবক অক্ষর *label, ধ্রুবক অক্ষর *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  unsigned পূর্ণসংখ্যা cnt = গুনতি_test_patterns (co_স্তূপ_বাফার, co_স্তূপ_আকার);
+  নির্বাচন (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
+    ক্ষেত্র EXPECT_NONE:
+      যদি (cnt == 0)
 	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+      অন্যথা
 	{
 	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
 	  test_status = 1;
 	}
-      break;
+      বিরতি;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
+    ক্ষেত্র EXPECT_SOME:
+      যদি (cnt > 0)
 	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+      অন্যথা
 	{
 	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
 	  test_status = 1;
 	}
-      break;
+      বিরতি;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
+     ক্ষেত্র EXPECT_ALL:
+      যদি (cnt == PATTERN_REPS)
 	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
 		PATTERN_REPS, cnt);
-      else
+      অন্যথা
 	{
 	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
 		  PATTERN_REPS, cnt);
 	  test_status = 1;
 	}
-      break;
+      বিরতি;
 
-    case NO_EXPECTATIONS:
+    ক্ষেত্র NO_EXPECTATIONS:
       printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      বিরতি;
 
-    default:
+    পূর্বনির্ধারিত:
       printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
+	      label, stage, (পূর্ণসংখ্যা)expected);
       test_status = 1;
     }
 }
 
-static void
-test_loop (void)
+স্থির শূন্য
+test_loop (শূন্য)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  যখন (cur_subtest->setup_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      যদি (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      check_test_বাফার (EXPECT_ALL, cur_subtest->label, "prepare");
+      যদি (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
+      check_test_বাফার (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  যদি (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+পূর্ণসংখ্যা
+do_test (শূন্য)
 {
   size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  যদি (page_alignment < আকার (শূন্য *))
+    page_alignment = আকার (শূন্য *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_স্তূপ_আকার = SIGSTKSZ + TEST_বাফার_আকার;
+  যদি (co_স্তূপ_আকার < page_alignment * 4)
+    co_স্তূপ_আকার = page_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  শূন্য *p;
+  পূর্ণসংখ্যা err = posix_memalign (&p, page_alignment, co_স্তূপ_আকার);
+  যদি (err || !p)
     {
       printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      ফেরত 2;
     }
-  co_stack_buffer = p;
+  co_স্তূপ_বাফার = p;
 
-  if (getcontext (&uc_co))
+  যদি (getcontext (&uc_co))
     {
       printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      ফেরত 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_স্তূপ_বাফার;
+  uc_co.uc_stack.ss_size = co_স্তূপ_আকার;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  ফেরত test_status;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

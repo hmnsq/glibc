@@ -17,9 +17,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
+#অন্তর্ভাব <stdint.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <ctype.h>
 
 /* states: S_N: normal, S_I: comparing integral part, S_F: comparing
            fractionnal parts, S_Z: idem but with leading Zeroes only */
@@ -38,15 +38,15 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
-__strverscmp (const char *s1, const char *s2)
+পূর্ণসংখ্যা
+__strverscmp (ধ্রুবক অক্ষর *s1, ধ্রুবক অক্ষর *s2)
 {
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
+  ধ্রুবক unsigned অক্ষর *p1 = (ধ্রুবক unsigned অক্ষর *) s1;
+  ধ্রুবক unsigned অক্ষর *p2 = (ধ্রুবক unsigned অক্ষর *) s2;
 
   /* Symbol(s)    0       [1-9]   others
      Transition   (10) 0  (01) d  (00) x   */
-  static const uint8_t next_state[] =
+  স্থির ধ্রুবক uint8_t পরবর্তী_state[] =
   {
       /* state    x    d    0  */
       /* S_N */  S_N, S_I, S_Z,
@@ -55,7 +55,7 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  S_N, S_F, S_Z
   };
 
-  static const int8_t result_type[] =
+  স্থির ধ্রুবক int8_t ফলাফল_type[] =
   {
       /* state   x/x  x/d  x/0  d/x  d/d  d/0  0/x  0/d  0/0  */
 
@@ -65,42 +65,42 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  যদি (p1 == p2)
+    ফেরত 0;
 
-  unsigned char c1 = *p1++;
-  unsigned char c2 = *p2++;
+  unsigned অক্ষর c1 = *p1++;
+  unsigned অক্ষর c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  পূর্ণসংখ্যা state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  পূর্ণসংখ্যা diff;
+  যখন ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      যদি (c1 == '\0')
+	ফেরত diff;
 
-      state = next_state[state];
+      state = পরবর্তী_state[state];
       c1 = *p1++;
       c2 = *p2++;
       state += (c1 == '0') + (isdigit (c1) != 0);
     }
 
-  state = result_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
+  state = ফলাফল_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
 
-  switch (state)
+  নির্বাচন (state)
   {
-    case CMP:
-      return diff;
+    ক্ষেত্র CMP:
+      ফেরত diff;
 
-    case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+    ক্ষেত্র LEN:
+      যখন (isdigit (*p1++))
+	যদি (!isdigit (*p2++))
+	  ফেরত 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      ফেরত isdigit (*p2) ? -1 : diff;
 
-    default:
-      return state;
+    পূর্বনির্ধারিত:
+      ফেরত state;
   }
 }
 libc_hidden_def (__strverscmp)

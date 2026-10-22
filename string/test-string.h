@@ -16,21 +16,21 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <sys/cdefs.h>
-#include <support/support.h>
+#অন্তর্ভাব <sys/cdefs.h>
+#অন্তর্ভাব <support/support.h>
 
-typedef struct
+প্রকারলেখ কাঠামো
 {
-  const char *name;
-  void (*fn) (void);
+  ধ্রুবক অক্ষর *name;
+  শূন্য (*fn) (শূন্য);
   long test;
 } impl_t;
-extern impl_t __start_impls[], __stop_impls[];
+বাহ্যিক impl_t __start_impls[], __stop_impls[];
 
 #define IMPL(name, test) \
   impl_t tst_ ## name							\
-  __attribute__ ((section ("impls"), aligned (sizeof (void *))))	\
-       = { __STRING (name), (void (*) (void))name, test };
+  __attribute__ ((section ("impls"), aligned (আকার (শূন্য *))))	\
+       = { __STRING (name), (শূন্য (*) (শূন্য))name, test };
 
 #ifdef TEST_MAIN
 
@@ -40,20 +40,20 @@ extern impl_t __start_impls[], __stop_impls[];
 
 #undef __USE_STRING_INLINES
 
-#include <libc-misc.h>
-#include <getopt.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/mman.h>
-#include <sys/param.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <error.h>
-#include <errno.h>
-#include <time.h>
-#include <ifunc-impl-list.h>
+#অন্তর্ভাব <libc-misc.h>
+#অন্তর্ভাব <getopt.h>
+#অন্তর্ভাব <stdint.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <sys/mman.h>
+#অন্তর্ভাব <sys/param.h>
+#অন্তর্ভাব <unistd.h>
+#অন্তর্ভাব <fcntl.h>
+#অন্তর্ভাব <error.h>
+#অন্তর্ভাব <errno.h>
+#অন্তর্ভাব <time.h>
+#অন্তর্ভাব <ifunc-impl-list.h>
 #define GL(x) _##x
 #define GLRO(x) _##x
 
@@ -66,50 +66,50 @@ extern impl_t __start_impls[], __stop_impls[];
 # define OPT_RANDOM 10001
 # define OPT_SEED 10002
 
-unsigned char *buf1, *buf2;
-int ret, do_srandom;
-unsigned int seed;
-size_t page_size;
+unsigned অক্ষর *buf1, *buf2;
+পূর্ণসংখ্যা ret, do_srandom;
+unsigned পূর্ণসংখ্যা seed;
+size_t page_আকার;
 
 # ifndef ITERATIONS
 size_t iterations = 100000;
 #  define ITERATIONS_OPTIONS \
-  { "iterations", required_argument, NULL, OPT_ITERATIONS },
+  { "iterations", required_argument, ফাঁকা, OPT_ITERATIONS },
 #  define ITERATIONS_PROCESS \
-  case OPT_ITERATIONS:				\
-    iterations = strtoul (optarg, NULL, 0);	\
-    break;
+  ক্ষেত্র OPT_ITERATIONS:				\
+    iterations = strtoul (optarg, ফাঁকা, 0);	\
+    বিরতি;
 #  define ITERATIONS iterations
-# else
+# অন্যথা
 #  define ITERATIONS_OPTIONS
 #  define ITERATIONS_PROCESS
 # endif
 
 # define CMDLINE_OPTIONS ITERATIONS_OPTIONS \
-  { "random", no_argument, NULL, OPT_RANDOM },	\
-  { "seed", required_argument, NULL, OPT_SEED },
+  { "random", no_argument, ফাঁকা, OPT_RANDOM },	\
+  { "seed", required_argument, ফাঁকা, OPT_SEED },
 
-static void __attribute__ ((used))
-cmdline_process_function (int c)
+স্থির শূন্য __attribute__ ((used))
+cmdline_process_function (পূর্ণসংখ্যা c)
 {
-  switch (c)
+  নির্বাচন (c)
     {
       ITERATIONS_PROCESS
-      case OPT_RANDOM:
+      ক্ষেত্র OPT_RANDOM:
         {
-          int fdr = open ("/dev/urandom", O_RDONLY);
-          if (fdr < 0 || read (fdr, &seed, sizeof (seed)) != sizeof (seed))
-            seed = time (NULL);
-          if (fdr >= 0)
+          পূর্ণসংখ্যা fdr = open ("/dev/urandom", O_RDONLY);
+          যদি (fdr < 0 || পঠ (fdr, &seed, আকার (seed)) != আকার (seed))
+            seed = time (ফাঁকা);
+          যদি (fdr >= 0)
             close (fdr);
           do_srandom = 1;
-          break;
+          বিরতি;
         }
 
-      case OPT_SEED:
-        seed = strtoul (optarg, NULL, 0);
+      ক্ষেত্র OPT_SEED:
+        seed = strtoul (optarg, ফাঁকা, 0);
         do_srandom = 1;
-        break;
+        বিরতি;
     }
 }
 # define CMDLINE_PROCESS cmdline_process_function
@@ -119,94 +119,94 @@ cmdline_process_function (int c)
 
 #ifdef TEST_NAME
 /* Increase size of FUNC_LIST if assert is triggered at run-time.  */
-static struct libc_ifunc_impl func_list[32];
-static int func_count;
-static int impl_count __attribute__ ((unused)) = -1;
-static impl_t *impl_array __attribute__ ((unused));
+স্থির কাঠামো libc_ifunc_impl func_list[32];
+স্থির পূর্ণসংখ্যা func_গুনতি;
+স্থির পূর্ণসংখ্যা impl_গুনতি __attribute__ ((unused)) = -1;
+স্থির impl_t *impl_array __attribute__ ((unused));
 
 # define FOR_EACH_IMPL(impl, notall) \
   impl_t *impl;								\
-  int count;								\
-  if (impl_count == -1)							\
+  পূর্ণসংখ্যা গুনতি;								\
+  যদি (impl_গুনতি == -1)							\
     {									\
-      impl_count = 0;							\
-      if (func_count != 0)						\
+      impl_গুনতি = 0;							\
+      যদি (func_গুনতি != 0)						\
 	{								\
-	  int f;							\
-	  impl_t *skip = NULL, *a;					\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (strcmp (impl->name, TEST_NAME) == 0)			\
+	  পূর্ণসংখ্যা f;							\
+	  impl_t *skip = ফাঁকা, *a;					\
+	  জন্য (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    যদি (strcmp (impl->name, TEST_NAME) == 0)			\
 	      skip = impl;						\
-	    else							\
-	      impl_count++;						\
-	  a = impl_array = xmalloc ((impl_count + func_count) *		\
-				    sizeof (impl_t));			\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (impl != skip)						\
+	    অন্যথা							\
+	      impl_গুনতি++;						\
+	  a = impl_array = xmalloc ((impl_গুনতি + func_গুনতি) *		\
+				    আকার (impl_t));			\
+	  জন্য (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    যদি (impl != skip)						\
 	      *a++ = *impl;						\
-	  for (f = 0; f < func_count; f++)				\
-	    if (func_list[f].usable)					\
+	  জন্য (f = 0; f < func_গুনতি; f++)				\
+	    যদি (func_list[f].usable)					\
 	      {								\
 		a->name = func_list[f].name;				\
 		a->fn = func_list[f].fn;				\
 		a->test = 1;						\
 		a++;							\
 	      }								\
-	  impl_count = a - impl_array;					\
+	  impl_গুনতি = a - impl_array;					\
 	}								\
-      else								\
+      অন্যথা								\
         {								\
-	  impl_count = __stop_impls - __start_impls;			\
+	  impl_গুনতি = __stop_impls - __start_impls;			\
 	  impl_array = __start_impls;					\
         }								\
     }									\
   impl = impl_array;							\
-  for (count = 0; count < impl_count; ++count, ++impl)			\
-    if (!notall || impl->test)
-#else
+  জন্য (গুনতি = 0; গুনতি < impl_গুনতি; ++গুনতি, ++impl)			\
+    যদি (!notall || impl->test)
+#অন্যথা
 # define FOR_EACH_IMPL(impl, notall) \
-  for (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
-    if (!notall || impl->test)
+  জন্য (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
+    যদি (!notall || impl->test)
 #endif
 
 #ifndef BUF1PAGES
 # define BUF1PAGES 1
 #endif
 
-static void
-test_init (void)
+স্থির শূন্য
+test_init (শূন্য)
 {
 #ifdef TEST_NAME
-  func_count = __libc_ifunc_impl_list (TEST_NAME, func_list,
-				       (sizeof func_list
-					/ sizeof func_list[0]));
+  func_গুনতি = __libc_ifunc_impl_list (TEST_NAME, func_list,
+				       (আকার func_list
+					/ আকার func_list[0]));
 #endif
 
-  page_size = 2 * getpagesize ();
-#ifdef MIN_PAGE_SIZE
-  if (page_size < MIN_PAGE_SIZE)
-    page_size = MIN_PAGE_SIZE;
+  page_আকার = 2 * getpagesize ();
+#ifdef MIN_PAGE_আকার
+  যদি (page_আকার < MIN_PAGE_আকার)
+    page_আকার = MIN_PAGE_আকার;
 #endif
-  buf1 = mmap (0, (BUF1PAGES + 1) * page_size, PROT_READ | PROT_WRITE,
+  buf1 = mmap (0, (BUF1PAGES + 1) * page_আকার, PROT_READ | PROT_WRITE,
 	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf1 == MAP_FAILED)
+  যদি (buf1 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf1 + BUF1PAGES * page_size, page_size, PROT_NONE))
+  যদি (mprotect (buf1 + BUF1PAGES * page_আকার, page_আকার, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
-  buf2 = mmap (0, 2 * page_size, PROT_READ | PROT_WRITE,
+  buf2 = mmap (0, 2 * page_আকার, PROT_READ | PROT_WRITE,
 	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf2 == MAP_FAILED)
+  যদি (buf2 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf2 + page_size, page_size, PROT_NONE))
+  যদি (mprotect (buf2 + page_আকার, page_আকার, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
-  if (do_srandom)
+  যদি (do_srandom)
     {
       printf ("Setting seed to 0x%x\n", seed);
       srandom (seed);
     }
 
-  memset (buf1, 0xa5, BUF1PAGES * page_size);
-  memset (buf2, 0x5a, page_size);
+  memset (buf1, 0xa5, BUF1PAGES * page_আকার);
+  memset (buf2, 0x5a, page_আকার);
 }
 
 #endif

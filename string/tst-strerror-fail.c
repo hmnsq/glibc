@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#অন্তর্ভাব <locale.h>
+#অন্তর্ভাব <stdbool.h>
+#অন্তর্ভাব <stdlib.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <support/check.h>
+#অন্তর্ভাব <support/namespace.h>
+#অন্তর্ভাব <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+স্থির অস্থির bool fail_malloc;
 
-void *
-malloc (size_t size)
+শূন্য *
+malloc (size_t আকার_2)
 {
-  if (fail_malloc)
-    return NULL;
+  যদি (fail_malloc)
+    ফেরত ফাঁকা;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
-    original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  স্থির শূন্য *(*original_malloc) (size_t);
+  যদি (original_malloc == ফাঁকা)
+    original_malloc = xdlsym (RTLD_পরবর্তী, "malloc");
+  ফেরত original_malloc (আকার_2);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+স্থির শূন্য
+test_strerror (শূন্য *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  ধ্রুবক অক্ষর *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+স্থির শূন্য
+test_strerror_l (শূন্য *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  ধ্রুবক অক্ষর *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+স্থির পূর্ণসংখ্যা
+do_test (শূন্য)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, ফাঁকা);
+  support_isolate_in_subprocess (test_strerror_l, ফাঁকা);
 
-  return 0;
+  ফেরত 0;
 }
 
-#include <support/test-driver.c>
+#অন্তর্ভাব <support/test-driver.c>

@@ -16,23 +16,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRPBRK_RESULT(s, pos) (pos)
+#define STRPBRK_ফলাফল(s, pos) (pos)
 #define RES_TYPE size_t
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#অন্যথা
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
-#include "test-string.h"
+#অন্তর্ভাব "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR অক্ষর
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#অন্যথা
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -41,40 +41,40 @@
 # define STRLEN wcslen
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+প্রকারলেখ size_t (*proto_t) (ধ্রুবক CHAR *, ধ্রুবক CHAR *);
+size_t SIMPLE_STRCSPN (ধ্রুবক CHAR *, ধ্রুবক CHAR *);
+size_t STUPID_STRCSPN (ধ্রুবক CHAR *, ধ্রুবক CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (ধ্রুবক CHAR *s, ধ্রুবক CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  ধ্রুবক CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  যখন ((c = *s++) != '\0')
+    জন্য (r = rej; *r != '\0'; ++r)
+      যদি (*r == c)
+	ফেরত s - str - 1;
+  ফেরত s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (ধ্রুবক CHAR *s, ধ্রুবক CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  জন্য (i = 0; i < ns; ++i)
+    জন্য (j = 0; j < nrej; ++j)
+      যদি (s[i] == rej[j])
+	ফেরত i;
+  ফেরত i;
 }
 
 #undef CHAR
 #undef STRLEN
-#include "test-strpbrk.c"
+#অন্তর্ভাব "test-strpbrk.c"

@@ -16,31 +16,31 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
+#অন্তর্ভাব <stdint.h>
+#অন্তর্ভাব <string.h>
 
 size_t
-__strlcat (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcat (অক্ষর *__restrict dest, ধ্রুবক অক্ষর *__restrict src, size_t আকার_2)
 {
-  size_t src_length = strlen (src);
+  size_t src_দৈর্ঘ্য = strlen (src);
 
   /* Our implementation strlcat supports dest == NULL if size == 0
      (for consistency with snprintf and strlcpy), but strnlen does
      not, so we have to cover this case explicitly.  */
-  if (size == 0)
-    return src_length;
+  যদি (আকার_2 == 0)
+    ফেরত src_দৈর্ঘ্য;
 
-  size_t dest_length = __strnlen (dest, size);
-  if (dest_length != size)
+  size_t dest_দৈর্ঘ্য = __strnlen (dest, আকার_2);
+  যদি (dest_দৈর্ঘ্য != আকার_2)
     {
       /* Copy at most the remaining number of characters in the
 	 destination buffer.  Leave for the NUL terminator.  */
-      size_t to_copy = size - dest_length - 1;
+      size_t to_copy = আকার_2 - dest_দৈর্ঘ্য - 1;
       /* But not more than what is available in the source string.  */
-      if (to_copy > src_length)
-	to_copy = src_length;
+      যদি (to_copy > src_দৈর্ঘ্য)
+	to_copy = src_দৈর্ঘ্য;
 
-      char *target = dest + dest_length;
+      অক্ষর *target = dest + dest_দৈর্ঘ্য;
       memcpy (target, src, to_copy);
       target[to_copy] = '\0';
     }
@@ -51,9 +51,9 @@ __strlcat (char *__restrict dest, const char *__restrict src, size_t size)
      (which the static_assert checks), then by the pigeonhole
      principle, the two input strings must overlap, which is
      undefined.  */
-  _Static_assert (sizeof (uintptr_t) == sizeof (size_t),
+  _Static_assert (আকার (uintptr_t) == আকার (size_t),
 		  "theoretical maximum object size covers address space");
-  return dest_length + src_length;
+  ফেরত dest_দৈর্ঘ্য + src_দৈর্ঘ্য;
 }
 libc_hidden_def (__strlcat)
 weak_alias (__strlcat, strlcat)

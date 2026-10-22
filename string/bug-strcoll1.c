@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#অন্তর্ভাব <stdio.h>
+#অন্তর্ভাব <string.h>
+#অন্তর্ভাব <locale.h>
 
-int
-main (void)
+পূর্ণসংখ্যা
+প্রধান (শূন্য)
 {
-  const char t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
-  const char t2[] = "00000-00000.COM";
-  int res1;
-  int res2;
+  ধ্রুবক অক্ষর t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
+  ধ্রুবক অক্ষর t2[] = "00000-00000.COM";
+  পূর্ণসংখ্যা res1;
+  পূর্ণসংখ্যা res2;
 
   setlocale (LC_ALL, "en_US.ISO-8859-1");
 
@@ -17,7 +17,7 @@ main (void)
   res2 = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, res2);
 
-  return ((res1 == 0 && res2 != 0)
+  ফেরত ((res1 == 0 && res2 != 0)
 	  || (res1 != 0 && res2 == 0)
 	  || (res1 < 0 && res2 < 0)
 	  || (res1 > 0 && res2 > 0));
