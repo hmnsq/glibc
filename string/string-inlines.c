@@ -24,30 +24,30 @@
 
 #include "shlib-compat.h"
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
+#ако SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
 /* These functions were removed from string.h in glibc 2.25.  */
 
 char *
 __old_strtok_r_1c (char *__s, char __sep, char **__nextp)
 {
   char *__result;
-  if (__s == NULL)
+  ако (__s == NULL)
     __s = *__nextp;
-  while (*__s == __sep)
+  док (*__s == __sep)
     ++__s;
   __result = NULL;
-  if (*__s != '\0')
+  ако (*__s != '\0')
     {
       __result = __s++;
-      while (*__s != '\0')
-	if (*__s++ == __sep)
+      док (*__s != '\0')
+	ако (*__s++ == __sep)
 	  {
 	    __s[-1] = '\0';
 	    break;
 	  }
     }
   *__nextp = __s;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
 
@@ -55,9 +55,9 @@ char *
 __old_strsep_1c (char **__s, char __reject)
 {
   char *__retval = *__s;
-  if (__retval != NULL && (*__s = strchr (__retval, __reject)) != NULL)
+  ако (__retval != NULL && (*__s = strchr (__retval, __reject)) != NULL)
     *(*__s)++ = '\0';
-  return __retval;
+  врати __retval;
 }
 compat_symbol (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
 
@@ -65,17 +65,17 @@ char *
 __old_strsep_2c (char **__s, char __reject1, char __reject2)
 {
   char *__retval = *__s;
-  if (__retval != NULL)
+  ако (__retval != NULL)
     {
       char *__cp = __retval;
-      while (1)
+      док (1)
 	{
-	  if (*__cp == '\0')
+	  ако (*__cp == '\0')
 	    {
 	      __cp = NULL;
 	      break;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2)
+	  ако (*__cp == __reject1 || *__cp == __reject2)
 	    {
 	      *__cp++ = '\0';
 	      break;
@@ -84,7 +84,7 @@ __old_strsep_2c (char **__s, char __reject1, char __reject2)
 	}
       *__s = __cp;
     }
-  return __retval;
+  врати __retval;
 }
 compat_symbol (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
 
@@ -92,17 +92,17 @@ char *
 __old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
 {
   char *__retval = *__s;
-  if (__retval != NULL)
+  ако (__retval != NULL)
     {
       char *__cp = __retval;
-      while (1)
+      док (1)
 	{
-	  if (*__cp == '\0')
+	  ако (*__cp == '\0')
 	    {
 	      __cp = NULL;
 	      break;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
+	  ако (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
 	    {
 	      *__cp++ = '\0';
 	      break;
@@ -111,106 +111,106 @@ __old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
 	}
       *__s = __cp;
     }
-  return __retval;
+  врати __retval;
 }
 compat_symbol (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
 #endif
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
+#ако SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
 /* These functions were removed from string.h in glibc 2.24.  */
 
 size_t
-__old_strcspn_c1 (const char *__s, int __reject)
+__old_strcspn_c1 (const char *__s, цео __reject)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject)
+  док (__s[__result] != '\0' && __s[__result] != __reject)
     ++__result;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
 
 size_t
-__old_strcspn_c2 (const char *__s, int __reject1, int __reject2)
+__old_strcspn_c2 (const char *__s, цео __reject1, цео __reject2)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  док (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2)
     ++__result;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
 
 size_t
-__old_strcspn_c3 (const char *__s, int __reject1, int __reject2,
-	      int __reject3)
+__old_strcspn_c3 (const char *__s, цео __reject1, цео __reject2,
+	      цео __reject3)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  док (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2 && __s[__result] != __reject3)
     ++__result;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c1 (const char *__s, int __accept)
+__old_strspn_c1 (const char *__s, цео __accept)
 {
   size_t __result = 0;
   /* Please note that __accept never can be '\0'.  */
-  while (__s[__result] == __accept)
+  док (__s[__result] == __accept)
     ++__result;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c2 (const char *__s, int __accept1, int __accept2)
+__old_strspn_c2 (const char *__s, цео __accept1, цео __accept2)
 {
   size_t __result = 0;
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2)
+  док (__s[__result] == __accept1 || __s[__result] == __accept2)
     ++__result;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c3 (const char *__s, int __accept1, int __accept2,
-		 int __accept3)
+__old_strspn_c3 (const char *__s, цео __accept1, цео __accept2,
+		 цео __accept3)
 {
   size_t __result = 0;
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2
+  док (__s[__result] == __accept1 || __s[__result] == __accept2
 	 || __s[__result] == __accept3)
     ++__result;
-  return __result;
+  врати __result;
 }
 compat_symbol (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
 
 char *
-__old_strpbrk_c2 (const char *__s, int __accept1, int __accept2)
+__old_strpbrk_c2 (const char *__s, цео __accept1, цео __accept2)
 {
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
+  док (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  врати *__s == '\0' ? NULL : (char *) (size_t) __s;
 }
 compat_symbol (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
 
 char *
-__old_strpbrk_c3 (const char *__s, int __accept1, int __accept2, int __accept3)
+__old_strpbrk_c3 (const char *__s, цео __accept1, цео __accept2, цео __accept3)
 {
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2
+  док (*__s != '\0' && *__s != __accept1 && *__s != __accept2
 	 && *__s != __accept3)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  врати *__s == '\0' ? NULL : (char *) (size_t) __s;
 }
 compat_symbol (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
 
-# if defined __mc68020__ || defined __s390__ || defined __i386__
+# ако defined __mc68020__ || defined __s390__ || defined __i386__
 #  define _STRING_INLINE_unaligned 1
-# else
+# инако
 #  define _STRING_INLINE_unaligned 0
 /* These are a few types we need for the optimizations if we cannot
    use unaligned memory accesses.  */
@@ -227,7 +227,7 @@ __STRING2_COPY_TYPE (8);
 #  undef __STRING2_COPY_TYPE
 # endif
 
-# if _STRING_INLINE_unaligned
+# ако _STRING_INLINE_unaligned
 void *
 __old_mempcpy_small (void *__dest1,
 		     char __src0_1, char __src2_1, char __src4_1, char __src6_1,
@@ -241,7 +241,7 @@ __old_mempcpy_small (void *__dest1,
     unsigned char __uc;
     unsigned char __c;
   } *__u = __dest1;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned цео) __srclen)
     {
     case 1:
       __u->__c = __src0_1;
@@ -288,10 +288,10 @@ __old_mempcpy_small (void *__dest1,
       __u = __extension__ ((void *) __u + 4);
       break;
     }
-  return (void *) __u;
+  врати (void *) __u;
 }
 
-# else
+# инако
 
 void *
 __old_mempcpy_small (void *__dest, char __src1,
@@ -310,7 +310,7 @@ __old_mempcpy_small (void *__dest, char __src1,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned цео) __srclen)
     {
     case 1:
       __u->__c = __src1;
@@ -337,12 +337,12 @@ __old_mempcpy_small (void *__dest, char __src1,
       __extension__ __u->__sca8 = __src8;
       break;
     }
-  return __extension__ ((void *) __u + __srclen);
+  врати __extension__ ((void *) __u + __srclen);
 }
 # endif
 compat_symbol (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
+# ако _STRING_INLINE_unaligned
 char *
 __old_strcpy_small (char *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
@@ -354,7 +354,7 @@ __old_strcpy_small (char *__dest,
     __uint16_t __usi;
     unsigned char __uc;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned цео) __srclen)
     {
     case 1:
       __u->__uc = '\0';
@@ -393,10 +393,10 @@ __old_strcpy_small (char *__dest,
       __u->__ui = __src4_4;
       break;
     }
-  return __dest;
+  врати __dest;
 }
 
-# else
+# инако
 
 char *
 __old_strcpy_small (char *__dest,
@@ -415,7 +415,7 @@ __old_strcpy_small (char *__dest,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned цео) __srclen)
     {
     case 1:
       __u->__c = '\0';
@@ -442,12 +442,12 @@ __old_strcpy_small (char *__dest,
       __extension__ __u->__sca8 = __src8;
       break;
   }
-  return __dest;
+  врати __dest;
 }
 # endif
 compat_symbol (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
+# ако _STRING_INLINE_unaligned
 char *
 __old_stpcpy_small (char *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
@@ -455,12 +455,12 @@ __old_stpcpy_small (char *__dest,
 		    size_t __srclen)
 {
   union {
-    unsigned int __ui;
-    unsigned short int __usi;
+    unsigned цео __ui;
+    unsigned short цео __usi;
     unsigned char __uc;
     char __c;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned цео) __srclen)
     {
     case 1:
       __u->__uc = '\0';
@@ -503,10 +503,10 @@ __old_stpcpy_small (char *__dest,
       __u = __extension__ ((void *) __u + 3);
       break;
     }
-  return &__u->__c;
+  врати &__u->__c;
 }
 
-# else
+# инако
 
 char *
 __old_stpcpy_small (char *__dest,
@@ -525,7 +525,7 @@ __old_stpcpy_small (char *__dest,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned цео) __srclen)
     {
     case 1:
       __u->__c = '\0';
@@ -552,7 +552,7 @@ __old_stpcpy_small (char *__dest,
       __extension__ __u->__sca8 = __src8;
       break;
   }
-  return __dest + __srclen - 1;
+  врати __dest + __srclen - 1;
 }
 # endif
 compat_symbol (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);

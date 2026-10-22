@@ -42,7 +42,7 @@ DIAG_POP_NEEDS_COMMENT;
 #endif
 
 void
-WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_FWD_ALIGNED (long цео dstp, long цео srcp, size_t len)
 {
   op_t a0, a1;
 
@@ -86,8 +86,8 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
       goto do6;
 
     case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	врати;
       a0 = ((op_t *) srcp)[0];
       srcp -= 0 * OPSIZ;
       dstp -= 1 * OPSIZ;
@@ -97,7 +97,7 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
       srcp -=-1 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do8;			/* No-op.  */
     }
@@ -141,7 +141,7 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  док (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -159,10 +159,10 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
 #endif
 
 void
-WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_FWD_DEST_ALIGNED (long цео dstp, long цео srcp, size_t len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  цео sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -191,8 +191,8 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       len += 1;
       goto do2;
     case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	врати;
       a3 = ((op_t *) srcp)[0];
       a0 = ((op_t *) srcp)[1];
       srcp -=-1 * OPSIZ;
@@ -205,7 +205,7 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       srcp -=-2 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do4;			/* No-op.  */
     }
@@ -229,7 +229,7 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  док (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -247,7 +247,7 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
 #endif
 
 void
-WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_BWD_ALIGNED (long цео dstp, long цео srcp, size_t len)
 {
   op_t a0, a1;
 
@@ -291,8 +291,8 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
       goto do6;
 
     case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	врати;
       srcp -= 8 * OPSIZ;
       dstp -= 7 * OPSIZ;
       a0 = ((op_t *) srcp)[7];
@@ -302,7 +302,7 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 8 * OPSIZ;
       a1 = ((op_t *) srcp)[8];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do8;			/* No-op.  */
     }
@@ -342,7 +342,7 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  док (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -360,10 +360,10 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
 #endif
 
 void
-WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_BWD_DEST_ALIGNED (long цео dstp, long цео srcp, size_t len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  цео sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -393,8 +393,8 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       len += 1;
       goto do2;
     case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	врати;
       srcp -= 5 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[4];
@@ -406,7 +406,7 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       a1 = ((op_t *) srcp)[5];
       a0 = ((op_t *) srcp)[4];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      ако (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do4;			/* No-op.  */
     }
@@ -430,7 +430,7 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  док (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */

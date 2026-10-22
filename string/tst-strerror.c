@@ -27,7 +27,7 @@
 #include <support/support.h>
 #include <support/check.h>
 
-static int
+static цео
 do_test (void)
 {
   unsetenv ("LANGUAGE");
@@ -73,7 +73,7 @@ do_test (void)
 
   freelocale (l);
 
-  return 0;
+  врати 0;
 }
 
 #include <support/test-driver.c>

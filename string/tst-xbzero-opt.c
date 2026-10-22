@@ -97,39 +97,39 @@ static const unsigned char test_pattern[16] =
 
 static ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
+static __attribute_optimization_barrier__ цео
 use_test_buffer (unsigned char *buf)
 {
-  unsigned int sum = 0;
+  unsigned цео sum = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  за (unsigned цео i = 0; i < PATTERN_REPS; i++)
     sum += buf[i * PATTERN_SIZE];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  врати (sum == 2 * PATTERN_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#ако defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#инако
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
 #endif
 static inline ALWAYS_INLINE void
 prepare_test_buffer (unsigned char *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  за (unsigned цео i = 0; i < PATTERN_REPS; i++)
     memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
 
-  if (swapcontext (&uc_co, &uc_main))
+  ако (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  ако (use_test_buffer (buf))
     abort ();
 }
 
@@ -155,7 +155,7 @@ setup_explicit_clear (void)
   prepare_test_buffer (buf);
 #ifdef TEST_MEMSET_EXPLICIT
   memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
+#инако
   explicit_bzero (buf, TEST_BUFFER_SIZE);
 #endif
 }
@@ -185,10 +185,10 @@ static const struct subtest subtests[] =
 static void
 test_coroutine (void)
 {
-  while (cur_subtest->setup_subtest)
+  док (cur_subtest->setup_subtest)
     {
       cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      ако (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,39 +196,39 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
+static цео test_status;
 static unsigned char *co_stack_buffer;
 static size_t co_stack_size;
 
-static unsigned int
+static unsigned цео
 count_test_patterns (unsigned char *buf, size_t bufsiz)
 {
   unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  ако (!first)
+    врати 0;
+  unsigned цео cnt = 0;
+  за (unsigned цео i = 0; i < PATTERN_REPS; i++)
     {
       unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
+      ако (p + PATTERN_SIZE - buf > bufsiz)
 	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      ако (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
 	cnt++;
     }
-  return cnt;
+  врати cnt;
 }
 
 static void
 check_test_buffer (enum test_expectation expected,
 		   const char *label, const char *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
+  unsigned цео cnt = count_test_patterns (co_stack_buffer, co_stack_size);
   switch (expected)
     {
     case EXPECT_NONE:
-      if (cnt == 0)
+      ако (cnt == 0)
 	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+      инако
 	{
 	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
 	  test_status = 1;
@@ -236,9 +236,9 @@ check_test_buffer (enum test_expectation expected,
       break;
 
     case EXPECT_SOME:
-      if (cnt > 0)
+      ако (cnt > 0)
 	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+      инако
 	{
 	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
 	  test_status = 1;
@@ -246,10 +246,10 @@ check_test_buffer (enum test_expectation expected,
       break;
 
      case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
+      ако (cnt == PATTERN_REPS)
 	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
 		PATTERN_REPS, cnt);
-      else
+      инако
 	{
 	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
 		  PATTERN_REPS, cnt);
@@ -264,7 +264,7 @@ check_test_buffer (enum test_expectation expected,
 
     default:
       printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
+	      label, stage, (цео)expected);
       test_status = 1;
     }
 }
@@ -273,45 +273,45 @@ static void
 test_loop (void)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  док (cur_subtest->setup_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      ако (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      ако (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  ако (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
+цео
 do_test (void)
 {
   size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
+  ако (page_alignment < sizeof (void *))
     page_alignment = sizeof (void *);
 
   co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
+  ако (co_stack_size < page_alignment * 4)
     co_stack_size = page_alignment * 4;
 
   void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  цео err = posix_memalign (&p, page_alignment, co_stack_size);
+  ако (err || !p)
     {
       printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      врати 2;
     }
   co_stack_buffer = p;
 
-  if (getcontext (&uc_co))
+  ако (getcontext (&uc_co))
     {
       printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      врати 2;
     }
   uc_co.uc_stack.ss_sp   = co_stack_buffer;
   uc_co.uc_stack.ss_size = co_stack_size;
@@ -319,7 +319,7 @@ do_test (void)
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  врати test_status;
 }
 
 #include <support/test-driver.c>

@@ -26,14 +26,14 @@ __fortify_function void *
 __NTH (memcpy (void *__restrict __dest, const void *__restrict __src,
 	       size_t __len))
 {
-  return __builtin___memcpy_chk (__dest, __src, __len,
+  врати __builtin___memcpy_chk (__dest, __src, __len,
 				 __glibc_objsize0 (__dest));
 }
 
 __fortify_function void *
 __NTH (memmove (void *__dest, const void *__src, size_t __len))
 {
-  return __builtin___memmove_chk (__dest, __src, __len,
+  врати __builtin___memmove_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 
@@ -42,7 +42,7 @@ __fortify_function void *
 __NTH (mempcpy (void *__restrict __dest, const void *__restrict __src,
 		size_t __len))
 {
-  return __builtin___mempcpy_chk (__dest, __src, __len,
+  врати __builtin___mempcpy_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 #endif
@@ -54,20 +54,20 @@ __NTH (mempcpy (void *__restrict __dest, const void *__restrict __src,
    case no work is done at all.  We detect these problems by referring
    non-existing functions.  */
 __fortify_function void *
-__NTH (memset (void *__dest, int __ch, size_t __len))
+__NTH (memset (void *__dest, цео __ch, size_t __len))
 {
-  return __builtin___memset_chk (__dest, __ch, __len,
+  врати __builtin___memset_chk (__dest, __ch, __len,
 				 __glibc_objsize0 (__dest));
 }
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
-void *__memset_explicit_chk (void *__s, int __c, size_t __n, size_t __destlen)
+#ако defined __USE_MISC || __GLIBC_USE (ISOC23)
+void *__memset_explicit_chk (void *__s, цео __c, size_t __n, size_t __destlen)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
 
 __fortify_function void *
-__NTH (memset_explicit (void *__dest, int __ch, size_t __len))
+__NTH (memset_explicit (void *__dest, цео __ch, size_t __len))
 {
-  return __memset_explicit_chk (__dest, __ch, __len,
+  врати __memset_explicit_chk (__dest, __ch, __len,
 				__glibc_objsize0 (__dest));
 }
 #endif
@@ -90,7 +90,7 @@ __NTH (strcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
 	       const char *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strcpy_chk (__dest, __src, __glibc_objsize (__dest));
+  врати __builtin___strcpy_chk (__dest, __src, __glibc_objsize (__dest));
 }
 
 #ifdef __USE_XOPEN2K8
@@ -99,7 +99,7 @@ __NTH (stpcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
 	       const char *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___stpcpy_chk (__dest, __src, __glibc_objsize (__dest));
+  врати __builtin___stpcpy_chk (__dest, __src, __glibc_objsize (__dest));
 }
 #endif
 
@@ -109,21 +109,21 @@ __NTH (strncpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
 		const char *__restrict __src, size_t __len))
      __fortify_clang_warn_if_dest_too_small (__dest, __len)
 {
-  return __builtin___strncpy_chk (__dest, __src, __len,
+  врати __builtin___strncpy_chk (__dest, __src, __len,
 				  __glibc_objsize (__dest));
 }
 
 #ifdef __USE_XOPEN2K8
-# if __GNUC_PREREQ (4, 7) || __glibc_clang_prereq (2, 6)
+# ако __GNUC_PREREQ (4, 7) || __glibc_clang_prereq (2, 6)
 __fortify_function __attribute_overloadable__ char *
 __NTH (stpncpy (__fortify_clang_overload_arg (char *, ,__dest),
 		const char *__src, size_t __n))
      __fortify_clang_warn_if_dest_too_small (__dest, __n)
 {
-  return __builtin___stpncpy_chk (__dest, __src, __n,
+  врати __builtin___stpncpy_chk (__dest, __src, __n,
 				  __glibc_objsize (__dest));
 }
-# else
+# инако
 extern char *__stpncpy_chk (char *__dest, const char *__src, size_t __n,
 			    size_t __destlen) __THROW
   __fortified_attr_access (__write_only__, 1, 3)
@@ -135,10 +135,10 @@ __fortify_function __attribute_overloadable__ char *
 __NTH (stpncpy (__fortify_clang_overload_arg (char *, ,__dest),
 		const char *__src, size_t __n))
 {
-  if (__bos (__dest) != (size_t) -1
+  ако (__bos (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n) || __n > __bos (__dest)))
-    return __stpncpy_chk (__dest, __src, __n, __bos (__dest));
-  return __stpncpy_alias (__dest, __src, __n);
+    врати __stpncpy_chk (__dest, __src, __n, __bos (__dest));
+  врати __stpncpy_alias (__dest, __src, __n);
 }
 # endif
 #endif
@@ -149,7 +149,7 @@ __NTH (strcat (__fortify_clang_overload_arg (char *, __restrict, __dest),
 	       const char *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strcat_chk (__dest, __src, __glibc_objsize (__dest));
+  врати __builtin___strcat_chk (__dest, __src, __glibc_objsize (__dest));
 }
 
 
@@ -158,7 +158,7 @@ __NTH (strncat (__fortify_clang_overload_arg (char *, __restrict, __dest),
 		const char *__restrict __src, size_t __len))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strncat_chk (__dest, __src, __len,
+  врати __builtin___strncat_chk (__dest, __src, __len,
 				  __glibc_objsize (__dest));
 }
 
@@ -174,11 +174,11 @@ __NTH (strlcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
 		const char *__restrict __src, size_t __n))
      __fortify_clang_warn_if_dest_too_small (__dest, __n)
 {
-  if (__glibc_objsize (__dest) != (size_t) -1
+  ако (__glibc_objsize (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n > __glibc_objsize (__dest))
 	  || __n > __glibc_objsize (__dest)))
-    return __strlcpy_chk (__dest, __src, __n, __glibc_objsize (__dest));
-  return __strlcpy_alias (__dest, __src, __n);
+    врати __strlcpy_chk (__dest, __src, __n, __glibc_objsize (__dest));
+  врати __strlcpy_alias (__dest, __src, __n);
 }
 
 extern size_t __strlcat_chk (char *__dest, const char *__src, size_t __n,
@@ -191,11 +191,11 @@ __fortify_function __attribute_overloadable__ size_t
 __NTH (strlcat (__fortify_clang_overload_arg (char *, __restrict, __dest),
 		const char *__restrict __src, size_t __n))
 {
-  if (__glibc_objsize (__dest) != (size_t) -1
+  ако (__glibc_objsize (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n > __glibc_objsize (__dest))
 	  || __n > __glibc_objsize (__dest)))
-    return __strlcat_chk (__dest, __src, __n, __glibc_objsize (__dest));
-  return __strlcat_alias (__dest, __src, __n);
+    врати __strlcat_chk (__dest, __src, __n, __glibc_objsize (__dest));
+  врати __strlcat_alias (__dest, __src, __n);
 }
 #endif /* __USE_MISC */
 

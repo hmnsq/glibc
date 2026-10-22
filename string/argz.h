@@ -29,7 +29,7 @@ __BEGIN_DECLS
    operating system.  */
 #ifndef __error_t_defined
 # define __error_t_defined 1
-typedef int error_t;
+typedef цео error_t;
 #endif
 
 /* Make a '\0' separated arg vector from a unix argv vector, returning it in
@@ -45,7 +45,7 @@ extern error_t argz_create (char *const __argv[], char **__restrict __argz,
    memory allocation error occurs, ENOMEM is returned, otherwise 0.
    The result can be destroyed using free.  */
 extern error_t argz_create_sep (const char *__restrict __string,
-				int __sep, char **__restrict __argz,
+				цео __sep, char **__restrict __argz,
 				size_t *__restrict __len) __THROW;
 
 /* Returns the number of strings in ARGZ.  */
@@ -63,8 +63,8 @@ extern void argz_extract (const char *__restrict __argz, size_t __len,
 
 /* Make '\0' separated arg vector ARGZ printable by converting all the '\0's
    except the last into the character SEP.  */
-extern void __argz_stringify (char *__argz, size_t __len, int __sep) __THROW;
-extern void argz_stringify (char *__argz, size_t __len, int __sep) __THROW;
+extern void __argz_stringify (char *__argz, size_t __len, цео __sep) __THROW;
+extern void argz_stringify (char *__argz, size_t __len, цео __sep) __THROW;
 
 /* Append BUF, of length BUF_LEN to the argz vector in ARGZ & ARGZ_LEN.  */
 extern error_t argz_append (char **__restrict __argz,
@@ -81,7 +81,7 @@ extern error_t argz_add (char **__restrict __argz,
    ARGZ_LEN.  */
 extern error_t argz_add_sep (char **__restrict __argz,
 			     size_t *__restrict __argz_len,
-			     const char *__restrict __string, int __delim)
+			     const char *__restrict __string, цео __delim)
      __THROW;
 
 /* Delete ENTRY from ARGZ & ARGZ_LEN, if it appears there.  */
@@ -107,7 +107,7 @@ extern error_t argz_replace (char **__restrict __argz,
 			     size_t *__restrict __argz_len,
 			     const char *__restrict __str,
 			     const char *__restrict __with,
-			     unsigned int *__restrict __replace_count);
+			     unsigned цео *__restrict __replace_count);
 
 /* Returns the next entry in ARGZ & ARGZ_LEN after ENTRY, or NULL if there
    are no more.  If entry is NULL, then the first entry is returned.  This
@@ -133,21 +133,21 @@ __extern_inline char *
 __NTH (__argz_next (const char *__argz, size_t __argz_len,
 		    const char *__entry))
 {
-  if (__entry)
+  ако (__entry)
     {
-      if (__entry < __argz + __argz_len)
+      ако (__entry < __argz + __argz_len)
 	__entry = strchr (__entry, '\0') + 1;
 
-      return __entry >= __argz + __argz_len ? (char *) NULL : (char *) __entry;
+      врати __entry >= __argz + __argz_len ? (char *) NULL : (char *) __entry;
     }
-  else
-    return __argz_len > 0 ? (char *) __argz : NULL;
+  инако
+    врати __argz_len > 0 ? (char *) __argz : NULL;
 }
 __extern_inline char *
 __NTH (argz_next (const char *__argz, size_t __argz_len,
 		  const char *__entry))
 {
-  return __argz_next (__argz, __argz_len, __entry);
+  врати __argz_next (__argz, __argz_len, __entry);
 }
 #endif /* Use extern inlines.  */
 

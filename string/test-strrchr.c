@@ -19,7 +19,7 @@
 #define TEST_MAIN
 #ifdef WIDE
 # define TEST_NAME "wcsrchr"
-#else
+#инако
 # define TEST_NAME "strrchr"
 #endif
 #include "test-string.h"
@@ -31,7 +31,7 @@
 # define UCHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#else
+#инако
 # define STRRCHR strrchr
 # define CHAR char
 # define UCHAR unsigned char
@@ -39,7 +39,7 @@
 # define SMALL_CHAR 127
 #endif
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+typedef CHAR *(*proto_t) (const CHAR *, цео);
 
 IMPL (STRRCHR, 1)
 
@@ -61,7 +61,7 @@ IMPL (STRRCHR, 1)
 # define STRRCHR __strrchr_default
 # include "string/strrchr.c"
 # define STRRCHR_DEFAULT __strrchr_default
-#else
+#инако
 # define WCSRCHR __wcsrchr_default
 # include "wcsmbs/wcsrchr.c"
 # define STRRCHR_DEFAULT __wcsrchr_default
@@ -69,20 +69,20 @@ IMPL (STRRCHR, 1)
 IMPL (STRRCHR_DEFAULT, 1)
 
 static void
-do_one_test (impl_t *impl, const CHAR *s, int c, CHAR *exp_res)
+do_one_test (impl_t *impl, const CHAR *s, цео c, CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ако (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      врати;
     }
 }
 
 static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+do_test (size_t align, size_t pos, size_t len, цео seek_char, цео max_char)
 /* For wcsrchr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
@@ -92,29 +92,29 @@ do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
   CHAR *buf = (CHAR *) buf1;
 
   align &= 7;
-  if ( (align + len) * sizeof (CHAR) >= page_size)
-    return;
+  ако ( (align + len) * sizeof (CHAR) >= page_size)
+    врати;
 
-  for (i = 0; i < len; ++i)
+  за (i = 0; i < len; ++i)
     {
       buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      ако (!buf[align + i])
 	buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      ако (!buf[align + i])
 	buf[align + i] = 1;
-      if ((i > pos || pos >= len) && buf[align + i] == seek_char)
+      ако ((i > pos || pos >= len) && buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 10 + (random () & 15);
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  ако (pos < len)
     {
       buf[align + pos] = seek_char;
       result = (CHAR *) (buf + align + pos);
     }
-  else if (seek_char == 0)
+  инако ако (seek_char == 0)
     result = (CHAR *) (buf + align + len);
-  else
+  инако
     result = NULL;
 
   FOR_EACH_IMPL (impl, 0)
@@ -125,11 +125,11 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
+  цео seek_char;
   CHAR *result;
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  за (n = 0; n < ITERATIONS; n++)
     {
       align = random () & (63 / sizeof (CHAR));
       /* For wcsrchr: align here means align not in bytes, but in wchar_ts,
@@ -138,57 +138,57 @@ do_random_tests (void)
 	 some assembly implementations have separate prolog for alignments
 	 more 48. */
       pos = random () & 511;
-      if (pos + align >= 511)
+      ако (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
-      if (pos >= len)
+      ако (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      ако (len + align >= 512)
 	len = 511 - align - (random () & 7);
       seek_char = random () & 255;
-      if (seek_char && pos == len)
+      ако (seek_char && pos == len)
 	{
-	  if (pos)
+	  ако (pos)
 	    --pos;
-	  else
+	  инако
 	    ++len;
 	}
       j = len + align + 64;
-      if (j > 512)
+      ако (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      за (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ако (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  инако ако (i == len + align)
 	    p[i] = 0;
-	  else
+	  инако
 	    {
 	      p[i] = random () & 255;
-	      if (((i > pos + align && i < len + align) || pos > len)
+	      ако (((i > pos + align && i < len + align) || pos > len)
 		  && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      ако (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  ако (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
+      ако (pos <= len)
 	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
+      инако ако (seek_char == 0)
 	result = (CHAR *) (p + len + align);
-      else
+      инако
 	result = NULL;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	ако (CALL (impl, (CHAR *) (p + align), seek_char) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
@@ -198,7 +198,7 @@ do_random_tests (void)
     }
 }
 
-int
+цео
 test_main (void)
 {
   size_t i;
@@ -210,44 +210,44 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  за (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 23, SMALL_CHAR);
       do_test (i, 16 << i, 2048, 23, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  за (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 23, SMALL_CHAR);
       do_test (i, 64, 256, 23, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  за (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23, SMALL_CHAR);
       do_test (0, i, i + 1, 23, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  за (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 0, SMALL_CHAR);
       do_test (i, 16 << i, 2048, 0, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  за (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 0, SMALL_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  за (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 0, SMALL_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 
   do_random_tests ();
-  return ret;
+  врати ret;
 }
 
 #include <support/test-driver.c>

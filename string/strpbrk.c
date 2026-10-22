@@ -28,6 +28,6 @@ char *
 STRPBRK (const char *s, const char *accept)
 {
   s += strcspn (s, accept);
-  return *s ? (char *)s : NULL;
+  врати *s ? (char *)s : NULL;
 }
 libc_hidden_builtin_def (strpbrk)

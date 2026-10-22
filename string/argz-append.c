@@ -26,15 +26,15 @@ __argz_append (char **argz, size_t *argz_len, const char *buf, size_t buf_len)
 {
   size_t new_argz_len = *argz_len + buf_len;
   char *new_argz = realloc (*argz, new_argz_len);
-  if (new_argz)
+  ако (new_argz)
     {
       memcpy (new_argz + *argz_len, buf, buf_len);
       *argz = new_argz;
       *argz_len = new_argz_len;
-      return 0;
+      врати 0;
     }
-  else
-    return ENOMEM;
+  инако
+    врати ENOMEM;
 }
 weak_alias (__argz_append, argz_append)
 
@@ -43,6 +43,6 @@ weak_alias (__argz_append, argz_append)
 error_t
 __argz_add (char **argz, size_t *argz_len, const char *str)
 {
-  return __argz_append (argz, argz_len, str, strlen (str) + 1);
+  врати __argz_append (argz, argz_len, str, strlen (str) + 1);
 }
 weak_alias (__argz_add, argz_add)

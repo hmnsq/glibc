@@ -22,34 +22,34 @@
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (const char *string, цео delim, char **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  ако (nlen > 1)
     {
       const char *rp;
       char *wp;
 
       *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      ако (*argz == NULL)
+	врати ENOMEM;
 
       rp = string;
       wp = *argz;
       do
-	if (*rp == delim)
+	ако (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ако (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    инако
 	      --nlen;
 	  }
-	else
+	инако
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      док (*rp++ != '\0');
 
-      if (nlen == 0)
+      ако (nlen == 0)
 	{
 	  free (*argz);
 	  *argz = NULL;
@@ -58,12 +58,12 @@ __argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 
       *len = nlen;
     }
-  else
+  инако
     {
       *argz = NULL;
       *len = 0;
     }
 
-  return 0;
+  врати 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)
