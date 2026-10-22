@@ -20,17 +20,17 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpncpy"
-#else
+#ᱵᱟᱝ
 # define TEST_NAME "wcpncpy"
 #endif /* WIDE */
 #include "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR var_na
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#ᱵᱟᱝ
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
@@ -49,16 +49,16 @@ IMPL (STPNCPY, 1)
 CHAR *
 SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  ᱡᱚᱠᱷᱚᱱ (n--)
+    ᱡᱩᱫᱤ ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
 	for (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	ᱨᱩᱣᱟᱹᱲ dst - 1;
       }
-  return dst;
+  ᱨᱩᱣᱟᱹᱲ dst;
 }
 
 CHAR *
@@ -71,7 +71,7 @@ STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
     dst[i] = src[i];
   for (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  ᱨᱩᱣᱟᱹᱲ dst + nc;
 }
 
 #undef CHAR

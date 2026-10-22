@@ -27,7 +27,7 @@
 #include <support/support.h>
 #include <support/check.h>
 
-static int
+static puur_naa_nka
 do_test (void)
 {
   unsetenv ("LANGUAGE");
@@ -37,11 +37,11 @@ do_test (void)
   TEST_COMPARE_STRING (strsignal (SIGINT),     "Interrupt");
   TEST_COMPARE_STRING (strsignal (-1),         "Unknown signal -1");
 #ifdef SIGRTMIN
-  if (SIGRTMIN < SIGRTMAX)
+  ᱡᱩᱫᱤ (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),   "Real-time signal 0");
 #endif
 #ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+  ᱡᱩᱫᱤ (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Unknown signal 65");
 #endif
 
@@ -50,15 +50,15 @@ do_test (void)
   TEST_COMPARE_STRING (strsignal (SIGINT),    "Interrup\xc3\xa7\xc3\xa3\x6f");
   TEST_COMPARE_STRING (strsignal (-1),        "Sinal desconhecido -1");
 #ifdef SIGRTMI
-  if (SIGRTMIN < SIGRTMAX)
+  ᱡᱩᱫᱤ (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),  "Sinal de tempo-real 0");
 #endif
 #ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+  ᱡᱩᱫᱤ (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Sinal desconhecido 65");
 #endif
 
-  return 0;
+  ᱨᱩᱣᱟᱹᱲ 0;
 }
 
 #include <support/test-driver.c>

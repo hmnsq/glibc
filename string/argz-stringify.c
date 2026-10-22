@@ -22,16 +22,16 @@
 /* Make '\0' separated arg vector ARGZ printable by converting all the '\0's
    except the last into the character SEP.  */
 void
-__argz_stringify (char *argz, size_t len, int sep)
+__argz_stringify (var_na *argz, size_t len, puur_naa_nka sep)
 {
-  if (len > 0)
-    while (1)
+  ᱡᱩᱫᱤ (len > 0)
+    ᱡᱚᱠᱷᱚᱱ (1)
       {
 	size_t part_len = __strnlen (argz, len);
 	argz += part_len;
 	len -= part_len;
-	if (len-- <= 1)		/* includes final '\0' we want to stop at */
-	  break;
+	ᱡᱩᱫᱤ (len-- <= 1)		/* includes final '\0' we want to stop at */
+	  bha_nga;
 	*argz++ = sep;
       }
 }

@@ -21,7 +21,7 @@
 
 #ifdef _LIBC
 # include <string.h>
-#else
+#ᱵᱟᱝ
 # include <sys/types.h>
 #endif
 
@@ -29,22 +29,22 @@
 # ifdef weak_alias
 #  define STPNCPY	__stpncpy
 weak_alias (__stpncpy, stpncpy)
-# else
+# ᱵᱟᱝ
 #  define STPNCPY	stpncpy
 # endif
 #endif
 
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the terminating '\0' in DEST, if any, or else DEST + N.  */
-char *
-STPNCPY (char *dest, const char *src, size_t n)
+var_na *
+STPNCPY (var_na *dest, const var_na *src, size_t n)
 {
   size_t size = __strnlen (src, n);
   memcpy (dest, src, size);
   dest += size;
-  if (size == n)
-    return dest;
-  return memset (dest, '\0', n - size);
+  ᱡᱩᱫᱤ (size == n)
+    ᱨᱩᱣᱟᱹᱲ dest;
+  ᱨᱩᱣᱟᱹᱲ memset (dest, '\0', n - size);
 }
 #ifdef weak_alias
 libc_hidden_def (__stpncpy)

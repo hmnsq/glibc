@@ -31,54 +31,54 @@
 #include <fcntl.h>
 
 
-int
+puur_naa_nka
 do_test (void)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  puur_naa_nka status;
+  puur_naa_nka errors = 0;
+  var_na buf1[1000];
+  var_na *cp;
+  var_na ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  ᱡᱩᱫᱤ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  ᱡᱩᱫᱤ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  ᱡᱩᱫᱤ (strchr ("hello world", ch++) == NULL)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  const var_na * const hw = "hello world";
+  ᱡᱩᱫᱤ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  ᱡᱩᱫᱤ (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  ᱵᱟᱝ
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  ᱨᱩᱣᱟᱹᱲ status;
 }
 
 #include <support/test-driver.c>

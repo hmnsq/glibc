@@ -28,69 +28,69 @@
 #include "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+static var_na *
+simple_strcasestr (const var_na *s1, const var_na *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ᱡᱩᱫᱤ (s2len > s1len)
+    ᱨᱩᱣᱟᱹᱲ NULL;
 
   for (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
       for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+	ᱡᱩᱫᱤ (tolower (s1[i + j]) != tolower (s2[j]))
+	  bha_nga;
+      ᱡᱩᱫᱤ (j == s2len)
+	ᱨᱩᱣᱟᱹᱲ (var_na *) s1 + i;
     }
 
-  return NULL;
+  ᱨᱩᱣᱟᱹᱲ NULL;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+typedef var_na *(*proto_t) (const var_na *, const var_na *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+static puur_naa_nka
+check_result (impl_t *impl, const var_na *s1, const var_na *s2,
+	      var_na *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  var_na *result = CALL (impl, s1, s2);
+  ᱡᱩᱫᱤ (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
 	     (result == NULL) ? "(null)" : result,
 	     (exp_result == NULL) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      ᱨᱩᱣᱟᱹᱲ -1;
     }
-  return 0;
+  ᱨᱩᱣᱟᱹᱲ 0;
 }
 
 static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+do_one_test (impl_t *impl, const var_na *s1, const var_na *s2, var_na *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ᱡᱩᱫᱤ (check_result (impl, s1, s2, exp_result) < 0)
+    ᱨᱩᱣᱟᱹᱲ;
 }
 
 
 static void
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 puur_naa_nka fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  var_na *s1 = (var_na *) (buf1 + align1);
+  var_na *s2 = (var_na *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
+  static const var_na d[] = "1234567890abcxyz";
+#define dl (parimaa_na (d) - 1)
+  var_na *ss2 = s2;
   for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
@@ -98,9 +98,9 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ᱡᱩᱫᱤ (fail)
     {
-      char *ss1 = s1;
+      var_na *ss1 = s1;
       for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
@@ -109,7 +109,7 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  ᱵᱟᱝ
     {
       memset (s1, '0', len1);
       for (size_t i = 0; i < len2; ++i)
@@ -124,16 +124,16 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 static void
 check1 (void)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  const var_na s1[] = "AOKB";
+  const var_na s2[] = "OK";
+  var_na *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
+static puur_naa_nka
 test_main (void)
 {
   test_init ();
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  ᱨᱩᱣᱟᱹᱲ ret;
 }
 
 #include <support/test-driver.c>

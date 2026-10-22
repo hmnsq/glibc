@@ -18,7 +18,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlcat"
-#else
+#ᱵᱟᱝ
 # define TEST_NAME "wcslcat"
 #endif /* WIDE */
 #include "test-string.h"
@@ -36,9 +36,9 @@
 # define STRLEN wcslen
 # define STRNLEN wcsnlen
 # define UCHAR wchar_t
-#else
+#ᱵᱟᱝ
 # define BIG_CHAR CHAR_MAX
-# define CHAR char
+# define CHAR var_na
 # define MEMCMP memcmp
 # define MEMCPY memcpy
 # define MEMSET memset
@@ -47,7 +47,7 @@
 # define STRLCAT strlcat
 # define STRLEN strlen
 # define STRNLEN strnlen
-# define UCHAR unsigned char
+# define UCHAR unsigned var_na
 #endif /* !WIDE */
 
 /* Naive implementation to verify results.  */
@@ -56,23 +56,23 @@ SIMPLE_STRLCAT (CHAR *dst, const CHAR *src, size_t n)
 {
   size_t src_length = STRLEN (src);
 
-  if (n == 0)
-    return src_length;
+  ᱡᱩᱫᱤ (n == 0)
+    ᱨᱩᱣᱟᱹᱲ src_length;
 
   size_t dst_length = STRNLEN (dst, n);
 
-  if (dst_length != n)
+  ᱡᱩᱫᱤ (dst_length != n)
     {
       size_t to_copy = n - dst_length - 1;
 
-      if (to_copy > src_length)
+      ᱡᱩᱫᱤ (to_copy > src_length)
 	to_copy = src_length;
 
       CHAR *target = dst + dst_length;
       MEMCPY (target, src, to_copy);
       target[to_copy] = '\0';
     }
-  return dst_length + src_length;
+  ᱨᱩᱣᱟᱹᱲ dst_length + src_length;
 }
 
 IMPL (SIMPLE_STRLCAT, 0)
@@ -89,60 +89,60 @@ do_one_test (impl_t *impl, CHAR *dst, const CHAR *src,
   size_t src_length = STRLEN (src);
   size_t dst_length = STRNLEN (dst, n);
 
-  if  (n == 0)
+  ᱡᱩᱫᱤ  (n == 0)
     exp_ret = src_length;
-  else
+  ᱵᱟᱝ
     exp_ret = src_length + dst_length;
 
   func_ret = CALL (impl, dst, src, n);
-  if (exp_ret != func_ret)
+  ᱡᱩᱫᱤ (exp_ret != func_ret)
     {
       error (0, 0, "Wrong result in function %s %zd != %zd", impl->name,
 	     exp_ret, func_ret);
       ret = 1;
-      return;
+      ᱨᱩᱣᱟᱹᱲ;
     }
 
-  if (dst_length != n)
+  ᱡᱩᱫᱤ (dst_length != n)
     {
       size_t to_copy = n - dst_length - 1;
-      if (to_copy > src_length)
+      ᱡᱩᱫᱤ (to_copy > src_length)
 	to_copy = src_length;
-      if (MEMCMP (dst + dst_length, src, to_copy) != 0)
+      ᱡᱩᱫᱤ (MEMCMP (dst + dst_length, src, to_copy) != 0)
 	{
 	  error (0, 0, "Incorrect concatenation in function %s",
 		 impl->name);
 	  ret = 1;
-	  return;
+	  ᱨᱩᱣᱟᱹᱲ;
 	}
-      if (dst[dst_length + to_copy] != '\0')
+      ᱡᱩᱫᱤ (dst[dst_length + to_copy] != '\0')
 	{
 	  error (0, 0, "There is no zero in the end of output string in %s",
 		 impl->name);
 	  ret = 1;
-	  return;
+	  ᱨᱩᱣᱟᱹᱲ;
 	}
     }
-  return;
+  ᱨᱩᱣᱟᱹᱲ;
 }
 
 static void
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 size_t n, int max_char)
+	 size_t n, puur_naa_nka max_char)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= 7;
-  if ((align1 + len1) * sizeof (CHAR) >= page_size)
-    return;
-  if ((align1 + n) * sizeof (CHAR) > page_size)
-    return;
+  ᱡᱩᱫᱤ ((align1 + len1) * parimaa_na (CHAR) >= page_size)
+    ᱨᱩᱣᱟᱹᱲ;
+  ᱡᱩᱫᱤ ((align1 + n) * parimaa_na (CHAR) > page_size)
+    ᱨᱩᱣᱟᱹᱲ;
   align2 &= 7;
-  if ((align2 + len1 + len2) * sizeof (CHAR) >= page_size)
-    return;
-  if ((align2 + len1 + n) * sizeof (CHAR) > page_size)
-    return;
+  ᱡᱩᱫᱤ ((align2 + len1 + len2) * parimaa_na (CHAR) >= page_size)
+    ᱨᱩᱣᱟᱹᱲ;
+  ᱡᱩᱫᱤ ((align2 + len1 + n) * parimaa_na (CHAR) > page_size)
+    ᱨᱩᱣᱟᱹᱲ;
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
@@ -194,7 +194,7 @@ do_overflow_tests (void)
       }
 
     len = 0;
-    for (j = 8 * sizeof(size_t) - 1; j ; --j)
+    for (j = 8 * parimaa_na(size_t) - 1; j ; --j)
       {
 	len |= one << j;
 	FOR_EACH_IMPL (impl, 0)
@@ -242,7 +242,7 @@ do_random_tests (void)
       for (i = 0; i < len1; i++)
 	{
 	  p1[align1 + i] = random () & BIG_CHAR;
-	  if (!p1[align1 + i])
+	  ᱡᱩᱫᱤ (!p1[align1 + i])
 	    p1[align1 + i] = (random () & SMALL_CHAR) + 3;
 	}
       p1[align1 + len1] = 0;
@@ -250,7 +250,7 @@ do_random_tests (void)
       for (i = 0; i < len2; i++)
 	{
 	  p3[i] = random () & BIG_CHAR;
-	  if (!p3[i])
+	  ᱡᱩᱫᱤ (!p3[i])
 	    p3[i] = (random () & SMALL_CHAR) + 3;
 	}
       p3[len2] = 0;
@@ -259,9 +259,9 @@ do_random_tests (void)
       size_t src_length = STRLEN ((CHAR *) (p1 + align1));
       size_t dst_length = STRNLEN ((CHAR *) (p3), N);
 
-      if  (N == 0)
+      ᱡᱩᱫᱤ  (N == 0)
 	exp_ret = src_length;
-      else
+      ᱵᱟᱝ
 	exp_ret = src_length + dst_length;
 
       FOR_EACH_IMPL (impl, 1)
@@ -271,7 +271,7 @@ do_random_tests (void)
 	  MEMCPY (p2 + align2, p3, len2 + 1);
 	  res = CALL (impl, (CHAR *) (p2 + align2),
 		      (CHAR *) (p1 + align1), N);
-	  if (res != exp_ret)
+	  ᱡᱩᱫᱤ (res != exp_ret)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s "
 		     "(%zd, %zd, %zd, %zd, %zd) %zd != %zd",
@@ -282,26 +282,26 @@ do_random_tests (void)
 
 	  for (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ᱡᱩᱫᱤ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before dst, %s "
 			 "%zd, %zd, %zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len1, len2, N);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
-	  if (MEMCMP (p2 + align2, p3, len2))
+	  ᱡᱩᱫᱤ (MEMCMP (p2 + align2, p3, len2))
 	    {
 	      error (0, 0, "Iteration %zd - garbage in string before, %s "
 		     "(%zd, %zd, %zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len1, len2, N);
 	      ret = 1;
 	    }
-	  if (N > len2 + 1)
+	  ᱡᱩᱫᱤ (N > len2 + 1)
 	    {
 	      j = (N - len2 - 1 >= len1) ? len1 : N - len2 - 1;
-	      if (MEMCMP (p2 + align2 + len2, p1 + align1, j))
+	      ᱡᱩᱫᱤ (MEMCMP (p2 + align2 + len2, p1 + align1, j))
 		{
 		  error (0, 0, "Iteration %zd - different strings, %s "
 			 "(%zd, %zd, %zd, %zd)", n, impl->name, align1,
@@ -309,7 +309,7 @@ do_random_tests (void)
 		  ret = 1;
 		}
 
-	      if (p2[align2 + len2 + j] != '\0')
+	      ᱡᱩᱫᱤ (p2[align2 + len2 + j] != '\0')
 		{
 		  error (0, 0, "Iteration %zd - there is no zero at the "
 			 "end of output string, %s (%zd, %zd, %zd, %zd, %zd)",
@@ -319,19 +319,19 @@ do_random_tests (void)
 
 	      for (j = j + align2 + len2 + 1; j < 1024; ++j)
 		{
-		  if (p2[j] != '\1')
+		  ᱡᱩᱫᱤ (p2[j] != '\1')
 		    {
 		      error (0, 0, "Iteration %zd - garbage after, %s "
 			     "(%zd, %zd, %zd, %zd, %zd)",
 			     n, impl->name, align1, align2, len1, len2, N);
 		      ret = 1;
-		      break;
+		      bha_nga;
 		    }
 		}
 	    }
-	  else
+	  ᱵᱟᱝ
 	    {
-	      if (p2[align2 + len2] != '\0')
+	      ᱡᱩᱫᱤ (p2[align2 + len2] != '\0')
 		{
 		  error (0, 0, "Iteration %zd - destination modified, %s "
 			 "(%zd, %zd, %zd, %zd, %zd)",
@@ -343,7 +343,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i, n;
@@ -396,7 +396,7 @@ test_main (void)
 
   do_random_tests ();
   do_overflow_tests ();
-  return ret;
+  ᱨᱩᱣᱟᱹᱲ ret;
 }
 
 #include <support/test-driver.c>

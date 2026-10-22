@@ -23,11 +23,11 @@
 #include <support/support.h>
 #include <support/check.h>
 
-static const struct test_t
+static const sa_nracanaa test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  puur_naa_nka errno;
+  const var_na *abbrev;
+  const var_na *descr;
 } tests[] =
 {
 #define N_(name)                      name
@@ -36,7 +36,7 @@ static const struct test_t
 #undef init_sig
 };
 
-static int
+static puur_naa_nka
 do_test (void)
 {
   for (size_t i = 0; i < array_length (tests); i++)
@@ -45,7 +45,7 @@ do_test (void)
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  ᱨᱩᱣᱟᱹᱲ 0;
 }
 
 #include <support/test-driver.c>
