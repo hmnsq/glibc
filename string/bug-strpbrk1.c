@@ -1,15 +1,15 @@
 #undef __USE_STRING_INLINES
 #define __USE_STRING_INLINES
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <libc-diag.h>
+#ضمن <string.h>
+#ضمن <stdlib.h>
+#ضمن <stdio.h>
+#ضمن <libc-diag.h>
 
-int
-main (void)
+صحيح
+main (فراغ)
 {
-  const char *a = "abc";
-  const char *b = a;
+  ثابت حرف *a = "abc";
+  ثابت حرف *b = a;
 
   DIAG_PUSH_NEEDS_COMMENT;
   /* GCC 9 correctly warns that this call to strpbrk is useless.  That
@@ -19,8 +19,8 @@ main (void)
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strpbrk (b++, "");
   DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  אם (b != a + 1)
+    החזר 1;
 
-  return 0;
+  החזר 0;
 }

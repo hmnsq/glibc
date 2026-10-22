@@ -16,22 +16,22 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#ضمن <argz.h>
+#ضمن <string.h>
 
 /* Returns the number of strings in ARGZ.  */
 size_t
-__argz_count (const char *argz, size_t len)
+__argz_count (ثابت حرف *argz, size_t len)
 {
   size_t count = 0;
-  while (len > 0)
+  כלעוד (len > 0)
     {
       size_t part_len = strlen(argz);
       argz += part_len + 1;
       len -= part_len + 1;
       count++;
     }
-  return count;
+  החזר count;
 }
 libc_hidden_def (__argz_count)
 weak_alias (__argz_count, argz_count)

@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#ضمن <locale.h>
+#ضمن <stdbool.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
+#ضمن <support/check.h>
+#ضمن <support/namespace.h>
+#ضمن <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+ساكن متطاير bool fail_malloc;
 
-void *
+فراغ *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  אם (fail_malloc)
+    החזר عدم;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  ساكن فراغ *(*original_malloc) (size_t);
+  אם (original_malloc == عدم)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  החזר original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+ساكن فراغ
+test_strerror (فراغ *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  ثابت حرف *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+ساكن فراغ
+test_strerror_l (فراغ *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  ثابت حرف *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+ساكن صحيح
+do_test (فراغ)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, عدم);
+  support_isolate_in_subprocess (test_strerror_l, عدم);
 
-  return 0;
+  החזר 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>
