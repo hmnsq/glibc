@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#ضمن <argz.h>
+#ضمن <errno.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (ثابت حرف *string, صحيح delim, حرف **argz, size_t *len)
 {
-  size_t nlen = strlen (string) + 1;
+  size_t nlen = طول_رشته (string) + 1;
 
-  if (nlen > 1)
+  إذا (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ثابت حرف *rp;
+      حرف *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (حرف *) حافظه_بده (nlen);
+      إذا (*argz == عدم)
+	أرجع ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      افعل
+	إذا (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    إذا (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    وإلا
 	      --nlen;
 	  }
-	else
+	وإلا
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      طالما (*rp++ != '\0');
 
-      if (nlen == 0)
+      إذا (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  حرر (*argz);
+	  *argz = عدم;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  وإلا
     {
-      *argz = NULL;
+      *argz = عدم;
       *len = 0;
     }
 
-  return 0;
+  أرجع 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

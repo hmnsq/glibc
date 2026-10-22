@@ -17,46 +17,46 @@
    <https://www.gnu.org/licenses/>.  */
 
 /* test-memcpy-support.h contains all test functions.  */
-#include "test-memcpy-support.h"
+#ضمن "test-memcpy-support.h"
 
-static void
-do_random_large_tests (void)
+ساكن فراغ
+do_random_large_tests (فراغ)
 {
-  size_t i, align1, align2, size;
-  for (i = 0; i < 32; ++i)
+  size_t i, align1, align2, اندازه;
+  لكل (i = 0; i < 32; ++i)
     {
       align1 = random ();
       align2 = random ();
-      size = (random () % 0x1000000) + 0x200000;
-      do_test1 (align1, align2, size);
+      اندازه = (random () % 0x1000000) + 0x200000;
+      do_test1 (align1, align2, اندازه);
     }
 
-  for (i = 0; i < 128; ++i)
+  لكل (i = 0; i < 128; ++i)
     {
       align1 = random ();
       align2 = random ();
-      size = (random () % 32768) + 4096;
-      do_test1 (align1, align2, size);
+      اندازه = (random () % 32768) + 4096;
+      do_test1 (align1, align2, اندازه);
     }
 }
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i, j;
 
   test_init ();
 
-  printf ("%23s", "");
+  چاپ_کن ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-  printf ("\t%s", impl->name);
-  putchar ('\n');
+  چاپ_کن ("\t%s", impl->name);
+  حرف_چاپ_کن ('\n');
 
   do_test (0, 0, getpagesize () - 1);
 
-  for (i = 0x200000; i <= 0x2000000; i += i)
+  لكل (i = 0x200000; i <= 0x2000000; i += i)
     {
-      for (j = 64; j <= 1024; j <<= 1)
+      لكل (j = 64; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -97,7 +97,7 @@ test_main (void)
     }
 
   do_random_large_tests ();
-  return ret;
+  أرجع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

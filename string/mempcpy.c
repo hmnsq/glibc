@@ -19,20 +19,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define NO_MEMPCPY_STPCPY_REDIRECT
-#include <string.h>
+#تعریف_کن NO_MEMPCPY_STPCPY_REDIRECT
+#ضمن <string.h>
 
-#undef mempcpy
-#undef __mempcpy
+#لغو_تعریف mempcpy
+#لغو_تعریف __mempcpy
 
-#ifndef MEMPCPY
+#اگر_تعریف_نشده MEMPCPY
 # define MEMPCPY __mempcpy
-#endif
+#پایان_اگر
 
-void *
-MEMPCPY (void *dest, const void *src, size_t len)
+فراغ *
+MEMPCPY (فراغ *dest, ثابت فراغ *src, size_t len)
 {
-  return memcpy (dest, src, len) + len;
+  أرجع کپی_حافظه (dest, src, len) + len;
 }
 libc_hidden_def (__mempcpy)
 static_weak_alias (__mempcpy, mempcpy)

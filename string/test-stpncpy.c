@@ -16,63 +16,63 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRNCPY_RESULT(dst, len, n) ((dst) + ((len) > (n) ? (n) : (len)))
-#define TEST_MAIN
-#ifndef WIDE
+#تعریف_کن STRNCPY_نتیجه(dst, len, n) ((dst) + ((len) > (n) ? (n) : (len)))
+#تعریف_کن TEST_MAIN
+#اگر_تعریف_نشده WIDE
 # define TEST_NAME "stpncpy"
-#else
+#وإلا
 # define TEST_NAME "wcpncpy"
-#endif /* WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#پایان_اگر /* WIDE */
+#ضمن "test-string.h"
+#اگر_تعریف_نشده WIDE
+# define CHAR حرف
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#وإلا
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
 # define STUPID_STPNCPY stupid_wcpncpy
 # define STPNCPY wcpncpy
 # define STRNLEN wcsnlen
-#endif /* WIDE */
+#پایان_اگر /* WIDE */
 
-CHAR *SIMPLE_STPNCPY (CHAR *, const CHAR *, size_t);
-CHAR *STUPID_STPNCPY (CHAR *, const CHAR *, size_t);
+CHAR *SIMPLE_STPNCPY (CHAR *, ثابت CHAR *, size_t);
+CHAR *STUPID_STPNCPY (CHAR *, ثابت CHAR *, size_t);
 
 IMPL (STUPID_STPNCPY, 0)
 IMPL (SIMPLE_STPNCPY, 0)
 IMPL (STPNCPY, 1)
 
 CHAR *
-SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STPNCPY (CHAR *dst, ثابت CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  طالما (n--)
+    إذا ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	لكل (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	أرجع dst - 1;
       }
-  return dst;
+  أرجع dst;
 }
 
 CHAR *
-STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+STUPID_STPNCPY (CHAR *dst, ثابت CHAR *src, size_t n)
 {
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  لكل (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  لكل (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  أرجع dst + nc;
 }
 
-#undef CHAR
-#include "test-strncpy.c"
+#لغو_تعریف CHAR
+#ضمن "test-strncpy.c"

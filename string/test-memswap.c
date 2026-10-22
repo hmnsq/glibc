@@ -16,20 +16,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <support/check.h>
-#include <memswap.h>
+#ضمن <string.h>
+#ضمن <support/check.h>
+#ضمن <memswap.h>
 
-#define TEST_MAIN
-#define BUF1PAGES 3
-#include "test-string.h"
+#تعریف_کن TEST_MAIN
+#تعریف_کن BUF1_صفحات 3
+#ضمن "test-string.h"
 
-static unsigned char *ref1;
-static unsigned char *ref2;
+ساكن بیعلامت حرف *ref1;
+ساكن بیعلامت حرف *ref2;
 
-static void
-do_one_test (unsigned char *p1, unsigned char *ref1, unsigned char *p2,
-	     unsigned char *ref2, size_t len)
+ساكن فراغ
+do_one_test (بیعلامت حرف *p1, بیعلامت حرف *ref1, بیعلامت حرف *p2,
+	     بیعلامت حرف *ref2, size_t len)
 {
   __memswap (p1, p2, len);
 
@@ -37,23 +37,23 @@ do_one_test (unsigned char *p1, unsigned char *ref1, unsigned char *p2,
   TEST_COMPARE_BLOB (p2, len, ref1, len);
 }
 
-static inline void
+ساكن مضمن فراغ
 do_test (size_t align1, size_t align2, size_t len)
 {
-  align1 &= page_size;
-  if (align1 + len >= page_size)
-    return;
+  align1 &= صفحه_اندازه;
+  إذا (align1 + len >= صفحه_اندازه)
+    أرجع;
 
-  align2 &= page_size;
-  if (align2 + len >= page_size)
-    return;
+  align2 &= صفحه_اندازه;
+  إذا (align2 + len >= صفحه_اندازه)
+    أرجع;
 
-  unsigned char *p1 = buf1 + align1;
-  unsigned char *p2 = buf2 + align2;
-  for (size_t repeats = 0; repeats < 2; ++repeats)
+  بیعلامت حرف *p1 = buf1 + align1;
+  بیعلامت حرف *p2 = buf2 + align2;
+  لكل (size_t repeats = 0; repeats < 2; ++repeats)
     {
       size_t i, j;
-      for (i = 0, j = 1; i < len; i++, j += 23)
+      لكل (i = 0, j = 1; i < len; i++, j += 23)
 	{
 	  ref1[i] = p1[i] = j;
 	  ref2[i] = p2[i] = UCHAR_MAX - j;
@@ -63,92 +63,92 @@ do_test (size_t align1, size_t align2, size_t len)
     }
 }
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
-  for (size_t n = 0; n < ITERATIONS; n++)
+  لكل (size_t n = 0; n < ITERATIONS; n++)
     {
-      size_t len, size, size1, size2, align1, align2;
+      size_t len, اندازه, size1, size2, align1, align2;
 
-      if (n == 0)
+      إذا (n == 0)
         {
           len = getpagesize ();
-          size = len + 512;
-          size1 = size;
-          size2 = size;
+          اندازه = len + 512;
+          size1 = اندازه;
+          size2 = اندازه;
           align1 = 512;
           align2 = 512;
         }
-      else
+      وإلا
         {
-          if ((random () & 255) == 0)
-            size = 65536;
-          else
-            size = 768;
-          if (size > page_size)
-            size = page_size;
-          size1 = size;
-          size2 = size;
+          إذا ((random () & 255) == 0)
+            اندازه = 65536;
+          وإلا
+            اندازه = 768;
+          إذا (اندازه > صفحه_اندازه)
+            اندازه = صفحه_اندازه;
+          size1 = اندازه;
+          size2 = اندازه;
           size_t i = random ();
-          if (i & 3)
-            size -= 256;
-          if (i & 1)
+          إذا (i & 3)
+            اندازه -= 256;
+          إذا (i & 1)
             size1 -= 256;
-          if (i & 2)
+          إذا (i & 2)
             size2 -= 256;
-          if (i & 4)
+          إذا (i & 4)
             {
-              len = random () % size;
+              len = random () % اندازه;
               align1 = size1 - len - (random () & 31);
               align2 = size2 - len - (random () & 31);
-              if (align1 > size1)
+              إذا (align1 > size1)
                 align1 = 0;
-              if (align2 > size2)
+              إذا (align2 > size2)
                 align2 = 0;
             }
-          else
+          وإلا
             {
               align1 = random () & 63;
               align2 = random () & 63;
-              len = random () % size;
-              if (align1 + len > size1)
+              len = random () % اندازه;
+              إذا (align1 + len > size1)
                 align1 = size1 - len;
-              if (align2 + len > size2)
+              إذا (align2 + len > size2)
                 align2 = size2 - len;
             }
         }
-      unsigned char *p1 = buf1 + page_size - size1;
-      unsigned char *p2 = buf2 + page_size - size2;
+      بیعلامت حرف *p1 = buf1 + صفحه_اندازه - size1;
+      بیعلامت حرف *p2 = buf2 + صفحه_اندازه - size2;
       size_t j = align1 + len + 256;
-      if (j > size1)
+      إذا (j > size1)
         j = size1;
-      for (size_t i = 0; i < j; ++i)
+      لكل (size_t i = 0; i < j; ++i)
 	ref1[i] = p1[i] = random () & 255;
 
       j = align2 + len + 256;
-      if (j > size2)
+      إذا (j > size2)
 	j = size2;
 
-      for (size_t i = 0; i < j; ++i)
+      لكل (size_t i = 0; i < j; ++i)
 	ref2[i] = p2[i] = random () & 255;
 
       do_one_test (p1 + align1, ref1 + align1, p2 + align2, ref2 + align2, len);
     }
 }
 
-static int
-test_main (void)
+ساكن صحيح
+test_main (فراغ)
 {
   test_init ();
   /* Use the start of buf1 for reference buffers.  */
   ref1 = buf1;
-  ref2 = buf1 + page_size;
-  buf1 = ref2 + page_size;
+  ref2 = buf1 + صفحه_اندازه;
+  buf1 = ref2 + صفحه_اندازه;
 
-  printf ("%23s", "");
-  printf ("\t__memswap\n");
+  چاپ_کن ("%23s", "");
+  چاپ_کن ("\t__memswap\n");
 
-  for (size_t i = 0; i < 18; ++i)
+  لكل (size_t i = 0; i < 18; ++i)
     {
       do_test (0, 0, 1 << i);
       do_test (i, 0, 1 << i);
@@ -156,7 +156,7 @@ test_main (void)
       do_test (i, i, 1 << i);
     }
 
-  for (size_t i = 0; i < 32; ++i)
+  لكل (size_t i = 0; i < 32; ++i)
     {
       do_test (0, 0, i);
       do_test (i, 0, i);
@@ -164,17 +164,17 @@ test_main (void)
       do_test (i, i, i);
     }
 
-  for (size_t i = 3; i < 32; ++i)
+  لكل (size_t i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
-        continue;
+      إذا ((i & (i - 1)) == 0)
+        استمر;
       do_test (0, 0, 16 * i);
       do_test (i, 0, 16 * i);
       do_test (0, i, 16 * i);
       do_test (i, i, 16 * i);
     }
 
-  for (size_t i = 19; i <= 25; ++i)
+  لكل (size_t i = 19; i <= 25; ++i)
     {
       do_test (255, 0, 1 << i);
       do_test (0, 4000, 1 << i);
@@ -186,7 +186,7 @@ test_main (void)
 
   do_random_tests ();
 
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

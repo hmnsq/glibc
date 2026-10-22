@@ -16,21 +16,21 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define MEMCPY_RESULT(dst, len) (dst) + (len)
-#define MIN_PAGE_SIZE 131072
-#define TEST_MAIN
-#define TEST_NAME "mempcpy"
-#include "test-string.h"
+#تعریف_کن MEMCPY_نتیجه(dst, len) (dst) + (len)
+#تعریف_کن MIN_صفحه_اندازه 131072
+#تعریف_کن TEST_MAIN
+#تعریف_کن TEST_NAME "mempcpy"
+#ضمن "test-string.h"
 
 IMPL (mempcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_mempcpy (char *dst, const char *src, size_t n)
+حرف *
+simple_mempcpy (حرف *dst, ثابت حرف *src, size_t n)
 {
-  while (n--)
+  طالما (n--)
     *dst++ = *src++;
-  return dst;
+  أرجع dst;
 }
 
-#include "test-memcpy.c"
+#ضمن "test-memcpy.c"

@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#ضمن <string.h>
+#ضمن <stdint.h>
+#ضمن <libc-pointer-arith.h>
 
-#undef strspn
-#ifndef STRSPN
+#لغو_تعریف strspn
+#اگر_تعریف_نشده STRSPN
 # define STRSPN strspn
-#endif
+#پایان_اگر
 
 /* Return the length of the maximum initial segment
    of S which contains only characters in ACCEPT.  */
 size_t
-STRSPN (const char *str, const char *accept)
+STRSPN (ثابت حرف *str, ثابت حرف *accept)
 {
-  if (accept[0] == '\0')
-    return 0;
-  if (__glibc_unlikely (accept[1] == '\0'))
+  إذا (accept[0] == '\0')
+    أرجع 0;
+  إذا (__glibc_unlikely (accept[1] == '\0'))
     {
-      const char *a = str;
-      for (; *str == *accept; str++);
-      return str - a;
+      ثابت حرف *a = str;
+      لكل (; *str == *accept; str++);
+      أرجع str - a;
     }
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
+  بیعلامت حرف جدول[256];
+  بیعلامت حرف *p = memset (جدول, 0, 64);
   memset (p + 64, 0, 64);
   memset (p + 128, 0, 64);
   memset (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) accept;
+  بیعلامت حرف *s = (بیعلامت حرف*) accept;
   /* Different from strcspn it does not add the NULL on the table
      so can avoid check if str[i] is NULL, since table['\0'] will
      be 0 and thus stopping the loop check.  */
-  do
+  افعل
     p[*s++] = 1;
-  while (*s);
+  طالما (*s);
 
-  s = (unsigned char*) str;
-  if (!p[s[0]]) return 0;
-  if (!p[s[1]]) return 1;
-  if (!p[s[2]]) return 2;
-  if (!p[s[3]]) return 3;
+  s = (بیعلامت حرف*) str;
+  إذا (!p[s[0]]) أرجع 0;
+  إذا (!p[s[1]]) أرجع 1;
+  إذا (!p[s[2]]) أرجع 2;
+  إذا (!p[s[3]]) أرجع 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (بیعلامت حرف *) PTR_ALIGN_پایین (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do {
+  بیعلامت صحيح c0, c1, c2, c3;
+  افعل {
       s += 4;
       c0 = p[s[0]];
       c1 = p[s[1]];
       c2 = p[s[2]];
       c3 = p[s[3]];
-  } while ((c0 & c1 & c2 & c3) != 0);
+  } طالما ((c0 & c1 & c2 & c3) != 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 & c1) == 0 ? count + c0 : count + c2 + 2;
+  size_t شمار = s - (بیعلامت حرف *) str;
+  أرجع (c0 & c1) == 0 ? شمار + c0 : شمار + c2 + 2;
 }
 libc_hidden_builtin_def (strspn)

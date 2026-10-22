@@ -15,30 +15,30 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
-#ifndef STRNCAT
+#اگر_تعریف_نشده STRNCAT
 # undef strncat
 # define STRNCAT  strncat
 # define STRNCAT_PRIMARY
-#endif
+#پایان_اگر
 
-char *
-STRNCAT (char *s1, const char *s2, size_t n)
+حرف *
+STRNCAT (حرف *s1, ثابت حرف *s2, size_t n)
 {
-  char *s = s1;
+  حرف *s = s1;
 
   /* Find the end of S1.  */
-  s1 += strlen (s1);
+  s1 += طول_رشته (s1);
 
   size_t ss = __strnlen (s2, n);
 
   s1[ss] = '\0';
-  memcpy (s1, s2, ss);
+  کپی_حافظه (s1, s2, ss);
 
-  return s;
+  أرجع s;
 }
-#ifdef STRNCAT_PRIMARY
+#اگر_تعریف_شده STRNCAT_PRIMARY
 strong_alias (STRNCAT, __strncat)
 libc_hidden_def (__strncat)
-#endif
+#پایان_اگر

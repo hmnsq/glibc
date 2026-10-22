@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
-#undef strcat
+#لغو_تعریف strcat
 
-#ifndef STRCAT
+#اگر_تعریف_نشده STRCAT
 # define STRCAT strcat
-#endif
+#پایان_اگر
 
 /* Append SRC on the end of DEST.  */
-char *
-STRCAT (char *dest, const char *src)
+حرف *
+STRCAT (حرف *dest, ثابت حرف *src)
 {
-  strcpy (dest + strlen (dest), src);
-  return dest;
+  strcpy (dest + طول_رشته (dest), src);
+  أرجع dest;
 }
 libc_hidden_builtin_def (strcat)

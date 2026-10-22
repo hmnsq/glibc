@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#ضمن <stdio.h>
+#ضمن <envz.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
 
-static const struct
+ساكن ثابت بنية
 {
-  const char *s;
-  int in_result;
+  ثابت حرف *s;
+  صحيح درون_نتیجه;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,54 +22,54 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#تعریف_کن nstrs (حجم (strs) / حجم (strs[0]))
 
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
 
-  size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  size_t اندازه = 0;
+  حرف *str = حافظه_بده (100);
+  إذا (str == عدم)
     {
       puts ("out of memory");
-      return 1;
+      أرجع 1;
     }
 
-  char **argz = &str;
+  حرف **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
-    argz_add_sep (argz, &size, strs[i].s, '\0');
+  لكل (صحيح i = 0; i < nstrs; ++i)
+    argz_جمع_کن_sep (argz, &اندازه, strs[i].s, '\0');
 
-  printf ("calling envz_strip with size=%zu\n", size);
-  envz_strip (argz, &size);
+  چاپ_کن ("calling envz_strip with size=%zu\n", اندازه);
+  envz_strip (argz, &اندازه);
 
-  int result = 0;
-  printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  صحيح نتیجه = 0;
+  چاپ_کن ("new size=%zu\n", اندازه);
+  لكل (صحيح i = 0; i < nstrs; ++i)
+    إذا (strs[i].درون_نتیجه)
       {
-        char name[2];
+        حرف name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        حرف *e = envz_مدخل (*argz, اندازه, name);
+        إذا (e == عدم)
           {
-            printf ("entry '%s' not found\n", name);
-            result = 1;
+            چاپ_کن ("entry '%s' not found\n", name);
+            نتیجه = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        وإلا إذا (strcmp (e, strs[i].s) != 0)
           {
-            printf ("entry '%s' does not match: is '%s', expected '%s'\n",
+            چاپ_کن ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
-            result = 1;
+            نتیجه = 1;
           }
       }
 
-  free (*argz);
-  return result;
+  حرر (*argz);
+  أرجع نتیجه;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

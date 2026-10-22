@@ -15,14 +15,14 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
 /* Set N bytes of S to 0.  */
-void
-__bzero (void *s, size_t len)
+فراغ
+__bzero (فراغ *s, size_t len)
 {
   memset (s, '\0', len);
 }
-#ifndef __bzero
+#اگر_تعریف_نشده __bzero
 weak_alias (__bzero, bzero)
-#endif
+#پایان_اگر

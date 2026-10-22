@@ -23,152 +23,152 @@
    the allocation are unshared, and contain a specific non-repeating
    bit pattern.  */
 
-#include <array_length.h>
-#include <libc-diag.h>
-#include <stdint.h>
-#include <string.h>
-#include <support/blob_repeat.h>
-#include <support/check.h>
-#include <support/xunistd.h>
-#include <sys/mman.h>
-#include <unistd.h>
+#ضمن <array_length.h>
+#ضمن <libc-diag.h>
+#ضمن <stdint.h>
+#ضمن <string.h>
+#ضمن <support/blob_repeat.h>
+#ضمن <support/check.h>
+#ضمن <support/xunistd.h>
+#ضمن <sys/mman.h>
+#ضمن <unistd.h>
 
-#define TEST_MAIN
-#define TEST_NAME "memmove"
-#include "test-string.h"
-#include <support/test-driver.h>
+#تعریف_کن TEST_MAIN
+#تعریف_کن TEST_NAME "memmove"
+#ضمن "test-string.h"
+#ضمن <support/test-driver.h>
 
 IMPL (memmove, 1)
 
 /* Size of the part of the allocation which is not shared, at the
    start and the end of the overall allocation.  4 MiB.  */
-enum { unshared_size = (size_t) 4U << 20 };
+تعداد { unshared_اندازه = (size_t) 4U << 20 };
 
 /* The allocation is 2 GiB plus 8 MiB.  This should work with all page
    sizes that occur in practice.  */
-enum { allocation_size = ((size_t) 2U << 30) + 2 * unshared_size };
+تعداد { تخصیص_اندازه = ((size_t) 2U << 30) + 2 * unshared_اندازه };
 
 /* Compute the expected byte at the given index.  This is used to
    produce a non-repeating pattern.  */
-static inline unsigned char
-expected_value (size_t index)
+ساكن مضمن بیعلامت حرف
+expected_مقدار (size_t شاخص)
 {
-  uint32_t randomized = 0x9e3779b9 * index; /* Based on golden ratio.  */
-  return randomized >> 25;	/* Result is in the range [0, 127].  */
+  uint32_t randomized = 0x9e3779b9 * شاخص; /* Based on golden ratio.  */
+  أرجع randomized >> 25;	/* Result is in the range [0, 127].  */
 }
 
 /* Used to count mismatches up to a limit, to avoid creating a huge
    test output file.  */
-static unsigned int mismatch_count;
+ساكن بیعلامت صحيح mismatch_شمار;
 
 /* Check ACTUAL == EXPECTED.  Use INDEX for error reporting.  Exit the
    process after too many errors.  */
-static inline void
-check_one_index (size_t index, unsigned char actual, unsigned char expected)
+ساكن مضمن فراغ
+check_one_شاخص (size_t شاخص, بیعلامت حرف actual, بیعلامت حرف expected)
 {
-  if (actual != expected)
+  إذا (actual != expected)
     {
-      printf ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
-	      index, actual, expected);
-      ++mismatch_count;
-      if (mismatch_count > 200)
+      چاپ_کن ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
+	      شاخص, actual, expected);
+      ++mismatch_شمار;
+      إذا (mismatch_شمار > 200)
 	FAIL_EXIT1 ("bailing out due to too many errors");
     }
 }
 
-static int
-test_main (void)
+ساكن صحيح
+test_main (فراغ)
 {
   test_init ();
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
+      چاپ_کن ("info: testing %s\n", impl->name);
 
       /* Check that the allocation sizes are multiples of the page
 	 size.  */
-      TEST_COMPARE (allocation_size % xsysconf (_SC_PAGESIZE), 0);
-      TEST_COMPARE (unshared_size % xsysconf (_SC_PAGESIZE), 0);
+      TEST_COMPARE (تخصیص_اندازه % xsysconf (_SC_PAGESIZE), 0);
+      TEST_COMPARE (unshared_اندازه % xsysconf (_SC_PAGESIZE), 0);
 
       /* The repeating pattern has the MSB set in all bytes.  */
-      unsigned char repeating_pattern[128];
-      for (unsigned int i = 0; i < array_length (repeating_pattern); ++i)
-	repeating_pattern[i] = 0x80 | i;
+      بیعلامت حرف repeating_الگو[128];
+      لكل (بیعلامت صحيح i = 0; i < array_درازی (repeating_الگو); ++i)
+	repeating_الگو[i] = 0x80 | i;
 
-      struct support_blob_repeat repeat
-	= support_blob_repeat_allocate_shared (repeating_pattern,
-					       sizeof (repeating_pattern),
-					       (allocation_size
-						/ sizeof (repeating_pattern)));
-      if (repeat.start == NULL)
+      بنية support_blob_repeat repeat
+	= support_blob_repeat_allocate_shared (repeating_الگو,
+					       حجم (repeating_الگو),
+					       (تخصیص_اندازه
+						/ حجم (repeating_الگو)));
+      إذا (repeat.شروع == عدم)
 	FAIL_UNSUPPORTED ("repeated blob allocation failed: %m");
-      TEST_COMPARE (repeat.size, allocation_size);
+      TEST_COMPARE (repeat.اندازه, تخصیص_اندازه);
 
       /* Unshared the start and the end of the allocation.  */
-      unsigned char *start = repeat.start;
-      xmmap (start, unshared_size,
+      بیعلامت حرف *شروع = repeat.شروع;
+      xmmap (شروع, unshared_اندازه,
 	     PROT_READ | PROT_WRITE,
-	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
-      xmmap (start + allocation_size - unshared_size, unshared_size,
+	     MAP_خصوصی | MAP_ANONYMOUS | MAP_FIXED, -1);
+      xmmap (شروع + تخصیص_اندازه - unshared_اندازه, unshared_اندازه,
 	     PROT_READ | PROT_WRITE,
-	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
+	     MAP_خصوصی | MAP_ANONYMOUS | MAP_FIXED, -1);
 
       /* Initialize the non-repeating pattern.  */
-      for (size_t i = 0; i < unshared_size; ++i)
-	start[i] = expected_value (i);
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      لكل (size_t i = 0; i < unshared_اندازه; ++i)
+	شروع[i] = expected_مقدار (i);
+      لكل (size_t i = تخصیص_اندازه - unshared_اندازه; i < تخصیص_اندازه;
 	   ++i)
-	start[i] = expected_value (i);
+	شروع[i] = expected_مقدار (i);
 
       /* Make sure that there was really no sharing.  */
-      asm volatile ("" ::: "memory");
-      for (size_t i = 0; i < unshared_size; ++i)
-	TEST_COMPARE (start[i], expected_value (i));
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      asm متطاير ("" ::: "memory");
+      لكل (size_t i = 0; i < unshared_اندازه; ++i)
+	TEST_COMPARE (شروع[i], expected_مقدار (i));
+      لكل (size_t i = تخصیص_اندازه - unshared_اندازه; i < تخصیص_اندازه;
 	   ++i)
-	TEST_COMPARE (start[i], expected_value (i));
+	TEST_COMPARE (شروع[i], expected_مقدار (i));
 
       /* Used for a nicer error diagnostic using
 	 TEST_COMPARE_BLOB.  */
-      unsigned char expected_start[128];
-      memcpy (expected_start, start + 1, sizeof (expected_start));
-      unsigned char expected_end[128];
-      memcpy (expected_end,
-	      start + allocation_size - sizeof (expected_end),
-	      sizeof (expected_end));
+      بیعلامت حرف expected_شروع[128];
+      کپی_حافظه (expected_شروع, شروع + 1, حجم (expected_شروع));
+      بیعلامت حرف expected_انتها[128];
+      کپی_حافظه (expected_انتها,
+	      شروع + تخصیص_اندازه - حجم (expected_انتها),
+	      حجم (expected_انتها));
 
       /* Move the entire allocation forward by one byte.  */
-      DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (8, 0)
+      DIAG_افزودن_NEEDS_COMMENT;
+#إذا __GNUC_PREREQ (8, 0)
       /* GCC 8 warns about string function argument overflows.  */
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-overflow");
-#endif
-      memmove (start, start + 1, allocation_size - 1);
-      DIAG_POP_NEEDS_COMMENT;
+#پایان_اگر
+      memmove (شروع, شروع + 1, تخصیص_اندازه - 1);
+      DIAG_برداشت_NEEDS_COMMENT;
 
       /* Check that the unshared of the memory region have been
 	 shifted as expected.  The TEST_COMPARE_BLOB checks are
 	 redundant, but produce nicer diagnostics.  */
-      asm volatile ("" ::: "memory");
-      TEST_COMPARE_BLOB (expected_start, sizeof (expected_start),
-			 start, sizeof (expected_start));
-      TEST_COMPARE_BLOB (expected_end, sizeof (expected_end),
-			 start + allocation_size - sizeof (expected_end) - 1,
-			 sizeof (expected_end));
-      for (size_t i = 0; i < unshared_size - 1; ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+      asm متطاير ("" ::: "memory");
+      TEST_COMPARE_BLOB (expected_شروع, حجم (expected_شروع),
+			 شروع, حجم (expected_شروع));
+      TEST_COMPARE_BLOB (expected_انتها, حجم (expected_انتها),
+			 شروع + تخصیص_اندازه - حجم (expected_انتها) - 1,
+			 حجم (expected_انتها));
+      لكل (size_t i = 0; i < unshared_اندازه - 1; ++i)
+	check_one_شاخص (i, شروع[i], expected_مقدار (i + 1));
       /* The gap between the checked start and end area of the mapping
 	 has shared mappings at unspecified boundaries, so do not
 	 check the expected values in the middle.  */
-      for (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
+      لكل (size_t i = تخصیص_اندازه - unshared_اندازه; i < تخصیص_اندازه - 1;
 	   ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+	check_one_شاخص (i, شروع[i], expected_مقدار (i + 1));
 
       support_blob_repeat_free (&repeat);
     }
 
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

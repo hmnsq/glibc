@@ -16,9 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#ضمن <argz.h>
+#ضمن <string.h>
+#ضمن <stdlib.h>
 
 /* Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
    existing entry in ARGZ; if BEFORE is NULL, ENTRY is appended to the end.
@@ -27,36 +27,36 @@
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
 error_t
-__argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+__argz_insert (حرف **argz, size_t *argz_len, حرف *before, ثابت حرف *مدخل)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  إذا (! before)
+    أرجع __argz_add (argz, argz_len, مدخل);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  إذا (before < *argz || before >= *argz + *argz_len)
+    أرجع EINVAL;
 
-  if (before > *argz)
+  إذا (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    طالما (before[-1])
       before--;
 
   {
     size_t after_before = *argz_len - (before - *argz);
-    size_t entry_len = strlen  (entry) + 1;
-    size_t new_argz_len = *argz_len + entry_len;
-    char *new_argz = realloc (*argz, new_argz_len);
+    size_t مدخل_len = طول_رشته  (مدخل) + 1;
+    size_t new_argz_len = *argz_len + مدخل_len;
+    حرف *new_argz = realloc (*argz, new_argz_len);
 
-    if (new_argz)
+    إذا (new_argz)
       {
 	before = new_argz + (before - *argz);
-	memmove (before + entry_len, before, after_before);
-	memmove (before, entry, entry_len);
+	memmove (before + مدخل_len, before, after_before);
+	memmove (before, مدخل, مدخل_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	أرجع 0;
       }
-    else
-      return ENOMEM;
+    وإلا
+      أرجع ENOMEM;
   }
 }
-weak_alias (__argz_insert, argz_insert)
+weak_alias (__argz_insert, argz_درج)
