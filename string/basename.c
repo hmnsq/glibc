@@ -16,13 +16,13 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-char *
-__basename (const char *filename)
+वर्ण *
+__basename (ध्रुव वर्ण *filename)
 {
-  char *p = strrchr (filename, '/');
-  return p ? p + 1 : (char *) filename;
+  वर्ण *p = strrchr (filename, '/');
+  प्रत्यागम p ? p + 1 : (वर्ण *) filename;
 }
 libc_hidden_def (__basename)
 static_weak_alias (__basename, basename)

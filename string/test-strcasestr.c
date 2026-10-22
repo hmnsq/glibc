@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#अन्तर्भाव "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+स्थिर वर्ण *
+simple_strcasestr (ध्रुव वर्ण *s1, ध्रुव वर्ण *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  जइ (s2len > s1len)
+    प्रत्यागम रिक्त;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  प्रति (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      प्रति (j = 0; j < s2len; ++j)
+	जइ (tolower (s1[i + j]) != tolower (s2[j]))
+	  भङ्ग;
+      जइ (j == s2len)
+	प्रत्यागम (वर्ण *) s1 + i;
     }
 
-  return NULL;
+  प्रत्यागम रिक्त;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+प्रकारनिर्देश वर्ण *(*proto_t) (ध्रुव वर्ण *, ध्रुव वर्ण *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+स्थिर पूर्णाङ्क
+check_result (impl_t *impl, ध्रुव वर्ण *s1, ध्रुव वर्ण *s2,
+	      वर्ण *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  वर्ण *result = CALL (impl, s1, s2);
+  जइ (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == रिक्त) ? "(null)" : result,
+	     (exp_result == रिक्त) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      प्रत्यागम -1;
     }
-  return 0;
+  प्रत्यागम 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+स्थिर शून्य
+do_one_test (impl_t *impl, ध्रुव वर्ण *s1, ध्रुव वर्ण *s2, वर्ण *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  जइ (check_result (impl, s1, s2, exp_result) < 0)
+    प्रत्यागम;
 }
 
 
-static void
+स्थिर शून्य
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 पूर्णाङ्क fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  वर्ण *s1 = (वर्ण *) (buf1 + align1);
+  वर्ण *s2 = (वर्ण *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  स्थिर ध्रुव वर्ण d[] = "1234567890abcxyz";
+#define dl (परिमाण (d) - 1)
+  वर्ण *ss2 = s2;
+  प्रति (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  जइ (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      वर्ण *ss1 = s1;
+      प्रति (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  अण्णहा
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      प्रति (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? रिक्त : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+स्थिर शून्य
+check1 (शून्य)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ध्रुव वर्ण s1[] = "AOKB";
+  ध्रुव वर्ण s2[] = "OK";
+  वर्ण *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+स्थिर पूर्णाङ्क
+test_main (शून्य)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  प्रति (size_t klen = 2; klen < 32; ++klen)
+    प्रति (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  प्रत्यागम ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

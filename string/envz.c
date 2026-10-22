@@ -16,10 +16,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <malloc.h>
-#include <string.h>
+#अन्तर्भाव <malloc.h>
+#अन्तर्भाव <string.h>
 
-#include <envz.h>
+#अन्तर्भाव <envz.h>
 
 /* The character separating names from values in an envz.  */
 #define SEP '='
@@ -27,57 +27,57 @@
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.
    If NAME contains the separator character, only the portion before it is
    used in the comparison.  */
-char *
-envz_entry (const char *envz, size_t envz_len, const char *name)
+वर्ण *
+envz_entry (ध्रुव वर्ण *envz, size_t envz_len, ध्रुव वर्ण *name)
 {
-  while (envz_len)
+  जाव (envz_len)
     {
-      const char *p = name;
-      const char *entry = envz;	/* Start of this entry. */
+      ध्रुव वर्ण *p = name;
+      ध्रुव वर्ण *entry = envz;	/* Start of this entry. */
 
       /* See how far NAME and ENTRY match.  */
-      while (envz_len && *p == *envz && *p && *p != SEP)
+      जाव (envz_len && *p == *envz && *p && *p != SEP)
 	p++, envz++, envz_len--;
 
-      if ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
+      जइ ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
 	/* Bingo! */
-	return (char *) entry;
+	प्रत्यागम (वर्ण *) entry;
 
       /* No match, skip to the next entry.  */
-      while (envz_len && *envz)
+      जाव (envz_len && *envz)
 	envz++, envz_len--;
-      if (envz_len)
+      जइ (envz_len)
 	envz++, envz_len--;	/* skip '\0' */
     }
 
-  return NULL;
+  प्रत्यागम रिक्त;
 }
 libc_hidden_def (envz_entry)
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-char *
-envz_get (const char *envz, size_t envz_len, const char *name)
+वर्ण *
+envz_get (ध्रुव वर्ण *envz, size_t envz_len, ध्रुव वर्ण *name)
 {
-  char *entry = envz_entry (envz, envz_len, name);
-  if (entry)
+  वर्ण *entry = envz_entry (envz, envz_len, name);
+  जइ (entry)
     {
-      while (*entry && *entry != SEP)
+      जाव (*entry && *entry != SEP)
 	entry++;
-      if (*entry)
+      जइ (*entry)
 	entry++;
-      else
-	entry = NULL;		/* A null entry.  */
+      अण्णहा
+	entry = रिक्त;		/* A null entry.  */
     }
-  return entry;
+  प्रत्यागम entry;
 }
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
-void
-envz_remove (char **envz, size_t *envz_len, const char *name)
+शून्य
+envz_remove (वर्ण **envz, size_t *envz_len, ध्रुव वर्ण *name)
 {
-  char *entry = envz_entry (*envz, *envz_len, name);
-  if (entry)
+  वर्ण *entry = envz_entry (*envz, *envz_len, name);
+  जइ (entry)
     argz_delete (envz, envz_len, entry);
 }
 libc_hidden_def (envz_remove)
@@ -89,56 +89,56 @@ libc_hidden_def (envz_remove)
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
 error_t
-envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
+envz_add (वर्ण **envz, size_t *envz_len, ध्रुव वर्ण *name, ध्रुव वर्ण *मानम्)
 {
   envz_remove (envz, envz_len, name);
 
-  if (value)
+  जइ (मानम्)
     /* Add the new value, if there is one.  */
     {
       size_t name_len = strlen (name);
-      size_t value_len = strlen (value);
+      size_t मानम्_len = strlen (मानम्);
       size_t old_envz_len = *envz_len;
-      size_t new_envz_len = old_envz_len + name_len + 1 + value_len + 1;
-      char *new_envz = realloc (*envz, new_envz_len);
+      size_t new_envz_len = old_envz_len + name_len + 1 + मानम्_len + 1;
+      वर्ण *new_envz = realloc (*envz, new_envz_len);
 
-      if (new_envz)
+      जइ (new_envz)
 	{
 	  memcpy (new_envz + old_envz_len, name, name_len);
 	  new_envz[old_envz_len + name_len] = SEP;
-	  memcpy (new_envz + old_envz_len + name_len + 1, value, value_len);
+	  memcpy (new_envz + old_envz_len + name_len + 1, मानम्, मानम्_len);
 	  new_envz[new_envz_len - 1] = 0;
 
 	  *envz = new_envz;
 	  *envz_len = new_envz_len;
 
-	  return 0;
+	  प्रत्यागम 0;
 	}
-      else
-	return ENOMEM;
+      अण्णहा
+	प्रत्यागम ENOMEM;
     }
-  else
+  अण्णहा
     /* Add a null entry.  */
-    return __argz_add (envz, envz_len, name);
+    प्रत्यागम __argz_add (envz, envz_len, name);
 }
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
 error_t
-envz_merge (char **envz, size_t *envz_len, const char *envz2,
-	    size_t envz2_len, int override)
+envz_merge (वर्ण **envz, size_t *envz_len, ध्रुव वर्ण *envz2,
+	    size_t envz2_len, पूर्णाङ्क override)
 {
   error_t err = 0;
 
-  while (envz2_len && ! err)
+  जाव (envz2_len && ! err)
     {
-      char *old = envz_entry (*envz, *envz_len, envz2);
+      वर्ण *old = envz_entry (*envz, *envz_len, envz2);
       size_t new_len = strlen (envz2) + 1;
 
-      if (! old)
+      जइ (! old)
 	err = __argz_append (envz, envz_len, envz2, new_len);
-      else if (override)
+      अण्णहा जइ (override)
 	{
 	  argz_delete (envz, envz_len, old);
 	  err = __argz_append (envz, envz_len, envz2, new_len);
@@ -148,23 +148,23 @@ envz_merge (char **envz, size_t *envz_len, const char *envz2,
       envz2_len -= new_len;
     }
 
-  return err;
+  प्रत्यागम err;
 }
 
 /* Remove null entries.  */
-void
-envz_strip (char **envz, size_t *envz_len)
+शून्य
+envz_strip (वर्ण **envz, size_t *envz_len)
 {
-  char *entry = *envz;
-  size_t left = *envz_len;
-  while (left)
+  वर्ण *entry = *envz;
+  size_t वामः = *envz_len;
+  जाव (वामः)
     {
       size_t entry_len = strlen (entry) + 1;
-      left -= entry_len;
-      if (! strchr (entry, SEP))
+      वामः -= entry_len;
+      जइ (! strchr (entry, SEP))
 	/* Null entry. */
-	memmove (entry, entry + entry_len, left);
-      else
+	memmove (entry, entry + entry_len, वामः);
+      अण्णहा
 	entry += entry_len;
     }
   *envz_len = entry - *envz;

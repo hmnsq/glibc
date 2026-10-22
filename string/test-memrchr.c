@@ -18,9 +18,9 @@
 
 #define TEST_MAIN
 #define TEST_NAME "memrchr"
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
-typedef char *(*proto_t) (const char *, int, size_t);
+प्रकारनिर्देश वर्ण *(*proto_t) (ध्रुव वर्ण *, पूर्णाङ्क, size_t);
 
 IMPL (memrchr, 1)
 
@@ -28,122 +28,122 @@ IMPL (memrchr, 1)
 #undef weak_alias
 #define weak_alias(a, b)
 #define MEMRCHR __memrchr_default
-#include "string/memrchr.c"
+#अन्तर्भाव "string/memrchr.c"
 IMPL (__memrchr_default, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memrchr (const char *s, int c, size_t n)
+वर्ण *
+simple_memrchr (ध्रुव वर्ण *s, पूर्णाङ्क c, size_t n)
 {
   s = s + n;
-  while (n--)
-    if (*--s == (char) c)
-      return (char *) s;
-  return NULL;
+  जाव (n--)
+    जइ (*--s == (वर्ण) c)
+      प्रत्यागम (वर्ण *) s;
+  प्रत्यागम रिक्त;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s, int c, size_t n, char *exp_res)
+स्थिर शून्य
+do_one_test (impl_t *impl, ध्रुव वर्ण *s, पूर्णाङ्क c, size_t n, वर्ण *exp_res)
 {
-  char *res = CALL (impl, s, c, n);
-  if (res != exp_res)
+  वर्ण *res = CALL (impl, s, c, n);
+  जइ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      प्रत्यागम;
     }
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+स्थिर शून्य
+do_test (size_t align, size_t pos, size_t len, पूर्णाङ्क seek_char)
 {
   size_t i;
-  char *result;
+  वर्ण *result;
 
   align &= 7;
-  if (align + len >= page_size)
-    return;
+  जइ (align + len >= page_size)
+    प्रत्यागम;
 
-  for (i = 0; i < len; ++i)
+  प्रति (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      जइ (buf1[align + i] == seek_char)
         buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
 
-  if (pos < len)
+  जइ (pos < len)
     {
       buf1[align + pos] = seek_char;
       buf1[align + len] = -seek_char;
-      result = (char *) (buf1 + align + pos);
+      result = (वर्ण *) (buf1 + align + pos);
     }
-  else
+  अण्णहा
     {
-      result = NULL;
+      result = रिक्त;
       buf1[align + len] = seek_char;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (char *) (buf1 + align), seek_char, len, result);
+    do_one_test (impl, (वर्ण *) (buf1 + align), seek_char, len, result);
 }
 
-static void
-do_random_tests (void)
+स्थिर शून्य
+do_random_tests (शून्य)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  char *result;
-  unsigned char *p = buf1 + page_size - 512;
+  पूर्णाङ्क seek_char;
+  वर्ण *result;
+  unsigned वर्ण *p = buf1 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  प्रति (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      जइ (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (pos >= len)
+      जइ (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      जइ (len + align >= 512)
         len = 512 - align - (random () & 7);
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      जइ (j > 512)
         j = 512;
 
-      for (i = 0; i < j; i++)
+      प्रति (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  जइ (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  अण्णहा
 	    {
 	      p[i] = random () & 255;
-	      if (p[i] == seek_char)
+	      जइ (p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (pos < len)
-	result = (char *) (p + pos + align);
-      else
-	result = NULL;
+      जइ (pos < len)
+	result = (वर्ण *) (p + pos + align);
+      अण्णहा
+	result = रिक्त;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char, len) != result)
+	जइ (CALL (impl, (वर्ण *) (p + align), seek_char, len) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (char *) (p + align), seek_char, len),
+		   CALL (impl, (वर्ण *) (p + align), seek_char, len),
 		   result, p);
 	    ret = 1;
 	  }
     }
 }
 
-int
-test_main (void)
+पूर्णाङ्क
+test_main (शून्य)
 {
   size_t i;
 
@@ -154,7 +154,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
     {
       /* Test len == 0.  */
       do_test (i, i, 0, 0);
@@ -171,7 +171,7 @@ test_main (void)
       do_test (i, i, 256, 0);
 
     }
-  for (i = 1; i < 32; ++i)
+  प्रति (i = 1; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23);
       do_test (0, i, i + 1, 0);
@@ -185,7 +185,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  प्रत्यागम ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>
