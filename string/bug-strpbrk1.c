@@ -1,26 +1,26 @@
 #undef __USE_STRING_INLINES
 #define __USE_STRING_INLINES
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <libc-diag.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <libc-diag.h>
 
-int
-main (void)
+पूर्णाङ्क
+main (शून्य)
 {
-  const char *a = "abc";
-  const char *b = a;
+  ध्रुव वर्ण *a = "abc";
+  ध्रुव वर्ण *b = a;
 
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_प्रक्षिप_NEEDS_COMMENT;
   /* GCC 9 correctly warns that this call to strpbrk is useless.  That
      is deliberate; this test is verifying that a side effect in an
      argument still occurs when the call itself is useless and could
      be optimized to return a constant.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strpbrk (b++, "");
-  DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  DIAG_निष्कासय_NEEDS_COMMENT;
+  सचे (b != a + 1)
+    पटिनिवत्त 1;
 
-  return 0;
+  पटिनिवत्त 0;
 }

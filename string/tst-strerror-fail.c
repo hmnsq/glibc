@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#अन्तर्भाव <locale.h>
+#अन्तर्भाव <stdbool.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <support/check.h>
+#अन्तर्भाव <support/namespace.h>
+#अन्तर्भाव <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+स्थिर चञ्चल bool fail_malloc;
 
-void *
+शून्य *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  सचे (fail_malloc)
+    पटिनिवत्त रिक्त;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  स्थिर शून्य *(*original_malloc) (size_t);
+  सचे (original_malloc == रिक्त)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  पटिनिवत्त original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+स्थिर शून्य
+test_strerror (शून्य *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  ध्रुव वर्ण *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+स्थिर शून्य
+test_strerror_l (शून्य *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  ध्रुव वर्ण *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+स्थिर पूर्णाङ्क
+do_test (शून्य)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, रिक्त);
+  support_isolate_in_subprocess (test_strerror_l, रिक्त);
 
-  return 0;
+  पटिनिवत्त 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

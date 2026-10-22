@@ -20,17 +20,17 @@
 #define MIN_PAGE_SIZE 131072
 #define TEST_MAIN
 #define TEST_NAME "mempcpy"
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
 IMPL (mempcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_mempcpy (char *dst, const char *src, size_t n)
+वर्ण *
+simple_mempcpy (वर्ण *dst, ध्रुव वर्ण *src, size_t n)
 {
-  while (n--)
+  याव (n--)
     *dst++ = *src++;
-  return dst;
+  पटिनिवत्त dst;
 }
 
-#include "test-memcpy.c"
+#अन्तर्भाव "test-memcpy.c"

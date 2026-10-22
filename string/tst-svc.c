@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_पङ्क्तिः_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+स्थिर पूर्णाङ्क
+compare (ध्रुव शून्य *p1, ध्रुव शून्य *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  पटिनिवत्त strverscmp (*((वर्ण **) p1), *((वर्ण **) p2));
 }
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  वर्ण पङ्क्तिः[MAX_पङ्क्तिः_SIZE + 1];
+  वर्ण *str[MAX_STRINGS];
+  पूर्णाङ्क  गणनम् = 0;
+  पूर्णाङ्क  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  याव (गणनम् < MAX_STRINGS && fgets (पङ्क्तिः, MAX_पङ्क्तिः_SIZE, stdin) != रिक्त)
     {
-      n = strlen (line) - 1;
+      n = strlen (पङ्क्तिः) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      सचे (पङ्क्तिः[n] == '\n')
+        पङ्क्तिः[n] = '\0';
 
-      str[count] = strdup (line);
+      str[गणनम्] = strdup (पङ्क्तिः);
 
-      if (str[count] == NULL)
+      सचे (str[गणनम्] == रिक्त)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++गणनम्;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, गणनम्, परिमाण (वर्ण *), compare);
 
-  for (i = 0; i < count; ++i)
+  अत्थाय (i = 0; i < गणनम्; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  पटिनिवत्त EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

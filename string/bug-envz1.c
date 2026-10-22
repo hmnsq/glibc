@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <envz.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
 
-static const struct
+स्थिर ध्रुव संरचना
 {
-  const char *s;
-  int in_result;
+  ध्रुव वर्ण *s;
+  पूर्णाङ्क in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (परिमाण (strs) / परिमाण (strs[0]))
 
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  वर्ण *str = malloc (100);
+  सचे (str == रिक्त)
     {
       puts ("out of memory");
-      return 1;
+      पटिनिवत्त 1;
     }
 
-  char **argz = &str;
+  वर्ण **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  अत्थाय (पूर्णाङ्क i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  पूर्णाङ्क result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  अत्थाय (पूर्णाङ्क i = 0; i < nstrs; ++i)
+    सचे (strs[i].in_result)
       {
-        char name[2];
+        वर्ण name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        वर्ण *e = envz_entry (*argz, size, name);
+        सचे (e == रिक्त)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        अञ्ञथा सचे (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -68,8 +68,8 @@ do_test (void)
           }
       }
 
-  free (*argz);
-  return result;
+  मुक्त (*argz);
+  पटिनिवत्त result;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

@@ -15,21 +15,21 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/support.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <support/support.h>
 
-static int
-do_test (void)
+स्थिर पूर्णाङ्क
+do_test (शून्य)
 {
-  char *mem, *memp;
-  char *rand_mem;
-  char *lo_around, *hi_around;
-  int size, max_size;
-  int src_off, dst_off;
-  int i;
-  int space_around = 10;
+  वर्ण *mem, *memp;
+  वर्ण *rand_mem;
+  वर्ण *lo_around, *hi_around;
+  पूर्णाङ्क size, max_size;
+  पूर्णाङ्क src_off, dst_off;
+  पूर्णाङ्क i;
+  पूर्णाङ्क space_around = 10;
 
   max_size = 256;
 
@@ -40,38 +40,38 @@ do_test (void)
   memp = mem + space_around;
 
   /* Fill RAND_MEM with random bytes, each non-zero.  */
-  for (i = 0; i < max_size; i++)
+  अत्थाय (i = 0; i < max_size; i++)
     {
-      int x;
-      do
+      पूर्णाङ्क x;
+      करोहि
 	x = random ();
-      while (x == 0);
+      याव (x == 0);
       rand_mem[i] = x;
     }
 
-  for (size = 0; size < max_size; size++)
+  अत्थाय (size = 0; size < max_size; size++)
     {
       printf("phase %d\n", size);
-      for (src_off = 0; src_off <= 16; src_off++)
+      अत्थाय (src_off = 0; src_off <= 16; src_off++)
 	{
-	  for (dst_off = 0; dst_off <= 16; dst_off++)
+	  अत्थाय (dst_off = 0; dst_off <= 16; dst_off++)
 	    {
 	      /* Put zero around the intended destination, to check
 		 that it's not clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      अत्थाय (i = 1; i < space_around; i++)
 		{
 		  memp[dst_off - i] = 0;
 		  memp[dst_off + size - 1 + i] = 0;
 		}
 
 	      /* Fill the source area with known contents.  */
-	      for (i = 0; i < size; i++)
+	      अत्थाय (i = 0; i < size; i++)
 		memp[src_off + i] = rand_mem[i];
 
 	      /* Remember the contents around the destination area.
 		 (It might not be what we wrote some lines above, since
 		 the src area and the dst area overlap.)  */
-	      for (i = 1; i < space_around; i++)
+	      अत्थाय (i = 1; i < space_around; i++)
 		{
 		  lo_around[i] = memp[dst_off - i];
 		  hi_around[i] = memp[dst_off + size - 1 + i];
@@ -81,19 +81,19 @@ do_test (void)
 
 	      /* Check that the destination area has the same
 		 contents we wrote to the source area.  */
-	      for (i = 0; i < size; i++)
+	      अत्थाय (i = 0; i < size; i++)
 		{
-		  if (memp[dst_off + i] != rand_mem[i])
+		  सचे (memp[dst_off + i] != rand_mem[i])
 		    abort ();
 		}
 
 	      /* Check that the area around the destination is not
 		 clobbered.  */
-	      for (i = 1; i < space_around; i++)
+	      अत्थाय (i = 1; i < space_around; i++)
 		{
-		  if (memp[dst_off - i] != lo_around[i])
+		  सचे (memp[dst_off - i] != lo_around[i])
 		    abort ();
-		  if (memp[dst_off + size - 1 + i] != hi_around[i])
+		  सचे (memp[dst_off + size - 1 + i] != hi_around[i])
 		    abort ();
 		}
 	    }
@@ -102,7 +102,7 @@ do_test (void)
 
   puts ("Test succeeded.");
 
-  return 0;
+  पटिनिवत्त 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

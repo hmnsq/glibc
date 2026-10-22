@@ -15,9 +15,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdint.h>
+#अन्तर्भाव <libc-pointer-arith.h>
 
 #undef strcspn
 
@@ -28,35 +28,35 @@
 /* Return the length of the maximum initial segment of S
    which contains no characters from REJECT.  */
 size_t
-STRCSPN (const char *str, const char *reject)
+STRCSPN (ध्रुव वर्ण *str, ध्रुव वर्ण *reject)
 {
-  if (__glibc_unlikely (reject[0] == '\0')
+  सचे (__glibc_unlikely (reject[0] == '\0')
       || __glibc_unlikely (reject[1] == '\0'))
-    return __strchrnul (str, reject [0]) - str;
+    पटिनिवत्त __strchrnul (str, reject [0]) - str;
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
+  unsigned वर्ण table[256];
+  unsigned वर्ण *p = memset (table, 0, 64);
   memset (p + 64, 0, 64);
   memset (p + 128, 0, 64);
   memset (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) reject;
-  unsigned char tmp;
-  do
+  unsigned वर्ण *s = (unsigned वर्ण*) reject;
+  unsigned वर्ण tmp;
+  करोहि
     p[tmp = *s++] = 1;
-  while (tmp);
+  याव (tmp);
 
-  s = (unsigned char*) str;
-  if (p[s[0]]) return 0;
-  if (p[s[1]]) return 1;
-  if (p[s[2]]) return 2;
-  if (p[s[3]]) return 3;
+  s = (unsigned वर्ण*) str;
+  सचे (p[s[0]]) पटिनिवत्त 0;
+  सचे (p[s[1]]) पटिनिवत्त 1;
+  सचे (p[s[2]]) पटिनिवत्त 2;
+  सचे (p[s[3]]) पटिनिवत्त 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (unsigned वर्ण *) PTR_ALIGN_DOWN (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do
+  unsigned पूर्णाङ्क c0, c1, c2, c3;
+  करोहि
     {
       s += 4;
       c0 = p[s[0]];
@@ -64,9 +64,9 @@ STRCSPN (const char *str, const char *reject)
       c2 = p[s[2]];
       c3 = p[s[3]];
     }
-  while ((c0 | c1 | c2 | c3) == 0);
+  याव ((c0 | c1 | c2 | c3) == 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  size_t गणनम् = s - (unsigned वर्ण *) str;
+  पटिनिवत्त (c0 | c1) != 0 ? गणनम् - c0 + 1 : गणनम् - c2 + 3;
 }
 libc_hidden_builtin_def (strcspn)

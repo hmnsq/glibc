@@ -21,18 +21,18 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#अञ्ञथा
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR वर्ण
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#अञ्ञथा
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -41,40 +41,40 @@
 # define STRLEN wcslen
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+प्रकारनिर्देश size_t (*proto_t) (ध्रुव CHAR *, ध्रुव CHAR *);
+size_t SIMPLE_STRCSPN (ध्रुव CHAR *, ध्रुव CHAR *);
+size_t STUPID_STRCSPN (ध्रुव CHAR *, ध्रुव CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (ध्रुव CHAR *s, ध्रुव CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  ध्रुव CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  याव ((c = *s++) != '\0')
+    अत्थाय (r = rej; *r != '\0'; ++r)
+      सचे (*r == c)
+	पटिनिवत्त s - str - 1;
+  पटिनिवत्त s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (ध्रुव CHAR *s, ध्रुव CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  अत्थाय (i = 0; i < ns; ++i)
+    अत्थाय (j = 0; j < nrej; ++j)
+      सचे (s[i] == rej[j])
+	पटिनिवत्त i;
+  पटिनिवत्त i;
 }
 
 #undef CHAR
 #undef STRLEN
-#include "test-strpbrk.c"
+#अन्तर्भाव "test-strpbrk.c"
