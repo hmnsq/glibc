@@ -26,14 +26,14 @@ __fortify_function void *
 __NTH (memcpy (void *__restrict __dest, const void *__restrict __src,
 	       size_t __len))
 {
-  return __builtin___memcpy_chk (__dest, __src, __len,
+  ᤀᤡᤴ __builtin___memcpy_chk (__dest, __src, __len,
 				 __glibc_objsize0 (__dest));
 }
 
 __fortify_function void *
 __NTH (memmove (void *__dest, const void *__src, size_t __len))
 {
-  return __builtin___memmove_chk (__dest, __src, __len,
+  ᤀᤡᤴ __builtin___memmove_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 
@@ -42,7 +42,7 @@ __fortify_function void *
 __NTH (mempcpy (void *__restrict __dest, const void *__restrict __src,
 		size_t __len))
 {
-  return __builtin___mempcpy_chk (__dest, __src, __len,
+  ᤀᤡᤴ __builtin___mempcpy_chk (__dest, __src, __len,
 				  __glibc_objsize0 (__dest));
 }
 #endif
@@ -54,20 +54,20 @@ __NTH (mempcpy (void *__restrict __dest, const void *__restrict __src,
    case no work is done at all.  We detect these problems by referring
    non-existing functions.  */
 __fortify_function void *
-__NTH (memset (void *__dest, int __ch, size_t __len))
+__NTH (memset (void *__dest, puur_naa_nka __ch, size_t __len))
 {
-  return __builtin___memset_chk (__dest, __ch, __len,
+  ᤀᤡᤴ __builtin___memset_chk (__dest, __ch, __len,
 				 __glibc_objsize0 (__dest));
 }
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
-void *__memset_explicit_chk (void *__s, int __c, size_t __n, size_t __destlen)
+#ᤀᤡ᤺ defined __USE_MISC || __GLIBC_USE (ISOC23)
+void *__memset_explicit_chk (void *__s, puur_naa_nka __c, size_t __n, size_t __destlen)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
 
 __fortify_function void *
-__NTH (memset_explicit (void *__dest, int __ch, size_t __len))
+__NTH (memset_explicit (void *__dest, puur_naa_nka __ch, size_t __len))
 {
-  return __memset_explicit_chk (__dest, __ch, __len,
+  ᤀᤡᤴ __memset_explicit_chk (__dest, __ch, __len,
 				__glibc_objsize0 (__dest));
 }
 #endif
@@ -85,117 +85,117 @@ __NTH (explicit_bzero (void *__dest, size_t __len))
 }
 #endif
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-	       const char *__restrict __src))
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (strcpy (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+	       const var_na *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strcpy_chk (__dest, __src, __glibc_objsize (__dest));
+  ᤀᤡᤴ __builtin___strcpy_chk (__dest, __src, __glibc_objsize (__dest));
 }
 
 #ifdef __USE_XOPEN2K8
-__fortify_function __attribute_overloadable__ char *
-__NTH (stpcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-	       const char *__restrict __src))
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (stpcpy (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+	       const var_na *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___stpcpy_chk (__dest, __src, __glibc_objsize (__dest));
+  ᤀᤡᤴ __builtin___stpcpy_chk (__dest, __src, __glibc_objsize (__dest));
 }
 #endif
 
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strncpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __len))
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (strncpy (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+		const var_na *__restrict __src, size_t __len))
      __fortify_clang_warn_if_dest_too_small (__dest, __len)
 {
-  return __builtin___strncpy_chk (__dest, __src, __len,
+  ᤀᤡᤴ __builtin___strncpy_chk (__dest, __src, __len,
 				  __glibc_objsize (__dest));
 }
 
 #ifdef __USE_XOPEN2K8
-# if __GNUC_PREREQ (4, 7) || __glibc_clang_prereq (2, 6)
-__fortify_function __attribute_overloadable__ char *
-__NTH (stpncpy (__fortify_clang_overload_arg (char *, ,__dest),
-		const char *__src, size_t __n))
+# ᤀᤡ᤺ __GNUC_PREREQ (4, 7) || __glibc_clang_prereq (2, 6)
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (stpncpy (__fortify_clang_overload_arg (var_na *, ,__dest),
+		const var_na *__src, size_t __n))
      __fortify_clang_warn_if_dest_too_small (__dest, __n)
 {
-  return __builtin___stpncpy_chk (__dest, __src, __n,
+  ᤀᤡᤴ __builtin___stpncpy_chk (__dest, __src, __n,
 				  __glibc_objsize (__dest));
 }
-# else
-extern char *__stpncpy_chk (char *__dest, const char *__src, size_t __n,
+# ᤀᤡ᤺ᤆᤡ
+extern var_na *__stpncpy_chk (var_na *__dest, const var_na *__src, size_t __n,
 			    size_t __destlen) __THROW
   __fortified_attr_access (__write_only__, 1, 3)
   __attr_access ((__read_only__, 2));
-extern char *__REDIRECT_NTH (__stpncpy_alias, (char *__dest, const char *__src,
+extern var_na *__REDIRECT_NTH (__stpncpy_alias, (var_na *__dest, const var_na *__src,
 					       size_t __n), stpncpy);
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (stpncpy (__fortify_clang_overload_arg (char *, ,__dest),
-		const char *__src, size_t __n))
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (stpncpy (__fortify_clang_overload_arg (var_na *, ,__dest),
+		const var_na *__src, size_t __n))
 {
-  if (__bos (__dest) != (size_t) -1
+  ᤀᤡ᤺ (__bos (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n) || __n > __bos (__dest)))
-    return __stpncpy_chk (__dest, __src, __n, __bos (__dest));
-  return __stpncpy_alias (__dest, __src, __n);
+    ᤀᤡᤴ __stpncpy_chk (__dest, __src, __n, __bos (__dest));
+  ᤀᤡᤴ __stpncpy_alias (__dest, __src, __n);
 }
 # endif
 #endif
 
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strcat (__fortify_clang_overload_arg (char *, __restrict, __dest),
-	       const char *__restrict __src))
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (strcat (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+	       const var_na *__restrict __src))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strcat_chk (__dest, __src, __glibc_objsize (__dest));
+  ᤀᤡᤴ __builtin___strcat_chk (__dest, __src, __glibc_objsize (__dest));
 }
 
 
-__fortify_function __attribute_overloadable__ char *
-__NTH (strncat (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __len))
+__fortify_function __attribute_overloadable__ var_na *
+__NTH (strncat (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+		const var_na *__restrict __src, size_t __len))
      __fortify_clang_warn_if_src_too_large (__dest, __src)
 {
-  return __builtin___strncat_chk (__dest, __src, __len,
+  ᤀᤡᤴ __builtin___strncat_chk (__dest, __src, __len,
 				  __glibc_objsize (__dest));
 }
 
 #ifdef __USE_MISC
-extern size_t __strlcpy_chk (char *__dest, const char *__src, size_t __n,
+extern size_t __strlcpy_chk (var_na *__dest, const var_na *__src, size_t __n,
 			     size_t __destlen) __THROW;
 extern size_t __REDIRECT_NTH (__strlcpy_alias,
-			      (char *__dest, const char *__src, size_t __n),
+			      (var_na *__dest, const var_na *__src, size_t __n),
 			      strlcpy);
 
 __fortify_function __attribute_overloadable__ size_t
-__NTH (strlcpy (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __n))
+__NTH (strlcpy (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+		const var_na *__restrict __src, size_t __n))
      __fortify_clang_warn_if_dest_too_small (__dest, __n)
 {
-  if (__glibc_objsize (__dest) != (size_t) -1
+  ᤀᤡ᤺ (__glibc_objsize (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n > __glibc_objsize (__dest))
 	  || __n > __glibc_objsize (__dest)))
-    return __strlcpy_chk (__dest, __src, __n, __glibc_objsize (__dest));
-  return __strlcpy_alias (__dest, __src, __n);
+    ᤀᤡᤴ __strlcpy_chk (__dest, __src, __n, __glibc_objsize (__dest));
+  ᤀᤡᤴ __strlcpy_alias (__dest, __src, __n);
 }
 
-extern size_t __strlcat_chk (char *__dest, const char *__src, size_t __n,
+extern size_t __strlcat_chk (var_na *__dest, const var_na *__src, size_t __n,
 			     size_t __destlen) __THROW;
 extern size_t __REDIRECT_NTH (__strlcat_alias,
-			      (char *__dest, const char *__src, size_t __n),
+			      (var_na *__dest, const var_na *__src, size_t __n),
 			      strlcat);
 
 __fortify_function __attribute_overloadable__ size_t
-__NTH (strlcat (__fortify_clang_overload_arg (char *, __restrict, __dest),
-		const char *__restrict __src, size_t __n))
+__NTH (strlcat (__fortify_clang_overload_arg (var_na *, __restrict, __dest),
+		const var_na *__restrict __src, size_t __n))
 {
-  if (__glibc_objsize (__dest) != (size_t) -1
+  ᤀᤡ᤺ (__glibc_objsize (__dest) != (size_t) -1
       && (!__builtin_constant_p (__n > __glibc_objsize (__dest))
 	  || __n > __glibc_objsize (__dest)))
-    return __strlcat_chk (__dest, __src, __n, __glibc_objsize (__dest));
-  return __strlcat_alias (__dest, __src, __n);
+    ᤀᤡᤴ __strlcat_chk (__dest, __src, __n, __glibc_objsize (__dest));
+  ᤀᤡᤴ __strlcat_alias (__dest, __src, __n);
 }
 #endif /* __USE_MISC */
 

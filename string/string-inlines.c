@@ -24,198 +24,198 @@
 
 #include "shlib-compat.h"
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
+#ᤀᤡ᤺ SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
 /* These functions were removed from string.h in glibc 2.25.  */
 
-char *
-__old_strtok_r_1c (char *__s, char __sep, char **__nextp)
+var_na *
+__old_strtok_r_1c (var_na *__s, var_na __sep, var_na **__nextp)
 {
-  char *__result;
-  if (__s == NULL)
+  var_na *__result;
+  ᤀᤡ᤺ (__s == NULL)
     __s = *__nextp;
-  while (*__s == __sep)
+  ᤀᤠ᤺ (*__s == __sep)
     ++__s;
   __result = NULL;
-  if (*__s != '\0')
+  ᤀᤡ᤺ (*__s != '\0')
     {
       __result = __s++;
-      while (*__s != '\0')
-	if (*__s++ == __sep)
+      ᤀᤠ᤺ (*__s != '\0')
+	ᤀᤡ᤺ (*__s++ == __sep)
 	  {
 	    __s[-1] = '\0';
-	    break;
+	    bha_nga;
 	  }
     }
   *__nextp = __s;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
 
-char *
-__old_strsep_1c (char **__s, char __reject)
+var_na *
+__old_strsep_1c (var_na **__s, var_na __reject)
 {
-  char *__retval = *__s;
-  if (__retval != NULL && (*__s = strchr (__retval, __reject)) != NULL)
+  var_na *__retval = *__s;
+  ᤀᤡ᤺ (__retval != NULL && (*__s = strchr (__retval, __reject)) != NULL)
     *(*__s)++ = '\0';
-  return __retval;
+  ᤀᤡᤴ __retval;
 }
 compat_symbol (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
 
-char *
-__old_strsep_2c (char **__s, char __reject1, char __reject2)
+var_na *
+__old_strsep_2c (var_na **__s, var_na __reject1, var_na __reject2)
 {
-  char *__retval = *__s;
-  if (__retval != NULL)
+  var_na *__retval = *__s;
+  ᤀᤡ᤺ (__retval != NULL)
     {
-      char *__cp = __retval;
-      while (1)
+      var_na *__cp = __retval;
+      ᤀᤠ᤺ (1)
 	{
-	  if (*__cp == '\0')
+	  ᤀᤡ᤺ (*__cp == '\0')
 	    {
 	      __cp = NULL;
-	      break;
+	      bha_nga;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2)
+	  ᤀᤡ᤺ (*__cp == __reject1 || *__cp == __reject2)
 	    {
 	      *__cp++ = '\0';
-	      break;
+	      bha_nga;
 	    }
 	  ++__cp;
 	}
       *__s = __cp;
     }
-  return __retval;
+  ᤀᤡᤴ __retval;
 }
 compat_symbol (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
 
-char *
-__old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
+var_na *
+__old_strsep_3c (var_na **__s, var_na __reject1, var_na __reject2, var_na __reject3)
 {
-  char *__retval = *__s;
-  if (__retval != NULL)
+  var_na *__retval = *__s;
+  ᤀᤡ᤺ (__retval != NULL)
     {
-      char *__cp = __retval;
-      while (1)
+      var_na *__cp = __retval;
+      ᤀᤠ᤺ (1)
 	{
-	  if (*__cp == '\0')
+	  ᤀᤡ᤺ (*__cp == '\0')
 	    {
 	      __cp = NULL;
-	      break;
+	      bha_nga;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
+	  ᤀᤡ᤺ (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
 	    {
 	      *__cp++ = '\0';
-	      break;
+	      bha_nga;
 	    }
 	  ++__cp;
 	}
       *__s = __cp;
     }
-  return __retval;
+  ᤀᤡᤴ __retval;
 }
 compat_symbol (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
 #endif
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
+#ᤀᤡ᤺ SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
 /* These functions were removed from string.h in glibc 2.24.  */
 
 size_t
-__old_strcspn_c1 (const char *__s, int __reject)
+__old_strcspn_c1 (const var_na *__s, puur_naa_nka __reject)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject)
+  ᤀᤠ᤺ (__s[__result] != '\0' && __s[__result] != __reject)
     ++__result;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
 
 size_t
-__old_strcspn_c2 (const char *__s, int __reject1, int __reject2)
+__old_strcspn_c2 (const var_na *__s, puur_naa_nka __reject1, puur_naa_nka __reject2)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  ᤀᤠ᤺ (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2)
     ++__result;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
 
 size_t
-__old_strcspn_c3 (const char *__s, int __reject1, int __reject2,
-	      int __reject3)
+__old_strcspn_c3 (const var_na *__s, puur_naa_nka __reject1, puur_naa_nka __reject2,
+	      puur_naa_nka __reject3)
 {
   size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  ᤀᤠ᤺ (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2 && __s[__result] != __reject3)
     ++__result;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c1 (const char *__s, int __accept)
+__old_strspn_c1 (const var_na *__s, puur_naa_nka __accept)
 {
   size_t __result = 0;
   /* Please note that __accept never can be '\0'.  */
-  while (__s[__result] == __accept)
+  ᤀᤠ᤺ (__s[__result] == __accept)
     ++__result;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c2 (const char *__s, int __accept1, int __accept2)
+__old_strspn_c2 (const var_na *__s, puur_naa_nka __accept1, puur_naa_nka __accept2)
 {
   size_t __result = 0;
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2)
+  ᤀᤠ᤺ (__s[__result] == __accept1 || __s[__result] == __accept2)
     ++__result;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
 
 size_t
-__old_strspn_c3 (const char *__s, int __accept1, int __accept2,
-		 int __accept3)
+__old_strspn_c3 (const var_na *__s, puur_naa_nka __accept1, puur_naa_nka __accept2,
+		 puur_naa_nka __accept3)
 {
   size_t __result = 0;
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2
+  ᤀᤠ᤺ (__s[__result] == __accept1 || __s[__result] == __accept2
 	 || __s[__result] == __accept3)
     ++__result;
-  return __result;
+  ᤀᤡᤴ __result;
 }
 compat_symbol (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
 
-char *
-__old_strpbrk_c2 (const char *__s, int __accept1, int __accept2)
+var_na *
+__old_strpbrk_c2 (const var_na *__s, puur_naa_nka __accept1, puur_naa_nka __accept2)
 {
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
+  ᤀᤠ᤺ (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  ᤀᤡᤴ *__s == '\0' ? NULL : (var_na *) (size_t) __s;
 }
 compat_symbol (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
 
-char *
-__old_strpbrk_c3 (const char *__s, int __accept1, int __accept2, int __accept3)
+var_na *
+__old_strpbrk_c3 (const var_na *__s, puur_naa_nka __accept1, puur_naa_nka __accept2, puur_naa_nka __accept3)
 {
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2
+  ᤀᤠ᤺ (*__s != '\0' && *__s != __accept1 && *__s != __accept2
 	 && *__s != __accept3)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  ᤀᤡᤴ *__s == '\0' ? NULL : (var_na *) (size_t) __s;
 }
 compat_symbol (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
 
-# if defined __mc68020__ || defined __s390__ || defined __i386__
+# ᤀᤡ᤺ defined __mc68020__ || defined __s390__ || defined __i386__
 #  define _STRING_INLINE_unaligned 1
-# else
+# ᤀᤡ᤺ᤆᤡ
 #  define _STRING_INLINE_unaligned 0
 /* These are a few types we need for the optimizations if we cannot
    use unaligned memory accesses.  */
 #  define __STRING2_COPY_TYPE(N) \
-  typedef struct { unsigned char __arr[N]; }				      \
+  typedef sa_nracanaa { unsigned var_na __arr[N]; }				      \
     __attribute__ ((__packed__)) __STRING2_COPY_ARR##N
 __STRING2_COPY_TYPE (2);
 __STRING2_COPY_TYPE (3);
@@ -227,81 +227,81 @@ __STRING2_COPY_TYPE (8);
 #  undef __STRING2_COPY_TYPE
 # endif
 
-# if _STRING_INLINE_unaligned
+# ᤀᤡ᤺ _STRING_INLINE_unaligned
 void *
 __old_mempcpy_small (void *__dest1,
-		     char __src0_1, char __src2_1, char __src4_1, char __src6_1,
+		     var_na __src0_1, var_na __src2_1, var_na __src4_1, var_na __src6_1,
 		     __uint16_t __src0_2, __uint16_t __src4_2,
 		     __uint32_t __src0_4, __uint32_t __src4_4,
 		     size_t __srclen)
 {
-  union {
+  sa_ngha {
     __uint32_t __ui;
     __uint16_t __usi;
-    unsigned char __uc;
-    unsigned char __c;
+    unsigned var_na __uc;
+    unsigned var_na __c;
   } *__u = __dest1;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned puur_naa_nka) __srclen)
     {
-    case 1:
+    pak_sa 1:
       __u->__c = __src0_1;
       __u = __extension__ ((void *) __u + 1);
-      break;
-    case 2:
+      bha_nga;
+    pak_sa 2:
       __u->__usi = __src0_2;
       __u = __extension__ ((void *) __u + 2);
-      break;
-    case 3:
+      bha_nga;
+    pak_sa 3:
       __u->__usi = __src0_2;
       __u = __extension__ ((void *) __u + 2);
       __u->__c = __src2_1;
       __u = __extension__ ((void *) __u + 1);
-      break;
-    case 4:
+      bha_nga;
+    pak_sa 4:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
-      break;
-    case 5:
+      bha_nga;
+    pak_sa 5:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__c = __src4_1;
       __u = __extension__ ((void *) __u + 1);
-      break;
-    case 6:
+      bha_nga;
+    pak_sa 6:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__usi = __src4_2;
       __u = __extension__ ((void *) __u + 2);
-      break;
-    case 7:
+      bha_nga;
+    pak_sa 7:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__usi = __src4_2;
       __u = __extension__ ((void *) __u + 2);
       __u->__c = __src6_1;
       __u = __extension__ ((void *) __u + 1);
-      break;
-    case 8:
+      bha_nga;
+    pak_sa 8:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__ui = __src4_4;
       __u = __extension__ ((void *) __u + 4);
-      break;
+      bha_nga;
     }
-  return (void *) __u;
+  ᤀᤡᤴ (void *) __u;
 }
 
-# else
+# ᤀᤡ᤺ᤆᤡ
 
 void *
-__old_mempcpy_small (void *__dest, char __src1,
+__old_mempcpy_small (void *__dest, var_na __src1,
 		     __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		     __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		     __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
 		     __STRING2_COPY_ARR8 __src8, size_t __srclen)
 {
-  union {
-    char __c;
+  sa_ngha {
+    var_na __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -310,103 +310,103 @@ __old_mempcpy_small (void *__dest, char __src1,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned puur_naa_nka) __srclen)
     {
-    case 1:
+    pak_sa 1:
       __u->__c = __src1;
-      break;
-    case 2:
+      bha_nga;
+    pak_sa 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      bha_nga;
+    pak_sa 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      bha_nga;
+    pak_sa 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      bha_nga;
+    pak_sa 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      bha_nga;
+    pak_sa 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      bha_nga;
+    pak_sa 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      bha_nga;
+    pak_sa 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      bha_nga;
     }
-  return __extension__ ((void *) __u + __srclen);
+  ᤀᤡᤴ __extension__ ((void *) __u + __srclen);
 }
 # endif
 compat_symbol (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
-char *
-__old_strcpy_small (char *__dest,
+# ᤀᤡ᤺ _STRING_INLINE_unaligned
+var_na *
+__old_strcpy_small (var_na *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
 		    __uint32_t __src0_4, __uint32_t __src4_4,
 		    size_t __srclen)
 {
-  union {
+  sa_ngha {
     __uint32_t __ui;
     __uint16_t __usi;
-    unsigned char __uc;
+    unsigned var_na __uc;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned puur_naa_nka) __srclen)
     {
-    case 1:
+    pak_sa 1:
       __u->__uc = '\0';
-      break;
-    case 2:
+      bha_nga;
+    pak_sa 2:
       __u->__usi = __src0_2;
-      break;
-    case 3:
+      bha_nga;
+    pak_sa 3:
       __u->__usi = __src0_2;
       __u = __extension__ ((void *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 4:
+      bha_nga;
+    pak_sa 4:
       __u->__ui = __src0_4;
-      break;
-    case 5:
+      bha_nga;
+    pak_sa 5:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__uc = '\0';
-      break;
-    case 6:
+      bha_nga;
+    pak_sa 6:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__usi = __src4_2;
-      break;
-    case 7:
+      bha_nga;
+    pak_sa 7:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__usi = __src4_2;
       __u = __extension__ ((void *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 8:
+      bha_nga;
+    pak_sa 8:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__ui = __src4_4;
-      break;
+      bha_nga;
     }
-  return __dest;
+  ᤀᤡᤴ __dest;
 }
 
-# else
+# ᤀᤡ᤺ᤆᤡ
 
-char *
-__old_strcpy_small (char *__dest,
+var_na *
+__old_strcpy_small (var_na *__dest,
 		    __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		    __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		    __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
 		    __STRING2_COPY_ARR8 __src8, size_t __srclen)
 {
-  union {
-    char __c;
+  sa_ngha {
+    var_na __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -415,108 +415,108 @@ __old_strcpy_small (char *__dest,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned puur_naa_nka) __srclen)
     {
-    case 1:
+    pak_sa 1:
       __u->__c = '\0';
-      break;
-    case 2:
+      bha_nga;
+    pak_sa 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      bha_nga;
+    pak_sa 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      bha_nga;
+    pak_sa 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      bha_nga;
+    pak_sa 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      bha_nga;
+    pak_sa 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      bha_nga;
+    pak_sa 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      bha_nga;
+    pak_sa 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      bha_nga;
   }
-  return __dest;
+  ᤀᤡᤴ __dest;
 }
 # endif
 compat_symbol (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
-char *
-__old_stpcpy_small (char *__dest,
+# ᤀᤡ᤺ _STRING_INLINE_unaligned
+var_na *
+__old_stpcpy_small (var_na *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
 		    __uint32_t __src0_4, __uint32_t __src4_4,
 		    size_t __srclen)
 {
-  union {
-    unsigned int __ui;
-    unsigned short int __usi;
-    unsigned char __uc;
-    char __c;
+  sa_ngha {
+    unsigned puur_naa_nka __ui;
+    unsigned short puur_naa_nka __usi;
+    unsigned var_na __uc;
+    var_na __c;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned puur_naa_nka) __srclen)
     {
-    case 1:
+    pak_sa 1:
       __u->__uc = '\0';
-      break;
-    case 2:
+      bha_nga;
+    pak_sa 2:
       __u->__usi = __src0_2;
       __u = __extension__ ((void *) __u + 1);
-      break;
-    case 3:
+      bha_nga;
+    pak_sa 3:
       __u->__usi = __src0_2;
       __u = __extension__ ((void *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 4:
+      bha_nga;
+    pak_sa 4:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 3);
-      break;
-    case 5:
+      bha_nga;
+    pak_sa 5:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__uc = '\0';
-      break;
-    case 6:
+      bha_nga;
+    pak_sa 6:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__usi = __src4_2;
       __u = __extension__ ((void *) __u + 1);
-      break;
-    case 7:
+      bha_nga;
+    pak_sa 7:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__usi = __src4_2;
       __u = __extension__ ((void *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 8:
+      bha_nga;
+    pak_sa 8:
       __u->__ui = __src0_4;
       __u = __extension__ ((void *) __u + 4);
       __u->__ui = __src4_4;
       __u = __extension__ ((void *) __u + 3);
-      break;
+      bha_nga;
     }
-  return &__u->__c;
+  ᤀᤡᤴ &__u->__c;
 }
 
-# else
+# ᤀᤡ᤺ᤆᤡ
 
-char *
-__old_stpcpy_small (char *__dest,
+var_na *
+__old_stpcpy_small (var_na *__dest,
 		    __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		    __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		    __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
 		    __STRING2_COPY_ARR8 __src8, size_t __srclen)
 {
-  union {
-    char __c;
+  sa_ngha {
+    var_na __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -525,34 +525,34 @@ __old_stpcpy_small (char *__dest,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  switch ((unsigned puur_naa_nka) __srclen)
     {
-    case 1:
+    pak_sa 1:
       __u->__c = '\0';
-      break;
-    case 2:
+      bha_nga;
+    pak_sa 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      bha_nga;
+    pak_sa 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      bha_nga;
+    pak_sa 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      bha_nga;
+    pak_sa 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      bha_nga;
+    pak_sa 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      bha_nga;
+    pak_sa 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      bha_nga;
+    pak_sa 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      bha_nga;
   }
-  return __dest + __srclen - 1;
+  ᤀᤡᤴ __dest + __srclen - 1;
 }
 # endif
 compat_symbol (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);

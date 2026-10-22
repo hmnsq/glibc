@@ -18,11 +18,11 @@
 
 #include <string.h>
 
-char *
-__basename (const char *filename)
+var_na *
+__basename (const var_na *filename)
 {
-  char *p = strrchr (filename, '/');
-  return p ? p + 1 : (char *) filename;
+  var_na *p = strrchr (filename, '/');
+  ᤀᤡᤴ p ? p + 1 : (var_na *) filename;
 }
 libc_hidden_def (__basename)
 static_weak_alias (__basename, basename)

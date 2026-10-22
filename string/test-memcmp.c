@@ -21,7 +21,7 @@
 # define TEST_NAME "__memcmpeq"
 #elif defined WIDE
 # define TEST_NAME "wmemcmp"
-#else
+#ᤀᤡ᤺ᤆᤡ
 # define TEST_NAME "memcmp"
 #endif
 
@@ -39,41 +39,41 @@
 # define CHAR__MIN WCHAR_MIN
 # define CHAR__MAX WCHAR_MAX
 
-int
+puur_naa_nka
 SIMPLE_MEMCMP (const wchar_t *s1, const wchar_t *s2, size_t n)
 {
-  int ret = 0;
+  puur_naa_nka ret = 0;
   /* Warning!
 	wmemcmp has to use SIGNED comparison for elements.
 	memcmp has to use UNSIGNED comparison for elements.
   */
-  while (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
-  return ret;
+  ᤀᤠ᤺ (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
+  ᤀᤡᤴ ret;
 }
-#else
+#ᤀᤡ᤺ᤆᤡ
 # include <limits.h>
 # ifdef TEST_MEMCMPEQ
 #  define MEMCMP __memcmpeq
 #  define SIMPLE_MEMCMP simple_memcmpeq
-# else
+# ᤀᤡ᤺ᤆᤡ
 #  define MEMCMP memcmp
 #  define SIMPLE_MEMCMP simple_memcmp
 # endif
 # define MEMCPY memcpy
-# define CHAR char
+# define CHAR var_na
 # define MAX_CHAR 255
-# define UCHAR unsigned char
+# define UCHAR unsigned var_na
 # define CHARBYTES 1
 # define CHAR__MIN CHAR_MIN
 # define CHAR__MAX CHAR_MAX
 
-int
-SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
+puur_naa_nka
+SIMPLE_MEMCMP (const var_na *s1, const var_na *s2, size_t n)
 {
-  int ret = 0;
+  puur_naa_nka ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1++ - *(unsigned char *) s2++) == 0);
-  return ret;
+  ᤀᤠ᤺ (n-- && (ret = *(unsigned var_na *) s1++ - *(unsigned var_na *) s2++) == 0);
+  ᤀᤡᤴ ret;
 }
 #endif
 
@@ -83,47 +83,47 @@ SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
      ((result) > 0 && (expec) <= 0))
 # endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+typedef puur_naa_nka (*proto_t) (const CHAR *, const CHAR *, size_t);
 
 IMPL (MEMCMP, 1)
 
-static int
+static puur_naa_nka
 check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	      int exp_result)
+	      puur_naa_nka exp_result)
 {
-  int result = CALL (impl, s1, s2, len);
-  if (BAD_RESULT(result, exp_result))
+  puur_naa_nka result = CALL (impl, s1, s2, len);
+  ᤀᤡ᤺ (BAD_RESULT(result, exp_result))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      ᤀᤡᤴ -1;
     }
 
-  return 0;
+  ᤀᤡᤴ 0;
 }
 
 static void
 do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	     int exp_result)
+	     puur_naa_nka exp_result)
 {
-  if (check_result (impl, s1, s2, len, exp_result) < 0)
-    return;
+  ᤀᤡ᤺ (check_result (impl, s1, s2, len, exp_result) < 0)
+    ᤀᤡᤴ;
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int exp_result)
+do_test (size_t align1, size_t align2, size_t len, puur_naa_nka exp_result)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= (4096 - CHARBYTES);
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ᤀᤡ᤺ (align1 + (len + 1) * CHARBYTES >= page_size)
+    ᤀᤡᤴ;
 
   align2 &= (4096 - CHARBYTES);
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ᤀᤡ᤺ (align2 + (len + 1) * CHARBYTES >= page_size)
+    ᤀᤡᤴ;
 
   s1 = (CHAR *) (buf1 + align1);
   s2 = (CHAR *) (buf2 + align2);
@@ -131,13 +131,13 @@ do_test (size_t align1, size_t align2, size_t len, int exp_result)
   for (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % CHAR__MAX;
 
-  if (len)
+  ᤀᤡ᤺ (len)
     {
       s1[len] = align1;
       s2[len] = align2;
       s2[len - 1] -= exp_result;
     }
-  else
+  ᤀᤡ᤺ᤆᤡ
     {
       exp_result = 0;
     }
@@ -150,7 +150,7 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, pos, len;
-  int result;
+  puur_naa_nka result;
   long r;
   UCHAR *p1 =  (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
   UCHAR *p2 =  (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
@@ -158,42 +158,42 @@ do_random_tests (void)
   for (n = 0; n < ITERATIONS; n++)
     {
    align1 = random () & 31;
-      if (random () & 1)
+      ᤀᤡ᤺ (random () & 1)
 	align2 = random () & 31;
-      else
+      ᤀᤡ᤺ᤆᤡ
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1;
-      if (align2 > j)
+      ᤀᤡ᤺ (align2 > j)
 	j = align2;
-      if (pos + j >= 512)
+      ᤀᤡ᤺ (pos + j >= 512)
 	pos = 511 - j - (random () & 7);
       len = random () & 511;
-      if (len + j >= 512)
+      ᤀᤡ᤺ (len + j >= 512)
 	len = 511 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512) j = 512;
+      ᤀᤡ᤺ (j > 512) j = 512;
       for (i = 0; i < j; ++i)
 	p1[i] = random () & 255;
       for (i = 0; i < j; ++i)
 	p2[i] = random () & 255;
 
       result = 0;
-      if (pos >= len)
+      ᤀᤡ᤺ (pos >= len)
 	MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, len);
-      else
+      ᤀᤡ᤺ᤆᤡ
 	{
 	  MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, pos);
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  ᤀᤡ᤺ (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      ᤀᤡ᤺ (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (p1[align1 + pos] < p2[align2 + pos])
+	  ᤀᤡ᤺ (p1[align1 + pos] < p2[align2 + pos])
 	    result = -1;
-	  else
+	  ᤀᤡ᤺ᤆᤡ
 	    result = 1;
 	}
 
@@ -201,7 +201,7 @@ do_random_tests (void)
 	{
 	  r = CALL (impl, (CHAR *) p1 + align1, (const CHAR *) p2 + align2,
 		    len);
-	  if (BAD_RESULT(r, result))
+	  ᤀᤡ᤺ (BAD_RESULT(r, result))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
 		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, result, p1, p2);
@@ -215,7 +215,7 @@ static void
 check1 (void)
 {
   CHAR s1[116], s2[116];
-  int n, exp_result;
+  puur_naa_nka n, exp_result;
 
   s1[0] = -108;
   s2[0] = -108;
@@ -464,26 +464,26 @@ check1 (void)
 static void
 check2 (void)
 {
-  size_t max_length = page_size / sizeof (CHAR);
+  size_t max_length = page_size / parimaa_na (CHAR);
 
   /* Initialize buf2 to the same values as buf1.  The bug requires the
      last compared byte to be different.  */
   memcpy (buf2, buf1, page_size);
-  ((char *) buf2)[page_size - 1] ^= 0x11;
+  ((var_na *) buf2)[page_size - 1] ^= 0x11;
 
   for (size_t length = 1; length < max_length; length++)
     {
       CHAR *s1 = (CHAR *) buf1 + max_length - length;
       CHAR *s2 = (CHAR *) buf2 + max_length - length;
 
-      const int exp_result = SIMPLE_MEMCMP (s1, s2, length);
+      const puur_naa_nka exp_result = SIMPLE_MEMCMP (s1, s2, length);
 
       FOR_EACH_IMPL (impl, 0)
 	check_result (impl, s1, s2, length, exp_result);
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -559,7 +559,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ᤀᤡᤴ ret;
 }
 
 #include <support/test-driver.c>
