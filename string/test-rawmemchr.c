@@ -16,47 +16,47 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <support/xunistd.h>
+#ضمن <assert.h>
+#ضمن <support/xunistd.h>
 
 #define TEST_MAIN
 #define TEST_NAME "rawmemchr"
-#include "test-string.h"
+#ضمن "test-string.h"
 
-typedef char *(*proto_t) (const char *, int);
-char *simple_rawmemchr (const char *, int);
+تعريفنوع حرف *(*proto_t) (ثابت حرف *, صحيح);
+حرف *simple_rawmemchr (ثابت حرف *, صحيح);
 
 IMPL (simple_rawmemchr, 0)
 IMPL (rawmemchr, 1)
 
-char *
-simple_rawmemchr (const char *s, int c)
+حرف *
+simple_rawmemchr (ثابت حرف *s, صحيح c)
 {
-  while (1)
-    if (*s++ == (char) c)
-      return (char *) s - 1;
-  return NULL;
+  طالما (1)
+    𐤀𐤌 (*s++ == (حرف) c)
+      أرجع (حرف *) s - 1;
+  أرجع عدم;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s, int c, char *exp_res)
+ساكن فراغ
+do_one_test (impl_t *impl, ثابت حرف *s, صحيح c, حرف *exp_res)
 {
-  char *res = CALL (impl, s, c);
-  if (res != exp_res)
+  حرف *res = CALL (impl, s, c);
+  𐤀𐤌 (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      أرجع;
     }
 }
 
-static void
-do_test_bz29234 (void)
+ساكن فراغ
+do_test_bz29234 (فراغ)
 {
   size_t i, j;
-  char *ptr_start;
-  char *buf = xmmap (0, 8192, PROT_READ | PROT_WRITE,
+  حرف *ptr_start;
+  حرف *buf = xmmap (0, 8192, PROT_READ | PROT_WRITE,
 		     MAP_PRIVATE | MAP_ANONYMOUS, -1);
 
   memset (buf, -1, 8192);
@@ -66,14 +66,14 @@ do_test_bz29234 (void)
   /* Out of range matches before the start of a page. */
   memset (ptr_start - 8, 0x1, 8);
 
-  for (j = 0; j < 8; ++j)
+  لكل (j = 0; j < 8; ++j)
     {
-      for (i = 0; i < 128; ++i)
+      لكل (i = 0; i < 128; ++i)
 	{
 	  ptr_start[i + j] = 0x1;
 
 	  FOR_EACH_IMPL (impl, 0)
-	    do_one_test (impl, (char *) (ptr_start + j), 0x1,
+	    do_one_test (impl, (حرف *) (ptr_start + j), 0x1,
 			 ptr_start + i + j);
 
 	  ptr_start[i + j] = 0xff;
@@ -83,104 +83,104 @@ do_test_bz29234 (void)
   xmunmap (buf, 8192);
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+ساكن فراغ
+do_test (size_t align, size_t pos, size_t len, صحيح seek_char)
 {
   size_t i;
-  char *result;
+  حرف *result;
 
   align &= getpagesize () - 1;
-  if (align + len >= page_size)
-    return;
+  𐤀𐤌 (align + len >= page_size)
+    أرجع;
 
-  for (i = 0; i < len; ++i)
+  لكل (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      𐤀𐤌 (buf1[align + i] == seek_char)
 	buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
 
-  assert (pos < len);
+  أكد (pos < len);
 
   buf1[align + pos] = seek_char;
   buf1[align + len] = -seek_char;
-  result = (char *) (buf1 + align + pos);
+  result = (حرف *) (buf1 + align + pos);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (char *) (buf1 + align), seek_char, result);
+    do_one_test (impl, (حرف *) (buf1 + align), seek_char, result);
 }
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  char *result;
-  unsigned char *p = buf1 + page_size - 512;
+  صحيح seek_char;
+  حرف *result;
+  unsigned حرف *p = buf1 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  لكل (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      𐤀𐤌 (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      𐤀𐤌 (len + align >= 512)
 	len = 512 - align - (random () & 7);
-      if (pos >= len)
-	continue;
+      𐤀𐤌 (pos >= len)
+	استمر;
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      𐤀𐤌 (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      لكل (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  𐤀𐤌 (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  وإلا
 	    {
 	      p[i] = random () & 255;
-	      if (i < pos + align && p[i] == seek_char)
+	      𐤀𐤌 (i < pos + align && p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (align)
+      𐤀𐤌 (align)
 	{
 	  p[align - 1] = seek_char;
-	  if (align > 4)
+	  𐤀𐤌 (align > 4)
 	    p[align - 4] = seek_char;
 	}
 
-      assert (pos < len);
+      أكد (pos < len);
       size_t r = random ();
-      if ((r & 31) == 0)
+      𐤀𐤌 ((r & 31) == 0)
 	len = ~(uintptr_t) (p + align) - ((r >> 5) & 31);
-      result = (char *) (p + pos + align);
+      result = (حرف *) (p + pos + align);
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char) != result)
+	𐤀𐤌 (CALL (impl, (حرف *) (p + align), seek_char) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (char *) (p + align), seek_char),
+		   CALL (impl, (حرف *) (p + align), seek_char),
 		   result, p);
 	    ret = 1;
 	  }
 
-      if (align)
+      𐤀𐤌 (align)
 	{
 	  p[align - 1] = seek_char;
-	  if (align > 4)
+	  𐤀𐤌 (align > 4)
 	    p[align - 4] = seek_char;
 	}
     }
 }
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i;
 
@@ -191,7 +191,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 7; ++i)
+  لكل (i = 1; i < 7; ++i)
     {
       do_test (0, 16 << i, 2048, 23);
       do_test (i, 64, 256, 23);
@@ -201,7 +201,7 @@ test_main (void)
       do_test (getpagesize () - i, 64, 256, 23);
       do_test (getpagesize () - i, 64, 256, 0);
     }
-  for (i = 1; i < 32; ++i)
+  لكل (i = 1; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23);
       do_test (0, i, i + 1, 0);
@@ -213,7 +213,7 @@ test_main (void)
 
   do_random_tests ();
   do_test_bz29234 ();
-  return ret;
+  أرجع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

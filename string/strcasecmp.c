@@ -19,13 +19,13 @@
 # include <config.h>
 #endif
 
-#include <ctype.h>
-#include <string.h>
+#ضمن <ctype.h>
+#ضمن <string.h>
 
 #ifndef _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#وإلا
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
@@ -35,31 +35,31 @@
 
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#وإلا
 # define LOCALE_PARAM
 #endif
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+صحيح
+__strcasecmp (ثابت حرف *s1, ثابت حرف *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#𐤀𐤌 defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
 #endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+  ثابت unsigned حرف *p1 = (ثابت unsigned حرف *) s1;
+  ثابت unsigned حرف *p2 = (ثابت unsigned حرف *) s2;
+  صحيح result;
 
-  if (p1 == p2)
-    return 0;
+  𐤀𐤌 (p1 == p2)
+    أرجع 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  طالما ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    𐤀𐤌 (*p1++ == '\0')
+      اكسر;
 
-  return result;
+  أرجع result;
 }
 #ifndef __strcasecmp
 libc_hidden_def (__strcasecmp)
