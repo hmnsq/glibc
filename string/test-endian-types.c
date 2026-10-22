@@ -19,12 +19,12 @@
 #include <endian.h>
 #include <stdint.h>
 
-int i;
+ကိန်းပြည့် i;
 uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-int
+ကိန်းပြည့်
 do_test (void)
 {
   /* This is a compilation test.  */
@@ -43,7 +43,7 @@ do_test (void)
   (void) u16;
   (void) u32;
   (void) u64;
-  return 0;
+  ပြန်ပေး 0;
 }
 
 #include <support/test-driver.c>

@@ -2,13 +2,13 @@
 #include <string.h>
 #include <locale.h>
 
-int
+ကိန်းပြည့်
 main (void)
 {
-  const char t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
-  const char t2[] = "00000-00000.COM";
-  int res1;
-  int res2;
+  const var_na t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
+  const var_na t2[] = "00000-00000.COM";
+  ကိန်းပြည့် res1;
+  ကိန်းပြည့် res2;
 
   setlocale (LC_ALL, "en_US.ISO-8859-1");
 
@@ -17,7 +17,7 @@ main (void)
   res2 = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, res2);
 
-  return ((res1 == 0 && res2 != 0)
+  ပြန်ပေး ((res1 == 0 && res2 != 0)
 	  || (res1 != 0 && res2 == 0)
 	  || (res1 < 0 && res2 < 0)
 	  || (res1 > 0 && res2 > 0));

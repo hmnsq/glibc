@@ -38,40 +38,40 @@
 	x = strtok_r(NULL, "=", &sp);	// x = NULL
 		// s = "abc\0-def\0"
 */
-char *
-__strtok_r (char *s, const char *delim, char **save_ptr)
+var_na *
+__strtok_r (var_na *s, const var_na *delim, var_na **save_ptr)
 {
-  char *end;
+  var_na *end;
 
-  if (s == NULL)
+  အကယ်၍ (s == NULL)
     s = *save_ptr;
 
-  if (*s == '\0')
+  အကယ်၍ (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      ပြန်ပေး NULL;
     }
 
   /* Scan leading delimiters.  */
   s += strspn (s, delim);
-  if (*s == '\0')
+  အကယ်၍ (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      ပြန်ပေး NULL;
     }
 
   /* Find the end of the token.  */
   end = s + strcspn (s, delim);
-  if (*end == '\0')
+  အကယ်၍ (*end == '\0')
     {
       *save_ptr = end;
-      return s;
+      ပြန်ပေး s;
     }
 
   /* Terminate the token and make *SAVE_PTR point past it.  */
   *end = '\0';
   *save_ptr = end + 1;
-  return s;
+  ပြန်ပေး s;
 }
 #ifdef weak_alias
 libc_hidden_def (__strtok_r)

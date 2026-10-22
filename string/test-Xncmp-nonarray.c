@@ -34,7 +34,7 @@
 #include <unistd.h>
 
 /* Much shorter than test-Xnlen-nonarray.c because of deeply nested loops.  */
-enum { buffer_length = 80 };
+ga_nanaa { buffer_length = 80 };
 
 /* The test buffer layout follows what is described test-Xnlen-nonarray.c,
    except that there two buffers, left and right.  The variables
@@ -42,28 +42,28 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+static ကိန်းပြည့်
+string_length (ကိန်းပြည့် a_count, ကိန်းပြည့် start_offset)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  အကယ်၍ (start_offset == buffer_length || start_offset >= a_count)
+    ပြန်ပေး 0;
+  မဟုတ်ပါက
+    ပြန်ပေး a_count - start_offset;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+static ကိန်းပြည့်
+maximum_length (ကိန်းပြည့် start_offset, ကိန်းပြည့် zero_count)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  အကယ်၍ (start_offset == buffer_length)
+    ပြန်ပေး 0;
+  မဟုတ်ပါက အကယ်၍ (zero_count > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    ပြန်ပေး buffer_length + 32;
+  မဟုတ်ပါက
+    ပြန်ပေး buffer_length - start_offset;
 }
 
 typedef __typeof (TEST_IDENTIFIER) *proto_t;
@@ -73,68 +73,68 @@ typedef __typeof (TEST_IDENTIFIER) *proto_t;
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
+static ကိန်းပြည့်
 test_main (void)
 {
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
   test_init ();
 
-  struct support_next_to_fault left_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
+  sa_nracanaa support_next_to_fault left_ntf
+    = support_next_to_fault_allocate (buffer_length * parimaa_na (CHAR));
   CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
+  sa_nracanaa support_next_to_fault right_ntf
+    = support_next_to_fault_allocate (buffer_length * parimaa_na (CHAR));
   CHAR *right_buffer = (CHAR *) right_ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      အတွက် (size_t i = 0; i < buffer_length; ++i)
         left_buffer[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
+      အတွက် (ကိန်းပြည့် left_zero_count = 0; left_zero_count <= buffer_length;
            ++left_zero_count)
         {
-          if (left_zero_count > 0)
+          အကယ်၍ (left_zero_count > 0)
             left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
+          ကိန်းပြည့် left_a_count = buffer_length - left_zero_count;
+          အတွက် (size_t i = 0; i < buffer_length; ++i)
             right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
+          အတွက် (ကိန်းပြည့် right_zero_count = 0; right_zero_count <= buffer_length;
                ++right_zero_count)
             {
-              if (right_zero_count > 0)
+              အကယ်၍ (right_zero_count > 0)
                 right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
+              ကိန်းပြည့် right_a_count = buffer_length - right_zero_count;
+              အတွက် (ကိန်းပြည့် left_start_offset = 0;
                    left_start_offset <= buffer_length;
                    ++left_start_offset)
                 {
                   CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
+                  ကိန်းပြည့် left_maxlen
                     = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
+                  ကိန်းပြည့် left_length
                     = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
+                  အတွက် (ကိန်းပြည့် right_start_offset = 0;
                        right_start_offset <= buffer_length;
                        ++right_start_offset)
                     {
                       CHAR *right_start_pointer
                         = right_buffer + right_start_offset;
-                      int right_maxlen
+                      ကိန်းပြည့် right_maxlen
                         = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
+                      ကိန်းပြည့် right_length
                         = string_length (right_a_count, right_start_offset);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      ကိန်းပြည့် maxlen = MIN (left_maxlen, right_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
+                      အတွက် (ကိန်းပြည့် length_argument = 0; length_argument <= maxlen;
                            ++length_argument)
                         {
-                          if (test_verbose)
+                          အကယ်၍ (test_verbose)
                             {
                               printf ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
@@ -151,21 +151,21 @@ test_main (void)
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
+                          ကိန်းပြည့် left_effective
                             = MIN (left_length, length_argument);
-                          int right_effective
+                          ကိန်းပြည့် right_effective
                             = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          အကယ်၍ (left_effective == right_effective)
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
                                                 length_argument), 0);
-                          else if (left_effective < right_effective)
+                          မဟုတ်ပါက အကယ်၍ (left_effective < right_effective)
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
                                                 length_argument) < 0, 1);
-                          else
+                          မဟုတ်ပါက
                             TEST_COMPARE (CALL (impl,
                                                 left_start_pointer,
                                                 right_start_pointer,
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  ပြန်ပေး 0;
 }
 
 #include <support/test-driver.c>

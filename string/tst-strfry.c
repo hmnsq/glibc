@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+ကိန်းပြည့်
 do_test (void)
 {
-  char str[] = "this is a test";
+  var_na str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  ပြန်ပေး 0;
 }
 
 #include <support/test-driver.c>

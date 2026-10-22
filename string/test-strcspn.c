@@ -21,18 +21,18 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#မဟုတ်ပါက
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
 #include "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR var_na
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#မဟုတ်ပါက
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -55,11 +55,11 @@ SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
   const CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  နေစဉ် ((c = *s++) != '\0')
+    အတွက် (r = rej; *r != '\0'; ++r)
+      အကယ်၍ (*r == c)
+	ပြန်ပေး s - str - 1;
+  ပြန်ပေး s - str - 1;
 }
 
 size_t
@@ -68,11 +68,11 @@ STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  အတွက် (i = 0; i < ns; ++i)
+    အတွက် (j = 0; j < nrej; ++j)
+      အကယ်၍ (s[i] == rej[j])
+	ပြန်ပေး i;
+  ပြန်ပေး i;
 }
 
 #undef CHAR

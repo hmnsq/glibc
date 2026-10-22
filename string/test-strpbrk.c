@@ -17,13 +17,13 @@
    <https://www.gnu.org/licenses/>.  */
 
 #ifndef WIDE
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define STRLEN strlen
 # define STRCHR strchr
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#မဟုတ်ပါက
 # include <wchar.h>
 # define CHAR wchar_t
 # define UCHAR wchar_t
@@ -39,7 +39,7 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strpbrk"
-# else
+# မဟုတ်ပါက
 #  define TEST_NAME "wcspbrk"
 # endif /* WIDE */
 # include "test-string.h"
@@ -47,7 +47,7 @@
 # ifndef WIDE
 #  define STRPBRK strpbrk
 #  define SIMPLE_STRPBRK simple_strpbrk
-# else
+# မဟုတ်ပါက
 #  include <wchar.h>
 #  define STRPBRK wcspbrk
 #  define SIMPLE_STRPBRK simple_wcspbrk
@@ -64,11 +64,11 @@ SIMPLE_STRPBRK (const CHAR *s, const CHAR *rej)
   const CHAR *r;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-       return (CHAR *) s - 1;
-  return NULL;
+  နေစဉ် ((c = *s++) != '\0')
+    အတွက် (r = rej; *r != '\0'; ++r)
+      အကယ်၍ (*r == c)
+       ပြန်ပေး (CHAR *) s - 1;
+  ပြန်ပေး NULL;
 }
 
 #endif /* !STRPBRK_RESULT */
@@ -77,12 +77,12 @@ static void
 do_one_test (impl_t *impl, const CHAR *s, const CHAR *rej, RES_TYPE exp_res)
 {
   RES_TYPE res = CALL (impl, s, rej);
-  if (res != exp_res)
+  အကယ်၍ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     (void *) res, (void *) exp_res);
       ret = 1;
-      return;
+      ပြန်ပေး;
     }
 }
 
@@ -90,44 +90,44 @@ static void
 do_test (size_t align, size_t pos, size_t len)
 {
   size_t i;
-  int c;
+  ကိန်းပြည့် c;
   RES_TYPE result;
   CHAR *rej, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240)
-    return;
+  အကယ်၍ ((align + pos + 10) * parimaa_na (CHAR) >= page_size || len > 240)
+    ပြန်ပေး;
 
   rej = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  အတွက် (i = 0; i < len; ++i)
     {
       rej[i] = random () & BIG_CHAR;
-      if (!rej[i])
+      အကယ်၍ (!rej[i])
 	rej[i] = random () & BIG_CHAR;
-      if (!rej[i])
+      အကယ်၍ (!rej[i])
 	rej[i] = 1 + (random () & SMALL_CHAR);
     }
   rej[len] = '\0';
-  for (c = 1; c <= BIG_CHAR; ++c)
-    if (STRCHR (rej, c) == NULL)
-      break;
+  အတွက် (c = 1; c <= BIG_CHAR; ++c)
+    အကယ်၍ (STRCHR (rej, c) == NULL)
+      bha_nga;
 
-  for (i = 0; i < pos; ++i)
+  အတွက် (i = 0; i < pos; ++i)
     {
       s[i] = random () & BIG_CHAR;
-      if (STRCHR (rej, s[i]))
+      အကယ်၍ (STRCHR (rej, s[i]))
 	{
 	  s[i] = random () & BIG_CHAR;
-	  if (STRCHR (rej, s[i]))
+	  အကယ်၍ (STRCHR (rej, s[i]))
 	    s[i] = c;
 	}
     }
   s[pos] = rej[random () % (len + 1)];
-  if (s[pos])
+  အကယ်၍ (s[pos])
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      အတွက် (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
@@ -142,57 +142,57 @@ do_random_tests (void)
 {
   size_t i, j, n, align, pos, len, rlen;
   RES_TYPE result;
-  int c;
+  ကိန်းပြည့် c;
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
   UCHAR *rej;
 
-  for (n = 0; n < ITERATIONS; n++)
+  အတွက် (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 511)
+      အကယ်၍ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (pos >= len && (random () & 1))
+      အကယ်၍ (pos >= len && (random () & 1))
 	len = pos + 1 + (random () & 7);
-      if (len + align >= 512)
+      အကယ်၍ (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      if (random () & 1)
+      အကယ်၍ (random () & 1)
 	rlen = random () & 63;
-      else
+      မဟုတ်ပါက
 	rlen = random () & 15;
       rej = (UCHAR *) (buf2 + page_size) - rlen - 1 - (random () & 7);
-      for (i = 0; i < rlen; ++i)
+      အတွက် (i = 0; i < rlen; ++i)
 	{
 	  rej[i] = random () & BIG_CHAR;
-	  if (!rej[i])
+	  အကယ်၍ (!rej[i])
 	    rej[i] = random () & BIG_CHAR;
-	  if (!rej[i])
+	  အကယ်၍ (!rej[i])
 	    rej[i] = 1 + (random () & SMALL_CHAR);
 	}
       rej[i] = '\0';
-      for (c = 1; c <= BIG_CHAR; ++c)
-	if (STRCHR ((CHAR *) rej, c) == NULL)
-	  break;
+      အတွက် (c = 1; c <= BIG_CHAR; ++c)
+	အကယ်၍ (STRCHR ((CHAR *) rej, c) == NULL)
+	  bha_nga;
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      အကယ်၍ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      အတွက် (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  အကယ်၍ (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  မဟုတ်ပါက အကယ်၍ (i == pos + align)
 	    p[i] = rej[random () % (rlen + 1)];
-	  else if (i < align || i > pos + align)
+	  မဟုတ်ပါက အကယ်၍ (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  မဟုတ်ပါက
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) rej, p[i]))
+	      အကယ်၍ (STRCHR ((CHAR *) rej, p[i]))
 		{
 		  p[i] = random () & BIG_CHAR;
-		  if (STRCHR ((CHAR *) rej, p[i]))
+		  အကယ်၍ (STRCHR ((CHAR *) rej, p[i]))
 		    p[i] = c;
 		}
 	    }
@@ -201,7 +201,7 @@ do_random_tests (void)
       result = STRPBRK_RESULT ((CHAR *) (p + align), pos < len ? pos : len);
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), (CHAR *) rej) != result)
+	အကယ်၍ (CALL (impl, (CHAR *) (p + align), (CHAR *) rej) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %p != %p",
 		   n, impl->name, align, rej, rlen, pos, len,
@@ -212,7 +212,7 @@ do_random_tests (void)
     }
 }
 
-int
+ကိန်းပြည့်
 test_main (void)
 {
   size_t i;
@@ -224,26 +224,26 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 32; ++i)
+  အတွက် (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  အတွက် (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  အတွက် (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  အတွက် (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  ပြန်ပေး ret;
 }
 
 #include <support/test-driver.c>

@@ -18,8 +18,8 @@
 
 #include <stdio.h>
 
-const char *
-strerrorname_np (int errnum)
+const var_na *
+strerrorname_np (ကိန်းပြည့် errnum)
 {
-  return __get_errname (errnum);
+  ပြန်ပေး __get_errname (errnum);
 }

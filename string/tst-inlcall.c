@@ -31,54 +31,54 @@
 #include <fcntl.h>
 
 
-int
+ကိန်းပြည့်
 do_test (void)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  ကိန်းပြည့် status;
+  ကိန်းပြည့် errors = 0;
+  var_na buf1[1000];
+  var_na *cp;
+  var_na ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  အကယ်၍ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  အကယ်၍ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  အကယ်၍ (strchr ("hello world", ch++) == NULL)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  const var_na * const hw = "hello world";
+  အကယ်၍ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  အကယ်၍ (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  မဟုတ်ပါက
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  ပြန်ပေး status;
 }
 
 #include <support/test-driver.c>

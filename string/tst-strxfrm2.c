@@ -2,25 +2,25 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+ကိန်းပြည့်
 do_test (void)
 {
-  static const char test_locale[] = "de_DE.UTF-8";
+  static const var_na test_locale[] = "de_DE.UTF-8";
 
-  int res = 0;
+  ကိန်းပြည့် res = 0;
 
-  char buf[20];
+  var_na buf[20];
   size_t l1 = strxfrm (NULL, "ab", 0);
   size_t l2 = strxfrm (buf, "ab", 1);
-  size_t l3 = strxfrm (buf, "ab", sizeof (buf));
-  if (l3 < sizeof (buf) && strlen (buf) != l3)
+  size_t l3 = strxfrm (buf, "ab", parimaa_na (buf));
+  အကယ်၍ (l3 < parimaa_na (buf) && strlen (buf) != l3)
     {
       puts ("C locale l3 test failed");
       res = 1;
     }
 
   size_t l4 = strxfrm (buf, "ab", l1 + 1);
-  if (l4 < l1 + 1 && strlen (buf) != l4)
+  အကယ်၍ (l4 < l1 + 1 && strlen (buf) != l4)
     {
       puts ("C locale l4 test failed");
       res = 1;
@@ -28,36 +28,36 @@ do_test (void)
 
   buf[l1] = 'Z';
   size_t l5 = strxfrm (buf, "ab", l1);
-  if (buf[l1] != 'Z')
+  အကယ်၍ (buf[l1] != 'Z')
     {
       puts ("C locale l5 test failed");
       res = 1;
     }
 
-  if (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
+  အကယ်၍ (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
     {
       puts ("C locale retval test failed");
       res = 1;
     }
 
-  if (setlocale (LC_ALL, test_locale) == NULL)
+  အကယ်၍ (setlocale (LC_ALL, test_locale) == NULL)
     {
       printf ("cannot set locale \"%s\"\n", test_locale);
       res = 1;
     }
-  else
+  မဟုတ်ပါက
     {
       l1 = strxfrm (NULL, "ab", 0);
       l2 = strxfrm (buf, "ab", 1);
-      l3 = strxfrm (buf, "ab", sizeof (buf));
-      if (l3 < sizeof (buf) && strlen (buf) != l3)
+      l3 = strxfrm (buf, "ab", parimaa_na (buf));
+      အကယ်၍ (l3 < parimaa_na (buf) && strlen (buf) != l3)
 	{
 	  puts ("UTF-8 locale l3 test failed");
 	  res = 1;
 	}
 
       l4 = strxfrm (buf, "ab", l1 + 1);
-      if (l4 < l1 + 1 && strlen (buf) != l4)
+      အကယ်၍ (l4 < l1 + 1 && strlen (buf) != l4)
 	{
 	  puts ("UTF-8 locale l4 test failed");
 	  res = 1;
@@ -65,20 +65,20 @@ do_test (void)
 
       buf[l1] = 'Z';
       l5 = strxfrm (buf, "ab", l1);
-      if (buf[l1] != 'Z')
+      အကယ်၍ (buf[l1] != 'Z')
 	{
 	  puts ("UTF-8 locale l5 test failed");
 	  res = 1;
 	}
 
-      if (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
+      အကယ်၍ (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
 	{
 	  puts ("UTF-8 locale retval test failed");
 	  res = 1;
 	}
     }
 
-  return res;
+  ပြန်ပေး res;
 }
 
 #include <support/test-driver.c>

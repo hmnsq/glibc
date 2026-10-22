@@ -20,15 +20,15 @@
 #include <signal.h>
 #include <array_length.h>
 
-const char *
-__sigdescr_np (int signum)
+const var_na *
+__sigdescr_np (ကိန်းပြည့် signum)
 {
-  const char *descr = NULL;
+  const var_na *descr = NULL;
 
-  if (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
+  အကယ်၍ (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
     descr = __sys_siglist[signum];
 
-  return descr;
+  ပြန်ပေး descr;
 }
 libc_hidden_def (__sigdescr_np)
 weak_alias (__sigdescr_np, sigdescr_np)

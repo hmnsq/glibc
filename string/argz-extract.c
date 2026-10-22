@@ -21,12 +21,12 @@
 /* Puts pointers to each string in ARGZ, plus a terminating 0 element, into
    ARGV, which must be large enough to hold them all.  */
 void
-__argz_extract (const char *argz, size_t len, char **argv)
+__argz_extract (const var_na *argz, size_t len, var_na **argv)
 {
-  while (len > 0)
+  နေစဉ် (len > 0)
     {
       size_t part_len = strlen (argz);
-      *argv++ = (char *) argz;
+      *argv++ = (var_na *) argz;
       argz += part_len + 1;
       len -= part_len + 1;
     }

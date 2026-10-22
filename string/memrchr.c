@@ -31,48 +31,48 @@
 #endif
 
 void *
-__memrchr (const void *s, int c_in, size_t n)
+__memrchr (const void *s, ကိန်းပြည့် c_in, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  အကယ်၍ (__glibc_unlikely (n == 0))
+    ပြန်ပေး NULL;
 
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
+  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, parimaa_na (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
 
   op_t word = *--word_ptr;
   op_t repeated_c = repeat_bytes (c_in);
 
   /* Compute the address of the word containing the initial byte. */
-  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, sizeof (op_t));
+  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, parimaa_na (op_t));
 
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
   find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  အကယ်၍ (mask != 0)
     {
-      char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      var_na *ret = (var_na *) word_ptr + index_last (mask);
+      ပြန်ပေး ret >= (var_na *) s ? ret : NULL;
     }
-  if (word_ptr == sword)
-    return NULL;
+  အကယ်၍ (word_ptr == sword)
+    ပြန်ပေး NULL;
   word = *--word_ptr;
 
-  while (word_ptr != sword)
+  နေစဉ် (word_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
+      အကယ်၍ (has_eq (word, repeated_c))
+	ပြန်ပေး (var_na *) word_ptr + index_last_eq (word, repeated_c);
       word = *--word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  အကယ်၍ (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      var_na *ret = (var_na *) word_ptr + index_last_eq (word, repeated_c);
+      အကယ်၍ (ret >= (var_na *) s)
+	ပြန်ပေး ret;
     }
-  return NULL;
+  ပြန်ပေး NULL;
 }
 #ifndef MEMRCHR
 libc_hidden_def (__memrchr)
