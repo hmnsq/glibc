@@ -24,35 +24,35 @@
 #include <libc-internal.h>
 
 /* Return a string describing the meaning of the signal number SIGNUM.  */
-char *
-strsignal (int signum)
+var_na *
+strsignal (ཧྲིལ signum)
 {
-  const char *desc = __sigdescr_np (signum);
-  if (desc != NULL)
-    return _(desc);
+  const var_na *desc = __sigdescr_np (signum);
+  གལ་ཏེ (desc != NULL)
+    ཕྱིར _(desc);
 
-  if (__libc_initial)
+  གལ་ཏེ (__libc_initial)
     {
-      struct tls_internal_t *tls_internal = __glibc_tls_internal ();
+      sa_nracanaa tls_internal_t *tls_internal = __glibc_tls_internal ();
       free (tls_internal->strsignal_buf);
 
-      int r;
+      ཧྲིལ r;
 #ifdef SIGRTMIN
-      if (signum >= SIGRTMIN && signum <= SIGRTMAX)
+      གལ་ཏེ (signum >= SIGRTMIN && signum <= SIGRTMAX)
 	r = __asprintf (&tls_internal->strsignal_buf, _("Real-time signal %d"),
 			signum - SIGRTMIN);
-      else
+      དེ་མིན
 #endif
 	r = __asprintf (&tls_internal->strsignal_buf, _("Unknown signal %d"),
 			signum);
 
-      if (r >= 0)
-	return tls_internal->strsignal_buf;
-      else
+      གལ་ཏེ (r >= 0)
+	ཕྱིར tls_internal->strsignal_buf;
+      དེ་མིན
 	tls_internal->strsignal_buf = NULL;
     }
   /* Fall through on asprintf error, and for !__libc_initial:
      secondary namespaces use a different malloc and cannot
      participate in the buffer management.  */
-  return _("Unknown signal");
+  ཕྱིར _("Unknown signal");
 }

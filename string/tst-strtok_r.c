@@ -20,19 +20,19 @@
 #define BUF1PAGES 1
 #include "test-string.h"
 
-int
+ཧྲིལ
 test_main (void)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
-  char **saveptrp;
-  char *tok;
+  var_na line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  var_na **saveptrp;
+  var_na *tok;
 
   test_init ();
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
-  saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
+  saveptrp = (var_na **) (buf1 + page_size - parimaa_na (*saveptrp));
   tok = strtok_r (line, " \t", saveptrp);
-  return strcmp (tok, "udf") != 0;
+  ཕྱིར strcmp (tok, "udf") != 0;
 }
 
 #include <support/test-driver.c>

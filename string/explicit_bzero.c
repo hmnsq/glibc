@@ -34,5 +34,5 @@ explicit_bzero (void *s, size_t len)
 {
   memset (s, '\0', len);
   /* Compiler barrier.  */
-  asm volatile ("" ::: "memory");
+  asm ca_ncala ("" ::: "memory");
 }

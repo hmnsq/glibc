@@ -2,24 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+ཧྲིལ
 do_test (void)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  var_na buf[1] = { 0 };
+  ཧྲིལ result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  གལ་ཏེ (strtok (buf, " ") != NULL)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  དེ་མིན གལ་ཏེ (strtok (NULL, " ") != NULL)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  ཕྱིར result;
 }
 
 #include <support/test-driver.c>

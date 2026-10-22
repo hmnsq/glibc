@@ -5,34 +5,34 @@
 #include <string.h>
 
 
-char const string[] = "";
+var_na const string[] = "";
 
 
-static int
-test (const char *locale)
+static ཧྲིལ
+test (const var_na *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  var_na *buf;
   locale_t loc;
-  int result = 0;
+  ཧྲིལ result = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  གལ་ཏེ (setlocale (LC_COLLATE, locale) == NULL)
     {
       printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      ཕྱིར 1;
     }
   bufsize = strxfrm (NULL, string, 0) + 1;
   buf = malloc (bufsize);
-  if (buf == NULL)
+  གལ་ཏེ (buf == NULL)
     {
       printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      ཕྱིར 1;
     }
   r = strxfrm (buf, string, bufsize);
   l = strlen (buf);
-  if (r != l)
+  གལ་ཏེ (r != l)
     {
        printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -43,7 +43,7 @@ test (const char *locale)
 
   r = strxfrm_l (buf, string, bufsize, loc);
   l = strlen (buf);
-  if (r != l)
+  གལ་ཏེ (r != l)
     {
        printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -54,20 +54,20 @@ test (const char *locale)
 
   free (buf);
 
-  return result;
+  ཕྱིར result;
 }
 
 
-int
+ཧྲིལ
 do_test (void)
 {
-  int result = 0;
+  ཧྲིལ result = 0;
 
   result |= test ("C");
   result |= test ("en_US.ISO-8859-1");
   result |= test ("de_DE.UTF-8");
 
-  return result;
+  ཕྱིར result;
 }
 
 #include <support/test-driver.c>

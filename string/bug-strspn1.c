@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <libc-diag.h>
 
-int
-main (void)
+ཧྲིལ
+གཙོ (void)
 {
-  const char *a = "abc";
-  const char *b = a;
+  const var_na *a = "abc";
+  const var_na *b = a;
 
   DIAG_PUSH_NEEDS_COMMENT;
   /* GCC 9 correctly warns that this call to strspn is useless.  That
@@ -19,8 +19,8 @@ main (void)
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strspn (b++, "");
   DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  གལ་ཏེ (b != a + 1)
+    ཕྱིར 1;
 
-  return 0;
+  ཕྱིར 0;
 }

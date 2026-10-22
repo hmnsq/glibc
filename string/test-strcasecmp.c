@@ -26,61 +26,61 @@
 #define TEST_NAME "strcasecmp"
 #include "test-string.h"
 
-typedef int (*proto_t) (const char *, const char *);
+typedef ཧྲིལ (*proto_t) (const var_na *, const var_na *);
 
 IMPL (strcasecmp, 1)
 
 /* Naive implementation to verify results.  */
-int
-simple_strcasecmp (const char *s1, const char *s2)
+ཧྲིལ
+simple_strcasecmp (const var_na *s1, const var_na *s2)
 {
-  int ret;
+  ཧྲིལ ret;
 
-  while ((ret = ((unsigned char) tolower (*s1)
-		 - (unsigned char) tolower (*s2))) == 0
+  སྐབས ((ret = ((unsigned var_na) tolower (*s1)
+		 - (unsigned var_na) tolower (*s2))) == 0
 	 && *s1++)
     ++s2;
-  return ret;
+  ཕྱིར ret;
 }
 
 static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, int exp_result)
+do_one_test (impl_t *impl, const var_na *s1, const var_na *s2, ཧྲིལ exp_result)
 {
-  int result = CALL (impl, s1, s2);
-  if ((exp_result == 0 && result != 0)
+  ཧྲིལ result = CALL (impl, s1, s2);
+  གལ་ཏེ ((exp_result == 0 && result != 0)
       || (exp_result < 0 && result >= 0)
       || (exp_result > 0 && result <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return;
+      ཕྱིར;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int max_char,
-	 int exp_result)
+do_test (size_t align1, size_t align2, size_t len, ཧྲིལ max_char,
+	 ཧྲིལ exp_result)
 {
   size_t i;
-  char *s1, *s2;
+  var_na *s1, *s2;
 
-  if (len == 0)
-    return;
+  གལ་ཏེ (len == 0)
+    ཕྱིར;
 
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 1) >= page_size)
-    return;
+  གལ་ཏེ (align1 + (len + 1) >= page_size)
+    ཕྱིར;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 1) >= page_size)
-    return;
+  གལ་ཏེ (align2 + (len + 1) >= page_size)
+    ཕྱིར;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (var_na *) (buf1 + align1);
+  s2 = (var_na *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  ཆེད་དུ (i = 0; i < len; i++)
     {
       s1[i] = toupper (1 + 23 * i % max_char);
       s2[i] = tolower (s1[i]);
@@ -90,26 +90,26 @@ do_test (size_t align1, size_t align2, size_t len, int max_char,
   s1[len + 1] = 23;
   s2[len + 1] = 24 + exp_result;
 
-  if ((s2[len - 1] == 'z' && exp_result == -1)
+  གལ་ཏེ ((s2[len - 1] == 'z' && exp_result == -1)
       || (s2[len - 1] == 'a' && exp_result == 1))
     s1[len - 1] += exp_result;
-  else if ((s1[len - 1] == 'Z' + 1 && exp_result == 1)
+  དེ་མིན གལ་ཏེ ((s1[len - 1] == 'Z' + 1 && exp_result == 1)
            || (s1[len - 1] == 'A' - 1 && exp_result == -1))
     s1[len - 1] = tolower (s2[len - 1]) + exp_result;
-  else
+  དེ་མིན
     s2[len - 1] -= exp_result;
 
   /* For some locals this is not guaranteed yet.  */
-  if (tolower (s1[len - 1]) - tolower (s2[len - 1]) != exp_result)
+  གལ་ཏེ (tolower (s1[len - 1]) - tolower (s2[len - 1]) != exp_result)
     {
-      if (exp_result == -1)
+      གལ་ཏེ (exp_result == -1)
         {
           s1[len - 1] = tolower ('a');
           s2[len - 1] = toupper (tolower ('a') - 1);
         }
-      else if (exp_result == 0)
+      དེ་མིན གལ་ཏེ (exp_result == 0)
         s1[len - 1] = toupper (s2[len - 1]);
-      else
+      དེ་མིན
         {
           s1[len - 1] = tolower ('a');
           s2[len - 1] = toupper (tolower ('a') + 1);
@@ -124,70 +124,70 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, pos, len1, len2;
-  int result;
+  ཧྲིལ result;
   long r;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
+  unsigned var_na *p1 = buf1 + page_size - 512;
+  unsigned var_na *p2 = buf2 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ཆེད་དུ (n = 0; n < ITERATIONS; n++)
     {
       align1 = random () & 31;
-      if (random () & 1)
+      གལ་ཏེ (random () & 1)
 	align2 = random () & 31;
-      else
+      དེ་མིན
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1 > align2 ? align1 : align2;
-      if (pos + j >= 511)
+      གལ་ཏེ (pos + j >= 511)
 	pos = 510 - j - (random () & 7);
       len1 = random () & 511;
-      if (pos >= len1 && (random () & 1))
+      གལ་ཏེ (pos >= len1 && (random () & 1))
 	len1 = pos + (random () & 7);
-      if (len1 + j >= 512)
+      གལ་ཏེ (len1 + j >= 512)
 	len1 = 511 - j - (random () & 7);
-      if (pos >= len1)
+      གལ་ཏེ (pos >= len1)
 	len2 = len1;
-      else
+      དེ་མིན
 	len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
       j = (pos > len2 ? pos : len2) + align1 + 64;
-      if (j > 512)
+      གལ་ཏེ (j > 512)
 	j = 512;
-      for (i = 0; i < j; ++i)
+      ཆེད་དུ (i = 0; i < j; ++i)
 	{
 	  p1[i] = tolower (random () & 255);
-	  if (i < len1 + align1 && !p1[i])
+	  གལ་ཏེ (i < len1 + align1 && !p1[i])
 	    {
 	      p1[i] = tolower (random () & 255);
-	      if (!p1[i])
+	      གལ་ཏེ (!p1[i])
 		p1[i] = tolower (1 + (random () & 127));
 	    }
 	}
-      for (i = 0; i < j; ++i)
+      ཆེད་དུ (i = 0; i < j; ++i)
 	{
 	  p2[i] = toupper (random () & 255);
-	  if (i < len2 + align2 && !p2[i])
+	  གལ་ཏེ (i < len2 + align2 && !p2[i])
 	    {
 	      p2[i] = toupper (random () & 255);
-	      if (!p2[i])
+	      གལ་ཏེ (!p2[i])
 		toupper (p2[i] = 1 + (random () & 127));
 	    }
 	}
 
       result = 0;
       memcpy (p2 + align2, p1 + align1, pos);
-      if (pos < len1)
+      གལ་ཏེ (pos < len1)
 	{
-	  if (tolower (p2[align2 + pos]) == p1[align1 + pos])
+	  གལ་ཏེ (tolower (p2[align2 + pos]) == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = toupper (random () & 255);
-	      if (tolower (p2[align2 + pos]) == p1[align1 + pos])
+	      གལ་ཏེ (tolower (p2[align2 + pos]) == p1[align1 + pos])
 		p2[align2 + pos] = toupper (p1[align1 + pos]
 					    + 3 + (random () & 127));
 	    }
 
-	  if (p1[align1 + pos] < tolower (p2[align2 + pos]))
+	  གལ་ཏེ (p1[align1 + pos] < tolower (p2[align2 + pos]))
 	    result = -1;
-	  else
+	  དེ་མིན
 	    result = 1;
 	}
       p1[len1 + align1] = 0;
@@ -195,11 +195,11 @@ do_random_tests (void)
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (char *) (p1 + align1), (char *) (p2 + align2));
+	  r = CALL (impl, (var_na *) (p1 + align1), (var_na *) (p2 + align2));
 	  /* Test whether on 64-bit architectures where ABI requires
 	     callee to promote has the promotion been done.  */
 	  asm ("" : "=g" (r) : "0" (r));
-	  if ((r == 0 && result)
+	  གལ་ཏེ ((r == 0 && result)
 	      || (r < 0 && result >= 0)
 	      || (r > 0 && result <= 0))
 	    {
@@ -212,11 +212,11 @@ do_random_tests (void)
 }
 
 static void
-test_locale (const char *locale, int extra_tests)
+test_locale (const var_na *locale, ཧྲིལ extra_tests)
 {
   size_t i, j, k;
   const size_t test_len = MIN(TEST_LEN, 3 * 4096);
-  if (setlocale (LC_CTYPE, locale) == NULL)
+  གལ་ཏེ (setlocale (LC_CTYPE, locale) == NULL)
     {
       error (0, 0, "cannot set locale \"%s\"", locale);
       ret = 1;
@@ -227,14 +227,14 @@ test_locale (const char *locale, int extra_tests)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 16; ++i)
+  ཆེད་དུ (i = 1; i < 16; ++i)
     {
       do_test (i, i, i, 127, 0);
       do_test (i, i, i, 127, 1);
       do_test (i, i, i, 127, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  ཆེད་དུ (i = 1; i < 10; ++i)
     {
       do_test (0, 0, 2 << i, 127, 0);
       do_test (0, 0, 2 << i, 254, 0);
@@ -244,7 +244,7 @@ test_locale (const char *locale, int extra_tests)
       do_test (0, 0, 2 << i, 254, -1);
     }
 
-  for (i = 1; i < 8; ++i)
+  ཆེད་དུ (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, 127, 0);
       do_test (2 * i, i, 8 << i, 254, 0);
@@ -254,9 +254,9 @@ test_locale (const char *locale, int extra_tests)
       do_test (2 * i, i, 8 << i, 254, -1);
     }
 
-  for (j = 0; extra_tests && j < 160; ++j)
+  ཆེད་དུ (j = 0; extra_tests && j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      ཆེད་དུ (i = 0; i < test_len;)
         {
           do_test (getpagesize () - j - 1, 0, i, 127, 0);
           do_test (getpagesize () - j - 1, 0, i, 127, 1);
@@ -274,7 +274,7 @@ test_locale (const char *locale, int extra_tests)
           do_test (j, getpagesize () - j - 1, i, 127, 1);
           do_test (j, getpagesize () - j - 1, i, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          ཆེད་དུ (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i, 127, 0);
               do_test (getpagesize () - k - 1, getpagesize () - j - 1, i, 127,
@@ -287,29 +287,29 @@ test_locale (const char *locale, int extra_tests)
                        -1);
             }
 
-          if (i < 32)
+          གལ་ཏེ (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          དེ་མིན གལ་ཏེ (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          དེ་མིན གལ་ཏེ (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              གལ་ཏེ (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          དེ་མིན གལ་ཏེ (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          དེ་མིན
             {
               i += 1;
             }
@@ -319,7 +319,7 @@ test_locale (const char *locale, int extra_tests)
   do_random_tests ();
 }
 
-int
+ཧྲིལ
 test_main (void)
 {
   test_init ();
@@ -330,7 +330,7 @@ test_main (void)
   test_locale ("tr_TR.ISO-8859-9", 0);
   test_locale ("tr_TR.UTF-8", 0);
 
-  return ret;
+  ཕྱིར ret;
 }
 
 #include <support/test-driver.c>

@@ -42,62 +42,62 @@ DIAG_POP_NEEDS_COMMENT;
 #endif
 
 void
-WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_FWD_ALIGNED (long ཧྲིལ dstp, long ཧྲིལ srcp, size_t len)
 {
   op_t a0, a1;
 
   switch (len % 8)
     {
-    case 2:
+    pak_sa 2:
       a0 = ((op_t *) srcp)[0];
       srcp -= 6 * OPSIZ;
       dstp -= 7 * OPSIZ;
       len += 6;
       goto do1;
-    case 3:
+    pak_sa 3:
       a1 = ((op_t *) srcp)[0];
       srcp -= 5 * OPSIZ;
       dstp -= 6 * OPSIZ;
       len += 5;
       goto do2;
-    case 4:
+    pak_sa 4:
       a0 = ((op_t *) srcp)[0];
       srcp -= 4 * OPSIZ;
       dstp -= 5 * OPSIZ;
       len += 4;
       goto do3;
-    case 5:
+    pak_sa 5:
       a1 = ((op_t *) srcp)[0];
       srcp -= 3 * OPSIZ;
       dstp -= 4 * OPSIZ;
       len += 3;
       goto do4;
-    case 6:
+    pak_sa 6:
       a0 = ((op_t *) srcp)[0];
       srcp -= 2 * OPSIZ;
       dstp -= 3 * OPSIZ;
       len += 2;
       goto do5;
-    case 7:
+    pak_sa 7:
       a1 = ((op_t *) srcp)[0];
       srcp -= 1 * OPSIZ;
       dstp -= 2 * OPSIZ;
       len += 1;
       goto do6;
 
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    pak_sa 0:
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	ཕྱིར;
       a0 = ((op_t *) srcp)[0];
       srcp -= 0 * OPSIZ;
       dstp -= 1 * OPSIZ;
       goto do7;
-    case 1:
+    pak_sa 1:
       a1 = ((op_t *) srcp)[0];
       srcp -=-1 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do8;			/* No-op.  */
     }
@@ -141,7 +141,7 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  སྐབས (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -159,10 +159,10 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
 #endif
 
 void
-WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_FWD_DEST_ALIGNED (long ཧྲིལ dstp, long ཧྲིལ srcp, size_t len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  ཧྲིལ sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -176,36 +176,36 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
 
   switch (len % 4)
     {
-    case 2:
+    pak_sa 2:
       a1 = ((op_t *) srcp)[0];
       a2 = ((op_t *) srcp)[1];
       srcp -= 1 * OPSIZ;
       dstp -= 3 * OPSIZ;
       len += 2;
       goto do1;
-    case 3:
+    pak_sa 3:
       a0 = ((op_t *) srcp)[0];
       a1 = ((op_t *) srcp)[1];
       srcp -= 0 * OPSIZ;
       dstp -= 2 * OPSIZ;
       len += 1;
       goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    pak_sa 0:
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	ཕྱིར;
       a3 = ((op_t *) srcp)[0];
       a0 = ((op_t *) srcp)[1];
       srcp -=-1 * OPSIZ;
       dstp -= 1 * OPSIZ;
       len += 0;
       goto do3;
-    case 1:
+    pak_sa 1:
       a2 = ((op_t *) srcp)[0];
       a3 = ((op_t *) srcp)[1];
       srcp -=-2 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do4;			/* No-op.  */
     }
@@ -229,7 +229,7 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  སྐབས (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -247,62 +247,62 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
 #endif
 
 void
-WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_BWD_ALIGNED (long ཧྲིལ dstp, long ཧྲིལ srcp, size_t len)
 {
   op_t a0, a1;
 
   switch (len % 8)
     {
-    case 2:
+    pak_sa 2:
       srcp -= 2 * OPSIZ;
       dstp -= 1 * OPSIZ;
       a0 = ((op_t *) srcp)[1];
       len += 6;
       goto do1;
-    case 3:
+    pak_sa 3:
       srcp -= 3 * OPSIZ;
       dstp -= 2 * OPSIZ;
       a1 = ((op_t *) srcp)[2];
       len += 5;
       goto do2;
-    case 4:
+    pak_sa 4:
       srcp -= 4 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[3];
       len += 4;
       goto do3;
-    case 5:
+    pak_sa 5:
       srcp -= 5 * OPSIZ;
       dstp -= 4 * OPSIZ;
       a1 = ((op_t *) srcp)[4];
       len += 3;
       goto do4;
-    case 6:
+    pak_sa 6:
       srcp -= 6 * OPSIZ;
       dstp -= 5 * OPSIZ;
       a0 = ((op_t *) srcp)[5];
       len += 2;
       goto do5;
-    case 7:
+    pak_sa 7:
       srcp -= 7 * OPSIZ;
       dstp -= 6 * OPSIZ;
       a1 = ((op_t *) srcp)[6];
       len += 1;
       goto do6;
 
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    pak_sa 0:
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	ཕྱིར;
       srcp -= 8 * OPSIZ;
       dstp -= 7 * OPSIZ;
       a0 = ((op_t *) srcp)[7];
       goto do7;
-    case 1:
+    pak_sa 1:
       srcp -= 9 * OPSIZ;
       dstp -= 8 * OPSIZ;
       a1 = ((op_t *) srcp)[8];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do8;			/* No-op.  */
     }
@@ -342,7 +342,7 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  སྐབས (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -360,10 +360,10 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
 #endif
 
 void
-WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+WORDCOPY_BWD_DEST_ALIGNED (long ཧྲིལ dstp, long ཧྲིལ srcp, size_t len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  ཧྲིལ sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -378,35 +378,35 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
 
   switch (len % 4)
     {
-    case 2:
+    pak_sa 2:
       srcp -= 3 * OPSIZ;
       dstp -= 1 * OPSIZ;
       a2 = ((op_t *) srcp)[2];
       a1 = ((op_t *) srcp)[1];
       len += 2;
       goto do1;
-    case 3:
+    pak_sa 3:
       srcp -= 4 * OPSIZ;
       dstp -= 2 * OPSIZ;
       a3 = ((op_t *) srcp)[3];
       a2 = ((op_t *) srcp)[2];
       len += 1;
       goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    pak_sa 0:
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	ཕྱིར;
       srcp -= 5 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[4];
       a3 = ((op_t *) srcp)[3];
       goto do3;
-    case 1:
+    pak_sa 1:
       srcp -= 6 * OPSIZ;
       dstp -= 4 * OPSIZ;
       a1 = ((op_t *) srcp)[5];
       a0 = ((op_t *) srcp)[4];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
+      གལ་ཏེ (OP_T_THRES <= 3 * OPSIZ && len == 0)
 	goto do0;
       goto do4;			/* No-op.  */
     }
@@ -430,7 +430,7 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  སྐབས (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
