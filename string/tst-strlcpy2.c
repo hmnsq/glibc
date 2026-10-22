@@ -19,10 +19,10 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlcpy"
-#else
+#وإلا
 # define TEST_NAME "wcslcpy"
 #endif /* WIDE */
-#include "test-string.h"
+#ضمن "test-string.h"
 
 #ifdef WIDE
 # include <wchar.h>
@@ -34,9 +34,9 @@
 # define SMALL_CHAR 1273
 # define STRLCPY wcslcpy
 # define STRLEN wcslen
-#else
+#وإلا
 # define BIG_CHAR CHAR_MAX
-# define CHAR char
+# define CHAR حرف
 # define MEMCMP memcmp
 # define MEMSET memset
 # define SIMPLE_STRLCPY simple_strlcpy
@@ -47,57 +47,57 @@
 
 /* Naive implementation to verify results.  */
 size_t
-SIMPLE_STRLCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STRLCPY (CHAR *dst, ثابت CHAR *src, size_t n)
 {
   size_t ret = STRLEN (src);
 
-  if (!n)
-    return ret;
+  إذا (!n)
+    إرجاع ret;
 
-  while (--n)
-    if ((*dst++ = *src++) == '\0')
-      return ret;
+  بينما (--n)
+    إذا ((*dst++ = *src++) == '\0')
+      إرجاع ret;
   *dst = '\0';
-  return ret;
+  إرجاع ret;
 }
 
 IMPL (SIMPLE_STRLCPY, 0)
 IMPL (STRLCPY, 1)
 
-typedef size_t (*proto_t) (CHAR *, const CHAR *, size_t);
+تعريفنوع size_t (*proto_t) (CHAR *, ثابت CHAR *, size_t);
 
-static void
-do_one_test (impl_t *impl, CHAR *dst, const CHAR *src, size_t len, size_t n)
+ساكن فراغ
+do_one_test (impl_t *impl, CHAR *dst, ثابت CHAR *src, size_t len, size_t n)
 {
-  if (CALL (impl, dst, src, n) != len)
+  إذا (CALL (impl, dst, src, n) != len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     CALL (impl, dst, src, n), len);
       ret = 1;
-      return;
+      إرجاع;
     }
 
-  if (n == 0)
-    return;
+  إذا (n == 0)
+    إرجاع;
 
   len = (len >= n ? n - 1 : len);
-  if (MEMCMP (dst, src, len) != 0)
+  إذا (MEMCMP (dst, src, len) != 0)
     {
       error (0, 0, "Wrong result in function1 %s", impl->name);
       ret = 1;
-      return;
+      إرجاع;
     }
 
-  if (dst [len] != '\0')
+  إذا (dst [len] != '\0')
     {
       error (0, 0, "Wrong result in function2 %s", impl->name);
       ret = 1;
-      return;
+      إرجاع;
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+ساكن فراغ
+do_test (size_t align1, size_t align2, size_t len, size_t n, صحيح max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -105,17 +105,17 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
   /* For wcslcpy: align1 and align2 here mean alignment not in bytes,
      but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t)).  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  إذا ((align1 + len) * حجم (CHAR) >= page_size)
+    إرجاع;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  إذا ((align2 + len) * حجم (CHAR) >= page_size)
+    إرجاع;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len; ++i)
+  لكل (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
@@ -123,17 +123,17 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
     do_one_test (impl, s2, s1, len, n);
 }
 
-static void
-do_page_tests (void)
+ساكن فراغ
+do_page_tests (فراغ)
 {
   CHAR *s1, *s2;
-  const size_t maxoffset = 64;
+  ثابت size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (CHAR *) buf1 + BUF1PAGES * page_size / sizeof(CHAR) - maxoffset;
+  s1 = (CHAR *) buf1 + BUF1PAGES * page_size / حجم(CHAR) - maxoffset;
   /* s2 needs room to put a string with size of maxoffset + 1 at s2 +
      (maxoffset - 1).  */
-  s2 = (CHAR *) buf2 + page_size / sizeof(CHAR) - maxoffset * 2;
+  s2 = (CHAR *) buf2 + page_size / حجم(CHAR) - maxoffset * 2;
 
   MEMSET (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -146,9 +146,9 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
+  لكل (size_t off1 = 0; off1 < maxoffset; off1++)
     {
-      for (size_t off2 = 0; off2 < maxoffset; off2++)
+      لكل (size_t off2 = 0; off2 < maxoffset; off2++)
 	{
 	  FOR_EACH_IMPL (impl, 0)
 	    do_one_test (impl, s2 + off2, s1 + off1, maxoffset - off1 - 1,
@@ -157,69 +157,69 @@ do_page_tests (void)
     }
 }
 
-static void
-do_random_tests (void)
+ساكن فراغ
+do_random_tests (فراغ)
 {
   size_t i, j, n, align1, align2, len, size, mode;
   CHAR *p1 = (CHAR *) (buf1 + page_size) - 1024;
   CHAR *p2 = (CHAR *) (buf2 + page_size) - 1024;
   size_t res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  لكل (n = 0; n < ITERATIONS; n++)
     {
       /* For wcslcpy: align1 and align2 here mean align not in bytes,
 	 but in wchar_ts, in bytes it will equal to align * (sizeof
 	 (wchar_t)).  */
 
       mode = random ();
-      if (mode & 1)
+      إذا (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  إذا (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  وإلا
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  إذا (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  إذا (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  وإلا
 	    len = 512;
-	  if (len >= 512)
+	  إذا (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      وإلا
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  إذا (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  وإلا
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  إذا (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  إذا (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      إذا (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  وإلا
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  إذا ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1;
-      for (i = 0; i < j; i++)
+      لكل (i = 0; i < j; i++)
 	{
 	  p1[i] = random () & BIG_CHAR;
-	  if (i >= align1 && i < len + align1 && !p1[i])
+	  إذا (i >= align1 && i < len + align1 && !p1[i])
 	    p1[i] = (random () & SMALL_CHAR) + 3;
 	}
       p1[i] = 0;
@@ -229,61 +229,61 @@ do_random_tests (void)
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = CALL (impl, (CHAR *) (p2 + align2),
 		      (CHAR *) (p1 + align1), size);
-	  if (res != len)
+	  إذا (res != len)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd) %zd != %zd",
 		     n, impl->name, align1, align2, len, res);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  لكل (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      إذا (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  اكسر;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 > j)
+	  إذا (size + align2 > j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  لكل (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      إذا (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  اكسر;
 		}
 	    }
 	  j = len;
 	  /* Check for zero size.  */
-	  if (size)
+	  إذا (size)
 	    {
-	      if (size <= j)
+	      إذا (size <= j)
 		j = size - 1;
-	      if (MEMCMP (p1 + align1, p2 + align2, j))
+	      إذا (MEMCMP (p1 + align1, p2 + align2, j))
 		{
 		  error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
 		}
-	      if (p2[align2 + j])
+	      إذا (p2[align2 + j])
 		{
 		  error (0, 0, "Iteration %zd - garbage after size, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  اكسر;
 		}
 	    }
 	}
     }
 }
 
-int
-test_main (void)
+صحيح
+test_main (فراغ)
 {
   size_t i;
 
@@ -294,7 +294,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  لكل (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, SMALL_CHAR);
       do_test (i, i, 16, 16, BIG_CHAR);
@@ -306,7 +306,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  لكل (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, SMALL_CHAR);
       do_test (0, 0, 16 << i, 8 << i, SMALL_CHAR);
@@ -316,7 +316,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  إرجاع ret;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

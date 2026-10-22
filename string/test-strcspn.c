@@ -21,18 +21,18 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#وإلا
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
-#include "test-string.h"
+#ضمن "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR حرف
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#وإلا
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -41,40 +41,40 @@
 # define STRLEN wcslen
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+تعريفنوع size_t (*proto_t) (ثابت CHAR *, ثابت CHAR *);
+size_t SIMPLE_STRCSPN (ثابت CHAR *, ثابت CHAR *);
+size_t STUPID_STRCSPN (ثابت CHAR *, ثابت CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (ثابت CHAR *s, ثابت CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  ثابت CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  بينما ((c = *s++) != '\0')
+    لكل (r = rej; *r != '\0'; ++r)
+      إذا (*r == c)
+	إرجاع s - str - 1;
+  إرجاع s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (ثابت CHAR *s, ثابت CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  لكل (i = 0; i < ns; ++i)
+    لكل (j = 0; j < nrej; ++j)
+      إذا (s[i] == rej[j])
+	إرجاع i;
+  إرجاع i;
 }
 
 #undef CHAR
 #undef STRLEN
-#include "test-strpbrk.c"
+#ضمن "test-strpbrk.c"

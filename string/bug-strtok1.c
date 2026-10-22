@@ -1,27 +1,27 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#ضمن <string.h>
+#ضمن <stdio.h>
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  ثابت حرف str[] = "axaaba";
+  حرف *token;
+  حرف *cp;
+  حرف *l;
+  صحيح result = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
   printf ("cp = %p, len = %zu\n", cp, strlen (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == عدم || strcmp (token, "x");
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "ab");
-  result |= token != NULL;
+  result |= token != عدم;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "a");
-  result |= token != NULL;
+  result |= token != عدم;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
 
   puts ("test strtok_r");
@@ -29,16 +29,16 @@ do_test (void)
   size_t len = strlen (cp);
   printf ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == عدم || strcmp (token, "x");
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != عدم || l != cp + len;
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != عدم || l != cp + len;
   printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
 
-  return result;
+  إرجاع result;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>
