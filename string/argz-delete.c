@@ -22,15 +22,15 @@
 
 /* Delete ENTRY from ARGZ & ARGZ_LEN, if any.  */
 void
-argz_delete (char **argz, size_t *argz_len, char *entry)
+argz_delete (var_na **argz, size_t *argz_len, var_na *entry)
 {
-  if (entry)
+  ꦪꦼꦤ꧀ (entry)
     /* Get rid of the old value for NAME.  */
     {
       size_t entry_len = strlen (entry) + 1;
       *argz_len -= entry_len;
       memmove (entry, entry + entry_len, *argz_len - (entry - *argz));
-      if (*argz_len == 0)
+      ꦪꦼꦤ꧀ (*argz_len == 0)
 	{
 	  free (*argz);
 	  *argz = NULL;

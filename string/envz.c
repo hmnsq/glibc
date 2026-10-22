@@ -27,57 +27,57 @@
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.
    If NAME contains the separator character, only the portion before it is
    used in the comparison.  */
-char *
-envz_entry (const char *envz, size_t envz_len, const char *name)
+var_na *
+envz_entry (const var_na *envz, size_t envz_len, const var_na *name)
 {
-  while (envz_len)
+  ꦱꦼꦢꦼꦭ (envz_len)
     {
-      const char *p = name;
-      const char *entry = envz;	/* Start of this entry. */
+      const var_na *p = name;
+      const var_na *entry = envz;	/* Start of this entry. */
 
       /* See how far NAME and ENTRY match.  */
-      while (envz_len && *p == *envz && *p && *p != SEP)
+      ꦱꦼꦢꦼꦭ (envz_len && *p == *envz && *p && *p != SEP)
 	p++, envz++, envz_len--;
 
-      if ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
+      ꦪꦼꦤ꧀ ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
 	/* Bingo! */
-	return (char *) entry;
+	ꦮꦭꦶ (var_na *) entry;
 
       /* No match, skip to the next entry.  */
-      while (envz_len && *envz)
+      ꦱꦼꦢꦼꦭ (envz_len && *envz)
 	envz++, envz_len--;
-      if (envz_len)
+      ꦪꦼꦤ꧀ (envz_len)
 	envz++, envz_len--;	/* skip '\0' */
     }
 
-  return NULL;
+  ꦮꦭꦶ NULL;
 }
 libc_hidden_def (envz_entry)
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-char *
-envz_get (const char *envz, size_t envz_len, const char *name)
+var_na *
+envz_get (const var_na *envz, size_t envz_len, const var_na *name)
 {
-  char *entry = envz_entry (envz, envz_len, name);
-  if (entry)
+  var_na *entry = envz_entry (envz, envz_len, name);
+  ꦪꦼꦤ꧀ (entry)
     {
-      while (*entry && *entry != SEP)
+      ꦱꦼꦢꦼꦭ (*entry && *entry != SEP)
 	entry++;
-      if (*entry)
+      ꦪꦼꦤ꧀ (*entry)
 	entry++;
-      else
+      ꦭꦶꦪ
 	entry = NULL;		/* A null entry.  */
     }
-  return entry;
+  ꦮꦭꦶ entry;
 }
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
 void
-envz_remove (char **envz, size_t *envz_len, const char *name)
+envz_remove (var_na **envz, size_t *envz_len, const var_na *name)
 {
-  char *entry = envz_entry (*envz, *envz_len, name);
-  if (entry)
+  var_na *entry = envz_entry (*envz, *envz_len, name);
+  ꦪꦼꦤ꧀ (entry)
     argz_delete (envz, envz_len, entry);
 }
 libc_hidden_def (envz_remove)
@@ -89,20 +89,20 @@ libc_hidden_def (envz_remove)
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
 error_t
-envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
+envz_add (var_na **envz, size_t *envz_len, const var_na *name, const var_na *value)
 {
   envz_remove (envz, envz_len, name);
 
-  if (value)
+  ꦪꦼꦤ꧀ (value)
     /* Add the new value, if there is one.  */
     {
       size_t name_len = strlen (name);
       size_t value_len = strlen (value);
       size_t old_envz_len = *envz_len;
       size_t new_envz_len = old_envz_len + name_len + 1 + value_len + 1;
-      char *new_envz = realloc (*envz, new_envz_len);
+      var_na *new_envz = realloc (*envz, new_envz_len);
 
-      if (new_envz)
+      ꦪꦼꦤ꧀ (new_envz)
 	{
 	  memcpy (new_envz + old_envz_len, name, name_len);
 	  new_envz[old_envz_len + name_len] = SEP;
@@ -112,33 +112,33 @@ envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
 	  *envz = new_envz;
 	  *envz_len = new_envz_len;
 
-	  return 0;
+	  ꦮꦭꦶ 0;
 	}
-      else
-	return ENOMEM;
+      ꦭꦶꦪ
+	ꦮꦭꦶ ENOMEM;
     }
-  else
+  ꦭꦶꦪ
     /* Add a null entry.  */
-    return __argz_add (envz, envz_len, name);
+    ꦮꦭꦶ __argz_add (envz, envz_len, name);
 }
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
 error_t
-envz_merge (char **envz, size_t *envz_len, const char *envz2,
-	    size_t envz2_len, int override)
+envz_merge (var_na **envz, size_t *envz_len, const var_na *envz2,
+	    size_t envz2_len, puur_naa_nka override)
 {
   error_t err = 0;
 
-  while (envz2_len && ! err)
+  ꦱꦼꦢꦼꦭ (envz2_len && ! err)
     {
-      char *old = envz_entry (*envz, *envz_len, envz2);
+      var_na *old = envz_entry (*envz, *envz_len, envz2);
       size_t new_len = strlen (envz2) + 1;
 
-      if (! old)
+      ꦪꦼꦤ꧀ (! old)
 	err = __argz_append (envz, envz_len, envz2, new_len);
-      else if (override)
+      ꦭꦶꦪ ꦪꦼꦤ꧀ (override)
 	{
 	  argz_delete (envz, envz_len, old);
 	  err = __argz_append (envz, envz_len, envz2, new_len);
@@ -148,23 +148,23 @@ envz_merge (char **envz, size_t *envz_len, const char *envz2,
       envz2_len -= new_len;
     }
 
-  return err;
+  ꦮꦭꦶ err;
 }
 
 /* Remove null entries.  */
 void
-envz_strip (char **envz, size_t *envz_len)
+envz_strip (var_na **envz, size_t *envz_len)
 {
-  char *entry = *envz;
+  var_na *entry = *envz;
   size_t left = *envz_len;
-  while (left)
+  ꦱꦼꦢꦼꦭ (left)
     {
       size_t entry_len = strlen (entry) + 1;
       left -= entry_len;
-      if (! strchr (entry, SEP))
+      ꦪꦼꦤ꧀ (! strchr (entry, SEP))
 	/* Null entry. */
 	memmove (entry, entry + entry_len, left);
-      else
+      ꦭꦶꦪ
 	entry += entry_len;
     }
   *envz_len = entry - *envz;

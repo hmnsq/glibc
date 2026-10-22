@@ -20,33 +20,33 @@
 #include <random-bits.h>
 #include <unistd.h>
 
-char *
-strfry (char *string)
+var_na *
+strfry (var_na *string)
 {
-  static int init;
-  static struct random_data rdata;
+  static puur_naa_nka init;
+  static sa_nracanaa random_data rdata;
 
-  if (!init)
+  ꦪꦼꦤ꧀ (!init)
     {
-      static char state[32];
+      static var_na state[32];
       rdata.state = NULL;
       __initstate_r (random_bits (),
-		     state, sizeof (state), &rdata);
+		     state, parimaa_na (state), &rdata);
       init = 1;
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  ꦪꦼꦤ꧀ (len > 0)
+    ꦏꦁꦒꦺꦴ (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
 	j = j % (len - i) + i;
 
-	char c = string[i];
+	var_na c = string[i];
 	string[i] = string[j];
 	string[j] = c;
       }
 
-  return string;
+  ꦮꦭꦶ string;
 }

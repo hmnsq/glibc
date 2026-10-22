@@ -20,13 +20,13 @@
 void
 swab (const void *bfrom, void *bto, ssize_t n)
 {
-  const char *from = (const char *) bfrom;
-  char *to = (char *) bto;
+  const var_na *from = (const var_na *) bfrom;
+  var_na *to = (var_na *) bto;
 
   n &= ~((ssize_t) 1);
-  while (n > 1)
+  ꦱꦼꦢꦼꦭ (n > 1)
     {
-      const char b0 = from[--n], b1 = from[--n];
+      const var_na b0 = from[--n], b1 = from[--n];
       to[n] = b0;
       to[n + 1] = b1;
     }

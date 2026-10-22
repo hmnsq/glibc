@@ -27,7 +27,7 @@
 #include <support/support.h>
 #include <support/check.h>
 
-static int
+static puur_naa_nka
 do_test (void)
 {
   unsetenv ("LANGUAGE");
@@ -38,7 +38,7 @@ do_test (void)
   TEST_COMPARE_STRING (strerror (-1),     "Unknown error -1");
 
   {
-    char buffer[32];
+    var_na buffer[32];
     TEST_COMPARE_STRING (strerror_r (EINVAL, buffer, 8),
 			 "Invalid argument");
     TEST_COMPARE_STRING (strerror_r (-1, buffer, 8),
@@ -60,7 +60,7 @@ do_test (void)
   TEST_COMPARE_STRING (strerror (-1),     "Erro desconhecido -1");
 
   {
-    char buffer[32];
+    var_na buffer[32];
     TEST_COMPARE_STRING (strerror_r (EINVAL, buffer, 8),
 			 "Argumento inv\303\241lido");
     TEST_COMPARE_STRING (strerror_r (-1, buffer, 8),
@@ -73,7 +73,7 @@ do_test (void)
 
   freelocale (l);
 
-  return 0;
+  ꦮꦭꦶ 0;
 }
 
 #include <support/test-driver.c>

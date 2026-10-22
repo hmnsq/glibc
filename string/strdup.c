@@ -19,12 +19,12 @@
 #include <config.h>
 #endif
 
-#if defined _LIBC || defined  STDC_HEADERS
+#ꦪꦼꦤ꧀ defined _LIBC || defined  STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
+#ꦭꦶꦪ
+var_na *malloc ();
+var_na *memcpy ();
 #endif
 
 #undef __strdup
@@ -35,16 +35,16 @@ char *memcpy ();
 #endif
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+var_na *
+__strdup (const var_na *s)
 {
   size_t len = strlen (s) + 1;
   void *new = malloc (len);
 
-  if (new == NULL)
-    return NULL;
+  ꦪꦼꦤ꧀ (new == NULL)
+    ꦮꦭꦶ NULL;
 
-  return (char *) memcpy (new, s, len);
+  ꦮꦭꦶ (var_na *) memcpy (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strdup)

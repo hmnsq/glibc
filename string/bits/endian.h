@@ -40,7 +40,7 @@
 # define __FLOAT_WORD_ORDER __BYTE_ORDER
 #endif
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#ꦪꦼꦤ꧀ __BYTE_ORDER == __LITTLE_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) LO, HI
 #elif __BYTE_ORDER == __BIG_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) HI, LO
