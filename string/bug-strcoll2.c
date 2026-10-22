@@ -23,69 +23,69 @@
 /* An incorrect strcoll optimization resulted in incorrect
    results from strcoll for cs_CZ and da_DK.  */
 
-int
+ཧྲིལ
 test_cs_CZ (void)
 {
-  const char t1[] = "config";
-  const char t2[] = "choose";
-  if (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
+  const var_na t1[] = "config";
+  const var_na t2[] = "choose";
+  གལ་སྲིད (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
     {
       perror ("setlocale");
-      return 1;
+      ལོག 1;
     }
   /* In Czech the digraph ch sorts after c, therefore we expect
      config to sort before choose.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  ཧྲིལ a = strcoll (t1, t2);
+  ཧྲིལ b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  གལ་སྲིད (a < 0 && b > 0)
     {
       puts ("PASS: config < choose");
-      return 0;
+      ལོག 0;
     }
-  else
+  དེ་མིན
     {
       puts ("FAIL: Wrong sorting in cs_CZ.UTF-8.");
-      return 1;
+      ལོག 1;
     }
 }
 
-int
+ཧྲིལ
 test_da_DK (void)
 {
-  const char t1[] = "AS";
-  const char t2[] = "AA";
-  if (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
+  const var_na t1[] = "AS";
+  const var_na t2[] = "AA";
+  གལ་སྲིད (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
     {
       perror ("setlocale");
-      return 1;
+      ལོག 1;
     }
   /* AA should be treated as the last letter of the Danish alphabet,
      hence sorting after AS.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  ཧྲིལ a = strcoll (t1, t2);
+  ཧྲིལ b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  གལ་སྲིད (a < 0 && b > 0)
     {
       puts ("PASS: AS < AA");
-      return 0;
+      ལོག 0;
     }
-  else
+  དེ་མིན
     {
       puts ("FAIL: Wrong sorting in da_DK.ISO-8859-1");
-      return 1;
+      ལོག 1;
     }
 }
 
-int
+ཧྲིལ
 do_test (void)
 {
-  int err = 0;
+  ཧྲིལ err = 0;
   err |= test_cs_CZ ();
   err |= test_da_DK ();
-  return err;
+  ལོག err;
 }
 
 #include <support/test-driver.c>

@@ -22,7 +22,7 @@
 #define TEST_MAIN
 #ifdef WIDE
 # define TEST_NAME "wcsncmp"
-#else
+#དེ་མིན
 # define TEST_NAME "strncmp"
 #endif
 #define TIMEOUT (5 * 60)
@@ -45,48 +45,48 @@
 
 /* Wcsncmp uses signed semantics for comparison, not unsigned.
    Avoid using subtraction since possible overflow */
-int
+ཧྲིལ
 simple_wcsncmp (const CHAR *s1, const CHAR *s2, size_t n)
 {
   wchar_t c1, c2;
 
-  while (n--)
+  སྐབས (n--)
     {
       c1 = *s1++;
       c2 = *s2++;
-      if (c1 == L('\0') || c1 != c2)
-	return c1 > c2 ? 1 : (c1 < c2 ? -1 : 0);
+      གལ་སྲིད (c1 == L('\0') || c1 != c2)
+	ལོག c1 > c2 ? 1 : (c1 < c2 ? -1 : 0);
     }
-  return 0;
+  ལོག 0;
 }
 
-#else
+#དེ་མིན
 # define L(str) str
 # define STRNCMP strncmp
 # define STRCPY strcpy
 # define STRDUP strdup
 # define MEMCPY memcpy
 # define SIMPLE_STRNCMP simple_strncmp
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define CHARBYTES 1
 # define CHAR__MAX CHAR_MAX
 # define CHAR__MIN CHAR_MIN
 
 /* Strncmp uses unsigned semantics for comparison. */
-int
-simple_strncmp (const char *s1, const char *s2, size_t n)
+ཧྲིལ
+simple_strncmp (const var_na *s1, const var_na *s2, size_t n)
 {
-  int ret = 0;
+  ཧྲིལ ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1 - * (unsigned char *) s2++) == 0
+  སྐབས (n-- && (ret = *(unsigned var_na *) s1 - * (unsigned var_na *) s2++) == 0
 	 && *s1++);
-  return ret;
+  ལོག ret;
 }
 
 #endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+typedef ཧྲིལ (*proto_t) (const CHAR *, const CHAR *, size_t);
 
 IMPL (STRNCMP, 1)
 
@@ -100,42 +100,42 @@ IMPL (STRNCMP, 1)
 # define STRNCMP __strncmp_default
 # include "string/strncmp.c"
 # define STRNCMP_DEFAULT STRNCMP
-#else
+#དེ་མིན
 # define WCSNCMP __wcsncmp_default
 # include "wcsmbs/wcsncmp.c"
 # define STRNCMP_DEFAULT WCSNCMP
 #endif
 IMPL (STRNCMP_DEFAULT, 1)
 
-static int
+static ཧྲིལ
 check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t n,
-	     int exp_result)
+	     ཧྲིལ exp_result)
 {
-  int result = CALL (impl, s1, s2, n);
-  if ((exp_result == 0 && result != 0)
+  ཧྲིལ result = CALL (impl, s1, s2, n);
+  གལ་སྲིད ((exp_result == 0 && result != 0)
       || (exp_result < 0 && result >= 0)
       || (exp_result > 0 && result <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      ལོག -1;
     }
 
-  return 0;
+  ལོག 0;
 }
 
 static void
 do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t n,
-	     int exp_result)
+	     ཧྲིལ exp_result)
 {
-  if (check_result (impl, s1, s2, n, exp_result) < 0)
-    return;
+  གལ་སྲིད (check_result (impl, s1, s2, n, exp_result) < 0)
+    ལོག;
 }
 
 static void
-do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
-	 int exp_result)
+do_test_limit (size_t align1, size_t align2, size_t len, size_t n, ཧྲིལ max_char,
+	 ཧྲིལ exp_result)
 {
   size_t i, align_n;
   CHAR *s1, *s2;
@@ -143,7 +143,7 @@ do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
-  if (n == 0)
+  གལ་སྲིད (n == 0)
     {
       s1 = (CHAR *) (buf1 + page_size);
       s2 = (CHAR *) (buf2 + page_size);
@@ -151,7 +151,7 @@ do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
       FOR_EACH_IMPL (impl, 0)
 	do_one_test (impl, s1, s2, n, 0);
 
-      return;
+      ལོག;
     }
 
   align1 &= 15;
@@ -161,22 +161,22 @@ do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
   s1 = (CHAR *) (buf1 + page_size - n * CHARBYTES);
   s2 = (CHAR *) (buf2 + page_size - n * CHARBYTES);
 
-  if (align1 < align_n)
-    s1 = (CHAR *) ((char *) s1 - (align_n - align1));
+  གལ་སྲིད (align1 < align_n)
+    s1 = (CHAR *) ((var_na *) s1 - (align_n - align1));
 
-  if (align2 < align_n)
-    s2 = (CHAR *) ((char *) s2 - (align_n - align2));
+  གལ་སྲིད (align2 < align_n)
+    s2 = (CHAR *) ((var_na *) s2 - (align_n - align2));
 
-  for (i = 0; i < n; i++)
+  དོན་ལུ (i = 0; i < n; i++)
     s1[i] = s2[i] = 1 + 23 * i % max_char;
 
-  if (len < n)
+  གལ་སྲིད (len < n)
     {
       s1[len] = 0;
       s2[len] = 0;
-      if (exp_result < 0)
+      གལ་སྲིད (exp_result < 0)
 	s2[len] = 32;
-      else if (exp_result > 0)
+      དེ་མིན གལ་སྲིད (exp_result > 0)
 	s1[len] = 64;
     }
 
@@ -185,8 +185,8 @@ do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
 }
 
 static void
-do_test_n (size_t align1, size_t align2, size_t len, size_t n, int n_in_bounds,
-           int max_char, int exp_result)
+do_test_n (size_t align1, size_t align2, size_t len, size_t n, ཧྲིལ n_in_bounds,
+           ཧྲིལ max_char, ཧྲིལ exp_result)
 {
   size_t i, buf_bound;
   CHAR *s1, *s2, *s1_end, *s2_end;
@@ -194,38 +194,38 @@ do_test_n (size_t align1, size_t align2, size_t len, size_t n, int n_in_bounds,
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
-  if (n == 0)
-    return;
+  གལ་སྲིད (n == 0)
+    ལོག;
 
   buf_bound = n_in_bounds ? n : len;
 
   align1 &= getpagesize () - 1;
-  if (align1 + (buf_bound + 2) * CHARBYTES >= page_size)
-    return;
+  གལ་སྲིད (align1 + (buf_bound + 2) * CHARBYTES >= page_size)
+    ལོག;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (buf_bound + 2) * CHARBYTES >= page_size)
-    return;
+  གལ་སྲིད (align2 + (buf_bound + 2) * CHARBYTES >= page_size)
+    ལོག;
 
   s1 = (CHAR *)(buf1 + align1);
   s2 = (CHAR *)(buf2 + align2);
 
-  if (n_in_bounds)
+  གལ་སྲིད (n_in_bounds)
     {
       s1[n] = 24 + exp_result;
       s2[n] = 23;
     }
 
-  for (i = 0; i < buf_bound; i++)
+  དོན་ལུ (i = 0; i < buf_bound; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % max_char;
 
   s1[len] = 0;
   s2[len] = 0;
-  if (exp_result < 0)
+  གལ་སྲིད (exp_result < 0)
     s2[len] = 32;
-  else if (exp_result > 0)
+  དེ་མིན གལ་སྲིད (exp_result > 0)
     s1[len] = 64;
-  if (len >= n)
+  གལ་སྲིད (len >= n)
     s2[n - 1] -= exp_result;
 
   /* Ensure that both s1 and s2 are valid null terminated strings. This is
@@ -240,8 +240,8 @@ do_test_n (size_t align1, size_t align2, size_t len, size_t n, int n_in_bounds,
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char,
-         int exp_result)
+do_test (size_t align1, size_t align2, size_t len, size_t n, ཧྲིལ max_char,
+         ཧྲིལ exp_result)
 {
   do_test_n (align1, align2, len, n, 1, max_char, exp_result);
 }
@@ -250,10 +250,10 @@ static void
 do_page_test (size_t offset1, size_t offset2, CHAR *s2)
 {
   CHAR *s1;
-  int exp_result;
+  ཧྲིལ exp_result;
 
-  if (offset1 * CHARBYTES  >= page_size || offset2 * CHARBYTES >= page_size)
-    return;
+  གལ་སྲིད (offset1 * CHARBYTES  >= page_size || offset2 * CHARBYTES >= page_size)
+    ལོག;
 
   s1 = (CHAR *) buf1;
   s1 += offset1;
@@ -272,72 +272,72 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, pos, len1, len2, size;
-  int result;
+  ཧྲིལ result;
   long r;
   UCHAR *p1 = (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
   UCHAR *p2 = (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
 
-  for (n = 0; n < ITERATIONS; n++)
+  དོན་ལུ (n = 0; n < ITERATIONS; n++)
     {
       align1 = random () & 31;
-      if (random () & 1)
+      གལ་སྲིད (random () & 1)
 	align2 = random () & 31;
-      else
+      དེ་མིན
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       size = random () & 511;
       j = align1 > align2 ? align1 : align2;
-      if (pos + j >= 511)
+      གལ་སྲིད (pos + j >= 511)
 	pos = 510 - j - (random () & 7);
       len1 = random () & 511;
-      if (pos >= len1 && (random () & 1))
+      གལ་སྲིད (pos >= len1 && (random () & 1))
 	len1 = pos + (random () & 7);
-      if (len1 + j >= 512)
+      གལ་སྲིད (len1 + j >= 512)
 	len1 = 511 - j - (random () & 7);
-      if (pos >= len1)
+      གལ་སྲིད (pos >= len1)
 	len2 = len1;
-      else
+      དེ་མིན
 	len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
       j = (pos > len2 ? pos : len2) + align1 + 64;
-      if (j > 512)
+      གལ་སྲིད (j > 512)
 	j = 512;
-      for (i = 0; i < j; ++i)
+      དོན་ལུ (i = 0; i < j; ++i)
 	{
 	  p1[i] = random () & 255;
-	  if (i < len1 + align1 && !p1[i])
+	  གལ་སྲིད (i < len1 + align1 && !p1[i])
 	    {
 	      p1[i] = random () & 255;
-	      if (!p1[i])
+	      གལ་སྲིད (!p1[i])
 		p1[i] = 1 + (random () & 127);
 	    }
 	}
-      for (i = 0; i < j; ++i)
+      དོན་ལུ (i = 0; i < j; ++i)
 	{
 	  p2[i] = random () & 255;
-	  if (i < len2 + align2 && !p2[i])
+	  གལ་སྲིད (i < len2 + align2 && !p2[i])
 	    {
 	      p2[i] = random () & 255;
-	      if (!p2[i])
+	      གལ་སྲིད (!p2[i])
 		p2[i] = 1 + (random () & 127);
 	    }
 	}
 
       result = 0;
       MEMCPY (p2 + align2, p1 + align1, pos);
-      if (pos < len1)
+      གལ་སྲིད (pos < len1)
 	{
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  གལ་སྲིད (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      གལ་སྲིད (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (pos < size)
+	  གལ་སྲིད (pos < size)
 	    {
-	      if (p1[align1 + pos] < p2[align2 + pos])
+	      གལ་སྲིད (p1[align1 + pos] < p2[align2 + pos])
 		result = -1;
-	      else
+	      དེ་མིན
 		result = 1;
 	    }
 	}
@@ -350,7 +350,7 @@ do_random_tests (void)
 	  /* Test whether on 64-bit architectures where ABI requires
 	     callee to promote has the promotion been done.  */
 	  asm ("" : "=g" (r) : "0" (r));
-	  if ((r == 0 && result)
+	  གལ་སྲིད ((r == 0 && result)
 	      || (r < 0 && result >= 0)
 	      || (r > 0 && result <= 0))
 	    {
@@ -368,7 +368,7 @@ check1 (void)
   CHAR *s1 = (CHAR *) (buf1 + 0xb2c);
   CHAR *s2 = (CHAR *) (buf1 + 0xfd8);
   size_t i, offset;
-  int exp_result;
+  ཧྲིལ exp_result;
 
   STRCPY(s1, L("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrs"));
   STRCPY(s2, L("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkLMNOPQRSTUV"));
@@ -377,9 +377,9 @@ check1 (void)
   s1[4] = CHAR__MAX;
   s2[4] = CHAR__MIN;
 
-  for (offset = 0; offset < 6; offset++)
+  དོན་ལུ (offset = 0; offset < 6; offset++)
     {
-      for (i = 0; i < 80; i++)
+      དོན་ལུ (i = 0; i < 80; i++)
 	{
 	  exp_result = SIMPLE_STRNCMP (s1 + offset, s2 + offset, i);
 	  FOR_EACH_IMPL (impl, 0)
@@ -395,13 +395,13 @@ check2 (void)
   CHAR *s1, *s2;
 
   s1 = (CHAR *) buf1;
-  for (i = 0; i < (page_size / CHARBYTES) - 1; i++)
+  དོན་ལུ (i = 0; i < (page_size / CHARBYTES) - 1; i++)
     s1[i] = 23;
   s1[i] = 0;
 
   s2 = STRDUP (s1);
 
-  for (i = 0; i < 64; ++i)
+  དོན་ལུ (i = 0; i < 64; ++i)
     do_page_test ((3988 / CHARBYTES) + i, (2636 / CHARBYTES), s2);
 
   free (s2);
@@ -417,7 +417,7 @@ check3 (void)
   size_t size = 32 * 4;
   CHAR *s1 = (CHAR *) (buf1 + (BUF1PAGES - 1) * page_size);
   CHAR *s2 = (CHAR *) (buf2 + (BUF1PAGES - 1) * page_size);
-  int exp_result;
+  ཧྲིལ exp_result;
 
   memset (s1, 'a', page_size);
   memset (s2, 'a', page_size);
@@ -427,9 +427,9 @@ check3 (void)
      trigger up to the size we expect will trigger the bug e.g. [99-128].
      Likewise iterate the start of two strings between 30 and 31 bytes
      away from the boundary to simulate alignment changes.  */
-  for (size_t s = 99; s <= size; s++)
-    for (size_t s1a = 30; s1a < 32; s1a++)
-      for (size_t s2a = 30; s2a < 32; s2a++)
+  དོན་ལུ (size_t s = 99; s <= size; s++)
+    དོན་ལུ (size_t s1a = 30; s1a < 32; s1a++)
+      དོན་ལུ (size_t s2a = 30; s2a < 32; s2a++)
 	{
 	  CHAR *s1p = s1 + (page_size / CHARBYTES - s) - s1a;
 	  CHAR *s2p = s2 + (page_size / CHARBYTES - s) - s2a;
@@ -449,10 +449,10 @@ check4 (void)
      the start of the strings.  */
 
   size_t size = 10;
-  size_t addr_mask = (getpagesize () - 1) ^ (sizeof (CHAR) - 1);
+  size_t addr_mask = (getpagesize () - 1) ^ (parimaa_na (CHAR) - 1);
   CHAR *s1 = (CHAR *)(buf1 + (addr_mask & 0xffa));
   CHAR *s2 = (CHAR *)(buf2 + (addr_mask & 0xfed));
-  int exp_result;
+  ཧྲིལ exp_result;
 
   STRCPY (s1, L ("tst-tlsmod%"));
   STRCPY (s2, L ("tst-tls-manydynamic73mod"));
@@ -481,12 +481,12 @@ check_overflow (void)
       = { ULONG_MAX, LONG_MIN, ULONG_MAX - (ULONG_MAX >> 2),
           ((size_t)LONG_MAX) >> 1 };
   const size_t test_len = MIN(TEST_LEN, 3 * 4096);
-  for (of_idx = 0; of_idx < sizeof (of_masks) / sizeof (of_masks[0]); ++of_idx)
+  དོན་ལུ (of_idx = 0; of_idx < parimaa_na (of_masks) / parimaa_na (of_masks[0]); ++of_idx)
     {
       of_mask = of_masks[of_idx];
-      for (j = 0; j < 160; ++j)
+      དོན་ལུ (j = 0; j < 160; ++j)
         {
-          for (i = 1; i <= 161; i += (32 / sizeof (CHAR)))
+          དོན་ལུ (i = 1; i <= 161; i += (32 / parimaa_na (CHAR)))
             {
               do_test_n (j, 0, i, of_mask, 0, 127, 0);
               do_test_n (j, 0, i, of_mask, 0, 127, 1);
@@ -534,7 +534,7 @@ check_overflow (void)
                          of_mask - j * 2, 0, 127, -1);
             }
 
-          for (i = 1; i < test_len; i += i)
+          དོན་ལུ (i = 1; i < test_len; i += i)
             {
               do_test_n (j, 0, i - 1, of_mask, 0, 127, 0);
               do_test_n (j, 0, i - 1, of_mask, 0, 127, 1);
@@ -586,7 +586,7 @@ check_overflow (void)
     }
 }
 
-int
+ཧྲིལ
 test_main (void)
 {
   size_t i, j, k;
@@ -604,7 +604,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i =0; i < 16; ++i)
+  དོན་ལུ (i =0; i < 16; ++i)
     {
       do_test (0, 0, 8, i, 127, 0);
       do_test (0, 0, 8, i, 127, -1);
@@ -626,7 +626,7 @@ test_main (void)
       do_test (i, 3 * i, 8, i, 255, -1);
     }
 
-  for (i = 1; i < 8; ++i)
+  དོན་ལུ (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, 16 << i, 127, 0);
       do_test (0, 0, 8 << i, 16 << i, 127, 1);
@@ -646,7 +646,7 @@ test_main (void)
   do_test_limit (8, 0, 25, 24, 127, 0);
   do_test_limit (0, 8, 25, 24, 127, 0);
 
-  for (i = 0; i < 8; ++i)
+  དོན་ལུ (i = 0; i < 8; ++i)
     {
       do_test_limit (0, 0, 17 - i, 16 - i, 127, 0);
       do_test_limit (0, 0, 17 - i, 16 - i, 255, 0);
@@ -658,9 +658,9 @@ test_main (void)
       do_test_limit (0, 0, 15 - i, 16 - i, 255, -1);
     }
 
-  for (j = 0; j < 160; ++j)
+  དོན་ལུ (j = 0; j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      དོན་ལུ (i = 0; i < test_len;)
         {
           do_test_n (getpagesize () - j - 1, 0, i, i + 1, 0, 127, 0);
           do_test_n (getpagesize () - j - 1, 0, i, i + 1, 0, 127, 1);
@@ -722,7 +722,7 @@ test_main (void)
           do_test_n (j, getpagesize () - j - 1, i, ULONG_MAX - i, 0, 127, 1);
           do_test_n (j, getpagesize () - j - 1, i, ULONG_MAX - i, 0, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          དོན་ལུ (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i - 1, i,
                        127, 0);
@@ -746,29 +746,29 @@ test_main (void)
                        i, 127, 1);
             }
 
-          if (i < 32)
+          གལ་སྲིད (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          དེ་མིན གལ་སྲིད (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          དེ་མིན གལ་སྲིད (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              གལ་སྲིད (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          དེ་མིན གལ་སྲིད (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          དེ་མིན
             {
               i += 1;
             }
@@ -777,7 +777,7 @@ test_main (void)
 
   check_overflow ();
   do_random_tests ();
-  return ret;
+  ལོག ret;
 }
 
 #include <support/test-driver.c>

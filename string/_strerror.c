@@ -21,17 +21,17 @@
 #include <stdlib.h>
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_r (int errnum, char *buf, size_t buflen)
+var_na *
+__strerror_r (ཧྲིལ errnum, var_na *buf, size_t buflen)
 {
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  var_na *err = (var_na *) __get_errlist (errnum);
+  གལ་སྲིད (__glibc_unlikely (err == NULL))
     {
       __snprintf (buf, buflen, "%s%d", _("Unknown error "), errnum);
-      return buf;
+      ལོག buf;
     }
 
-  return _(err);
+  ལོག _(err);
 }
 weak_alias (__strerror_r, strerror_r)
 libc_hidden_def (__strerror_r)

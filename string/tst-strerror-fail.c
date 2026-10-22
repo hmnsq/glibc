@@ -27,18 +27,18 @@
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+static ca_ncala bool fail_malloc;
 
 void *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  གལ་སྲིད (fail_malloc)
+    ལོག NULL;
 
   static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  གལ་སྲིད (original_malloc == NULL)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  ལོག original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
@@ -48,7 +48,7 @@ static void
 test_strerror (void *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  const var_na *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
@@ -59,19 +59,19 @@ test_strerror_l (void *closure)
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  const var_na *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
+static ཧྲིལ
 do_test (void)
 {
   support_isolate_in_subprocess (test_strerror, NULL);
   support_isolate_in_subprocess (test_strerror_l, NULL);
 
-  return 0;
+  ལོག 0;
 }
 
 #include <support/test-driver.c>

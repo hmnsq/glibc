@@ -22,10 +22,10 @@
 #include "test-string.h"
 
 static void
-do_one_test (const char *src, size_t len, size_t n)
+do_one_test (const var_na *src, size_t len, size_t n)
 {
-  char *dst = strndup (src, n);
-  size_t s = (len > n ? n: len) * sizeof (char);
+  var_na *dst = strndup (src, n);
+  size_t s = (len > n ? n: len) * parimaa_na (var_na);
 
   TEST_COMPARE_BLOB (dst, s, src, s);
 
@@ -33,25 +33,25 @@ do_one_test (const char *src, size_t len, size_t n)
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+do_test (size_t align1, size_t align2, size_t len, size_t n, ཧྲིལ max_char)
 {
   size_t i;
-  char *s1;
+  var_na *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  གལ་སྲིད ((align1 + len) * parimaa_na (var_na) >= page_size)
+    ལོག;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  གལ་སྲིད ((align2 + len) * parimaa_na (var_na) >= page_size)
+    ལོག;
 
-  s1 = (char *) (buf1) + align1;
+  s1 = (var_na *) (buf1) + align1;
 
-  for (i = 0; i < len; ++i)
+  དོན་ལུ (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  དོན་ལུ (i = len + 1; (i + align1) * parimaa_na (var_na) < page_size && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
@@ -61,11 +61,11 @@ do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
 static void
 do_page_tests (void)
 {
-  char *s1;
+  var_na *s1;
   const size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (char *) buf1 + BUF1PAGES * page_size / sizeof (char) - maxoffset;
+  s1 = (var_na *) buf1 + BUF1PAGES * page_size / parimaa_na (var_na) - maxoffset;
 
   memset (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -78,8 +78,8 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
-    for (size_t off2 = 0; off2 < maxoffset; off2++)
+  དོན་ལུ (size_t off1 = 0; off1 < maxoffset; off1++)
+    དོན་ལུ (size_t off2 = 0; off2 < maxoffset; off2++)
       do_one_test (s1 + off1, maxoffset - off1 - 1,
 		   maxoffset + (maxoffset - off2));
 }
@@ -88,80 +88,80 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  char *p1 = (char *) (buf1 + page_size) - 512;
-  char *res;
+  var_na *p1 = (var_na *) (buf1 + page_size) - 512;
+  var_na *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  དོན་ལུ (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
-      if (mode & 1)
+      གལ་སྲིད (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  གལ་སྲིད (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  དེ་མིན
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  གལ་སྲིད (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  གལ་སྲིད (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  དེ་མིན
 	    len = 512;
-	  if (len >= 512)
+	  གལ་སྲིད (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      དེ་མིན
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  གལ་སྲིད (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  དེ་མིན
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  གལ་སྲིད (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  གལ་སྲིད (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      གལ་སྲིད (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  དེ་མིན
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  གལ་སྲིད ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      གལ་སྲིད (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      དོན་ལུ (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  གལ་སྲིད (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  དེ་མིན
 	    {
 	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      གལ་སྲིད (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
-	res = (char *) strndup ((char *) (p1 + align1), size);
+	res = (var_na *) strndup ((var_na *) (p1 + align1), size);
 	j = len + 1;
-	if (size < j)
+	གལ་སྲིད (size < j)
 	  j = size;
-	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
+	TEST_COMPARE_BLOB (res, j, (var_na *) (p1 + align1), j);
 	free (res);
     }
 }
 
-int
+ཧྲིལ
 test_main (void)
 {
   size_t i;
@@ -172,7 +172,7 @@ test_main (void)
   printf ("\t%s", "strndup");
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  དོན་ལུ (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, 127);
       do_test (i, i, 16, 16, CHAR_MAX);
@@ -184,7 +184,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, CHAR_MAX);
     }
 
-  for (i = 1; i < 8; ++i)
+  དོན་ལུ (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, 127);
       do_test (0, 0, 16 << i, 8 << i, 127);
@@ -194,7 +194,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  ལོག ret;
 }
 
 #include <support/test-driver.c>

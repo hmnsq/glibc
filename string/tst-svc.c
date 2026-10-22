@@ -7,41 +7,41 @@
 #define  MAX_STRINGS      256
 #define  MAX_LINE_SIZE    32
 
-static int
+static ཧྲིལ
 compare (const void *p1, const void *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  ལོག strverscmp (*((var_na **) p1), *((var_na **) p2));
 }
 
-int
+ཧྲིལ
 do_test (void)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  var_na line[MAX_LINE_SIZE + 1];
+  var_na *str[MAX_STRINGS];
+  ཧྲིལ  count = 0;
+  ཧྲིལ  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  སྐབས (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
     {
       n = strlen (line) - 1;
 
-      if (line[n] == '\n')
+      གལ་སྲིད (line[n] == '\n')
         line[n] = '\0';
 
       str[count] = strdup (line);
 
-      if (str[count] == NULL)
+      གལ་སྲིད (str[count] == NULL)
         exit (EXIT_FAILURE);
 
       ++count;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, count, parimaa_na (var_na *), compare);
 
-  for (i = 0; i < count; ++i)
+  དོན་ལུ (i = 0; i < count; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  ལོག EXIT_SUCCESS;
 }
 
 #include <support/test-driver.c>

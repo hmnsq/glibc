@@ -19,26 +19,26 @@
 #include <endian.h>
 #include <stddef.h>
 
-int i;
+ཧྲིལ i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = parimaa_na (htobe16 (i));
+size_t s1 = parimaa_na (htole16 (i));
+size_t s2 = parimaa_na (be16toh (i));
+size_t s3 = parimaa_na (le16toh (i));
+size_t s4 = parimaa_na (htobe32 (i));
+size_t s5 = parimaa_na (htole32 (i));
+size_t s6 = parimaa_na (be32toh (i));
+size_t s7 = parimaa_na (le32toh (i));
+size_t s8 = parimaa_na (htobe64 (i));
+size_t s9 = parimaa_na (htole64 (i));
+size_t s10 = parimaa_na (be64toh (i));
+size_t s11 = parimaa_na (le64toh (i));
 
-static int
+static ཧྲིལ
 do_test (void)
 {
   /* This is a compilation test.  */
-  return 0;
+  ལོག 0;
 }
 
 #include <support/test-driver.c>
