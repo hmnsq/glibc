@@ -15,15 +15,15 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define TEST_NAME "strlcat"
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define TEST_NAME "wcslcat"
-#endif /* WIDE */
-#include "test-string.h"
+#ಆದರೆ_ಅಂತ್ಯ /* WIDE */
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-#ifdef WIDE
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ WIDE
 # include <wchar.h>
 # define BIG_CHAR WCHAR_MAX
 # define CHAR wchar_t
@@ -36,124 +36,124 @@
 # define STRLEN wcslen
 # define STRNLEN wcsnlen
 # define UCHAR wchar_t
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define BIG_CHAR CHAR_MAX
-# define CHAR char
+# define CHAR ಅಕ್ಷರ
 # define MEMCMP memcmp
-# define MEMCPY memcpy
+# define MEMCPY ಸ್ಮರಣೆ_ನಕಲು
 # define MEMSET memset
 # define SMALL_CHAR 127
 # define SIMPLE_STRLCAT simple_strlcat
 # define STRLCAT strlcat
-# define STRLEN strlen
+# define STRLEN ಅಕ್ಷರಸರಣಿ_ಉದ್ದ
 # define STRNLEN strnlen
-# define UCHAR unsigned char
-#endif /* !WIDE */
+# define UCHAR ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ
+#ಆದರೆ_ಅಂತ್ಯ /* !WIDE */
 
 /* Naive implementation to verify results.  */
 size_t
-SIMPLE_STRLCAT (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STRLCAT (CHAR *dst, ಸ್ಥಿರಾಂಕ CHAR *src, size_t n)
 {
-  size_t src_length = STRLEN (src);
+  size_t src_ಉದ್ದಳತೆ = STRLEN (src);
 
-  if (n == 0)
-    return src_length;
+  ಆದರೆ (n == 0)
+    ಹಿಂತಿರುಗಿ src_ಉದ್ದಳತೆ;
 
-  size_t dst_length = STRNLEN (dst, n);
+  size_t dst_ಉದ್ದಳತೆ = STRNLEN (dst, n);
 
-  if (dst_length != n)
+  ಆದರೆ (dst_ಉದ್ದಳತೆ != n)
     {
-      size_t to_copy = n - dst_length - 1;
+      size_t ಗಮ್ಯ_copy = n - dst_ಉದ್ದಳತೆ - 1;
 
-      if (to_copy > src_length)
-	to_copy = src_length;
+      ಆದರೆ (ಗಮ್ಯ_copy > src_ಉದ್ದಳತೆ)
+	ಗಮ್ಯ_copy = src_ಉದ್ದಳತೆ;
 
-      CHAR *target = dst + dst_length;
-      MEMCPY (target, src, to_copy);
-      target[to_copy] = '\0';
+      CHAR *ಗುರಿ = dst + dst_ಉದ್ದಳತೆ;
+      MEMCPY (ಗುರಿ, src, ಗಮ್ಯ_copy);
+      ಗುರಿ[ಗಮ್ಯ_copy] = '\0';
     }
-  return dst_length + src_length;
+  ಹಿಂತಿರುಗಿ dst_ಉದ್ದಳತೆ + src_ಉದ್ದಳತೆ;
 }
 
 IMPL (SIMPLE_STRLCAT, 0)
 IMPL (STRLCAT, 1)
 
-typedef size_t (*proto_t) (CHAR *, const CHAR *, size_t);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ size_t (*proto_t) (CHAR *, ಸ್ಥಿರಾಂಕ CHAR *, size_t);
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 __attribute__((noinline))
-do_one_test (impl_t *impl, CHAR *dst, const CHAR *src,
+do_one_test (impl_t *impl, CHAR *dst, ಸ್ಥಿರಾಂಕ CHAR *src,
 	     size_t n)
 {
   size_t exp_ret, func_ret;
-  size_t src_length = STRLEN (src);
-  size_t dst_length = STRNLEN (dst, n);
+  size_t src_ಉದ್ದಳತೆ = STRLEN (src);
+  size_t dst_ಉದ್ದಳತೆ = STRNLEN (dst, n);
 
-  if  (n == 0)
-    exp_ret = src_length;
-  else
-    exp_ret = src_length + dst_length;
+  ಆದರೆ  (n == 0)
+    exp_ret = src_ಉದ್ದಳತೆ;
+  ಇಲ್ಲದಿದ್ದರೆ
+    exp_ret = src_ಉದ್ದಳತೆ + dst_ಉದ್ದಳತೆ;
 
   func_ret = CALL (impl, dst, src, n);
-  if (exp_ret != func_ret)
+  ಆದರೆ (exp_ret != func_ret)
     {
       error (0, 0, "Wrong result in function %s %zd != %zd", impl->name,
 	     exp_ret, func_ret);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 
-  if (dst_length != n)
+  ಆದರೆ (dst_ಉದ್ದಳತೆ != n)
     {
-      size_t to_copy = n - dst_length - 1;
-      if (to_copy > src_length)
-	to_copy = src_length;
-      if (MEMCMP (dst + dst_length, src, to_copy) != 0)
+      size_t ಗಮ್ಯ_copy = n - dst_ಉದ್ದಳತೆ - 1;
+      ಆದರೆ (ಗಮ್ಯ_copy > src_ಉದ್ದಳತೆ)
+	ಗಮ್ಯ_copy = src_ಉದ್ದಳತೆ;
+      ಆದರೆ (MEMCMP (dst + dst_ಉದ್ದಳತೆ, src, ಗಮ್ಯ_copy) != 0)
 	{
 	  error (0, 0, "Incorrect concatenation in function %s",
 		 impl->name);
 	  ret = 1;
-	  return;
+	  ಹಿಂತಿರುಗಿ;
 	}
-      if (dst[dst_length + to_copy] != '\0')
+      ಆದರೆ (dst[dst_ಉದ್ದಳತೆ + ಗಮ್ಯ_copy] != '\0')
 	{
 	  error (0, 0, "There is no zero in the end of output string in %s",
 		 impl->name);
 	  ret = 1;
-	  return;
+	  ಹಿಂತಿರುಗಿ;
 	}
     }
-  return;
+  ಹಿಂತಿರುಗಿ;
 }
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 size_t n, int max_char)
+	 size_t n, ಪೂರ್ಣಾಂಕ max_char)
 {
   size_t i;
   CHAR *s1, *s2;
 
   align1 &= 7;
-  if ((align1 + len1) * sizeof (CHAR) >= page_size)
-    return;
-  if ((align1 + n) * sizeof (CHAR) > page_size)
-    return;
+  ಆದರೆ ((align1 + len1) * ಗಾತ್ರ (CHAR) >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
+  ಆದರೆ ((align1 + n) * ಗಾತ್ರ (CHAR) > ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
   align2 &= 7;
-  if ((align2 + len1 + len2) * sizeof (CHAR) >= page_size)
-    return;
-  if ((align2 + len1 + n) * sizeof (CHAR) > page_size)
-    return;
+  ಆದರೆ ((align2 + len1 + len2) * ಗಾತ್ರ (CHAR) >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
+  ಆದರೆ ((align2 + len1 + n) * ಗಾತ್ರ (CHAR) > ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len1; ++i)
+  ಗಾಗಿ (i = 0; i < len1; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
     {
 
-      for (i = 0; i < len2; i++)
+      ಗಾಗಿ (i = 0; i < len2; i++)
 	s2[i] = 32 + 23 * i % (max_char - 32);
       s2[len2] = '\0';
 
@@ -161,21 +161,21 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
     }
 }
 
-static void
-do_overflow_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_ಅತಿಪ್ರವಾಹ_tests (ಶೂನ್ಯ)
 {
   size_t i, j, len;
-  const size_t one = 1;
+  ಸ್ಥಿರಾಂಕ size_t one = 1;
   CHAR *s1, *s2;
   uintptr_t s1_addr;
   s1 = (CHAR *) buf1;
   s2 = (CHAR *) buf2;
   s1_addr = (uintptr_t)s1;
-  for (j = 0; j < 200; ++j)
+  ಗಾಗಿ (j = 0; j < 200; ++j)
     s2[j] = 32 + 23 * j % (BIG_CHAR - 32);
   s2[200] = 0;
-  for (i = 0; i < 750; ++i) {
-    for (j = 0; j < i; ++j)
+  ಗಾಗಿ (i = 0; i < 750; ++i) {
+    ಗಾಗಿ (j = 0; j < i; ++j)
       s1[j] = 32 + 23 * j % (BIG_CHAR - 32);
     s1[i] = '\0';
 
@@ -194,7 +194,7 @@ do_overflow_tests (void)
       }
 
     len = 0;
-    for (j = 8 * sizeof(size_t) - 1; j ; --j)
+    ಗಾಗಿ (j = 8 * ಗಾತ್ರ(size_t) - 1; j ; --j)
       {
 	len |= one << j;
 	FOR_EACH_IMPL (impl, 0)
@@ -221,17 +221,17 @@ do_overflow_tests (void)
   }
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
   size_t i, j, n, align1, align2, len1, len2, N;
-  UCHAR *p1 = (UCHAR *) (buf1 + page_size) - 1024;
-  UCHAR *p2 = (UCHAR *) (buf2 + page_size) - 1024;
+  UCHAR *p1 = (UCHAR *) (buf1 + ಪುಟ_ಗಾತ್ರ) - 1024;
+  UCHAR *p2 = (UCHAR *) (buf2 + ಪುಟ_ಗಾತ್ರ) - 1024;
   UCHAR *p3 = (UCHAR *) buf1;
   size_t res;
   fprintf (stdout, "Number of iterations in random test = %zd\n",
 	   ITERATIONS);
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
       N = random () & 1023;
       align1 = random () & 255;
@@ -239,30 +239,30 @@ do_random_tests (void)
       len1 = random () & 255;
       len2 = random () & 255;
 
-      for (i = 0; i < len1; i++)
+      ಗಾಗಿ (i = 0; i < len1; i++)
 	{
 	  p1[align1 + i] = random () & BIG_CHAR;
-	  if (!p1[align1 + i])
+	  ಆದರೆ (!p1[align1 + i])
 	    p1[align1 + i] = (random () & SMALL_CHAR) + 3;
 	}
       p1[align1 + len1] = 0;
 
-      for (i = 0; i < len2; i++)
+      ಗಾಗಿ (i = 0; i < len2; i++)
 	{
 	  p3[i] = random () & BIG_CHAR;
-	  if (!p3[i])
+	  ಆದರೆ (!p3[i])
 	    p3[i] = (random () & SMALL_CHAR) + 3;
 	}
       p3[len2] = 0;
 
       size_t exp_ret;
-      size_t src_length = STRLEN ((CHAR *) (p1 + align1));
-      size_t dst_length = STRNLEN ((CHAR *) (p3), N);
+      size_t src_ಉದ್ದಳತೆ = STRLEN ((CHAR *) (p1 + align1));
+      size_t dst_ಉದ್ದಳತೆ = STRNLEN ((CHAR *) (p3), N);
 
-      if  (N == 0)
-	exp_ret = src_length;
-      else
-	exp_ret = src_length + dst_length;
+      ಆದರೆ  (N == 0)
+	exp_ret = src_ಉದ್ದಳತೆ;
+      ಇಲ್ಲದಿದ್ದರೆ
+	exp_ret = src_ಉದ್ದಳತೆ + dst_ಉದ್ದಳತೆ;
 
       FOR_EACH_IMPL (impl, 1)
 	{
@@ -271,7 +271,7 @@ do_random_tests (void)
 	  MEMCPY (p2 + align2, p3, len2 + 1);
 	  res = CALL (impl, (CHAR *) (p2 + align2),
 		      (CHAR *) (p1 + align1), N);
-	  if (res != exp_ret)
+	  ಆದರೆ (res != exp_ret)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s "
 		     "(%zd, %zd, %zd, %zd, %zd) %zd != %zd",
@@ -280,28 +280,28 @@ do_random_tests (void)
 	      ret = 1;
 	    }
 
-	  for (j = 0; j < align2 + 64; ++j)
+	  ಗಾಗಿ (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ಆದರೆ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before dst, %s "
 			 "%zd, %zd, %zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len1, len2, N);
 		  ret = 1;
-		  break;
+		  ನಿಲ್ಲಿಸು;
 		}
 	    }
-	  if (MEMCMP (p2 + align2, p3, len2))
+	  ಆದರೆ (MEMCMP (p2 + align2, p3, len2))
 	    {
 	      error (0, 0, "Iteration %zd - garbage in string before, %s "
 		     "(%zd, %zd, %zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len1, len2, N);
 	      ret = 1;
 	    }
-	  if (N > len2 + 1)
+	  ಆದರೆ (N > len2 + 1)
 	    {
 	      j = (N - len2 - 1 >= len1) ? len1 : N - len2 - 1;
-	      if (MEMCMP (p2 + align2 + len2, p1 + align1, j))
+	      ಆದರೆ (MEMCMP (p2 + align2 + len2, p1 + align1, j))
 		{
 		  error (0, 0, "Iteration %zd - different strings, %s "
 			 "(%zd, %zd, %zd, %zd)", n, impl->name, align1,
@@ -309,7 +309,7 @@ do_random_tests (void)
 		  ret = 1;
 		}
 
-	      if (p2[align2 + len2 + j] != '\0')
+	      ಆದರೆ (p2[align2 + len2 + j] != '\0')
 		{
 		  error (0, 0, "Iteration %zd - there is no zero at the "
 			 "end of output string, %s (%zd, %zd, %zd, %zd, %zd)",
@@ -317,21 +317,21 @@ do_random_tests (void)
 		  ret = 1;
 		}
 
-	      for (j = j + align2 + len2 + 1; j < 1024; ++j)
+	      ಗಾಗಿ (j = j + align2 + len2 + 1; j < 1024; ++j)
 		{
-		  if (p2[j] != '\1')
+		  ಆದರೆ (p2[j] != '\1')
 		    {
 		      error (0, 0, "Iteration %zd - garbage after, %s "
 			     "(%zd, %zd, %zd, %zd, %zd)",
 			     n, impl->name, align1, align2, len1, len2, N);
 		      ret = 1;
-		      break;
+		      ನಿಲ್ಲಿಸು;
 		    }
 		}
 	    }
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
-	      if (p2[align2 + len2] != '\0')
+	      ಆದರೆ (p2[align2 + len2] != '\0')
 		{
 		  error (0, 0, "Iteration %zd - destination modified, %s "
 			 "(%zd, %zd, %zd, %zd, %zd)",
@@ -343,19 +343,19 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i, n;
 
   test_init ();
 
-  printf ("%28s", "");
+  ಬರೆ ("%28s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (n = 2; n <= 2048; n*=4)
+  ಗಾಗಿ (n = 2; n <= 2048; n*=4)
     {
       do_test (0, 2, 2, 2, n, SMALL_CHAR);
       do_test (0, 0, 4, 4, n, SMALL_CHAR);
@@ -369,7 +369,7 @@ test_main (void)
       do_test (0, 0, 8, 8, SIZE_MAX, SMALL_CHAR);
       do_test (0, 8, 8, 8, SIZE_MAX, SMALL_CHAR);
 
-      for (i = 1; i < 8; ++i)
+      ಗಾಗಿ (i = 1; i < 8; ++i)
 	{
 	  do_test (0, 0, 8 << i, 8 << i, n, SMALL_CHAR);
 	  do_test (8 - i, 2 * i, 8 << i, 8 << i, n, SMALL_CHAR);
@@ -382,7 +382,7 @@ test_main (void)
 	  do_test (8 - i, 2 * i, 8 << i, 2 << i, SIZE_MAX, SMALL_CHAR);
 	}
 
-      for (i = 1; i < 8; ++i)
+      ಗಾಗಿ (i = 1; i < 8; ++i)
 	{
 	  do_test (i, 2 * i, 8 << i, 1, n, SMALL_CHAR);
 	  do_test (2 * i, i, 8 << i, 1, n, BIG_CHAR);
@@ -395,8 +395,8 @@ test_main (void)
     }
 
   do_random_tests ();
-  do_overflow_tests ();
-  return ret;
+  do_ಅತಿಪ್ರವಾಹ_tests ();
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

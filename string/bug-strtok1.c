@@ -1,44 +1,44 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ str[] = "axaaba";
+  ಅಕ್ಷರ *token;
+  ಅಕ್ಷರ *cp;
+  ಅಕ್ಷರ *l;
+  ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
-  printf ("cp = %p, len = %zu\n", cp, strlen (cp));
+  ಬರೆ ("cp = %p, len = %zu\n", cp, ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  ಫಲಿತಾಂಶ |= token == ಖಾಲಿ || strcmp (token, "x");
+  ಬರೆ ("token: %s (%d)\n", token ? token : "NULL", ಫಲಿತಾಂಶ);
   token = strtok(0, "ab");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  ಫಲಿತಾಂಶ |= token != ಖಾಲಿ;
+  ಬರೆ ("token: %s (%d)\n", token ? token : "NULL", ಫಲಿತಾಂಶ);
   token = strtok(0, "a");
-  result |= token != NULL;
-  printf ("token: %s (%d)\n", token ? token : "NULL", result);
+  ಫಲಿತಾಂಶ |= token != ಖಾಲಿ;
+  ಬರೆ ("token: %s (%d)\n", token ? token : "NULL", ಫಲಿತಾಂಶ);
 
   puts ("test strtok_r");
   cp = strdupa (str);
-  size_t len = strlen (cp);
-  printf ("cp = %p, len = %zu\n", cp, len);
+  size_t len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (cp);
+  ಬರೆ ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  ಫಲಿತಾಂಶ |= token == ಖಾಲಿ || strcmp (token, "x");
+  ಬರೆ ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, ಫಲಿತಾಂಶ);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
+  ಫಲಿತಾಂಶ |= token != ಖಾಲಿ || l != cp + len;
+  ಬರೆ ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, ಫಲಿತಾಂಶ);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
-  printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
+  ಫಲಿತಾಂಶ |= token != ಖಾಲಿ || l != cp + len;
+  ಬರೆ ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, ಫಲಿತಾಂಶ);
 
-  return result;
+  ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

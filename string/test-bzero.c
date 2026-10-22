@@ -15,5 +15,5 @@
    You should have received a copy of the GNU Lesser General Public
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
-#define TEST_BZERO
-#include "test-memset.c"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_BZERO
+#ಅನ್ತರ್ಭಾವ "test-memset.c"

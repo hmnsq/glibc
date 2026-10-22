@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <support/check.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
 
-static int
-do_test (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  struct {
-    char buf1[16];
-    char buf2[16];
+  ರಚನೆ {
+    ಅಕ್ಷರ buf1[16];
+    ಅಕ್ಷರ buf2[16];
   } s;
 
   /* Nothing is written to the destination if its size is 0.  */
-  memset (&s, '@', sizeof (s));
+  memset (&s, '@', ಗಾತ್ರ (s));
   TEST_COMPARE (strlcat (s.buf1, "", 0), 0);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s), "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
   TEST_COMPARE (strlcat (s.buf1, "Hello!", 0), 6);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s), "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* No bytes are are modified in the target buffer if the source
      string is short enough.  */
-  memset (&s, '@', sizeof (s));
+  memset (&s, '@', ಗಾತ್ರ (s));
   strcpy (s.buf1, "He");
-  TEST_COMPARE (strlcat (s.buf1, "llo!", sizeof (s.buf1)), 6);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "Hello!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
+  TEST_COMPARE (strlcat (s.buf1, "llo!", ಗಾತ್ರ (s.buf1)), 6);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s), "Hello!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* A source string which fits exactly into the destination buffer is
      not truncated.  */
-  memset (&s, '@', sizeof (s));
+  memset (&s, '@', ಗಾತ್ರ (s));
   strcpy (s.buf1, "H");
-  TEST_COMPARE (strlcat (s.buf1, "ello, world!!!", sizeof (s.buf1)), 15);
-  TEST_COMPARE_BLOB (&s, sizeof (s),
+  TEST_COMPARE (strlcat (s.buf1, "ello, world!!!", ಗಾತ್ರ (s.buf1)), 15);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* A source string one character longer than the destination buffer
      is truncated by one character.  The total length is returned.  */
-  memset (&s, '@', sizeof (s));
+  memset (&s, '@', ಗಾತ್ರ (s));
   strcpy (s.buf1, "Hello");
-  TEST_COMPARE (strlcat (s.buf1, ", world!!!!", sizeof (s.buf1)), 16);
-  TEST_COMPARE_BLOB (&s, sizeof (s),
+  TEST_COMPARE (strlcat (s.buf1, ", world!!!!", ಗಾತ್ರ (s.buf1)), 16);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* An even longer source string is truncated as well, and the total
      length is returned.  */
-  memset (&s, '@', sizeof (s));
+  memset (&s, '@', ಗಾತ್ರ (s));
   strcpy (s.buf1, "Hello,");
-  TEST_COMPARE (strlcat (s.buf1, " world!!!!!!!!", sizeof (s.buf1)), 20);
-  TEST_COMPARE_BLOB (&s, sizeof (s),
+  TEST_COMPARE (strlcat (s.buf1, " world!!!!!!!!", ಗಾತ್ರ (s.buf1)), 20);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s),
 		     "Hello, world!!!\0@@@@@@@@@@@@@@@@@@@@@@@@@", 32);
 
   /* A destination string which is not NUL-terminated does not result
      in any changes to the buffer.  */
-  memset (&s, '@', sizeof (s));
-  memset (s.buf1, '$', sizeof (s.buf1));
-  TEST_COMPARE (strlcat (s.buf1, "", sizeof (s.buf1)), 16);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "$$$$$$$$$$$$$$$$@@@@@@@@@@@@@@@@", 32);
-  TEST_COMPARE (strlcat (s.buf1, "Hello!", sizeof (s.buf1)), 22);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "$$$$$$$$$$$$$$$$@@@@@@@@@@@@@@@@", 32);
-  TEST_COMPARE (strlcat (s.buf1, "Hello, world!!!!!!!!", sizeof (s.buf1)), 36);
-  TEST_COMPARE_BLOB (&s, sizeof (s), "$$$$$$$$$$$$$$$$@@@@@@@@@@@@@@@@", 32);
+  memset (&s, '@', ಗಾತ್ರ (s));
+  memset (s.buf1, '$', ಗಾತ್ರ (s.buf1));
+  TEST_COMPARE (strlcat (s.buf1, "", ಗಾತ್ರ (s.buf1)), 16);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s), "$$$$$$$$$$$$$$$$@@@@@@@@@@@@@@@@", 32);
+  TEST_COMPARE (strlcat (s.buf1, "Hello!", ಗಾತ್ರ (s.buf1)), 22);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s), "$$$$$$$$$$$$$$$$@@@@@@@@@@@@@@@@", 32);
+  TEST_COMPARE (strlcat (s.buf1, "Hello, world!!!!!!!!", ಗಾತ್ರ (s.buf1)), 36);
+  TEST_COMPARE_BLOB (&s, ಗಾತ್ರ (s), "$$$$$$$$$$$$$$$$@@@@@@@@@@@@@@@@", 32);
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

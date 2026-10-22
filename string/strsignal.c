@@ -15,44 +15,44 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libintl.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#ಅನ್ತರ್ಭಾವ <signal.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <libintl.h>
+#ಅನ್ತರ್ಭಾವ <tls-internal.h>
+#ಅನ್ತರ್ಭಾವ <libc-internal.h>
 
 /* Return a string describing the meaning of the signal number SIGNUM.  */
-char *
-strsignal (int signum)
+ಅಕ್ಷರ *
+strsignal (ಪೂರ್ಣಾಂಕ signum)
 {
-  const char *desc = __sigdescr_np (signum);
-  if (desc != NULL)
-    return _(desc);
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *desc = __sigdescr_np (signum);
+  ಆದರೆ (desc != ಖಾಲಿ)
+    ಹಿಂತಿರುಗಿ _(desc);
 
-  if (__libc_initial)
+  ಆದರೆ (__libc_initial)
     {
-      struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-      free (tls_internal->strsignal_buf);
+      ರಚನೆ tls_ಆಂತರಿಕ_t *tls_ಆಂತರಿಕ = __glibc_tls_internal ();
+      ಬಿಡುಗಡೆ (tls_ಆಂತರಿಕ->strsignal_buf);
 
-      int r;
-#ifdef SIGRTMIN
-      if (signum >= SIGRTMIN && signum <= SIGRTMAX)
-	r = __asprintf (&tls_internal->strsignal_buf, _("Real-time signal %d"),
+      ಪೂರ್ಣಾಂಕ r;
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ SIGRTMIN
+      ಆದರೆ (signum >= SIGRTMIN && signum <= SIGRTMAX)
+	r = __asprintf (&tls_ಆಂತರಿಕ->strsignal_buf, _("Real-time signal %d"),
 			signum - SIGRTMIN);
-      else
-#endif
-	r = __asprintf (&tls_internal->strsignal_buf, _("Unknown signal %d"),
+      ಇಲ್ಲದಿದ್ದರೆ
+#ಆದರೆ_ಅಂತ್ಯ
+	r = __asprintf (&tls_ಆಂತರಿಕ->strsignal_buf, _("Unknown signal %d"),
 			signum);
 
-      if (r >= 0)
-	return tls_internal->strsignal_buf;
-      else
-	tls_internal->strsignal_buf = NULL;
+      ಆದರೆ (r >= 0)
+	ಹಿಂತಿರುಗಿ tls_ಆಂತರಿಕ->strsignal_buf;
+      ಇಲ್ಲದಿದ್ದರೆ
+	tls_ಆಂತರಿಕ->strsignal_buf = ಖಾಲಿ;
     }
   /* Fall through on asprintf error, and for !__libc_initial:
      secondary namespaces use a different malloc and cannot
      participate in the buffer management.  */
-  return _("Unknown signal");
+  ಹಿಂತಿರುಗಿ _("Unknown signal");
 }

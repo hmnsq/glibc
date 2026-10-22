@@ -16,19 +16,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_LEN (getpagesize () * 3)
-#define MIN_PAGE_SIZE (TEST_LEN + 2 * getpagesize ())
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_LEN (getpagesize () * 3)
+#ವ್ಯಾಖ್ಯಾನಿಸು MIN_ಪುಟ_ಗಾತ್ರ (TEST_LEN + 2 * getpagesize ())
 
-#define TEST_MAIN
-#ifdef WIDE
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ WIDE
 # define TEST_NAME "wcscmp"
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define TEST_NAME "strcmp"
-#endif
-#include "test-string.h"
-#include <support/test-driver.h>
+#ಆದರೆ_ಅಂತ್ಯ
+#ಅನ್ತರ್ಭಾವ "test-string.h"
+#ಅನ್ತರ್ಭಾವ <support/test-driver.h>
 
-#ifdef WIDE
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ WIDE
 # include <wchar.h>
 
 # define L(str) L##str
@@ -50,33 +50,33 @@
 /* Wcscmp uses signed semantics for comparison, not unsigned */
 /* Avoid using subtraction since possible overflow */
 
-int
-simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
+ಪೂರ್ಣಾಂಕ
+simple_wcscmp (ಸ್ಥಿರಾಂಕ wchar_t *s1, ಸ್ಥಿರಾಂಕ wchar_t *s2)
 {
   wchar_t c1, c2;
-  do
+  ಮಾಡು
     {
       c1 = *s1++;
       c2 = *s2++;
-      if (c2 == L'\0')
-      return c1 - c2;
+      ಆದರೆ (c2 == L'\0')
+      ಹಿಂತಿರುಗಿ c1 - c2;
     }
-  while (c1 == c2);
+  ಆಗ (c1 == c2);
 
-  return c1 < c2 ? -1 : 1;
+  ಹಿಂತಿರುಗಿ c1 < c2 ? -1 : 1;
 }
 
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <limits.h>
 
 # define L(str) str
 # define STRCMP strcmp
 # define STRCPY strcpy
-# define STRLEN strlen
-# define MEMCPY memcpy
+# define STRLEN ಅಕ್ಷರಸರಣಿ_ಉದ್ದ
+# define MEMCPY ಸ್ಮರಣೆ_ನಕಲು
 # define SIMPLE_STRCMP simple_strcmp
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR ಅಕ್ಷರ
+# define UCHAR ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ
 # define CHARBYTES 1
 # define CHARBYTESLOG 0
 # define CHARALIGN 1
@@ -86,119 +86,119 @@ simple_wcscmp (const wchar_t *s1, const wchar_t *s2)
 # define CHAR__MIN CHAR_MIN
 
 /* Strcmp uses unsigned semantics for comparison. */
-int
-simple_strcmp (const char *s1, const char *s2)
+ಪೂರ್ಣಾಂಕ
+simple_strcmp (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s2)
 {
-  int ret;
+  ಪೂರ್ಣಾಂಕ ret;
 
-  while ((ret = *(unsigned char *) s1 - *(unsigned char*) s2++) == 0 && *s1++);
-  return ret;
+  ಆಗ ((ret = *(ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) s1 - *(ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ*) s2++) == 0 && *s1++);
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-typedef int (*proto_t) (const CHAR *, const CHAR *);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಪೂರ್ಣಾಂಕ (*proto_t) (ಸ್ಥಿರಾಂಕ CHAR *, ಸ್ಥಿರಾಂಕ CHAR *);
 
 IMPL (STRCMP, 1)
 
 /* Also check the default implementation.  */
-#undef STRCMP
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef weak_alias
-#define weak_alias(a, b)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು STRCMP
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_builtin_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_builtin_def(a)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_def(a)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು weak_alias
+#ವ್ಯಾಖ್ಯಾನಿಸು weak_alias(a, b)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು attribute_hidden
+#ವ್ಯಾಖ್ಯಾನಿಸು attribute_hidden
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define STRCMP __strcmp_default
 # include "string/strcmp.c"
 # define STRCMP_DEFAULT STRCMP
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define WCSCMP __wcscmp_default
 # include "wcsmbs/wcscmp.c"
 # define STRCMP_DEFAULT WCSCMP
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 IMPL (STRCMP_DEFAULT, 1)
 
 
-static int
-check_result (impl_t *impl,
-	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+check_ಫಲಿತಾಂಶ (impl_t *impl,
+	     ಸ್ಥಿರಾಂಕ CHAR *s1, ಸ್ಥಿರಾಂಕ CHAR *s2,
+	     ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ)
 {
-  int result = CALL (impl, s1, s2);
-  if ((exp_result == 0 && result != 0)
-      || (exp_result < 0 && result >= 0)
-      || (exp_result > 0 && result <= 0))
+  ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ = CALL (impl, s1, s2);
+  ಆದರೆ ((exp_ಫಲಿತಾಂಶ == 0 && ಫಲಿತಾಂಶ != 0)
+      || (exp_ಫಲಿತಾಂಶ < 0 && ಫಲಿತಾಂಶ >= 0)
+      || (exp_ಫಲಿತಾಂಶ > 0 && ಫಲಿತಾಂಶ <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
-	     result, exp_result);
+	     ಫಲಿತಾಂಶ, exp_ಫಲಿತಾಂಶ);
       ret = 1;
-      return -1;
+      ಹಿಂತಿರುಗಿ -1;
     }
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_one_test (impl_t *impl,
-	     const CHAR *s1, const CHAR *s2,
-	     int exp_result)
+	     ಸ್ಥಿರಾಂಕ CHAR *s1, ಸ್ಥಿರಾಂಕ CHAR *s2,
+	     ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ಆದರೆ (check_ಫಲಿತಾಂಶ (impl, s1, s2, exp_ಫಲಿತಾಂಶ) < 0)
+    ಹಿಂತಿರುಗಿ;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char,
-         int exp_result)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test (size_t align1, size_t align2, size_t len, ಪೂರ್ಣಾಂಕ max_char,
+         ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ)
 {
   size_t i;
 
   CHAR *s1, *s2;
 
-  if (len == 0)
-    return;
+  ಆದರೆ (len == 0)
+    ಹಿಂತಿರುಗಿ;
 
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ಆದರೆ (align1 + (len + 1) * CHARBYTES >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  ಆದರೆ (align2 + (len + 1) * CHARBYTES >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   /* Put them close to the end of page.  */
   i = align1 + CHARBYTES * (len + 2);
-  s1 = (CHAR *)(buf1 + ((page_size - i) / 16 * 16) + align1);
+  s1 = (CHAR *)(buf1 + ((ಪುಟ_ಗಾತ್ರ - i) / 16 * 16) + align1);
   i = align2 + CHARBYTES * (len + 2);
-  s2 = (CHAR *)(buf2 + ((page_size - i) / 16 * 16) + align2);
+  s2 = (CHAR *)(buf2 + ((ಪುಟ_ಗಾತ್ರ - i) / 16 * 16) + align2);
 
-  for (i = 0; i < len; i++)
+  ಗಾಗಿ (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % max_char;
 
   s1[len] = s2[len] = 0;
   s1[len + 1] = 23;
-  s2[len + 1] = 24 + exp_result;
-  s2[len - 1] -= exp_result;
+  s2[len + 1] = 24 + exp_ಫಲಿತಾಂಶ;
+  s2[len - 1] -= exp_ಫಲಿತಾಂಶ;
 
   FOR_EACH_IMPL (impl, 0)
-  do_one_test (impl, s1, s2, exp_result);
+  do_one_test (impl, s1, s2, exp_ಫಲಿತಾಂಶ);
 }
 
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
-	UCHAR *p1 = (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
-	UCHAR *p2 = (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
+	UCHAR *p1 = (UCHAR *) (buf1 + ಪುಟ_ಗಾತ್ರ - 512 * CHARBYTES);
+	UCHAR *p2 = (UCHAR *) (buf2 + ಪುಟ_ಗಾತ್ರ - 512 * CHARBYTES);
 
-	for (size_t n = 0; n < ITERATIONS; n++)
+	ಗಾಗಿ (size_t n = 0; n < ITERATIONS; n++)
 	  {
 	    /* for wcscmp case align1 and align2 mean here alignment
 	       in wchar_t symbols, it equal 4*k alignment in bytes, we
@@ -207,87 +207,87 @@ do_random_tests (void)
 	       because it's wrong using of wchar_t type.  */
 	    size_t align1 = random () & 31;
 	    size_t align2;
-	    if (random () & 1)
+	    ಆದರೆ (random () & 1)
 	      align2 = random () & 31;
-	    else
+	    ಇಲ್ಲದಿದ್ದರೆ
 	      align2 = align1 + (random () & 24);
 	    size_t pos = random () & 511;
 	    size_t j = align1 > align2 ? align1 : align2;
-	    if (pos + j >= 511)
+	    ಆದರೆ (pos + j >= 511)
 	      pos = 510 - j - (random () & 7);
 	    size_t len1 = random () & 511;
-	    if (pos >= len1 && (random () & 1))
+	    ಆದರೆ (pos >= len1 && (random () & 1))
 	      len1 = pos + (random () & 7);
-	    if (len1 + j >= 512)
+	    ಆದರೆ (len1 + j >= 512)
 	      len1 = 511 - j - (random () & 7);
 	    size_t len2;
-	    if (pos >= len1)
+	    ಆದರೆ (pos >= len1)
 	      len2 = len1;
-	    else
+	    ಇಲ್ಲದಿದ್ದರೆ
 	      len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
 	    j = (pos > len2 ? pos : len2) + align1 + 64;
-	    if (j > 512)
+	    ಆದರೆ (j > 512)
 	      j = 512;
-	    for (size_t i = 0; i < j; ++i)
+	    ಗಾಗಿ (size_t i = 0; i < j; ++i)
 	      {
 		p1[i] = random () & 255;
-		if (i < len1 + align1 && !p1[i])
+		ಆದರೆ (i < len1 + align1 && !p1[i])
 		  {
 		    p1[i] = random () & 255;
-		    if (!p1[i])
+		    ಆದರೆ (!p1[i])
 		      p1[i] = 1 + (random () & 127);
 		  }
 	      }
-	    for (size_t i = 0; i < j; ++i)
+	    ಗಾಗಿ (size_t i = 0; i < j; ++i)
 	      {
 		p2[i] = random () & 255;
-		if (i < len2 + align2 && !p2[i])
+		ಆದರೆ (i < len2 + align2 && !p2[i])
 		  {
 		    p2[i] = random () & 255;
-		    if (!p2[i])
+		    ಆದರೆ (!p2[i])
 		      p2[i] = 1 + (random () & 127);
 		  }
 	      }
 
-	    int result = 0;
+	    ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ = 0;
 	    MEMCPY (p2 + align2, p1 + align1, pos);
-	    if (pos < len1)
+	    ಆದರೆ (pos < len1)
 	      {
-		if (p2[align2 + pos] == p1[align1 + pos])
+		ಆದರೆ (p2[align2 + pos] == p1[align1 + pos])
 		  {
 		    p2[align2 + pos] = random () & 255;
-		    if (p2[align2 + pos] == p1[align1 + pos])
+		    ಆದರೆ (p2[align2 + pos] == p1[align1 + pos])
 		      p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 		  }
 
-		if (p1[align1 + pos] < p2[align2 + pos])
-		  result = -1;
-		else
-		  result = 1;
+		ಆದರೆ (p1[align1 + pos] < p2[align2 + pos])
+		  ಫಲಿತಾಂಶ = -1;
+		ಇಲ್ಲದಿದ್ದರೆ
+		  ಫಲಿತಾಂಶ = 1;
 	      }
 	    p1[len1 + align1] = 0;
 	    p2[len2 + align2] = 0;
 
 	    FOR_EACH_IMPL (impl, 1)
 	      {
-		int r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
+		ಪೂರ್ಣಾಂಕ r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2));
 		/* Test whether on 64-bit architectures where ABI requires
 		   callee to promote has the promotion been done.  */
 		asm ("" : "=g" (r) : "0" (r));
-		if ((r == 0 && result)
-		    || (r < 0 && result >= 0)
-		    || (r > 0 && result <= 0))
+		ಆದರೆ ((r == 0 && ಫಲಿತಾಂಶ)
+		    || (r < 0 && ಫಲಿತಾಂಶ >= 0)
+		    || (r > 0 && ಫಲಿತಾಂಶ <= 0))
 		  {
 		    error (0, 0, "Iteration %zd - wrong result in function %s (align in bytes: %zd, align in bytes: %zd, len1:  %zd, len2: %zd, pos: %zd) %d != %d, p1 %p p2 %p",
-			   n, impl->name, (size_t) (p1 + align1) & 63, (size_t) (p1 + align2) & 63, len1, len2, pos, r, result, p1, p2);
+			   n, impl->name, (size_t) (p1 + align1) & 63, (size_t) (p1 + align2) & 63, len1, len2, pos, r, ಫಲಿತಾಂಶ, p1, p2);
 		    ret = 1;
 		  }
 	      }
      }
 }
 
-static void
-check (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check (ಶೂನ್ಯ)
 {
   CHAR *s1 = (CHAR *) (buf1 + 0xb2c);
   CHAR *s2 = (CHAR *) (buf1 + 0xfd8);
@@ -314,29 +314,29 @@ check (void)
   size_t l1 = STRLEN (s1);
   size_t l2 = STRLEN (s2);
 
-  for (size_t i1 = 0; i1 < l1; i1++)
-    for (size_t i2 = 0; i2 < l2; i2++)
+  ಗಾಗಿ (size_t i1 = 0; i1 < l1; i1++)
+    ಗಾಗಿ (size_t i2 = 0; i2 < l2; i2++)
       {
-		int exp_result = SIMPLE_STRCMP (s1 + i1, s2 + i2);
+		ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ = SIMPLE_STRCMP (s1 + i1, s2 + i2);
 		FOR_EACH_IMPL (impl, 0)
-		check_result (impl, s1 + i1, s2 + i2, exp_result);
+		check_ಫಲಿತಾಂಶ (impl, s1 + i1, s2 + i2, exp_ಫಲಿತಾಂಶ);
       }
 
   /* Test cases where there are multiple zero bytes after the first.  */
 
-  for (size_t i = 0; i < 16 + 1; i++)
+  ಗಾಗಿ (size_t i = 0; i < 16 + 1; i++)
     {
       s1[i] = 0x00;
       s2[i] = 0x00;
     }
 
-  for (size_t i = 0; i < 16; i++)
+  ಗಾಗಿ (size_t i = 0; i < 16; i++)
     {
-      int exp_result;
+      ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ;
 
-      for (int val = 0x01; val < 0x100; val++)
+      ಗಾಗಿ (ಪೂರ್ಣಾಂಕ val = 0x01; val < 0x100; val++)
 	{
-	  for (size_t j = 0; j < i; j++)
+	  ಗಾಗಿ (size_t j = 0; j < i; j++)
 	    {
 	      s1[j] = val;
 	      s2[j] = val;
@@ -344,95 +344,95 @@ check (void)
 
 	  s2[i] = val;
 
-	  exp_result = SIMPLE_STRCMP (s1, s2);
+	  exp_ಫಲಿತಾಂಶ = SIMPLE_STRCMP (s1, s2);
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1, s2, exp_result);
+	    check_ಫಲಿತಾಂಶ (impl, s1, s2, exp_ಫಲಿತಾಂಶ);
 	}
     }
 }
 
-static void
-check2 (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check2 (ಶೂನ್ಯ)
 {
   /* To trigger bug 25933, we need a size that is equal to the vector
      length times 4. In the case of AVX2 for Intel, we need 32 * 4.  We
      make this test generic and run it for all architectures as additional
      boundary testing for such related algorithms.  */
-  size_t size = 32 * 4;
-  CHAR *s1 = (CHAR *) (buf1 + (BUF1PAGES - 1) * page_size);
-  CHAR *s2 = (CHAR *) (buf2 + (BUF1PAGES - 1) * page_size);
-  int exp_result;
+  size_t ಗಾತ್ರ_2 = 32 * 4;
+  CHAR *s1 = (CHAR *) (buf1 + (BUF1_ಪುಟಗಳು - 1) * ಪುಟ_ಗಾತ್ರ);
+  CHAR *s2 = (CHAR *) (buf2 + (BUF1_ಪುಟಗಳು - 1) * ಪುಟ_ಗಾತ್ರ);
+  ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ;
 
-  memset (s1, 'a', page_size);
-  memset (s2, 'a', page_size);
-  s1[(page_size / CHARBYTES) - 1] = (CHAR) 0;
-  s2[(page_size / CHARBYTES) - 1] = (CHAR) 0;
+  memset (s1, 'a', ಪುಟ_ಗಾತ್ರ);
+  memset (s2, 'a', ಪುಟ_ಗಾತ್ರ);
+  s1[(ಪುಟ_ಗಾತ್ರ / CHARBYTES) - 1] = (CHAR) 0;
+  s2[(ಪುಟ_ಗಾತ್ರ / CHARBYTES) - 1] = (CHAR) 0;
 
   /* Iterate over a size that is just below where we expect the bug to
      trigger up to the size we expect will trigger the bug e.g. [99-128].
      Likewise iterate the start of two strings between 30 and 31 bytes
      away from the boundary to simulate alignment changes.  */
-  for (size_t s = 99; s <= size; s++)
-    for (size_t s1a = 30; s1a < 32; s1a++)
-      for (size_t s2a = 30; s2a < 32; s2a++)
+  ಗಾಗಿ (size_t s = 99; s <= ಗಾತ್ರ_2; s++)
+    ಗಾಗಿ (size_t s1a = 30; s1a < 32; s1a++)
+      ಗಾಗಿ (size_t s2a = 30; s2a < 32; s2a++)
 	{
-	  CHAR *s1p = s1 + (page_size / CHARBYTES - s) - s1a;
-	  CHAR *s2p = s2 + (page_size / CHARBYTES - s) - s2a;
-	  exp_result = SIMPLE_STRCMP (s1p, s2p);
+	  CHAR *s1p = s1 + (ಪುಟ_ಗಾತ್ರ / CHARBYTES - s) - s1a;
+	  CHAR *s2p = s2 + (ಪುಟ_ಗಾತ್ರ / CHARBYTES - s) - s2a;
+	  exp_ಫಲಿತಾಂಶ = SIMPLE_STRCMP (s1p, s2p);
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1p, s2p, exp_result);
+	    check_ಫಲಿತಾಂಶ (impl, s1p, s2p, exp_ಫಲಿತಾಂಶ);
 	}
 }
 
-static void
-check3 (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check3 (ಶೂನ್ಯ)
 {
-  size_t size = 0xd000 + 0x4000;
+  size_t ಗಾತ್ರ_2 = 0xd000 + 0x4000;
   CHAR *s1, *s2;
-  CHAR *buffer1 = mmap (NULL, size, PROT_READ | PROT_WRITE,
-			MAP_PRIVATE | MAP_ANON, -1, 0);
-  CHAR *buffer2 = mmap (NULL, size, PROT_READ | PROT_WRITE,
-			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
+  CHAR *buffer1 = mmap (ಖಾಲಿ, ಗಾತ್ರ_2, PROT_READ | PROT_WRITE,
+			MAP_ಖಾಸಗಿ | MAP_ANON, -1, 0);
+  CHAR *buffer2 = mmap (ಖಾಲಿ, ಗಾತ್ರ_2, PROT_READ | PROT_WRITE,
+			MAP_ಖಾಸಗಿ | MAP_ANON, -1, 0);
+  ಆದರೆ (buffer1 == MAP_FAILED || buffer1 == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  s1 = (CHAR *) (buffer1 + 0x8f8 / sizeof (CHAR));
-  s2 = (CHAR *) (buffer2 + 0xcff3 / sizeof (CHAR));
+  s1 = (CHAR *) (buffer1 + 0x8f8 / ಗಾತ್ರ (CHAR));
+  s2 = (CHAR *) (buffer2 + 0xcff3 / ಗಾತ್ರ (CHAR));
 
   STRCPY(s1, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/util/PathDocFileFactory.java"));
   STRCPY(s2, L("/export/redhat/rpms/BUILD/java-1.8.0-openjdk-1.8.0.312.b07-2.fc35.x86_64/openjdk/langtools/src/share/classes/com/sun/tools/doclets/internal/toolkit/taglets/ThrowsTaglet.java"));
 
-  int exp_result = SIMPLE_STRCMP (s1, s2);
+  ಪೂರ್ಣಾಂಕ exp_ಫಲಿತಾಂಶ = SIMPLE_STRCMP (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_ಫಲಿತಾಂಶ (impl, s1, s2, exp_ಫಲಿತಾಂಶ);
 
-  munmap ((void *) buffer1, size);
-  munmap ((void *) buffer2, size);
+  munmap ((ಶೂನ್ಯ *) buffer1, ಗಾತ್ರ_2);
+  munmap ((ಶೂನ್ಯ *) buffer2, ಗಾತ್ರ_2);
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i, j, k;
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
+  ಸ್ಥಿರಾಂಕ size_t test_len = MIN(TEST_LEN, 3 * 4096);
   test_init ();
   check();
   check2 ();
   check3 ();
 
-  printf ("%23s", "");
+  ಬರೆ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (i = 1; i < 32; ++i)
+  ಗಾಗಿ (i = 1; i < 32; ++i)
     {
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, 0);
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, 1);
       do_test (CHARBYTES * i, CHARBYTES * i, i, MIDCHAR, -1);
     }
 
-  for (i = 1; i < 10 + CHARBYTESLOG; ++i)
+  ಗಾಗಿ (i = 1; i < 10 + CHARBYTESLOG; ++i)
     {
       do_test (0, 0, 2 << i, MIDCHAR, 0);
       do_test (0, 0, 2 << i, LARGECHAR, 0);
@@ -444,7 +444,7 @@ test_main (void)
       do_test (CHARBYTES * i, CHARBYTES * (i + 1), 2 << i, LARGECHAR, 1);
     }
 
-  for (i = 1; i < 8; ++i)
+  ಗಾಗಿ (i = 1; i < 8; ++i)
     {
       do_test (CHARBYTES * i, 2 * CHARBYTES * i, 8 << i, MIDCHAR, 0);
       do_test (2 * CHARBYTES * i, CHARBYTES * i, 8 << i, LARGECHAR, 0);
@@ -454,9 +454,9 @@ test_main (void)
       do_test (2 * CHARBYTES * i, CHARBYTES * i, 8 << i, LARGECHAR, -1);
     }
 
-  for (j = 0; j < 160; ++j)
+  ಗಾಗಿ (j = 0; j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      ಗಾಗಿ (i = 0; i < test_len;)
         {
           do_test (getpagesize () - j - 1, 0, i, 127, 0);
           do_test (getpagesize () - j - 1, 0, i, 127, 1);
@@ -474,7 +474,7 @@ test_main (void)
           do_test (j, getpagesize () - j - 1, i, 127, 1);
           do_test (j, getpagesize () - j - 1, i, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          ಗಾಗಿ (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i, 127, 0);
               do_test (getpagesize () - k - 1, getpagesize () - j - 1, i, 127,
@@ -487,29 +487,29 @@ test_main (void)
                        -1);
             }
 
-          if (i < 32)
+          ಆದರೆ (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              ಆದರೆ (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          ಇಲ್ಲದಿದ್ದರೆ
             {
               i += 1;
             }
@@ -517,7 +517,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

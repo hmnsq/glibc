@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ GNU_ಮೂಲ
+#ವ್ಯಾಖ್ಯಾನಿಸು GNU_ಮೂಲ
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Make sure we test the optimized inline functions.  */
-#define __USE_STRING_INLINES	1
+#ವ್ಯಾಖ್ಯಾನಿಸು __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <strings.h>
+#ಅನ್ತರ್ಭಾವ <fcntl.h>
 
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  ಪೂರ್ಣಾಂಕ ಸ್ಥಿತಿ_2;
+  ಪೂರ್ಣಾಂಕ errors = 0;
+  ಅಕ್ಷರ buf1[1000];
+  ಅಕ್ಷರ *cp;
+  ಅಕ್ಷರ ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  ಆದರೆ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  ಆದರೆ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  ಆದರೆ (strchr ("hello world", ch++) == ಖಾಲಿ)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ * ಸ್ಥಿರಾಂಕ hw = "hello world";
+  ಆದರೆ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  ಆದರೆ (errors == 0)
     {
-      status = EXIT_SUCCESS;
+      ಸ್ಥಿತಿ_2 = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
-      status = EXIT_FAILURE;
-      printf ("%d errors.\n", errors);
+      ಸ್ಥಿತಿ_2 = EXIT_FAILURE;
+      ಬರೆ ("%d errors.\n", errors);
     }
-  return status;
+  ಹಿಂತಿರುಗಿ ಸ್ಥಿತಿ_2;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

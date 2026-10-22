@@ -25,26 +25,26 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#ಅನ್ತರ್ಭಾವ <array_length.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
+#ಅನ್ತರ್ಭಾವ <support/next_to_fault.h>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.h>
+#ಅನ್ತರ್ಭಾವ <sys/param.h>
+#ಅನ್ತರ್ಭಾವ <unistd.h>
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ __typeof (TEST_IDENTIFIER) *proto_t;
 
-#define TEST_MAIN
-#include "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
-  enum { buffer_length = 256 };
-  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
+  ಎಣಿಕೆ { ಬಫರ್_ಉದ್ದಳತೆ = 256 };
+  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= ಬಫರ್_ಉದ್ದಳತೆ);
 
   test_init ();
 
@@ -76,58 +76,58 @@ test_main (void)
     The length argument must not be greater than buffer_length -
     start_offset, and the result is the length argument.  */
 
-  struct support_next_to_fault ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *buffer = (CHAR *) ntf.buffer;
+  ರಚನೆ support_ಮುಂದಿನ_ಗಮ್ಯ_fault ntf
+    = support_ಮುಂದಿನ_ಗಮ್ಯ_fault_allocate (ಬಫರ್_ಉದ್ದಳತೆ * ಗಾತ್ರ (CHAR));
+  CHAR *ಬಫರ್ = (CHAR *) ntf.ಬಫರ್;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        buffer[i] = 'A';
+      ಬರೆ ("info: testing %s\n", impl->name);
+      ಗಾಗಿ (size_t i = 0; i < ಬಫರ್_ಉದ್ದಳತೆ; ++i)
+        ಬಫರ್[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      ಗಾಗಿ (ಪೂರ್ಣಾಂಕ zero_ಎಣಿಕೆ = 0; zero_ಎಣಿಕೆ <= ಬಫರ್_ಉದ್ದಳತೆ; ++zero_ಎಣಿಕೆ)
         {
-          if (zero_count > 0)
-            buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
-               ++start_offset)
+          ಆದರೆ (zero_ಎಣಿಕೆ > 0)
+            ಬಫರ್[ಬಫರ್_ಉದ್ದಳತೆ - zero_ಎಣಿಕೆ] = 0;
+          ಪೂರ್ಣಾಂಕ a_ಎಣಿಕೆ = ಬಫರ್_ಉದ್ದಳತೆ - zero_ಎಣಿಕೆ;
+          ಗಾಗಿ (ಪೂರ್ಣಾಂಕ ಆರಂಭ_ಸ್ಥಾನಾಂತರ = 0; ಆರಂಭ_ಸ್ಥಾನಾಂತರ <= ಬಫರ್_ಉದ್ದಳತೆ;
+               ++ಆರಂಭ_ಸ್ಥಾನಾಂತರ)
             {
-              CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
-                TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
-                     length_argument <= 2 * buffer_length;
-                     ++length_argument)
+              CHAR *ಆರಂಭ_ಸೂಚಕ = ಬಫರ್ + ಆರಂಭ_ಸ್ಥಾನಾಂತರ;
+              ಆದರೆ (ಆರಂಭ_ಸ್ಥಾನಾಂತರ == ಬಫರ್_ಉದ್ದಳತೆ)
+                TEST_COMPARE (CALL (impl, ಬಫರ್ + ಆರಂಭ_ಸ್ಥಾನಾಂತರ, 0), 0);
+              ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (zero_ಎಣಿಕೆ > 0)
+                ಗಾಗಿ (ಪೂರ್ಣಾಂಕ ಉದ್ದಳತೆ_ವಾದ = 0;
+                     ಉದ್ದಳತೆ_ವಾದ <= 2 * ಬಫರ್_ಉದ್ದಳತೆ;
+                     ++ಉದ್ದಳತೆ_ವಾದ)
                   {
-                    if (test_verbose)
-                      printf ("zero_count=%d a_count=%d start_offset=%d"
+                    ಆದರೆ (test_verbose)
+                      ಬರೆ ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
-                              zero_count, a_count, start_offset,
-                              length_argument);
-                    if (start_offset < a_count)
-                      TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                    MIN (a_count - start_offset,
-                                         length_argument));
-                    else
-                      TEST_COMPARE (CALL (impl, start_pointer, length_argument),
+                              zero_ಎಣಿಕೆ, a_ಎಣಿಕೆ, ಆರಂಭ_ಸ್ಥಾನಾಂತರ,
+                              ಉದ್ದಳತೆ_ವಾದ);
+                    ಆದರೆ (ಆರಂಭ_ಸ್ಥಾನಾಂತರ < a_ಎಣಿಕೆ)
+                      TEST_COMPARE (CALL (impl, ಆರಂಭ_ಸೂಚಕ, ಉದ್ದಳತೆ_ವಾದ),
+                                    MIN (a_ಎಣಿಕೆ - ಆರಂಭ_ಸ್ಥಾನಾಂತರ,
+                                         ಉದ್ದಳತೆ_ವಾದ));
+                    ಇಲ್ಲದಿದ್ದರೆ
+                      TEST_COMPARE (CALL (impl, ಆರಂಭ_ಸೂಚಕ, ಉದ್ದಳತೆ_ವಾದ),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
-                     length_argument <= buffer_length - start_offset;
-                     ++length_argument)
-                  TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                length_argument);
+              ಇಲ್ಲದಿದ್ದರೆ
+                ಗಾಗಿ (ಪೂರ್ಣಾಂಕ ಉದ್ದಳತೆ_ವಾದ = 0;
+                     ಉದ್ದಳತೆ_ವಾದ <= ಬಫರ್_ಉದ್ದಳತೆ - ಆರಂಭ_ಸ್ಥಾನಾಂತರ;
+                     ++ಉದ್ದಳತೆ_ವಾದ)
+                  TEST_COMPARE (CALL (impl, ಆರಂಭ_ಸೂಚಕ, ಉದ್ದಳತೆ_ವಾದ),
+                                ಉದ್ದಳತೆ_ವಾದ);
             }
         }
     }
 
-  support_next_to_fault_free (&ntf);
+  support_ಮುಂದಿನ_ಗಮ್ಯ_fault_free (&ntf);
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

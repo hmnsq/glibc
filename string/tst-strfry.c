@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  char str[] = "this is a test";
+  ಅಕ್ಷರ str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

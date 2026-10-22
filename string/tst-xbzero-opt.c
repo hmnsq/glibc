@@ -38,19 +38,19 @@
    printf, but we know the OS won't erase it, so we can do all the
    checks and printing from the normal stack.  */
 
-#define _GNU_SOURCE 1
+#ವ್ಯಾಖ್ಯಾನಿಸು GNU_ಮೂಲ 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <signal.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <ucontext.h>
+#ಅನ್ತರ್ಭಾವ <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ test_ನಮೂನೆ[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,9 +60,9 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
-#define PATTERN_REPS 32
-#define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
+#ವ್ಯಾಖ್ಯಾನಿಸು ನಮೂನೆ_ಗಾತ್ರ (ಗಾತ್ರ test_ನಮೂನೆ)
+#ವ್ಯಾಖ್ಯಾನಿಸು ನಮೂನೆ_REPS 32
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_ಬಫರ್_ಗಾತ್ರ (ನಮೂನೆ_ಗಾತ್ರ * ನಮೂನೆ_REPS)
 
 /* There are three subtests, two of which are sanity checks.
    Each test follows this sequence:
@@ -70,16 +70,16 @@ static const unsigned char test_pattern[16] =
      main                      coroutine
      ----                      --------
      advance cur_subtest
-     swap
+ಅದಲುಬದಲು
                                call setup function
                                  prepare test buffer
-                                 swap
+ಅದಲುಬದಲು
      verify that buffer
      was filled in
-     swap
+ಅದಲುಬದಲು
                                  possibly clear buffer
                                  return
-                               swap
+ಅದಲುಬದಲು
      check buffer again,
      according to test
      expectation
@@ -95,100 +95,100 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+ಸ್ಥಿರ ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+ಸ್ಥಿರ __attribute_optimization_barrier__ ಪೂರ್ಣಾಂಕ
+use_test_ಬಫರ್ (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *buf)
 {
-  unsigned int sum = 0;
+  ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ ಮೊತ್ತ = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    sum += buf[i * PATTERN_SIZE];
+  ಗಾಗಿ (ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ i = 0; i < ನಮೂನೆ_REPS; i++)
+    ಮೊತ್ತ += buf[i * ನಮೂನೆ_ಗಾತ್ರ];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  ಹಿಂತಿರುಗಿ (ಮೊತ್ತ == 2 * ನಮೂನೆ_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#ಆದರೆ defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
-#endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+#ಆದರೆ_ಅಂತ್ಯ
+ಸ್ಥಿರ ಸಾಲೊಳಗೆ ALWAYS_INLINE ಶೂನ್ಯ
+prepare_test_ಬಫರ್ (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
+  ಗಾಗಿ (ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ i = 0; i < ನಮೂನೆ_REPS; i++)
+    ಸ್ಮರಣೆ_ನಕಲು (buf + i*ನಮೂನೆ_ಗಾತ್ರ, test_ನಮೂನೆ, ನಮೂನೆ_ಗಾತ್ರ);
 
-  if (swapcontext (&uc_co, &uc_main))
+  ಆದರೆ (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  ಆದರೆ (use_test_ಬಫರ್ (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+ಸಿದ್ಧತೆ_no_clear (ಶೂನ್ಯ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ buf[TEST_ಬಫರ್_ಗಾತ್ರ];
+  prepare_test_ಬಫರ್ (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+ಸಿದ್ಧತೆ_ordinary_clear (ಶೂನ್ಯ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-  memset (buf, 0, TEST_BUFFER_SIZE);
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ buf[TEST_ಬಫರ್_ಗಾತ್ರ];
+  prepare_test_ಬಫರ್ (buf);
+  memset (buf, 0, TEST_ಬಫರ್_ಗಾತ್ರ);
 }
 
-static void
-setup_explicit_clear (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+ಸಿದ್ಧತೆ_explicit_clear (ಶೂನ್ಯ)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-#ifdef TEST_MEMSET_EXPLICIT
-  memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
-  explicit_bzero (buf, TEST_BUFFER_SIZE);
-#endif
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ buf[TEST_ಬಫರ್_ಗಾತ್ರ];
+  prepare_test_ಬಫರ್ (buf);
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_MEMSET_EXPLICIT
+  memset_explicit (buf, 0, TEST_ಬಫರ್_ಗಾತ್ರ);
+#ಇಲ್ಲದಿದ್ದರೆ
+  explicit_bzero (buf, TEST_ಬಫರ್_ಗಾತ್ರ);
+#ಆದರೆ_ಅಂತ್ಯ
 }
 
-enum test_expectation
+ಎಣಿಕೆ test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+ರಚನೆ subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  ಶೂನ್ಯ (*ಸಿದ್ಧತೆ_subtest) (ಶೂನ್ಯ);
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *label;
+  ಎಣಿಕೆ test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ ರಚನೆ subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ ರಚನೆ subtest subtests[] =
 {
-  { setup_no_clear,       "no clear",       EXPECT_SOME },
+  { ಸಿದ್ಧತೆ_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
      optimizations.  */
-  { setup_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
-  { setup_explicit_clear, "explicit clear", EXPECT_NONE },
+  { ಸಿದ್ಧತೆ_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
+  { ಸಿದ್ಧತೆ_explicit_clear, "explicit clear", EXPECT_NONE },
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+test_coroutine (ಶೂನ್ಯ)
 {
-  while (cur_subtest->setup_subtest)
+  ಆಗ (cur_subtest->ಸಿದ್ಧತೆ_subtest)
     {
-      cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      cur_subtest->ಸಿದ್ಧತೆ_subtest ();
+      ಆದರೆ (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ test_ಸ್ಥಿತಿ;
+ಸ್ಥಿರ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *co_ರಾಶಿ_ಬಫರ್;
+ಸ್ಥಿರ size_t co_ರಾಶಿ_ಗಾತ್ರ;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+ಸ್ಥಿರ ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ
+ಎಣಿಕೆ_test_patterns (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *ಮೊದಲ = memmem (buf, bufsiz, test_ನಮೂನೆ, ನಮೂನೆ_ಗಾತ್ರ);
+  ಆದರೆ (!ಮೊದಲ)
+    ಹಿಂತಿರುಗಿ 0;
+  ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ cnt = 0;
+  ಗಾಗಿ (ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ i = 0; i < ನಮೂನೆ_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p = ಮೊದಲ + i*ನಮೂನೆ_ಗಾತ್ರ;
+      ಆದರೆ (p + ನಮೂನೆ_ಗಾತ್ರ - buf > bufsiz)
+	ನಿಲ್ಲಿಸು;
+      ಆದರೆ (memcmp (p, test_ನಮೂನೆ, ನಮೂನೆ_ಗಾತ್ರ) == 0)
 	cnt++;
     }
-  return cnt;
+  ಹಿಂತಿರುಗಿ cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check_test_ಬಫರ್ (ಎಣಿಕೆ test_expectation expected,
+		   ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *label, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ cnt = ಎಣಿಕೆ_test_patterns (co_ರಾಶಿ_ಬಫರ್, co_ರಾಶಿ_ಗಾತ್ರ);
+  ಆಯ್ಕೆ (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
-	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+    ಸ್ಥಿತಿ EXPECT_NONE:
+      ಆದರೆ (cnt == 0)
+	ಬರೆ ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
+      ಇಲ್ಲದಿದ್ದರೆ
 	{
-	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
-	  test_status = 1;
+	  ಬರೆ ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
+	  test_ಸ್ಥಿತಿ = 1;
 	}
-      break;
+      ನಿಲ್ಲಿಸು;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
-	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+    ಸ್ಥಿತಿ EXPECT_SOME:
+      ಆದರೆ (cnt > 0)
+	ಬರೆ ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
+      ಇಲ್ಲದಿದ್ದರೆ
 	{
-	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
-	  test_status = 1;
+	  ಬರೆ ("FAIL: %s/%s: expected some got 0\n", label, stage);
+	  test_ಸ್ಥಿತಿ = 1;
 	}
-      break;
+      ನಿಲ್ಲಿಸು;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
-	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
-		PATTERN_REPS, cnt);
-      else
+     ಸ್ಥಿತಿ EXPECT_ALL:
+      ಆದರೆ (cnt == ನಮೂನೆ_REPS)
+	ಬರೆ ("PASS: %s/%s: expected %d got %d\n", label, stage,
+		ನಮೂನೆ_REPS, cnt);
+      ಇಲ್ಲದಿದ್ದರೆ
 	{
-	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
-		  PATTERN_REPS, cnt);
-	  test_status = 1;
+	  ಬರೆ ("FAIL: %s/%s: expected %d got %d\n", label, stage,
+		  ನಮೂನೆ_REPS, cnt);
+	  test_ಸ್ಥಿತಿ = 1;
 	}
-      break;
+      ನಿಲ್ಲಿಸು;
 
-    case NO_EXPECTATIONS:
-      printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
+    ಸ್ಥಿತಿ NO_EXPECTATIONS:
+      ಬರೆ ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      ನಿಲ್ಲಿಸು;
 
-    default:
-      printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
-      test_status = 1;
+    ಪೂರ್ವನಿಯೋಜಿತ:
+      ಬರೆ ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
+	      label, stage, (ಪೂರ್ಣಾಂಕ)expected);
+      test_ಸ್ಥಿತಿ = 1;
     }
 }
 
-static void
-test_loop (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+test_loop (ಶೂನ್ಯ)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  ಆಗ (cur_subtest->ಸಿದ್ಧತೆ_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      ಆದರೆ (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      check_test_ಬಫರ್ (EXPECT_ALL, cur_subtest->label, "prepare");
+      ಆದರೆ (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
+      check_test_ಬಫರ್ (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  ಆದರೆ (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  size_t ಪುಟ_alignment = sysconf (_SC_PAGESIZE);
+  ಆದರೆ (ಪುಟ_alignment < ಗಾತ್ರ (ಶೂನ್ಯ *))
+    ಪುಟ_alignment = ಗಾತ್ರ (ಶೂನ್ಯ *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_ರಾಶಿ_ಗಾತ್ರ = SIGSTKSZ + TEST_ಬಫರ್_ಗಾತ್ರ;
+  ಆದರೆ (co_ರಾಶಿ_ಗಾತ್ರ < ಪುಟ_alignment * 4)
+    co_ರಾಶಿ_ಗಾತ್ರ = ಪುಟ_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  ಶೂನ್ಯ *p;
+  ಪೂರ್ಣಾಂಕ err = posix_memalign (&p, ಪುಟ_alignment, co_ರಾಶಿ_ಗಾತ್ರ);
+  ಆದರೆ (err || !p)
     {
-      printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      ಬರೆ ("ERROR: allocating alt stack: %s\n", strerror (err));
+      ಹಿಂತಿರುಗಿ 2;
     }
-  co_stack_buffer = p;
+  co_ರಾಶಿ_ಬಫರ್ = p;
 
-  if (getcontext (&uc_co))
+  ಆದರೆ (getcontext (&uc_co))
     {
-      printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      ಬರೆ ("ERROR: allocating coroutine context: %s\n", strerror (err));
+      ಹಿಂತಿರುಗಿ 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_ರಾಶಿ_ಬಫರ್;
+  uc_co.uc_stack.ss_size = co_ರಾಶಿ_ಗಾತ್ರ;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  ಹಿಂತಿರುಗಿ test_ಸ್ಥಿತಿ;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

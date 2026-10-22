@@ -15,37 +15,37 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef _LIBC
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ _LIBC
 # include <string.h>
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <sys/types.h>
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifndef STPNCPY
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ STPNCPY
 # ifdef weak_alias
 #  define STPNCPY	__stpncpy
 weak_alias (__stpncpy, stpncpy)
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define STPNCPY	stpncpy
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the terminating '\0' in DEST, if any, or else DEST + N.  */
-char *
-STPNCPY (char *dest, const char *src, size_t n)
+ಅಕ್ಷರ *
+STPNCPY (ಅಕ್ಷರ *dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *src, size_t n)
 {
-  size_t size = __strnlen (src, n);
-  memcpy (dest, src, size);
-  dest += size;
-  if (size == n)
-    return dest;
-  return memset (dest, '\0', n - size);
+  size_t ಗಾತ್ರ_2 = __strnlen (src, n);
+  ಸ್ಮರಣೆ_ನಕಲು (dest, src, ಗಾತ್ರ_2);
+  dest += ಗಾತ್ರ_2;
+  ಆದರೆ (ಗಾತ್ರ_2 == n)
+    ಹಿಂತಿರುಗಿ dest;
+  ಹಿಂತಿರುಗಿ memset (dest, '\0', n - ಗಾತ್ರ_2);
 }
-#ifdef weak_alias
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ weak_alias
 libc_hidden_def (__stpncpy)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

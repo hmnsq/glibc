@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <unistd.h>
+#ಅನ್ತರ್ಭಾವ <unistd.h>
 
-void
-swab (const void *bfrom, void *bto, ssize_t n)
+ಶೂನ್ಯ
+swab (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *bfrom, ಶೂನ್ಯ *bto, ssize_t n)
 {
-  const char *from = (const char *) bfrom;
-  char *to = (char *) bto;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *from = (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) bfrom;
+  ಅಕ್ಷರ *ಗಮ್ಯ = (ಅಕ್ಷರ *) bto;
 
   n &= ~((ssize_t) 1);
-  while (n > 1)
+  ಆಗ (n > 1)
     {
-      const char b0 = from[--n], b1 = from[--n];
-      to[n] = b0;
-      to[n + 1] = b1;
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ b0 = from[--n], b1 = from[--n];
+      ಗಮ್ಯ[n] = b0;
+      ಗಮ್ಯ[n + 1] = b1;
     }
 }

@@ -19,60 +19,60 @@
  *	ISO C99 Standard: 7.21 String handling	<string.h>
  */
 
-#ifndef	_STRING_H
-#define	_STRING_H	1
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ	_STRING_H
+#ವ್ಯಾಖ್ಯಾನಿಸು	_STRING_H	1
 
-#define __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
-#include <bits/libc-header-start.h>
+#ವ್ಯಾಖ್ಯಾನಿಸು __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
+#ಅನ್ತರ್ಭಾವ <bits/libc-header-start.h>
 
 __BEGIN_DECLS
 
-#if __GLIBC_USE (ISOC23)
+#ಆದರೆ __GLIBC_USE (ISOC23)
 # define __STDC_VERSION_STRING_H__ 202311L
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Get size_t and NULL from <stddef.h>.  */
-#define	__need_size_t
-#define	__need_NULL
-#include <stddef.h>
+#ವ್ಯಾಖ್ಯಾನಿಸು	__need_size_t
+#ವ್ಯಾಖ್ಯಾನಿಸು	__need_NULL
+#ಅನ್ತರ್ಭಾವ <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && (__GNUC_PREREQ (4, 4) \
+#ಆದರೆ defined __cplusplus && (__GNUC_PREREQ (4, 4) \
 			    || __glibc_clang_prereq (3, 5))
 # define __CORRECT_ISO_CPP_STRING_H_PROTO
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
 /* Copy N bytes of SRC to DEST.  */
-extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+ಬಾಹ್ಯ ಶೂನ್ಯ *ಸ್ಮರಣೆ_ನಕಲು (ಶೂನ್ಯ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__restrict __src,
 		     size_t __n) __THROW __nonnull ((1, 2));
 /* Copy N bytes of SRC to DEST, guaranteeing
    correct behavior for overlapping strings.  */
-extern void *memmove (void *__dest, const void *__src, size_t __n)
+ಬಾಹ್ಯ ಶೂನ್ಯ *memmove (ಶೂನ್ಯ *__dest, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__src, size_t __n)
      __THROW __nonnull ((1, 2));
 
 /* Copy no more than N bytes of SRC to DEST, stopping when C is found.
    Return the position in DEST one byte past where C was copied,
    or NULL if C was not found in the first N bytes of SRC.  */
-#if defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
-extern void *memccpy (void *__restrict __dest, const void *__restrict __src,
-		      int __c, size_t __n)
+#ಆದರೆ defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
+ಬಾಹ್ಯ ಶೂನ್ಯ *memccpy (ಶೂನ್ಯ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__restrict __src,
+		      ಪೂರ್ಣಾಂಕ __c, size_t __n)
     __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 4));
-#endif /* Misc || X/Open.  */
+#ಆದರೆ_ಅಂತ್ಯ /* Misc || X/Open.  */
 
 
 /* Set N bytes of S to C.  */
-extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+ಬಾಹ್ಯ ಶೂನ್ಯ *memset (ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n) __THROW __nonnull ((1));
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
+#ಆದರೆ defined __USE_MISC || __GLIBC_USE (ISOC23)
 /* Like memset, but the compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void *memset_explicit (void *__s, int __c, size_t __n)
+ಬಾಹ್ಯ ಶೂನ್ಯ *memset_explicit (ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Compare N bytes of S1 and S2.  */
-extern int memcmp (const void *__s1, const void *__s2, size_t __n)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ memcmp (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s1, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare N bytes of S1 and S2.  Return zero if S1 and S2 are equal.
@@ -88,368 +88,368 @@ extern int memcmp (const void *__s1, const void *__s2, size_t __n)
 
    __memcmpeq is declared only for use by compilers.  Programs should
    continue to use memcmp.  */
-extern int __memcmpeq (const void *__s1, const void *__s2, size_t __n)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ __memcmpeq (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s1, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Search N bytes of S for C.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __CORRECT_ISO_CPP_STRING_H_PROTO
+ಬಾಹ್ಯ "C++"
 {
-extern void *memchr (void *__s, int __c, size_t __n)
+ಬಾಹ್ಯ ಶೂನ್ಯ *memchr (ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
-extern const void *memchr (const void *__s, int __c, size_t __n)
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *memchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline void *
-memchr (void *__s, int __c, size_t __n) __THROW
+__extern_always_inline ಶೂನ್ಯ *
+memchr (ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  ಹಿಂತಿರುಗಿ __builtin_memchr (__s, __c, __n);
 }
 
-__extern_always_inline const void *
-memchr (const void *__s, int __c, size_t __n) __THROW
+__extern_always_inline ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *
+memchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  ಹಿಂತಿರುಗಿ __builtin_memchr (__s, __c, __n);
 }
 # endif
 }
-#else
-extern void *memchr (const void *__s, int __c, size_t __n)
+#ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಶೂನ್ಯ *memchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ಆದರೆ __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define memchr(S, C, N)					\
-  __glibc_const_generic (S, const void *, memchr (S, C, N))
+  __glibc_const_generic (S, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *, memchr (S, C, N))
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_GNU
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_GNU
 /* Search in S for C.  This is similar to `memchr' but there is no
    length limit.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *rawmemchr (void *__s, int __c)
+ಬಾಹ್ಯ "C++" ಶೂನ್ಯ *rawmemchr (ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-extern "C++" const void *rawmemchr (const void *__s, int __c)
+ಬಾಹ್ಯ "C++" ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *rawmemchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-# else
-extern void *rawmemchr (const void *__s, int __c)
+# ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಶೂನ್ಯ *rawmemchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Search N bytes of S for the final occurrence of C.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *memrchr (void *__s, int __c, size_t __n)
+ಬಾಹ್ಯ "C++" ಶೂನ್ಯ *memrchr (ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-extern "C++" const void *memrchr (const void *__s, int __c, size_t __n)
+ಬಾಹ್ಯ "C++" ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *memrchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-# else
-extern void *memrchr (const void *__s, int __c, size_t __n)
+# ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಶೂನ್ಯ *memrchr (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__s, ಪೂರ್ಣಾಂಕ __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
 /* Copy SRC to DEST.  */
-extern char *strcpy (char *__restrict __dest, const char *__restrict __src)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strcpy (ಅಕ್ಷರ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src)
      __THROW __nonnull ((1, 2));
 /* Copy no more than N characters of SRC to DEST.  */
-extern char *strncpy (char *__restrict __dest,
-		      const char *__restrict __src, size_t __n)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strncpy (ಅಕ್ಷರ *__restrict __dest,
+		      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
 
 /* Append SRC onto DEST.  */
-extern char *strcat (char *__restrict __dest, const char *__restrict __src)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strcat (ಅಕ್ಷರ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src)
      __THROW __nonnull ((1, 2));
 /* Append no more than N characters from SRC onto DEST.  */
-extern char *strncat (char *__restrict __dest, const char *__restrict __src,
+ಬಾಹ್ಯ ಅಕ್ಷರ *strncat (ಅಕ್ಷರ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src,
 		      size_t __n) __THROW __nonnull ((1, 2));
 
 /* Compare S1 and S2.  */
-extern int strcmp (const char *__s1, const char *__s2)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ strcmp (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Compare N characters of S1 and S2.  */
-extern int strncmp (const char *__s1, const char *__s2, size_t __n)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ ಅಕ್ಷರಸರಣಿ_ಹೋಲಿಕೆ (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare the collated forms of S1 and S2.  */
-extern int strcoll (const char *__s1, const char *__s2)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ strcoll (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Put a transformation of SRC into no more than N bytes of DEST.  */
-extern size_t strxfrm (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+ಬಾಹ್ಯ size_t strxfrm (ಅಕ್ಷರ *__restrict __dest,
+		       ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src, size_t __n)
     __THROW __nonnull ((2)) __attr_access ((__write_only__, 1, 3));
 
-#ifdef __USE_XOPEN2K8
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_XOPEN2K8
 /* POSIX.1-2008 extended locale interface (see locale.h).  */
 # include <bits/types/locale_t.h>
 
 /* Compare the collated forms of S1 and S2, using sorting rules from L.  */
-extern int strcoll_l (const char *__s1, const char *__s2, locale_t __l)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ strcoll_l (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s2, locale_t __l)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 /* Put a transformation of SRC into no more than N bytes of DEST,
    using sorting rules from L.  */
-extern size_t strxfrm_l (char *__dest, const char *__src, size_t __n,
+ಬಾಹ್ಯ size_t strxfrm_l (ಅಕ್ಷರ *__dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__src, size_t __n,
 			 locale_t __l) __THROW __nonnull ((2, 4))
      __attr_access ((__write_only__, 1, 3));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#if (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
+#ಆದರೆ (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
      || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23))
 /* Duplicate S, returning an identical malloc'd string.  */
-extern char *strdup (const char *__s)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strdup (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s)
      __THROW __attribute_malloc__ __nonnull ((1));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Return a malloc'd copy of at most N bytes of STRING.  The
    resultant string is terminated even if no null terminator
    appears before STRING[N].  */
-#if defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
-extern char *strndup (const char *__string, size_t __n)
+#ಆದರೆ defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strndup (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__string, size_t __n)
      __THROW __attribute_malloc__ __nonnull ((1));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#if defined __USE_GNU && defined __GNUC__
+#ಆದರೆ defined __USE_GNU && defined __GNUC__
 /* Duplicate S, returning an identical alloca'd string.  */
 # define strdupa(s)							      \
   (__extension__							      \
     ({									      \
-      const char *__old = (s);						      \
-      size_t __len = strlen (__old) + 1;				      \
-      char *__new = (char *) __builtin_alloca (__len);			      \
-      (char *) memcpy (__new, __old, __len);				      \
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__old = (s);						      \
+      size_t __len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (__old) + 1;				      \
+      ಅಕ್ಷರ *__new = (ಅಕ್ಷರ *) __builtin_alloca (__len);			      \
+      (ಅಕ್ಷರ *) ಸ್ಮರಣೆ_ನಕಲು (__new, __old, __len);				      \
     }))
 
 /* Return an alloca'd copy of at most N bytes of string.  */
 # define strndupa(s, n)							      \
   (__extension__							      \
     ({									      \
-      const char *__old = (s);						      \
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__old = (s);						      \
       size_t __len = strnlen (__old, (n));				      \
-      char *__new = (char *) __builtin_alloca (__len + 1);		      \
+      ಅಕ್ಷರ *__new = (ಅಕ್ಷರ *) __builtin_alloca (__len + 1);		      \
       __new[__len] = '\0';						      \
-      (char *) memcpy (__new, __old, __len);				      \
+      (ಅಕ್ಷರ *) ಸ್ಮರಣೆ_ನಕಲು (__new, __old, __len);				      \
     }))
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Find the first occurrence of C in S.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __CORRECT_ISO_CPP_STRING_H_PROTO
+ಬಾಹ್ಯ "C++"
 {
-extern char *strchr (char *__s, int __c)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strchr (ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
-extern const char *strchr (const char *__s, int __c)
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strchr (char *__s, int __c) __THROW
+__extern_always_inline ಅಕ್ಷರ *
+strchr (ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  ಹಿಂತಿರುಗಿ __builtin_strchr (__s, __c);
 }
 
-__extern_always_inline const char *
-strchr (const char *__s, int __c) __THROW
+__extern_always_inline ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *
+strchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  ಹಿಂತಿರುಗಿ __builtin_strchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strchr (const char *__s, int __c)
+#ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *strchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ಆದರೆ __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strchr(S, C)						\
-  __glibc_const_generic (S, const char *, strchr (S, C))
+  __glibc_const_generic (S, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, strchr (S, C))
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 /* Find the last occurrence of C in S.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __CORRECT_ISO_CPP_STRING_H_PROTO
+ಬಾಹ್ಯ "C++"
 {
-extern char *strrchr (char *__s, int __c)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strrchr (ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
-extern const char *strrchr (const char *__s, int __c)
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strrchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strrchr (char *__s, int __c) __THROW
+__extern_always_inline ಅಕ್ಷರ *
+strrchr (ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  ಹಿಂತಿರುಗಿ __builtin_strrchr (__s, __c);
 }
 
-__extern_always_inline const char *
-strrchr (const char *__s, int __c) __THROW
+__extern_always_inline ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *
+strrchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  ಹಿಂತಿರುಗಿ __builtin_strrchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strrchr (const char *__s, int __c)
+#ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *strrchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ಆದರೆ __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strrchr(S, C)						\
-  __glibc_const_generic (S, const char *, strrchr (S, C))
+  __glibc_const_generic (S, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, strrchr (S, C))
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_MISC
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_MISC
 /* This function is similar to `strchr'.  But it returns a pointer to
    the closing NUL byte in case C is not found in S.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strchrnul (char *__s, int __c)
+ಬಾಹ್ಯ "C++" ಅಕ್ಷರ *strchrnul (ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-extern "C++" const char *strchrnul (const char *__s, int __c)
+ಬಾಹ್ಯ "C++" ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strchrnul (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-# else
-extern char *strchrnul (const char *__s, int __c)
+# ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *strchrnul (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಪೂರ್ಣಾಂಕ __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Return the length of the initial segment of S which
    consists entirely of characters not in REJECT.  */
-extern size_t strcspn (const char *__s, const char *__reject)
+ಬಾಹ್ಯ size_t strcspn (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__reject)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Return the length of the initial segment of S which
    consists entirely of characters in ACCEPT.  */
-extern size_t strspn (const char *__s, const char *__accept)
+ಬಾಹ್ಯ size_t strspn (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Find the first occurrence in S of any character in ACCEPT.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __CORRECT_ISO_CPP_STRING_H_PROTO
+ಬಾಹ್ಯ "C++"
 {
-extern char *strpbrk (char *__s, const char *__accept)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strpbrk (ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__accept)
      __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
-extern const char *strpbrk (const char *__s, const char *__accept)
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strpbrk (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__accept)
      __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strpbrk (char *__s, const char *__accept) __THROW
+__extern_always_inline ಅಕ್ಷರ *
+strpbrk (ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  ಹಿಂತಿರುಗಿ __builtin_strpbrk (__s, __accept);
 }
 
-__extern_always_inline const char *
-strpbrk (const char *__s, const char *__accept) __THROW
+__extern_always_inline ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *
+strpbrk (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  ಹಿಂತಿರುಗಿ __builtin_strpbrk (__s, __accept);
 }
 # endif
 }
-#else
-extern char *strpbrk (const char *__s, const char *__accept)
+#ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *strpbrk (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ಆದರೆ __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strpbrk(S, ACCEPT)					\
-  __glibc_const_generic (S, const char *, strpbrk (S, ACCEPT))
+  __glibc_const_generic (S, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, strpbrk (S, ACCEPT))
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
-#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __CORRECT_ISO_CPP_STRING_H_PROTO
+ಬಾಹ್ಯ "C++"
 {
-extern char *strstr (char *__haystack, const char *__needle)
+ಬಾಹ್ಯ ಅಕ್ಷರ *ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle)
      __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
-extern const char *strstr (const char *__haystack, const char *__needle)
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle)
      __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strstr (char *__haystack, const char *__needle) __THROW
+__extern_always_inline ಅಕ್ಷರ *
+ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  ಹಿಂತಿರುಗಿ __builtin_strstr (__haystack, __needle);
 }
 
-__extern_always_inline const char *
-strstr (const char *__haystack, const char *__needle) __THROW
+__extern_always_inline ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *
+ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  ಹಿಂತಿರುಗಿ __builtin_strstr (__haystack, __needle);
 }
 # endif
 }
-#else
-extern char *strstr (const char *__haystack, const char *__needle)
+#ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
-#  define strstr(HAYSTACK, NEEDLE)			\
-  __glibc_const_generic (HAYSTACK, const char *,	\
-			 strstr (HAYSTACK, NEEDLE))
+# ಆದರೆ __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+#  define ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು(HAYSTACK, NEEDLE)			\
+  __glibc_const_generic (HAYSTACK, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *,	\
+			 ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (HAYSTACK, NEEDLE))
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
 /* Divide S into tokens separated by characters in DELIM.  */
-extern char *strtok (char *__restrict __s, const char *__restrict __delim)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strtok (ಅಕ್ಷರ *__restrict __s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __delim)
      __THROW __nonnull ((2));
 
 /* Divide S into tokens separated by characters in DELIM.  Information
    passed between calls are stored in SAVE_PTR.  */
-extern char *__strtok_r (char *__restrict __s,
-			 const char *__restrict __delim,
-			 char **__restrict __save_ptr)
+ಬಾಹ್ಯ ಅಕ್ಷರ *__strtok_r (ಅಕ್ಷರ *__restrict __s,
+			 ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __delim,
+			 ಅಕ್ಷರ **__restrict __save_ptr)
      __THROW __nonnull ((2, 3));
-#ifdef __USE_POSIX
-extern char *strtok_r (char *__restrict __s, const char *__restrict __delim,
-		       char **__restrict __save_ptr)
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_POSIX
+ಬಾಹ್ಯ ಅಕ್ಷರ *strtok_r (ಅಕ್ಷರ *__restrict __s, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __delim,
+		       ಅಕ್ಷರ **__restrict __save_ptr)
      __THROW __nonnull ((2, 3));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_MISC
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_MISC
 /* Similar to `strstr' but this function ignores the case of both strings.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strcasestr (char *__haystack, const char *__needle)
+ಬಾಹ್ಯ "C++" ಅಕ್ಷರ *strcasestr (ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-extern "C++" const char *strcasestr (const char *__haystack,
-				     const char *__needle)
+ಬಾಹ್ಯ "C++" ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strcasestr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__haystack,
+				     ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-# else
-extern char *strcasestr (const char *__haystack, const char *__needle)
+# ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *strcasestr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_MISC
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_MISC
 /* Find the first occurrence of NEEDLE in HAYSTACK.
    NEEDLE is NEEDLELEN bytes long;
    HAYSTACK is HAYSTACKLEN bytes long.  */
-extern void *memmem (const void *__haystack, size_t __haystacklen,
-		     const void *__needle, size_t __needlelen)
+ಬಾಹ್ಯ ಶೂನ್ಯ *memmem (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__haystack, size_t __haystacklen,
+		     ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__needle, size_t __needlelen)
      __THROW __attribute_pure__ __nonnull ((1, 3))
     __attr_access ((__read_only__, 1, 2))
     __attr_access ((__read_only__, 3, 4));
 
 /* Copy N bytes of SRC to DEST, return pointer to bytes after the
    last written byte.  */
-extern void *__mempcpy (void *__restrict __dest,
-			const void *__restrict __src, size_t __n)
+ಬಾಹ್ಯ ಶೂನ್ಯ *__mempcpy (ಶೂನ್ಯ *__restrict __dest,
+			ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-extern void *mempcpy (void *__restrict __dest,
-		      const void *__restrict __src, size_t __n)
+ಬಾಹ್ಯ ಶೂನ್ಯ *mempcpy (ಶೂನ್ಯ *__restrict __dest,
+		      ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
 /* Return the length of S.  */
-extern size_t strlen (const char *__s)
+ಬಾಹ್ಯ size_t ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s)
      __THROW __attribute_pure__ __nonnull ((1));
 
-#ifdef	__USE_XOPEN2K8
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ	__USE_XOPEN2K8
 /* Find the length of STRING, but scan at most MAXLEN characters.
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
-extern size_t strnlen (const char *__string, size_t __maxlen)
+ಬಾಹ್ಯ size_t strnlen (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__string, size_t __maxlen)
      __THROW __attribute_pure__ __nonnull ((1));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
 /* Return a string describing the meaning of the `errno' code in ERRNUM.  */
-extern char *strerror (int __errnum) __THROW;
-#ifdef __USE_XOPEN2K
+ಬಾಹ್ಯ ಅಕ್ಷರ *strerror (ಪೂರ್ಣಾಂಕ __errnum) __THROW;
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_XOPEN2K
 /* Reentrant version of `strerror'.
    There are 2 flavors of `strerror_r', GNU which returns the string
    and may or may not use the supplied temporary buffer and POSIX one
@@ -457,105 +457,105 @@ extern char *strerror (int __errnum) __THROW;
    To use the POSIX version, -D_XOPEN_SOURCE=600 or -D_POSIX_C_SOURCE=200112L
    without -D_GNU_SOURCE is needed, otherwise the GNU version is
    preferred.  */
-# if defined __USE_XOPEN2K && !defined __USE_GNU
+# ಆದರೆ defined __USE_XOPEN2K && !defined __USE_GNU
 /* Fill BUF with a string describing the meaning of the `errno' code in
    ERRNUM.  */
 #  ifdef __REDIRECT_NTH
-extern int __REDIRECT_NTH (strerror_r,
-			   (int __errnum, char *__buf, size_t __buflen),
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ __REDIRECT_NTH (strerror_r,
+			   (ಪೂರ್ಣಾಂಕ __errnum, ಅಕ್ಷರ *__buf, size_t __buflen),
 			   __xpg_strerror_r) __nonnull ((2))
     __attr_access ((__write_only__, 2, 3));
-#  else
-extern int __xpg_strerror_r (int __errnum, char *__buf, size_t __buflen)
+#  ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ __xpg_strerror_r (ಪೂರ್ಣಾಂಕ __errnum, ಅಕ್ಷರ *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __attr_access ((__write_only__, 2, 3));
 #   define strerror_r __xpg_strerror_r
 #  endif
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 /* If a temporary buffer is required, at most BUFLEN bytes of BUF will be
    used.  */
-extern char *strerror_r (int __errnum, char *__buf, size_t __buflen)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strerror_r (ಪೂರ್ಣಾಂಕ __errnum, ಅಕ್ಷರ *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __wur  __attr_access ((__write_only__, 2, 3));
 # endif
 
 # ifdef __USE_GNU
 /* Return a string describing the meaning of tthe error in ERR.  */
-extern const char *strerrordesc_np (int __err) __THROW;
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strerrordesc_np (ಪೂರ್ಣಾಂಕ __err) __THROW;
 /* Return a string with the error name in ERR.  */
-extern const char *strerrorname_np (int __err) __THROW;
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *strerrorname_np (ಪೂರ್ಣಾಂಕ __err) __THROW;
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_XOPEN2K8
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_XOPEN2K8
 /* Translate error number to string according to the locale L.  */
-extern char *strerror_l (int __errnum, locale_t __l) __THROW;
-#endif
+ಬಾಹ್ಯ ಅಕ್ಷರ *strerror_l (ಪೂರ್ಣಾಂಕ __errnum, locale_t __l) __THROW;
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_MISC
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_MISC
 # include <strings.h>
 
 /* Set N bytes of S to 0.  The compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void explicit_bzero (void *__s, size_t __n) __THROW __nonnull ((1))
+ಬಾಹ್ಯ ಶೂನ್ಯ explicit_bzero (ಶೂನ್ಯ *__s, size_t __n) __THROW __nonnull ((1))
     __fortified_attr_access (__write_only__, 1, 2);
 
 /* Return the next DELIM-delimited token from *STRINGP,
    terminating it with a '\0', and update *STRINGP to point past it.  */
-extern char *strsep (char **__restrict __stringp,
-		     const char *__restrict __delim)
+ಬಾಹ್ಯ ಅಕ್ಷರ *strsep (ಅಕ್ಷರ **__restrict __stringp,
+		     ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __delim)
      __THROW __nonnull ((1, 2));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef	__USE_XOPEN2K8
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ	__USE_XOPEN2K8
 /* Return a string describing the meaning of the signal number in SIG.  */
-extern char *strsignal (int __sig) __THROW;
+ಬಾಹ್ಯ ಅಕ್ಷರ *strsignal (ಪೂರ್ಣಾಂಕ __sig) __THROW;
 
 # ifdef __USE_GNU
 /* Return an abbreviation string for the signal number SIG.  */
-extern const char *sigabbrev_np (int __sig) __THROW;
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *sigabbrev_np (ಪೂರ್ಣಾಂಕ __sig) __THROW;
 /* Return a string describing the meaning of the signal number in SIG,
    the result is not translated.  */
-extern const char *sigdescr_np (int __sig) __THROW;
+ಬಾಹ್ಯ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *sigdescr_np (ಪೂರ್ಣಾಂಕ __sig) __THROW;
 # endif
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-extern char *__stpcpy (char *__restrict __dest, const char *__restrict __src)
+ಬಾಹ್ಯ ಅಕ್ಷರ *__stpcpy (ಅಕ್ಷರ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src)
      __THROW __nonnull ((1, 2));
-extern char *stpcpy (char *__restrict __dest, const char *__restrict __src)
+ಬಾಹ್ಯ ಅಕ್ಷರ *stpcpy (ಅಕ್ಷರ *__restrict __dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src)
      __THROW __nonnull ((1, 2));
 
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the last character written into DEST.  */
-extern char *__stpncpy (char *__restrict __dest,
-			const char *__restrict __src, size_t __n)
+ಬಾಹ್ಯ ಅಕ್ಷರ *__stpncpy (ಅಕ್ಷರ *__restrict __dest,
+			ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-extern char *stpncpy (char *__restrict __dest,
-		      const char *__restrict __src, size_t __n)
+ಬಾಹ್ಯ ಅಕ್ಷರ *stpncpy (ಅಕ್ಷರ *__restrict __dest,
+		      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef __USE_MISC
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ __USE_MISC
 /* Copy at most N - 1 characters from SRC to DEST.  */
-extern size_t strlcpy (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+ಬಾಹ್ಯ size_t strlcpy (ಅಕ್ಷರ *__restrict __dest,
+		       ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src, size_t __n)
   __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 3));
 
 /* Append SRC to DEST, possibly with truncation to keep the total size
    below N.  */
-extern size_t strlcat (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+ಬಾಹ್ಯ size_t strlcat (ಅಕ್ಷರ *__restrict __dest,
+		       ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__restrict __src, size_t __n)
   __THROW __nonnull ((1, 2))  __attr_access ((__read_write__, 1, 3));
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef	__USE_GNU
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ	__USE_GNU
 /* Compare S1 and S2 as strings holding name & indices/version numbers.  */
-extern int strverscmp (const char *__s1, const char *__s2)
+ಬಾಹ್ಯ ಪೂರ್ಣಾಂಕ strverscmp (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Sautee STRING briskly.  */
-extern char *strfry (char *__string) __THROW __nonnull ((1));
+ಬಾಹ್ಯ ಅಕ್ಷರ *strfry (ಅಕ್ಷರ *__string) __THROW __nonnull ((1));
 
 /* Frobnicate N bytes of S.  */
-extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
+ಬಾಹ್ಯ ಶೂನ್ಯ *memfrob (ಶೂನ್ಯ *__s, size_t __n) __THROW __nonnull ((1))
     __attr_access ((__read_write__, 1, 2));
 
 # ifndef basename
@@ -564,23 +564,23 @@ extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
    in <libgen.h>) which makes the XPG version of this function
    available.  */
 #  ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *basename (char *__filename)
+ಬಾಹ್ಯ "C++" ಅಕ್ಷರ *basename (ಅಕ್ಷರ *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-extern "C++" const char *basename (const char *__filename)
+ಬಾಹ್ಯ "C++" ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *basename (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-#  else
-extern char *basename (const char *__filename) __THROW __nonnull ((1));
+#  ಇಲ್ಲದಿದ್ದರೆ
+ಬಾಹ್ಯ ಅಕ್ಷರ *basename (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *__filename) __THROW __nonnull ((1));
 #  endif
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#if __GNUC_PREREQ (3,4)
-# if __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
+#ಆದರೆ __GNUC_PREREQ (3,4)
+# ಆದರೆ __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
 /* Functions with security checks.  */
 #  include <bits/string_fortified.h>
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 __END_DECLS
 
-#endif /* string.h  */
+#ಆದರೆ_ಅಂತ್ಯ /* string.h  */

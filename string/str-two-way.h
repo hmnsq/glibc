@@ -45,9 +45,9 @@
   LONG_NEEDLE_THRESHOLD.
 */
 
-#include <limits.h>
-#include <stdint.h>
-#include <sys/param.h>                  /* Defines MAX.  */
+#ಅನ್ತರ್ಭಾವ <limits.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
+#ಅನ್ತರ್ಭಾವ <sys/param.h>                  /* Defines MAX.  */
 
 /* We use the Two-Way string matching algorithm, which guarantees
    linear complexity with constant space.  Additionally, for long
@@ -66,30 +66,30 @@
    needle, the better the potential performance gain.  On the other
    hand, on non-POSIX systems with CHAR_BIT larger than eight, the
    memory required for the table is prohibitive.  */
-#if CHAR_BIT < 10
-# define LONG_NEEDLE_THRESHOLD 32U
-#else
-# define LONG_NEEDLE_THRESHOLD SIZE_MAX
-#endif
+#ಆದರೆ CHAR_BIT < 10
+# define LONG_NEEDLE_ಮಿತಿ 32U
+#ಇಲ್ಲದಿದ್ದರೆ
+# define LONG_NEEDLE_ಮಿತಿ SIZE_MAX
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifndef CANON_ELEMENT
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ CANON_ELEMENT
 # define CANON_ELEMENT(c) c
-#endif
-#ifndef CMP_FUNC
+#ಆದರೆ_ಅಂತ್ಯ
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ CMP_FUNC
 # define CMP_FUNC memcmp
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Check for end-of-line in strstr and strcasestr routines.
    We piggy-back matching procedure for detecting EOL where possible,
    and use AVAILABLE macro otherwise.  */
-#ifndef CHECK_EOL
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ CHECK_EOL
 # define CHECK_EOL (0)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Return NULL if argument is '\0'.  */
-#ifndef RET0_IF_0
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ RET0_IF_0
 # define RET0_IF_0(a) /* nothing */
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Perform a critical factorization of NEEDLE, of length NEEDLE_LEN.
    Return the index of the first byte in the right half, and set
@@ -114,8 +114,8 @@
    larger of two ordered maximal suffixes.  The ordered maximal
    suffixes are determined by lexicographic comparison of
    periodicity.  */
-static size_t
-critical_factorization (const unsigned char *needle, size_t needle_len,
+ಸ್ಥಿರ size_t
+critical_factorization (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *needle, size_t needle_len,
 			size_t *period)
 {
   /* Index of last byte of left half, or SIZE_MAX.  */
@@ -123,7 +123,7 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
   size_t j; /* Index into NEEDLE for current candidate suffix.  */
   size_t k; /* Offset into current period.  */
   size_t p; /* Intermediate period.  */
-  unsigned char a, b; /* Current comparison bytes.  */
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ a, b; /* Current comparison bytes.  */
 
   /* Invariants:
      0 <= j < NEEDLE_LEN - 1
@@ -138,29 +138,29 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
   max_suffix = SIZE_MAX;
   j = 0;
   k = p = 1;
-  while (j + k < needle_len)
+  ಆಗ (j + k < needle_len)
     {
       a = CANON_ELEMENT (needle[j + k]);
       b = CANON_ELEMENT (needle[max_suffix + k]);
-      if (a < b)
+      ಆದರೆ (a < b)
 	{
 	  /* Suffix is smaller, period is entire prefix so far.  */
 	  j += k;
 	  k = 1;
 	  p = j - max_suffix;
 	}
-      else if (a == b)
+      ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (a == b)
 	{
 	  /* Advance through repetition of the current period.  */
-	  if (k != p)
+	  ಆದರೆ (k != p)
 	    ++k;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      j += p;
 	      k = 1;
 	    }
 	}
-      else /* b < a */
+      ಇಲ್ಲದಿದ್ದರೆ /* b < a */
 	{
 	  /* Suffix is larger, start over from current location.  */
 	  max_suffix = j++;
@@ -173,29 +173,29 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
   max_suffix_rev = SIZE_MAX;
   j = 0;
   k = p = 1;
-  while (j + k < needle_len)
+  ಆಗ (j + k < needle_len)
     {
       a = CANON_ELEMENT (needle[j + k]);
       b = CANON_ELEMENT (needle[max_suffix_rev + k]);
-      if (b < a)
+      ಆದರೆ (b < a)
 	{
 	  /* Suffix is smaller, period is entire prefix so far.  */
 	  j += k;
 	  k = 1;
 	  p = j - max_suffix_rev;
 	}
-      else if (a == b)
+      ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (a == b)
 	{
 	  /* Advance through repetition of the current period.  */
-	  if (k != p)
+	  ಆದರೆ (k != p)
 	    ++k;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      j += p;
 	      k = 1;
 	    }
 	}
-      else /* a < b */
+      ಇಲ್ಲದಿದ್ದರೆ /* a < b */
 	{
 	  /* Suffix is larger, start over from current location.  */
 	  max_suffix_rev = j++;
@@ -205,10 +205,10 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
 
   /* Choose the longer suffix.  Return the first byte of the right
      half, rather than the last byte of the left half.  */
-  if (max_suffix_rev + 1 < max_suffix + 1)
-    return max_suffix + 1;
+  ಆದರೆ (max_suffix_rev + 1 < max_suffix + 1)
+    ಹಿಂತಿರುಗಿ max_suffix + 1;
   *period = p;
-  return max_suffix_rev + 1;
+  ಹಿಂತಿರುಗಿ max_suffix_rev + 1;
 }
 
 /* Return the first location of non-empty NEEDLE within HAYSTACK, or
@@ -221,9 +221,9 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
    most 2 * HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching.
    If AVAILABLE modifies HAYSTACK_LEN (as in strstr), then at most 3 *
    HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching.  */
-static inline RETURN_TYPE
-two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
-		      const unsigned char *needle, size_t needle_len)
+ಸ್ಥಿರ ಸಾಲೊಳಗೆ RETURN_TYPE
+two_way_short_needle (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *haystack, size_t haystack_len,
+		      ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *needle, size_t needle_len)
 {
   size_t i; /* Index into current byte of NEEDLE.  */
   size_t j; /* Index into current window of HAYSTACK.  */
@@ -237,138 +237,138 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 
   /* Perform the search.  Each iteration compares the right half
      first.  */
-  if (CMP_FUNC (needle, needle + period, suffix) == 0)
+  ಆದರೆ (CMP_FUNC (needle, needle + period, suffix) == 0)
     {
       /* Entire needle is periodic; a mismatch can only advance by the
 	 period, so use memory to avoid rescanning known occurrences
 	 of the period.  */
-      size_t memory = 0;
+      size_t ಸ್ಮರಣೆ = 0;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      ಆಗ (ಲಭ್ಯ (haystack, haystack_len, j, needle_len))
 	{
-	  const unsigned char *pneedle;
-	  const unsigned char *phaystack;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *pneedle;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *phaystack;
 
 	  /* Scan for matches in right half.  */
-	  i = MAX (suffix, memory);
+	  i = MAX (suffix, ಸ್ಮರಣೆ);
 	  pneedle = &needle[i];
 	  phaystack = &haystack[i + j];
-	  while (i < needle_len && (CANON_ELEMENT (*pneedle++)
+	  ಆಗ (i < needle_len && (CANON_ELEMENT (*pneedle++)
 				    == CANON_ELEMENT (*phaystack++)))
 	    ++i;
-	  if (needle_len <= i)
+	  ಆದರೆ (needle_len <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (memory < i + 1 && (CANON_ELEMENT (*pneedle--)
+	      ಆಗ (ಸ್ಮರಣೆ < i + 1 && (CANON_ELEMENT (*pneedle--)
 					== CANON_ELEMENT (*phaystack--)))
 		--i;
-	      if (i + 1 < memory + 1)
-		return (RETURN_TYPE) (haystack + j);
+	      ಆದರೆ (i + 1 < ಸ್ಮರಣೆ + 1)
+		ಹಿಂತಿರುಗಿ (RETURN_TYPE) (haystack + j);
 	      /* No match, so remember how many repetitions of period
 		 on the right half were scanned.  */
 	      j += period;
-	      memory = needle_len - period;
+	      ಸ್ಮರಣೆ = needle_len - period;
 	    }
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      j += i - suffix + 1;
-	      memory = 0;
+	      ಸ್ಮರಣೆ = 0;
 	    }
 	}
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
-      const unsigned char *phaystack;
+      ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *phaystack;
       /* The comparison always starts from needle[suffix], so cache it
 	 and use an optimized first-character loop.  */
-      unsigned char needle_suffix = CANON_ELEMENT (needle[suffix]);
+      ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ needle_suffix = CANON_ELEMENT (needle[suffix]);
 
       /* The two halves of needle are distinct; no extra memory is
 	 required, and any mismatch results in a maximal shift.  */
       period = MAX (suffix, needle_len - suffix) + 1;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      ಆಗ (ಲಭ್ಯ (haystack, haystack_len, j, needle_len))
 	{
-	  unsigned char haystack_char;
-	  const unsigned char *pneedle;
+	  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ haystack_char;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *pneedle;
 
 	  phaystack = &haystack[suffix + j];
 
-#ifdef FASTSEARCH
-	  if (*phaystack++ != needle_suffix)
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ FASTSEARCH
+	  ಆದರೆ (*phaystack++ != needle_suffix)
 	    {
 	      phaystack = FASTSEARCH (phaystack, needle_suffix,
 				      haystack_len - needle_len - j);
-	      if (phaystack == NULL)
-		goto ret0;
+	      ಆದರೆ (phaystack == ಖಾಲಿ)
+		ಹೋಗು ret0;
 	      j = phaystack - &haystack[suffix];
 	      phaystack++;
 	    }
-#else
-	  while (needle_suffix
+#ಇಲ್ಲದಿದ್ದರೆ
+	  ಆಗ (needle_suffix
 	      != (haystack_char = CANON_ELEMENT (*phaystack++)))
 	    {
 	      RET0_IF_0 (haystack_char);
-# if !CHECK_EOL
+# ಆದರೆ !CHECK_EOL
 	      ++j;
-	      if (!AVAILABLE (haystack, haystack_len, j, needle_len))
-		goto ret0;
+	      ಆದರೆ (!ಲಭ್ಯ (haystack, haystack_len, j, needle_len))
+		ಹೋಗು ret0;
 # endif
 	    }
 
-# if CHECK_EOL
+# ಆದರೆ CHECK_EOL
 	  /* Calculate J if it wasn't kept up-to-date in the first-character
 	     loop.  */
 	  j = phaystack - &haystack[suffix] - 1;
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 	  /* Scan for matches in right half.  */
 	  i = suffix + 1;
 	  pneedle = &needle[i];
-	  while (i < needle_len)
+	  ಆಗ (i < needle_len)
 	    {
-	      if (CANON_ELEMENT (*pneedle++)
+	      ಆದರೆ (CANON_ELEMENT (*pneedle++)
 		  != (haystack_char = CANON_ELEMENT (*phaystack++)))
 		{
 		  RET0_IF_0 (haystack_char);
-		  break;
+		  ನಿಲ್ಲಿಸು;
 		}
 	      ++i;
 	    }
-#if CHECK_EOL
+#ಆದರೆ CHECK_EOL
 	  /* Update minimal length of haystack.  */
-	  if (phaystack > haystack + haystack_len)
+	  ಆದರೆ (phaystack > haystack + haystack_len)
 	    haystack_len = phaystack - haystack;
-#endif
-	  if (needle_len <= i)
+#ಆದರೆ_ಅಂತ್ಯ
+	  ಆದರೆ (needle_len <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (i != SIZE_MAX)
+	      ಆಗ (i != SIZE_MAX)
 		{
-		  if (CANON_ELEMENT (*pneedle--)
+		  ಆದರೆ (CANON_ELEMENT (*pneedle--)
 		      != (haystack_char = CANON_ELEMENT (*phaystack--)))
 		    {
 		      RET0_IF_0 (haystack_char);
-		      break;
+		      ನಿಲ್ಲಿಸು;
 		    }
 		  --i;
 		}
-	      if (i == SIZE_MAX)
-		return (RETURN_TYPE) (haystack + j);
+	      ಆದರೆ (i == SIZE_MAX)
+		ಹಿಂತಿರುಗಿ (RETURN_TYPE) (haystack + j);
 	      j += period;
 	    }
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    j += i - suffix + 1;
 	}
     }
- ret0: __attribute__ ((unused))
-  return NULL;
+ ret0: __attribute__ ((ಬಳಸದ))
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
 
 /* Return the first location of non-empty NEEDLE within HAYSTACK, or
@@ -386,15 +386,15 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
 
    Since this function is large and complex, block inlining to avoid
    slowing down the common case of small needles.  */
-__attribute__((noinline)) static RETURN_TYPE
-two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
-		     const unsigned char *needle, size_t needle_len)
+__attribute__((noinline)) ಸ್ಥಿರ RETURN_TYPE
+two_way_long_needle (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *haystack, size_t haystack_len,
+		     ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *needle, size_t needle_len)
 {
   size_t i; /* Index into current byte of NEEDLE.  */
   size_t j; /* Index into current window of HAYSTACK.  */
   size_t period; /* The period of the right half of needle.  */
   size_t suffix; /* The index of the right half of needle.  */
-  size_t shift_table[1U << CHAR_BIT]; /* See below.  */
+  size_t ಸರಿಸು_ಕೋಷ್ಟಕ[1U << CHAR_BIT]; /* See below.  */
 
   /* Factor the needle into two halves, such that the left half is
      smaller than the global period, and the right half is
@@ -405,124 +405,124 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
      shift_table[c] is the distance from the last occurrence of c to
      the end of NEEDLE, or NEEDLE_LEN if c is absent from the NEEDLE.
      shift_table[NEEDLE[NEEDLE_LEN - 1]] contains the only 0.  */
-  for (i = 0; i < 1U << CHAR_BIT; i++)
-    shift_table[i] = needle_len;
-  for (i = 0; i < needle_len; i++)
-    shift_table[CANON_ELEMENT (needle[i])] = needle_len - i - 1;
+  ಗಾಗಿ (i = 0; i < 1U << CHAR_BIT; i++)
+    ಸರಿಸು_ಕೋಷ್ಟಕ[i] = needle_len;
+  ಗಾಗಿ (i = 0; i < needle_len; i++)
+    ಸರಿಸು_ಕೋಷ್ಟಕ[CANON_ELEMENT (needle[i])] = needle_len - i - 1;
 
   /* Perform the search.  Each iteration compares the right half
      first.  */
-  if (CMP_FUNC (needle, needle + period, suffix) == 0)
+  ಆದರೆ (CMP_FUNC (needle, needle + period, suffix) == 0)
     {
       /* Entire needle is periodic; a mismatch can only advance by the
 	 period, so use memory to avoid rescanning known occurrences
 	 of the period.  */
-      size_t memory = 0;
-      size_t shift;
+      size_t ಸ್ಮರಣೆ = 0;
+      size_t ಸರಿಸು;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      ಆಗ (ಲಭ್ಯ (haystack, haystack_len, j, needle_len))
 	{
-	  const unsigned char *pneedle;
-	  const unsigned char *phaystack;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *pneedle;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *phaystack;
 
 	  /* Check the last byte first; if it does not match, then
 	     shift to the next possible match location.  */
-	  shift = shift_table[CANON_ELEMENT (haystack[j + needle_len - 1])];
-	  if (0 < shift)
+	  ಸರಿಸು = ಸರಿಸು_ಕೋಷ್ಟಕ[CANON_ELEMENT (haystack[j + needle_len - 1])];
+	  ಆದರೆ (0 < ಸರಿಸು)
 	    {
-	      if (memory && shift < period)
+	      ಆದರೆ (ಸ್ಮರಣೆ && ಸರಿಸು < period)
 		{
 		  /* Since needle is periodic, but the last period has
 		     a byte out of place, there can be no match until
 		     after the mismatch.  */
-		  shift = needle_len - period;
+		  ಸರಿಸು = needle_len - period;
 		}
-	      memory = 0;
-	      j += shift;
-	      continue;
+	      ಸ್ಮರಣೆ = 0;
+	      j += ಸರಿಸು;
+	      ಮುಂದುವರಿ;
 	    }
 	  /* Scan for matches in right half.  The last byte has
 	     already been matched, by virtue of the shift table.  */
-	  i = MAX (suffix, memory);
+	  i = MAX (suffix, ಸ್ಮರಣೆ);
 	  pneedle = &needle[i];
 	  phaystack = &haystack[i + j];
-	  while (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
+	  ಆಗ (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
 					== CANON_ELEMENT (*phaystack++)))
 	    ++i;
-	  if (needle_len - 1 <= i)
+	  ಆದರೆ (needle_len - 1 <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (memory < i + 1 && (CANON_ELEMENT (*pneedle--)
+	      ಆಗ (ಸ್ಮರಣೆ < i + 1 && (CANON_ELEMENT (*pneedle--)
 					== CANON_ELEMENT (*phaystack--)))
 		--i;
-	      if (i + 1 < memory + 1)
-		return (RETURN_TYPE) (haystack + j);
+	      ಆದರೆ (i + 1 < ಸ್ಮರಣೆ + 1)
+		ಹಿಂತಿರುಗಿ (RETURN_TYPE) (haystack + j);
 	      /* No match, so remember how many repetitions of period
 		 on the right half were scanned.  */
 	      j += period;
-	      memory = needle_len - period;
+	      ಸ್ಮರಣೆ = needle_len - period;
 	    }
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      j += i - suffix + 1;
-	      memory = 0;
+	      ಸ್ಮರಣೆ = 0;
 	    }
 	}
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
       /* The two halves of needle are distinct; no extra memory is
 	 required, and any mismatch results in a maximal shift.  */
-      size_t shift;
+      size_t ಸರಿಸು;
       period = MAX (suffix, needle_len - suffix) + 1;
       j = 0;
-      while (AVAILABLE (haystack, haystack_len, j, needle_len))
+      ಆಗ (ಲಭ್ಯ (haystack, haystack_len, j, needle_len))
 	{
-	  const unsigned char *pneedle;
-	  const unsigned char *phaystack;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *pneedle;
+	  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *phaystack;
 
 	  /* Check the last byte first; if it does not match, then
 	     shift to the next possible match location.  */
-	  shift = shift_table[CANON_ELEMENT (haystack[j + needle_len - 1])];
-	  if (0 < shift)
+	  ಸರಿಸು = ಸರಿಸು_ಕೋಷ್ಟಕ[CANON_ELEMENT (haystack[j + needle_len - 1])];
+	  ಆದರೆ (0 < ಸರಿಸು)
 	    {
-	      j += shift;
-	      continue;
+	      j += ಸರಿಸು;
+	      ಮುಂದುವರಿ;
 	    }
 	  /* Scan for matches in right half.  The last byte has
 	     already been matched, by virtue of the shift table.  */
 	  i = suffix;
 	  pneedle = &needle[i];
 	  phaystack = &haystack[i + j];
-	  while (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
+	  ಆಗ (i < needle_len - 1 && (CANON_ELEMENT (*pneedle++)
 					== CANON_ELEMENT (*phaystack++)))
 	    ++i;
-	  if (needle_len - 1 <= i)
+	  ಆದರೆ (needle_len - 1 <= i)
 	    {
 	      /* Scan for matches in left half.  */
 	      i = suffix - 1;
 	      pneedle = &needle[i];
 	      phaystack = &haystack[i + j];
-	      while (i != SIZE_MAX && (CANON_ELEMENT (*pneedle--)
+	      ಆಗ (i != SIZE_MAX && (CANON_ELEMENT (*pneedle--)
 				       == CANON_ELEMENT (*phaystack--)))
 		--i;
-	      if (i == SIZE_MAX)
-		return (RETURN_TYPE) (haystack + j);
+	      ಆದರೆ (i == SIZE_MAX)
+		ಹಿಂತಿರುಗಿ (RETURN_TYPE) (haystack + j);
 	      j += period;
 	    }
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    j += i - suffix + 1;
 	}
     }
-  return NULL;
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
 
-#undef AVAILABLE
-#undef CANON_ELEMENT
-#undef CMP_FUNC
-#undef RET0_IF_0
-#undef RETURN_TYPE
-#undef CHECK_EOL
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು ಲಭ್ಯ
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು CANON_ELEMENT
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು CMP_FUNC
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು RET0_IF_0
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು RETURN_TYPE
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು CHECK_EOL

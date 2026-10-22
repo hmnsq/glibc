@@ -16,133 +16,133 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "memmem"
-#define BUF1PAGES 20
-#define ITERATIONS 500
-#include "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_NAME "memmem"
+#ವ್ಯಾಖ್ಯಾನಿಸು BUF1_ಪುಟಗಳು 20
+#ವ್ಯಾಖ್ಯಾನಿಸು ITERATIONS 500
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಅಕ್ಷರ *(*proto_t) (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *, size_t, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+ಶೂನ್ಯ *
+simple_memmem (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *haystack, size_t haystack_len, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *begin;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *ಸ್ಥಿರಾಂಕ ಕೊನೆಯ_possible
+    = (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  ಆದರೆ (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    ಹಿಂತಿರುಗಿ (ಶೂನ್ಯ *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  ಆದರೆ (__glibc_unlikely (haystack_len < needle_len))
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  ಗಾಗಿ (begin = (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) haystack; begin <= ಕೊನೆಯ_possible; ++begin)
+    ಆದರೆ (begin[0] == ((ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) needle)[0]
+        && !memcmp ((ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *) &begin[1],
+		    (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *) ((ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      ಹಿಂತಿರುಗಿ (ಶೂನ್ಯ *) begin;
 
-  return NULL;
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+check_ಫಲಿತಾಂಶ (impl_t *impl, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *haystack, size_t haystack_len,
+	     ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *needle, size_t needle_len, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *expected)
 {
-  void *res;
+  ಶೂನ್ಯ *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  ಆದರೆ (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      ಹಿಂತಿರುಗಿ -1;
     }
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *haystack, size_t haystack_len,
+	     ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *needle, size_t needle_len, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  ಆದರೆ (check_ಫಲಿತಾಂಶ (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    ಹಿಂತಿರುಗಿ;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  ಅಕ್ಷರ tmpbuf[len];
 
-  memcpy (tmpbuf, buf1 + idx, len);
-  memcpy (buf1 + idx, str, len);
+  ಸ್ಮರಣೆ_ನಕಲು (tmpbuf, buf1 + idx, len);
+  ಸ್ಮರಣೆ_ನಕಲು (buf1 + idx, str, len);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, buf1, BUF1PAGES * page_size, str, len, buf1 + idx);
+    do_one_test (impl, buf1, BUF1_ಪುಟಗಳು * ಪುಟ_ಗಾತ್ರ, str, len, buf1 + idx);
 
-  memcpy (buf1 + idx, tmpbuf, len);
+  ಸ್ಮರಣೆ_ನಕಲು (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  ಗಾಗಿ (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      ಅಕ್ಷರ tmpbuf[32];
 
-      size_t shift = random () % 11;
-      size_t rel = random () % ((2 << (shift + 1)) * 64);
-      size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
-      len = MIN (len, BUF1PAGES * page_size - idx - 1);
-      memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      size_t ಸರಿಸು = random () % 11;
+      size_t rel = random () % ((2 << (ಸರಿಸು + 1)) * 64);
+      size_t idx = MIN ((2 << ಸರಿಸು) * 64 + rel, BUF1_ಪುಟಗಳು * ಪುಟ_ಗಾತ್ರ - 2);
+      size_t len = random () % (ಗಾತ್ರ (tmpbuf) - 1) + 1;
+      len = MIN (len, BUF1_ಪುಟಗಳು * ಪುಟ_ಗಾತ್ರ - idx - 1);
+      ಸ್ಮರಣೆ_ನಕಲು (tmpbuf, buf1 + idx, len);
+      ಗಾಗಿ (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  ಅಕ್ಷರ ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
 
       FOR_EACH_IMPL (impl, 0)
-	do_one_test (impl, buf1, BUF1PAGES * page_size, buf1 + idx, len,
+	do_one_test (impl, buf1, BUF1_ಪುಟಗಳು * ಪುಟ_ಗಾತ್ರ, buf1 + idx, len,
 		     buf1 + idx);
 
-      memcpy (buf1 + idx, tmpbuf, len);
+      ಸ್ಮರಣೆ_ನಕಲು (buf1 + idx, tmpbuf, len);
     }
 }
 
-static void
-check1 (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check1 (ಶೂನ್ಯ)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ ಹುಡುಕು_buf_ದತ್ತಾಂಶ[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ ನಮೂನೆ[2] = { 0x78, 0x56 };
+  ಶೂನ್ಯ *ಹುಡುಕು_buf = (ಶೂನ್ಯ *) buf1 + ಪುಟ_ಗಾತ್ರ - ಗಾತ್ರ ಹುಡುಕು_buf_ದತ್ತಾಂಶ;
+  ಶೂನ್ಯ *exp_ಫಲಿತಾಂಶ;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  ಸ್ಮರಣೆ_ನಕಲು (ಹುಡುಕು_buf, ಹುಡುಕು_buf_ದತ್ತಾಂಶ, ಗಾತ್ರ ಹುಡುಕು_buf_ದತ್ತಾಂಶ);
+  exp_ಫಲಿತಾಂಶ = simple_memmem (ಹುಡುಕು_buf, ಗಾತ್ರ ಹುಡುಕು_buf_ದತ್ತಾಂಶ,
+			      ನಮೂನೆ, ಗಾತ್ರ ನಮೂನೆ);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_ಫಲಿತಾಂಶ (impl, ಹುಡುಕು_buf, ಗಾತ್ರ ಹುಡುಕು_buf_ದತ್ತಾಂಶ,
+		  ನಮೂನೆ, ಗಾತ್ರ ನಮೂನೆ, exp_ಫಲಿತಾಂಶ);
 }
 
-static const char *const strs[] =
+ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *ಸ್ಥಿರಾಂಕ strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
@@ -159,24 +159,24 @@ test_main (void)
 
   check1 ();
 
-  printf ("%23s", "");
+  ಬರೆ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  ಗಾಗಿ (i = 0; i < BUF1_ಪುಟಗಳು * ಪುಟ_ಗಾತ್ರ; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  ಗಾಗಿ (i = 0; i < ಗಾತ್ರ (strs) / ಗಾತ್ರ (strs[0]); ++i)
+    ಗಾಗಿ (size_t j = 0; j < 120; j += 7)
       {
-	size_t len = strlen (strs[i]);
+	size_t len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (strs[i]);
 
 	do_test (strs[i], len, j);
       }
 
   do_random_tests ();
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

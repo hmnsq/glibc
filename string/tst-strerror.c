@@ -17,18 +17,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <locale.h>
-#include <array_length.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <locale.h>
+#ಅನ್ತರ್ಭಾವ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#ಅನ್ತರ್ಭಾವ <support/support.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
 
-static int
-do_test (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
   unsetenv ("LANGUAGE");
 
@@ -38,18 +38,18 @@ do_test (void)
   TEST_COMPARE_STRING (strerror (-1),     "Unknown error -1");
 
   {
-    char buffer[32];
-    TEST_COMPARE_STRING (strerror_r (EINVAL, buffer, 8),
+    ಅಕ್ಷರ ಬಫರ್[32];
+    TEST_COMPARE_STRING (strerror_r (EINVAL, ಬಫರ್, 8),
 			 "Invalid argument");
-    TEST_COMPARE_STRING (strerror_r (-1, buffer, 8),
+    TEST_COMPARE_STRING (strerror_r (-1, ಬಫರ್, 8),
 			 "Unknown");
-    TEST_COMPARE_STRING (strerror_r (-1, buffer, 16),
+    TEST_COMPARE_STRING (strerror_r (-1, ಬಫರ್, 16),
 			 "Unknown error -");
-    TEST_COMPARE_STRING (strerror_r (-1, buffer, 32),
+    TEST_COMPARE_STRING (strerror_r (-1, ಬಫರ್, 32),
 			 "Unknown error -1");
   }
 
-  locale_t l = xnewlocale (LC_ALL_MASK, "pt_BR.UTF-8", NULL);
+  locale_t l = xnewlocale (LC_ALL_MASK, "pt_BR.UTF-8", ಖಾಲಿ);
 
   TEST_COMPARE_STRING (strerror_l (EINVAL, l), "Argumento inv\303\241lido");
   TEST_COMPARE_STRING (strerror_l (-1, l),     "Erro desconhecido -1");
@@ -60,20 +60,20 @@ do_test (void)
   TEST_COMPARE_STRING (strerror (-1),     "Erro desconhecido -1");
 
   {
-    char buffer[32];
-    TEST_COMPARE_STRING (strerror_r (EINVAL, buffer, 8),
+    ಅಕ್ಷರ ಬಫರ್[32];
+    TEST_COMPARE_STRING (strerror_r (EINVAL, ಬಫರ್, 8),
 			 "Argumento inv\303\241lido");
-    TEST_COMPARE_STRING (strerror_r (-1, buffer, 8),
+    TEST_COMPARE_STRING (strerror_r (-1, ಬಫರ್, 8),
 			 "Erro de");
-    TEST_COMPARE_STRING (strerror_r (-1, buffer, 16),
+    TEST_COMPARE_STRING (strerror_r (-1, ಬಫರ್, 16),
 			 "Erro desconheci");
-    TEST_COMPARE_STRING (strerror_r (-1, buffer, 32),
+    TEST_COMPARE_STRING (strerror_r (-1, ಬಫರ್, 32),
 			 "Erro desconhecido -1");
   }
 
   freelocale (l);
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

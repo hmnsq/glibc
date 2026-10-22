@@ -17,45 +17,45 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <memcopy.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <memcopy.h>
 
 /* All this is so that bcopy.c can #include
    this file after defining some things.  */
-#ifndef	a1
-#define	a1	dest	/* First arg is DEST.  */
-#define	a1const
-#define	a2	src	/* Second arg is SRC.  */
-#define	a2const	const
-#undef memmove
-#endif
-#if	!defined(RETURN) || !defined(rettype)
-#define	RETURN(s)	return (s)	/* Return DEST.  */
-#define	rettype		void *
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ	a1
+#ವ್ಯಾಖ್ಯಾನಿಸು	a1	dest	/* First arg is DEST.  */
+#ವ್ಯಾಖ್ಯಾನಿಸು	a1const
+#ವ್ಯಾಖ್ಯಾನಿಸು	a2	src	/* Second arg is SRC.  */
+#ವ್ಯಾಖ್ಯಾನಿಸು	a2const	ಸ್ಥಿರಾಂಕ
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು memmove
+#ಆದರೆ_ಅಂತ್ಯ
+#ಆದರೆ	!defined(RETURN) || !defined(rettype)
+#ವ್ಯಾಖ್ಯಾನಿಸು	RETURN(s)	ಹಿಂತಿರುಗಿ (s)	/* Return DEST.  */
+#ವ್ಯಾಖ್ಯಾನಿಸು	rettype		ಶೂನ್ಯ *
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifndef MEMMOVE
-#define MEMMOVE memmove
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ MEMMOVE
+#ವ್ಯಾಖ್ಯಾನಿಸು MEMMOVE memmove
+#ಆದರೆ_ಅಂತ್ಯ
 
 rettype
-inhibit_loop_to_libcall
-MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
+inhibit_loop_ಗಮ್ಯ_libcall
+MEMMOVE (a1const ಶೂನ್ಯ *a1, a2const ಶೂನ್ಯ *a2, size_t len)
 {
-  unsigned long int dstp = (long int) dest;
-  unsigned long int srcp = (long int) src;
+  ಚಿಹ್ನೆರಹಿತ ದೀರ್ಘ ಪೂರ್ಣಾಂಕ dstp = (ದೀರ್ಘ ಪೂರ್ಣಾಂಕ) dest;
+  ಚಿಹ್ನೆರಹಿತ ದೀರ್ಘ ಪೂರ್ಣಾಂಕ srcp = (ದೀರ್ಘ ಪೂರ್ಣಾಂಕ) src;
 
   /* This test makes the forward copying code be used whenever possible.
      Reduces the working set.  */
-  if (dstp - srcp >= len)	/* *Unsigned* compare!  */
+  ಆದರೆ (dstp - srcp >= len)	/* *Unsigned* compare!  */
     {
       /* Copy from the beginning to the end.  */
 
-#if MEMCPY_OK_FOR_FWD_MEMMOVE
-      dest = memcpy (dest, src, len);
-#else
+#ಆದರೆ MEMCPY_OK_FOR_FWD_MEMMOVE
+      dest = ಸ್ಮರಣೆ_ನಕಲು (dest, src, len);
+#ಇಲ್ಲದಿದ್ದರೆ
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      ಆದರೆ (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= (-dstp) % OPSIZ;
@@ -64,30 +64,30 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
 	  /* Copy whole pages from SRCP to DSTP by virtual address
 	     manipulation, as much as possible.  */
 
-	  PAGE_COPY_FWD_MAYBE (dstp, srcp, len, len);
+	  ಪುಟ_COPY_FWD_MAYBE (dstp, srcp, len, len);
 
 	  /* Copy from SRCP to DSTP taking advantage of the known
 	     alignment of DSTP.  Number of bytes remaining is put
 	     in the third argument, i.e. in LEN.  This number may
 	     vary from machine to machine.  */
 
-	  WORD_COPY_FWD (dstp, srcp, len, len);
+	  ಶಬ್ದ_COPY_FWD (dstp, srcp, len, len);
 
 	  /* Fall out and copy the tail.  */
 	}
 
       /* There are just a few bytes to copy.  Use byte memory operations.  */
       BYTE_COPY_FWD (dstp, srcp, len);
-#endif /* MEMCPY_OK_FOR_FWD_MEMMOVE */
+#ಆದರೆ_ಅಂತ್ಯ /* MEMCPY_OK_FOR_FWD_MEMMOVE */
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
       /* Copy from the end to the beginning.  */
       srcp += len;
       dstp += len;
 
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      ಆದರೆ (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= dstp % OPSIZ;
@@ -98,7 +98,7 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
 	     in the third argument, i.e. in LEN.  This number may
 	     vary from machine to machine.  */
 
-	  WORD_COPY_BWD (dstp, srcp, len, len);
+	  ಶಬ್ದ_COPY_BWD (dstp, srcp, len, len);
 
 	  /* Fall out and copy the tail.  */
 	}
@@ -109,6 +109,6 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
 
   RETURN (dest);
 }
-#ifndef memmove
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ memmove
 libc_hidden_builtin_def (memmove)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRPBRK_RESULT(s, pos) (pos)
-#define RES_TYPE size_t
-#define TEST_MAIN
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನಿಸು STRPBRK_ಫಲಿತಾಂಶ(s, pos) (pos)
+#ವ್ಯಾಖ್ಯಾನಿಸು RES_TYPE size_t
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define TEST_NAME "strcspn"
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define TEST_NAME "wcscspn"
-#endif /* WIDE */
-#include "test-string.h"
+#ಆದರೆ_ಅಂತ್ಯ /* WIDE */
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR ಅಕ್ಷರ
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
-# define STRLEN strlen
-#else
+# define STRLEN ಅಕ್ಷರಸರಣಿ_ಉದ್ದ
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
 # define SIMPLE_STRCSPN simple_wcscspn
 # define STUPID_STRCSPN stupid_wcscspn
 # define STRLEN wcslen
-#endif /* WIDE */
+#ಆದರೆ_ಅಂತ್ಯ /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ size_t (*proto_t) (ಸ್ಥಿರಾಂಕ CHAR *, ಸ್ಥಿರಾಂಕ CHAR *);
+size_t SIMPLE_STRCSPN (ಸ್ಥಿರಾಂಕ CHAR *, ಸ್ಥಿರಾಂಕ CHAR *);
+size_t STUPID_STRCSPN (ಸ್ಥಿರಾಂಕ CHAR *, ಸ್ಥಿರಾಂಕ CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (ಸ್ಥಿರಾಂಕ CHAR *s, ಸ್ಥಿರಾಂಕ CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  ಸ್ಥಿರಾಂಕ CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  ಆಗ ((c = *s++) != '\0')
+    ಗಾಗಿ (r = rej; *r != '\0'; ++r)
+      ಆದರೆ (*r == c)
+	ಹಿಂತಿರುಗಿ s - str - 1;
+  ಹಿಂತಿರುಗಿ s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (ಸ್ಥಿರಾಂಕ CHAR *s, ಸ್ಥಿರಾಂಕ CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  ಗಾಗಿ (i = 0; i < ns; ++i)
+    ಗಾಗಿ (j = 0; j < nrej; ++j)
+      ಆದರೆ (s[i] == rej[j])
+	ಹಿಂತಿರುಗಿ i;
+  ಹಿಂತಿರುಗಿ i;
 }
 
-#undef CHAR
-#undef STRLEN
-#include "test-strpbrk.c"
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು CHAR
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು STRLEN
+#ಅನ್ತರ್ಭಾವ "test-strpbrk.c"

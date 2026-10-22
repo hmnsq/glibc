@@ -16,71 +16,71 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define TEST_NAME "strlen"
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define TEST_NAME "wcslen"
-#endif
-#include "test-string.h"
+#ಆದರೆ_ಅಂತ್ಯ
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-#ifndef WIDE
-# define STRLEN strlen
-# define CHAR char
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
+# define STRLEN ಅಕ್ಷರಸರಣಿ_ಉದ್ದ
+# define CHAR ಅಕ್ಷರ
 # define MAX_CHAR CHAR_MAX
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <wchar.h>
 # define STRLEN wcslen
 # define CHAR wchar_t
 # define MAX_CHAR WCHAR_MAX
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-typedef size_t (*proto_t) (const CHAR *);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ size_t (*proto_t) (ಸ್ಥಿರಾಂಕ CHAR *);
 
 IMPL (STRLEN, 1)
 
 /* Also check the generic implementation.  */
-#undef STRLEN
-#undef static_weak_alias
-#define static_weak_alias(a, b)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು STRLEN
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು static_weak_alias
+#ವ್ಯಾಖ್ಯಾನಿಸು static_weak_alias(a, b)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_builtin_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_builtin_def(a)
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 IMPL (__strlen_default, 1)
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define WCSLEN __wcslen_default
 # include "wcsmbs/wcslen.c"
 IMPL (__wcslen_default, 1)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, size_t exp_len)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಸ್ಥಿರಾಂಕ CHAR *s, size_t exp_len)
 {
   size_t len = CALL (impl, s);
-  if (len != exp_len)
+  ಆದರೆ (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 }
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_test (size_t align, size_t len)
 {
   size_t i;
 
-  align &= (getpagesize () / sizeof (CHAR)) - 1;
-  if (align + sizeof (CHAR) * len >= page_size)
-    return;
+  align &= (getpagesize () / ಗಾತ್ರ (CHAR)) - 1;
+  ಆದರೆ (align + ಗಾತ್ರ (CHAR) * len >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   CHAR *buf = (CHAR *) (buf1);
 
-  for (i = 0; i < len; ++i)
+  ಗಾಗಿ (i = 0; i < len; ++i)
     buf[align + i] = 1 + 11111 * i % MAX_CHAR;
   buf[align + len] = 0;
 
@@ -88,36 +88,36 @@ do_test (size_t align, size_t len)
     do_one_test (impl, (CHAR *) (buf + align), len);
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
   size_t i, j, n, align, len;
-  CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  CHAR *p = (CHAR *) (buf1 + ಪುಟ_ಗಾತ್ರ - 512 * ಗಾತ್ರ (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      ಆದರೆ (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      ಆದರೆ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      ಗಾಗಿ (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  ಆದರೆ (i == len + align)
 	    p[i] = 0;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      ಆದರೆ (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align)) != len)
+	ಆದರೆ (CALL (impl, (CHAR *) (p + align)) != len)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd) %zd != %zd, p %p",
 		   n, impl->name, align, CALL (impl, (CHAR *) (p + align)),
@@ -127,40 +127,40 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%20s", "");
+  ಬರೆ ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
   /* Checking with only 4 * N alignments for wcslen, other alignments are wrong for wchar_t type arrays*/
 
-  for (i = 1; i < 8; ++i)
+  ಗಾಗಿ (i = 1; i < 8; ++i)
   {
-    do_test (sizeof (CHAR) * i, i);
+    do_test (ಗಾತ್ರ (CHAR) * i, i);
     do_test (0, i);
   }
 
-  for (i = 2; i <= 12; ++i)
+  ಗಾಗಿ (i = 2; i <= 12; ++i)
     {
       do_test (0, 1 << i);
-      do_test (sizeof (CHAR) * 7, 1 << i);
-      do_test (sizeof (CHAR) * i, 1 << i);
-      do_test (sizeof (CHAR) * i, (size_t)((1 << i) / 1.5));
+      do_test (ಗಾತ್ರ (CHAR) * 7, 1 << i);
+      do_test (ಗಾತ್ರ (CHAR) * i, 1 << i);
+      do_test (ಗಾತ್ರ (CHAR) * i, (size_t)((1 << i) / 1.5));
     }
 
   /* Test strings near page boundary */
 
-  size_t maxlength = 64 / sizeof (CHAR) - 1;
-  size_t pagesize = getpagesize () / sizeof (CHAR);
+  size_t maxlength = 64 / ಗಾತ್ರ (CHAR) - 1;
+  size_t pagesize = getpagesize () / ಗಾತ್ರ (CHAR);
 
-  for (i = maxlength ; i > 1; --i)
+  ಗಾಗಿ (i = maxlength ; i > 1; --i)
     {
       /* String stays on the same page.  */
       do_test (pagesize - i, i - 1);
@@ -169,7 +169,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

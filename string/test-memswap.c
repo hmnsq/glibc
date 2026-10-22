@@ -16,20 +16,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <support/check.h>
-#include <memswap.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
+#ಅನ್ತರ್ಭಾವ <memswap.h>
 
-#define TEST_MAIN
-#define BUF1PAGES 3
-#include "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿಸು BUF1_ಪುಟಗಳು 3
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-static unsigned char *ref1;
-static unsigned char *ref2;
+ಸ್ಥಿರ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *ref1;
+ಸ್ಥಿರ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *ref2;
 
-static void
-do_one_test (unsigned char *p1, unsigned char *ref1, unsigned char *p2,
-	     unsigned char *ref2, size_t len)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p1, ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *ref1, ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p2,
+	     ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *ref2, size_t len)
 {
   __memswap (p1, p2, len);
 
@@ -37,23 +37,23 @@ do_one_test (unsigned char *p1, unsigned char *ref1, unsigned char *p2,
   TEST_COMPARE_BLOB (p2, len, ref1, len);
 }
 
-static inline void
+ಸ್ಥಿರ ಸಾಲೊಳಗೆ ಶೂನ್ಯ
 do_test (size_t align1, size_t align2, size_t len)
 {
-  align1 &= page_size;
-  if (align1 + len >= page_size)
-    return;
+  align1 &= ಪುಟ_ಗಾತ್ರ;
+  ಆದರೆ (align1 + len >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
-  align2 &= page_size;
-  if (align2 + len >= page_size)
-    return;
+  align2 &= ಪುಟ_ಗಾತ್ರ;
+  ಆದರೆ (align2 + len >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
-  unsigned char *p1 = buf1 + align1;
-  unsigned char *p2 = buf2 + align2;
-  for (size_t repeats = 0; repeats < 2; ++repeats)
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p1 = buf1 + align1;
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p2 = buf2 + align2;
+  ಗಾಗಿ (size_t repeats = 0; repeats < 2; ++repeats)
     {
       size_t i, j;
-      for (i = 0, j = 1; i < len; i++, j += 23)
+      ಗಾಗಿ (i = 0, j = 1; i < len; i++, j += 23)
 	{
 	  ref1[i] = p1[i] = j;
 	  ref2[i] = p2[i] = UCHAR_MAX - j;
@@ -63,92 +63,92 @@ do_test (size_t align1, size_t align2, size_t len)
     }
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
-  for (size_t n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (size_t n = 0; n < ITERATIONS; n++)
     {
-      size_t len, size, size1, size2, align1, align2;
+      size_t len, ಗಾತ್ರ_2, size1, size2, align1, align2;
 
-      if (n == 0)
+      ಆದರೆ (n == 0)
         {
           len = getpagesize ();
-          size = len + 512;
-          size1 = size;
-          size2 = size;
+          ಗಾತ್ರ_2 = len + 512;
+          size1 = ಗಾತ್ರ_2;
+          size2 = ಗಾತ್ರ_2;
           align1 = 512;
           align2 = 512;
         }
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
         {
-          if ((random () & 255) == 0)
-            size = 65536;
-          else
-            size = 768;
-          if (size > page_size)
-            size = page_size;
-          size1 = size;
-          size2 = size;
+          ಆದರೆ ((random () & 255) == 0)
+            ಗಾತ್ರ_2 = 65536;
+          ಇಲ್ಲದಿದ್ದರೆ
+            ಗಾತ್ರ_2 = 768;
+          ಆದರೆ (ಗಾತ್ರ_2 > ಪುಟ_ಗಾತ್ರ)
+            ಗಾತ್ರ_2 = ಪುಟ_ಗಾತ್ರ;
+          size1 = ಗಾತ್ರ_2;
+          size2 = ಗಾತ್ರ_2;
           size_t i = random ();
-          if (i & 3)
-            size -= 256;
-          if (i & 1)
+          ಆದರೆ (i & 3)
+            ಗಾತ್ರ_2 -= 256;
+          ಆದರೆ (i & 1)
             size1 -= 256;
-          if (i & 2)
+          ಆದರೆ (i & 2)
             size2 -= 256;
-          if (i & 4)
+          ಆದರೆ (i & 4)
             {
-              len = random () % size;
+              len = random () % ಗಾತ್ರ_2;
               align1 = size1 - len - (random () & 31);
               align2 = size2 - len - (random () & 31);
-              if (align1 > size1)
+              ಆದರೆ (align1 > size1)
                 align1 = 0;
-              if (align2 > size2)
+              ಆದರೆ (align2 > size2)
                 align2 = 0;
             }
-          else
+          ಇಲ್ಲದಿದ್ದರೆ
             {
               align1 = random () & 63;
               align2 = random () & 63;
-              len = random () % size;
-              if (align1 + len > size1)
+              len = random () % ಗಾತ್ರ_2;
+              ಆದರೆ (align1 + len > size1)
                 align1 = size1 - len;
-              if (align2 + len > size2)
+              ಆದರೆ (align2 + len > size2)
                 align2 = size2 - len;
             }
         }
-      unsigned char *p1 = buf1 + page_size - size1;
-      unsigned char *p2 = buf2 + page_size - size2;
+      ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p1 = buf1 + ಪುಟ_ಗಾತ್ರ - size1;
+      ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p2 = buf2 + ಪುಟ_ಗಾತ್ರ - size2;
       size_t j = align1 + len + 256;
-      if (j > size1)
+      ಆದರೆ (j > size1)
         j = size1;
-      for (size_t i = 0; i < j; ++i)
+      ಗಾಗಿ (size_t i = 0; i < j; ++i)
 	ref1[i] = p1[i] = random () & 255;
 
       j = align2 + len + 256;
-      if (j > size2)
+      ಆದರೆ (j > size2)
 	j = size2;
 
-      for (size_t i = 0; i < j; ++i)
+      ಗಾಗಿ (size_t i = 0; i < j; ++i)
 	ref2[i] = p2[i] = random () & 255;
 
       do_one_test (p1 + align1, ref1 + align1, p2 + align2, ref2 + align2, len);
     }
 }
 
-static int
-test_main (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   test_init ();
   /* Use the start of buf1 for reference buffers.  */
   ref1 = buf1;
-  ref2 = buf1 + page_size;
-  buf1 = ref2 + page_size;
+  ref2 = buf1 + ಪುಟ_ಗಾತ್ರ;
+  buf1 = ref2 + ಪುಟ_ಗಾತ್ರ;
 
-  printf ("%23s", "");
-  printf ("\t__memswap\n");
+  ಬರೆ ("%23s", "");
+  ಬರೆ ("\t__memswap\n");
 
-  for (size_t i = 0; i < 18; ++i)
+  ಗಾಗಿ (size_t i = 0; i < 18; ++i)
     {
       do_test (0, 0, 1 << i);
       do_test (i, 0, 1 << i);
@@ -156,7 +156,7 @@ test_main (void)
       do_test (i, i, 1 << i);
     }
 
-  for (size_t i = 0; i < 32; ++i)
+  ಗಾಗಿ (size_t i = 0; i < 32; ++i)
     {
       do_test (0, 0, i);
       do_test (i, 0, i);
@@ -164,17 +164,17 @@ test_main (void)
       do_test (i, i, i);
     }
 
-  for (size_t i = 3; i < 32; ++i)
+  ಗಾಗಿ (size_t i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
-        continue;
+      ಆದರೆ ((i & (i - 1)) == 0)
+        ಮುಂದುವರಿ;
       do_test (0, 0, 16 * i);
       do_test (i, 0, 16 * i);
       do_test (0, i, 16 * i);
       do_test (i, i, 16 * i);
     }
 
-  for (size_t i = 19; i <= 25; ++i)
+  ಗಾಗಿ (size_t i = 19; i <= 25; ++i)
     {
       do_test (255, 0, 1 << i);
       do_test (0, 4000, 1 << i);
@@ -186,7 +186,7 @@ test_main (void)
 
   do_random_tests ();
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

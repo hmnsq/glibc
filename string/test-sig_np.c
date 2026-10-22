@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <signal.h>
+#ಅನ್ತರ್ಭಾವ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#ಅನ್ತರ್ಭಾವ <support/support.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
 
-static const struct test_t
+ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ ರಚನೆ test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  ಪೂರ್ಣಾಂಕ errno;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *abbrev;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *descr;
 } tests[] =
 {
-#define N_(name)                      name
-#define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
-#undef init_sig
+#ವ್ಯಾಖ್ಯಾನಿಸು N_(name)                      name
+#ವ್ಯಾಖ್ಯಾನಿಸು init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
+#ಅನ್ತರ್ಭಾವ <siglist.h>
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು init_sig
 };
 
-static int
-do_test (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  ಗಾಗಿ (size_t i = 0; i < array_ಉದ್ದಳತೆ (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

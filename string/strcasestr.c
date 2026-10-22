@@ -26,71 +26,71 @@
  * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de	*/
 
 /* Specification.  */
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <strings.h>
+#ಅನ್ತರ್ಭಾವ <ctype.h>
+#ಅನ್ತರ್ಭಾವ <stdbool.h>
+#ಅನ್ತರ್ಭಾವ <strings.h>
 
-#define TOLOWER(Ch) tolower (Ch)
+#ವ್ಯಾಖ್ಯಾನಿಸು TOLOWER(Ch) tolower (Ch)
 
 /* Two-Way algorithm.  */
-#define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
+#ವ್ಯಾಖ್ಯಾನಿಸು RETURN_TYPE ಅಕ್ಷರ *
+#ವ್ಯಾಖ್ಯಾನಿಸು ಲಭ್ಯ(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((ಶೂನ್ಯ*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#define CHECK_EOL (1)
-#define RET0_IF_0(a) if (!a) goto ret0
-#define CANON_ELEMENT(c) TOLOWER (c)
-#define CMP_FUNC(p1, p2, l)				\
-  __strncasecmp ((const char *) (p1), (const char *) (p2), l)
-#include "str-two-way.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು CHECK_EOL (1)
+#ವ್ಯಾಖ್ಯಾನಿಸು RET0_IF_0(a) ಆದರೆ (!a) ಹೋಗು ret0
+#ವ್ಯಾಖ್ಯಾನಿಸು CANON_ELEMENT(c) TOLOWER (c)
+#ವ್ಯಾಖ್ಯಾನಿಸು CMP_FUNC(p1, p2, l)				\
+  __strncasecmp ((ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) (p1), (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *) (p2), l)
+#ಅನ್ತರ್ಭಾವ "str-two-way.h"
 
-#undef strcasestr
-#undef __strcasestr
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು strcasestr
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು __strcasestr
 
-#ifndef STRCASESTR
-#define STRCASESTR __strcasestr
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ STRCASESTR
+#ವ್ಯಾಖ್ಯಾನಿಸು STRCASESTR __strcasestr
+#ಆದರೆ_ಅಂತ್ಯ
 
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using
    case-insensitive comparison.  This function gives unspecified
    results in multibyte locales.  */
-char *
-STRCASESTR (const char *haystack, const char *needle)
+ಅಕ್ಷರ *
+STRCASESTR (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *haystack, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *needle)
 {
   size_t needle_len; /* Length of NEEDLE.  */
   size_t haystack_len; /* Known minimum length of HAYSTACK.  */
 
   /* Handle empty NEEDLE special case.  */
-  if (needle[0] == '\0')
-    return (char *) haystack;
+  ಆದರೆ (needle[0] == '\0')
+    ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) haystack;
 
   /* Ensure HAYSTACK length is at least as long as NEEDLE length.
      Since a match may occur early on in a huge HAYSTACK, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  needle_len = strlen (needle);
+  needle_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (needle);
   haystack_len = __strnlen (haystack, needle_len + 256);
-  if (haystack_len < needle_len)
-    return NULL;
+  ಆದರೆ (haystack_len < needle_len)
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See
      ISO C 99 section 6.2.6.1.  */
-  if (needle_len < LONG_NEEDLE_THRESHOLD)
-    return two_way_short_needle ((const unsigned char *) haystack,
+  ಆದರೆ (needle_len < LONG_NEEDLE_ಮಿತಿ)
+    ಹಿಂತಿರುಗಿ two_way_short_needle ((ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) haystack,
 				 haystack_len,
-				 (const unsigned char *) needle,
+				 (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) needle,
 				 needle_len);
-  return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
-			      (const unsigned char *) needle,
+  ಹಿಂತಿರುಗಿ two_way_long_needle ((ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) haystack, haystack_len,
+			      (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) needle,
 			      needle_len);
 }
 
-#undef LONG_NEEDLE_THRESHOLD
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು LONG_NEEDLE_ಮಿತಿ
 
-#ifndef NO_ALIAS
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ NO_ALIAS
 weak_alias (__strcasestr, strcasestr)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

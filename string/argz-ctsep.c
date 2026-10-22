@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <argz.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *string, ಪೂರ್ಣಾಂಕ delim, ಅಕ್ಷರ **argz, size_t *len)
 {
-  size_t nlen = strlen (string) + 1;
+  size_t nlen = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (string) + 1;
 
-  if (nlen > 1)
+  ಆದರೆ (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *rp;
+      ಅಕ್ಷರ *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (ಅಕ್ಷರ *) ಸ್ಮರಣೆ_ಕೊಡು (nlen);
+      ಆದರೆ (*argz == ಖಾಲಿ)
+	ಹಿಂತಿರುಗಿ ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      ಮಾಡು
+	ಆದರೆ (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ಆದರೆ (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    ಇಲ್ಲದಿದ್ದರೆ
 	      --nlen;
 	  }
-	else
+	ಇಲ್ಲದಿದ್ದರೆ
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ಆಗ (*rp++ != '\0');
 
-      if (nlen == 0)
+      ಆದರೆ (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  ಬಿಡುಗಡೆ (*argz);
+	  *argz = ಖಾಲಿ;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
-      *argz = NULL;
+      *argz = ಖಾಲಿ;
       *len = 0;
     }
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

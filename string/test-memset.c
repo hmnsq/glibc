@@ -16,39 +16,39 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_BZERO
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BZERO
 # ifdef TEST_EXPLICIT_BZERO
 #  define TEST_NAME "explicit_bzero"
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define TEST_NAME "bzero"
 # endif
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # ifndef WIDE
 #  ifdef TEST_MEMSET_EXPLICIT
 #   define TEST_NAME "memset_explicit"
-#  else
+#  ಇಲ್ಲದಿದ್ದರೆ
 #   define TEST_NAME "memset"
 #  endif
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define TEST_NAME "wmemset"
 # endif /* WIDE */
-#endif /* !TEST_BZERO */
-#define MIN_PAGE_SIZE 131072
-#include "test-string.h"
+#ಆದರೆ_ಅಂತ್ಯ /* !TEST_BZERO */
+#ವ್ಯಾಖ್ಯಾನಿಸು MIN_ಪುಟ_ಗಾತ್ರ 131072
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # ifdef TEST_MEMSET_EXPLICIT
 #  define MEMSET memset_explicit
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define MEMSET memset
 # endif
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR ಅಕ್ಷರ
+# define UCHAR ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ
 # define SIMPLE_MEMSET simple_memset
 # define MEMCMP memcmp
 # define BIG_CHAR CHAR_MAX
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <wchar.h>
 # define MEMSET wmemset
 # define CHAR wchar_t
@@ -56,190 +56,190 @@
 # define SIMPLE_MEMSET simple_wmemset
 # define MEMCMP wmemcmp
 # define BIG_CHAR WCHAR_MAX
-#endif /* WIDE */
+#ಆದರೆ_ಅಂತ್ಯ /* WIDE */
 
-#ifdef TEST_BZERO
-typedef void (*proto_t) (char *, size_t);
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BZERO
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಶೂನ್ಯ (*proto_t) (ಅಕ್ಷರ *, size_t);
 # ifdef TEST_EXPLICIT_BZERO
 IMPL (explicit_bzero, 1)
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 IMPL (bzero, 1)
 # endif
-#else
-typedef CHAR *(*proto_t) (CHAR *, int, size_t);
+#ಇಲ್ಲದಿದ್ದರೆ
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ CHAR *(*proto_t) (CHAR *, ಪೂರ್ಣಾಂಕ, size_t);
 IMPL (MEMSET, 1)
-#endif /* !TEST_BZERO */
+#ಆದರೆ_ಅಂತ್ಯ /* !TEST_BZERO */
 
 /* Naive implementation to verify results.  */
 CHAR *
-test_cc_inhibit_loop_to_libcall
-SIMPLE_MEMSET (CHAR *s, int c, size_t n)
+test_cc_inhibit_loop_ಗಮ್ಯ_libcall
+SIMPLE_MEMSET (CHAR *s, ಪೂರ್ಣಾಂಕ c, size_t n)
 {
-  CHAR *r = s, *end = s + n;
-  while (r < end)
+  CHAR *r = s, *ಕೊನೆ = s + n;
+  ಆಗ (r < ಕೊನೆ)
     *r++ = c;
-  return s;
+  ಹಿಂತಿರುಗಿ s;
 }
 
-static void
-do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int space_below, int space_above)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, CHAR *s, ಪೂರ್ಣಾಂಕ c __attribute ((ಬಳಸದ)), size_t n, ಪೂರ್ಣಾಂಕ space_ಕೆಳಗೆ, ಪೂರ್ಣಾಂಕ space_above)
 {
   CHAR buf[n];
   CHAR sentinel = ~c;
-  if (space_below)
+  ಆದರೆ (space_ಕೆಳಗೆ)
       s[-1] = sentinel;
-  if (space_above)
+  ಆದರೆ (space_above)
       s[n] = sentinel;
   SIMPLE_MEMSET(s, ~c, n);
-#ifdef TEST_BZERO
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BZERO
   SIMPLE_MEMSET (buf, 0, n);
   CALL (impl, s, n);
-  if (memcmp (s, buf, n) != 0
-      || (space_below && s[-1] != sentinel)
+  ಆದರೆ (memcmp (s, buf, n) != 0
+      || (space_ಕೆಳಗೆ && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
   CHAR *res = CALL (impl, s, c, n);
-  if (res != s
+  ಆದರೆ (res != s
       || SIMPLE_MEMSET (buf, c, n) != buf
       || MEMCMP (s, buf, n) != 0
-      || (space_below && s[-1] != sentinel)
+      || (space_ಕೆಳಗೆ && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#endif /* !TEST_BZERO */
+#ಆದರೆ_ಅಂತ್ಯ /* !TEST_BZERO */
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 }
 
-static void
-do_test (size_t align, int c, size_t len)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test (size_t align, ಪೂರ್ಣಾಂಕ c, size_t len)
 {
-  int space_below, space_above;
+  ಪೂರ್ಣಾಂಕ space_ಕೆಳಗೆ, space_above;
   align &= 4095;
-  if ((align + len) * sizeof (CHAR) > page_size)
-    return;
+  ಆದರೆ ((align + len) * ಗಾತ್ರ (CHAR) > ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
-  space_below = !!align;
-  space_above = !((align + len + 1) * sizeof (CHAR) > page_size);
+  space_ಕೆಳಗೆ = !!align;
+  space_above = !((align + len + 1) * ಗಾತ್ರ (CHAR) > ಪುಟ_ಗಾತ್ರ);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_below, space_above);
+    do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_ಕೆಳಗೆ, space_above);
 }
 
-#ifndef TEST_BZERO
-static void
-do_random_tests (void)
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ TEST_BZERO
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
-  size_t i, j, k, n, align, len, size;
-  int c, o;
+  size_t i, j, k, n, align, len, ಗಾತ್ರ_2;
+  ಪೂರ್ಣಾಂಕ c, o;
   UCHAR *p, *res;
   UCHAR *p2 = (UCHAR *) buf2;
 
-  for (i = 0; i < 65536 / sizeof (CHAR); ++i)
+  ಗಾಗಿ (i = 0; i < 65536 / ಗಾತ್ರ (CHAR); ++i)
     p2[i] = random () & BIG_CHAR;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 31) == 0)
-	size = 65536 / sizeof (CHAR);
-      else
-	size = 512;
-      p = (UCHAR *) (buf1 + page_size) - size;
-      len = random () & (size - 1);
-      align = size - len - (random () & 31);
-      if (align > size)
-	align = size - len;
-      if ((random () & 7) == 0)
+      ಆದರೆ ((random () & 31) == 0)
+	ಗಾತ್ರ_2 = 65536 / ಗಾತ್ರ (CHAR);
+      ಇಲ್ಲದಿದ್ದರೆ
+	ಗಾತ್ರ_2 = 512;
+      p = (UCHAR *) (buf1 + ಪುಟ_ಗಾತ್ರ) - ಗಾತ್ರ_2;
+      len = random () & (ಗಾತ್ರ_2 - 1);
+      align = ಗಾತ್ರ_2 - len - (random () & 31);
+      ಆದರೆ (align > ಗಾತ್ರ_2)
+	align = ಗಾತ್ರ_2 - len;
+      ಆದರೆ ((random () & 7) == 0)
 	align &= ~63;
-      if ((random () & 7) == 0)
+      ಆದರೆ ((random () & 7) == 0)
 	c = 0;
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
 	c = random () & BIG_CHAR;
       o = random () & BIG_CHAR;
-      if (o == c)
+      ಆದರೆ (o == c)
 	o = (c + 1) & BIG_CHAR;
       j = len + align + 128;
-      if (j > size)
-	j = size;
-      if (align >= 128)
+      ಆದರೆ (j > ಗಾತ್ರ_2)
+	j = ಗಾತ್ರ_2;
+      ಆದರೆ (align >= 128)
 	k = align - 128;
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
 	k = 0;
-      for (i = k; i < align; ++i)
+      ಗಾಗಿ (i = k; i < align; ++i)
 	p[i] = o;
-      for (i = align + len; i < j; ++i)
+      ಗಾಗಿ (i = align + len; i < j; ++i)
 	p[i] = o;
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  for (i = 0; i < len; ++i)
+	  ಗಾಗಿ (i = 0; i < len; ++i)
 	    {
 	      p[i + align] = p2[i];
-	      if (p[i + align] == c)
+	      ಆದರೆ (p[i + align] == c)
 		p[i + align] = o;
 	    }
 	  res = (UCHAR *) CALL (impl, (CHAR *) p + align, c, len);
-	  if (res != p + align)
+	  ಆದರೆ (res != p + align)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd) %p != %p",
 		     n, impl->name, align, c, len, res, p + align);
 	      ret = 1;
 	    }
-	  for (i = k; i < align; ++i)
-	    if (p[i] != o)
+	  ಗಾಗಿ (i = k; i < align; ++i)
+	    ಆದರೆ (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage before %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		ನಿಲ್ಲಿಸು;
 	      }
-	  for (; i < align + len; ++i)
-	    if (p[i] != c)
+	  ಗಾಗಿ (; i < align + len; ++i)
+	    ಆದರೆ (p[i] != c)
 	      {
 		error (0, 0, "Iteration %zd - not cleared correctly %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		ನಿಲ್ಲಿಸು;
 	      }
-	  for (; i < j; ++i)
-	    if (p[i] != o)
+	  ಗಾಗಿ (; i < j; ++i)
+	    ಆದರೆ (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage after %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		ನಿಲ್ಲಿಸು;
 	      }
 	}
     }
 }
-#endif /* !TEST_BZERO */
+#ಆದರೆ_ಅಂತ್ಯ /* !TEST_BZERO */
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
-  int c = 0;
+  ಪೂರ್ಣಾಂಕ c = 0;
 
   test_init ();
 
-  printf ("%24s", "");
+  ಬರೆ ("%24s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-#ifndef TEST_BZERO
-  for (c = -65; c <= 130; c += 65)
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ TEST_BZERO
+  ಗಾಗಿ (c = -65; c <= 130; c += 65)
+#ಆದರೆ_ಅಂತ್ಯ
     {
-      for (i = 0; i < 18; ++i)
+      ಗಾಗಿ (i = 0; i < 18; ++i)
 	do_test (0, c, 1 << i);
-      for (i = 1; i < 64; ++i)
+      ಗಾಗಿ (i = 1; i < 64; ++i)
 	{
 	  do_test (i, c, i);
 	  do_test (4096 - i, c, i);
 	  do_test (4095, c, i);
-	  if (i & (i - 1))
+	  ಆದರೆ (i & (i - 1))
 	    do_test (0, c, i);
 	}
       do_test (1, c, 14);
@@ -248,11 +248,11 @@ test_main (void)
       do_test (2, c, 25);
     }
 
-#ifndef TEST_BZERO
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ TEST_BZERO
   do_random_tests ();
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

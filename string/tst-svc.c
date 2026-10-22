@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#ವ್ಯಾಖ್ಯಾನಿಸು  MAX_ಅಕ್ಷರಸರಣಿಗಳು      256
+#ವ್ಯಾಖ್ಯಾನಿಸು  MAX_ಸಾಲು_ಗಾತ್ರ    32
 
-static int
-compare (const void *p1, const void *p2)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+compare (ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *p1, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  ಹಿಂತಿರುಗಿ strverscmp (*((ಅಕ್ಷರ **) p1), *((ಅಕ್ಷರ **) p2));
 }
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  ಅಕ್ಷರ ಸಾಲು[MAX_ಸಾಲು_ಗಾತ್ರ + 1];
+  ಅಕ್ಷರ *str[MAX_ಅಕ್ಷರಸರಣಿಗಳು];
+  ಪೂರ್ಣಾಂಕ  ಎಣಿಕೆ_2 = 0;
+  ಪೂರ್ಣಾಂಕ  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  ಆಗ (ಎಣಿಕೆ_2 < MAX_ಅಕ್ಷರಸರಣಿಗಳು && fgets (ಸಾಲು, MAX_ಸಾಲು_ಗಾತ್ರ, stdin) != ಖಾಲಿ)
     {
-      n = strlen (line) - 1;
+      n = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (ಸಾಲು) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      ಆದರೆ (ಸಾಲು[n] == '\n')
+        ಸಾಲು[n] = '\0';
 
-      str[count] = strdup (line);
+      str[ಎಣಿಕೆ_2] = strdup (ಸಾಲು);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      ಆದರೆ (str[ಎಣಿಕೆ_2] == ಖಾಲಿ)
+        ನಿರ್ಗಮಿಸು (EXIT_FAILURE);
 
-      ++count;
+      ++ಎಣಿಕೆ_2;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, ಎಣಿಕೆ_2, ಗಾತ್ರ (ಅಕ್ಷರ *), compare);
 
-  for (i = 0; i < count; ++i)
+  ಗಾಗಿ (i = 0; i < ಎಣಿಕೆ_2; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  ಹಿಂತಿರುಗಿ EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

@@ -16,8 +16,8 @@
    License along with the GNU C Library; if not, see
    <http://www.gnu.org/licenses/>.  */
 
-#ifndef _BITS_ENDIAN_H
-#define _BITS_ENDIAN_H 1
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ _BITS_ENDIAN_H
+#ವ್ಯಾಖ್ಯಾನಿಸು _BITS_ENDIAN_H 1
 
 /* Definitions for byte order, according to significance of bytes,
    from low addresses to high addresses.  The value is what you get by
@@ -27,23 +27,23 @@
    each byte, starting with the byte at the lowest address at the left,
    and proceeding to the byte with the highest address at the right.  */
 
-#define	__LITTLE_ENDIAN	1234
-#define	__BIG_ENDIAN	4321
-#define	__PDP_ENDIAN	3412
+#ವ್ಯಾಖ್ಯಾನಿಸು	__LITTLE_ENDIAN	1234
+#ವ್ಯಾಖ್ಯಾನಿಸು	__BIG_ENDIAN	4321
+#ವ್ಯಾಖ್ಯಾನಿಸು	__PDP_ENDIAN	3412
 
 /* This file defines `__BYTE_ORDER' for the particular machine.  */
-#include <bits/endianness.h>
+#ಅನ್ತರ್ಭಾವ <bits/endianness.h>
 
 /* Some machines may need to use a different endianness for floating point
    values.  */
-#ifndef __FLOAT_WORD_ORDER
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ __FLOAT_WORD_ORDER
 # define __FLOAT_WORD_ORDER __BYTE_ORDER
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#ಆದರೆ __BYTE_ORDER == __LITTLE_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) LO, HI
-#elif __BYTE_ORDER == __BIG_ENDIAN
+#ಅಥವಾಆದರೆ __BYTE_ORDER == __BIG_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) HI, LO
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#endif /* bits/endian.h */
+#ಆದರೆ_ಅಂತ್ಯ /* bits/endian.h */

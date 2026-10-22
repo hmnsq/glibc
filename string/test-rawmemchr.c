@@ -16,182 +16,182 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <support/xunistd.h>
+#ಅನ್ತರ್ಭಾವ <assert.h>
+#ಅನ್ತರ್ಭಾವ <support/xunistd.h>
 
-#define TEST_MAIN
-#define TEST_NAME "rawmemchr"
-#include "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_NAME "rawmemchr"
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-typedef char *(*proto_t) (const char *, int);
-char *simple_rawmemchr (const char *, int);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಅಕ್ಷರ *(*proto_t) (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, ಪೂರ್ಣಾಂಕ);
+ಅಕ್ಷರ *simple_rawmemchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, ಪೂರ್ಣಾಂಕ);
 
 IMPL (simple_rawmemchr, 0)
 IMPL (rawmemchr, 1)
 
-char *
-simple_rawmemchr (const char *s, int c)
+ಅಕ್ಷರ *
+simple_rawmemchr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s, ಪೂರ್ಣಾಂಕ c)
 {
-  while (1)
-    if (*s++ == (char) c)
-      return (char *) s - 1;
-  return NULL;
+  ಆಗ (1)
+    ಆದರೆ (*s++ == (ಅಕ್ಷರ) c)
+      ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) s - 1;
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s, int c, char *exp_res)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s, ಪೂರ್ಣಾಂಕ c, ಅಕ್ಷರ *exp_res)
 {
-  char *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ಅಕ್ಷರ *res = CALL (impl, s, c);
+  ಆದರೆ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 }
 
-static void
-do_test_bz29234 (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test_bz29234 (ಶೂನ್ಯ)
 {
   size_t i, j;
-  char *ptr_start;
-  char *buf = xmmap (0, 8192, PROT_READ | PROT_WRITE,
-		     MAP_PRIVATE | MAP_ANONYMOUS, -1);
+  ಅಕ್ಷರ *ptr_ಆರಂಭ;
+  ಅಕ್ಷರ *buf = xmmap (0, 8192, PROT_READ | PROT_WRITE,
+		     MAP_ಖಾಸಗಿ | MAP_ANONYMOUS, -1);
 
   memset (buf, -1, 8192);
 
-  ptr_start = buf + 4096 - 8;
+  ptr_ಆರಂಭ = buf + 4096 - 8;
 
   /* Out of range matches before the start of a page. */
-  memset (ptr_start - 8, 0x1, 8);
+  memset (ptr_ಆರಂಭ - 8, 0x1, 8);
 
-  for (j = 0; j < 8; ++j)
+  ಗಾಗಿ (j = 0; j < 8; ++j)
     {
-      for (i = 0; i < 128; ++i)
+      ಗಾಗಿ (i = 0; i < 128; ++i)
 	{
-	  ptr_start[i + j] = 0x1;
+	  ptr_ಆರಂಭ[i + j] = 0x1;
 
 	  FOR_EACH_IMPL (impl, 0)
-	    do_one_test (impl, (char *) (ptr_start + j), 0x1,
-			 ptr_start + i + j);
+	    do_one_test (impl, (ಅಕ್ಷರ *) (ptr_ಆರಂಭ + j), 0x1,
+			 ptr_ಆರಂಭ + i + j);
 
-	  ptr_start[i + j] = 0xff;
+	  ptr_ಆರಂಭ[i + j] = 0xff;
 	}
     }
 
   xmunmap (buf, 8192);
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test (size_t align, size_t pos, size_t len, ಪೂರ್ಣಾಂಕ seek_char)
 {
   size_t i;
-  char *result;
+  ಅಕ್ಷರ *ಫಲಿತಾಂಶ;
 
   align &= getpagesize () - 1;
-  if (align + len >= page_size)
-    return;
+  ಆದರೆ (align + len >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
-  for (i = 0; i < len; ++i)
+  ಗಾಗಿ (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      ಆದರೆ (buf1[align + i] == seek_char)
 	buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
 
-  assert (pos < len);
+  ಪ್ರತಿಜ್ಞಾ (pos < len);
 
   buf1[align + pos] = seek_char;
   buf1[align + len] = -seek_char;
-  result = (char *) (buf1 + align + pos);
+  ಫಲಿತಾಂಶ = (ಅಕ್ಷರ *) (buf1 + align + pos);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (char *) (buf1 + align), seek_char, result);
+    do_one_test (impl, (ಅಕ್ಷರ *) (buf1 + align), seek_char, ಫಲಿತಾಂಶ);
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  char *result;
-  unsigned char *p = buf1 + page_size - 512;
+  ಪೂರ್ಣಾಂಕ seek_char;
+  ಅಕ್ಷರ *ಫಲಿತಾಂಶ;
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p = buf1 + ಪುಟ_ಗಾತ್ರ - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      ಆದರೆ (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      ಆದರೆ (len + align >= 512)
 	len = 512 - align - (random () & 7);
-      if (pos >= len)
-	continue;
+      ಆದರೆ (pos >= len)
+	ಮುಂದುವರಿ;
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      ಆದರೆ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      ಗಾಗಿ (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ಆದರೆ (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      p[i] = random () & 255;
-	      if (i < pos + align && p[i] == seek_char)
+	      ಆದರೆ (i < pos + align && p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (align)
+      ಆದರೆ (align)
 	{
 	  p[align - 1] = seek_char;
-	  if (align > 4)
+	  ಆದರೆ (align > 4)
 	    p[align - 4] = seek_char;
 	}
 
-      assert (pos < len);
+      ಪ್ರತಿಜ್ಞಾ (pos < len);
       size_t r = random ();
-      if ((r & 31) == 0)
+      ಆದರೆ ((r & 31) == 0)
 	len = ~(uintptr_t) (p + align) - ((r >> 5) & 31);
-      result = (char *) (p + pos + align);
+      ಫಲಿತಾಂಶ = (ಅಕ್ಷರ *) (p + pos + align);
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char) != result)
+	ಆದರೆ (CALL (impl, (ಅಕ್ಷರ *) (p + align), seek_char) != ಫಲಿತಾಂಶ)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (char *) (p + align), seek_char),
-		   result, p);
+		   CALL (impl, (ಅಕ್ಷರ *) (p + align), seek_char),
+		   ಫಲಿತಾಂಶ, p);
 	    ret = 1;
 	  }
 
-      if (align)
+      ಆದರೆ (align)
 	{
 	  p[align - 1] = seek_char;
-	  if (align > 4)
+	  ಆದರೆ (align > 4)
 	    p[align - 4] = seek_char;
 	}
     }
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%20s", "");
+  ಬರೆ ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (i = 1; i < 7; ++i)
+  ಗಾಗಿ (i = 1; i < 7; ++i)
     {
       do_test (0, 16 << i, 2048, 23);
       do_test (i, 64, 256, 23);
@@ -201,7 +201,7 @@ test_main (void)
       do_test (getpagesize () - i, 64, 256, 23);
       do_test (getpagesize () - i, 64, 256, 0);
     }
-  for (i = 1; i < 32; ++i)
+  ಗಾಗಿ (i = 1; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23);
       do_test (0, i, i + 1, 0);
@@ -213,7 +213,7 @@ test_main (void)
 
   do_random_tests ();
   do_test_bz29234 ();
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

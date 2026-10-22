@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <malloc.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <malloc.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#include <envz.h>
+#ಅನ್ತರ್ಭಾವ <envz.h>
 
 /* The character separating names from values in an envz.  */
-#define SEP '='
+#ವ್ಯಾಖ್ಯಾನಿಸು SEP '='
 
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.
    If NAME contains the separator character, only the portion before it is
    used in the comparison.  */
-char *
-envz_entry (const char *envz, size_t envz_len, const char *name)
+ಅಕ್ಷರ *
+envz_ನಮೂದು (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *envz, size_t envz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *name)
 {
-  while (envz_len)
+  ಆಗ (envz_len)
     {
-      const char *p = name;
-      const char *entry = envz;	/* Start of this entry. */
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *p = name;
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *ನಮೂದು = envz;	/* Start of this entry. */
 
       /* See how far NAME and ENTRY match.  */
-      while (envz_len && *p == *envz && *p && *p != SEP)
+      ಆಗ (envz_len && *p == *envz && *p && *p != SEP)
 	p++, envz++, envz_len--;
 
-      if ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
+      ಆದರೆ ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
 	/* Bingo! */
-	return (char *) entry;
+	ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) ನಮೂದು;
 
       /* No match, skip to the next entry.  */
-      while (envz_len && *envz)
+      ಆಗ (envz_len && *envz)
 	envz++, envz_len--;
-      if (envz_len)
+      ಆದರೆ (envz_len)
 	envz++, envz_len--;	/* skip '\0' */
     }
 
-  return NULL;
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
-libc_hidden_def (envz_entry)
+libc_hidden_def (envz_ನಮೂದು)
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-char *
-envz_get (const char *envz, size_t envz_len, const char *name)
+ಅಕ್ಷರ *
+envz_get (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *envz, size_t envz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *name)
 {
-  char *entry = envz_entry (envz, envz_len, name);
-  if (entry)
+  ಅಕ್ಷರ *ನಮೂದು = envz_ನಮೂದು (envz, envz_len, name);
+  ಆದರೆ (ನಮೂದು)
     {
-      while (*entry && *entry != SEP)
-	entry++;
-      if (*entry)
-	entry++;
-      else
-	entry = NULL;		/* A null entry.  */
+      ಆಗ (*ನಮೂದು && *ನಮೂದು != SEP)
+	ನಮೂದು++;
+      ಆದರೆ (*ನಮೂದು)
+	ನಮೂದು++;
+      ಇಲ್ಲದಿದ್ದರೆ
+	ನಮೂದು = ಖಾಲಿ;		/* A null entry.  */
     }
-  return entry;
+  ಹಿಂತಿರುಗಿ ನಮೂದು;
 }
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
-void
-envz_remove (char **envz, size_t *envz_len, const char *name)
+ಶೂನ್ಯ
+envz_remove (ಅಕ್ಷರ **envz, size_t *envz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *name)
 {
-  char *entry = envz_entry (*envz, *envz_len, name);
-  if (entry)
-    argz_delete (envz, envz_len, entry);
+  ಅಕ್ಷರ *ನಮೂದು = envz_ನಮೂದು (*envz, *envz_len, name);
+  ಆದರೆ (ನಮೂದು)
+    argz_delete (envz, envz_len, ನಮೂದು);
 }
 libc_hidden_def (envz_remove)
 
@@ -89,56 +89,56 @@ libc_hidden_def (envz_remove)
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
 error_t
-envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
+envz_ಕೂಡಿಸು (ಅಕ್ಷರ **envz, size_t *envz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *name, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *ಮೌಲ್ಯ)
 {
   envz_remove (envz, envz_len, name);
 
-  if (value)
+  ಆದರೆ (ಮೌಲ್ಯ)
     /* Add the new value, if there is one.  */
     {
-      size_t name_len = strlen (name);
-      size_t value_len = strlen (value);
+      size_t name_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (name);
+      size_t ಮೌಲ್ಯ_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (ಮೌಲ್ಯ);
       size_t old_envz_len = *envz_len;
-      size_t new_envz_len = old_envz_len + name_len + 1 + value_len + 1;
-      char *new_envz = realloc (*envz, new_envz_len);
+      size_t new_envz_len = old_envz_len + name_len + 1 + ಮೌಲ್ಯ_len + 1;
+      ಅಕ್ಷರ *new_envz = realloc (*envz, new_envz_len);
 
-      if (new_envz)
+      ಆದರೆ (new_envz)
 	{
-	  memcpy (new_envz + old_envz_len, name, name_len);
+	  ಸ್ಮರಣೆ_ನಕಲು (new_envz + old_envz_len, name, name_len);
 	  new_envz[old_envz_len + name_len] = SEP;
-	  memcpy (new_envz + old_envz_len + name_len + 1, value, value_len);
+	  ಸ್ಮರಣೆ_ನಕಲು (new_envz + old_envz_len + name_len + 1, ಮೌಲ್ಯ, ಮೌಲ್ಯ_len);
 	  new_envz[new_envz_len - 1] = 0;
 
 	  *envz = new_envz;
 	  *envz_len = new_envz_len;
 
-	  return 0;
+	  ಹಿಂತಿರುಗಿ 0;
 	}
-      else
-	return ENOMEM;
+      ಇಲ್ಲದಿದ್ದರೆ
+	ಹಿಂತಿರುಗಿ ENOMEM;
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     /* Add a null entry.  */
-    return __argz_add (envz, envz_len, name);
+    ಹಿಂತಿರುಗಿ __argz_add (envz, envz_len, name);
 }
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
 error_t
-envz_merge (char **envz, size_t *envz_len, const char *envz2,
-	    size_t envz2_len, int override)
+envz_ವಿಲೀನ (ಅಕ್ಷರ **envz, size_t *envz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *envz2,
+	    size_t envz2_len, ಪೂರ್ಣಾಂಕ override)
 {
   error_t err = 0;
 
-  while (envz2_len && ! err)
+  ಆಗ (envz2_len && ! err)
     {
-      char *old = envz_entry (*envz, *envz_len, envz2);
-      size_t new_len = strlen (envz2) + 1;
+      ಅಕ್ಷರ *old = envz_ನಮೂದು (*envz, *envz_len, envz2);
+      size_t new_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (envz2) + 1;
 
-      if (! old)
+      ಆದರೆ (! old)
 	err = __argz_append (envz, envz_len, envz2, new_len);
-      else if (override)
+      ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (override)
 	{
 	  argz_delete (envz, envz_len, old);
 	  err = __argz_append (envz, envz_len, envz2, new_len);
@@ -148,24 +148,24 @@ envz_merge (char **envz, size_t *envz_len, const char *envz2,
       envz2_len -= new_len;
     }
 
-  return err;
+  ಹಿಂತಿರುಗಿ err;
 }
 
 /* Remove null entries.  */
-void
-envz_strip (char **envz, size_t *envz_len)
+ಶೂನ್ಯ
+envz_strip (ಅಕ್ಷರ **envz, size_t *envz_len)
 {
-  char *entry = *envz;
-  size_t left = *envz_len;
-  while (left)
+  ಅಕ್ಷರ *ನಮೂದು = *envz;
+  size_t ಎಡ = *envz_len;
+  ಆಗ (ಎಡ)
     {
-      size_t entry_len = strlen (entry) + 1;
-      left -= entry_len;
-      if (! strchr (entry, SEP))
+      size_t ನಮೂದು_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (ನಮೂದು) + 1;
+      ಎಡ -= ನಮೂದು_len;
+      ಆದರೆ (! strchr (ನಮೂದು, SEP))
 	/* Null entry. */
-	memmove (entry, entry + entry_len, left);
-      else
-	entry += entry_len;
+	memmove (ನಮೂದು, ನಮೂದು + ನಮೂದು_len, ಎಡ);
+      ಇಲ್ಲದಿದ್ದರೆ
+	ನಮೂದು += ನಮೂದು_len;
     }
-  *envz_len = entry - *envz;
+  *envz_len = ನಮೂದು - *envz;
 }

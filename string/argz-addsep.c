@@ -15,43 +15,43 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <argz.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
 
 error_t
-__argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+__argz_add_sep (ಅಕ್ಷರ **argz, size_t *argz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *string, ಪೂರ್ಣಾಂಕ delim)
 {
-  size_t nlen = strlen (string) + 1;
+  size_t nlen = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (string) + 1;
 
-  if (nlen > 1)
+  ಆದರೆ (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *rp;
+      ಅಕ್ಷರ *wp;
 
-      *argz = (char *) realloc (*argz, *argz_len + nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (ಅಕ್ಷರ *) realloc (*argz, *argz_len + nlen);
+      ಆದರೆ (*argz == ಖಾಲಿ)
+	ಹಿಂತಿರುಗಿ ENOMEM;
 
       wp = *argz + *argz_len;
       rp = string;
-      do
-	if (*rp == delim)
+      ಮಾಡು
+	ಆದರೆ (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ಆದರೆ (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    ಇಲ್ಲದಿದ್ದರೆ
 	      --nlen;
 	  }
-	else
+	ಇಲ್ಲದಿದ್ದರೆ
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ಆಗ (*rp++ != '\0');
 
       *argz_len += nlen;
     }
 
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
-weak_alias (__argz_add_sep, argz_add_sep)
+weak_alias (__argz_add_sep, argz_ಕೂಡಿಸು_sep)

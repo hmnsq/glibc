@@ -15,48 +15,48 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
+#ಅನ್ತರ್ಭಾವ <libc-pointer-arith.h>
 
-#undef strcspn
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು strcspn
 
-#ifndef STRCSPN
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ STRCSPN
 # define STRCSPN strcspn
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Return the length of the maximum initial segment of S
    which contains no characters from REJECT.  */
 size_t
-STRCSPN (const char *str, const char *reject)
+STRCSPN (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *str, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *reject)
 {
-  if (__glibc_unlikely (reject[0] == '\0')
+  ಆದರೆ (__glibc_unlikely (reject[0] == '\0')
       || __glibc_unlikely (reject[1] == '\0'))
-    return __strchrnul (str, reject [0]) - str;
+    ಹಿಂತಿರುಗಿ __strchrnul (str, reject [0]) - str;
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ ಕೋಷ್ಟಕ[256];
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p = memset (ಕೋಷ್ಟಕ, 0, 64);
   memset (p + 64, 0, 64);
   memset (p + 128, 0, 64);
   memset (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) reject;
-  unsigned char tmp;
-  do
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *s = (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ*) reject;
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ tmp;
+  ಮಾಡು
     p[tmp = *s++] = 1;
-  while (tmp);
+  ಆಗ (tmp);
 
-  s = (unsigned char*) str;
-  if (p[s[0]]) return 0;
-  if (p[s[1]]) return 1;
-  if (p[s[2]]) return 2;
-  if (p[s[3]]) return 3;
+  s = (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ*) str;
+  ಆದರೆ (p[s[0]]) ಹಿಂತಿರುಗಿ 0;
+  ಆದರೆ (p[s[1]]) ಹಿಂತಿರುಗಿ 1;
+  ಆದರೆ (p[s[2]]) ಹಿಂತಿರುಗಿ 2;
+  ಆದರೆ (p[s[3]]) ಹಿಂತಿರುಗಿ 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) PTR_ALIGN_ಕೆಳಕ್ಕೆ (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do
+  ಚಿಹ್ನೆರಹಿತ ಪೂರ್ಣಾಂಕ c0, c1, c2, c3;
+  ಮಾಡು
     {
       s += 4;
       c0 = p[s[0]];
@@ -64,9 +64,9 @@ STRCSPN (const char *str, const char *reject)
       c2 = p[s[2]];
       c3 = p[s[3]];
     }
-  while ((c0 | c1 | c2 | c3) == 0);
+  ಆಗ ((c0 | c1 | c2 | c3) == 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  size_t ಎಣಿಕೆ_2 = s - (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) str;
+  ಹಿಂತಿರುಗಿ (c0 | c1) != 0 ? ಎಣಿಕೆ_2 - c0 + 1 : ಎಣಿಕೆ_2 - c2 + 3;
 }
 libc_hidden_builtin_def (strcspn)

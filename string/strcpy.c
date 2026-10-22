@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stddef.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stddef.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#undef strcpy
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು strcpy
 /* Disable internal stpcpy optimization, otherwise the __stpcpy might it
    generate a strcpy call.  */
-#undef __stpcpy
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು __stpcpy
 
-#ifndef STRCPY
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ STRCPY
 # define STRCPY strcpy
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Copy SRC to DEST.  */
-char *
-STRCPY (char *dest, const char *src)
+ಅಕ್ಷರ *
+STRCPY (ಅಕ್ಷರ *dest, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  ಹಿಂತಿರುಗಿ dest;
 }
 libc_hidden_builtin_def (strcpy)

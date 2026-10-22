@@ -16,73 +16,73 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <libc-pointer-arith.h>
+#ಅನ್ತರ್ಭಾವ <string-fzb.h>
+#ಅನ್ತರ್ಭಾವ <string-fzc.h>
+#ಅನ್ತರ್ಭಾವ <string-fzi.h>
+#ಅನ್ತರ್ಭಾವ <string-shift.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#undef memchr
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು memchr
 
-#ifdef MEMCHR
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ MEMCHR
 # define __memchr MEMCHR
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-static __always_inline const char *
+ಸ್ಥಿರ __always_inline ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *
 sadd (uintptr_t x, uintptr_t y)
 {
-  return (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
+  ಹಿಂತಿರುಗಿ (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
 }
 
 /* Search no more than N bytes of S for C.  */
-void *
-__memchr (void const *s, int c_in, size_t n)
+ಶೂನ್ಯ *
+__memchr (ಶೂನ್ಯ ಸ್ಥಿರಾಂಕ *s, ಪೂರ್ಣಾಂಕ c_ಒಳ, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  ಆದರೆ (__glibc_unlikely (n == 0))
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
   /* Read the first word, but munge it so that bytes before the array
      will not match goal.  */
-  const op_t *word_ptr = PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ಸ್ಥಿರಾಂಕ op_t *ಶಬ್ದ_ptr = PTR_ALIGN_ಕೆಳಕ್ಕೆ (s, ಗಾತ್ರ (op_t));
   uintptr_t s_int = (uintptr_t) s;
 
-  op_t word = *word_ptr;
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t ಶಬ್ದ = *ಶಬ್ದ_ptr;
+  op_t repeated_c = repeat_ಬೈಟುಗಳು (c_ಒಳ);
   /* Compute the address of the last byte taking in consideration possible
      overflow.  */
-  const char *lbyte = sadd (s_int, n - 1);
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *lbyte = sadd (s_int, n - 1);
   /* And also the address of the word containing the last byte. */
-  const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, sizeof (op_t));
+  ಸ್ಥಿರಾಂಕ op_t *lword = (ಸ್ಥಿರಾಂಕ op_t *) PTR_ALIGN_ಕೆಳಕ್ಕೆ (lbyte, ಗಾತ್ರ (op_t));
 
-  find_t mask = shift_find (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ಕಂಡುಹಿಡಿ_t ಮುಖವಾಡ = ಸರಿಸು_ಕಂಡುಹಿಡಿ (ಕಂಡುಹಿಡಿ_eq_all (ಶಬ್ದ, repeated_c), s_int);
+  ಆದರೆ (ಮುಖವಾಡ != 0)
     {
-      char *ret = (char *) s + index_first (mask);
-      return (ret <= lbyte) ? ret : NULL;
+      ಅಕ್ಷರ *ret = (ಅಕ್ಷರ *) s + ಸೂಚ್ಯಂಕ_ಮೊದಲ (ಮುಖವಾಡ);
+      ಹಿಂತಿರುಗಿ (ret <= lbyte) ? ret : ಖಾಲಿ;
     }
-  if (word_ptr == lword)
-    return NULL;
+  ಆದರೆ (ಶಬ್ದ_ptr == lword)
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
-  word = *++word_ptr;
-  while (word_ptr != lword)
+  ಶಬ್ದ = *++ಶಬ್ದ_ptr;
+  ಆಗ (ಶಬ್ದ_ptr != lword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_first_eq (word, repeated_c);
-      word = *++word_ptr;
+      ಆದರೆ (has_eq (ಶಬ್ದ, repeated_c))
+	ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) ಶಬ್ದ_ptr + ಸೂಚ್ಯಂಕ_ಮೊದಲ_eq (ಶಬ್ದ, repeated_c);
+      ಶಬ್ದ = *++ಶಬ್ದ_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  ಆದರೆ (has_eq (ಶಬ್ದ, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_first_eq (word, repeated_c);
-      if (ret <= lbyte)
-	return ret;
+      ಅಕ್ಷರ *ret = (ಅಕ್ಷರ *) ಶಬ್ದ_ptr + ಸೂಚ್ಯಂಕ_ಮೊದಲ_eq (ಶಬ್ದ, repeated_c);
+      ಆದರೆ (ret <= lbyte)
+	ಹಿಂತಿರುಗಿ ret;
     }
-  return NULL;
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
-#ifndef MEMCHR
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ MEMCHR
 weak_alias (__memchr, memchr)
 libc_hidden_builtin_def (memchr)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

@@ -16,291 +16,291 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_BCOPY
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
 # define TEST_NAME "bcopy"
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define TEST_NAME "memmove"
-#endif
-#include "test-string.h"
-#include <support/test-driver.h>
+#ಆದರೆ_ಅಂತ್ಯ
+#ಅನ್ತರ್ಭಾವ "test-string.h"
+#ಅನ್ತರ್ಭಾವ <support/test-driver.h>
 
-char *simple_memmove (char *, const char *, size_t);
+ಅಕ್ಷರ *simple_memmove (ಅಕ್ಷರ *, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, size_t);
 
-#ifdef TEST_BCOPY
-typedef void (*proto_t) (const char *, char *, size_t);
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಶೂನ್ಯ (*proto_t) (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, ಅಕ್ಷರ *, size_t);
 
 IMPL (bcopy, 1)
 
 /* Naive implementation to verify results.  */
-void
-simple_bcopy (const char *src, char *dst, size_t n)
+ಶೂನ್ಯ
+simple_bcopy (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *src, ಅಕ್ಷರ *dst, size_t n)
 {
   simple_memmove (dst, src, n);
 }
 
-#else
-typedef char *(*proto_t) (char *, const char *, size_t);
+#ಇಲ್ಲದಿದ್ದರೆ
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಅಕ್ಷರ *(*proto_t) (ಅಕ್ಷರ *, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, size_t);
 
 IMPL (memmove, 1)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Naive implementation to verify results.  */
-char *
-test_cc_inhibit_loop_to_libcall
-simple_memmove (char *dst, const char *src, size_t n)
+ಅಕ್ಷರ *
+test_cc_inhibit_loop_ಗಮ್ಯ_libcall
+simple_memmove (ಅಕ್ಷರ *dst, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *src, size_t n)
 {
-  char *ret = dst;
-  if (src < dst)
+  ಅಕ್ಷರ *ret = dst;
+  ಆದರೆ (src < dst)
     {
       dst += n;
       src += n;
-      while (n--)
+      ಆಗ (n--)
 	*--dst = *--src;
     }
-  else
-    while (n--)
+  ಇಲ್ಲದಿದ್ದರೆ
+    ಆಗ (n--)
       *dst++ = *src++;
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-static void
-do_one_test (impl_t *impl, char *dst, char *src, const char *orig_src,
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಅಕ್ಷರ *dst, ಅಕ್ಷರ *src, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *orig_src,
 	     size_t len)
 {
   /* This also clears the destination buffer set by the previous run.  */
-  memcpy (src, orig_src, len);
-#ifdef TEST_BCOPY
+  ಸ್ಮರಣೆ_ನಕಲು (src, orig_src, len);
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
   CALL (impl, src, dst, len);
-#else
-  char *res;
+#ಇಲ್ಲದಿದ್ದರೆ
+  ಅಕ್ಷರ *res;
 
   res = CALL (impl, dst, src, len);
-  if (res != dst)
+  ಆದರೆ (res != dst)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, dst);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-  if (memcmp (dst, orig_src, len) != 0)
+  ಆದರೆ (memcmp (dst, orig_src, len) != 0)
     {
       error (0, 0, "Wrong result in function %s dst \"%s\" src \"%s\"",
 	     impl->name, dst, src);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 }
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  ಅಕ್ಷರ *s1, *s2;
 
   align1 &= (getpagesize() - 1);
-  if (align1 + len >= page_size)
-    return;
+  ಆದರೆ (align1 + len >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   align2 &= (getpagesize() - 1);
-  if (align2 + len >= page_size)
-    return;
+  ಆದರೆ (align2 + len >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (ಅಕ್ಷರ *) (buf1 + align1);
+  s2 = (ಅಕ್ಷರ *) (buf2 + align2);
 
-  for (i = 0, j = 1; i < len; i++, j += 23)
+  ಗಾಗಿ (i = 0, j = 1; i < len; i++, j += 23)
     s1[i] = j;
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s2, (char *) (buf2 + align1), s1, len);
+    do_one_test (impl, s2, (ಅಕ್ಷರ *) (buf2 + align1), s1, len);
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
-  size_t i, n, align1, align2, len, size;
+  size_t i, n, align1, align2, len, ಗಾತ್ರ_2;
   size_t srcstart, srcend, dststart, dstend;
-  int c;
-  unsigned char *p1, *p2;
-#ifndef TEST_BCOPY
-  unsigned char *res;
-#endif
+  ಪೂರ್ಣಾಂಕ c;
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p1, *p2;
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ TEST_BCOPY
+  ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *res;
+#ಆದರೆ_ಅಂತ್ಯ
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 255) == 0)
-	size = 65536;
-      else
-	size = 512;
-      if (size > page_size)
-	size = page_size;
-      if ((random () & 3) == 0)
+      ಆದರೆ ((random () & 255) == 0)
+	ಗಾತ್ರ_2 = 65536;
+      ಇಲ್ಲದಿದ್ದರೆ
+	ಗಾತ್ರ_2 = 512;
+      ಆದರೆ (ಗಾತ್ರ_2 > ಪುಟ_ಗಾತ್ರ)
+	ಗಾತ್ರ_2 = ಪುಟ_ಗಾತ್ರ;
+      ಆದರೆ ((random () & 3) == 0)
 	{
-	  len = random () & (size - 1);
-	  align1 = size - len - (random () & 31);
-	  align2 = size - len - (random () & 31);
-	  if (align1 > size)
+	  len = random () & (ಗಾತ್ರ_2 - 1);
+	  align1 = ಗಾತ್ರ_2 - len - (random () & 31);
+	  align2 = ಗಾತ್ರ_2 - len - (random () & 31);
+	  ಆದರೆ (align1 > ಗಾತ್ರ_2)
 	    align1 = 0;
-	  if (align2 > size)
+	  ಆದರೆ (align2 > ಗಾತ್ರ_2)
 	    align2 = 0;
 	}
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
 	{
-	  align1 = random () & (size / 2 - 1);
-	  align2 = random () & (size / 2 - 1);
-	  len = random () & (size - 1);
-	  if (align1 + len > size)
-	    align1 = size - len;
-	  if (align2 + len > size)
-	    align2 = size - len;
+	  align1 = random () & (ಗಾತ್ರ_2 / 2 - 1);
+	  align2 = random () & (ಗಾತ್ರ_2 / 2 - 1);
+	  len = random () & (ಗಾತ್ರ_2 - 1);
+	  ಆದರೆ (align1 + len > ಗಾತ್ರ_2)
+	    align1 = ಗಾತ್ರ_2 - len;
+	  ಆದರೆ (align2 + len > ಗಾತ್ರ_2)
+	    align2 = ಗಾತ್ರ_2 - len;
 	}
 
-      p1 = buf1 + page_size - size;
-      p2 = buf2 + page_size - size;
+      p1 = buf1 + ಪುಟ_ಗಾತ್ರ - ಗಾತ್ರ_2;
+      p2 = buf2 + ಪುಟ_ಗಾತ್ರ - ಗಾತ್ರ_2;
       c = random () & 255;
       srcend = align1 + len + 256;
-      if (srcend > size)
-	srcend = size;
-      if (align1 > 256)
+      ಆದರೆ (srcend > ಗಾತ್ರ_2)
+	srcend = ಗಾತ್ರ_2;
+      ಆದರೆ (align1 > 256)
 	srcstart = align1 - 256;
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
 	srcstart = 0;
-      for (i = srcstart; i < srcend; ++i)
+      ಗಾಗಿ (i = srcstart; i < srcend; ++i)
 	p1[i] = random () & 255;
       dstend = align2 + len + 256;
-      if (dstend > size)
-	dstend = size;
-      if (align2 > 256)
+      ಆದರೆ (dstend > ಗಾತ್ರ_2)
+	dstend = ಗಾತ್ರ_2;
+      ಆದರೆ (align2 > 256)
 	dststart = align2 - 256;
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
 	dststart = 0;
 
       FOR_EACH_IMPL (impl, 1)
 	{
 	  memset (p2 + dststart, c, dstend - dststart);
-	  memcpy (p2 + srcstart, p1 + srcstart, srcend - srcstart);
-#ifdef TEST_BCOPY
-	  CALL (impl, (char *) (p2 + align1), (char *) (p2 + align2), len);
-#else
-	  res = (unsigned char *) CALL (impl,
-					(char *) (p2 + align2),
-					(char *) (p2 + align1), len);
-	  if (res != p2 + align2)
+	  ಸ್ಮರಣೆ_ನಕಲು (p2 + srcstart, p1 + srcstart, srcend - srcstart);
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
+	  CALL (impl, (ಅಕ್ಷರ *) (p2 + align1), (ಅಕ್ಷರ *) (p2 + align2), len);
+#ಇಲ್ಲದಿದ್ದರೆ
+	  res = (ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) CALL (impl,
+					(ಅಕ್ಷರ *) (p2 + align2),
+					(ಅಕ್ಷರ *) (p2 + align1), len);
+	  ಆದರೆ (res != p2 + align2)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res, p2 + align2);
 	      ret = 1;
 	    }
-#endif
-	  if (memcmp (p1 + align1, p2 + align2, len))
+#ಆದರೆ_ಅಂತ್ಯ
+	  ಆದರೆ (memcmp (p1 + align1, p2 + align2, len))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
 	    }
-	  for (i = dststart; i < dstend; ++i)
+	  ಗಾಗಿ (i = dststart; i < dstend; ++i)
 	    {
-	      if (i >= align2 && i < align2 + len)
+	      ಆದರೆ (i >= align2 && i < align2 + len)
 		{
 		  i = align2 + len - 1;
-		  continue;
+		  ಮುಂದುವರಿ;
 		}
-	      if (i >= srcstart && i < srcend)
+	      ಆದರೆ (i >= srcstart && i < srcend)
 		{
 		  i = srcend - 1;
-		  continue;
+		  ಮುಂದುವರಿ;
 		}
-	      if (p2[i] != c)
+	      ಆದರೆ (p2[i] != c)
 		{
 		  error (0, 0, "Iteration %zd - garbage in memset area, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ನಿಲ್ಲಿಸು;
 		}
 	    }
 
-	  if (srcstart < align2
+	  ಆದರೆ (srcstart < align2
 	      && memcmp (p2 + srcstart, p1 + srcstart,
 			 (srcend > align2 ? align2 : srcend) - srcstart))
 	    {
 	      error (0, 0, "Iteration %zd - garbage before dst, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
-	      break;
+	      ನಿಲ್ಲಿಸು;
 	    }
 
 	  i = srcstart > align2 + len ? srcstart : align2 + len;
-	  if (srcend > align2 + len
+	  ಆದರೆ (srcend > align2 + len
 	      && memcmp (p2 + i, p1 + i, srcend - i))
 	    {
 	      error (0, 0, "Iteration %zd - garbage after dst, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
 	      ret = 1;
-	      break;
+	      ನಿಲ್ಲಿಸು;
 	    }
 	}
     }
 }
 
-static void
-do_test2 (size_t offset)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test2 (size_t ಸ್ಥಾನಾಂತರ)
 {
-  size_t size = 0x20000000;
+  size_t ಗಾತ್ರ_2 = 0x20000000;
   uint32_t * large_buf;
 
-  large_buf = mmap ((void*) 0x70000000, size, PROT_READ | PROT_WRITE,
-		    MAP_PRIVATE | MAP_ANON, -1, 0);
+  large_buf = mmap ((ಶೂನ್ಯ*) 0x70000000, ಗಾತ್ರ_2, PROT_READ | PROT_WRITE,
+		    MAP_ಖಾಸಗಿ | MAP_ANON, -1, 0);
 
-  if (large_buf == MAP_FAILED)
+  ಆದರೆ (large_buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "Large mmap failed");
 
-  if ((uintptr_t) large_buf > 0x80000000 - 128
+  ಆದರೆ ((uintptr_t) large_buf > 0x80000000 - 128
       || 0x80000000 - (uintptr_t) large_buf > 0x20000000)
     {
       error (0, 0, "Large mmap allocated improperly");
       ret = EXIT_UNSUPPORTED;
-      munmap ((void *) large_buf, size);
-      return;
+      munmap ((ಶೂನ್ಯ *) large_buf, ಗಾತ್ರ_2);
+      ಹಿಂತಿರುಗಿ;
     }
 
-  size_t bytes_move = 0x80000000 - (uintptr_t) large_buf;
-  if (bytes_move + offset * sizeof (uint32_t) > size)
+  size_t ಬೈಟುಗಳು_move = 0x80000000 - (uintptr_t) large_buf;
+  ಆದರೆ (ಬೈಟುಗಳು_move + ಸ್ಥಾನಾಂತರ * ಗಾತ್ರ (uint32_t) > ಗಾತ್ರ_2)
     {
-      munmap ((void *) large_buf, size);
-      return;
+      munmap ((ಶೂನ್ಯ *) large_buf, ಗಾತ್ರ_2);
+      ಹಿಂತಿರುಗಿ;
     }
-  size_t arr_size = bytes_move / sizeof (uint32_t);
+  size_t arr_ಗಾತ್ರ = ಬೈಟುಗಳು_move / ಗಾತ್ರ (uint32_t);
   size_t i;
   size_t repeats;
   uint32_t * src = large_buf;
-  uint32_t * dst = &large_buf[offset];
-  for (repeats = 0; repeats < 2; ++repeats)
+  uint32_t * dst = &large_buf[ಸ್ಥಾನಾಂತರ];
+  ಗಾಗಿ (repeats = 0; repeats < 2; ++repeats)
     {
       FOR_EACH_IMPL (impl, 0)
         {
-          for (i = 0; i < arr_size; i++)
+          ಗಾಗಿ (i = 0; i < arr_ಗಾತ್ರ; i++)
             src[i] = (uint32_t) i;
 
 
-#ifdef TEST_BCOPY
-          CALL (impl, (char *) src, (char *) dst, bytes_move);
-#else
-          CALL (impl, (char *) dst, (char *) src, bytes_move);
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
+          CALL (impl, (ಅಕ್ಷರ *) src, (ಅಕ್ಷರ *) dst, ಬೈಟುಗಳು_move);
+#ಇಲ್ಲದಿದ್ದರೆ
+          CALL (impl, (ಅಕ್ಷರ *) dst, (ಅಕ್ಷರ *) src, ಬೈಟುಗಳು_move);
+#ಆದರೆ_ಅಂತ್ಯ
 
-          for (i = 0; i < arr_size; i++)
+          ಗಾಗಿ (i = 0; i < arr_ಗಾತ್ರ; i++)
 	    {
-	      if (dst[i] != (uint32_t) i)
+	      ಆದರೆ (dst[i] != (uint32_t) i)
 		{
 		  error (0, 0,
 			 "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
 			 impl->name, dst, src, i);
 		  ret = 1;
-		  munmap ((void *) large_buf, size);
-		  return;
+		  munmap ((ಶೂನ್ಯ *) large_buf, ಗಾತ್ರ_2);
+		  ಹಿಂತಿರುಗಿ;
 		}
 	    }
 	}
@@ -308,111 +308,111 @@ do_test2 (size_t offset)
       dst = large_buf;
     }
 
-  munmap ((void *) large_buf, size);
+  munmap ((ಶೂನ್ಯ *) large_buf, ಗಾತ್ರ_2);
 }
 
-static void
-do_test3 (size_t bytes_move, size_t offset)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test3 (size_t ಬೈಟುಗಳು_move, size_t ಸ್ಥಾನಾಂತರ)
 {
-  size_t size = bytes_move * 3;
+  size_t ಗಾತ್ರ_2 = ಬೈಟುಗಳು_move * 3;
   uint32_t *buf;
 
-  buf = mmap (NULL, size, PROT_READ | PROT_WRITE,
-	      MAP_PRIVATE | MAP_ANON, -1, 0);
+  buf = mmap (ಖಾಲಿ, ಗಾತ್ರ_2, PROT_READ | PROT_WRITE,
+	      MAP_ಖಾಸಗಿ | MAP_ANON, -1, 0);
 
-  if (buf == MAP_FAILED)
+  ಆದರೆ (buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
-  size_t arr_size = bytes_move / sizeof (uint32_t);
+  size_t arr_ಗಾತ್ರ = ಬೈಟುಗಳು_move / ಗಾತ್ರ (uint32_t);
   size_t i;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      for (i = 0; i < arr_size; i++)
+      ಗಾಗಿ (i = 0; i < arr_ಗಾತ್ರ; i++)
         buf[i] = (uint32_t) i;
 
-      uint32_t *dst = &buf[arr_size + offset];
+      uint32_t *dst = &buf[arr_ಗಾತ್ರ + ಸ್ಥಾನಾಂತರ];
 
-#ifdef TEST_BCOPY
-      CALL (impl, (char *) buf, (char *) dst, bytes_move);
-#else
-      CALL (impl, (char *) dst, (char *) buf, bytes_move);
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
+      CALL (impl, (ಅಕ್ಷರ *) buf, (ಅಕ್ಷರ *) dst, ಬೈಟುಗಳು_move);
+#ಇಲ್ಲದಿದ್ದರೆ
+      CALL (impl, (ಅಕ್ಷರ *) dst, (ಅಕ್ಷರ *) buf, ಬೈಟುಗಳು_move);
+#ಆದರೆ_ಅಂತ್ಯ
 
-      for (i = 0; i < arr_size; i++)
+      ಗಾಗಿ (i = 0; i < arr_ಗಾತ್ರ; i++)
 	{
-	  if (dst[i] != (uint32_t) i)
+	  ಆದರೆ (dst[i] != (uint32_t) i)
 	    {
 	      error (0, 0,
 		     "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
 		     impl->name, dst, buf, i);
 	      ret = 1;
-	      break;
+	      ನಿಲ್ಲಿಸು;
 	    }
 	}
     }
 
-  munmap ((void *) buf, size);
+  munmap ((ಶೂನ್ಯ *) buf, ಗಾತ್ರ_2);
 }
 
-static void
-do_test4 (size_t bytes_move, size_t offset1, size_t offset2)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test4 (size_t ಬೈಟುಗಳು_move, size_t offset1, size_t offset2)
 {
-  size_t size, repeats, i;
+  size_t ಗಾತ್ರ_2, repeats, i;
   uint8_t *buf, *dst, *src;
 
-  size = bytes_move + MAX(offset1, offset2);
-  buf  = mmap(NULL, size, PROT_READ | PROT_WRITE,
-             MAP_PRIVATE | MAP_ANON, -1, 0);
+  ಗಾತ್ರ_2 = ಬೈಟುಗಳು_move + MAX(offset1, offset2);
+  buf  = mmap(ಖಾಲಿ, ಗಾತ್ರ_2, PROT_READ | PROT_WRITE,
+             MAP_ಖಾಸಗಿ | MAP_ANON, -1, 0);
 
-  if (buf == MAP_FAILED)
+  ಆದರೆ (buf == MAP_FAILED)
     error (EXIT_UNSUPPORTED, errno, "mmap failed");
 
   dst = &buf[offset1];
   src = &buf[offset2];
-  for (repeats = 0; repeats < 2; ++repeats)
+  ಗಾಗಿ (repeats = 0; repeats < 2; ++repeats)
     {
       FOR_EACH_IMPL (impl, 0)
         {
-          for (i = 0; i < bytes_move; i++)
+          ಗಾಗಿ (i = 0; i < ಬೈಟುಗಳು_move; i++)
               src[i] = (uint8_t) i;
-#ifdef TEST_BCOPY
-          CALL (impl, (char *) src, (char *) dst, bytes_move);
-#else
-          CALL (impl, (char *) dst, (char *) src, bytes_move);
-#endif
-          for (i = 0; i < bytes_move; i++)
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ TEST_BCOPY
+          CALL (impl, (ಅಕ್ಷರ *) src, (ಅಕ್ಷರ *) dst, ಬೈಟುಗಳು_move);
+#ಇಲ್ಲದಿದ್ದರೆ
+          CALL (impl, (ಅಕ್ಷರ *) dst, (ಅಕ್ಷರ *) src, ಬೈಟುಗಳು_move);
+#ಆದರೆ_ಅಂತ್ಯ
+          ಗಾಗಿ (i = 0; i < ಬೈಟುಗಳು_move; i++)
             {
-              if (dst[i] != (uint8_t) i)
+              ಆದರೆ (dst[i] != (uint8_t) i)
                 {
                   error (0, 0,
                          "Wrong result in function %s dst \"%p\" src \"%p\" offset \"%zd\"",
                          impl->name, dst, buf, i);
                   ret = 1;
-                  break;
+                  ನಿಲ್ಲಿಸು;
                 }
             }
         }
       dst = &buf[offset2];
       src = &buf[offset1];
     }
-  munmap ((void *) buf, size);
+  munmap ((ಶೂನ್ಯ *) buf, ಗಾತ್ರ_2);
 }
 
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%23s", "");
+  ಬರೆ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (i = 0; i < 14; ++i)
+  ಗಾಗಿ (i = 0; i < 14; ++i)
     {
       do_test (0, 32, 1 << i);
       do_test (32, 0, 1 << i);
@@ -420,7 +420,7 @@ test_main (void)
       do_test (i, 0, 1 << i);
     }
 
-  for (i = 0; i < 32; ++i)
+  ಗಾಗಿ (i = 0; i < 32; ++i)
     {
       do_test (0, 32, i);
       do_test (32, 0, i);
@@ -428,10 +428,10 @@ test_main (void)
       do_test (i, 0, i);
     }
 
-  for (i = 3; i < 32; ++i)
+  ಗಾಗಿ (i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
-	continue;
+      ಆದರೆ ((i & (i - 1)) == 0)
+	ಮುಂದುವರಿ;
       do_test (0, 32, 16 * i);
       do_test (32, 0, 16 * i);
       do_test (0, i, 16 * i);
@@ -454,7 +454,7 @@ test_main (void)
 
   /* Copy 16KB data.  */
   do_test3 (16384, 3);
-  for (i = 4096; i <= 16384; i <<= 1)
+  ಗಾಗಿ (i = 4096; i <= 16384; i <<= 1)
     {
       do_test4 (i, 0, i);
       do_test4 (i, 0, i - 1);
@@ -474,7 +474,7 @@ test_main (void)
     }
 
 
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

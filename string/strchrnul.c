@@ -15,42 +15,42 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <libc-pointer-arith.h>
+#ಅನ್ತರ್ಭಾವ <string-fzb.h>
+#ಅನ್ತರ್ಭಾವ <string-fzc.h>
+#ಅನ್ತರ್ಭಾವ <string-fzi.h>
+#ಅನ್ತರ್ಭಾವ <string-shift.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#undef __strchrnul
-#undef strchrnul
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು __strchrnul
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು strchrnul
 
-#ifdef STRCHRNUL
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ STRCHRNUL
 # define __strchrnul STRCHRNUL
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
-char *
-__strchrnul (const char *str, int c_in)
+ಅಕ್ಷರ *
+__strchrnul (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *str, ಪೂರ್ಣಾಂಕ c_ಒಳ)
 {
   /* Align pointer to sizeof op_t.  */
   uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  ಸ್ಥಿರಾಂಕ op_t *ಶಬ್ದ_ptr = (ಸ್ಥಿರಾಂಕ op_t *) PTR_ALIGN_ಕೆಳಕ್ಕೆ (str, ಗಾತ್ರ (op_t));
 
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t repeated_c = repeat_ಬೈಟುಗಳು (c_ಒಳ);
 
-  op_t word = *word_ptr;
-  find_t mask = shift_find (find_zero_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
-    return (char *) str + index_first (mask);
+  op_t ಶಬ್ದ = *ಶಬ್ದ_ptr;
+  ಕಂಡುಹಿಡಿ_t ಮುಖವಾಡ = ಸರಿಸು_ಕಂಡುಹಿಡಿ (ಕಂಡುಹಿಡಿ_zero_eq_all (ಶಬ್ದ, repeated_c), s_int);
+  ಆದರೆ (ಮುಖವಾಡ != 0)
+    ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) str + ಸೂಚ್ಯಂಕ_ಮೊದಲ (ಮುಖವಾಡ);
 
-  do
-    word = *++word_ptr;
-  while (! has_zero_eq (word, repeated_c));
+  ಮಾಡು
+    ಶಬ್ದ = *++ಶಬ್ದ_ptr;
+  ಆಗ (! has_zero_eq (ಶಬ್ದ, repeated_c));
 
-  return (char *) word_ptr + index_first_zero_eq (word, repeated_c);
+  ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) ಶಬ್ದ_ptr + ಸೂಚ್ಯಂಕ_ಮೊದಲ_zero_eq (ಶಬ್ದ, repeated_c);
 }
-#ifndef STRCHRNUL
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ STRCHRNUL
 libc_hidden_def (__strchrnul)
 weak_alias (__strchrnul, strchrnul)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

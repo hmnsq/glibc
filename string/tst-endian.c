@@ -1,11 +1,11 @@
-#include <byteswap.h>
-#include <endian.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <libc-diag.h>
+#ಅನ್ತರ್ಭಾವ <byteswap.h>
+#ಅನ್ತರ್ಭಾವ <endian.h>
+#ಅನ್ತರ್ಭಾವ <inttypes.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
+#ಅನ್ತರ್ಭಾವ <libc-diag.h>
 
-#if __GNUC_PREREQ (6, 0)
+#ಆದರೆ __GNUC_PREREQ (6, 0)
 /* GCC 6.0 warns on big endian systems about:
    htobeXX (beXXtoh (i)) != i
    warning: self-comparison always evaluates to false [-Wtautological-compare]
@@ -14,121 +14,121 @@
    The same applies to htoleXX/leXXtoh on little endian systems.  */
 # define DIAG_IGNORE_NEEDS_COMMENT_TAUTOLOGICAL_COMPARE() \
   DIAG_IGNORE_NEEDS_COMMENT (6, "-Wtautological-compare")
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define DIAG_IGNORE_NEEDS_COMMENT_TAUTOLOGICAL_COMPARE()
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  int result = 0;
+  ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ = 0;
 
-  for (uint64_t i = 0; i < (~UINT64_C (0)) >> 2; i = (i << 1) + 3)
+  ಗಾಗಿ (uint64_t i = 0; i < (~UINT64_C (0)) >> 2; i = (i << 1) + 3)
     {
-      if (i < UINT64_C (65536))
+      ಆದರೆ (i < UINT64_C (65536))
 	{
-	  DIAG_PUSH_NEEDS_COMMENT;
+	  DIAG_ತಳ್ಳು_NEEDS_COMMENT;
 	  DIAG_IGNORE_NEEDS_COMMENT_TAUTOLOGICAL_COMPARE ();
-	  if (htobe16 (be16toh (i)) != i)
+	  ಆದರೆ (htobe16 (be16toh (i)) != i)
 	    {
-	      printf ("htobe16 (be16toh (%" PRIx64 ")) == %" PRIx16 "\n",
+	      ಬರೆ ("htobe16 (be16toh (%" PRIx64 ")) == %" PRIx16 "\n",
 		      i, (uint16_t) htobe16 (be16toh (i)));
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
-	  if (htole16 (le16toh (i)) != i)
+	  ಆದರೆ (htole16 (le16toh (i)) != i)
 	    {
-	      printf ("htole16 (le16toh (%" PRIx64 ")) == %" PRIx16 "\n",
+	      ಬರೆ ("htole16 (le16toh (%" PRIx64 ")) == %" PRIx16 "\n",
 		      i, (uint16_t) htole16 (le16toh (i)));
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
-	  DIAG_POP_NEEDS_COMMENT;
+	  DIAG_ತೆಗೆ_NEEDS_COMMENT;
 
 	  uint16_t n[2];
 	  n[__BYTE_ORDER == __LITTLE_ENDIAN] = bswap_16 (i);
 	  n[__BYTE_ORDER == __BIG_ENDIAN] = i;
-	  if (htole16 (i) != n[0])
+	  ಆದರೆ (htole16 (i) != n[0])
 	    {
-	      printf ("htole16 (%" PRIx64 ") == %" PRIx16 " != %" PRIx16 "\n",
+	      ಬರೆ ("htole16 (%" PRIx64 ") == %" PRIx16 " != %" PRIx16 "\n",
 		      i, (uint16_t) htole16 (i), n[0]);
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
-	  if (htobe16 (i) != n[1])
+	  ಆದರೆ (htobe16 (i) != n[1])
 	    {
-	      printf ("htobe16 (%" PRIx64 ") == %" PRIx16 " != %" PRIx16 "\n",
+	      ಬರೆ ("htobe16 (%" PRIx64 ") == %" PRIx16 " != %" PRIx16 "\n",
 		      i, (uint16_t) htobe16 (i), n[1]);
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
 	}
 
-      if (i < UINT64_C (4294967296))
+      ಆದರೆ (i < UINT64_C (4294967296))
 	{
-	  DIAG_PUSH_NEEDS_COMMENT;
+	  DIAG_ತಳ್ಳು_NEEDS_COMMENT;
 	  DIAG_IGNORE_NEEDS_COMMENT_TAUTOLOGICAL_COMPARE ();
-	  if (htobe32 (be32toh (i)) != i)
+	  ಆದರೆ (htobe32 (be32toh (i)) != i)
 	    {
-	      printf ("htobe32 (be32toh (%" PRIx64 ")) == %" PRIx32 "\n",
+	      ಬರೆ ("htobe32 (be32toh (%" PRIx64 ")) == %" PRIx32 "\n",
 		      i, (uint32_t) htobe32 (be32toh (i)));
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
-	  if (htole32 (le32toh (i)) != i)
+	  ಆದರೆ (htole32 (le32toh (i)) != i)
 	    {
-	      printf ("htole32 (le32toh (%" PRIx64 ")) == %" PRIx32 "\n",
+	      ಬರೆ ("htole32 (le32toh (%" PRIx64 ")) == %" PRIx32 "\n",
 		      i, (uint32_t) htole32 (le32toh (i)));
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
-	  DIAG_POP_NEEDS_COMMENT;
+	  DIAG_ತೆಗೆ_NEEDS_COMMENT;
 
 	  uint32_t n[2];
 	  n[__BYTE_ORDER == __LITTLE_ENDIAN] = bswap_32 (i);
 	  n[__BYTE_ORDER == __BIG_ENDIAN] = i;
-	  if (htole32 (i) != n[0])
+	  ಆದರೆ (htole32 (i) != n[0])
 	    {
-	      printf ("htole32 (%" PRIx64 ") == %" PRIx32 " != %" PRIx32 "\n",
+	      ಬರೆ ("htole32 (%" PRIx64 ") == %" PRIx32 " != %" PRIx32 "\n",
 		      i, (uint32_t) htole32 (i), n[0]);
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
-	  if (htobe32 (i) != n[1])
+	  ಆದರೆ (htobe32 (i) != n[1])
 	    {
-	      printf ("htobe32 (%" PRIx64 ") == %" PRIx32 " != %" PRIx32 "\n",
+	      ಬರೆ ("htobe32 (%" PRIx64 ") == %" PRIx32 " != %" PRIx32 "\n",
 		      i, (uint32_t) htobe32 (i), n[1]);
-	      result = 1;
+	      ಫಲಿತಾಂಶ = 1;
 	    }
 	}
 
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_ತಳ್ಳು_NEEDS_COMMENT;
       DIAG_IGNORE_NEEDS_COMMENT_TAUTOLOGICAL_COMPARE ();
-      if (htobe64 (be64toh (i)) != i)
+      ಆದರೆ (htobe64 (be64toh (i)) != i)
 	{
-	  printf ("htobe64 (be64toh (%" PRIx64 ")) == %" PRIx64 "\n",
+	  ಬರೆ ("htobe64 (be64toh (%" PRIx64 ")) == %" PRIx64 "\n",
 		  i, htobe64 (be64toh (i)));
-	  result = 1;
+	  ಫಲಿತಾಂಶ = 1;
 	}
-      if (htole64 (le64toh (i)) != i)
+      ಆದರೆ (htole64 (le64toh (i)) != i)
 	{
-	  printf ("htole64 (le64toh (%" PRIx64 ")) == %" PRIx64 "\n",
+	  ಬರೆ ("htole64 (le64toh (%" PRIx64 ")) == %" PRIx64 "\n",
 		  i, htole64 (le64toh (i)));
-	  result = 1;
+	  ಫಲಿತಾಂಶ = 1;
 	}
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_ತೆಗೆ_NEEDS_COMMENT;
 
       uint64_t n[2];
       n[__BYTE_ORDER == __LITTLE_ENDIAN] = bswap_64 (i);
       n[__BYTE_ORDER == __BIG_ENDIAN] = i;
-      if (htole64 (i) != n[0])
+      ಆದರೆ (htole64 (i) != n[0])
 	{
-	  printf ("htole64 (%" PRIx64 ") == %" PRIx64 " != %" PRIx64 "\n",
+	  ಬರೆ ("htole64 (%" PRIx64 ") == %" PRIx64 " != %" PRIx64 "\n",
 		  i, htole64 (i), n[0]);
-	  result = 1;
+	  ಫಲಿತಾಂಶ = 1;
 	}
-      if (htobe64 (i) != n[1])
+      ಆದರೆ (htobe64 (i) != n[1])
 	{
-	  printf ("htobe64 (%" PRIx64 ") == %" PRIx64 " != %" PRIx64 "\n",
+	  ಬರೆ ("htobe64 (%" PRIx64 ") == %" PRIx64 " != %" PRIx64 "\n",
 		  i, htobe64 (i), n[1]);
-	  result = 1;
+	  ಫಲಿತಾಂಶ = 1;
 	}
     }
 
-  return result;
+  ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

@@ -16,56 +16,56 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
 
-#define TEST_MAIN
-#include "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-static void
-do_one_test (const char *src, size_t len, size_t n)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *src, size_t len, size_t n)
 {
-  char *dst = strndup (src, n);
-  size_t s = (len > n ? n: len) * sizeof (char);
+  ಅಕ್ಷರ *dst = strndup (src, n);
+  size_t s = (len > n ? n: len) * ಗಾತ್ರ (ಅಕ್ಷರ);
 
   TEST_COMPARE_BLOB (dst, s, src, s);
 
-  free (dst);
+  ಬಿಡುಗಡೆ (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test (size_t align1, size_t align2, size_t len, size_t n, ಪೂರ್ಣಾಂಕ max_char)
 {
   size_t i;
-  char *s1;
+  ಅಕ್ಷರ *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  ಆದರೆ ((align1 + len) * ಗಾತ್ರ (ಅಕ್ಷರ) >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  ಆದರೆ ((align2 + len) * ಗಾತ್ರ (ಅಕ್ಷರ) >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
-  s1 = (char *) (buf1) + align1;
+  s1 = (ಅಕ್ಷರ *) (buf1) + align1;
 
-  for (i = 0; i < len; ++i)
+  ಗಾಗಿ (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  ಗಾಗಿ (i = len + 1; (i + align1) * ಗಾತ್ರ (ಅಕ್ಷರ) < ಪುಟ_ಗಾತ್ರ && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   do_one_test (s1, len, n);
 }
 
-static void
-do_page_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_ಪುಟ_tests (ಶೂನ್ಯ)
 {
-  char *s1;
-  const size_t maxoffset = 64;
+  ಅಕ್ಷರ *s1;
+  ಸ್ಥಿರಾಂಕ size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (char *) buf1 + BUF1PAGES * page_size / sizeof (char) - maxoffset;
+  s1 = (ಅಕ್ಷರ *) buf1 + BUF1_ಪುಟಗಳು * ಪುಟ_ಗಾತ್ರ / ಗಾತ್ರ (ಅಕ್ಷರ) - maxoffset;
 
   memset (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -78,101 +78,101 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
-    for (size_t off2 = 0; off2 < maxoffset; off2++)
+  ಗಾಗಿ (size_t off1 = 0; off1 < maxoffset; off1++)
+    ಗಾಗಿ (size_t off2 = 0; off2 < maxoffset; off2++)
       do_one_test (s1 + off1, maxoffset - off1 - 1,
 		   maxoffset + (maxoffset - off2));
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
-  size_t i, j, n, align1, align2, len, size, mode;
-  char *p1 = (char *) (buf1 + page_size) - 512;
-  char *res;
+  size_t i, j, n, align1, align2, len, ಗಾತ್ರ_2, ಬಹುಲಕ;
+  ಅಕ್ಷರ *p1 = (ಅಕ್ಷರ *) (buf1 + ಪುಟ_ಗಾತ್ರ) - 512;
+  ಅಕ್ಷರ *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
-      mode = random ();
-      if (mode & 1)
+      ಬಹುಲಕ = random ();
+      ಆದರೆ (ಬಹುಲಕ & 1)
 	{
-	  size = random () & 255;
-	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  ಗಾತ್ರ_2 = random () & 255;
+	  align1 = 512 - ಗಾತ್ರ_2 - (random () & 15);
+	  ಆದರೆ (ಬಹುಲಕ & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  ಆದರೆ (ಬಹುಲಕ & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
-	    len = size - (random () & 31);
-	  else
+	  ಆದರೆ (ಬಹುಲಕ & 8)
+	    len = ಗಾತ್ರ_2 - (random () & 31);
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    len = 512;
-	  if (len >= 512)
+	  ಆದರೆ (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      ಇಲ್ಲದಿದ್ದರೆ
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  ಆದರೆ (ಬಹುಲಕ & 2)
 	    align2 = random () & 31;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  ಆದರೆ (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  ಆದರೆ (ಬಹುಲಕ & 4)
 	    {
-	      size = random () & 511;
-	      if (size + j > 512)
-		size = 512 - j - (random () & 31);
+	      ಗಾತ್ರ_2 = random () & 511;
+	      ಆದರೆ (ಗಾತ್ರ_2 + j > 512)
+		ಗಾತ್ರ_2 = 512 - j - (random () & 31);
 	    }
-	  else
-	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  ಇಲ್ಲದಿದ್ದರೆ
+	    ಗಾತ್ರ_2 = 512 - j;
+	  ಆದರೆ ((ಬಹುಲಕ & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      ಆದರೆ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      ಗಾಗಿ (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ಆದರೆ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      ಆದರೆ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
-	res = (char *) strndup ((char *) (p1 + align1), size);
+	res = (ಅಕ್ಷರ *) strndup ((ಅಕ್ಷರ *) (p1 + align1), ಗಾತ್ರ_2);
 	j = len + 1;
-	if (size < j)
-	  j = size;
-	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
-	free (res);
+	ಆದರೆ (ಗಾತ್ರ_2 < j)
+	  j = ಗಾತ್ರ_2;
+	TEST_COMPARE_BLOB (res, j, (ಅಕ್ಷರ *) (p1 + align1), j);
+	ಬಿಡುಗಡೆ (res);
     }
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%28s", "");
-  printf ("\t%s", "strndup");
-  putchar ('\n');
+  ಬರೆ ("%28s", "");
+  ಬರೆ ("\t%s", "strndup");
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (i = 1; i < 8; ++i)
+  ಗಾಗಿ (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, 127);
       do_test (i, i, 16, 16, CHAR_MAX);
@@ -184,7 +184,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, CHAR_MAX);
     }
 
-  for (i = 1; i < 8; ++i)
+  ಗಾಗಿ (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, 127);
       do_test (0, 0, 16 << i, 8 << i, 127);
@@ -193,8 +193,8 @@ test_main (void)
     }
 
   do_random_tests ();
-  do_page_tests ();
-  return ret;
+  do_ಪುಟ_tests ();
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

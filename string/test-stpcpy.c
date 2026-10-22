@@ -16,46 +16,46 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRCPY_RESULT(dst, len) ((dst) + (len))
-#define TEST_MAIN
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನಿಸು STRCPY_ಫಲಿತಾಂಶ(dst, len) ((dst) + (len))
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define TEST_NAME "stpcpy"
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define TEST_NAME "wcpcpy"
-#endif /* !WIDE */
-#include "test-string.h"
-#ifndef WIDE
-# define CHAR char
+#ಆದರೆ_ಅಂತ್ಯ /* !WIDE */
+#ಅನ್ತರ್ಭಾವ "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
+# define CHAR ಅಕ್ಷರ
 # define STPCPY stpcpy
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <wchar.h>
 # define CHAR wchar_t
 # define STPCPY wcpcpy
-#endif /* !WIDE */
+#ಆದರೆ_ಅಂತ್ಯ /* !WIDE */
 
 IMPL (STPCPY, 1)
 
 /* Also check the generic implementation.  */
-#undef STPCPY
-#undef weak_alias
-#define weak_alias(a, b)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು STPCPY
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು weak_alias
+#ವ್ಯಾಖ್ಯಾನಿಸು weak_alias(a, b)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_def(a)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_builtin_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_builtin_def(a)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು attribute_hidden
+#ವ್ಯಾಖ್ಯಾನಿಸು attribute_hidden
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ WIDE
 # define STPCPY __stpcpy_default
 # include "string/stpcpy.c"
 IMPL (__stpcpy_default, 1)
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define __wcslen wcslen
 # define __wmemcpy wmemcpy
 # define WCPCPY __wcpcpy_default
 # include "wcsmbs/wcpcpy.c"
 IMPL (__wcpcpy_default, 1)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#undef CHAR
-#include "test-strcpy.c"
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು CHAR
+#ಅನ್ತರ್ಭಾವ "test-strcpy.c"

@@ -17,8 +17,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define USE_IN_EXTENDED_LOCALE_MODEL	1
-#include "strncase.c"
+#ವ್ಯಾಖ್ಯಾನಿಸು USE_ಒಳ_EXTENDED_LOCALE_MODEL	1
+#ಅನ್ತರ್ಭಾವ "strncase.c"
 
 libc_hidden_def (__strncasecmp_l)
 weak_alias (__strncasecmp_l, strncasecmp_l)

@@ -16,137 +16,137 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "strcasestr"
-#include "test-string.h"
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_MAIN
+#ವ್ಯಾಖ್ಯಾನಿಸು TEST_NAME "strcasestr"
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
 
-#define STRCASESTR c_strcasestr
-#define NO_ALIAS
-#define __strncasecmp strncasecmp
-#define __strnlen strnlen
-#include "strcasestr.c"
+#ವ್ಯಾಖ್ಯಾನಿಸು STRCASESTR c_strcasestr
+#ವ್ಯಾಖ್ಯಾನಿಸು NO_ALIAS
+#ವ್ಯಾಖ್ಯಾನಿಸು __strncasecmp strncasecmp
+#ವ್ಯಾಖ್ಯಾನಿಸು __strnlen strnlen
+#ಅನ್ತರ್ಭಾವ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+ಸ್ಥಿರ ಅಕ್ಷರ *
+simple_strcasestr (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s2)
 {
-  ssize_t s1len = strlen (s1);
-  ssize_t s2len = strlen (s2);
+  ssize_t s1len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (s1);
+  ssize_t s2len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ಆದರೆ (s2len > s1len)
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  ಗಾಗಿ (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      ಗಾಗಿ (j = 0; j < s2len; ++j)
+	ಆದರೆ (tolower (s1[i + j]) != tolower (s2[j]))
+	  ನಿಲ್ಲಿಸು;
+      ಆದರೆ (j == s2len)
+	ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) s1 + i;
     }
 
-  return NULL;
+  ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ ಅಕ್ಷರ *(*proto_t) (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+check_ಫಲಿತಾಂಶ (impl_t *impl, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s2,
+	      ಅಕ್ಷರ *exp_ಫಲಿತಾಂಶ)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  ಅಕ್ಷರ *ಫಲಿತಾಂಶ = CALL (impl, s1, s2);
+  ಆದರೆ (ಫಲಿತಾಂಶ != exp_ಫಲಿತಾಂಶ)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (ಫಲಿತಾಂಶ == ಖಾಲಿ) ? "(null)" : ಫಲಿತಾಂಶ,
+	     (exp_ಫಲಿತಾಂಶ == ಖಾಲಿ) ? "(null)" : exp_ಫಲಿತಾಂಶ);
       ret = 1;
-      return -1;
+      ಹಿಂತಿರುಗಿ -1;
     }
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s2, ಅಕ್ಷರ *exp_ಫಲಿತಾಂಶ)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ಆದರೆ (check_ಫಲಿತಾಂಶ (impl, s1, s2, exp_ಫಲಿತಾಂಶ) < 0)
+    ಹಿಂತಿರುಗಿ;
 }
 
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 ಪೂರ್ಣಾಂಕ fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  ಅಕ್ಷರ *s1 = (ಅಕ್ಷರ *) (buf1 + align1);
+  ಅಕ್ಷರ *s2 = (ಅಕ್ಷರ *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ d[] = "1234567890abcxyz";
+#ವ್ಯಾಖ್ಯಾನಿಸು dl (ಗಾತ್ರ (d) - 1)
+  ಅಕ್ಷರ *ss2 = s2;
+  ಗಾಗಿ (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ಆದರೆ (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      ಅಕ್ಷರ *ss1 = s1;
+      ಗಾಗಿ (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
-	  memcpy (ss1, d, t);
+	  ಸ್ಮರಣೆ_ನಕಲು (ss1, d, t);
 	  ++ss1[len2 > 7 ? 7 : len2 - 1];
 	  ss1 += t;
 	}
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
-	s1[len1 - len2 + i] = toupper (s2[i]);
+      ಗಾಗಿ (size_t i = 0; i < len2; ++i)
+	s1[len1 - len2 + i] = ದೊಡ್ಡ_ಅಕ್ಷರ (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? ಖಾಲಿ : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check1 (ಶೂನ್ಯ)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ s1[] = "AOKB";
+  ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ s2[] = "OK";
+  ಅಕ್ಷರ *exp_ಫಲಿತಾಂಶ;
 
-  exp_result = simple_strcasestr (s1, s2);
+  exp_ಫಲಿತಾಂಶ = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_ಫಲಿತಾಂಶ (impl, s1, s2, exp_ಫಲಿತಾಂಶ);
 }
 
-static int
-test_main (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   test_init ();
 
   check1 ();
 
-  printf ("%23s", "");
+  ಬರೆ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  ಗಾಗಿ (size_t klen = 2; klen < 32; ++klen)
+    ಗಾಗಿ (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -185,10 +185,10 @@ test_main (void)
 	do_test (15, 15, hlen, klen, 1);
       }
 
-  do_test (0, 0, page_size - 1, 16, 0);
-  do_test (0, 0, page_size - 1, 16, 1);
+  do_test (0, 0, ಪುಟ_ಗಾತ್ರ - 1, 16, 0);
+  do_test (0, 0, ಪುಟ_ಗಾತ್ರ - 1, 16, 1);
 
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

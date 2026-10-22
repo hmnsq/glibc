@@ -1,57 +1,57 @@
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#undef __USE_STRING_INLINES
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ಸ್ಥಿರ ಸ್ಥಿರಾಂಕ size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
-  size_t base;
+  ಅಕ್ಷರ basebuf[24 + 32];
+  size_t ತಳ;
 
-  for (base = 0; base < 32; ++base)
+  ಗಾಗಿ (ತಳ = 0; ತಳ < 32; ++ತಳ)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      ಅಕ್ಷರ *buf = basebuf + ತಳ;
+      size_t ಪದಗಳು;
 
-      for (words = 0; words < 4; ++words)
+      ಗಾಗಿ (ಪದಗಳು = 0; ಪದಗಳು < 4; ++ಪದಗಳು)
 	{
-	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  size_t ಕೊನೆಯ;
+	  memset (buf, 'a', ಪದಗಳು * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  ಗಾಗಿ (ಕೊನೆಯ = 0; ಕೊನೆಯ < 16; ++ಕೊನೆಯ)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[ಪದಗಳು * 4 + 0] = (ಕೊನೆಯ & 1) != 0 ? 'b' : '\0';
+	      buf[ಪದಗಳು * 4 + 1] = (ಕೊನೆಯ & 2) != 0 ? 'c' : '\0';
+	      buf[ಪದಗಳು * 4 + 2] = (ಕೊನೆಯ & 4) != 0 ? 'd' : '\0';
+	      buf[ಪದಗಳು * 4 + 3] = (ಕೊನೆಯ & 8) != 0 ? 'e' : '\0';
+	      buf[ಪದಗಳು * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      ಆದರೆ (ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (buf) != ಪದಗಳು * 4 + lens[ಕೊನೆಯ])
 		{
-		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  ಬರೆ ("\
+ಅಕ್ಷರಸರಣಿ_ಉದ್ದ failed ಗಾಗಿ ತಳ=%zu, ಪದಗಳು=%zu, and ಕೊನೆಯ=%zu (is %zd, expected %zd)\n",
+			  ತಳ, ಪದಗಳು, ಕೊನೆಯ,
+			  ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (buf), ಪದಗಳು * 4 + lens[ಕೊನೆಯ]);
+		  ಹಿಂತಿರುಗಿ 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      ಆದರೆ (strnlen (buf, -1) != ಪದಗಳು * 4 + lens[ಕೊನೆಯ])
 		{
-		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  ಬರೆ ("\
+strnlen failed ಗಾಗಿ ತಳ=%zu, ಪದಗಳು=%zu, and ಕೊನೆಯ=%zu (is %zd, expected %zd)\n",
+			  ತಳ, ಪದಗಳು, ಕೊನೆಯ,
+			  strnlen (buf, -1), ಪದಗಳು * 4 + lens[ಕೊನೆಯ]);
+		  ಹಿಂತಿರುಗಿ 1;
 		}
 	    }
 	}
     }
-  return 0;
+  ಹಿಂತಿರುಗಿ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

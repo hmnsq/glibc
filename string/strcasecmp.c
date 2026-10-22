@@ -15,53 +15,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#include <ctype.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <ctype.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#ifndef _LIBC
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_ಒಳ_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ USE_ಒಳ_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#ಇಲ್ಲದಿದ್ದರೆ
 # define LOCALE_PARAM
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+ಪೂರ್ಣಾಂಕ
+__strcasecmp (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s1, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#ಆದರೆ defined _LIBC && !defined USE_ಒಳ_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#ಆದರೆ_ಅಂತ್ಯ
+  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p1 = (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) s1;
+  ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *p2 = (ಸ್ಥಿರಾಂಕ ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ *) s2;
+  ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ;
 
-  if (p1 == p2)
-    return 0;
+  ಆದರೆ (p1 == p2)
+    ಹಿಂತಿರುಗಿ 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  ಆಗ ((ಫಲಿತಾಂಶ = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    ಆದರೆ (*p1++ == '\0')
+      ನಿಲ್ಲಿಸು;
 
-  return result;
+  ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
 }
-#ifndef __strcasecmp
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ __strcasecmp
 libc_hidden_def (__strcasecmp)
 weak_alias (__strcasecmp, strcasecmp)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

@@ -16,7 +16,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef WIDE
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ WIDE
 # include <wchar.h>
 # define CHAR wchar_t
 # define UCHAR wchar_t
@@ -26,44 +26,44 @@
 # define STRCMP wcscmp
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
-#else
-# define CHAR char
-# define UCHAR unsigned char
+#ಇಲ್ಲದಿದ್ದರೆ
+# define CHAR ಅಕ್ಷರ
+# define UCHAR ಚಿಹ್ನೆರಹಿತ ಅಕ್ಷರ
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
 # define STRCMP strcmp
 # define MEMCMP memcmp
 # define MEMSET memset
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-#ifndef STRCPY_RESULT
-# define STRCPY_RESULT(dst, len) dst
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ STRCPY_ಫಲಿತಾಂಶ
+# define STRCPY_ಫಲಿತಾಂಶ(dst, len) dst
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strcpy"
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define TEST_NAME "wcscpy"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRCPY strcpy
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define STRCPY wcscpy
 # endif
 
 IMPL (STRCPY, 1)
 
 /* Also check the generic implementation.  */
-#undef STRCPY
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef weak_alias
-#define weak_alias(a,b)
-#undef attribute_hidden
-#define attribute_hidden
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು STRCPY
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_builtin_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_builtin_def(a)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು libc_hidden_def
+#ವ್ಯಾಖ್ಯಾನಿಸು libc_hidden_def(a)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು weak_alias
+#ವ್ಯಾಖ್ಯಾನಿಸು weak_alias(a,b)
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು attribute_hidden
+#ವ್ಯಾಖ್ಯಾನಿಸು attribute_hidden
 # ifndef WIDE
 #  define STPCPY __stpcpy_default
 #  include "string/stpcpy.c"
@@ -71,41 +71,41 @@ IMPL (STRCPY, 1)
 #  define __stpcpy __stpcpy_default
 #  include "string/strcpy.c"
 IMPL (__strcpy_default, 1)
-# else
+# ಇಲ್ಲದಿದ್ದರೆ
 #  define __wcslen wcslen
 #  define __wmemcpy wmemcpy
 #  define WCSCPY __wcscpy_default
 #  include "wcsmbs/wcscpy.c"
 IMPL (__wcscpy_default, 1)
 # endif
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-typedef CHAR *(*proto_t) (CHAR *, const CHAR *);
+ಪ್ರಕಾರವ್ಯಾಖ್ಯೆ CHAR *(*proto_t) (CHAR *, ಸ್ಥಿರಾಂಕ CHAR *);
 
-static void
-do_one_test (impl_t *impl, CHAR *dst, const CHAR *src,
-	     size_t len __attribute__((unused)))
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, CHAR *dst, ಸ್ಥಿರಾಂಕ CHAR *src,
+	     size_t len __attribute__((ಬಳಸದ)))
 {
-  if (CALL (impl, dst, src) != STRCPY_RESULT (dst, len))
+  ಆದರೆ (CALL (impl, dst, src) != STRCPY_ಫಲಿತಾಂಶ (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-	     CALL (impl, dst, src), STRCPY_RESULT (dst, len));
+	     CALL (impl, dst, src), STRCPY_ಫಲಿತಾಂಶ (dst, len));
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 
-  if (STRCMP (dst, src) != 0)
+  ಆದರೆ (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     impl->name, dst, src);
       ret = 1;
-      return;
+      ಹಿಂತಿರುಗಿ;
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_test (size_t align1, size_t align2, size_t len, ಪೂರ್ಣಾಂಕ max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -113,17 +113,17 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ಆದರೆ ((align1 + len) * ಗಾತ್ರ (CHAR) >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ಆದರೆ ((align2 + len) * ಗಾತ್ರ (CHAR) >= ಪುಟ_ಗಾತ್ರ)
+    ಹಿಂತಿರುಗಿ;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len; i++)
+  ಗಾಗಿ (i = 0; i < len; i++)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
@@ -131,15 +131,15 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
     do_one_test (impl, s2, s1, len);
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
   size_t i, j, n, align1, align2, len;
-  UCHAR *p1 = (UCHAR *) (buf1 + page_size) - 512;
-  UCHAR *p2 = (UCHAR *) (buf2 + page_size) - 512;
+  UCHAR *p1 = (UCHAR *) (buf1 + ಪುಟ_ಗಾತ್ರ) - 512;
+  UCHAR *p2 = (UCHAR *) (buf2 + ಪುಟ_ಗಾತ್ರ) - 512;
   UCHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಗಾಗಿ (n = 0; n < ITERATIONS; n++)
     {
       /* For wcsrchr: align1 and align2 here mean align not in bytes,
 	 but in wchar_ts, in bytes it will equal to align * (sizeof
@@ -147,28 +147,28 @@ do_random_tests (void)
 	 0 to 63 since some assembly implementations have separate
 	 prolog for alignments more 48. */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / ಗಾತ್ರ (CHAR));
+      ಆದರೆ (random () & 1)
+	align2 = random () & (63 / ಗಾತ್ರ (CHAR));
+      ಇಲ್ಲದಿದ್ದರೆ
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      ಆದರೆ (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      ಆದರೆ (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      ಆದರೆ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      ಗಾಗಿ (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ಆದರೆ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  ಇಲ್ಲದಿದ್ದರೆ
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      ಆದರೆ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -177,34 +177,34 @@ do_random_tests (void)
 	{
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = (UCHAR *) CALL (impl, (CHAR *) (p2 + align2), (CHAR *) (p1 + align1));
-	  if (res != STRCPY_RESULT (p2 + align2, len))
+	  ಆದರೆ (res != STRCPY_ಫಲಿತಾಂಶ (p2 + align2, len))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res,
-		     STRCPY_RESULT (p2 + align2, len));
+		     STRCPY_ಫಲಿತಾಂಶ (p2 + align2, len));
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  ಗಾಗಿ (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ಆದರೆ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ನಿಲ್ಲಿಸು;
 		}
 	    }
-	  for (j = align2 + len + 1; j < 512; ++j)
+	  ಗಾಗಿ (j = align2 + len + 1; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ಆದರೆ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ನಿಲ್ಲಿಸು;
 		}
 	    }
-	  if (MEMCMP (p1 + align1, p2 + align2, len + 1))
+	  ಆದರೆ (MEMCMP (p1 + align1, p2 + align2, len + 1))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -214,19 +214,19 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಂಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%23s", "");
+  ಬರೆ ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    ಬರೆ ("\t%s", impl->name);
+  ಅಕ್ಷರ_ಬರೆ ('\n');
 
-  for (i = 0; i < 16; ++i)
+  ಗಾಗಿ (i = 0; i < 16; ++i)
     {
       do_test (0, 0, i, SMALL_CHAR);
       do_test (0, 0, i, BIG_CHAR);
@@ -234,13 +234,13 @@ test_main (void)
       do_test (i, 0, i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  ಗಾಗಿ (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, SMALL_CHAR);
       do_test (8 - i, 2 * i, 8 << i, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  ಗಾಗಿ (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, SMALL_CHAR);
       do_test (2 * i, i, 8 << i, BIG_CHAR);
@@ -249,7 +249,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ಹಿಂತಿರುಗಿ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

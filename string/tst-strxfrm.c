@@ -1,73 +1,73 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <locale.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
 
-char const string[] = "";
+ಅಕ್ಷರ ಸ್ಥಿರಾಂಕ string[] = "";
 
 
-static int
-test (const char *locale)
+ಸ್ಥಿರ ಪೂರ್ಣಾಂಕ
+test (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  ಅಕ್ಷರ *buf;
   locale_t loc;
-  int result = 0;
+  ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  ಆದರೆ (setlocale (LC_COLLATE, locale) == ಖಾಲಿ)
     {
-      printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      ಬರೆ ("cannot set locale \"%s\"\n", locale);
+      ಹಿಂತಿರುಗಿ 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
-  buf = malloc (bufsize);
-  if (buf == NULL)
+  bufsize = strxfrm (ಖಾಲಿ, string, 0) + 1;
+  buf = ಸ್ಮರಣೆ_ಕೊಡು (bufsize);
+  ಆದರೆ (buf == ಖಾಲಿ)
     {
-      printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      ಬರೆ ("cannot allocate %zd bytes\n", bufsize);
+      ಹಿಂತಿರುಗಿ 1;
     }
   r = strxfrm (buf, string, bufsize);
-  l = strlen (buf);
-  if (r != l)
+  l = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (buf);
+  ಆದರೆ (r != l)
     {
-       printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
+       ಬರೆ ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       ಫಲಿತಾಂಶ = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, ಖಾಲಿ);
 
   r = strxfrm_l (buf, string, bufsize, loc);
-  l = strlen (buf);
-  if (r != l)
+  l = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (buf);
+  ಆದರೆ (r != l)
     {
-       printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
+       ಬರೆ ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       ಫಲಿತಾಂಶ = 1;
     }
 
   freelocale (loc);
 
-  free (buf);
+  ಬಿಡುಗಡೆ (buf);
 
-  return result;
+  ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
 }
 
 
-int
-do_test (void)
+ಪೂರ್ಣಾಂಕ
+do_test (ಶೂನ್ಯ)
 {
-  int result = 0;
+  ಪೂರ್ಣಾಂಕ ಫಲಿತಾಂಶ = 0;
 
-  result |= test ("C");
-  result |= test ("en_US.ISO-8859-1");
-  result |= test ("de_DE.UTF-8");
+  ಫಲಿತಾಂಶ |= test ("C");
+  ಫಲಿತಾಂಶ |= test ("en_US.ISO-8859-1");
+  ಫಲಿತಾಂಶ |= test ("de_DE.UTF-8");
 
-  return result;
+  ಹಿಂತಿರುಗಿ ಫಲಿತಾಂಶ;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

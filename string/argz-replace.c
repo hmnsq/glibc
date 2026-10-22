@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+ಸ್ಥಿರ ಶೂನ್ಯ
+str_append (ಅಕ್ಷರ **ಗಮ್ಯ, size_t *ಗಮ್ಯ_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *buf, ಸ್ಥಿರಾಂಕ size_t buf_len)
 {
-  size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  size_t new_len = *ಗಮ್ಯ_len + buf_len;
+  ಅಕ್ಷರ *new_ಗಮ್ಯ = realloc (*ಗಮ್ಯ, new_len + 1);
 
-  if (new_to)
+  ಆದರೆ (new_ಗಮ್ಯ)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
-      *to = new_to;
-      *to_len = new_len;
+      *((ಅಕ್ಷರ *) __mempcpy (new_ಗಮ್ಯ + *ಗಮ್ಯ_len, buf, buf_len)) = '\0';
+      *ಗಮ್ಯ = new_ಗಮ್ಯ;
+      *ಗಮ್ಯ_len = new_len;
     }
-  else
+  ಇಲ್ಲದಿದ್ದರೆ
     {
-      free (*to);
-      *to = NULL;
+      ಬಿಡುಗಡೆ (*ಗಮ್ಯ);
+      *ಗಮ್ಯ = ಖಾಲಿ;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (ಅಕ್ಷರ **argz, size_t *argz_len, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *str, ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *with,
+		ಚಿಹ್ನೆರಹಿತ *replace_ಎಣಿಕೆ)
 {
   error_t err = 0;
 
-  if (str && *str)
+  ಆದರೆ (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      ಅಕ್ಷರ *arg = ಖಾಲಿ;
+      ಅಕ್ಷರ *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      ಅಕ್ಷರ *dst = ಖಾಲಿ;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
-      size_t str_len = strlen (str), with_len = strlen (with);
+      ಪೂರ್ಣಾಂಕ delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      size_t str_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (str), with_len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      ಆಗ (!err && (arg = argz_ಮುಂದಿನ (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  ಅಕ್ಷರ *ಹೊಂದಿಕೆ = ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (arg, str);
+	  ಆದರೆ (ಹೊಂದಿಕೆ)
 	    {
-	      char *from = match + str_len;
-	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      ಅಕ್ಷರ *from = ಹೊಂದಿಕೆ + str_len;
+	      size_t ಗಮ್ಯ_len = ಹೊಂದಿಕೆ - arg;
+	      ಅಕ್ಷರ *ಗಮ್ಯ = __strndup (arg, ಗಮ್ಯ_len);
 
-	      while (to && from)
+	      ಆಗ (ಗಮ್ಯ && from)
 		{
-		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  str_append (&ಗಮ್ಯ, &ಗಮ್ಯ_len, with, with_len);
+		  ಆದರೆ (ಗಮ್ಯ)
 		    {
-		      match = strstr (from, str);
-		      if (match)
+		      ಹೊಂದಿಕೆ = ಅಕ್ಷರಸರಣಿ_ಹುಡುಕು (from, str);
+		      ಆದರೆ (ಹೊಂದಿಕೆ)
 			{
-			  str_append (&to, &to_len, from, match - from);
-			  from = match + str_len;
+			  str_append (&ಗಮ್ಯ, &ಗಮ್ಯ_len, from, ಹೊಂದಿಕೆ - from);
+			  from = ಹೊಂದಿಕೆ + str_len;
 			}
-		      else
+		      ಇಲ್ಲದಿದ್ದರೆ
 			{
-			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  str_append (&ಗಮ್ಯ, &ಗಮ್ಯ_len, from, ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (from));
+			  from = ಖಾಲಿ;
 			}
 		    }
 		}
 
-	      if (to)
+	      ಆದರೆ (ಗಮ್ಯ)
 		{
-		  if (delayed_copy)
+		  ಆದರೆ (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      ಆದರೆ (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
-		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  ಆದರೆ (! err)
+		    err = __argz_add (&dst, &dst_len, ಗಮ್ಯ);
+		  ಬಿಡುಗಡೆ (ಗಮ್ಯ);
 		}
-	      else
+	      ಇಲ್ಲದಿದ್ದರೆ
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      ಆದರೆ (replace_ಎಣಿಕೆ)
+		(*replace_ಎಣಿಕೆ)++;
 	    }
-	  else if (! delayed_copy)
+	  ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      ಆದರೆ (! err)
 	{
-	  if (! delayed_copy)
+	  ಆದರೆ (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      ಬಿಡುಗಡೆ (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      ಇಲ್ಲದಿದ್ದರೆ ಆದರೆ (dst_len > 0)
+	ಬಿಡುಗಡೆ (dst);
     }
 
-  return err;
+  ಹಿಂತಿರುಗಿ err;
 }
 weak_alias (__argz_replace, argz_replace)

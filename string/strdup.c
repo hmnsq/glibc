@@ -15,40 +15,40 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ HAVE_CONFIG_H
+#ಅನ್ತರ್ಭಾವ <config.h>
+#ಆದರೆ_ಅಂತ್ಯ
 
-#if defined _LIBC || defined  STDC_HEADERS
+#ಆದರೆ defined _LIBC || defined  STDC_ಶೀರ್ಷಿಕೆಗಳು
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
-#endif
+#ಇಲ್ಲದಿದ್ದರೆ
+ಅಕ್ಷರ *ಸ್ಮರಣೆ_ಕೊಡು ();
+ಅಕ್ಷರ *ಸ್ಮರಣೆ_ನಕಲು ();
+#ಆದರೆ_ಅಂತ್ಯ
 
-#undef __strdup
-#undef strdup
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು __strdup
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು strdup
 
-#ifndef weak_alias
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ weak_alias
 # define __strdup strdup
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+ಅಕ್ಷರ *
+__strdup (ಸ್ಥಿರಾಂಕ ಅಕ್ಷರ *s)
 {
-  size_t len = strlen (s) + 1;
-  void *new = malloc (len);
+  size_t len = ಅಕ್ಷರಸರಣಿ_ಉದ್ದ (s) + 1;
+  ಶೂನ್ಯ *new = ಸ್ಮರಣೆ_ಕೊಡು (len);
 
-  if (new == NULL)
-    return NULL;
+  ಆದರೆ (new == ಖಾಲಿ)
+    ಹಿಂತಿರುಗಿ ಖಾಲಿ;
 
-  return (char *) memcpy (new, s, len);
+  ಹಿಂತಿರುಗಿ (ಅಕ್ಷರ *) ಸ್ಮರಣೆ_ನಕಲು (new, s, len);
 }
-#ifdef libc_hidden_def
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ libc_hidden_def
 libc_hidden_def (__strdup)
-#endif
-#ifdef weak_alias
+#ಆದರೆ_ಅಂತ್ಯ
+#ವ್ಯಾಖ್ಯಾನಿತವಾದರೆ weak_alias
 weak_alias (__strdup, strdup)
-#endif
+#ಆದರೆ_ಅಂತ್ಯ

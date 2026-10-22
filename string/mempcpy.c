@@ -19,20 +19,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define NO_MEMPCPY_STPCPY_REDIRECT
-#include <string.h>
+#ವ್ಯಾಖ್ಯಾನಿಸು NO_MEMPCPY_STPCPY_REDIRECT
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#undef mempcpy
-#undef __mempcpy
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು mempcpy
+#ವ್ಯಾಖ್ಯಾನ_ರದ್ದು __mempcpy
 
-#ifndef MEMPCPY
+#ವ್ಯಾಖ್ಯಾನಿತವಾಗದಿದ್ದರೆ MEMPCPY
 # define MEMPCPY __mempcpy
-#endif
+#ಆದರೆ_ಅಂತ್ಯ
 
-void *
-MEMPCPY (void *dest, const void *src, size_t len)
+ಶೂನ್ಯ *
+MEMPCPY (ಶೂನ್ಯ *dest, ಸ್ಥಿರಾಂಕ ಶೂನ್ಯ *src, size_t len)
 {
-  return memcpy (dest, src, len) + len;
+  ಹಿಂತಿರುಗಿ ಸ್ಮರಣೆ_ನಕಲು (dest, src, len) + len;
 }
 libc_hidden_def (__mempcpy)
 static_weak_alias (__mempcpy, mempcpy)
