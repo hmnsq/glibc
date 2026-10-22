@@ -23,62 +23,62 @@
 /* Make sure we test the optimized inline functions.  */
 #define __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#अन्तर्भाव <errno.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <strings.h>
+#अन्तर्भाव <fcntl.h>
 
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  पूर्णाङ्क status;
+  पूर्णाङ्क errors = 0;
+  वर्ण buf1[1000];
+  वर्ण *cp;
+  वर्ण ch;
 
-  cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  cp = म_नकल (buf1, "hello world");
+  यदि (म_भेद ("hello world", cp++) != 0)
     {
-      puts ("strcmp test 1 failed");
+      माला_दो ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  यदि (म_भेद (cp++, "hello world") != 0)
     {
-      puts ("strcmp test 2 failed");
+      माला_दो ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  यदि (म_अक्षर ("hello world", ch++) == रिक्त)
     {
-      puts ("strchr test 1 failed");
+      माला_दो ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ध्रुव वर्ण * ध्रुव hw = "hello world";
+  यदि (strpbrk (hw, "o") - hw != 4)
     {
-      puts ("strpbrk test 1 failed");
+      माला_दो ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  यदि (errors == 0)
     {
-      status = EXIT_SUCCESS;
-      puts ("No errors.");
+      status = निकास_सफल;
+      माला_दो ("No errors.");
     }
-  else
+  अन्यथा
     {
-      status = EXIT_FAILURE;
-      printf ("%d errors.\n", errors);
+      status = निकास_त्रुटि;
+      म_लिखो ("%d errors.\n", errors);
     }
-  return status;
+  प्रत्यागम status;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

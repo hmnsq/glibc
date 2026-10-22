@@ -15,20 +15,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#undef strncpy
+#undef म_नकलन
 
 #ifndef STRNCPY
- #define STRNCPY strncpy
+ #define STRNCPY म_नकलन
 #endif
 
-char *
-STRNCPY (char *s1, const char *s2, size_t n)
+वर्ण *
+STRNCPY (वर्ण *s1, ध्रुव वर्ण *s2, माप_प्रकार n)
 {
-  size_t size = __strnlen (s2, n);
-  if (size != n)
-    memset (s1 + size, '\0', n - size);
-  return memcpy (s1, s2, size);
+  माप_प्रकार size = __strnlen (s2, n);
+  यदि (size != n)
+    स_रखो (s1 + size, '\0', n - size);
+  प्रत्यागम स_नकल (s1, s2, size);
 }
-libc_hidden_builtin_def (strncpy)
+libc_hidden_builtin_def (म_नकलन)

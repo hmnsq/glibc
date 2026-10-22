@@ -19,23 +19,23 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlen"
-#else
+#अन्यथा
 # define TEST_NAME "wcslen"
 #endif
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 
 #ifndef WIDE
-# define STRLEN strlen
-# define CHAR char
-# define MAX_CHAR CHAR_MAX
-#else
+# define STRLEN म_माप
+# define CHAR वर्ण
+# define MAX_CHAR अक्षर_उच्च
+#अन्यथा
 # include <wchar.h>
 # define STRLEN wcslen
-# define CHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
 # define MAX_CHAR WCHAR_MAX
 #endif
 
-typedef size_t (*proto_t) (const CHAR *);
+प्रकारनिर्देश माप_प्रकार (*proto_t) (ध्रुव CHAR *);
 
 IMPL (STRLEN, 1)
 
@@ -49,38 +49,38 @@ IMPL (STRLEN, 1)
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 IMPL (__strlen_default, 1)
-#else
+#अन्यथा
 # define WCSLEN __wcslen_default
 # include "wcsmbs/wcslen.c"
 IMPL (__wcslen_default, 1)
 #endif
 
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, size_t exp_len)
+स्थिर शून्य
+do_one_test (impl_t *impl, ध्रुव CHAR *s, माप_प्रकार exp_len)
 {
-  size_t len = CALL (impl, s);
-  if (len != exp_len)
+  माप_प्रकार len = CALL (impl, s);
+  यदि (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      प्रत्यागम;
     }
 }
 
-static void
-do_test (size_t align, size_t len)
+स्थिर शून्य
+do_test (माप_प्रकार align, माप_प्रकार len)
 {
-  size_t i;
+  माप_प्रकार i;
 
-  align &= (getpagesize () / sizeof (CHAR)) - 1;
-  if (align + sizeof (CHAR) * len >= page_size)
-    return;
+  align &= (getpagesize () / परिमाण (CHAR)) - 1;
+  यदि (align + परिमाण (CHAR) * len >= page_size)
+    प्रत्यागम;
 
   CHAR *buf = (CHAR *) (buf1);
 
-  for (i = 0; i < len; ++i)
+  प्रति (i = 0; i < len; ++i)
     buf[align + i] = 1 + 11111 * i % MAX_CHAR;
   buf[align + len] = 0;
 
@@ -88,36 +88,36 @@ do_test (size_t align, size_t len)
     do_one_test (impl, (CHAR *) (buf + align), len);
 }
 
-static void
-do_random_tests (void)
+स्थिर शून्य
+do_random_tests (शून्य)
 {
-  size_t i, j, n, align, len;
-  CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  माप_प्रकार i, j, n, align, len;
+  CHAR *p = (CHAR *) (buf1 + page_size - 512 * परिमाण (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  प्रति (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      यदि (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      यदि (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      प्रति (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  यदि (i == len + align)
 	    p[i] = 0;
-	  else
+	  अन्यथा
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      यदि (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align)) != len)
+	यदि (CALL (impl, (CHAR *) (p + align)) != len)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd) %zd != %zd, p %p",
 		   n, impl->name, align, CALL (impl, (CHAR *) (p + align)),
@@ -127,40 +127,40 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+पूर्णाङ्क
+test_main (शून्य)
 {
-  size_t i;
+  माप_प्रकार i;
 
   test_init ();
 
-  printf ("%20s", "");
+  म_लिखो ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
   /* Checking with only 4 * N alignments for wcslen, other alignments are wrong for wchar_t type arrays*/
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
   {
-    do_test (sizeof (CHAR) * i, i);
+    do_test (परिमाण (CHAR) * i, i);
     do_test (0, i);
   }
 
-  for (i = 2; i <= 12; ++i)
+  प्रति (i = 2; i <= 12; ++i)
     {
       do_test (0, 1 << i);
-      do_test (sizeof (CHAR) * 7, 1 << i);
-      do_test (sizeof (CHAR) * i, 1 << i);
-      do_test (sizeof (CHAR) * i, (size_t)((1 << i) / 1.5));
+      do_test (परिमाण (CHAR) * 7, 1 << i);
+      do_test (परिमाण (CHAR) * i, 1 << i);
+      do_test (परिमाण (CHAR) * i, (माप_प्रकार)((1 << i) / 1.5));
     }
 
   /* Test strings near page boundary */
 
-  size_t maxlength = 64 / sizeof (CHAR) - 1;
-  size_t pagesize = getpagesize () / sizeof (CHAR);
+  माप_प्रकार maxlength = 64 / परिमाण (CHAR) - 1;
+  माप_प्रकार pagesize = getpagesize () / परिमाण (CHAR);
 
-  for (i = maxlength ; i > 1; --i)
+  प्रति (i = maxlength ; i > 1; --i)
     {
       /* String stays on the same page.  */
       do_test (pagesize - i, i - 1);
@@ -169,7 +169,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  प्रत्यागम ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

@@ -20,202 +20,202 @@
    that old binaries contain references to them.  */
 
 #define __NO_STRING_INLINES
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#include "shlib-compat.h"
+#अन्तर्भाव "shlib-compat.h"
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
+#यदि SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_25)
 /* These functions were removed from string.h in glibc 2.25.  */
 
-char *
-__old_strtok_r_1c (char *__s, char __sep, char **__nextp)
+वर्ण *
+__old_strtok_r_1c (वर्ण *__s, वर्ण __sep, वर्ण **__nextp)
 {
-  char *__result;
-  if (__s == NULL)
+  वर्ण *__result;
+  यदि (__s == रिक्त)
     __s = *__nextp;
-  while (*__s == __sep)
+  यावत् (*__s == __sep)
     ++__s;
-  __result = NULL;
-  if (*__s != '\0')
+  __result = रिक्त;
+  यदि (*__s != '\0')
     {
       __result = __s++;
-      while (*__s != '\0')
-	if (*__s++ == __sep)
+      यावत् (*__s != '\0')
+	यदि (*__s++ == __sep)
 	  {
 	    __s[-1] = '\0';
-	    break;
+	    भङ्ग;
 	  }
     }
   *__nextp = __s;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
 
-char *
-__old_strsep_1c (char **__s, char __reject)
+वर्ण *
+__old_strsep_1c (वर्ण **__s, वर्ण __reject)
 {
-  char *__retval = *__s;
-  if (__retval != NULL && (*__s = strchr (__retval, __reject)) != NULL)
+  वर्ण *__retval = *__s;
+  यदि (__retval != रिक्त && (*__s = म_अक्षर (__retval, __reject)) != रिक्त)
     *(*__s)++ = '\0';
-  return __retval;
+  प्रत्यागम __retval;
 }
-compat_symbol (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
 
-char *
-__old_strsep_2c (char **__s, char __reject1, char __reject2)
+वर्ण *
+__old_strsep_2c (वर्ण **__s, वर्ण __reject1, वर्ण __reject2)
 {
-  char *__retval = *__s;
-  if (__retval != NULL)
+  वर्ण *__retval = *__s;
+  यदि (__retval != रिक्त)
     {
-      char *__cp = __retval;
-      while (1)
+      वर्ण *__cp = __retval;
+      यावत् (1)
 	{
-	  if (*__cp == '\0')
+	  यदि (*__cp == '\0')
 	    {
-	      __cp = NULL;
-	      break;
+	      __cp = रिक्त;
+	      भङ्ग;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2)
+	  यदि (*__cp == __reject1 || *__cp == __reject2)
 	    {
 	      *__cp++ = '\0';
-	      break;
+	      भङ्ग;
 	    }
 	  ++__cp;
 	}
       *__s = __cp;
     }
-  return __retval;
+  प्रत्यागम __retval;
 }
-compat_symbol (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
 
-char *
-__old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
+वर्ण *
+__old_strsep_3c (वर्ण **__s, वर्ण __reject1, वर्ण __reject2, वर्ण __reject3)
 {
-  char *__retval = *__s;
-  if (__retval != NULL)
+  वर्ण *__retval = *__s;
+  यदि (__retval != रिक्त)
     {
-      char *__cp = __retval;
-      while (1)
+      वर्ण *__cp = __retval;
+      यावत् (1)
 	{
-	  if (*__cp == '\0')
+	  यदि (*__cp == '\0')
 	    {
-	      __cp = NULL;
-	      break;
+	      __cp = रिक्त;
+	      भङ्ग;
 	    }
-	  if (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
+	  यदि (*__cp == __reject1 || *__cp == __reject2 || *__cp == __reject3)
 	    {
 	      *__cp++ = '\0';
-	      break;
+	      भङ्ग;
 	    }
 	  ++__cp;
 	}
       *__s = __cp;
     }
-  return __retval;
+  प्रत्यागम __retval;
 }
-compat_symbol (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
 #endif
 
-#if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
+#यदि SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
 /* These functions were removed from string.h in glibc 2.24.  */
 
-size_t
-__old_strcspn_c1 (const char *__s, int __reject)
+माप_प्रकार
+__old_strcspn_c1 (ध्रुव वर्ण *__s, पूर्णाङ्क __reject)
 {
-  size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject)
+  माप_प्रकार __result = 0;
+  यावत् (__s[__result] != '\0' && __s[__result] != __reject)
     ++__result;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
 
-size_t
-__old_strcspn_c2 (const char *__s, int __reject1, int __reject2)
+माप_प्रकार
+__old_strcspn_c2 (ध्रुव वर्ण *__s, पूर्णाङ्क __reject1, पूर्णाङ्क __reject2)
 {
-  size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  माप_प्रकार __result = 0;
+  यावत् (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2)
     ++__result;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
 
-size_t
-__old_strcspn_c3 (const char *__s, int __reject1, int __reject2,
-	      int __reject3)
+माप_प्रकार
+__old_strcspn_c3 (ध्रुव वर्ण *__s, पूर्णाङ्क __reject1, पूर्णाङ्क __reject2,
+	      पूर्णाङ्क __reject3)
 {
-  size_t __result = 0;
-  while (__s[__result] != '\0' && __s[__result] != __reject1
+  माप_प्रकार __result = 0;
+  यावत् (__s[__result] != '\0' && __s[__result] != __reject1
 	 && __s[__result] != __reject2 && __s[__result] != __reject3)
     ++__result;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
 
-size_t
-__old_strspn_c1 (const char *__s, int __accept)
+माप_प्रकार
+__old_strspn_c1 (ध्रुव वर्ण *__s, पूर्णाङ्क __accept)
 {
-  size_t __result = 0;
+  माप_प्रकार __result = 0;
   /* Please note that __accept never can be '\0'.  */
-  while (__s[__result] == __accept)
+  यावत् (__s[__result] == __accept)
     ++__result;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
 
-size_t
-__old_strspn_c2 (const char *__s, int __accept1, int __accept2)
+माप_प्रकार
+__old_strspn_c2 (ध्रुव वर्ण *__s, पूर्णाङ्क __accept1, पूर्णाङ्क __accept2)
 {
-  size_t __result = 0;
+  माप_प्रकार __result = 0;
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2)
+  यावत् (__s[__result] == __accept1 || __s[__result] == __accept2)
     ++__result;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
 
-size_t
-__old_strspn_c3 (const char *__s, int __accept1, int __accept2,
-		 int __accept3)
+माप_प्रकार
+__old_strspn_c3 (ध्रुव वर्ण *__s, पूर्णाङ्क __accept1, पूर्णाङ्क __accept2,
+		 पूर्णाङ्क __accept3)
 {
-  size_t __result = 0;
+  माप_प्रकार __result = 0;
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (__s[__result] == __accept1 || __s[__result] == __accept2
+  यावत् (__s[__result] == __accept1 || __s[__result] == __accept2
 	 || __s[__result] == __accept3)
     ++__result;
-  return __result;
+  प्रत्यागम __result;
 }
-compat_symbol (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
 
-char *
-__old_strpbrk_c2 (const char *__s, int __accept1, int __accept2)
+वर्ण *
+__old_strpbrk_c2 (ध्रुव वर्ण *__s, पूर्णाङ्क __accept1, पूर्णाङ्क __accept2)
 {
   /* Please note that __accept1 and __accept2 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
+  यावत् (*__s != '\0' && *__s != __accept1 && *__s != __accept2)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  प्रत्यागम *__s == '\0' ? रिक्त : (वर्ण *) (माप_प्रकार) __s;
 }
-compat_symbol (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
 
-char *
-__old_strpbrk_c3 (const char *__s, int __accept1, int __accept2, int __accept3)
+वर्ण *
+__old_strpbrk_c3 (ध्रुव वर्ण *__s, पूर्णाङ्क __accept1, पूर्णाङ्क __accept2, पूर्णाङ्क __accept3)
 {
   /* Please note that __accept1 to __accept3 never can be '\0'.  */
-  while (*__s != '\0' && *__s != __accept1 && *__s != __accept2
+  यावत् (*__s != '\0' && *__s != __accept1 && *__s != __accept2
 	 && *__s != __accept3)
     ++__s;
-  return *__s == '\0' ? NULL : (char *) (size_t) __s;
+  प्रत्यागम *__s == '\0' ? रिक्त : (वर्ण *) (माप_प्रकार) __s;
 }
-compat_symbol (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
 
-# if defined __mc68020__ || defined __s390__ || defined __i386__
+# यदि defined __mc68020__ || defined __s390__ || defined __i386__
 #  define _STRING_INLINE_unaligned 1
-# else
+# अन्यथा
 #  define _STRING_INLINE_unaligned 0
 /* These are a few types we need for the optimizations if we cannot
    use unaligned memory accesses.  */
 #  define __STRING2_COPY_TYPE(N) \
-  typedef struct { unsigned char __arr[N]; }				      \
+  प्रकारनिर्देश संरचना { अचिन्हित वर्ण __arr[N]; }				      \
     __attribute__ ((__packed__)) __STRING2_COPY_ARR##N
 __STRING2_COPY_TYPE (2);
 __STRING2_COPY_TYPE (3);
@@ -227,81 +227,81 @@ __STRING2_COPY_TYPE (8);
 #  undef __STRING2_COPY_TYPE
 # endif
 
-# if _STRING_INLINE_unaligned
-void *
-__old_mempcpy_small (void *__dest1,
-		     char __src0_1, char __src2_1, char __src4_1, char __src6_1,
+# यदि _STRING_INLINE_unaligned
+शून्य *
+__old_mempcpy_small (शून्य *__dest1,
+		     वर्ण __src0_1, वर्ण __src2_1, वर्ण __src4_1, वर्ण __src6_1,
 		     __uint16_t __src0_2, __uint16_t __src4_2,
 		     __uint32_t __src0_4, __uint32_t __src4_4,
-		     size_t __srclen)
+		     माप_प्रकार __srclen)
 {
-  union {
+  सङ्घ {
     __uint32_t __ui;
     __uint16_t __usi;
-    unsigned char __uc;
-    unsigned char __c;
+    अचिन्हित वर्ण __uc;
+    अचिन्हित वर्ण __c;
   } *__u = __dest1;
-  switch ((unsigned int) __srclen)
+  विकल्प ((अचिन्हित पूर्णाङ्क) __srclen)
     {
-    case 1:
+    पक्ष 1:
       __u->__c = __src0_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 2:
+      __u = __extension__ ((शून्य *) __u + 1);
+      भङ्ग;
+    पक्ष 2:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
-      break;
-    case 3:
+      __u = __extension__ ((शून्य *) __u + 2);
+      भङ्ग;
+    पक्ष 3:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((शून्य *) __u + 2);
       __u->__c = __src2_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 4:
+      __u = __extension__ ((शून्य *) __u + 1);
+      भङ्ग;
+    पक्ष 4:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
-      break;
-    case 5:
+      __u = __extension__ ((शून्य *) __u + 4);
+      भङ्ग;
+    पक्ष 5:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__c = __src4_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 6:
+      __u = __extension__ ((शून्य *) __u + 1);
+      भङ्ग;
+    पक्ष 6:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
-      break;
-    case 7:
+      __u = __extension__ ((शून्य *) __u + 2);
+      भङ्ग;
+    पक्ष 7:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((शून्य *) __u + 2);
       __u->__c = __src6_1;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 8:
+      __u = __extension__ ((शून्य *) __u + 1);
+      भङ्ग;
+    पक्ष 8:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__ui = __src4_4;
-      __u = __extension__ ((void *) __u + 4);
-      break;
+      __u = __extension__ ((शून्य *) __u + 4);
+      भङ्ग;
     }
-  return (void *) __u;
+  प्रत्यागम (शून्य *) __u;
 }
 
-# else
+# अन्यथा
 
-void *
-__old_mempcpy_small (void *__dest, char __src1,
+शून्य *
+__old_mempcpy_small (शून्य *__dest, वर्ण __src1,
 		     __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		     __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		     __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
-		     __STRING2_COPY_ARR8 __src8, size_t __srclen)
+		     __STRING2_COPY_ARR8 __src8, माप_प्रकार __srclen)
 {
-  union {
-    char __c;
+  सङ्घ {
+    वर्ण __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -310,103 +310,103 @@ __old_mempcpy_small (void *__dest, char __src1,
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
   } *__u = __dest;
-  switch ((unsigned int) __srclen)
+  विकल्प ((अचिन्हित पूर्णाङ्क) __srclen)
     {
-    case 1:
+    पक्ष 1:
       __u->__c = __src1;
-      break;
-    case 2:
+      भङ्ग;
+    पक्ष 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      भङ्ग;
+    पक्ष 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      भङ्ग;
+    पक्ष 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      भङ्ग;
+    पक्ष 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      भङ्ग;
+    पक्ष 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      भङ्ग;
+    पक्ष 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      भङ्ग;
+    पक्ष 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      भङ्ग;
     }
-  return __extension__ ((void *) __u + __srclen);
+  प्रत्यागम __extension__ ((शून्य *) __u + __srclen);
 }
 # endif
-compat_symbol (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
-char *
-__old_strcpy_small (char *__dest,
+# यदि _STRING_INLINE_unaligned
+वर्ण *
+__old_strcpy_small (वर्ण *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
 		    __uint32_t __src0_4, __uint32_t __src4_4,
-		    size_t __srclen)
+		    माप_प्रकार __srclen)
 {
-  union {
+  सङ्घ {
     __uint32_t __ui;
     __uint16_t __usi;
-    unsigned char __uc;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+    अचिन्हित वर्ण __uc;
+  } *__u = (शून्य *) __dest;
+  विकल्प ((अचिन्हित पूर्णाङ्क) __srclen)
     {
-    case 1:
+    पक्ष 1:
       __u->__uc = '\0';
-      break;
-    case 2:
+      भङ्ग;
+    पक्ष 2:
       __u->__usi = __src0_2;
-      break;
-    case 3:
+      भङ्ग;
+    पक्ष 3:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((शून्य *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 4:
+      भङ्ग;
+    पक्ष 4:
       __u->__ui = __src0_4;
-      break;
-    case 5:
+      भङ्ग;
+    पक्ष 5:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__uc = '\0';
-      break;
-    case 6:
+      भङ्ग;
+    पक्ष 6:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__usi = __src4_2;
-      break;
-    case 7:
+      भङ्ग;
+    पक्ष 7:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((शून्य *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 8:
+      भङ्ग;
+    पक्ष 8:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__ui = __src4_4;
-      break;
+      भङ्ग;
     }
-  return __dest;
+  प्रत्यागम __dest;
 }
 
-# else
+# अन्यथा
 
-char *
-__old_strcpy_small (char *__dest,
+वर्ण *
+__old_strcpy_small (वर्ण *__dest,
 		    __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		    __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		    __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
-		    __STRING2_COPY_ARR8 __src8, size_t __srclen)
+		    __STRING2_COPY_ARR8 __src8, माप_प्रकार __srclen)
 {
-  union {
-    char __c;
+  सङ्घ {
+    वर्ण __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -414,109 +414,109 @@ __old_strcpy_small (char *__dest,
     __STRING2_COPY_ARR6 __sca6;
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  } *__u = (शून्य *) __dest;
+  विकल्प ((अचिन्हित पूर्णाङ्क) __srclen)
     {
-    case 1:
+    पक्ष 1:
       __u->__c = '\0';
-      break;
-    case 2:
+      भङ्ग;
+    पक्ष 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      भङ्ग;
+    पक्ष 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      भङ्ग;
+    पक्ष 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      भङ्ग;
+    पक्ष 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      भङ्ग;
+    पक्ष 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      भङ्ग;
+    पक्ष 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      भङ्ग;
+    पक्ष 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      भङ्ग;
   }
-  return __dest;
+  प्रत्यागम __dest;
 }
 # endif
-compat_symbol (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
 
-# if _STRING_INLINE_unaligned
-char *
-__old_stpcpy_small (char *__dest,
+# यदि _STRING_INLINE_unaligned
+वर्ण *
+__old_stpcpy_small (वर्ण *__dest,
 		    __uint16_t __src0_2, __uint16_t __src4_2,
 		    __uint32_t __src0_4, __uint32_t __src4_4,
-		    size_t __srclen)
+		    माप_प्रकार __srclen)
 {
-  union {
-    unsigned int __ui;
-    unsigned short int __usi;
-    unsigned char __uc;
-    char __c;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  सङ्घ {
+    अचिन्हित पूर्णाङ्क __ui;
+    अचिन्हित लघु पूर्णाङ्क __usi;
+    अचिन्हित वर्ण __uc;
+    वर्ण __c;
+  } *__u = (शून्य *) __dest;
+  विकल्प ((अचिन्हित पूर्णाङ्क) __srclen)
     {
-    case 1:
+    पक्ष 1:
       __u->__uc = '\0';
-      break;
-    case 2:
+      भङ्ग;
+    पक्ष 2:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 3:
+      __u = __extension__ ((शून्य *) __u + 1);
+      भङ्ग;
+    पक्ष 3:
       __u->__usi = __src0_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((शून्य *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 4:
+      भङ्ग;
+    पक्ष 4:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 3);
-      break;
-    case 5:
+      __u = __extension__ ((शून्य *) __u + 3);
+      भङ्ग;
+    पक्ष 5:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__uc = '\0';
-      break;
-    case 6:
+      भङ्ग;
+    पक्ष 6:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 1);
-      break;
-    case 7:
+      __u = __extension__ ((शून्य *) __u + 1);
+      भङ्ग;
+    पक्ष 7:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__usi = __src4_2;
-      __u = __extension__ ((void *) __u + 2);
+      __u = __extension__ ((शून्य *) __u + 2);
       __u->__uc = '\0';
-      break;
-    case 8:
+      भङ्ग;
+    पक्ष 8:
       __u->__ui = __src0_4;
-      __u = __extension__ ((void *) __u + 4);
+      __u = __extension__ ((शून्य *) __u + 4);
       __u->__ui = __src4_4;
-      __u = __extension__ ((void *) __u + 3);
-      break;
+      __u = __extension__ ((शून्य *) __u + 3);
+      भङ्ग;
     }
-  return &__u->__c;
+  प्रत्यागम &__u->__c;
 }
 
-# else
+# अन्यथा
 
-char *
-__old_stpcpy_small (char *__dest,
+वर्ण *
+__old_stpcpy_small (वर्ण *__dest,
 		    __STRING2_COPY_ARR2 __src2, __STRING2_COPY_ARR3 __src3,
 		    __STRING2_COPY_ARR4 __src4, __STRING2_COPY_ARR5 __src5,
 		    __STRING2_COPY_ARR6 __src6, __STRING2_COPY_ARR7 __src7,
-		    __STRING2_COPY_ARR8 __src8, size_t __srclen)
+		    __STRING2_COPY_ARR8 __src8, माप_प्रकार __srclen)
 {
-  union {
-    char __c;
+  सङ्घ {
+    वर्ण __c;
     __STRING2_COPY_ARR2 __sca2;
     __STRING2_COPY_ARR3 __sca3;
     __STRING2_COPY_ARR4 __sca4;
@@ -524,37 +524,37 @@ __old_stpcpy_small (char *__dest,
     __STRING2_COPY_ARR6 __sca6;
     __STRING2_COPY_ARR7 __sca7;
     __STRING2_COPY_ARR8 __sca8;
-  } *__u = (void *) __dest;
-  switch ((unsigned int) __srclen)
+  } *__u = (शून्य *) __dest;
+  विकल्प ((अचिन्हित पूर्णाङ्क) __srclen)
     {
-    case 1:
+    पक्ष 1:
       __u->__c = '\0';
-      break;
-    case 2:
+      भङ्ग;
+    पक्ष 2:
       __extension__ __u->__sca2 = __src2;
-      break;
-    case 3:
+      भङ्ग;
+    पक्ष 3:
       __extension__ __u->__sca3 = __src3;
-      break;
-    case 4:
+      भङ्ग;
+    पक्ष 4:
       __extension__ __u->__sca4 = __src4;
-      break;
-    case 5:
+      भङ्ग;
+    पक्ष 5:
       __extension__ __u->__sca5 = __src5;
-      break;
-    case 6:
+      भङ्ग;
+    पक्ष 6:
       __extension__ __u->__sca6 = __src6;
-      break;
-    case 7:
+      भङ्ग;
+    पक्ष 7:
       __extension__ __u->__sca7 = __src7;
-      break;
-    case 8:
+      भङ्ग;
+    पक्ष 8:
       __extension__ __u->__sca8 = __src8;
-      break;
+      भङ्ग;
   }
-  return __dest + __srclen - 1;
+  प्रत्यागम __dest + __srclen - 1;
 }
 # endif
-compat_symbol (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);
+compat_प्रतीक (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);
 
 #endif

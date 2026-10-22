@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <signal.h>
+#अन्तर्भाव <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#अन्तर्भाव <support/support.h>
+#अन्तर्भाव <support/check.h>
 
-static const struct test_t
+स्थिर ध्रुव संरचना test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  पूर्णाङ्क त्रुटि_सं;
+  ध्रुव वर्ण *abbrev;
+  ध्रुव वर्ण *descr;
 } tests[] =
 {
 #define N_(name)                      name
 #define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
+#अन्तर्भाव <siglist.h>
 #undef init_sig
 };
 
-static int
-do_test (void)
+स्थिर पूर्णाङ्क
+do_test (शून्य)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  प्रति (माप_प्रकार i = 0; i < array_length (tests); i++)
     {
-      TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
-      TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
+      TEST_COMPARE_STRING (sigabbrev_np (tests[i].त्रुटि_सं), tests[i].abbrev);
+      TEST_COMPARE_STRING (sigdescr_np (tests[i].त्रुटि_सं), tests[i].descr);
     }
 
-  return 0;
+  प्रत्यागम 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>
