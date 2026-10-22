@@ -22,11 +22,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#ပေႃး defined _LIBC || defined STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
+#ပေႃးဢမ်ႇ
+var_na *malloc ();
 #endif
 
 #undef __strndup
@@ -36,17 +36,17 @@ char *malloc ();
 # define __strndup strndup
 #endif
 
-char *
-__strndup (const char *s, size_t n)
+var_na *
+__strndup (const var_na *s, size_t n)
 {
   size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  var_na *new = (var_na *) malloc (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  ပေႃး (new == NULL)
+    ပွၵ်ႈ NULL;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  ပွၵ်ႈ (var_na *) memcpy (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strndup)

@@ -20,14 +20,14 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpcpy"
-#else
+#ပေႃးဢမ်ႇ
 # define TEST_NAME "wcpcpy"
 #endif /* !WIDE */
 #include "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR var_na
 # define STPCPY stpcpy
-#else
+#ပေႃးဢမ်ႇ
 # include <wchar.h>
 # define CHAR wchar_t
 # define STPCPY wcpcpy
@@ -49,7 +49,7 @@ IMPL (STPCPY, 1)
 # define STPCPY __stpcpy_default
 # include "string/stpcpy.c"
 IMPL (__stpcpy_default, 1)
-#else
+#ပေႃးဢမ်ႇ
 # define __wcslen wcslen
 # define __wmemcpy wmemcpy
 # define WCPCPY __wcpcpy_default

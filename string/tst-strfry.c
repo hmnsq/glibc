@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+puur_naa_nka
 do_test (void)
 {
-  char str[] = "this is a test";
+  var_na str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  ပွၵ်ႈ 0;
 }
 
 #include <support/test-driver.c>

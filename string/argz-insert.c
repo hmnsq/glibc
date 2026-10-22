@@ -27,36 +27,36 @@
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
 error_t
-__argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+__argz_insert (var_na **argz, size_t *argz_len, var_na *before, const var_na *entry)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  ပေႃး (! before)
+    ပွၵ်ႈ __argz_add (argz, argz_len, entry);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  ပေႃး (before < *argz || before >= *argz + *argz_len)
+    ပွၵ်ႈ EINVAL;
 
-  if (before > *argz)
+  ပေႃး (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    ၶၢဝ်း (before[-1])
       before--;
 
   {
     size_t after_before = *argz_len - (before - *argz);
     size_t entry_len = strlen  (entry) + 1;
     size_t new_argz_len = *argz_len + entry_len;
-    char *new_argz = realloc (*argz, new_argz_len);
+    var_na *new_argz = realloc (*argz, new_argz_len);
 
-    if (new_argz)
+    ပေႃး (new_argz)
       {
 	before = new_argz + (before - *argz);
 	memmove (before + entry_len, before, after_before);
 	memmove (before, entry, entry_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	ပွၵ်ႈ 0;
       }
-    else
-      return ENOMEM;
+    ပေႃးဢမ်ႇ
+      ပွၵ်ႈ ENOMEM;
   }
 }
 weak_alias (__argz_insert, argz_insert)

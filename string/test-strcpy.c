@@ -26,9 +26,9 @@
 # define STRCMP wcscmp
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
-#else
-# define CHAR char
-# define UCHAR unsigned char
+#ပေႃးဢမ်ႇ
+# define CHAR var_na
+# define UCHAR unsigned var_na
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
@@ -42,13 +42,13 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strcpy"
-# else
+# ပေႃးဢမ်ႇ
 #  define TEST_NAME "wcscpy"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRCPY strcpy
-# else
+# ပေႃးဢမ်ႇ
 #  define STRCPY wcscpy
 # endif
 
@@ -71,7 +71,7 @@ IMPL (STRCPY, 1)
 #  define __stpcpy __stpcpy_default
 #  include "string/strcpy.c"
 IMPL (__strcpy_default, 1)
-# else
+# ပေႃးဢမ်ႇ
 #  define __wcslen wcslen
 #  define __wmemcpy wmemcpy
 #  define WCSCPY __wcscpy_default
@@ -86,26 +86,26 @@ static void
 do_one_test (impl_t *impl, CHAR *dst, const CHAR *src,
 	     size_t len __attribute__((unused)))
 {
-  if (CALL (impl, dst, src) != STRCPY_RESULT (dst, len))
+  ပေႃး (CALL (impl, dst, src) != STRCPY_RESULT (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src), STRCPY_RESULT (dst, len));
       ret = 1;
-      return;
+      ပွၵ်ႈ;
     }
 
-  if (STRCMP (dst, src) != 0)
+  ပေႃး (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     impl->name, dst, src);
       ret = 1;
-      return;
+      ပွၵ်ႈ;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+do_test (size_t align1, size_t align2, size_t len, puur_naa_nka max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -113,12 +113,12 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ပေႃး ((align1 + len) * parimaa_na (CHAR) >= page_size)
+    ပွၵ်ႈ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  ပေႃး ((align2 + len) * parimaa_na (CHAR) >= page_size)
+    ပွၵ်ႈ;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
@@ -147,28 +147,28 @@ do_random_tests (void)
 	 0 to 63 since some assembly implementations have separate
 	 prolog for alignments more 48. */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / parimaa_na (CHAR));
+      ပေႃး (random () & 1)
+	align2 = random () & (63 / parimaa_na (CHAR));
+      ပေႃးဢမ်ႇ
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      ပေႃး (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      ပေႃး (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      ပေႃး (j > 512)
 	j = 512;
       for (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ပေႃး (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  ပေႃးဢမ်ႇ
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      ပေႃး (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -177,7 +177,7 @@ do_random_tests (void)
 	{
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = (UCHAR *) CALL (impl, (CHAR *) (p2 + align2), (CHAR *) (p1 + align1));
-	  if (res != STRCPY_RESULT (p2 + align2, len))
+	  ပေႃး (res != STRCPY_RESULT (p2 + align2, len))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res,
@@ -186,25 +186,25 @@ do_random_tests (void)
 	    }
 	  for (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ပေႃး (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
 	  for (j = align2 + len + 1; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ပေႃး (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
-	  if (MEMCMP (p1 + align1, p2 + align2, len + 1))
+	  ပေႃး (MEMCMP (p1 + align1, p2 + align2, len + 1))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -214,7 +214,7 @@ do_random_tests (void)
     }
 }
 
-int
+puur_naa_nka
 test_main (void)
 {
   size_t i;
@@ -249,7 +249,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ပွၵ်ႈ ret;
 }
 
 #include <support/test-driver.c>

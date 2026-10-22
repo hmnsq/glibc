@@ -18,8 +18,8 @@
 
 #include <stdio.h>
 
-const char *
-strerrorname_np (int errnum)
+const var_na *
+strerrorname_np (puur_naa_nka errnum)
 {
-  return __get_errname (errnum);
+  ပွၵ်ႈ __get_errname (errnum);
 }
