@@ -19,8 +19,8 @@
 #include <stdio.h>
 
 const char *
-__strerrordesc_np (int errnum)
+__strerrordesc_np (цяло errnum)
 {
-  return __get_errlist (errnum);
+  върни __get_errlist (errnum);
 }
 weak_alias (__strerrordesc_np, strerrordesc_np)

@@ -21,17 +21,17 @@
 
 void *vp;
 const void *cvp;
-int *ip;
-const int *cip;
+цяло *ip;
+const цяло *cip;
 char *cp;
 const char *ccp;
-int c;
+цяло c;
 size_t sz;
 
 #define CHECK_TYPE(EXPR, TYPE)					\
   _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
 
-static int
+static цяло
 do_test (void)
 {
   /* This is a compilation test.  */
@@ -101,7 +101,7 @@ do_test (void)
   CHECK_TYPE (strstr ((void *) 0, ccp), char *);
   DIAG_POP_NEEDS_COMMENT;
   CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  върни 0;
 }
 
 #include <support/test-driver.c>

@@ -21,13 +21,13 @@
 #include <array_length.h>
 
 const char *
-sigabbrev_np (int signum)
+sigabbrev_np (цяло signum)
 {
   const char *abbrev = NULL;
 
-  if (signum >= 0 && signum <= NSIG
+  ако (signum >= 0 && signum <= NSIG
       && signum < array_length (__sys_sigabbrev))
     abbrev = __sys_sigabbrev[signum];
 
-  return abbrev;
+  върни abbrev;
 }

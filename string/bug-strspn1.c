@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <libc-diag.h>
 
-int
+цяло
 main (void)
 {
   const char *a = "abc";
@@ -19,8 +19,8 @@ main (void)
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strspn (b++, "");
   DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  ако (b != a + 1)
+    върни 1;
 
-  return 0;
+  върни 0;
 }

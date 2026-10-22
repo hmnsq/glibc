@@ -27,7 +27,7 @@
 
 __BEGIN_DECLS
 
-#if __GLIBC_USE (ISOC23)
+#ако __GLIBC_USE (ISOC23)
 # define __STDC_VERSION_STRING_H__ 202311L
 #endif
 
@@ -37,7 +37,7 @@ __BEGIN_DECLS
 #include <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && (__GNUC_PREREQ (4, 4) \
+#ако defined __cplusplus && (__GNUC_PREREQ (4, 4) \
 			    || __glibc_clang_prereq (3, 5))
 # define __CORRECT_ISO_CPP_STRING_H_PROTO
 #endif
@@ -54,25 +54,25 @@ extern void *memmove (void *__dest, const void *__src, size_t __n)
 /* Copy no more than N bytes of SRC to DEST, stopping when C is found.
    Return the position in DEST one byte past where C was copied,
    or NULL if C was not found in the first N bytes of SRC.  */
-#if defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
+#ако defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
 extern void *memccpy (void *__restrict __dest, const void *__restrict __src,
-		      int __c, size_t __n)
+		      цяло __c, size_t __n)
     __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 4));
 #endif /* Misc || X/Open.  */
 
 
 /* Set N bytes of S to C.  */
-extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+extern void *memset (void *__s, цяло __c, size_t __n) __THROW __nonnull ((1));
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
+#ако defined __USE_MISC || __GLIBC_USE (ISOC23)
 /* Like memset, but the compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void *memset_explicit (void *__s, int __c, size_t __n)
+extern void *memset_explicit (void *__s, цяло __c, size_t __n)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
 #endif
 
 /* Compare N bytes of S1 and S2.  */
-extern int memcmp (const void *__s1, const void *__s2, size_t __n)
+extern цяло memcmp (const void *__s1, const void *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare N bytes of S1 and S2.  Return zero if S1 and S2 are equal.
@@ -88,36 +88,36 @@ extern int memcmp (const void *__s1, const void *__s2, size_t __n)
 
    __memcmpeq is declared only for use by compilers.  Programs should
    continue to use memcmp.  */
-extern int __memcmpeq (const void *__s1, const void *__s2, size_t __n)
+extern цяло __memcmpeq (const void *__s1, const void *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Search N bytes of S for C.  */
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
 extern "C++"
 {
-extern void *memchr (void *__s, int __c, size_t __n)
+extern void *memchr (void *__s, цяло __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
-extern const void *memchr (const void *__s, int __c, size_t __n)
+extern const void *memchr (const void *__s, цяло __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
 __extern_always_inline void *
-memchr (void *__s, int __c, size_t __n) __THROW
+memchr (void *__s, цяло __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  върни __builtin_memchr (__s, __c, __n);
 }
 
 __extern_always_inline const void *
-memchr (const void *__s, int __c, size_t __n) __THROW
+memchr (const void *__s, цяло __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  върни __builtin_memchr (__s, __c, __n);
 }
 # endif
 }
-#else
-extern void *memchr (const void *__s, int __c, size_t __n)
+#иначе
+extern void *memchr (const void *__s, цяло __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ако __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define memchr(S, C, N)					\
   __glibc_const_generic (S, const void *, memchr (S, C, N))
 # endif
@@ -127,25 +127,25 @@ extern void *memchr (const void *__s, int __c, size_t __n)
 /* Search in S for C.  This is similar to `memchr' but there is no
    length limit.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *rawmemchr (void *__s, int __c)
+extern "C++" void *rawmemchr (void *__s, цяло __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-extern "C++" const void *rawmemchr (const void *__s, int __c)
+extern "C++" const void *rawmemchr (const void *__s, цяло __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-# else
-extern void *rawmemchr (const void *__s, int __c)
+# иначе
+extern void *rawmemchr (const void *__s, цяло __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Search N bytes of S for the final occurrence of C.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *memrchr (void *__s, int __c, size_t __n)
+extern "C++" void *memrchr (void *__s, цяло __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-extern "C++" const void *memrchr (const void *__s, int __c, size_t __n)
+extern "C++" const void *memrchr (const void *__s, цяло __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-# else
-extern void *memrchr (const void *__s, int __c, size_t __n)
+# иначе
+extern void *memrchr (const void *__s, цяло __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
 # endif
@@ -168,14 +168,14 @@ extern char *strncat (char *__restrict __dest, const char *__restrict __src,
 		      size_t __n) __THROW __nonnull ((1, 2));
 
 /* Compare S1 and S2.  */
-extern int strcmp (const char *__s1, const char *__s2)
+extern цяло strcmp (const char *__s1, const char *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Compare N characters of S1 and S2.  */
-extern int strncmp (const char *__s1, const char *__s2, size_t __n)
+extern цяло strncmp (const char *__s1, const char *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare the collated forms of S1 and S2.  */
-extern int strcoll (const char *__s1, const char *__s2)
+extern цяло strcoll (const char *__s1, const char *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Put a transformation of SRC into no more than N bytes of DEST.  */
 extern size_t strxfrm (char *__restrict __dest,
@@ -187,7 +187,7 @@ extern size_t strxfrm (char *__restrict __dest,
 # include <bits/types/locale_t.h>
 
 /* Compare the collated forms of S1 and S2, using sorting rules from L.  */
-extern int strcoll_l (const char *__s1, const char *__s2, locale_t __l)
+extern цяло strcoll_l (const char *__s1, const char *__s2, locale_t __l)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 /* Put a transformation of SRC into no more than N bytes of DEST,
    using sorting rules from L.  */
@@ -196,7 +196,7 @@ extern size_t strxfrm_l (char *__dest, const char *__src, size_t __n,
      __attr_access ((__write_only__, 1, 3));
 #endif
 
-#if (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
+#ако (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
      || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23))
 /* Duplicate S, returning an identical malloc'd string.  */
 extern char *strdup (const char *__s)
@@ -206,12 +206,12 @@ extern char *strdup (const char *__s)
 /* Return a malloc'd copy of at most N bytes of STRING.  The
    resultant string is terminated even if no null terminator
    appears before STRING[N].  */
-#if defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
+#ако defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
 extern char *strndup (const char *__string, size_t __n)
      __THROW __attribute_malloc__ __nonnull ((1));
 #endif
 
-#if defined __USE_GNU && defined __GNUC__
+#ако defined __USE_GNU && defined __GNUC__
 /* Duplicate S, returning an identical alloca'd string.  */
 # define strdupa(s)							      \
   (__extension__							      \
@@ -238,29 +238,29 @@ extern char *strndup (const char *__string, size_t __n)
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
 extern "C++"
 {
-extern char *strchr (char *__s, int __c)
+extern char *strchr (char *__s, цяло __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
-extern const char *strchr (const char *__s, int __c)
+extern const char *strchr (const char *__s, цяло __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
 __extern_always_inline char *
-strchr (char *__s, int __c) __THROW
+strchr (char *__s, цяло __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  върни __builtin_strchr (__s, __c);
 }
 
 __extern_always_inline const char *
-strchr (const char *__s, int __c) __THROW
+strchr (const char *__s, цяло __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  върни __builtin_strchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strchr (const char *__s, int __c)
+#иначе
+extern char *strchr (const char *__s, цяло __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ако __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strchr(S, C)						\
   __glibc_const_generic (S, const char *, strchr (S, C))
 # endif
@@ -269,29 +269,29 @@ extern char *strchr (const char *__s, int __c)
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
 extern "C++"
 {
-extern char *strrchr (char *__s, int __c)
+extern char *strrchr (char *__s, цяло __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
-extern const char *strrchr (const char *__s, int __c)
+extern const char *strrchr (const char *__s, цяло __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
 __extern_always_inline char *
-strrchr (char *__s, int __c) __THROW
+strrchr (char *__s, цяло __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  върни __builtin_strrchr (__s, __c);
 }
 
 __extern_always_inline const char *
-strrchr (const char *__s, int __c) __THROW
+strrchr (const char *__s, цяло __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  върни __builtin_strrchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strrchr (const char *__s, int __c)
+#иначе
+extern char *strrchr (const char *__s, цяло __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ако __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strrchr(S, C)						\
   __glibc_const_generic (S, const char *, strrchr (S, C))
 # endif
@@ -301,12 +301,12 @@ extern char *strrchr (const char *__s, int __c)
 /* This function is similar to `strchr'.  But it returns a pointer to
    the closing NUL byte in case C is not found in S.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strchrnul (char *__s, int __c)
+extern "C++" char *strchrnul (char *__s, цяло __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-extern "C++" const char *strchrnul (const char *__s, int __c)
+extern "C++" const char *strchrnul (const char *__s, цяло __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-# else
-extern char *strchrnul (const char *__s, int __c)
+# иначе
+extern char *strchrnul (const char *__s, цяло __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 #endif
@@ -332,20 +332,20 @@ extern const char *strpbrk (const char *__s, const char *__accept)
 __extern_always_inline char *
 strpbrk (char *__s, const char *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  върни __builtin_strpbrk (__s, __accept);
 }
 
 __extern_always_inline const char *
 strpbrk (const char *__s, const char *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  върни __builtin_strpbrk (__s, __accept);
 }
 # endif
 }
-#else
+#иначе
 extern char *strpbrk (const char *__s, const char *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ако __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strpbrk(S, ACCEPT)					\
   __glibc_const_generic (S, const char *, strpbrk (S, ACCEPT))
 # endif
@@ -363,20 +363,20 @@ extern const char *strstr (const char *__haystack, const char *__needle)
 __extern_always_inline char *
 strstr (char *__haystack, const char *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  върни __builtin_strstr (__haystack, __needle);
 }
 
 __extern_always_inline const char *
 strstr (const char *__haystack, const char *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  върни __builtin_strstr (__haystack, __needle);
 }
 # endif
 }
-#else
+#иначе
 extern char *strstr (const char *__haystack, const char *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# ако __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strstr(HAYSTACK, NEEDLE)			\
   __glibc_const_generic (HAYSTACK, const char *,	\
 			 strstr (HAYSTACK, NEEDLE))
@@ -408,7 +408,7 @@ extern "C++" char *strcasestr (char *__haystack, const char *__needle)
 extern "C++" const char *strcasestr (const char *__haystack,
 				     const char *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-# else
+# иначе
 extern char *strcasestr (const char *__haystack, const char *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 # endif
@@ -448,7 +448,7 @@ extern size_t strnlen (const char *__string, size_t __maxlen)
 
 
 /* Return a string describing the meaning of the `errno' code in ERRNUM.  */
-extern char *strerror (int __errnum) __THROW;
+extern char *strerror (цяло __errnum) __THROW;
 #ifdef __USE_XOPEN2K
 /* Reentrant version of `strerror'.
    There are 2 flavors of `strerror_r', GNU which returns the string
@@ -457,37 +457,37 @@ extern char *strerror (int __errnum) __THROW;
    To use the POSIX version, -D_XOPEN_SOURCE=600 or -D_POSIX_C_SOURCE=200112L
    without -D_GNU_SOURCE is needed, otherwise the GNU version is
    preferred.  */
-# if defined __USE_XOPEN2K && !defined __USE_GNU
+# ако defined __USE_XOPEN2K && !defined __USE_GNU
 /* Fill BUF with a string describing the meaning of the `errno' code in
    ERRNUM.  */
 #  ifdef __REDIRECT_NTH
-extern int __REDIRECT_NTH (strerror_r,
-			   (int __errnum, char *__buf, size_t __buflen),
+extern цяло __REDIRECT_NTH (strerror_r,
+			   (цяло __errnum, char *__buf, size_t __buflen),
 			   __xpg_strerror_r) __nonnull ((2))
     __attr_access ((__write_only__, 2, 3));
-#  else
-extern int __xpg_strerror_r (int __errnum, char *__buf, size_t __buflen)
+#  иначе
+extern цяло __xpg_strerror_r (цяло __errnum, char *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __attr_access ((__write_only__, 2, 3));
 #   define strerror_r __xpg_strerror_r
 #  endif
-# else
+# иначе
 /* If a temporary buffer is required, at most BUFLEN bytes of BUF will be
    used.  */
-extern char *strerror_r (int __errnum, char *__buf, size_t __buflen)
+extern char *strerror_r (цяло __errnum, char *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __wur  __attr_access ((__write_only__, 2, 3));
 # endif
 
 # ifdef __USE_GNU
 /* Return a string describing the meaning of tthe error in ERR.  */
-extern const char *strerrordesc_np (int __err) __THROW;
+extern const char *strerrordesc_np (цяло __err) __THROW;
 /* Return a string with the error name in ERR.  */
-extern const char *strerrorname_np (int __err) __THROW;
+extern const char *strerrorname_np (цяло __err) __THROW;
 # endif
 #endif
 
 #ifdef __USE_XOPEN2K8
 /* Translate error number to string according to the locale L.  */
-extern char *strerror_l (int __errnum, locale_t __l) __THROW;
+extern char *strerror_l (цяло __errnum, locale_t __l) __THROW;
 #endif
 
 #ifdef __USE_MISC
@@ -507,14 +507,14 @@ extern char *strsep (char **__restrict __stringp,
 
 #ifdef	__USE_XOPEN2K8
 /* Return a string describing the meaning of the signal number in SIG.  */
-extern char *strsignal (int __sig) __THROW;
+extern char *strsignal (цяло __sig) __THROW;
 
 # ifdef __USE_GNU
 /* Return an abbreviation string for the signal number SIG.  */
-extern const char *sigabbrev_np (int __sig) __THROW;
+extern const char *sigabbrev_np (цяло __sig) __THROW;
 /* Return a string describing the meaning of the signal number in SIG,
    the result is not translated.  */
-extern const char *sigdescr_np (int __sig) __THROW;
+extern const char *sigdescr_np (цяло __sig) __THROW;
 # endif
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
@@ -548,7 +548,7 @@ extern size_t strlcat (char *__restrict __dest,
 
 #ifdef	__USE_GNU
 /* Compare S1 and S2 as strings holding name & indices/version numbers.  */
-extern int strverscmp (const char *__s1, const char *__s2)
+extern цяло strverscmp (const char *__s1, const char *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Sautee STRING briskly.  */
@@ -568,14 +568,14 @@ extern "C++" char *basename (char *__filename)
      __THROW __asm ("basename") __nonnull ((1));
 extern "C++" const char *basename (const char *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-#  else
+#  иначе
 extern char *basename (const char *__filename) __THROW __nonnull ((1));
 #  endif
 # endif
 #endif
 
-#if __GNUC_PREREQ (3,4)
-# if __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
+#ако __GNUC_PREREQ (3,4)
+# ако __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
 /* Functions with security checks.  */
 #  include <bits/string_fortified.h>
 # endif

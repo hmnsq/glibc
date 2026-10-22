@@ -20,7 +20,7 @@
 #ifndef WIDE
 # define TEST_NAME "strstr"
 # define TEST_FUNC strstr
-#else
+#иначе
 # define TEST_NAME "wcsstr"
 # define TEST_FUNC wcsstr
 #endif
@@ -33,7 +33,7 @@
 # define MEMSET memset
 # define MEMPCPY mempcpy
 # define L(s) s
-#else
+#иначе
 # include <wchar.h>
 # define CHAR wchar_t
 # define STRLEN wcslen
@@ -55,7 +55,7 @@
 # define __strnlen strnlen
 # include "strstr.c"
 # define C_IMPL STRSTR
-#else
+#иначе
 # undef weak_alias
 # define weak_alias(a, b)
 # define WCSSTR c_wcsstr
@@ -73,20 +73,20 @@ simple_strstr (const CHAR *s1, const CHAR *s2)
   ssize_t s1len = STRLEN (s1);
   ssize_t s2len = STRLEN (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ако (s2len > s1len)
+    върни NULL;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  за (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (s1[i + j] != s2[j])
+      за (j = 0; j < s2len; ++j)
+	ако (s1[i + j] != s2[j])
 	  break;
-      if (j == s2len)
-	return (CHAR *) s1 + i;
+      ако (j == s2len)
+	върни (CHAR *) s1 + i;
     }
 
-  return NULL;
+  върни NULL;
 }
 
 
@@ -95,33 +95,33 @@ typedef CHAR *(*proto_t) (const CHAR *, const CHAR *);
 IMPL (C_IMPL, 1)
 IMPL (TEST_FUNC, 1)
 
-static int
+static цяло
 check_result (impl_t *impl, const CHAR *s1, const CHAR *s2,
 	      CHAR *exp_result)
 {
   CHAR *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  ако (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      върни -1;
     }
 
-  return 0;
+  върни 0;
 }
 
 static void
 do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, CHAR *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ако (check_result (impl, s1, s2, exp_result) < 0)
+    върни;
 }
 
 
 static void
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 цяло fail)
 {
   align1 = align1 * sizeof (CHAR);
   align2 = align2 * sizeof (CHAR);
@@ -132,17 +132,17 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
   static const CHAR d[] = L("1234567890abcdef");
   const size_t dl = STRLEN (d);
   CHAR *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  за (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = MEMPCPY (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ако (fail)
     {
       CHAR *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      за (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  MEMCPY (ss1, d, t);
@@ -150,7 +150,7 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  иначе
     {
       MEMSET (s1, '0', len1);
       MEMCPY (s1 + len1 - len2, s2, len2);
@@ -253,7 +253,7 @@ pr23637 (void)
   CHAR *h = (CHAR*) buf1;
   CHAR *n = (CHAR*) buf2;
 
-  for (int i = 0; i < N; i++)
+  за (цяло i = 0; i < N; i++)
     {
       n[i] = 'x';
       h[i] = ' ';
@@ -413,7 +413,7 @@ pr23865 (void)
   }
 }
 
-static int
+static цяло
 test_main (void)
 {
   test_init ();
@@ -429,8 +429,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  за (size_t klen = 2; klen < 32; ++klen)
+    за (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -475,7 +475,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  върни ret;
 }
 
 #include <support/test-driver.c>

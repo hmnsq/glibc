@@ -27,5 +27,5 @@
 size_t
 STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n)
 {
-  return STRXFRM_L (dest, src, n, _NL_CURRENT_LOCALE);
+  върни STRXFRM_L (dest, src, n, _NL_CURRENT_LOCALE);
 }

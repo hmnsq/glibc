@@ -23,31 +23,31 @@
 #define TEST_NAME "rawmemchr"
 #include "test-string.h"
 
-typedef char *(*proto_t) (const char *, int);
-char *simple_rawmemchr (const char *, int);
+typedef char *(*proto_t) (const char *, цяло);
+char *simple_rawmemchr (const char *, цяло);
 
 IMPL (simple_rawmemchr, 0)
 IMPL (rawmemchr, 1)
 
 char *
-simple_rawmemchr (const char *s, int c)
+simple_rawmemchr (const char *s, цяло c)
 {
-  while (1)
-    if (*s++ == (char) c)
-      return (char *) s - 1;
-  return NULL;
+  докато (1)
+    ако (*s++ == (char) c)
+      върни (char *) s - 1;
+  върни NULL;
 }
 
 static void
-do_one_test (impl_t *impl, const char *s, int c, char *exp_res)
+do_one_test (impl_t *impl, const char *s, цяло c, char *exp_res)
 {
   char *res = CALL (impl, s, c);
-  if (res != exp_res)
+  ако (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      върни;
     }
 }
 
@@ -66,9 +66,9 @@ do_test_bz29234 (void)
   /* Out of range matches before the start of a page. */
   memset (ptr_start - 8, 0x1, 8);
 
-  for (j = 0; j < 8; ++j)
+  за (j = 0; j < 8; ++j)
     {
-      for (i = 0; i < 128; ++i)
+      за (i = 0; i < 128; ++i)
 	{
 	  ptr_start[i + j] = 0x1;
 
@@ -84,19 +84,19 @@ do_test_bz29234 (void)
 }
 
 static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+do_test (size_t align, size_t pos, size_t len, цяло seek_char)
 {
   size_t i;
   char *result;
 
   align &= getpagesize () - 1;
-  if (align + len >= page_size)
-    return;
+  ако (align + len >= page_size)
+    върни;
 
-  for (i = 0; i < len; ++i)
+  за (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      ако (buf1[align + i] == seek_char)
 	buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
@@ -115,53 +115,53 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
+  цяло seek_char;
   char *result;
   unsigned char *p = buf1 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  за (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      ако (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      ако (len + align >= 512)
 	len = 512 - align - (random () & 7);
-      if (pos >= len)
+      ако (pos >= len)
 	continue;
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      ако (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      за (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ако (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  иначе
 	    {
 	      p[i] = random () & 255;
-	      if (i < pos + align && p[i] == seek_char)
+	      ако (i < pos + align && p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (align)
+      ако (align)
 	{
 	  p[align - 1] = seek_char;
-	  if (align > 4)
+	  ако (align > 4)
 	    p[align - 4] = seek_char;
 	}
 
       assert (pos < len);
       size_t r = random ();
-      if ((r & 31) == 0)
+      ако ((r & 31) == 0)
 	len = ~(uintptr_t) (p + align) - ((r >> 5) & 31);
       result = (char *) (p + pos + align);
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char) != result)
+	ако (CALL (impl, (char *) (p + align), seek_char) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
@@ -170,16 +170,16 @@ do_random_tests (void)
 	    ret = 1;
 	  }
 
-      if (align)
+      ако (align)
 	{
 	  p[align - 1] = seek_char;
-	  if (align > 4)
+	  ако (align > 4)
 	    p[align - 4] = seek_char;
 	}
     }
 }
 
-int
+цяло
 test_main (void)
 {
   size_t i;
@@ -191,7 +191,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 7; ++i)
+  за (i = 1; i < 7; ++i)
     {
       do_test (0, 16 << i, 2048, 23);
       do_test (i, 64, 256, 23);
@@ -201,7 +201,7 @@ test_main (void)
       do_test (getpagesize () - i, 64, 256, 23);
       do_test (getpagesize () - i, 64, 256, 0);
     }
-  for (i = 1; i < 32; ++i)
+  за (i = 1; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23);
       do_test (0, i, i + 1, 0);
@@ -213,7 +213,7 @@ test_main (void)
 
   do_random_tests ();
   do_test_bz29234 ();
-  return ret;
+  върни ret;
 }
 
 #include <support/test-driver.c>

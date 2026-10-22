@@ -19,7 +19,7 @@
 #include <stdio.h>
 
 const char *
-strerrorname_np (int errnum)
+strerrorname_np (цяло errnum)
 {
-  return __get_errname (errnum);
+  върни __get_errname (errnum);
 }

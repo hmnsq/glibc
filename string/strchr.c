@@ -26,10 +26,10 @@
 
 /* Find the first occurrence of C in S.  */
 char *
-strchr (const char *s, int c_in)
+strchr (const char *s, цяло c_in)
 {
   char *r = __strchrnul (s, c_in);
-  return (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
+  върни (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
 }
 #ifndef STRCHR
 weak_alias (strchr, index)

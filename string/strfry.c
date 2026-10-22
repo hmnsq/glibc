@@ -23,10 +23,10 @@
 char *
 strfry (char *string)
 {
-  static int init;
+  static цяло init;
   static struct random_data rdata;
 
-  if (!init)
+  ако (!init)
     {
       static char state[32];
       rdata.state = NULL;
@@ -36,8 +36,8 @@ strfry (char *string)
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  ако (len > 0)
+    за (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
@@ -48,5 +48,5 @@ strfry (char *string)
 	string[j] = c;
       }
 
-  return string;
+  върни string;
 }

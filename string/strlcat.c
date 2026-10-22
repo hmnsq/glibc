@@ -27,17 +27,17 @@ __strlcat (char *__restrict dest, const char *__restrict src, size_t size)
   /* Our implementation strlcat supports dest == NULL if size == 0
      (for consistency with snprintf and strlcpy), but strnlen does
      not, so we have to cover this case explicitly.  */
-  if (size == 0)
-    return src_length;
+  ако (size == 0)
+    върни src_length;
 
   size_t dest_length = __strnlen (dest, size);
-  if (dest_length != size)
+  ако (dest_length != size)
     {
       /* Copy at most the remaining number of characters in the
 	 destination buffer.  Leave for the NUL terminator.  */
       size_t to_copy = size - dest_length - 1;
       /* But not more than what is available in the source string.  */
-      if (to_copy > src_length)
+      ако (to_copy > src_length)
 	to_copy = src_length;
 
       char *target = dest + dest_length;
@@ -53,7 +53,7 @@ __strlcat (char *__restrict dest, const char *__restrict src, size_t size)
      undefined.  */
   _Static_assert (sizeof (uintptr_t) == sizeof (size_t),
 		  "theoretical maximum object size covers address space");
-  return dest_length + src_length;
+  върни dest_length + src_length;
 }
 libc_hidden_def (__strlcat)
 weak_alias (__strlcat, strlcat)

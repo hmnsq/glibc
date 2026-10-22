@@ -40,7 +40,7 @@ typedef __typeof (TEST_IDENTIFIER) *proto_t;
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
+static цяло
 test_main (void)
 {
   enum { buffer_length = 256 };
@@ -83,40 +83,40 @@ test_main (void)
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      за (size_t i = 0; i < buffer_length; ++i)
         buffer[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      за (цяло zero_count = 0; zero_count <= buffer_length; ++zero_count)
         {
-          if (zero_count > 0)
+          ако (zero_count > 0)
             buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
+          цяло a_count = buffer_length - zero_count;
+          за (цяло start_offset = 0; start_offset <= buffer_length;
                ++start_offset)
             {
               CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
+              ако (start_offset == buffer_length)
                 TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
+              иначе ако (zero_count > 0)
+                за (цяло length_argument = 0;
                      length_argument <= 2 * buffer_length;
                      ++length_argument)
                   {
-                    if (test_verbose)
+                    ако (test_verbose)
                       printf ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
                               zero_count, a_count, start_offset,
                               length_argument);
-                    if (start_offset < a_count)
+                    ако (start_offset < a_count)
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
                                     MIN (a_count - start_offset,
                                          length_argument));
-                    else
+                    иначе
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
+              иначе
+                за (цяло length_argument = 0;
                      length_argument <= buffer_length - start_offset;
                      ++length_argument)
                   TEST_COMPARE (CALL (impl, start_pointer, length_argument),
@@ -127,7 +127,7 @@ test_main (void)
 
   support_next_to_fault_free (&ntf);
 
-  return 0;
+  върни 0;
 }
 
 #include <support/test-driver.c>

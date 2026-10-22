@@ -27,10 +27,10 @@
 #include "../locale/localeinfo.h"
 
 
-int
+цяло
 STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2)
 {
-  return STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
+  върни STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
 }
 
 #ifdef USE_HIDDEN_DEF
