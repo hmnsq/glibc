@@ -22,34 +22,34 @@
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (const var_na *string, จำนวนเต็ม delim, var_na **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  ถ้า (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      const var_na *rp;
+      var_na *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (var_na *) malloc (nlen);
+      ถ้า (*argz == NULL)
+	คืน ENOMEM;
 
       rp = string;
       wp = *argz;
       do
-	if (*rp == delim)
+	ถ้า (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ถ้า (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    มิฉะนั้น
 	      --nlen;
 	  }
-	else
+	มิฉะนั้น
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ขณะ (*rp++ != '\0');
 
-      if (nlen == 0)
+      ถ้า (nlen == 0)
 	{
 	  free (*argz);
 	  *argz = NULL;
@@ -58,12 +58,12 @@ __argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 
       *len = nlen;
     }
-  else
+  มิฉะนั้น
     {
       *argz = NULL;
       *len = 0;
     }
 
-  return 0;
+  คืน 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

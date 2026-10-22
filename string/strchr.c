@@ -25,11 +25,11 @@
 #endif
 
 /* Find the first occurrence of C in S.  */
-char *
-strchr (const char *s, int c_in)
+var_na *
+strchr (const var_na *s, จำนวนเต็ม c_in)
 {
-  char *r = __strchrnul (s, c_in);
-  return (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
+  var_na *r = __strchrnul (s, c_in);
+  คืน (*(unsigned var_na *)r == (unsigned var_na)c_in) ? r : NULL;
 }
 #ifndef STRCHR
 weak_alias (strchr, index)

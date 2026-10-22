@@ -31,7 +31,7 @@
 
 #ifndef CHAR
 # define L(c) c
-# define CHAR char
+# define CHAR var_na
 # define MEMSET memset
 # define STRLEN strlen
 # define STRNLEN strnlen
@@ -54,41 +54,41 @@
 #define STRINGIFY2(s) #s
 
 
-int
+จำนวนเต็ม
 do_test (void)
 {
   size_t size = sysconf (_SC_PAGESIZE);
-  size_t nchars = size / sizeof (CHAR);
+  size_t nchars = size / parimaa_na (CHAR);
   CHAR *adr;
   CHAR *dest;
-  int result = 0;
+  จำนวนเต็ม result = 0;
 
   adr = (CHAR *) mmap (NULL, 3 * size, PROT_READ | PROT_WRITE,
 		       MAP_PRIVATE | MAP_ANON, -1, 0);
   dest = (CHAR *) mmap (NULL, 3 * size, PROT_READ | PROT_WRITE,
 			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (adr == MAP_FAILED || dest == MAP_FAILED)
+  ถ้า (adr == MAP_FAILED || dest == MAP_FAILED)
     {
-      if (errno == ENOSYS)
+      ถ้า (errno == ENOSYS)
 	puts ("No test, mmap not available.");
-      else
+      มิฉะนั้น
 	{
 	  printf ("mmap failed: %m");
 	  result = 1;
 	}
     }
-  else
+  มิฉะนั้น
     {
       size_t inner, middle, outer, nchars64, max128;
 
-      if (nchars > 64)
+      ถ้า (nchars > 64)
 	nchars64 = nchars - 64;
-      else
+      มิฉะนั้น
 	nchars64 = 0;
 
-      if (nchars > 128)
+      ถ้า (nchars > 128)
 	max128 = nchars - 128;
-      else
+      มิฉะนั้น
 	max128 = 0;
 
       mprotect (adr, size, PROT_NONE);
@@ -102,13 +102,13 @@ do_test (void)
       MEMSET (adr, L('T'), nchars);
 
       /* strlen/wcslen test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  สำหรับ (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRLEN (&adr[outer]) != (size_t) (inner - outer))
+	      ถ้า (STRLEN (&adr[outer]) != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STRLEN), outer, inner);
@@ -117,18 +117,18 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* strnlen/wcsnlen test */
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  สำหรับ (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRNLEN (&adr[outer], inner - outer + 1)
+	      ถ้า (STRNLEN (&adr[outer], inner - outer + 1)
 		  != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
@@ -138,14 +138,14 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner <= nchars; ++inner)
+	  สำหรับ (inner = MAX (outer, nchars64); inner <= nchars; ++inner)
 	    {
-	      if (STRNLEN (&adr[outer], inner - outer)
+	      ถ้า (STRNLEN (&adr[outer], inner - outer)
 		  != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked bounded for outer = %zu, inner = %zu\n",
@@ -153,23 +153,23 @@ do_test (void)
 		  result = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* strchr/wcschr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  สำหรับ (middle = MAX (outer, nchars64); middle < nchars; ++middle)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      สำหรับ (inner = middle; inner < nchars; ++inner)
 		{
 		  adr[middle] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
+		  ถ้า ((inner == middle && cp != NULL)
 		      || (inner != middle
 			  && (cp - &adr[outer]) != middle - outer))
 		    {
@@ -183,13 +183,13 @@ do_test (void)
 		  adr[middle] = L('T');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* Special test.  */
       adr[nchars - 1] = L('\0');
-      if (STRCHR (&adr[nchars - 1], L('\n')) != NULL)
+      ถ้า (STRCHR (&adr[nchars - 1], L('\n')) != NULL)
 	{
 	  printf ("%s flunked test of empty string at end of page\n",
 		  STRINGIFY (STRCHR));
@@ -197,18 +197,18 @@ do_test (void)
 	}
 
       /* strrchr/wcsrchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  สำหรับ (middle = MAX (outer, nchars64); middle < nchars; ++middle)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      สำหรับ (inner = middle; inner < nchars; ++inner)
 		{
 		  adr[middle] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
+		  ถ้า ((inner == middle && cp != NULL)
 		      || (inner != middle
 			  && (cp - &adr[outer]) != middle - outer))
 		    {
@@ -222,20 +222,20 @@ do_test (void)
 		  adr[middle] = L('T');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* memchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  สำหรับ (middle = MAX (outer, nchars64); middle < nchars; ++middle)
 	    {
 	      adr[middle] = L('V');
 
 	      CHAR *cp = MEMCHR (&adr[outer], L('V'), 3 * size);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      ถ้า (cp - &adr[outer] != middle - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
 			  STRINGIFY (MEMCHR), outer, middle);
@@ -244,35 +244,35 @@ do_test (void)
 
 	      adr[middle] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
 	  CHAR *cp = MEMCHR (&adr[outer], L('V'), nchars - outer);
 
-	  if (cp != NULL)
+	  ถ้า (cp != NULL)
 	    {
 	      printf ("%s flunked for outer = %zu\n",
 		      STRINGIFY (MEMCHR), outer);
 	      result = 1;
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* These functions only exist for single-byte characters.  */
 #ifndef WCSTEST
       /* rawmemchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  สำหรับ (middle = MAX (outer, nchars64); middle < nchars; ++middle)
 	    {
 	      adr[middle] = L('V');
 
 	      CHAR *cp = rawmemchr (&adr[outer], L('V'));
 
-	      if (cp - &adr[outer] != middle - outer)
+	      ถ้า (cp - &adr[outer] != middle - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
 			  STRINGIFY (rawmemchr), outer, middle);
@@ -281,20 +281,20 @@ do_test (void)
 
 	      adr[middle] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* memrchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  สำหรับ (middle = MAX (outer, nchars64); middle < nchars; ++middle)
 	    {
 	      adr[middle] = L('V');
 
 	      CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      ถ้า (cp - &adr[outer] != middle - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
 			  STRINGIFY (memrchr), outer, middle);
@@ -303,32 +303,32 @@ do_test (void)
 
 	      adr[middle] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
 	  CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	  if (cp != NULL)
+	  ถ้า (cp != NULL)
 	    {
 	      printf ("%s flunked for outer = %zu\n",
 		      STRINGIFY (memrchr), outer);
 	      result = 1;
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 #endif
 
       /* strcpy/wcscpy test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  สำหรับ (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRCPY (dest, &adr[outer]) != dest
+	      ถ้า (STRCPY (dest, &adr[outer]) != dest
 		  || STRLEN (dest) != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
@@ -338,27 +338,27 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* strcmp/wcscmp tests */
-      for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+      สำหรับ (outer = 1; outer < 32; ++outer)
+	สำหรับ (middle = 0; middle < 16; ++middle)
 	  {
 	    MEMSET (adr + middle, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('\0');
 
-	    if (STRCMP (adr + middle, dest + nchars - outer) <= 0)
+	    ถ้า (STRCMP (adr + middle, dest + nchars - outer) <= 0)
 	      {
 		printf ("%s 1 flunked for outer = %zu, middle = %zu\n",
 			STRINGIFY (STRCMP), outer, middle);
 		result = 1;
 	      }
 
-	    if (STRCMP (dest + nchars - outer, adr + middle) >= 0)
+	    ถ้า (STRCMP (dest + nchars - outer, adr + middle) >= 0)
 	      {
 		printf ("%s 2 flunked for outer = %zu, middle = %zu\n",
 			STRINGIFY (STRCMP), outer, middle);
@@ -367,17 +367,17 @@ do_test (void)
 	  }
 
       /* strncmp/wcsncmp tests */
-      for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+      สำหรับ (outer = 1; outer < 32; ++outer)
+	สำหรับ (middle = 0; middle < 16; ++middle)
 	  {
 	    MEMSET (adr + middle, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('U');
 
-	    for (inner = 0; inner < outer; ++inner)
+	    สำหรับ (inner = 0; inner < outer; ++inner)
 	      {
-		if (STRNCMP (adr + middle, dest + nchars - outer, inner) != 0)
+		ถ้า (STRNCMP (adr + middle, dest + nchars - outer, inner) != 0)
 		  {
 		    printf ("%s 1 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
@@ -385,7 +385,7 @@ do_test (void)
 		    result = 1;
 		  }
 
-		if (STRNCMP (dest + nchars - outer, adr + middle, inner) != 0)
+		ถ้า (STRNCMP (dest + nchars - outer, adr + middle, inner) != 0)
 		  {
 		    printf ("%s 2 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
@@ -394,14 +394,14 @@ do_test (void)
 		  }
 	      }
 
-	    if (STRNCMP (adr + middle, dest + nchars - outer, outer) >= 0)
+	    ถ้า (STRNCMP (adr + middle, dest + nchars - outer, outer) >= 0)
 	      {
 		printf ("%s 1 flunked for outer = %zu, middle = %zu, full\n",
 			STRINGIFY (STRNCMP), outer, middle);
 		result = 1;
 	      }
 
-	    if (STRNCMP (dest + nchars - outer, adr + middle, outer) <= 0)
+	    ถ้า (STRNCMP (dest + nchars - outer, adr + middle, outer) <= 0)
 	      {
 		printf ("%s 2 flunked for outer = %zu, middle = %zu, full\n",
 			STRINGIFY (STRNCMP), outer, middle);
@@ -411,13 +411,13 @@ do_test (void)
 
       /* strncpy/wcsncpy tests */
       adr[nchars - 1] = L('T');
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
 	  size_t len;
 
-	  for (len = 0; len < nchars - outer; ++len)
+	  สำหรับ (len = 0; len < nchars - outer; ++len)
 	    {
-	      if (STRNCPY (dest, &adr[outer], len) != dest
+	      ถ้า (STRNCPY (dest, &adr[outer], len) != dest
 		  || MEMCMP (dest, &adr[outer], len) != 0)
 		{
 		  printf ("outer %s flunked for outer = %zu, len = %zu\n",
@@ -425,22 +425,22 @@ do_test (void)
 		  result = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
       adr[nchars - 1] = L('\0');
 
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  สำหรับ (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      size_t len;
 
 	      adr[inner] = L('\0');
 
-	      for (len = 0; len < nchars - outer + 64; ++len)
+	      สำหรับ (len = 0; len < nchars - outer + 64; ++len)
 		{
-		  if (STRNCPY (dest, &adr[outer], len) != dest
+		  ถ้า (STRNCPY (dest, &adr[outer], len) != dest
 		      || MEMCMP (dest, &adr[outer],
 				 MIN (inner - outer, len)) != 0
 		      || (inner - outer < len
@@ -451,7 +451,7 @@ do_test (void)
 			      STRINGIFY (STRNCPY), outer, inner, len);
 		      result = 1;
 		    }
-		  if (STRNCPY (dest + 1, &adr[outer], len) != dest + 1
+		  ถ้า (STRNCPY (dest + 1, &adr[outer], len) != dest + 1
 		      || MEMCMP (dest + 1, &adr[outer],
 				 MIN (inner - outer, len)) != 0
 		      || (inner - outer < len
@@ -466,18 +466,18 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* stpcpy/wcpcpy test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  สำหรับ (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if ((STPCPY (dest, &adr[outer]) - dest) != inner - outer)
+	      ถ้า ((STPCPY (dest, &adr[outer]) - dest) != inner - outer)
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STPCPY), outer, inner);
@@ -486,19 +486,19 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* stpncpy/wcpncpy test */
       adr[nchars - 1] = L('T');
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
 	  size_t len;
 
-	  for (len = 0; len < nchars - outer; ++len)
+	  สำหรับ (len = 0; len < nchars - outer; ++len)
 	    {
-	      if (STPNCPY (dest, &adr[outer], len) != dest + len
+	      ถ้า (STPNCPY (dest, &adr[outer], len) != dest + len
 		  || MEMCMP (dest, &adr[outer], len) != 0)
 		{
 		  printf ("outer %s flunked for outer = %zu, len = %zu\n",
@@ -506,20 +506,20 @@ do_test (void)
 		  result = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
       adr[nchars - 1] = L('\0');
 
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  สำหรับ (middle = MAX (outer, nchars64); middle < nchars; ++middle)
 	    {
 	      adr[middle] = L('\0');
 
-	      for (inner = 0; inner < nchars - outer; ++ inner)
+	      สำหรับ (inner = 0; inner < nchars - outer; ++ inner)
 		{
-		  if ((STPNCPY (dest, &adr[outer], inner) - dest)
+		  ถ้า ((STPNCPY (dest, &adr[outer], inner) - dest)
 		      != MIN (inner, middle - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
@@ -531,88 +531,88 @@ do_test (void)
 
 	      adr[middle] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* memcpy/wmemcpy test */
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (MEMCPY (dest, &adr[outer], inner) !=  dest)
+	  สำหรับ (inner = 0; inner < nchars - outer; ++inner)
+	    ถ้า (MEMCPY (dest, &adr[outer], inner) !=  dest)
 	      {
 		printf ("%s flunked for outer = %zu, inner = %zu\n",
 			STRINGIFY (MEMCPY), outer, inner);
 		result = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* mempcpy/wmempcpy test */
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (MEMPCPY (dest, &adr[outer], inner) !=  dest + inner)
+	  สำหรับ (inner = 0; inner < nchars - outer; ++inner)
+	    ถ้า (MEMPCPY (dest, &adr[outer], inner) !=  dest + inner)
 	      {
 		printf ("%s flunked for outer = %zu, inner = %zu\n",
 			STRINGIFY (MEMPCPY), outer, inner);
 		result = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 
       /* This function only exists for single-byte characters.  */
 #ifndef WCSTEST
       /* memccpy test */
       memset (adr, '\0', nchars);
-      for (outer = nchars; outer >= max128; --outer)
+      สำหรับ (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (memccpy (dest, &adr[outer], L('\1'), inner) != NULL)
+	  สำหรับ (inner = 0; inner < nchars - outer; ++inner)
+	    ถ้า (memccpy (dest, &adr[outer], L('\1'), inner) != NULL)
 	      {
 		printf ("memccpy flunked full copy for outer = %zu, inner = %zu\n",
 			outer, inner);
 		result = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
-      for (outer = nchars - 1; outer >= max128; --outer)
+      สำหรับ (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = 0; middle < nchars - outer; ++middle)
+	  สำหรับ (middle = 0; middle < nchars - outer; ++middle)
 	    {
 	      memset (dest, L('\2'), middle + 1);
-	      for (inner = 0; inner < middle; ++inner)
+	      สำหรับ (inner = 0; inner < middle; ++inner)
 		{
 		  adr[outer + inner] = L('\1');
 
-		  if (memccpy (dest, &adr[outer], '\1', middle + 128)
+		  ถ้า (memccpy (dest, &adr[outer], '\1', middle + 128)
 		      !=  dest + inner + 1)
 		    {
 		      printf ("\
-			      memccpy flunked partial copy for outer = %zu, middle = %zu, inner = %zu\n",
+			      memccpy flunked partial copy สำหรับ outer = %zu, middle = %zu, inner = %zu\n",
 			      outer, middle, inner);
 		      result = 1;
 		    }
-		  else if (dest[inner + 1] != L('\2'))
+		  มิฉะนั้น ถ้า (dest[inner + 1] != L('\2'))
 		    {
 		      printf ("\
-			      memccpy copied too much for outer = %zu, middle = %zu, inner = %zu\n",
+			      memccpy copied too much สำหรับ outer = %zu, middle = %zu, inner = %zu\n",
 			      outer, middle, inner);
 		      result = 1;
 		    }
 		  adr[outer + inner] = L('\0');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  ถ้า (outer == 0)
+	    bha_nga;
 	}
 #endif
     }
 
-  return result;
+  คืน result;
 }
 
 #include <support/test-driver.c>
