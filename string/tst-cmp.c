@@ -20,136 +20,136 @@
    characters in the padding.  It is partly a regression test for bug
    20327.  */
 
-#include <limits.h>
-#include <malloc.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libc-diag.h>
+#अन्तर्भाव <limits.h>
+#अन्तर्भाव <malloc.h>
+#अन्तर्भाव <stdbool.h>
+#अन्तर्भाव <stdint.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <libc-diag.h>
 
-static int
-signum (int val)
+स्थिर पूर्णाङ्क
+signum (पूर्णाङ्क val)
 {
-  if (val < 0)
-    return -1;
-  if (val > 0)
-    return 1;
-  else
-    return 0;
+  यदि (val < 0)
+    प्रत्यागम -1;
+  यदि (val > 0)
+    प्रत्यागम 1;
+  अन्यथा
+    प्रत्यागम 0;
 }
 
-static size_t
-max_size_t (size_t left, size_t right)
+स्थिर size_t
+max_size_t (size_t बायाँ, size_t दायाँ)
 {
-  if (left > right)
-    return left;
-  else
-    return right;
+  यदि (बायाँ > दायाँ)
+    प्रत्यागम बायाँ;
+  अन्यथा
+    प्रत्यागम दायाँ;
 }
 
 /* Wrappers for strncmp and strncasecmp which determine the maximum
    string length in some, either based on the input string length, or
    using fixed constants.  */
 
-static int
-strncmp_no_terminator (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncmp_no_terminator (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t बायाँ_len = strlen (बायाँ);
+  size_t दायाँ_len = strlen (दायाँ);
+  प्रत्यागम strncmp (बायाँ, दायाँ, max_size_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncasecmp_no_terminator (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncasecmp_no_terminator (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t बायाँ_len = strlen (बायाँ);
+  size_t दायाँ_len = strlen (दायाँ);
+  प्रत्यागम strncasecmp (बायाँ, दायाँ, max_size_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncmp_terminator (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncmp_terminator (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t बायाँ_len = strlen (बायाँ);
+  size_t दायाँ_len = strlen (दायाँ);
+  प्रत्यागम strncmp (बायाँ, दायाँ, max_size_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncasecmp_terminator (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncasecmp_terminator (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t बायाँ_len = strlen (बायाँ);
+  size_t दायाँ_len = strlen (दायाँ);
+  प्रत्यागम strncasecmp (बायाँ, दायाँ, max_size_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncmp_64 (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncmp_64 (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  return strncmp (left, right, 64);
+  प्रत्यागम strncmp (बायाँ, दायाँ, 64);
 }
 
-static int
-strncasecmp_64 (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncasecmp_64 (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  return strncasecmp (left, right, 64);
+  प्रत्यागम strncasecmp (बायाँ, दायाँ, 64);
 }
 
-static int
-strncmp_max (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncmp_max (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_धकेलो_NEEDS_COMMENT;
+#यदि __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncmp being larger than
      PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
 #endif
-#if __GNUC_PREREQ (11, 0)
+#यदि __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+  प्रत्यागम strncmp (बायाँ, दायाँ, SIZE_MAX);
+  DIAG_निकालो_NEEDS_COMMENT;
 }
 
-static int
-strncasecmp_max (const char *left, const char *right)
+स्थिर पूर्णाङ्क
+strncasecmp_max (ध्रुव वर्ण *बायाँ, ध्रुव वर्ण *दायाँ)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_धकेलो_NEEDS_COMMENT;
+#यदि __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncasecmp being larger
      than PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
 #endif
-#if __GNUC_PREREQ (11, 0)
+#यदि __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncasecmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+  प्रत्यागम strncasecmp (बायाँ, दायाँ, SIZE_MAX);
+  DIAG_निकालो_NEEDS_COMMENT;
 }
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
-  enum {
+  गणना {
     max_align = 64,
     max_string_length = 33
   };
   size_t blob_size = max_align + max_string_length + 1;
-  char *left = memalign (max_align, blob_size);
-  char *right = memalign (max_align, blob_size);
-  if (left == NULL || right == NULL)
+  वर्ण *बायाँ = memalign (max_align, blob_size);
+  वर्ण *दायाँ = memalign (max_align, blob_size);
+  यदि (बायाँ == रिक्त || दायाँ == रिक्त)
     {
       printf ("error: out of memory\n");
-      return 1;
+      प्रत्यागम 1;
     }
 
-  const struct
+  ध्रुव संरचना
   {
-    const char *name;
-    int (*implementation) (const char *, const char *);
+    ध्रुव वर्ण *name;
+    पूर्णाङ्क (*implementation) (ध्रुव वर्ण *, ध्रुव वर्ण *);
   } functions[] =
       {
         { "strcmp", strcmp },
@@ -162,9 +162,9 @@ do_test (void)
         { "strncasecmp (length 64)", strncasecmp_64},
         { "strncmp (length SIZE_MAX)", strncmp_max},
         { "strncasecmp (length SIZE_MAX)", strncasecmp_max},
-        { NULL, NULL }
+        { रिक्त, रिक्त }
       };
-  const char *const strings[] =
+  ध्रुव वर्ण *ध्रुव strings[] =
     {
       "",
       "0",
@@ -180,34 +180,34 @@ do_test (void)
       "23456789abcdef",
       "23456789abcdefg",
       "abcdefghijklmnopqrstuvwxyzABCDEF",
-      NULL
+      रिक्त
     };
-  const unsigned char pads[] =
+  ध्रुव unsigned वर्ण pads[] =
     { 0, 1, 32, 64, 128, '0', '1', 'e', 'f', 'g', 127, 192, 255 };
 
   bool errors = false;
-  for (int left_idx = 0; strings[left_idx] != NULL; ++left_idx)
-    for (int left_align = 0; left_align < max_align; ++left_align)
-      for (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
+  प्रति (पूर्णाङ्क बायाँ_idx = 0; strings[बायाँ_idx] != रिक्त; ++बायाँ_idx)
+    प्रति (पूर्णाङ्क बायाँ_align = 0; बायाँ_align < max_align; ++बायाँ_align)
+      प्रति (unsigned pad_बायाँ = 0; pad_बायाँ < परिमाण (pads); ++pad_बायाँ)
         {
-          memset (left, pads[pad_left], blob_size);
-          strcpy (left + left_align, strings[left_idx]);
+          memset (बायाँ, pads[pad_बायाँ], blob_size);
+          strcpy (बायाँ + बायाँ_align, strings[बायाँ_idx]);
 
-          for (int right_idx = 0; strings[right_idx] != NULL; ++right_idx)
-            for (unsigned pad_right = 0; pad_right < sizeof (pads);
-                 ++pad_right)
-              for (int right_align = 0; right_align < max_align;
-                   ++right_align)
+          प्रति (पूर्णाङ्क दायाँ_idx = 0; strings[दायाँ_idx] != रिक्त; ++दायाँ_idx)
+            प्रति (unsigned pad_दायाँ = 0; pad_दायाँ < परिमाण (pads);
+                 ++pad_दायाँ)
+              प्रति (पूर्णाङ्क दायाँ_align = 0; दायाँ_align < max_align;
+                   ++दायाँ_align)
                 {
-                  memset (right, pads[pad_right], blob_size);
-                  strcpy (right + right_align, strings[right_idx]);
+                  memset (दायाँ, pads[pad_दायाँ], blob_size);
+                  strcpy (दायाँ + दायाँ_align, strings[दायाँ_idx]);
 
-                  for (int func = 0; functions[func].name != NULL; ++func)
+                  प्रति (पूर्णाङ्क func = 0; functions[func].name != रिक्त; ++func)
                     {
-                      int expected = left_idx - right_idx;
-                      int actual = functions[func].implementation
-                        (left + left_align, right + right_align);
-                      if (signum (actual) != signum (expected))
+                      पूर्णाङ्क expected = बायाँ_idx - दायाँ_idx;
+                      पूर्णाङ्क actual = functions[func].implementation
+                        (बायाँ + बायाँ_align, दायाँ + दायाँ_align);
+                      यदि (signum (actual) != signum (expected))
                         {
                           printf ("error: mismatch for %s: %d\n"
                                   "  left:  \"%s\"\n"
@@ -215,21 +215,21 @@ do_test (void)
                                   "  pad_left = %u, pad_right = %u,\n"
                                   "  left_align = %d, right_align = %d\n",
                                   functions[func].name, actual,
-                                  strings[left_idx], strings[right_idx],
-                                  pad_left, pad_right,
-                                  left_align, right_align);
+                                  strings[बायाँ_idx], strings[दायाँ_idx],
+                                  pad_बायाँ, pad_दायाँ,
+                                  बायाँ_align, दायाँ_align);
                           errors = true;
                         }
                     }
                 }
         }
-  free (right);
-  free (left);
-  return errors;
+  मुक्त (दायाँ);
+  मुक्त (बायाँ);
+  प्रत्यागम errors;
 }
 
 /* The nested loops need a long time to complete on slower
    machines.  */
 #define TIMEOUT 600
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>
