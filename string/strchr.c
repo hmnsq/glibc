@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
 #undef strchr
 #undef index
@@ -25,11 +25,11 @@
 #endif
 
 /* Find the first occurrence of C in S.  */
-char *
-strchr (const char *s, int c_in)
+حرف *
+strchr (ثابت حرف *s, صحيح c_in)
 {
-  char *r = __strchrnul (s, c_in);
-  return (*(unsigned char *)r == (unsigned char)c_in) ? r : NULL;
+  حرف *r = __strchrnul (s, c_in);
+  أرجع (*(unsigned حرف *)r == (unsigned حرف)c_in) ? r : عدم;
 }
 #ifndef STRCHR
 weak_alias (strchr, index)
