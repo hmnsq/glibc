@@ -5,25 +5,25 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+පූර්ණ_සංඛ්‍යා
 do_test (void)
 {
   static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  var_na basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  සඳහා (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
+      var_na *buf = basebuf + base;
       size_t words;
 
-      for (words = 0; words < 4; ++words)
+      සඳහා (words = 0; words < 4; ++words)
 	{
 	  size_t last;
 	  memset (buf, 'a', words * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  සඳහා (last = 0; last < 16; ++last)
 	    {
 	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
 	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
@@ -31,27 +31,27 @@ do_test (void)
 	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
 	      buf[words * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      නම් (strlen (buf) != words * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
+strlen failed සඳහා base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
 			  base, words, last,
 			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  ආපසු 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      නම් (strnlen (buf, -1) != words * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
+strnlen failed සඳහා base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
 			  base, words, last,
 			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  ආපසු 1;
 		}
 	    }
 	}
     }
-  return 0;
+  ආපසු 0;
 }
 
 #include <support/test-driver.c>

@@ -22,13 +22,13 @@
 #include <math-use-builtins.h>
 
 /* Find the first bit set in I.  */
-int
-__ffs (int i)
+පූර්ණ_සංඛ්‍යා
+__ffs (පූර්ණ_සංඛ්‍යා i)
 {
-#if USE_FFS_BUILTIN
-  return __builtin_ffs (i);
-#else
-  static const unsigned char table[] =
+#නම් USE_FFS_BUILTIN
+  ආපසු __builtin_ffs (i);
+#නැතහොත්
+  static const unsigned var_na table[] =
     {
       0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
       6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -39,19 +39,19 @@ __ffs (int i)
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
     };
-  unsigned int a;
-  unsigned int x = i & -i;
+  unsigned පූර්ණ_සංඛ්‍යා a;
+  unsigned පූර්ණ_සංඛ්‍යා x = i & -i;
 
   a = x <= 0xffff ? (x <= 0xff ? 0 : 8) : (x <= 0xffffff ?  16 : 24);
 
-  return table[x >> a] + a;
+  ආපසු table[x >> a] + a;
 #endif
 }
 static_weak_alias (__ffs, ffs)
 libc_hidden_def (__ffs)
 libc_hidden_builtin_def (ffs)
 
-#if ULONG_MAX == UINT_MAX
+#නම් ULONG_MAX == UINT_MAX
 #undef ffsl
 weak_alias (__ffs, ffsl)
 #endif

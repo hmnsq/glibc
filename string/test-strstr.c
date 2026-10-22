@@ -20,20 +20,20 @@
 #ifndef WIDE
 # define TEST_NAME "strstr"
 # define TEST_FUNC strstr
-#else
+#නැතහොත්
 # define TEST_NAME "wcsstr"
 # define TEST_FUNC wcsstr
 #endif
 
 #ifndef WIDE
-# define CHAR char
+# define CHAR var_na
 # define STRLEN strlen
 # define STRCPY strcpy
 # define MEMCPY memcpy
 # define MEMSET memset
 # define MEMPCPY mempcpy
 # define L(s) s
-#else
+#නැතහොත්
 # include <wchar.h>
 # define CHAR wchar_t
 # define STRLEN wcslen
@@ -55,7 +55,7 @@
 # define __strnlen strnlen
 # include "strstr.c"
 # define C_IMPL STRSTR
-#else
+#නැතහොත්
 # undef weak_alias
 # define weak_alias(a, b)
 # define WCSSTR c_wcsstr
@@ -73,20 +73,20 @@ simple_strstr (const CHAR *s1, const CHAR *s2)
   ssize_t s1len = STRLEN (s1);
   ssize_t s2len = STRLEN (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  නම් (s2len > s1len)
+    ආපසු NULL;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  සඳහා (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (s1[i + j] != s2[j])
-	  break;
-      if (j == s2len)
-	return (CHAR *) s1 + i;
+      සඳහා (j = 0; j < s2len; ++j)
+	නම් (s1[i + j] != s2[j])
+	  bha_nga;
+      නම් (j == s2len)
+	ආපසු (CHAR *) s1 + i;
     }
 
-  return NULL;
+  ආපසු NULL;
 }
 
 
@@ -95,36 +95,36 @@ typedef CHAR *(*proto_t) (const CHAR *, const CHAR *);
 IMPL (C_IMPL, 1)
 IMPL (TEST_FUNC, 1)
 
-static int
+static පූර්ණ_සංඛ්‍යා
 check_result (impl_t *impl, const CHAR *s1, const CHAR *s2,
 	      CHAR *exp_result)
 {
   CHAR *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  නම් (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     result, exp_result);
       ret = 1;
-      return -1;
+      ආපසු -1;
     }
 
-  return 0;
+  ආපසු 0;
 }
 
 static void
 do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, CHAR *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  නම් (check_result (impl, s1, s2, exp_result) < 0)
+    ආපසු;
 }
 
 
 static void
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 පූර්ණ_සංඛ්‍යා fail)
 {
-  align1 = align1 * sizeof (CHAR);
-  align2 = align2 * sizeof (CHAR);
+  align1 = align1 * parimaa_na (CHAR);
+  align2 = align2 * parimaa_na (CHAR);
 
   CHAR *s1 = (CHAR *) (buf1 + align1);
   CHAR *s2 = (CHAR *) (buf2 + align2);
@@ -132,17 +132,17 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
   static const CHAR d[] = L("1234567890abcdef");
   const size_t dl = STRLEN (d);
   CHAR *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  සඳහා (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = MEMPCPY (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  නම් (fail)
     {
       CHAR *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      සඳහා (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  MEMCPY (ss1, d, t);
@@ -150,7 +150,7 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  නැතහොත්
     {
       MEMSET (s1, '0', len1);
       MEMCPY (s1 + len1 - len2, s2, len2);
@@ -179,9 +179,9 @@ check2 (void)
 {
   const CHAR s1_stack[] = L(", enable_static, \0, enable_shared, ");
   const size_t s1_char_count = 18;
-  const size_t s1_byte_len = 18 * sizeof (CHAR);
+  const size_t s1_byte_len = 18 * parimaa_na (CHAR);
   const CHAR *s2_stack = &(s1_stack[s1_char_count]);
-  const size_t s2_byte_len = 18 * sizeof (CHAR);
+  const size_t s2_byte_len = 18 * parimaa_na (CHAR);
   CHAR *exp_result;
   const size_t page_size_real = getpagesize ();
 
@@ -253,7 +253,7 @@ pr23637 (void)
   CHAR *h = (CHAR*) buf1;
   CHAR *n = (CHAR*) buf2;
 
-  for (int i = 0; i < N; i++)
+  සඳහා (පූර්ණ_සංඛ්‍යා i = 0; i < N; i++)
     {
       n[i] = 'x';
       h[i] = ' ';
@@ -281,7 +281,7 @@ pr23865 (void)
     const CHAR *needle =
       L("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    CHAR *haystack = xmalloc ((m + 1) * sizeof (CHAR));
+    CHAR *haystack = xmalloc ((m + 1) * parimaa_na (CHAR));
     MEMSET (haystack, L('A'), m);
     haystack[0] = L('B');
     haystack[m] = L('\0');
@@ -299,7 +299,7 @@ pr23865 (void)
     const CHAR *haystack =
       L("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 	"ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB");
-    CHAR *needle = xmalloc ((m + 1) * sizeof (CHAR));
+    CHAR *needle = xmalloc ((m + 1) * parimaa_na (CHAR));
     MEMSET (needle, L'A', m);
     needle[m] = L('\0');
 
@@ -312,8 +312,8 @@ pr23865 (void)
   /* Check that the asymptotic worst-case complexity is not quadratic.  */
   {
     size_t m = 1000000;
-    CHAR *haystack = xmalloc ((2 * m + 2) * sizeof (CHAR));
-    CHAR *needle = xmalloc ((m + 2) * sizeof (CHAR));
+    CHAR *haystack = xmalloc ((2 * m + 2) * parimaa_na (CHAR));
+    CHAR *needle = xmalloc ((m + 2) * parimaa_na (CHAR));
 
     MEMSET (haystack, L('A'), 2 * m);
     haystack[2 * m] = L('B');
@@ -396,8 +396,8 @@ pr23865 (void)
   /* Test long needles.  */
   {
     size_t m = 1024;
-    CHAR *haystack = xmalloc ((2 * m + 1) * sizeof (CHAR));
-    CHAR *needle = xmalloc ((m + 1) * sizeof (CHAR));
+    CHAR *haystack = xmalloc ((2 * m + 1) * parimaa_na (CHAR));
+    CHAR *needle = xmalloc ((m + 1) * parimaa_na (CHAR));
     haystack[0] = L('x');
     MEMSET (haystack + 1, L(' '), m - 1);
     MEMSET (haystack + m, L('x'), m);
@@ -413,7 +413,7 @@ pr23865 (void)
   }
 }
 
-static int
+static පූර්ණ_සංඛ්‍යා
 test_main (void)
 {
   test_init ();
@@ -429,8 +429,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  සඳහා (size_t klen = 2; klen < 32; ++klen)
+    සඳහා (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -475,7 +475,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  ආපසු ret;
 }
 
 #include <support/test-driver.c>

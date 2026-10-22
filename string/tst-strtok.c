@@ -2,24 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+පූර්ණ_සංඛ්‍යා
 do_test (void)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  var_na buf[1] = { 0 };
+  පූර්ණ_සංඛ්‍යා result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  නම් (strtok (buf, " ") != NULL)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  නැතහොත් නම් (strtok (NULL, " ") != NULL)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  ආපසු result;
 }
 
 #include <support/test-driver.c>

@@ -18,8 +18,8 @@
 #include <string.h>
 #include <locale/localeinfo.h>
 
-char *
-strerror (int errnum)
+var_na *
+strerror (පූර්ණ_සංඛ්‍යා errnum)
 {
-  return __strerror_l (errnum, __libc_tsd_LOCALE);
+  ආපසු __strerror_l (errnum, __libc_tsd_LOCALE);
 }

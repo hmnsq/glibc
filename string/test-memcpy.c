@@ -23,13 +23,13 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, len, size1, size2, size;
-  int c;
-  unsigned char *p1, *p2;
-  unsigned char *res;
+  පූර්ණ_සංඛ්‍යා c;
+  unsigned var_na *p1, *p2;
+  unsigned var_na *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  සඳහා (n = 0; n < ITERATIONS; n++)
     {
-      if (n == 0)
+      නම් (n == 0)
         {
           len = getpagesize ();
           size = len + 512;
@@ -38,41 +38,41 @@ do_random_tests (void)
           align1 = 512;
           align2 = 512;
         }
-      else
+      නැතහොත්
         {
-          if ((random () & 255) == 0)
+          නම් ((random () & 255) == 0)
             size = 65536;
-          else
+          නැතහොත්
             size = 768;
-          if (size > page_size)
+          නම් (size > page_size)
             size = page_size;
           size1 = size;
           size2 = size;
           i = random ();
-          if (i & 3)
+          නම් (i & 3)
             size -= 256;
-          if (i & 1)
+          නම් (i & 1)
             size1 -= 256;
-          if (i & 2)
+          නම් (i & 2)
             size2 -= 256;
-          if (i & 4)
+          නම් (i & 4)
             {
               len = random () % size;
               align1 = size1 - len - (random () & 31);
               align2 = size2 - len - (random () & 31);
-              if (align1 > size1)
+              නම් (align1 > size1)
                 align1 = 0;
-              if (align2 > size2)
+              නම් (align2 > size2)
                 align2 = 0;
             }
-          else
+          නැතහොත්
             {
               align1 = random () & 63;
               align2 = random () & 63;
               len = random () % size;
-              if (align1 + len > size1)
+              නම් (align1 + len > size1)
                 align1 = size1 - len;
-              if (align2 + len > size2)
+              නම් (align2 + len > size2)
                 align2 = size2 - len;
             }
         }
@@ -80,20 +80,20 @@ do_random_tests (void)
       p2 = buf2 + page_size - size2;
       c = random () & 255;
       j = align1 + len + 256;
-      if (j > size1)
+      නම් (j > size1)
         j = size1;
-      for (i = 0; i < j; ++i)
+      සඳහා (i = 0; i < j; ++i)
         p1[i] = random () & 255;
 
       FOR_EACH_IMPL (impl, 1)
       {
         j = align2 + len + 256;
-        if (j > size2)
+        නම් (j > size2)
           j = size2;
         memset (p2, c, j);
-        res = (unsigned char *)CALL (impl, (char *)(p2 + align2),
-                                     (char *)(p1 + align1), len);
-        if (res != MEMCPY_RESULT (p2 + align2, len))
+        res = (unsigned var_na *)CALL (impl, (var_na *)(p2 + align2),
+                                     (var_na *)(p1 + align1), len);
+        නම් (res != MEMCPY_RESULT (p2 + align2, len))
           {
             error (0, 0,
                    "Iteration %zd - wrong result in function %s (%zd, %zd, "
@@ -102,29 +102,29 @@ do_random_tests (void)
                    MEMCPY_RESULT (p2 + align2, len));
             ret = 1;
           }
-        for (i = 0; i < align2; ++i)
+        සඳහා (i = 0; i < align2; ++i)
           {
-            if (p2[i] != c)
+            නම් (p2[i] != c)
               {
                 error (0, 0,
                        "Iteration %zd - garbage before, %s (%zd, %zd, %zd)", n,
                        impl->name, align1, align2, len);
                 ret = 1;
-                break;
+                bha_nga;
               }
           }
-        for (i = align2 + len; i < j; ++i)
+        සඳහා (i = align2 + len; i < j; ++i)
           {
-            if (p2[i] != c)
+            නම් (p2[i] != c)
               {
                 error (0, 0,
                        "Iteration %zd - garbage after, %s (%zd, %zd, %zd)", n,
                        impl->name, align1, align2, len);
                 ret = 1;
-                break;
+                bha_nga;
               }
           }
-        if (memcmp (p1 + align1, p2 + align2, len))
+        නම් (memcmp (p1 + align1, p2 + align2, len))
           {
             error (0, 0,
                    "Iteration %zd - different strings, %s (%zd, %zd, %zd)", n,
@@ -135,7 +135,7 @@ do_random_tests (void)
     }
 }
 
-int
+පූර්ණ_සංඛ්‍යා
 test_main (void)
 {
   size_t i, j;
@@ -147,14 +147,14 @@ test_main (void)
   printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 18; ++i)
+  සඳහා (i = 0; i < 18; ++i)
     {
       do_test (0, 0, 1 << i);
       do_test (i, 0, 1 << i);
       do_test (0, i, 1 << i);
       do_test (i, i, 1 << i);
     }
-  for (i = 0; i < 32; ++i)
+  සඳහා (i = 0; i < 32; ++i)
     {
       do_test (0, 0, i);
       do_test (i, 0, i);
@@ -162,9 +162,9 @@ test_main (void)
       do_test (i, i, i);
     }
 
-  for (i = 3; i < 32; ++i)
+  සඳහා (i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
+      නම් ((i & (i - 1)) == 0)
         continue;
       do_test (0, 0, 16 * i);
       do_test (i, 0, 16 * i);
@@ -172,7 +172,7 @@ test_main (void)
       do_test (i, i, 16 * i);
     }
 
-  for (i = 19; i <= 25; ++i)
+  සඳහා (i = 19; i <= 25; ++i)
     {
       do_test (255, 0, 1 << i);
       do_test (0, 4000, 1 << i);
@@ -186,9 +186,9 @@ test_main (void)
   do_test1 (0, 0, 0x100000);
   do_test1 (0, 0, 0x2000000);
 
-  for (i = 4096; i < 32768; i += 4096)
+  සඳහා (i = 4096; i < 32768; i += 4096)
     {
-      for (j = 1; j <= 1024; j <<= 1)
+      සඳහා (j = 1; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -204,9 +204,9 @@ test_main (void)
         }
     }
 
-  for (i = 0x300000; i < 0x2000000; i += 0x235689)
+  සඳහා (i = 0x300000; i < 0x2000000; i += 0x235689)
     {
-      for (j = 64; j <= 1024; j <<= 1)
+      සඳහා (j = 64; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -222,7 +222,7 @@ test_main (void)
         }
     }
 
-  return ret;
+  ආපසු ret;
 }
 
 #include <support/test-driver.c>

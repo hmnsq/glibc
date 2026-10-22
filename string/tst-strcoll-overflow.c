@@ -30,22 +30,22 @@
    64-bit.  */
 #define SIZE 0x40000000ul
 
-int
+පූර්ණ_සංඛ්‍යා
 do_test (void)
 {
   TEST_VERIFY_EXIT (setlocale (LC_COLLATE, "en_GB.UTF-8") != NULL);
 
-  char *p = malloc (SIZE);
-  if (p == NULL)
+  var_na *p = malloc (SIZE);
+  නම් (p == NULL)
     {
       puts ("info: could not allocate memory, cannot run test");
-      return EXIT_UNSUPPORTED;
+      ආපසු EXIT_UNSUPPORTED;
     }
 
   memset (p, 'x', SIZE - 1);
   p[SIZE - 1] = 0;
   printf ("info: strcoll result: %d\n", strcoll (p, p));
-  return 0;
+  ආපසු 0;
 }
 
 /* This test can rung for a long time, but it should complete within

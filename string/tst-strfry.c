@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+පූර්ණ_සංඛ්‍යා
 do_test (void)
 {
-  char str[] = "this is a test";
+  var_na str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  ආපසු 0;
 }
 
 #include <support/test-driver.c>

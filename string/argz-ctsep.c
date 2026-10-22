@@ -22,34 +22,34 @@
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (const var_na *string, පූර්ණ_සංඛ්‍යා delim, var_na **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  නම් (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      const var_na *rp;
+      var_na *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (var_na *) malloc (nlen);
+      නම් (*argz == NULL)
+	ආපසු ENOMEM;
 
       rp = string;
       wp = *argz;
       do
-	if (*rp == delim)
+	නම් (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    නම් (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    නැතහොත්
 	      --nlen;
 	  }
-	else
+	නැතහොත්
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      අතරතුර (*rp++ != '\0');
 
-      if (nlen == 0)
+      නම් (nlen == 0)
 	{
 	  free (*argz);
 	  *argz = NULL;
@@ -58,12 +58,12 @@ __argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 
       *len = nlen;
     }
-  else
+  නැතහොත්
     {
       *argz = NULL;
       *len = 0;
     }
 
-  return 0;
+  ආපසු 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

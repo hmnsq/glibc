@@ -2,14 +2,14 @@
 #include <string.h>
 #include <stdio.h>
 
-int
+පූර්ණ_සංඛ්‍යා
 do_test (void)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  const var_na str[] = "axaaba";
+  var_na *token;
+  var_na *cp;
+  var_na *l;
+  පූර්ණ_සංඛ්‍යා result = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
@@ -38,7 +38,7 @@ do_test (void)
   result |= token != NULL || l != cp + len;
   printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
 
-  return result;
+  ආපසු result;
 }
 
 #include <support/test-driver.c>

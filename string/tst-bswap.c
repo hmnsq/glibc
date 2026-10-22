@@ -18,57 +18,57 @@
 #include <byteswap.h>
 #include <stdio.h>
 
-extern unsigned long long int wash (unsigned long long int a);
+extern unsigned long long පූර්ණ_සංඛ්‍යා wash (unsigned long long පූර්ණ_සංඛ්‍යා a);
 
-int
+පූර්ණ_සංඛ්‍යා
 do_test (void)
 {
-  int result = 0;
+  පූර්ණ_සංඛ්‍යා result = 0;
 
   /* Test the functions with constant arguments.  */
-  if (bswap_16 (0x1234) != 0x3412)
+  නම් (bswap_16 (0x1234) != 0x3412)
     {
       puts ("bswap_16 (constant) flunked");
       result = 1;
     }
-  if (bswap_32 (0x12345678) != 0x78563412)
+  නම් (bswap_32 (0x12345678) != 0x78563412)
     {
       puts ("bswap_32 (constant) flunked");
       result = 1;
     }
-  if (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
+  නම් (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (constant) flunked");
       result = 1;
     }
 
   /* Test the functions with non-constant arguments.  */
-  if (bswap_16 (wash (0x1234)) != 0x3412)
+  නම් (bswap_16 (wash (0x1234)) != 0x3412)
     {
       puts ("bswap_16 (non-constant) flunked");
       result = 1;
     }
-  if (bswap_32 (wash (0x12345678)) != 0x78563412)
+  නම් (bswap_32 (wash (0x12345678)) != 0x78563412)
     {
       puts ("bswap_32 (non-constant) flunked");
       result = 1;
     }
-  if (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
+  නම් (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (non-constant) flunked");
       result = 1;
     }
 
-  return result;
+  ආපසු result;
 }
 
 
-unsigned long long int
-wash (unsigned long long int a)
+unsigned long long පූර්ණ_සංඛ්‍යා
+wash (unsigned long long පූර්ණ_සංඛ්‍යා a)
 {
   /* Do nothing.  This function simply exists to avoid that the compiler
      regards the argument to the bswap_*() functions as constant.  */
-  return a + 0;
+  ආපසු a + 0;
 }
 
 #include <support/test-driver.c>

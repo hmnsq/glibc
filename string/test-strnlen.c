@@ -19,7 +19,7 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strnlen"
-#else
+#නැතහොත්
 # define TEST_NAME "wcsnlen"
 #endif /* !WIDE */
 #include "test-string.h"
@@ -27,11 +27,11 @@
 #ifndef WIDE
 # define STRNLEN strnlen
 # define MEMSET memset
-# define CHAR char
+# define CHAR var_na
 # define BIG_CHAR CHAR_MAX
 # define MIDDLE_CHAR 127
 # define SIMPLE_STRNLEN simple_strnlen
-#else
+#නැතහොත්
 # include <wchar.h>
 # define STRNLEN wcsnlen
 # define MEMSET wmemset
@@ -56,7 +56,7 @@ typedef size_t (*proto_t) (const CHAR *, size_t);
 # define memchr __memchr_default
 # include "string/strnlen.c"
 IMPL (__strnlen_default, 1)
-#else
+#නැතහොත්
 # define WMEMCHR __wmemchr_default
 # define static_weak_alias(a, b)
 # define libc_hidden_def(a)
@@ -73,27 +73,27 @@ static void
 do_one_test (impl_t *impl, const CHAR *s, size_t maxlen, size_t exp_len)
 {
   size_t len = CALL (impl, s, maxlen);
-  if (len != exp_len)
+  නම් (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      ආපසු;
     }
 }
 
 static void
-do_test (size_t align, size_t len, size_t maxlen, int max_char)
+do_test (size_t align, size_t len, size_t maxlen, පූර්ණ_සංඛ්‍යා max_char)
 {
   size_t i;
 
-  align &= (getpagesize () / sizeof (CHAR) - 1);
-  if ((align + len) * sizeof (CHAR) >= page_size)
-    return;
+  align &= (getpagesize () / parimaa_na (CHAR) - 1);
+  නම් ((align + len) * parimaa_na (CHAR) >= page_size)
+    ආපසු;
 
   CHAR *buf = (CHAR *) (buf1);
 
-  for (i = 0; i < len; ++i)
+  සඳහා (i = 0; i < len; ++i)
     buf[align + i] = 1 + 11111 * i % max_char;
   buf[align + len] = 0;
 
@@ -109,15 +109,15 @@ do_overflow_tests (void)
   uintptr_t buf_addr = (uintptr_t) buf1;
   const size_t alignments[] = { 0, 1, 7, 9, 31, 33, 63, 65, 95, 97, 127, 129 };
 
-  for (al_idx = 0; al_idx < sizeof (alignments) / sizeof (alignments[0]);
+  සඳහා (al_idx = 0; al_idx < parimaa_na (alignments) / parimaa_na (alignments[0]);
        al_idx++)
     {
-      for (repeats = 0; repeats < 2; ++repeats)
+      සඳහා (repeats = 0; repeats < 2; ++repeats)
 	{
 	  size_t align = repeats ? (getpagesize () - alignments[al_idx])
 				 : alignments[al_idx];
-	  align /= sizeof (CHAR);
-	  for (i = 0; i < 750; ++i)
+	  align /= parimaa_na (CHAR);
+	  සඳහා (i = 0; i < 750; ++i)
 	    {
 	      do_test (align, i, SIZE_MAX, BIG_CHAR);
 
@@ -128,7 +128,7 @@ do_overflow_tests (void)
 	      do_test (align, i, SIZE_MAX - buf_addr + i, BIG_CHAR);
 
 	      len = 0;
-	      for (j = 8 * sizeof (size_t) - 1; j; --j)
+	      සඳහා (j = 8 * parimaa_na (size_t) - 1; j; --j)
 		{
 		  len |= one << j;
 		  do_test (align, i, len, BIG_CHAR);
@@ -155,33 +155,33 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align, len;
-  CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  CHAR *p = (CHAR *) (buf1 + page_size - 512 * parimaa_na (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  සඳහා (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      නම් (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      නම් (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      සඳහා (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  නම් (i == len + align)
 	    p[i] = 0;
-	  else
+	  නැතහොත්
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      නම් (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  if (len > 0
+	  නම් (len > 0
 	      && CALL (impl, (CHAR *) (p + align), len - 1) != len - 1)
 	    {
 	      error (0, 0, "Iteration %zd (limited) - wrong result in function %s (%zd) %zd != %zd, p %p",
@@ -189,14 +189,14 @@ do_random_tests (void)
 		     CALL (impl, (CHAR *) (p + align), len - 1), len - 1, p);
 	      ret = 1;
 	    }
-	  if (CALL (impl, (CHAR *) (p + align), len) != len)
+	  නම් (CALL (impl, (CHAR *) (p + align), len) != len)
 	    {
 	      error (0, 0, "Iteration %zd (exact) - wrong result in function %s (%zd) %zd != %zd, p %p",
 		     n, impl->name, align,
 		     CALL (impl, (CHAR *) (p + align), len), len, p);
 	      ret = 1;
 	    }
-	  if (CALL (impl, (CHAR *) (p + align), len + 1) != len)
+	  නම් (CALL (impl, (CHAR *) (p + align), len + 1) != len)
 	    {
 	      error (0, 0, "Iteration %zd (long) - wrong result in function %s (%zd) %zd != %zd, p %p",
 		     n, impl->name, align,
@@ -214,7 +214,7 @@ do_page_tests (void)
 {
   size_t i, exp_len, start_offset, offset;
   /* Calculate the null character offset.  */
-  size_t last_offset = (page_size / sizeof (CHAR)) - 1;
+  size_t last_offset = (page_size / parimaa_na (CHAR)) - 1;
 
   CHAR *s = (CHAR *) buf2;
   MEMSET (s, 65, (last_offset - 1));
@@ -222,7 +222,7 @@ do_page_tests (void)
 
   /* Place short strings ending at page boundary.  */
   offset = last_offset;
-  for (i = 0; i < 128; i++)
+  සඳහා (i = 0; i < 128; i++)
     {
       /* Decrease offset to stress several sizes and alignments.  */
       offset--;
@@ -237,19 +237,19 @@ do_page_tests (void)
           do_one_test (impl, (CHAR *) (s + offset), page_size, exp_len);
           do_one_test (impl, (CHAR *) (s + offset), exp_len + 1, exp_len);
           do_one_test (impl, (CHAR *) (s + offset), exp_len, exp_len);
-          if (exp_len > 0)
+          නම් (exp_len > 0)
             do_one_test (impl, (CHAR *) (s + offset), exp_len - 1, exp_len - 1);
         }
     }
 
   /* Place long strings ending at page boundary.  */
   start_offset = (last_offset + 1) / 2;
-  for (i = 0; i < 64; ++i)
+  සඳහා (i = 0; i < 64; ++i)
     {
       /* Increase offset to stress several alignments.  */
       offset = start_offset + i;
-      if (offset >= (last_offset + 1))
-        break;
+      නම් (offset >= (last_offset + 1))
+        bha_nga;
       exp_len = last_offset - offset;
       FOR_EACH_IMPL (impl, 0)
         {
@@ -267,7 +267,7 @@ static void
 do_page_2_tests (void)
 {
   size_t i, exp_len, offset;
-  size_t last_offset = page_size / sizeof (CHAR);
+  size_t last_offset = page_size / parimaa_na (CHAR);
 
   CHAR *s = (CHAR *) buf2;
   MEMSET (s, 65, last_offset);
@@ -275,7 +275,7 @@ do_page_2_tests (void)
   /* Place short strings ending at page boundary without the null
      byte.  */
   offset = last_offset;
-  for (i = 0; i < 128; i++)
+  සඳහා (i = 0; i < 128; i++)
     {
       /* Decrease offset to stress several sizes and alignments.  */
       offset--;
@@ -289,7 +289,7 @@ do_page_2_tests (void)
     }
 }
 
-int
+පූර්ණ_සංඛ්‍යා
 test_main (void)
 {
   size_t i, length, char_per_page;
@@ -301,42 +301,42 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  සඳහා (i = 1; i < 8; ++i)
     {
       do_test (0, i, i - 1, MIDDLE_CHAR);
       do_test (0, i, i, MIDDLE_CHAR);
       do_test (0, i, i + 1, MIDDLE_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  සඳහා (i = 1; i < 8; ++i)
     {
       do_test (i, i, i - 1, MIDDLE_CHAR);
       do_test (i, i, i, MIDDLE_CHAR);
       do_test (i, i, i + 1, MIDDLE_CHAR);
     }
 
-  for (i = 2; i <= 10; ++i)
+  සඳහා (i = 2; i <= 10; ++i)
     {
       do_test (0, 1 << i, 5000, MIDDLE_CHAR);
       do_test (1, 1 << i, 5000, MIDDLE_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  සඳහා (i = 1; i < 8; ++i)
     do_test (0, i, 5000, BIG_CHAR);
 
-  for (i = 1; i < 8; ++i)
+  සඳහා (i = 1; i < 8; ++i)
     do_test (i, i, 5000, BIG_CHAR);
 
-  for (i = 2; i <= 10; ++i)
+  සඳහා (i = 2; i <= 10; ++i)
     {
       do_test (0, 1 << i, 5000, BIG_CHAR);
       do_test (1, 1 << i, 5000, BIG_CHAR);
     }
 
-  char_per_page = getpagesize () / sizeof (CHAR);
+  char_per_page = getpagesize () / parimaa_na (CHAR);
 
-  for (i = 0; i <= 127; i++)
-    for (length = i; length <= 512; length++)
+  සඳහා (i = 0; i <= 127; i++)
+    සඳහා (length = i; length <= 512; length++)
       {
 	do_test (i, length, 512, BIG_CHAR);
 	do_test (char_per_page - i, length, 512, BIG_CHAR);
@@ -346,7 +346,7 @@ test_main (void)
   do_page_tests ();
   do_page_2_tests ();
   do_overflow_tests ();
-  return ret;
+  ආපසු ret;
 }
 
 #include <support/test-driver.c>
