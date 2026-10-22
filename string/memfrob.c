@@ -15,15 +15,15 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#அந்தர்பாவ <string.h>
 
-void *
-memfrob (void *s, size_t n)
+வெறுமை *
+memfrob (வெறுமை *s, size_t n)
 {
-  char *p = (char *) s;
+  எழுத்து *p = (எழுத்து *) s;
 
-  while (n-- > 0)
+  போது (n-- > 0)
     *p++ ^= 42;
 
-  return s;
+  திரும்பு s;
 }

@@ -22,16 +22,16 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <sys/param.h>
+#அந்தர்பாவ <errno.h>
+#அந்தர்பாவ <stdio.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <unistd.h>
+#அந்தர்பாவ <sys/mman.h>
+#அந்தர்பாவ <sys/param.h>
 
 #ifndef CHAR
 # define L(c) c
-# define CHAR char
+# define CHAR எழுத்து
 # define MEMSET memset
 # define STRLEN strlen
 # define STRNLEN strnlen
@@ -54,41 +54,41 @@
 #define STRINGIFY2(s) #s
 
 
-int
-do_test (void)
+முழு
+do_test (வெறுமை)
 {
   size_t size = sysconf (_SC_PAGESIZE);
-  size_t nchars = size / sizeof (CHAR);
+  size_t nchars = size / அளவு (CHAR);
   CHAR *adr;
   CHAR *dest;
-  int result = 0;
+  முழு result = 0;
 
-  adr = (CHAR *) mmap (NULL, 3 * size, PROT_READ | PROT_WRITE,
+  adr = (CHAR *) mmap (வெற்று, 3 * size, PROT_READ | PROT_WRITE,
 		       MAP_PRIVATE | MAP_ANON, -1, 0);
-  dest = (CHAR *) mmap (NULL, 3 * size, PROT_READ | PROT_WRITE,
+  dest = (CHAR *) mmap (வெற்று, 3 * size, PROT_READ | PROT_WRITE,
 			MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (adr == MAP_FAILED || dest == MAP_FAILED)
+  எனில் (adr == MAP_FAILED || dest == MAP_FAILED)
     {
-      if (errno == ENOSYS)
+      எனில் (errno == ENOSYS)
 	puts ("No test, mmap not available.");
-      else
+      இல்லையெனில்
 	{
 	  printf ("mmap failed: %m");
 	  result = 1;
 	}
     }
-  else
+  இல்லையெனில்
     {
-      size_t inner, middle, outer, nchars64, max128;
+      size_t inner, நடு, outer, nchars64, max128;
 
-      if (nchars > 64)
+      எனில் (nchars > 64)
 	nchars64 = nchars - 64;
-      else
+      இல்லையெனில்
 	nchars64 = 0;
 
-      if (nchars > 128)
+      எனில் (nchars > 128)
 	max128 = nchars - 128;
-      else
+      இல்லையெனில்
 	max128 = 0;
 
       mprotect (adr, size, PROT_NONE);
@@ -102,13 +102,13 @@ do_test (void)
       MEMSET (adr, L('T'), nchars);
 
       /* strlen/wcslen test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  க்கு (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRLEN (&adr[outer]) != (size_t) (inner - outer))
+	      எனில் (STRLEN (&adr[outer]) != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STRLEN), outer, inner);
@@ -117,18 +117,18 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* strnlen/wcsnlen test */
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  க்கு (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRNLEN (&adr[outer], inner - outer + 1)
+	      எனில் (STRNLEN (&adr[outer], inner - outer + 1)
 		  != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
@@ -138,14 +138,14 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner <= nchars; ++inner)
+	  க்கு (inner = MAX (outer, nchars64); inner <= nchars; ++inner)
 	    {
-	      if (STRNLEN (&adr[outer], inner - outer)
+	      எனில் (STRNLEN (&adr[outer], inner - outer)
 		  != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked bounded for outer = %zu, inner = %zu\n",
@@ -153,43 +153,43 @@ do_test (void)
 		  result = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* strchr/wcschr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  க்கு (நடு = MAX (outer, nchars64); நடு < nchars; ++நடு)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      க்கு (inner = நடு; inner < nchars; ++inner)
 		{
-		  adr[middle] = L('V');
+		  adr[நடு] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
-		      || (inner != middle
-			  && (cp - &adr[outer]) != middle - outer))
+		  எனில் ((inner == நடு && cp != வெற்று)
+		      || (inner != நடு
+			  && (cp - &adr[outer]) != நடு - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STRCHR), outer, middle, inner);
+			      STRINGIFY (STRCHR), outer, நடு, inner);
 		      result = 1;
 		    }
 
 		  adr[inner] = L('T');
-		  adr[middle] = L('T');
+		  adr[நடு] = L('T');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* Special test.  */
       adr[nchars - 1] = L('\0');
-      if (STRCHR (&adr[nchars - 1], L('\n')) != NULL)
+      எனில் (STRCHR (&adr[nchars - 1], L('\n')) != வெற்று)
 	{
 	  printf ("%s flunked test of empty string at end of page\n",
 		  STRINGIFY (STRCHR));
@@ -197,138 +197,138 @@ do_test (void)
 	}
 
       /* strrchr/wcsrchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  க்கு (நடு = MAX (outer, nchars64); நடு < nchars; ++நடு)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      க்கு (inner = நடு; inner < nchars; ++inner)
 		{
-		  adr[middle] = L('V');
+		  adr[நடு] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
-		      || (inner != middle
-			  && (cp - &adr[outer]) != middle - outer))
+		  எனில் ((inner == நடு && cp != வெற்று)
+		      || (inner != நடு
+			  && (cp - &adr[outer]) != நடு - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STRRCHR), outer, middle, inner);
+			      STRINGIFY (STRRCHR), outer, நடு, inner);
 		      result = 1;
 		    }
 
 		  adr[inner] = L('T');
-		  adr[middle] = L('T');
+		  adr[நடு] = L('T');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* memchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  க்கு (நடு = MAX (outer, nchars64); நடு < nchars; ++நடு)
 	    {
-	      adr[middle] = L('V');
+	      adr[நடு] = L('V');
 
 	      CHAR *cp = MEMCHR (&adr[outer], L('V'), 3 * size);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      எனில் (cp - &adr[outer] != நடு - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (MEMCHR), outer, middle);
+			  STRINGIFY (MEMCHR), outer, நடு);
 		  result = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[நடு] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
 	  CHAR *cp = MEMCHR (&adr[outer], L('V'), nchars - outer);
 
-	  if (cp != NULL)
+	  எனில் (cp != வெற்று)
 	    {
 	      printf ("%s flunked for outer = %zu\n",
 		      STRINGIFY (MEMCHR), outer);
 	      result = 1;
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* These functions only exist for single-byte characters.  */
 #ifndef WCSTEST
       /* rawmemchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  க்கு (நடு = MAX (outer, nchars64); நடு < nchars; ++நடு)
 	    {
-	      adr[middle] = L('V');
+	      adr[நடு] = L('V');
 
 	      CHAR *cp = rawmemchr (&adr[outer], L('V'));
 
-	      if (cp - &adr[outer] != middle - outer)
+	      எனில் (cp - &adr[outer] != நடு - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (rawmemchr), outer, middle);
+			  STRINGIFY (rawmemchr), outer, நடு);
 		  result = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[நடு] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* memrchr test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  க்கு (நடு = MAX (outer, nchars64); நடு < nchars; ++நடு)
 	    {
-	      adr[middle] = L('V');
+	      adr[நடு] = L('V');
 
 	      CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      எனில் (cp - &adr[outer] != நடு - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (memrchr), outer, middle);
+			  STRINGIFY (memrchr), outer, நடு);
 		  result = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[நடு] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
 	  CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	  if (cp != NULL)
+	  எனில் (cp != வெற்று)
 	    {
 	      printf ("%s flunked for outer = %zu\n",
 		      STRINGIFY (memrchr), outer);
 	      result = 1;
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 #endif
 
       /* strcpy/wcscpy test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  க்கு (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if (STRCPY (dest, &adr[outer]) != dest
+	      எனில் (STRCPY (dest, &adr[outer]) != dest
 		  || STRLEN (dest) != (size_t) (inner - outer))
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
@@ -338,86 +338,86 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* strcmp/wcscmp tests */
-      for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+      க்கு (outer = 1; outer < 32; ++outer)
+	க்கு (நடு = 0; நடு < 16; ++நடு)
 	  {
-	    MEMSET (adr + middle, L('T'), 256);
+	    MEMSET (adr + நடு, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('\0');
 
-	    if (STRCMP (adr + middle, dest + nchars - outer) <= 0)
+	    எனில் (STRCMP (adr + நடு, dest + nchars - outer) <= 0)
 	      {
 		printf ("%s 1 flunked for outer = %zu, middle = %zu\n",
-			STRINGIFY (STRCMP), outer, middle);
+			STRINGIFY (STRCMP), outer, நடு);
 		result = 1;
 	      }
 
-	    if (STRCMP (dest + nchars - outer, adr + middle) >= 0)
+	    எனில் (STRCMP (dest + nchars - outer, adr + நடு) >= 0)
 	      {
 		printf ("%s 2 flunked for outer = %zu, middle = %zu\n",
-			STRINGIFY (STRCMP), outer, middle);
+			STRINGIFY (STRCMP), outer, நடு);
 		result = 1;
 	      }
 	  }
 
       /* strncmp/wcsncmp tests */
-      for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+      க்கு (outer = 1; outer < 32; ++outer)
+	க்கு (நடு = 0; நடு < 16; ++நடு)
 	  {
-	    MEMSET (adr + middle, L('T'), 256);
+	    MEMSET (adr + நடு, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('U');
 
-	    for (inner = 0; inner < outer; ++inner)
+	    க்கு (inner = 0; inner < outer; ++inner)
 	      {
-		if (STRNCMP (adr + middle, dest + nchars - outer, inner) != 0)
+		எனில் (STRNCMP (adr + நடு, dest + nchars - outer, inner) != 0)
 		  {
 		    printf ("%s 1 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
-			    STRINGIFY (STRNCMP), outer, middle, inner);
+			    STRINGIFY (STRNCMP), outer, நடு, inner);
 		    result = 1;
 		  }
 
-		if (STRNCMP (dest + nchars - outer, adr + middle, inner) != 0)
+		எனில் (STRNCMP (dest + nchars - outer, adr + நடு, inner) != 0)
 		  {
 		    printf ("%s 2 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
-			    STRINGIFY (STRNCMP), outer, middle, inner);
+			    STRINGIFY (STRNCMP), outer, நடு, inner);
 		    result = 1;
 		  }
 	      }
 
-	    if (STRNCMP (adr + middle, dest + nchars - outer, outer) >= 0)
+	    எனில் (STRNCMP (adr + நடு, dest + nchars - outer, outer) >= 0)
 	      {
 		printf ("%s 1 flunked for outer = %zu, middle = %zu, full\n",
-			STRINGIFY (STRNCMP), outer, middle);
+			STRINGIFY (STRNCMP), outer, நடு);
 		result = 1;
 	      }
 
-	    if (STRNCMP (dest + nchars - outer, adr + middle, outer) <= 0)
+	    எனில் (STRNCMP (dest + nchars - outer, adr + நடு, outer) <= 0)
 	      {
 		printf ("%s 2 flunked for outer = %zu, middle = %zu, full\n",
-			STRINGIFY (STRNCMP), outer, middle);
+			STRINGIFY (STRNCMP), outer, நடு);
 		result = 1;
 	      }
 	  }
 
       /* strncpy/wcsncpy tests */
       adr[nchars - 1] = L('T');
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
 	  size_t len;
 
-	  for (len = 0; len < nchars - outer; ++len)
+	  க்கு (len = 0; len < nchars - outer; ++len)
 	    {
-	      if (STRNCPY (dest, &adr[outer], len) != dest
+	      எனில் (STRNCPY (dest, &adr[outer], len) != dest
 		  || MEMCMP (dest, &adr[outer], len) != 0)
 		{
 		  printf ("outer %s flunked for outer = %zu, len = %zu\n",
@@ -425,22 +425,22 @@ do_test (void)
 		  result = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
       adr[nchars - 1] = L('\0');
 
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  க்கு (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      size_t len;
 
 	      adr[inner] = L('\0');
 
-	      for (len = 0; len < nchars - outer + 64; ++len)
+	      க்கு (len = 0; len < nchars - outer + 64; ++len)
 		{
-		  if (STRNCPY (dest, &adr[outer], len) != dest
+		  எனில் (STRNCPY (dest, &adr[outer], len) != dest
 		      || MEMCMP (dest, &adr[outer],
 				 MIN (inner - outer, len)) != 0
 		      || (inner - outer < len
@@ -451,7 +451,7 @@ do_test (void)
 			      STRINGIFY (STRNCPY), outer, inner, len);
 		      result = 1;
 		    }
-		  if (STRNCPY (dest + 1, &adr[outer], len) != dest + 1
+		  எனில் (STRNCPY (dest + 1, &adr[outer], len) != dest + 1
 		      || MEMCMP (dest + 1, &adr[outer],
 				 MIN (inner - outer, len)) != 0
 		      || (inner - outer < len
@@ -466,18 +466,18 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* stpcpy/wcpcpy test */
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (inner = MAX (outer, nchars64); inner < nchars; ++inner)
+	  க்கு (inner = MAX (outer, nchars64); inner < nchars; ++inner)
 	    {
 	      adr[inner] = L('\0');
 
-	      if ((STPCPY (dest, &adr[outer]) - dest) != inner - outer)
+	      எனில் ((STPCPY (dest, &adr[outer]) - dest) != inner - outer)
 		{
 		  printf ("%s flunked for outer = %zu, inner = %zu\n",
 			  STRINGIFY (STPCPY), outer, inner);
@@ -486,19 +486,19 @@ do_test (void)
 
 	      adr[inner] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* stpncpy/wcpncpy test */
       adr[nchars - 1] = L('T');
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
 	  size_t len;
 
-	  for (len = 0; len < nchars - outer; ++len)
+	  க்கு (len = 0; len < nchars - outer; ++len)
 	    {
-	      if (STPNCPY (dest, &adr[outer], len) != dest + len
+	      எனில் (STPNCPY (dest, &adr[outer], len) != dest + len
 		  || MEMCMP (dest, &adr[outer], len) != 0)
 		{
 		  printf ("outer %s flunked for outer = %zu, len = %zu\n",
@@ -506,113 +506,113 @@ do_test (void)
 		  result = 1;
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
       adr[nchars - 1] = L('\0');
 
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  க்கு (நடு = MAX (outer, nchars64); நடு < nchars; ++நடு)
 	    {
-	      adr[middle] = L('\0');
+	      adr[நடு] = L('\0');
 
-	      for (inner = 0; inner < nchars - outer; ++ inner)
+	      க்கு (inner = 0; inner < nchars - outer; ++ inner)
 		{
-		  if ((STPNCPY (dest, &adr[outer], inner) - dest)
-		      != MIN (inner, middle - outer))
+		  எனில் ((STPNCPY (dest, &adr[outer], inner) - dest)
+		      != MIN (inner, நடு - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STPNCPY), outer, middle, inner);
+			      STRINGIFY (STPNCPY), outer, நடு, inner);
 		      result = 1;
 		    }
 		}
 
-	      adr[middle] = L('T');
+	      adr[நடு] = L('T');
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* memcpy/wmemcpy test */
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (MEMCPY (dest, &adr[outer], inner) !=  dest)
+	  க்கு (inner = 0; inner < nchars - outer; ++inner)
+	    எனில் (MEMCPY (dest, &adr[outer], inner) !=  dest)
 	      {
 		printf ("%s flunked for outer = %zu, inner = %zu\n",
 			STRINGIFY (MEMCPY), outer, inner);
 		result = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* mempcpy/wmempcpy test */
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (MEMPCPY (dest, &adr[outer], inner) !=  dest + inner)
+	  க்கு (inner = 0; inner < nchars - outer; ++inner)
+	    எனில் (MEMPCPY (dest, &adr[outer], inner) !=  dest + inner)
 	      {
 		printf ("%s flunked for outer = %zu, inner = %zu\n",
 			STRINGIFY (MEMPCPY), outer, inner);
 		result = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 
       /* This function only exists for single-byte characters.  */
 #ifndef WCSTEST
       /* memccpy test */
       memset (adr, '\0', nchars);
-      for (outer = nchars; outer >= max128; --outer)
+      க்கு (outer = nchars; outer >= max128; --outer)
 	{
-	  for (inner = 0; inner < nchars - outer; ++inner)
-	    if (memccpy (dest, &adr[outer], L('\1'), inner) != NULL)
+	  க்கு (inner = 0; inner < nchars - outer; ++inner)
+	    எனில் (memccpy (dest, &adr[outer], L('\1'), inner) != வெற்று)
 	      {
 		printf ("memccpy flunked full copy for outer = %zu, inner = %zu\n",
 			outer, inner);
 		result = 1;
 	      }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
-      for (outer = nchars - 1; outer >= max128; --outer)
+      க்கு (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = 0; middle < nchars - outer; ++middle)
+	  க்கு (நடு = 0; நடு < nchars - outer; ++நடு)
 	    {
-	      memset (dest, L('\2'), middle + 1);
-	      for (inner = 0; inner < middle; ++inner)
+	      memset (dest, L('\2'), நடு + 1);
+	      க்கு (inner = 0; inner < நடு; ++inner)
 		{
 		  adr[outer + inner] = L('\1');
 
-		  if (memccpy (dest, &adr[outer], '\1', middle + 128)
+		  எனில் (memccpy (dest, &adr[outer], '\1', நடு + 128)
 		      !=  dest + inner + 1)
 		    {
 		      printf ("\
-			      memccpy flunked partial copy for outer = %zu, middle = %zu, inner = %zu\n",
-			      outer, middle, inner);
+			      memccpy flunked partial copy க்கு outer = %zu, நடு = %zu, inner = %zu\n",
+			      outer, நடு, inner);
 		      result = 1;
 		    }
-		  else if (dest[inner + 1] != L('\2'))
+		  இல்லையெனில் எனில் (dest[inner + 1] != L('\2'))
 		    {
 		      printf ("\
-			      memccpy copied too much for outer = %zu, middle = %zu, inner = %zu\n",
-			      outer, middle, inner);
+			      memccpy copied too much க்கு outer = %zu, நடு = %zu, inner = %zu\n",
+			      outer, நடு, inner);
 		      result = 1;
 		    }
 		  adr[outer + inner] = L('\0');
 		}
 	    }
-	  if (outer == 0)
-	    break;
+	  எனில் (outer == 0)
+	    நிறுத்து;
 	}
 #endif
     }
 
-  return result;
+  திரும்பு result;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

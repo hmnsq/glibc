@@ -18,9 +18,9 @@
 
 #define TEST_MAIN
 #define TEST_NAME "memrchr"
-#include "test-string.h"
+#அந்தர்பாவ "test-string.h"
 
-typedef char *(*proto_t) (const char *, int, size_t);
+வகைவரை எழுத்து *(*proto_t) (மாறிலி எழுத்து *, முழு, size_t);
 
 IMPL (memrchr, 1)
 
@@ -28,122 +28,122 @@ IMPL (memrchr, 1)
 #undef weak_alias
 #define weak_alias(a, b)
 #define MEMRCHR __memrchr_default
-#include "string/memrchr.c"
+#அந்தர்பாவ "string/memrchr.c"
 IMPL (__memrchr_default, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memrchr (const char *s, int c, size_t n)
+எழுத்து *
+simple_memrchr (மாறிலி எழுத்து *s, முழு c, size_t n)
 {
   s = s + n;
-  while (n--)
-    if (*--s == (char) c)
-      return (char *) s;
-  return NULL;
+  போது (n--)
+    எனில் (*--s == (எழுத்து) c)
+      திரும்பு (எழுத்து *) s;
+  திரும்பு வெற்று;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s, int c, size_t n, char *exp_res)
+நிலையான வெறுமை
+do_one_test (impl_t *impl, மாறிலி எழுத்து *s, முழு c, size_t n, எழுத்து *exp_res)
 {
-  char *res = CALL (impl, s, c, n);
-  if (res != exp_res)
+  எழுத்து *res = CALL (impl, s, c, n);
+  எனில் (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      திரும்பு;
     }
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+நிலையான வெறுமை
+do_test (size_t align, size_t pos, size_t len, முழு seek_char)
 {
   size_t i;
-  char *result;
+  எழுத்து *result;
 
   align &= 7;
-  if (align + len >= page_size)
-    return;
+  எனில் (align + len >= page_size)
+    திரும்பு;
 
-  for (i = 0; i < len; ++i)
+  க்கு (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      எனில் (buf1[align + i] == seek_char)
         buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
 
-  if (pos < len)
+  எனில் (pos < len)
     {
       buf1[align + pos] = seek_char;
       buf1[align + len] = -seek_char;
-      result = (char *) (buf1 + align + pos);
+      result = (எழுத்து *) (buf1 + align + pos);
     }
-  else
+  இல்லையெனில்
     {
-      result = NULL;
+      result = வெற்று;
       buf1[align + len] = seek_char;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (char *) (buf1 + align), seek_char, len, result);
+    do_one_test (impl, (எழுத்து *) (buf1 + align), seek_char, len, result);
 }
 
-static void
-do_random_tests (void)
+நிலையான வெறுமை
+do_random_tests (வெறுமை)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  char *result;
-  unsigned char *p = buf1 + page_size - 512;
+  முழு seek_char;
+  எழுத்து *result;
+  unsigned எழுத்து *p = buf1 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  க்கு (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      எனில் (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (pos >= len)
+      எனில் (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      எனில் (len + align >= 512)
         len = 512 - align - (random () & 7);
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      எனில் (j > 512)
         j = 512;
 
-      for (i = 0; i < j; i++)
+      க்கு (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  எனில் (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  இல்லையெனில்
 	    {
 	      p[i] = random () & 255;
-	      if (p[i] == seek_char)
+	      எனில் (p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (pos < len)
-	result = (char *) (p + pos + align);
-      else
-	result = NULL;
+      எனில் (pos < len)
+	result = (எழுத்து *) (p + pos + align);
+      இல்லையெனில்
+	result = வெற்று;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char, len) != result)
+	எனில் (CALL (impl, (எழுத்து *) (p + align), seek_char, len) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (char *) (p + align), seek_char, len),
+		   CALL (impl, (எழுத்து *) (p + align), seek_char, len),
 		   result, p);
 	    ret = 1;
 	  }
     }
 }
 
-int
-test_main (void)
+முழு
+test_main (வெறுமை)
 {
   size_t i;
 
@@ -154,7 +154,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  க்கு (i = 1; i < 8; ++i)
     {
       /* Test len == 0.  */
       do_test (i, i, 0, 0);
@@ -171,7 +171,7 @@ test_main (void)
       do_test (i, i, 256, 0);
 
     }
-  for (i = 1; i < 32; ++i)
+  க்கு (i = 1; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23);
       do_test (0, i, i + 1, 0);
@@ -185,7 +185,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  திரும்பு ret;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

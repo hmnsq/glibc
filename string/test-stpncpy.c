@@ -20,17 +20,17 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpncpy"
-#else
+#இல்லையெனில்
 # define TEST_NAME "wcpncpy"
 #endif /* WIDE */
-#include "test-string.h"
+#அந்தர்பாவ "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR எழுத்து
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#இல்லையெனில்
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
@@ -39,40 +39,40 @@
 # define STRNLEN wcsnlen
 #endif /* WIDE */
 
-CHAR *SIMPLE_STPNCPY (CHAR *, const CHAR *, size_t);
-CHAR *STUPID_STPNCPY (CHAR *, const CHAR *, size_t);
+CHAR *SIMPLE_STPNCPY (CHAR *, மாறிலி CHAR *, size_t);
+CHAR *STUPID_STPNCPY (CHAR *, மாறிலி CHAR *, size_t);
 
 IMPL (STUPID_STPNCPY, 0)
 IMPL (SIMPLE_STPNCPY, 0)
 IMPL (STPNCPY, 1)
 
 CHAR *
-SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STPNCPY (CHAR *dst, மாறிலி CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  போது (n--)
+    எனில் ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	க்கு (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	திரும்பு dst - 1;
       }
-  return dst;
+  திரும்பு dst;
 }
 
 CHAR *
-STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+STUPID_STPNCPY (CHAR *dst, மாறிலி CHAR *src, size_t n)
 {
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  க்கு (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  க்கு (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  திரும்பு dst + nc;
 }
 
 #undef CHAR
-#include "test-strncpy.c"
+#அந்தர்பாவ "test-strncpy.c"

@@ -23,56 +23,56 @@
 #define	_STRING_H	1
 
 #define __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
-#include <bits/libc-header-start.h>
+#அந்தர்பாவ <bits/libc-header-start.h>
 
 __BEGIN_DECLS
 
-#if __GLIBC_USE (ISOC23)
+#எனில் __GLIBC_USE (ISOC23)
 # define __STDC_VERSION_STRING_H__ 202311L
 #endif
 
 /* Get size_t and NULL from <stddef.h>.  */
 #define	__need_size_t
 #define	__need_NULL
-#include <stddef.h>
+#அந்தர்பாவ <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && (__GNUC_PREREQ (4, 4) \
+#எனில் defined __cplusplus && (__GNUC_PREREQ (4, 4) \
 			    || __glibc_clang_prereq (3, 5))
 # define __CORRECT_ISO_CPP_STRING_H_PROTO
 #endif
 
 
 /* Copy N bytes of SRC to DEST.  */
-extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+வெளி வெறுமை *memcpy (வெறுமை *__restrict __dest, மாறிலி வெறுமை *__restrict __src,
 		     size_t __n) __THROW __nonnull ((1, 2));
 /* Copy N bytes of SRC to DEST, guaranteeing
    correct behavior for overlapping strings.  */
-extern void *memmove (void *__dest, const void *__src, size_t __n)
+வெளி வெறுமை *memmove (வெறுமை *__dest, மாறிலி வெறுமை *__src, size_t __n)
      __THROW __nonnull ((1, 2));
 
 /* Copy no more than N bytes of SRC to DEST, stopping when C is found.
    Return the position in DEST one byte past where C was copied,
    or NULL if C was not found in the first N bytes of SRC.  */
-#if defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
-extern void *memccpy (void *__restrict __dest, const void *__restrict __src,
-		      int __c, size_t __n)
+#எனில் defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC23)
+வெளி வெறுமை *memccpy (வெறுமை *__restrict __dest, மாறிலி வெறுமை *__restrict __src,
+		      முழு __c, size_t __n)
     __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 4));
 #endif /* Misc || X/Open.  */
 
 
 /* Set N bytes of S to C.  */
-extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+வெளி வெறுமை *memset (வெறுமை *__s, முழு __c, size_t __n) __THROW __nonnull ((1));
 
-#if defined __USE_MISC || __GLIBC_USE (ISOC23)
+#எனில் defined __USE_MISC || __GLIBC_USE (ISOC23)
 /* Like memset, but the compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void *memset_explicit (void *__s, int __c, size_t __n)
+வெளி வெறுமை *memset_explicit (வெறுமை *__s, முழு __c, size_t __n)
      __THROW __nonnull ((1)) __fortified_attr_access (__write_only__, 1, 3);
 #endif
 
 /* Compare N bytes of S1 and S2.  */
-extern int memcmp (const void *__s1, const void *__s2, size_t __n)
+வெளி முழு memcmp (மாறிலி வெறுமை *__s1, மாறிலி வெறுமை *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare N bytes of S1 and S2.  Return zero if S1 and S2 are equal.
@@ -88,38 +88,38 @@ extern int memcmp (const void *__s1, const void *__s2, size_t __n)
 
    __memcmpeq is declared only for use by compilers.  Programs should
    continue to use memcmp.  */
-extern int __memcmpeq (const void *__s1, const void *__s2, size_t __n)
+வெளி முழு __memcmpeq (மாறிலி வெறுமை *__s1, மாறிலி வெறுமை *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Search N bytes of S for C.  */
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+வெளி "C++"
 {
-extern void *memchr (void *__s, int __c, size_t __n)
+வெளி வெறுமை *memchr (வெறுமை *__s, முழு __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
-extern const void *memchr (const void *__s, int __c, size_t __n)
+வெளி மாறிலி வெறுமை *memchr (மாறிலி வெறுமை *__s, முழு __c, size_t __n)
       __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline void *
-memchr (void *__s, int __c, size_t __n) __THROW
+__extern_always_inline வெறுமை *
+memchr (வெறுமை *__s, முழு __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  திரும்பு __builtin_memchr (__s, __c, __n);
 }
 
-__extern_always_inline const void *
-memchr (const void *__s, int __c, size_t __n) __THROW
+__extern_always_inline மாறிலி வெறுமை *
+memchr (மாறிலி வெறுமை *__s, முழு __c, size_t __n) __THROW
 {
-  return __builtin_memchr (__s, __c, __n);
+  திரும்பு __builtin_memchr (__s, __c, __n);
 }
 # endif
 }
-#else
-extern void *memchr (const void *__s, int __c, size_t __n)
+#இல்லையெனில்
+வெளி வெறுமை *memchr (மாறிலி வெறுமை *__s, முழு __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# எனில் __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define memchr(S, C, N)					\
-  __glibc_const_generic (S, const void *, memchr (S, C, N))
+  __glibc_const_generic (S, மாறிலி வெறுமை *, memchr (S, C, N))
 # endif
 #endif
 
@@ -127,25 +127,25 @@ extern void *memchr (const void *__s, int __c, size_t __n)
 /* Search in S for C.  This is similar to `memchr' but there is no
    length limit.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *rawmemchr (void *__s, int __c)
+வெளி "C++" வெறுமை *rawmemchr (வெறுமை *__s, முழு __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-extern "C++" const void *rawmemchr (const void *__s, int __c)
+வெளி "C++" மாறிலி வெறுமை *rawmemchr (மாறிலி வெறுமை *__s, முழு __c)
      __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
-# else
-extern void *rawmemchr (const void *__s, int __c)
+# இல்லையெனில்
+வெளி வெறுமை *rawmemchr (மாறிலி வெறுமை *__s, முழு __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Search N bytes of S for the final occurrence of C.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" void *memrchr (void *__s, int __c, size_t __n)
+வெளி "C++" வெறுமை *memrchr (வெறுமை *__s, முழு __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-extern "C++" const void *memrchr (const void *__s, int __c, size_t __n)
+வெளி "C++" மாறிலி வெறுமை *memrchr (மாறிலி வெறுமை *__s, முழு __c, size_t __n)
       __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
-# else
-extern void *memrchr (const void *__s, int __c, size_t __n)
+# இல்லையெனில்
+வெளி வெறுமை *memrchr (மாறிலி வெறுமை *__s, முழு __c, size_t __n)
       __THROW __attribute_pure__ __nonnull ((1))
       __attr_access ((__read_only__, 1, 3));
 # endif
@@ -153,33 +153,33 @@ extern void *memrchr (const void *__s, int __c, size_t __n)
 
 
 /* Copy SRC to DEST.  */
-extern char *strcpy (char *__restrict __dest, const char *__restrict __src)
+வெளி எழுத்து *strcpy (எழுத்து *__restrict __dest, மாறிலி எழுத்து *__restrict __src)
      __THROW __nonnull ((1, 2));
 /* Copy no more than N characters of SRC to DEST.  */
-extern char *strncpy (char *__restrict __dest,
-		      const char *__restrict __src, size_t __n)
+வெளி எழுத்து *strncpy (எழுத்து *__restrict __dest,
+		      மாறிலி எழுத்து *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
 
 /* Append SRC onto DEST.  */
-extern char *strcat (char *__restrict __dest, const char *__restrict __src)
+வெளி எழுத்து *strcat (எழுத்து *__restrict __dest, மாறிலி எழுத்து *__restrict __src)
      __THROW __nonnull ((1, 2));
 /* Append no more than N characters from SRC onto DEST.  */
-extern char *strncat (char *__restrict __dest, const char *__restrict __src,
+வெளி எழுத்து *strncat (எழுத்து *__restrict __dest, மாறிலி எழுத்து *__restrict __src,
 		      size_t __n) __THROW __nonnull ((1, 2));
 
 /* Compare S1 and S2.  */
-extern int strcmp (const char *__s1, const char *__s2)
+வெளி முழு strcmp (மாறிலி எழுத்து *__s1, மாறிலி எழுத்து *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Compare N characters of S1 and S2.  */
-extern int strncmp (const char *__s1, const char *__s2, size_t __n)
+வெளி முழு strncmp (மாறிலி எழுத்து *__s1, மாறிலி எழுத்து *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare the collated forms of S1 and S2.  */
-extern int strcoll (const char *__s1, const char *__s2)
+வெளி முழு strcoll (மாறிலி எழுத்து *__s1, மாறிலி எழுத்து *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Put a transformation of SRC into no more than N bytes of DEST.  */
-extern size_t strxfrm (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+வெளி size_t strxfrm (எழுத்து *__restrict __dest,
+		       மாறிலி எழுத்து *__restrict __src, size_t __n)
     __THROW __nonnull ((2)) __attr_access ((__write_only__, 1, 3));
 
 #ifdef __USE_XOPEN2K8
@@ -187,113 +187,113 @@ extern size_t strxfrm (char *__restrict __dest,
 # include <bits/types/locale_t.h>
 
 /* Compare the collated forms of S1 and S2, using sorting rules from L.  */
-extern int strcoll_l (const char *__s1, const char *__s2, locale_t __l)
+வெளி முழு strcoll_l (மாறிலி எழுத்து *__s1, மாறிலி எழுத்து *__s2, locale_t __l)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 /* Put a transformation of SRC into no more than N bytes of DEST,
    using sorting rules from L.  */
-extern size_t strxfrm_l (char *__dest, const char *__src, size_t __n,
+வெளி size_t strxfrm_l (எழுத்து *__dest, மாறிலி எழுத்து *__src, size_t __n,
 			 locale_t __l) __THROW __nonnull ((2, 4))
      __attr_access ((__write_only__, 1, 3));
 #endif
 
-#if (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
+#எனில் (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8	\
      || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23))
 /* Duplicate S, returning an identical malloc'd string.  */
-extern char *strdup (const char *__s)
+வெளி எழுத்து *strdup (மாறிலி எழுத்து *__s)
      __THROW __attribute_malloc__ __nonnull ((1));
 #endif
 
 /* Return a malloc'd copy of at most N bytes of STRING.  The
    resultant string is terminated even if no null terminator
    appears before STRING[N].  */
-#if defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
-extern char *strndup (const char *__string, size_t __n)
+#எனில் defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC23)
+வெளி எழுத்து *strndup (மாறிலி எழுத்து *__string, size_t __n)
      __THROW __attribute_malloc__ __nonnull ((1));
 #endif
 
-#if defined __USE_GNU && defined __GNUC__
+#எனில் defined __USE_GNU && defined __GNUC__
 /* Duplicate S, returning an identical alloca'd string.  */
 # define strdupa(s)							      \
   (__extension__							      \
     ({									      \
-      const char *__old = (s);						      \
+      மாறிலி எழுத்து *__old = (s);						      \
       size_t __len = strlen (__old) + 1;				      \
-      char *__new = (char *) __builtin_alloca (__len);			      \
-      (char *) memcpy (__new, __old, __len);				      \
+      எழுத்து *__new = (எழுத்து *) __builtin_alloca (__len);			      \
+      (எழுத்து *) memcpy (__new, __old, __len);				      \
     }))
 
 /* Return an alloca'd copy of at most N bytes of string.  */
 # define strndupa(s, n)							      \
   (__extension__							      \
     ({									      \
-      const char *__old = (s);						      \
+      மாறிலி எழுத்து *__old = (s);						      \
       size_t __len = strnlen (__old, (n));				      \
-      char *__new = (char *) __builtin_alloca (__len + 1);		      \
+      எழுத்து *__new = (எழுத்து *) __builtin_alloca (__len + 1);		      \
       __new[__len] = '\0';						      \
-      (char *) memcpy (__new, __old, __len);				      \
+      (எழுத்து *) memcpy (__new, __old, __len);				      \
     }))
 #endif
 
 /* Find the first occurrence of C in S.  */
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+வெளி "C++"
 {
-extern char *strchr (char *__s, int __c)
+வெளி எழுத்து *strchr (எழுத்து *__s, முழு __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
-extern const char *strchr (const char *__s, int __c)
+வெளி மாறிலி எழுத்து *strchr (மாறிலி எழுத்து *__s, முழு __c)
      __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strchr (char *__s, int __c) __THROW
+__extern_always_inline எழுத்து *
+strchr (எழுத்து *__s, முழு __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  திரும்பு __builtin_strchr (__s, __c);
 }
 
-__extern_always_inline const char *
-strchr (const char *__s, int __c) __THROW
+__extern_always_inline மாறிலி எழுத்து *
+strchr (மாறிலி எழுத்து *__s, முழு __c) __THROW
 {
-  return __builtin_strchr (__s, __c);
+  திரும்பு __builtin_strchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strchr (const char *__s, int __c)
+#இல்லையெனில்
+வெளி எழுத்து *strchr (மாறிலி எழுத்து *__s, முழு __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# எனில் __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strchr(S, C)						\
-  __glibc_const_generic (S, const char *, strchr (S, C))
+  __glibc_const_generic (S, மாறிலி எழுத்து *, strchr (S, C))
 # endif
 #endif
 /* Find the last occurrence of C in S.  */
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+வெளி "C++"
 {
-extern char *strrchr (char *__s, int __c)
+வெளி எழுத்து *strrchr (எழுத்து *__s, முழு __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
-extern const char *strrchr (const char *__s, int __c)
+வெளி மாறிலி எழுத்து *strrchr (மாறிலி எழுத்து *__s, முழு __c)
      __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strrchr (char *__s, int __c) __THROW
+__extern_always_inline எழுத்து *
+strrchr (எழுத்து *__s, முழு __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  திரும்பு __builtin_strrchr (__s, __c);
 }
 
-__extern_always_inline const char *
-strrchr (const char *__s, int __c) __THROW
+__extern_always_inline மாறிலி எழுத்து *
+strrchr (மாறிலி எழுத்து *__s, முழு __c) __THROW
 {
-  return __builtin_strrchr (__s, __c);
+  திரும்பு __builtin_strrchr (__s, __c);
 }
 # endif
 }
-#else
-extern char *strrchr (const char *__s, int __c)
+#இல்லையெனில்
+வெளி எழுத்து *strrchr (மாறிலி எழுத்து *__s, முழு __c)
      __THROW __attribute_pure__ __nonnull ((1));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# எனில் __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strrchr(S, C)						\
-  __glibc_const_generic (S, const char *, strrchr (S, C))
+  __glibc_const_generic (S, மாறிலி எழுத்து *, strrchr (S, C))
 # endif
 #endif
 
@@ -301,115 +301,115 @@ extern char *strrchr (const char *__s, int __c)
 /* This function is similar to `strchr'.  But it returns a pointer to
    the closing NUL byte in case C is not found in S.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strchrnul (char *__s, int __c)
+வெளி "C++" எழுத்து *strchrnul (எழுத்து *__s, முழு __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-extern "C++" const char *strchrnul (const char *__s, int __c)
+வெளி "C++" மாறிலி எழுத்து *strchrnul (மாறிலி எழுத்து *__s, முழு __c)
      __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
-# else
-extern char *strchrnul (const char *__s, int __c)
+# இல்லையெனில்
+வெளி எழுத்து *strchrnul (மாறிலி எழுத்து *__s, முழு __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 #endif
 
 /* Return the length of the initial segment of S which
    consists entirely of characters not in REJECT.  */
-extern size_t strcspn (const char *__s, const char *__reject)
+வெளி size_t strcspn (மாறிலி எழுத்து *__s, மாறிலி எழுத்து *__reject)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Return the length of the initial segment of S which
    consists entirely of characters in ACCEPT.  */
-extern size_t strspn (const char *__s, const char *__accept)
+வெளி size_t strspn (மாறிலி எழுத்து *__s, மாறிலி எழுத்து *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 /* Find the first occurrence in S of any character in ACCEPT.  */
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+வெளி "C++"
 {
-extern char *strpbrk (char *__s, const char *__accept)
+வெளி எழுத்து *strpbrk (எழுத்து *__s, மாறிலி எழுத்து *__accept)
      __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
-extern const char *strpbrk (const char *__s, const char *__accept)
+வெளி மாறிலி எழுத்து *strpbrk (மாறிலி எழுத்து *__s, மாறிலி எழுத்து *__accept)
      __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strpbrk (char *__s, const char *__accept) __THROW
+__extern_always_inline எழுத்து *
+strpbrk (எழுத்து *__s, மாறிலி எழுத்து *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  திரும்பு __builtin_strpbrk (__s, __accept);
 }
 
-__extern_always_inline const char *
-strpbrk (const char *__s, const char *__accept) __THROW
+__extern_always_inline மாறிலி எழுத்து *
+strpbrk (மாறிலி எழுத்து *__s, மாறிலி எழுத்து *__accept) __THROW
 {
-  return __builtin_strpbrk (__s, __accept);
+  திரும்பு __builtin_strpbrk (__s, __accept);
 }
 # endif
 }
-#else
-extern char *strpbrk (const char *__s, const char *__accept)
+#இல்லையெனில்
+வெளி எழுத்து *strpbrk (மாறிலி எழுத்து *__s, மாறிலி எழுத்து *__accept)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# எனில் __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strpbrk(S, ACCEPT)					\
-  __glibc_const_generic (S, const char *, strpbrk (S, ACCEPT))
+  __glibc_const_generic (S, மாறிலி எழுத்து *, strpbrk (S, ACCEPT))
 # endif
 #endif
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
 #ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++"
+வெளி "C++"
 {
-extern char *strstr (char *__haystack, const char *__needle)
+வெளி எழுத்து *strstr (எழுத்து *__haystack, மாறிலி எழுத்து *__needle)
      __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
-extern const char *strstr (const char *__haystack, const char *__needle)
+வெளி மாறிலி எழுத்து *strstr (மாறிலி எழுத்து *__haystack, மாறிலி எழுத்து *__needle)
      __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
 
 # ifdef __OPTIMIZE__
-__extern_always_inline char *
-strstr (char *__haystack, const char *__needle) __THROW
+__extern_always_inline எழுத்து *
+strstr (எழுத்து *__haystack, மாறிலி எழுத்து *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  திரும்பு __builtin_strstr (__haystack, __needle);
 }
 
-__extern_always_inline const char *
-strstr (const char *__haystack, const char *__needle) __THROW
+__extern_always_inline மாறிலி எழுத்து *
+strstr (மாறிலி எழுத்து *__haystack, மாறிலி எழுத்து *__needle) __THROW
 {
-  return __builtin_strstr (__haystack, __needle);
+  திரும்பு __builtin_strstr (__haystack, __needle);
 }
 # endif
 }
-#else
-extern char *strstr (const char *__haystack, const char *__needle)
+#இல்லையெனில்
+வெளி எழுத்து *strstr (மாறிலி எழுத்து *__haystack, மாறிலி எழுத்து *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
-# if __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
+# எனில் __GLIBC_USE (ISOC23) && defined __glibc_const_generic && !defined _LIBC
 #  define strstr(HAYSTACK, NEEDLE)			\
-  __glibc_const_generic (HAYSTACK, const char *,	\
+  __glibc_const_generic (HAYSTACK, மாறிலி எழுத்து *,	\
 			 strstr (HAYSTACK, NEEDLE))
 # endif
 #endif
 
 
 /* Divide S into tokens separated by characters in DELIM.  */
-extern char *strtok (char *__restrict __s, const char *__restrict __delim)
+வெளி எழுத்து *strtok (எழுத்து *__restrict __s, மாறிலி எழுத்து *__restrict __delim)
      __THROW __nonnull ((2));
 
 /* Divide S into tokens separated by characters in DELIM.  Information
    passed between calls are stored in SAVE_PTR.  */
-extern char *__strtok_r (char *__restrict __s,
-			 const char *__restrict __delim,
-			 char **__restrict __save_ptr)
+வெளி எழுத்து *__strtok_r (எழுத்து *__restrict __s,
+			 மாறிலி எழுத்து *__restrict __delim,
+			 எழுத்து **__restrict __save_ptr)
      __THROW __nonnull ((2, 3));
 #ifdef __USE_POSIX
-extern char *strtok_r (char *__restrict __s, const char *__restrict __delim,
-		       char **__restrict __save_ptr)
+வெளி எழுத்து *strtok_r (எழுத்து *__restrict __s, மாறிலி எழுத்து *__restrict __delim,
+		       எழுத்து **__restrict __save_ptr)
      __THROW __nonnull ((2, 3));
 #endif
 
 #ifdef __USE_MISC
 /* Similar to `strstr' but this function ignores the case of both strings.  */
 # ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *strcasestr (char *__haystack, const char *__needle)
+வெளி "C++" எழுத்து *strcasestr (எழுத்து *__haystack, மாறிலி எழுத்து *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-extern "C++" const char *strcasestr (const char *__haystack,
-				     const char *__needle)
+வெளி "C++" மாறிலி எழுத்து *strcasestr (மாறிலி எழுத்து *__haystack,
+				     மாறிலி எழுத்து *__needle)
      __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
-# else
-extern char *strcasestr (const char *__haystack, const char *__needle)
+# இல்லையெனில்
+வெளி எழுத்து *strcasestr (மாறிலி எழுத்து *__haystack, மாறிலி எழுத்து *__needle)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 # endif
 #endif
@@ -418,37 +418,37 @@ extern char *strcasestr (const char *__haystack, const char *__needle)
 /* Find the first occurrence of NEEDLE in HAYSTACK.
    NEEDLE is NEEDLELEN bytes long;
    HAYSTACK is HAYSTACKLEN bytes long.  */
-extern void *memmem (const void *__haystack, size_t __haystacklen,
-		     const void *__needle, size_t __needlelen)
+வெளி வெறுமை *memmem (மாறிலி வெறுமை *__haystack, size_t __haystacklen,
+		     மாறிலி வெறுமை *__needle, size_t __needlelen)
      __THROW __attribute_pure__ __nonnull ((1, 3))
     __attr_access ((__read_only__, 1, 2))
     __attr_access ((__read_only__, 3, 4));
 
 /* Copy N bytes of SRC to DEST, return pointer to bytes after the
    last written byte.  */
-extern void *__mempcpy (void *__restrict __dest,
-			const void *__restrict __src, size_t __n)
+வெளி வெறுமை *__mempcpy (வெறுமை *__restrict __dest,
+			மாறிலி வெறுமை *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-extern void *mempcpy (void *__restrict __dest,
-		      const void *__restrict __src, size_t __n)
+வெளி வெறுமை *mempcpy (வெறுமை *__restrict __dest,
+		      மாறிலி வெறுமை *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
 #endif
 
 
 /* Return the length of S.  */
-extern size_t strlen (const char *__s)
+வெளி size_t strlen (மாறிலி எழுத்து *__s)
      __THROW __attribute_pure__ __nonnull ((1));
 
 #ifdef	__USE_XOPEN2K8
 /* Find the length of STRING, but scan at most MAXLEN characters.
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
-extern size_t strnlen (const char *__string, size_t __maxlen)
+வெளி size_t strnlen (மாறிலி எழுத்து *__string, size_t __maxlen)
      __THROW __attribute_pure__ __nonnull ((1));
 #endif
 
 
 /* Return a string describing the meaning of the `errno' code in ERRNUM.  */
-extern char *strerror (int __errnum) __THROW;
+வெளி எழுத்து *strerror (முழு __errnum) __THROW;
 #ifdef __USE_XOPEN2K
 /* Reentrant version of `strerror'.
    There are 2 flavors of `strerror_r', GNU which returns the string
@@ -457,37 +457,37 @@ extern char *strerror (int __errnum) __THROW;
    To use the POSIX version, -D_XOPEN_SOURCE=600 or -D_POSIX_C_SOURCE=200112L
    without -D_GNU_SOURCE is needed, otherwise the GNU version is
    preferred.  */
-# if defined __USE_XOPEN2K && !defined __USE_GNU
+# எனில் defined __USE_XOPEN2K && !defined __USE_GNU
 /* Fill BUF with a string describing the meaning of the `errno' code in
    ERRNUM.  */
 #  ifdef __REDIRECT_NTH
-extern int __REDIRECT_NTH (strerror_r,
-			   (int __errnum, char *__buf, size_t __buflen),
+வெளி முழு __REDIRECT_NTH (strerror_r,
+			   (முழு __errnum, எழுத்து *__buf, size_t __buflen),
 			   __xpg_strerror_r) __nonnull ((2))
     __attr_access ((__write_only__, 2, 3));
-#  else
-extern int __xpg_strerror_r (int __errnum, char *__buf, size_t __buflen)
+#  இல்லையெனில்
+வெளி முழு __xpg_strerror_r (முழு __errnum, எழுத்து *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __attr_access ((__write_only__, 2, 3));
 #   define strerror_r __xpg_strerror_r
 #  endif
-# else
+# இல்லையெனில்
 /* If a temporary buffer is required, at most BUFLEN bytes of BUF will be
    used.  */
-extern char *strerror_r (int __errnum, char *__buf, size_t __buflen)
+வெளி எழுத்து *strerror_r (முழு __errnum, எழுத்து *__buf, size_t __buflen)
      __THROW __nonnull ((2)) __wur  __attr_access ((__write_only__, 2, 3));
 # endif
 
 # ifdef __USE_GNU
 /* Return a string describing the meaning of tthe error in ERR.  */
-extern const char *strerrordesc_np (int __err) __THROW;
+வெளி மாறிலி எழுத்து *strerrordesc_np (முழு __err) __THROW;
 /* Return a string with the error name in ERR.  */
-extern const char *strerrorname_np (int __err) __THROW;
+வெளி மாறிலி எழுத்து *strerrorname_np (முழு __err) __THROW;
 # endif
 #endif
 
 #ifdef __USE_XOPEN2K8
 /* Translate error number to string according to the locale L.  */
-extern char *strerror_l (int __errnum, locale_t __l) __THROW;
+வெளி எழுத்து *strerror_l (முழு __errnum, locale_t __l) __THROW;
 #endif
 
 #ifdef __USE_MISC
@@ -495,67 +495,67 @@ extern char *strerror_l (int __errnum, locale_t __l) __THROW;
 
 /* Set N bytes of S to 0.  The compiler will not delete a call to this
    function, even if S is dead after the call.  */
-extern void explicit_bzero (void *__s, size_t __n) __THROW __nonnull ((1))
+வெளி வெறுமை explicit_bzero (வெறுமை *__s, size_t __n) __THROW __nonnull ((1))
     __fortified_attr_access (__write_only__, 1, 2);
 
 /* Return the next DELIM-delimited token from *STRINGP,
    terminating it with a '\0', and update *STRINGP to point past it.  */
-extern char *strsep (char **__restrict __stringp,
-		     const char *__restrict __delim)
+வெளி எழுத்து *strsep (எழுத்து **__restrict __stringp,
+		     மாறிலி எழுத்து *__restrict __delim)
      __THROW __nonnull ((1, 2));
 #endif
 
 #ifdef	__USE_XOPEN2K8
 /* Return a string describing the meaning of the signal number in SIG.  */
-extern char *strsignal (int __sig) __THROW;
+வெளி எழுத்து *strsignal (முழு __sig) __THROW;
 
 # ifdef __USE_GNU
 /* Return an abbreviation string for the signal number SIG.  */
-extern const char *sigabbrev_np (int __sig) __THROW;
+வெளி மாறிலி எழுத்து *sigabbrev_np (முழு __sig) __THROW;
 /* Return a string describing the meaning of the signal number in SIG,
    the result is not translated.  */
-extern const char *sigdescr_np (int __sig) __THROW;
+வெளி மாறிலி எழுத்து *sigdescr_np (முழு __sig) __THROW;
 # endif
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-extern char *__stpcpy (char *__restrict __dest, const char *__restrict __src)
+வெளி எழுத்து *__stpcpy (எழுத்து *__restrict __dest, மாறிலி எழுத்து *__restrict __src)
      __THROW __nonnull ((1, 2));
-extern char *stpcpy (char *__restrict __dest, const char *__restrict __src)
+வெளி எழுத்து *stpcpy (எழுத்து *__restrict __dest, மாறிலி எழுத்து *__restrict __src)
      __THROW __nonnull ((1, 2));
 
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the last character written into DEST.  */
-extern char *__stpncpy (char *__restrict __dest,
-			const char *__restrict __src, size_t __n)
+வெளி எழுத்து *__stpncpy (எழுத்து *__restrict __dest,
+			மாறிலி எழுத்து *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
-extern char *stpncpy (char *__restrict __dest,
-		      const char *__restrict __src, size_t __n)
+வெளி எழுத்து *stpncpy (எழுத்து *__restrict __dest,
+		      மாறிலி எழுத்து *__restrict __src, size_t __n)
      __THROW __nonnull ((1, 2));
 #endif
 
 #ifdef __USE_MISC
 /* Copy at most N - 1 characters from SRC to DEST.  */
-extern size_t strlcpy (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+வெளி size_t strlcpy (எழுத்து *__restrict __dest,
+		       மாறிலி எழுத்து *__restrict __src, size_t __n)
   __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 3));
 
 /* Append SRC to DEST, possibly with truncation to keep the total size
    below N.  */
-extern size_t strlcat (char *__restrict __dest,
-		       const char *__restrict __src, size_t __n)
+வெளி size_t strlcat (எழுத்து *__restrict __dest,
+		       மாறிலி எழுத்து *__restrict __src, size_t __n)
   __THROW __nonnull ((1, 2))  __attr_access ((__read_write__, 1, 3));
 #endif
 
 #ifdef	__USE_GNU
 /* Compare S1 and S2 as strings holding name & indices/version numbers.  */
-extern int strverscmp (const char *__s1, const char *__s2)
+வெளி முழு strverscmp (மாறிலி எழுத்து *__s1, மாறிலி எழுத்து *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Sautee STRING briskly.  */
-extern char *strfry (char *__string) __THROW __nonnull ((1));
+வெளி எழுத்து *strfry (எழுத்து *__string) __THROW __nonnull ((1));
 
 /* Frobnicate N bytes of S.  */
-extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
+வெளி வெறுமை *memfrob (வெறுமை *__s, size_t __n) __THROW __nonnull ((1))
     __attr_access ((__read_write__, 1, 2));
 
 # ifndef basename
@@ -564,18 +564,18 @@ extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
    in <libgen.h>) which makes the XPG version of this function
    available.  */
 #  ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
-extern "C++" char *basename (char *__filename)
+வெளி "C++" எழுத்து *basename (எழுத்து *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-extern "C++" const char *basename (const char *__filename)
+வெளி "C++" மாறிலி எழுத்து *basename (மாறிலி எழுத்து *__filename)
      __THROW __asm ("basename") __nonnull ((1));
-#  else
-extern char *basename (const char *__filename) __THROW __nonnull ((1));
+#  இல்லையெனில்
+வெளி எழுத்து *basename (மாறிலி எழுத்து *__filename) __THROW __nonnull ((1));
 #  endif
 # endif
 #endif
 
-#if __GNUC_PREREQ (3,4)
-# if __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
+#எனில் __GNUC_PREREQ (3,4)
+# எனில் __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
 /* Functions with security checks.  */
 #  include <bits/string_fortified.h>
 # endif

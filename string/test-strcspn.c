@@ -21,18 +21,18 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#இல்லையெனில்
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
-#include "test-string.h"
+#அந்தர்பாவ "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR எழுத்து
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#இல்லையெனில்
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -41,40 +41,40 @@
 # define STRLEN wcslen
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+வகைவரை size_t (*proto_t) (மாறிலி CHAR *, மாறிலி CHAR *);
+size_t SIMPLE_STRCSPN (மாறிலி CHAR *, மாறிலி CHAR *);
+size_t STUPID_STRCSPN (மாறிலி CHAR *, மாறிலி CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (மாறிலி CHAR *s, மாறிலி CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  மாறிலி CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  போது ((c = *s++) != '\0')
+    க்கு (r = rej; *r != '\0'; ++r)
+      எனில் (*r == c)
+	திரும்பு s - str - 1;
+  திரும்பு s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (மாறிலி CHAR *s, மாறிலி CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  க்கு (i = 0; i < ns; ++i)
+    க்கு (j = 0; j < nrej; ++j)
+      எனில் (s[i] == rej[j])
+	திரும்பு i;
+  திரும்பு i;
 }
 
 #undef CHAR
 #undef STRLEN
-#include "test-strpbrk.c"
+#அந்தர்பாவ "test-strpbrk.c"

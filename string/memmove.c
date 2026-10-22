@@ -17,8 +17,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <memcopy.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <memcopy.h>
 
 /* All this is so that bcopy.c can #include
    this file after defining some things.  */
@@ -26,12 +26,12 @@
 #define	a1	dest	/* First arg is DEST.  */
 #define	a1const
 #define	a2	src	/* Second arg is SRC.  */
-#define	a2const	const
+#define	a2const	மாறிலி
 #undef memmove
 #endif
-#if	!defined(RETURN) || !defined(rettype)
-#define	RETURN(s)	return (s)	/* Return DEST.  */
-#define	rettype		void *
+#எனில்	!defined(RETURN) || !defined(rettype)
+#define	RETURN(s)	திரும்பு (s)	/* Return DEST.  */
+#define	rettype		வெறுமை *
 #endif
 
 #ifndef MEMMOVE
@@ -40,22 +40,22 @@
 
 rettype
 inhibit_loop_to_libcall
-MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
+MEMMOVE (a1const வெறுமை *a1, a2const வெறுமை *a2, size_t len)
 {
-  unsigned long int dstp = (long int) dest;
-  unsigned long int srcp = (long int) src;
+  unsigned long முழு dstp = (long முழு) dest;
+  unsigned long முழு srcp = (long முழு) src;
 
   /* This test makes the forward copying code be used whenever possible.
      Reduces the working set.  */
-  if (dstp - srcp >= len)	/* *Unsigned* compare!  */
+  எனில் (dstp - srcp >= len)	/* *Unsigned* compare!  */
     {
       /* Copy from the beginning to the end.  */
 
-#if MEMCPY_OK_FOR_FWD_MEMMOVE
+#எனில் MEMCPY_OK_FOR_FWD_MEMMOVE
       dest = memcpy (dest, src, len);
-#else
+#இல்லையெனில்
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      எனில் (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= (-dstp) % OPSIZ;
@@ -80,14 +80,14 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
       BYTE_COPY_FWD (dstp, srcp, len);
 #endif /* MEMCPY_OK_FOR_FWD_MEMMOVE */
     }
-  else
+  இல்லையெனில்
     {
       /* Copy from the end to the beginning.  */
       srcp += len;
       dstp += len;
 
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      எனில் (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= dstp % OPSIZ;

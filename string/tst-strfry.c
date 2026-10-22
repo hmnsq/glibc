@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#அந்தர்பாவ <stdio.h>
+#அந்தர்பாவ <string.h>
 
-int
-do_test (void)
+முழு
+do_test (வெறுமை)
 {
-  char str[] = "this is a test";
+  எழுத்து str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

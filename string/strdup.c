@@ -16,15 +16,15 @@
    <https://www.gnu.org/licenses/>.  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#அந்தர்பாவ <config.h>
 #endif
 
-#if defined _LIBC || defined  STDC_HEADERS
+#எனில் defined _LIBC || defined  STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
+#இல்லையெனில்
+எழுத்து *malloc ();
+எழுத்து *memcpy ();
 #endif
 
 #undef __strdup
@@ -35,16 +35,16 @@ char *memcpy ();
 #endif
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+எழுத்து *
+__strdup (மாறிலி எழுத்து *s)
 {
   size_t len = strlen (s) + 1;
-  void *new = malloc (len);
+  வெறுமை *new = malloc (len);
 
-  if (new == NULL)
-    return NULL;
+  எனில் (new == வெற்று)
+    திரும்பு வெற்று;
 
-  return (char *) memcpy (new, s, len);
+  திரும்பு (எழுத்து *) memcpy (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strdup)

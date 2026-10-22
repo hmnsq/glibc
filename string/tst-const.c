@@ -16,92 +16,92 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <libc-diag.h>
 
-void *vp;
-const void *cvp;
-int *ip;
-const int *cip;
-char *cp;
-const char *ccp;
-int c;
+வெறுமை *vp;
+மாறிலி வெறுமை *cvp;
+முழு *ip;
+மாறிலி முழு *cip;
+எழுத்து *cp;
+மாறிலி எழுத்து *ccp;
+முழு c;
 size_t sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#define CHECK_TYPE(கோவை, TYPE)					\
+  _Static_assert (_Generic (கோவை, TYPE: 1), "type check")
 
-static int
-do_test (void)
+நிலையான முழு
+do_test (வெறுமை)
 {
   /* This is a compilation test.  */
-  CHECK_TYPE (memchr (vp, c, sz), void *);
-  CHECK_TYPE (memchr (cvp, c, sz), const void *);
-  CHECK_TYPE (memchr (ip, c, sz), void *);
-  CHECK_TYPE (memchr (cip, c, sz), const void *);
-  CHECK_TYPE (memchr (cp, c, sz), void *);
-  CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (vp, c, sz), வெறுமை *);
+  CHECK_TYPE (memchr (cvp, c, sz), மாறிலி வெறுமை *);
+  CHECK_TYPE (memchr (ip, c, sz), வெறுமை *);
+  CHECK_TYPE (memchr (cip, c, sz), மாறிலி வெறுமை *);
+  CHECK_TYPE (memchr (cp, c, sz), வெறுமை *);
+  CHECK_TYPE (memchr (ccp, c, sz), மாறிலி வெறுமை *);
+  DIAG_தள்ளு_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (memchr (0, c, sz), void *);
-  CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((memchr) (cvp, c, sz), void *);
-  CHECK_TYPE (strchr (vp, c), char *);
-  CHECK_TYPE (strchr (cvp, c), const char *);
-  CHECK_TYPE (strchr (cp, c), char *);
-  CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (0, c, sz), வெறுமை *);
+  CHECK_TYPE (memchr ((வெறுமை *) 0, c, sz), வெறுமை *);
+  DIAG_எடு_NEEDS_COMMENT;
+  CHECK_TYPE ((memchr) (cvp, c, sz), வெறுமை *);
+  CHECK_TYPE (strchr (vp, c), எழுத்து *);
+  CHECK_TYPE (strchr (cvp, c), மாறிலி எழுத்து *);
+  CHECK_TYPE (strchr (cp, c), எழுத்து *);
+  CHECK_TYPE (strchr (ccp, c), மாறிலி எழுத்து *);
+  DIAG_தள்ளு_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strchr (0, c), char *);
-  CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strchr) (ccp, c), char *);
-  CHECK_TYPE (strpbrk (vp, vp), char *);
-  CHECK_TYPE (strpbrk (vp, cvp), char *);
-  CHECK_TYPE (strpbrk (cvp, vp), const char *);
-  CHECK_TYPE (strpbrk (cvp, cvp), const char *);
-  CHECK_TYPE (strpbrk (cp, cp), char *);
-  CHECK_TYPE (strpbrk (cp, ccp), char *);
-  CHECK_TYPE (strpbrk (ccp, cp), const char *);
-  CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strchr (0, c), எழுத்து *);
+  CHECK_TYPE (strchr ((வெறுமை *) 0, c), எழுத்து *);
+  DIAG_எடு_NEEDS_COMMENT;
+  CHECK_TYPE ((strchr) (ccp, c), எழுத்து *);
+  CHECK_TYPE (strpbrk (vp, vp), எழுத்து *);
+  CHECK_TYPE (strpbrk (vp, cvp), எழுத்து *);
+  CHECK_TYPE (strpbrk (cvp, vp), மாறிலி எழுத்து *);
+  CHECK_TYPE (strpbrk (cvp, cvp), மாறிலி எழுத்து *);
+  CHECK_TYPE (strpbrk (cp, cp), எழுத்து *);
+  CHECK_TYPE (strpbrk (cp, ccp), எழுத்து *);
+  CHECK_TYPE (strpbrk (ccp, cp), மாறிலி எழுத்து *);
+  CHECK_TYPE (strpbrk (ccp, ccp), மாறிலி எழுத்து *);
+  DIAG_தள்ளு_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strpbrk (0, cp), char *);
-  CHECK_TYPE (strpbrk (0, ccp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
-  CHECK_TYPE (strrchr (vp, c), char *);
-  CHECK_TYPE (strrchr (cvp, c), const char *);
-  CHECK_TYPE (strrchr (cp, c), char *);
-  CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strpbrk (0, cp), எழுத்து *);
+  CHECK_TYPE (strpbrk (0, ccp), எழுத்து *);
+  CHECK_TYPE (strpbrk ((வெறுமை *) 0, cp), எழுத்து *);
+  CHECK_TYPE (strpbrk ((வெறுமை *) 0, ccp), எழுத்து *);
+  DIAG_எடு_NEEDS_COMMENT;
+  CHECK_TYPE ((strpbrk) (ccp, ccp), எழுத்து *);
+  CHECK_TYPE (strrchr (vp, c), எழுத்து *);
+  CHECK_TYPE (strrchr (cvp, c), மாறிலி எழுத்து *);
+  CHECK_TYPE (strrchr (cp, c), எழுத்து *);
+  CHECK_TYPE (strrchr (ccp, c), மாறிலி எழுத்து *);
+  DIAG_தள்ளு_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strrchr (0, c), char *);
-  CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strrchr) (ccp, c), char *);
-  CHECK_TYPE (strstr (vp, vp), char *);
-  CHECK_TYPE (strstr (vp, cvp), char *);
-  CHECK_TYPE (strstr (cvp, vp), const char *);
-  CHECK_TYPE (strstr (cvp, cvp), const char *);
-  CHECK_TYPE (strstr (cp, cp), char *);
-  CHECK_TYPE (strstr (cp, ccp), char *);
-  CHECK_TYPE (strstr (ccp, cp), const char *);
-  CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strrchr (0, c), எழுத்து *);
+  CHECK_TYPE (strrchr ((வெறுமை *) 0, c), எழுத்து *);
+  DIAG_எடு_NEEDS_COMMENT;
+  CHECK_TYPE ((strrchr) (ccp, c), எழுத்து *);
+  CHECK_TYPE (strstr (vp, vp), எழுத்து *);
+  CHECK_TYPE (strstr (vp, cvp), எழுத்து *);
+  CHECK_TYPE (strstr (cvp, vp), மாறிலி எழுத்து *);
+  CHECK_TYPE (strstr (cvp, cvp), மாறிலி எழுத்து *);
+  CHECK_TYPE (strstr (cp, cp), எழுத்து *);
+  CHECK_TYPE (strstr (cp, ccp), எழுத்து *);
+  CHECK_TYPE (strstr (ccp, cp), மாறிலி எழுத்து *);
+  CHECK_TYPE (strstr (ccp, ccp), மாறிலி எழுத்து *);
+  DIAG_தள்ளு_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strstr (0, cp), char *);
-  CHECK_TYPE (strstr (0, ccp), char *);
-  CHECK_TYPE (strstr ((void *) 0, cp), char *);
-  CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  CHECK_TYPE (strstr (0, cp), எழுத்து *);
+  CHECK_TYPE (strstr (0, ccp), எழுத்து *);
+  CHECK_TYPE (strstr ((வெறுமை *) 0, cp), எழுத்து *);
+  CHECK_TYPE (strstr ((வெறுமை *) 0, ccp), எழுத்து *);
+  DIAG_எடு_NEEDS_COMMENT;
+  CHECK_TYPE ((strstr) (ccp, ccp), எழுத்து *);
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

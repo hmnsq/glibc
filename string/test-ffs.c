@@ -15,41 +15,41 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/check.h>
+#அந்தர்பாவ <stdlib.h>
+#அந்தர்பாவ <stdio.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+வெறுமை try (மாறிலி எழுத்து *name, long long முழு param, முழு மதிப்பு, முழு expected)
 {
-  if (value != expected)
+  எனில் (மதிப்பு != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
+	      name, param, expected, மதிப்பு);
       support_record_failure ();
     }
-  else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+  இல்லையெனில்
+    printf ("%s(%#llx) as expected %d\n", name, param, மதிப்பு);
 }
 
-int
-do_test (void)
+முழு
+do_test (வெறுமை)
 {
-  int i;
+  முழு i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  க்கு (i=0 ; i < 8 * அளவு (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  க்கு (i=0 ; i < 8 * அளவு (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, முழு);
+  TEST (ffsl, long முழு);
+  TEST (ffsll, long long முழு);
 
-  return 0;
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

@@ -21,13 +21,13 @@
 # include <config.h>
 #endif
 
-#include <string.h>
-#include <ctype.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <ctype.h>
 
 #ifndef weak_alias
 # define __strncasecmp strncasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#இல்லையெனில்
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strncasecmp __strncasecmp_l
@@ -37,7 +37,7 @@
 
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#இல்லையெனில்
 # define LOCALE_PARAM
 #endif
 
@@ -45,24 +45,24 @@
    ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less
    than, equal to or greater than S2.  */
-int
-__strncasecmp (const char *s1, const char *s2, size_t n LOCALE_PARAM)
+முழு
+__strncasecmp (மாறிலி எழுத்து *s1, மாறிலி எழுத்து *s2, size_t n LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#எனில் defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
 #endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+  மாறிலி unsigned எழுத்து *p1 = (மாறிலி unsigned எழுத்து *) s1;
+  மாறிலி unsigned எழுத்து *p2 = (மாறிலி unsigned எழுத்து *) s2;
+  முழு result;
 
-  if (p1 == p2 || n == 0)
-    return 0;
+  எனில் (p1 == p2 || n == 0)
+    திரும்பு 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0' || --n == 0)
-      break;
+  போது ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    எனில் (*p1++ == '\0' || --n == 0)
+      நிறுத்து;
 
-  return result;
+  திரும்பு result;
 }
 #ifndef __strncasecmp
 weak_alias (__strncasecmp, strncasecmp)

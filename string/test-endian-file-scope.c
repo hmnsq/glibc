@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#அந்தர்பாவ <endian.h>
+#அந்தர்பாவ <stddef.h>
 
-int i;
+முழு i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = அளவு (htobe16 (i));
+size_t s1 = அளவு (htole16 (i));
+size_t s2 = அளவு (be16toh (i));
+size_t s3 = அளவு (le16toh (i));
+size_t s4 = அளவு (htobe32 (i));
+size_t s5 = அளவு (htole32 (i));
+size_t s6 = அளவு (be32toh (i));
+size_t s7 = அளவு (le32toh (i));
+size_t s8 = அளவு (htobe64 (i));
+size_t s9 = அளவு (htole64 (i));
+size_t s10 = அளவு (be64toh (i));
+size_t s11 = அளவு (le64toh (i));
 
-static int
-do_test (void)
+நிலையான முழு
+do_test (வெறுமை)
 {
   /* This is a compilation test.  */
-  return 0;
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

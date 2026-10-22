@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#அந்தர்பாவ <stdlib.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+நிலையான வெறுமை
+str_append (எழுத்து **to, size_t *to_len, மாறிலி எழுத்து *buf, மாறிலி size_t buf_len)
 {
   size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  எழுத்து *new_to = realloc (*to, new_len + 1);
 
-  if (new_to)
+  எனில் (new_to)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
+      *((எழுத்து *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
       *to = new_to;
       *to_len = new_len;
     }
-  else
+  இல்லையெனில்
     {
-      free (*to);
-      *to = NULL;
+      விடுவி (*to);
+      *to = வெற்று;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (எழுத்து **argz, size_t *argz_len, மாறிலி எழுத்து *str, மாறிலி எழுத்து *with,
+		unsigned *replace_மொத்தம்)
 {
   error_t err = 0;
 
-  if (str && *str)
+  எனில் (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      எழுத்து *arg = வெற்று;
+      எழுத்து *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      எழுத்து *dst = வெற்று;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      முழு delayed_copy = 1;	/* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      போது (!err && (arg = argz_next (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  எழுத்து *match = strstr (arg, str);
+	  எனில் (match)
 	    {
-	      char *from = match + str_len;
+	      எழுத்து *from = match + str_len;
 	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      எழுத்து *to = __strndup (arg, to_len);
 
-	      while (to && from)
+	      போது (to && from)
 		{
 		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  எனில் (to)
 		    {
 		      match = strstr (from, str);
-		      if (match)
+		      எனில் (match)
 			{
 			  str_append (&to, &to_len, from, match - from);
 			  from = match + str_len;
 			}
-		      else
+		      இல்லையெனில்
 			{
 			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  from = வெற்று;
 			}
 		    }
 		}
 
-	      if (to)
+	      எனில் (to)
 		{
-		  if (delayed_copy)
+		  எனில் (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      எனில் (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
+		  எனில் (! err)
 		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  விடுவி (to);
 		}
-	      else
+	      இல்லையெனில்
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      எனில் (replace_மொத்தம்)
+		(*replace_மொத்தம்)++;
 	    }
-	  else if (! delayed_copy)
+	  இல்லையெனில் எனில் (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      எனில் (! err)
 	{
-	  if (! delayed_copy)
+	  எனில் (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      விடுவி (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      இல்லையெனில் எனில் (dst_len > 0)
+	விடுவி (dst);
     }
 
-  return err;
+  திரும்பு err;
 }
 weak_alias (__argz_replace, argz_replace)

@@ -16,4 +16,4 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 #define TEST_BZERO
-#include "test-memset.c"
+#அந்தர்பாவ "test-memset.c"

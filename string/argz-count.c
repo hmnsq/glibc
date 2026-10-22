@@ -16,22 +16,22 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#அந்தர்பாவ <argz.h>
+#அந்தர்பாவ <string.h>
 
 /* Returns the number of strings in ARGZ.  */
 size_t
-__argz_count (const char *argz, size_t len)
+__argz_count (மாறிலி எழுத்து *argz, size_t len)
 {
-  size_t count = 0;
-  while (len > 0)
+  size_t மொத்தம் = 0;
+  போது (len > 0)
     {
       size_t part_len = strlen(argz);
       argz += part_len + 1;
       len -= part_len + 1;
-      count++;
+      மொத்தம்++;
     }
-  return count;
+  திரும்பு மொத்தம்;
 }
 libc_hidden_def (__argz_count)
-weak_alias (__argz_count, argz_count)
+weak_alias (__argz_count, argz_மொத்தம்)

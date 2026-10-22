@@ -21,7 +21,7 @@
    Architecture-specific implementations also need to define
    __memset_explicit_chk.  */
 
-#include <string.h>
+#அந்தர்பாவ <string.h>
 
 /* glibc-internal users use __memset_explicit_chk, and memset_explicit
    redirects to that.  */
@@ -29,11 +29,11 @@
 
 /* Set LEN bytes of S to C.  The compiler will not delete a call to
    this function, even if S is dead after the call.  */
-void *
-memset_explicit (void *s, int c, size_t len)
+வெறுமை *
+memset_explicit (வெறுமை *s, முழு c, size_t len)
 {
   memset (s, c, len);
   /* Compiler barrier.  */
-  asm volatile ("" ::: "memory");
-  return s;
+  asm நிலையற்ற ("" ::: "memory");
+  திரும்பு s;
 }

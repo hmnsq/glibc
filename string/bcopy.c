@@ -15,10 +15,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#அந்தர்பாவ <string.h>
 
-void
-bcopy (const void *src, void *dest, size_t len)
+வெறுமை
+bcopy (மாறிலி வெறுமை *src, வெறுமை *dest, size_t len)
 {
   memmove (dest, src, len);
 }

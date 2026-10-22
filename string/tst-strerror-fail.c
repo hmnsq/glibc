@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#அந்தர்பாவ <locale.h>
+#அந்தர்பாவ <stdbool.h>
+#அந்தர்பாவ <stdlib.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <support/check.h>
+#அந்தர்பாவ <support/namespace.h>
+#அந்தர்பாவ <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+நிலையான நிலையற்ற bool fail_malloc;
 
-void *
+வெறுமை *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  எனில் (fail_malloc)
+    திரும்பு வெற்று;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  நிலையான வெறுமை *(*original_malloc) (size_t);
+  எனில் (original_malloc == வெற்று)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  திரும்பு original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+நிலையான வெறுமை
+test_strerror (வெறுமை *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  மாறிலி எழுத்து *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+நிலையான வெறுமை
+test_strerror_l (வெறுமை *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  மாறிலி எழுத்து *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+நிலையான முழு
+do_test (வெறுமை)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, வெற்று);
+  support_isolate_in_subprocess (test_strerror_l, வெற்று);
 
-  return 0;
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#அந்தர்பாவ "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#அந்தர்பாவ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+நிலையான எழுத்து *
+simple_strcasestr (மாறிலி எழுத்து *s1, மாறிலி எழுத்து *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  எனில் (s2len > s1len)
+    திரும்பு வெற்று;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  க்கு (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      க்கு (j = 0; j < s2len; ++j)
+	எனில் (tolower (s1[i + j]) != tolower (s2[j]))
+	  நிறுத்து;
+      எனில் (j == s2len)
+	திரும்பு (எழுத்து *) s1 + i;
     }
 
-  return NULL;
+  திரும்பு வெற்று;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+வகைவரை எழுத்து *(*proto_t) (மாறிலி எழுத்து *, மாறிலி எழுத்து *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+நிலையான முழு
+check_result (impl_t *impl, மாறிலி எழுத்து *s1, மாறிலி எழுத்து *s2,
+	      எழுத்து *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  எழுத்து *result = CALL (impl, s1, s2);
+  எனில் (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == வெற்று) ? "(null)" : result,
+	     (exp_result == வெற்று) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      திரும்பு -1;
     }
-  return 0;
+  திரும்பு 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+நிலையான வெறுமை
+do_one_test (impl_t *impl, மாறிலி எழுத்து *s1, மாறிலி எழுத்து *s2, எழுத்து *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  எனில் (check_result (impl, s1, s2, exp_result) < 0)
+    திரும்பு;
 }
 
 
-static void
+நிலையான வெறுமை
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 முழு fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  எழுத்து *s1 = (எழுத்து *) (buf1 + align1);
+  எழுத்து *s2 = (எழுத்து *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  நிலையான மாறிலி எழுத்து d[] = "1234567890abcxyz";
+#define dl (அளவு (d) - 1)
+  எழுத்து *ss2 = s2;
+  க்கு (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  எனில் (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      எழுத்து *ss1 = s1;
+      க்கு (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  இல்லையெனில்
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      க்கு (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? வெற்று : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+நிலையான வெறுமை
+check1 (வெறுமை)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  மாறிலி எழுத்து s1[] = "AOKB";
+  மாறிலி எழுத்து s2[] = "OK";
+  எழுத்து *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+நிலையான முழு
+test_main (வெறுமை)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  க்கு (size_t klen = 2; klen < 32; ++klen)
+    க்கு (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  திரும்பு ret;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

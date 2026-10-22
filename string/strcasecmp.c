@@ -19,13 +19,13 @@
 # include <config.h>
 #endif
 
-#include <ctype.h>
-#include <string.h>
+#அந்தர்பாவ <ctype.h>
+#அந்தர்பாவ <string.h>
 
 #ifndef _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#இல்லையெனில்
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
@@ -35,31 +35,31 @@
 
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#இல்லையெனில்
 # define LOCALE_PARAM
 #endif
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+முழு
+__strcasecmp (மாறிலி எழுத்து *s1, மாறிலி எழுத்து *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#எனில் defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
 #endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+  மாறிலி unsigned எழுத்து *p1 = (மாறிலி unsigned எழுத்து *) s1;
+  மாறிலி unsigned எழுத்து *p2 = (மாறிலி unsigned எழுத்து *) s2;
+  முழு result;
 
-  if (p1 == p2)
-    return 0;
+  எனில் (p1 == p2)
+    திரும்பு 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  போது ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    எனில் (*p1++ == '\0')
+      நிறுத்து;
 
-  return result;
+  திரும்பு result;
 }
 #ifndef __strcasecmp
 libc_hidden_def (__strcasecmp)

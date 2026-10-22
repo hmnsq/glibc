@@ -20,14 +20,14 @@
 # include <config.h>
 #endif
 
-#include <string.h>
+#அந்தர்பாவ <string.h>
 
-#define RETURN_TYPE char *
+#define RETURN_TYPE எழுத்து *
 #define AVAILABLE(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((வெறுமை*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#include "str-two-way.h"
+#அந்தர்பாவ "str-two-way.h"
 
 #undef strstr
 
@@ -35,31 +35,31 @@
 #define STRSTR strstr
 #endif
 
-static inline char *
-strstr2 (const unsigned char *hs, const unsigned char *ne)
+நிலையான உள்வரி எழுத்து *
+strstr2 (மாறிலி unsigned எழுத்து *hs, மாறிலி unsigned எழுத்து *ne)
 {
   uint32_t h1 = (ne[0] << 16) | ne[1];
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  க்கு (முழு c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 << 16) | c;
-  return h1 == h2 ? (char *)hs - 2 : NULL;
+  திரும்பு h1 == h2 ? (எழுத்து *)hs - 2 : வெற்று;
 }
 
-static inline char *
-strstr3 (const unsigned char *hs, const unsigned char *ne)
+நிலையான உள்வரி எழுத்து *
+strstr3 (மாறிலி unsigned எழுத்து *hs, மாறிலி unsigned எழுத்து *ne)
 {
   uint32_t h1 = ((uint32_t)ne[0] << 24) | (ne[1] << 16) | (ne[2] << 8);
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  க்கு (முழு c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 | c) << 8;
-  return h1 == h2 ? (char *)hs - 3 : NULL;
+  திரும்பு h1 == h2 ? (எழுத்து *)hs - 3 : வெற்று;
 }
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % அளவு (shift))
 
 /* Fast strstr algorithm with guaranteed linear-time performance.
    Small needles up to size 3 use a dedicated linear search.  Longer needles
@@ -72,84 +72,84 @@ strstr3 (const unsigned char *hs, const unsigned char *ne)
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-char *
-STRSTR (const char *haystack, const char *needle)
+எழுத்து *
+STRSTR (மாறிலி எழுத்து *haystack, மாறிலி எழுத்து *needle)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  மாறிலி unsigned எழுத்து *hs = (மாறிலி unsigned எழுத்து *) haystack;
+  மாறிலி unsigned எழுத்து *ne = (மாறிலி unsigned எழுத்து *) needle;
 
   /* Handle short needle special cases first.  */
-  if (ne[0] == '\0')
-    return (char *)hs;
-  hs = (const unsigned char *)strchr ((const char*)hs, ne[0]);
-  if (hs == NULL || ne[1] == '\0')
-    return (char*)hs;
-  if (ne[2] == '\0')
-    return strstr2 (hs, ne);
-  if (ne[3] == '\0')
-    return strstr3 (hs, ne);
+  எனில் (ne[0] == '\0')
+    திரும்பு (எழுத்து *)hs;
+  hs = (மாறிலி unsigned எழுத்து *)strchr ((மாறிலி எழுத்து*)hs, ne[0]);
+  எனில் (hs == வெற்று || ne[1] == '\0')
+    திரும்பு (எழுத்து*)hs;
+  எனில் (ne[2] == '\0')
+    திரும்பு strstr2 (hs, ne);
+  எனில் (ne[3] == '\0')
+    திரும்பு strstr3 (hs, ne);
 
   /* Ensure haystack length is at least as long as needle length.
      Since a match may occur early on in a huge haystack, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  size_t ne_len = strlen ((const char*)ne);
-  size_t hs_len = __strnlen ((const char*)hs, ne_len | 512);
-  if (hs_len < ne_len)
-    return NULL;
+  size_t ne_len = strlen ((மாறிலி எழுத்து*)ne);
+  size_t hs_len = __strnlen ((மாறிலி எழுத்து*)hs, ne_len | 512);
+  எனில் (hs_len < ne_len)
+    திரும்பு வெற்று;
 
   /* Check whether we have a match.  This improves performance since we
      avoid initialization overheads.  */
-  if (memcmp (hs, ne, ne_len) == 0)
-    return (char *) hs;
+  எனில் (memcmp (hs, ne, ne_len) == 0)
+    திரும்பு (எழுத்து *) hs;
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__glibc_unlikely (ne_len > 256))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  எனில் (__glibc_unlikely (ne_len > 256))
+    திரும்பு two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  மாறிலி unsigned எழுத்து *end = hs + hs_len - ne_len;
   uint8_t shift[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
   size_t offset = 0;
 
   /* Initialize bad character shift hash table.  */
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
+  memset (shift, 0, அளவு (shift));
+  க்கு (முழு i = 1; i < m1; i++)
     shift[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
   shift1 = m1 - shift[hash2 (ne + m1)];
   shift[hash2 (ne + m1)] = m1;
 
-  while (1)
+  போது (1)
     {
-      if (__glibc_unlikely (hs > end))
+      எனில் (__glibc_unlikely (hs > end))
 	{
-	  end += __strnlen ((const char*)end + m1 + 1, 2048);
-	  if (hs > end)
-	    return NULL;
+	  end += __strnlen ((மாறிலி எழுத்து*)end + m1 + 1, 2048);
+	  எனில் (hs > end)
+	    திரும்பு வெற்று;
 	}
 
       /* Skip past character pairs not in the needle.  */
-      do
+      செய்
 	{
 	  hs += m1;
 	  tmp = shift[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      போது (tmp == 0 && hs <= end);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      எனில் (tmp < m1)
+	தொடர்;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      எனில் (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  எனில் (memcmp (hs, ne, m1) == 0)
+	    திரும்பு (வெறுமை *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
 	  offset = (offset >= 8 ? offset : m1) - 8;

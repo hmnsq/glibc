@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#அந்தர்பாவ <stdio.h>
+#அந்தர்பாவ <envz.h>
+#அந்தர்பாவ <stdlib.h>
+#அந்தர்பாவ <string.h>
 
-static const struct
+நிலையான மாறிலி கட்டமைப்பு
 {
-  const char *s;
-  int in_result;
+  மாறிலி எழுத்து *s;
+  முழு in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (அளவு (strs) / அளவு (strs[0]))
 
 
-int
-do_test (void)
+முழு
+do_test (வெறுமை)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  எழுத்து *str = malloc (100);
+  எனில் (str == வெற்று)
     {
       puts ("out of memory");
-      return 1;
+      திரும்பு 1;
     }
 
-  char **argz = &str;
+  எழுத்து **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  க்கு (முழு i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  முழு result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  க்கு (முழு i = 0; i < nstrs; ++i)
+    எனில் (strs[i].in_result)
       {
-        char name[2];
+        எழுத்து name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        எழுத்து *e = envz_entry (*argz, size, name);
+        எனில் (e == வெற்று)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        இல்லையெனில் எனில் (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -68,8 +68,8 @@ do_test (void)
           }
       }
 
-  free (*argz);
-  return result;
+  விடுவி (*argz);
+  திரும்பு result;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

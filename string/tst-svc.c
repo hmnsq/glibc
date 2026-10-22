@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#அந்தர்பாவ <stdlib.h>
+#அந்தர்பாவ <stdio.h>
+#அந்தர்பாவ <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_வரி_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+நிலையான முழு
+compare (மாறிலி வெறுமை *p1, மாறிலி வெறுமை *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  திரும்பு strverscmp (*((எழுத்து **) p1), *((எழுத்து **) p2));
 }
 
-int
-do_test (void)
+முழு
+do_test (வெறுமை)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  எழுத்து வரி[MAX_வரி_SIZE + 1];
+  எழுத்து *str[MAX_STRINGS];
+  முழு  மொத்தம் = 0;
+  முழு  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  போது (மொத்தம் < MAX_STRINGS && fgets (வரி, MAX_வரி_SIZE, stdin) != வெற்று)
     {
-      n = strlen (line) - 1;
+      n = strlen (வரி) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      எனில் (வரி[n] == '\n')
+        வரி[n] = '\0';
 
-      str[count] = strdup (line);
+      str[மொத்தம்] = strdup (வரி);
 
-      if (str[count] == NULL)
+      எனில் (str[மொத்தம்] == வெற்று)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++மொத்தம்;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, மொத்தம், அளவு (எழுத்து *), compare);
 
-  for (i = 0; i < count; ++i)
+  க்கு (i = 0; i < மொத்தம்; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  திரும்பு EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

@@ -16,34 +16,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stdint.h>
+#அந்தர்பாவ <endian.h>
+#அந்தர்பாவ <stdint.h>
 
-int i;
+முழு i;
 uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-int
-do_test (void)
+முழு
+do_test (வெறுமை)
 {
   /* This is a compilation test.  */
-  extern __typeof (htobe16 (i)) u16;
-  extern __typeof (htole16 (i)) u16;
-  extern __typeof (be16toh (i)) u16;
-  extern __typeof (le16toh (i)) u16;
-  extern __typeof (htobe32 (i)) u32;
-  extern __typeof (htole32 (i)) u32;
-  extern __typeof (be32toh (i)) u32;
-  extern __typeof (le32toh (i)) u32;
-  extern __typeof (htobe64 (i)) u64;
-  extern __typeof (htole64 (i)) u64;
-  extern __typeof (be64toh (i)) u64;
-  extern __typeof (le64toh (i)) u64;
-  (void) u16;
-  (void) u32;
-  (void) u64;
-  return 0;
+  வெளி __typeof (htobe16 (i)) u16;
+  வெளி __typeof (htole16 (i)) u16;
+  வெளி __typeof (be16toh (i)) u16;
+  வெளி __typeof (le16toh (i)) u16;
+  வெளி __typeof (htobe32 (i)) u32;
+  வெளி __typeof (htole32 (i)) u32;
+  வெளி __typeof (be32toh (i)) u32;
+  வெளி __typeof (le32toh (i)) u32;
+  வெளி __typeof (htobe64 (i)) u64;
+  வெளி __typeof (htole64 (i)) u64;
+  வெளி __typeof (be64toh (i)) u64;
+  வெளி __typeof (le64toh (i)) u64;
+  (வெறுமை) u16;
+  (வெறுமை) u32;
+  (வெறுமை) u64;
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>

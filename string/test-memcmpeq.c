@@ -18,4 +18,4 @@
 
 #define BAD_RESULT(result, expec) ((!(result)) != (!(expec)))
 #define TEST_MEMCMPEQ 1
-#include "test-memcmp.c"
+#அந்தர்பாவ "test-memcmp.c"

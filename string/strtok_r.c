@@ -20,7 +20,7 @@
 # include <config.h>
 #endif
 
-#include <string.h>
+#அந்தர்பாவ <string.h>
 
 #ifndef _LIBC
 /* Get specification.  */
@@ -38,40 +38,40 @@
 	x = strtok_r(NULL, "=", &sp);	// x = NULL
 		// s = "abc\0-def\0"
 */
-char *
-__strtok_r (char *s, const char *delim, char **save_ptr)
+எழுத்து *
+__strtok_r (எழுத்து *s, மாறிலி எழுத்து *delim, எழுத்து **save_ptr)
 {
-  char *end;
+  எழுத்து *end;
 
-  if (s == NULL)
+  எனில் (s == வெற்று)
     s = *save_ptr;
 
-  if (*s == '\0')
+  எனில் (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      திரும்பு வெற்று;
     }
 
   /* Scan leading delimiters.  */
   s += strspn (s, delim);
-  if (*s == '\0')
+  எனில் (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      திரும்பு வெற்று;
     }
 
   /* Find the end of the token.  */
   end = s + strcspn (s, delim);
-  if (*end == '\0')
+  எனில் (*end == '\0')
     {
       *save_ptr = end;
-      return s;
+      திரும்பு s;
     }
 
   /* Terminate the token and make *SAVE_PTR point past it.  */
   *end = '\0';
   *save_ptr = end + 1;
-  return s;
+  திரும்பு s;
 }
 #ifdef weak_alias
 libc_hidden_def (__strtok_r)

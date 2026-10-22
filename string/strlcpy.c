@@ -16,16 +16,16 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#அந்தர்பாவ <string.h>
 
 size_t
-__strlcpy (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcpy (எழுத்து *__restrict dest, மாறிலி எழுத்து *__restrict src, size_t size)
 {
   size_t src_length = strlen (src);
 
-  if (__glibc_unlikely (src_length >= size))
+  எனில் (__glibc_unlikely (src_length >= size))
     {
-      if (size > 0)
+      எனில் (size > 0)
 	{
 	  /* Copy the leading portion of the string.  The last
 	     character is subsequently overwritten with the NUL
@@ -37,10 +37,10 @@ __strlcpy (char *__restrict dest, const char *__restrict src, size_t size)
 	  dest[size - 1] = '\0';
 	}
     }
-  else
+  இல்லையெனில்
     /* Copy the string and its terminating NUL character.  */
     memcpy (dest, src, src_length + 1);
-  return src_length;
+  திரும்பு src_length;
 }
 libc_hidden_def (__strlcpy)
 weak_alias (__strlcpy, strlcpy)

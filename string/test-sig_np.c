@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#அந்தர்பாவ <string.h>
+#அந்தர்பாவ <signal.h>
+#அந்தர்பாவ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#அந்தர்பாவ <support/support.h>
+#அந்தர்பாவ <support/check.h>
 
-static const struct test_t
+நிலையான மாறிலி கட்டமைப்பு test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  முழு errno;
+  மாறிலி எழுத்து *abbrev;
+  மாறிலி எழுத்து *descr;
 } tests[] =
 {
 #define N_(name)                      name
 #define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
+#அந்தர்பாவ <siglist.h>
 #undef init_sig
 };
 
-static int
-do_test (void)
+நிலையான முழு
+do_test (வெறுமை)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  க்கு (size_t i = 0; i < array_length (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  திரும்பு 0;
 }
 
-#include <support/test-driver.c>
+#அந்தர்பாவ <support/test-driver.c>
