@@ -43,22 +43,22 @@ enum { buffer_length = 80 };
 /* Return the maximum string length for a string that starts at
    start_offset.  */
 static int
-string_length (int a_count, int start_offset)
+string_length (int a_बिलांग, int start_offset)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
+  if (start_offset == buffer_length || start_offset >= a_बिलांग)
     return 0;
   else
-    return a_count - start_offset;
+    return a_बिलांग - start_offset;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
 static int
-maximum_length (int start_offset, int zero_count)
+maximum_length (int start_offset, int zero_बिलांग)
 {
   if (start_offset == buffer_length)
     return 0;
-  else if (zero_count > 0)
+  else if (zero_बिलांग > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
     return buffer_length + 32;
@@ -79,57 +79,57 @@ test_main (void)
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
   test_init ();
 
-  struct support_next_to_fault left_ntf
+  struct support_next_to_fault कालिवा_ntf
     = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
+  CHAR *कालिवा_buffer = (CHAR *) कालिवा_ntf.buffer;
+  struct support_next_to_fault कानान_ntf
     = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *right_buffer = (CHAR *) right_ntf.buffer;
+  CHAR *कानान_buffer = (CHAR *) कानान_ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
       for (size_t i = 0; i < buffer_length; ++i)
-        left_buffer[i] = 'A';
+        कालिवा_buffer[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
-           ++left_zero_count)
+      for (int कालिवा_zero_बिलांग = 0; कालिवा_zero_बिलांग <= buffer_length;
+           ++कालिवा_zero_बिलांग)
         {
-          if (left_zero_count > 0)
-            left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
+          if (कालिवा_zero_बिलांग > 0)
+            कालिवा_buffer[buffer_length - कालिवा_zero_बिलांग] = 0;
+          int कालिवा_a_बिलांग = buffer_length - कालिवा_zero_बिलांग;
           for (size_t i = 0; i < buffer_length; ++i)
-            right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
-               ++right_zero_count)
+            कानान_buffer[i] = 'A';
+          for (int कानान_zero_बिलांग = 0; कानान_zero_बिलांग <= buffer_length;
+               ++कानान_zero_बिलांग)
             {
-              if (right_zero_count > 0)
-                right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
-                   left_start_offset <= buffer_length;
-                   ++left_start_offset)
+              if (कानान_zero_बिलांग > 0)
+                कानान_buffer[buffer_length - कानान_zero_बिलांग] = 0;
+              int कानान_a_बिलांग = buffer_length - कानान_zero_बिलांग;
+              for (int कालिवा_start_offset = 0;
+                   कालिवा_start_offset <= buffer_length;
+                   ++कालिवा_start_offset)
                 {
-                  CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
-                    = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
-                    = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
-                       right_start_offset <= buffer_length;
-                       ++right_start_offset)
+                  CHAR *कालिवा_start_pointer = कालिवा_buffer + कालिवा_start_offset;
+                  int कालिवा_maxlen
+                    = maximum_length (कालिवा_start_offset, कालिवा_zero_बिलांग);
+                  int कालिवा_length
+                    = string_length (कालिवा_a_बिलांग, कालिवा_start_offset);
+                  for (int कानान_start_offset = 0;
+                       कानान_start_offset <= buffer_length;
+                       ++कानान_start_offset)
                     {
-                      CHAR *right_start_pointer
-                        = right_buffer + right_start_offset;
-                      int right_maxlen
-                        = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
-                        = string_length (right_a_count, right_start_offset);
+                      CHAR *कानान_start_pointer
+                        = कानान_buffer + कानान_start_offset;
+                      int कानान_maxlen
+                        = maximum_length (कानान_start_offset, कानान_zero_बिलांग);
+                      int कानान_length
+                        = string_length (कानान_a_बिलांग, कानान_start_offset);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      int maxlen = MIN (कालिवा_maxlen, कानान_maxlen);
 
                       for (int length_argument = 0; length_argument <= maxlen;
                            ++length_argument)
@@ -138,12 +138,12 @@ test_main (void)
                             {
                               printf ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      left_zero_count, left_a_count,
-                                      left_start_offset);
+                                      कालिवा_zero_बिलांग, कालिवा_a_बिलांग,
+                                      कालिवा_start_offset);
                               printf ("right: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      right_zero_count, right_a_count,
-                                      right_start_offset);
+                                      कानान_zero_बिलांग, कानान_a_बिलांग,
+                                      कानान_start_offset);
                               printf ("length argument: %d\n",
                                       length_argument);
                             }
@@ -151,24 +151,24 @@ test_main (void)
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
-                            = MIN (left_length, length_argument);
-                          int right_effective
-                            = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          int कालिवा_effective
+                            = MIN (कालिवा_length, length_argument);
+                          int कानान_effective
+                            = MIN (कानान_length, length_argument);
+                          if (कालिवा_effective == कानान_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                कालिवा_start_pointer,
+                                                कानान_start_pointer,
                                                 length_argument), 0);
-                          else if (left_effective < right_effective)
+                          else if (कालिवा_effective < कानान_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                कालिवा_start_pointer,
+                                                कानान_start_pointer,
                                                 length_argument) < 0, 1);
                           else
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                कालिवा_start_pointer,
+                                                कानान_start_pointer,
                                                 length_argument) > 0, 1);
                         }
                     }

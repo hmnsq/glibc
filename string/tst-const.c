@@ -28,8 +28,8 @@ const char *ccp;
 int c;
 size_t sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#define CHECK_TYPE(पाहायाग, TYPE)					\
+  _Static_assert (_Generic (पाहायाग, TYPE: 1), "type check")
 
 static int
 do_test (void)
@@ -41,23 +41,23 @@ do_test (void)
   CHECK_TYPE (memchr (cip, c, sz), const void *);
   CHECK_TYPE (memchr (cp, c, sz), void *);
   CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
   CHECK_TYPE (memchr (0, c, sz), void *);
   CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   CHECK_TYPE ((memchr) (cvp, c, sz), void *);
   CHECK_TYPE (strchr (vp, c), char *);
   CHECK_TYPE (strchr (cvp, c), const char *);
   CHECK_TYPE (strchr (cp, c), char *);
   CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
   CHECK_TYPE (strchr (0, c), char *);
   CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   CHECK_TYPE ((strchr) (ccp, c), char *);
   CHECK_TYPE (strpbrk (vp, vp), char *);
   CHECK_TYPE (strpbrk (vp, cvp), char *);
@@ -67,23 +67,23 @@ do_test (void)
   CHECK_TYPE (strpbrk (cp, ccp), char *);
   CHECK_TYPE (strpbrk (ccp, cp), const char *);
   CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
   CHECK_TYPE (strpbrk (0, cp), char *);
   CHECK_TYPE (strpbrk (0, ccp), char *);
   CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
   CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
   CHECK_TYPE (strrchr (vp, c), char *);
   CHECK_TYPE (strrchr (cvp, c), const char *);
   CHECK_TYPE (strrchr (cp, c), char *);
   CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
   CHECK_TYPE (strrchr (0, c), char *);
   CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   CHECK_TYPE ((strrchr) (ccp, c), char *);
   CHECK_TYPE (strstr (vp, vp), char *);
   CHECK_TYPE (strstr (vp, cvp), char *);
@@ -93,13 +93,13 @@ do_test (void)
   CHECK_TYPE (strstr (cp, ccp), char *);
   CHECK_TYPE (strstr (ccp, cp), const char *);
   CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
   CHECK_TYPE (strstr (0, cp), char *);
   CHECK_TYPE (strstr (0, ccp), char *);
   CHECK_TYPE (strstr ((void *) 0, cp), char *);
   CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   CHECK_TYPE ((strstr) (ccp, ccp), char *);
   return 0;
 }

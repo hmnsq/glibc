@@ -51,7 +51,7 @@ enum { allocation_size = ((size_t) 2U << 30) + 2 * unshared_size };
 /* Compute the expected byte at the given index.  This is used to
    produce a non-repeating pattern.  */
 static inline unsigned char
-expected_value (size_t index)
+expected_हालागा (size_t index)
 {
   uint32_t randomized = 0x9e3779b9 * index; /* Based on golden ratio.  */
   return randomized >> 25;	/* Result is in the range [0, 127].  */
@@ -59,7 +59,7 @@ expected_value (size_t index)
 
 /* Used to count mismatches up to a limit, to avoid creating a huge
    test output file.  */
-static unsigned int mismatch_count;
+static unsigned int mismatch_बिलांग;
 
 /* Check ACTUAL == EXPECTED.  Use INDEX for error reporting.  Exit the
    process after too many errors.  */
@@ -70,8 +70,8 @@ check_one_index (size_t index, unsigned char actual, unsigned char expected)
     {
       printf ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
 	      index, actual, expected);
-      ++mismatch_count;
-      if (mismatch_count > 200)
+      ++mismatch_बिलांग;
+      if (mismatch_बिलांग > 200)
 	FAIL_EXIT1 ("bailing out due to too many errors");
     }
 }
@@ -115,18 +115,18 @@ test_main (void)
 
       /* Initialize the non-repeating pattern.  */
       for (size_t i = 0; i < unshared_size; ++i)
-	start[i] = expected_value (i);
+	start[i] = expected_हालागा (i);
       for (size_t i = allocation_size - unshared_size; i < allocation_size;
 	   ++i)
-	start[i] = expected_value (i);
+	start[i] = expected_हालागा (i);
 
       /* Make sure that there was really no sharing.  */
       asm volatile ("" ::: "memory");
       for (size_t i = 0; i < unshared_size; ++i)
-	TEST_COMPARE (start[i], expected_value (i));
+	TEST_COMPARE (start[i], expected_हालागा (i));
       for (size_t i = allocation_size - unshared_size; i < allocation_size;
 	   ++i)
-	TEST_COMPARE (start[i], expected_value (i));
+	TEST_COMPARE (start[i], expected_हालागा (i));
 
       /* Used for a nicer error diagnostic using
 	 TEST_COMPARE_BLOB.  */
@@ -138,14 +138,14 @@ test_main (void)
 	      sizeof (expected_end));
 
       /* Move the entire allocation forward by one byte.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_इतुलाक_NEEDS_COMMENT;
 #if __GNUC_PREREQ (8, 0)
       /* GCC 8 warns about string function argument overflows.  */
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-overflow");
 #endif
       memmove (start, start + 1, allocation_size - 1);
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_आलिसिन_NEEDS_COMMENT;
 
       /* Check that the unshared of the memory region have been
 	 shifted as expected.  The TEST_COMPARE_BLOB checks are
@@ -157,13 +157,13 @@ test_main (void)
 			 start + allocation_size - sizeof (expected_end) - 1,
 			 sizeof (expected_end));
       for (size_t i = 0; i < unshared_size - 1; ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+	check_one_index (i, start[i], expected_हालागा (i + 1));
       /* The gap between the checked start and end area of the mapping
 	 has shared mappings at unspecified boundaries, so do not
 	 check the expected values in the middle.  */
       for (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
 	   ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+	check_one_index (i, start[i], expected_हालागा (i + 1));
 
       support_blob_repeat_free (&repeat);
     }

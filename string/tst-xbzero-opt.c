@@ -197,11 +197,11 @@ test_coroutine (void)
    All the code below this point runs on the main stack.  */
 
 static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+static unsigned char *co_सालानसान_buffer;
+static size_t co_सालानसान_size;
 
 static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+बिलांग_test_patterns (unsigned char *buf, size_t bufsiz)
 {
   unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
   if (!first)
@@ -222,7 +222,7 @@ static void
 check_test_buffer (enum test_expectation expected,
 		   const char *label, const char *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
+  unsigned int cnt = बिलांग_test_patterns (co_सालानसान_buffer, co_सालानसान_size);
   switch (expected)
     {
     case EXPECT_NONE:
@@ -295,26 +295,26 @@ do_test (void)
   if (page_alignment < sizeof (void *))
     page_alignment = sizeof (void *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_सालानसान_size = SIGSTKSZ + TEST_BUFFER_SIZE;
+  if (co_सालानसान_size < page_alignment * 4)
+    co_सालानसान_size = page_alignment * 4;
 
   void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
+  int err = posix_memalign (&p, page_alignment, co_सालानसान_size);
   if (err || !p)
     {
       printf ("ERROR: allocating alt stack: %s\n", strerror (err));
       return 2;
     }
-  co_stack_buffer = p;
+  co_सालानसान_buffer = p;
 
   if (getcontext (&uc_co))
     {
       printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
       return 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_सालानसान_buffer;
+  uc_co.uc_stack.ss_size = co_सालानसान_size;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 

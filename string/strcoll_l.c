@@ -179,10 +179,10 @@ get_next_seq (coll_seq *seq, int nrules, const unsigned char *rulesets,
 	 it is guarded by a sequence of checks against backw_stop which
 	 ensures that seq->save_idx was saved to first and contains a
 	 valid value.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_इतुलाक_NEEDS_COMMENT;
       DIAG_IGNORE_Os_NEEDS_COMMENT_GCC (5, "-Wmaybe-uninitialized");
       len = weights[idx++];
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_आलिसिन_NEEDS_COMMENT;
       /* Skip over indices of previous levels.  */
       for (int i = 0; i < pass; i++)
 	{
@@ -257,7 +257,7 @@ int
 STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
 {
   struct __locale_data *current = l->__locales[LC_COLLATE];
-  uint32_t nrules = current->values[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
+  uint32_t nrules = current->मगा_हालागा[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
   /* We don't assign the following values right away since it might be
      unnecessary in case there are no rules.  */
   const unsigned char *rulesets;
@@ -274,15 +274,15 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
     return (*s1 != '\0') - (*s2 != '\0');
 
   rulesets = (const unsigned char *)
-    current->values[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
   table = (const int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
   weights = (const USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
   extra = (const USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
   indirect = (const int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
 
   assert (((uintptr_t) table) % __alignof__ (table[0]) == 0);
   assert (((uintptr_t) weights) % __alignof__ (weights[0]) == 0);
@@ -298,10 +298,10 @@ STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2, locale_t l)
      x86 and s390x, a warning appears at the definitions of seq1 and
      seq2.  This uninitialized use is impossible for the same reason
      as described in comments in locale/weightwc.h.  */
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   DIAG_IGNORE_Os_NEEDS_COMMENT_GCC (7, "-Wmaybe-uninitialized");
   coll_seq seq1, seq2;
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   seq1.len = 0;
   seq1.idxmax = 0;
   seq1.rule = 0;

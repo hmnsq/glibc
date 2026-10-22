@@ -41,7 +41,7 @@
 # define STRLEN strlen
 # define CHAR char
 # define BIG_CHAR CHAR_MAX
-# define MIDDLE_CHAR 127
+# define गित्ना_CHAR 127
 # define SMALL_CHAR 23
 # define UCHAR unsigned char
 # define L(s) s
@@ -55,7 +55,7 @@
 # define STRLEN wcslen
 # define CHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
-# define MIDDLE_CHAR 1121
+# define गित्ना_CHAR 1121
 # define SMALL_CHAR 851
 # define UCHAR wchar_t
 # define L(s) L ## s
@@ -334,61 +334,61 @@ test_main (void)
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
-      do_test (i, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, 16 << i, 2048, SMALL_CHAR, गित्ना_CHAR);
+      do_test (i, 16 << i, 2048, SMALL_CHAR, गित्ना_CHAR);
     }
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
-      do_test (i, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, 16 << i, 4096, SMALL_CHAR, गित्ना_CHAR);
+      do_test (i, 16 << i, 4096, SMALL_CHAR, गित्ना_CHAR);
     }
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (i, 64, 256, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (i, 64, 256, SMALL_CHAR, गित्ना_CHAR);
       do_test (i, 64, 256, SMALL_CHAR, BIG_CHAR);
     }
 
   for (i = 0; i < 8; ++i)
     {
-      do_test (16 * i, 256, 512, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (16 * i, 256, 512, SMALL_CHAR, गित्ना_CHAR);
       do_test (16 * i, 256, 512, SMALL_CHAR, BIG_CHAR);
     }
 
   for (i = 0; i < 32; ++i)
     {
-      do_test (0, i, i + 1, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, i, i + 1, SMALL_CHAR, गित्ना_CHAR);
       do_test (0, i, i + 1, SMALL_CHAR, BIG_CHAR);
     }
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 2048, 0, MIDDLE_CHAR);
-      do_test (i, 16 << i, 2048, 0, MIDDLE_CHAR);
+      do_test (0, 16 << i, 2048, 0, गित्ना_CHAR);
+      do_test (i, 16 << i, 2048, 0, गित्ना_CHAR);
     }
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 4096, 0, MIDDLE_CHAR);
-      do_test (i, 16 << i, 4096, 0, MIDDLE_CHAR);
+      do_test (0, 16 << i, 4096, 0, गित्ना_CHAR);
+      do_test (i, 16 << i, 4096, 0, गित्ना_CHAR);
     }
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (i, 64, 256, 0, MIDDLE_CHAR);
+      do_test (i, 64, 256, 0, गित्ना_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
   for (i = 0; i < 8; ++i)
     {
-      do_test (16 * i, 256, 512, 0, MIDDLE_CHAR);
+      do_test (16 * i, 256, 512, 0, गित्ना_CHAR);
       do_test (16 * i, 256, 512, 0, BIG_CHAR);
     }
 
   for (i = 0; i < 32; ++i)
     {
-      do_test (0, i, i + 1, 0, MIDDLE_CHAR);
+      do_test (0, i, i + 1, 0, गित्ना_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 

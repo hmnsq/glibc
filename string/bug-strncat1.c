@@ -17,9 +17,9 @@ char d[3] = "\0\1\2";
 int
 main (void)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
   strncat (d, "\5\6", 1);
-  DIAG_POP_NEEDS_COMMENT;
+  DIAG_आलिसिन_NEEDS_COMMENT;
   if (d[0] != '\5')
     {
       puts ("d[0] != '\\5'");

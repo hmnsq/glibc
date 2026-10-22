@@ -668,7 +668,7 @@ STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n, locale_t l)
 {
   locale_data_t l_data;
   struct __locale_data *current = l->__locales[LC_COLLATE];
-  l_data.nrules = current->values[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
+  l_data.nrules = current->मगा_हालागा[_NL_ITEM_INDEX (_NL_COLLATE_NRULES)].word;
 
   /* Handle byte comparison case.  */
   if (l_data.nrules == 0)
@@ -691,15 +691,15 @@ STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n, locale_t l)
 
   /* Get the locale data.  */
   l_data.rulesets = (unsigned char *)
-    current->values[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (_NL_COLLATE_RULESETS)].string;
   l_data.table = (int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_TABLE,SUFFIX))].string;
   l_data.weights = (USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_WEIGHT,SUFFIX))].string;
   l_data.extra = (USTRING_TYPE *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_EXTRA,SUFFIX))].string;
   l_data.indirect = (int32_t *)
-    current->values[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
+    current->मगा_हालागा[_NL_ITEM_INDEX (CONCAT(_NL_COLLATE_INDIRECT,SUFFIX))].string;
 
   assert (((uintptr_t) l_data.table) % __alignof__ (l_data.table[0]) == 0);
   assert (((uintptr_t) l_data.weights) % __alignof__ (l_data.weights[0]) == 0);

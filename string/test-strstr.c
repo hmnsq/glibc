@@ -177,44 +177,44 @@ check1 (void)
 static void
 check2 (void)
 {
-  const CHAR s1_stack[] = L(", enable_static, \0, enable_shared, ");
-  const size_t s1_char_count = 18;
+  const CHAR s1_सालानसान[] = L(", enable_static, \0, enable_shared, ");
+  const size_t s1_char_बिलांग = 18;
   const size_t s1_byte_len = 18 * sizeof (CHAR);
-  const CHAR *s2_stack = &(s1_stack[s1_char_count]);
+  const CHAR *s2_सालानसान = &(s1_सालानसान[s1_char_बिलांग]);
   const size_t s2_byte_len = 18 * sizeof (CHAR);
   CHAR *exp_result;
   const size_t page_size_real = getpagesize ();
 
   /* Haystack at end of page.  The following page is protected.  */
   CHAR *s1_page_end = (void *) buf1 + page_size - s1_byte_len;
-  STRCPY (s1_page_end, s1_stack);
+  STRCPY (s1_page_end, s1_सालानसान);
 
   /* Haystack which crosses a page boundary.
      Note: page_size is at least 2 * getpagesize.  See test_init.  */
   CHAR *s1_page_cross = (void *) buf1 + page_size_real - 8;
-  STRCPY (s1_page_cross, s1_stack);
+  STRCPY (s1_page_cross, s1_सालानसान);
 
   /* Needle at end of page.  The following page is protected.  */
   CHAR *s2_page_end = (void *) buf2 + page_size - s2_byte_len;
-  STRCPY (s2_page_end, s2_stack);
+  STRCPY (s2_page_end, s2_सालानसान);
 
   /* Needle which crosses a page boundary.
      Note: page_size is at least 2 * getpagesize.  See test_init.  */
   CHAR *s2_page_cross = (void *) buf2 + page_size_real - 8;
-  STRCPY (s2_page_cross, s2_stack);
+  STRCPY (s2_page_cross, s2_सालानसान);
 
-  exp_result = simple_strstr (s1_stack, s2_stack);
+  exp_result = simple_strstr (s1_सालानसान, s2_सालानसान);
   FOR_EACH_IMPL (impl, 0)
     {
-      check_result (impl, s1_stack, s2_stack, exp_result);
-      check_result (impl, s1_stack, s2_page_end, exp_result);
-      check_result (impl, s1_stack, s2_page_cross, exp_result);
+      check_result (impl, s1_सालानसान, s2_सालानसान, exp_result);
+      check_result (impl, s1_सालानसान, s2_page_end, exp_result);
+      check_result (impl, s1_सालानसान, s2_page_cross, exp_result);
 
-      check_result (impl, s1_page_end, s2_stack, exp_result);
+      check_result (impl, s1_page_end, s2_सालानसान, exp_result);
       check_result (impl, s1_page_end, s2_page_end, exp_result);
       check_result (impl, s1_page_end, s2_page_cross, exp_result);
 
-      check_result (impl, s1_page_cross, s2_stack, exp_result);
+      check_result (impl, s1_page_cross, s2_सालानसान, exp_result);
       check_result (impl, s1_page_cross, s2_page_end, exp_result);
       check_result (impl, s1_page_cross, s2_page_cross, exp_result);
     }
@@ -225,22 +225,22 @@ check3 (void)
 {
   /* Check that a long periodic needle does not cause false positives.  */
   {
-    const CHAR input[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+    const CHAR पासोक[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
                             "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
                             "_C3_A7_20_EF_BF_BD");
     const CHAR need[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, input, need, NULL);
+      check_result (impl, पासोक, need, NULL);
   }
 
   {
-    const CHAR input[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+    const CHAR पासोक[] = L("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
 			   "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
 			   "_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20"
 			   "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
     const CHAR need[] = L("_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, input, need, (CHAR *) input + 115);
+      check_result (impl, पासोक, need, (CHAR *) पासोक + 115);
   }
 }
 
@@ -387,10 +387,10 @@ pr23865 (void)
   /* Test case from Yves Bastide.
      <https://www.openwall.com/lists/musl/2014/04/18/2>  */
   {
-    const CHAR *input = L("playing play play play always");
+    const CHAR *पासोक = L("playing play play play always");
     const CHAR *needle = L("play play play");
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, input, needle, (CHAR*) input + 8);
+      check_result (impl, पासोक, needle, (CHAR*) पासोक + 8);
   }
 
   /* Test long needles.  */

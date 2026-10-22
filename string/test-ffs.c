@@ -20,16 +20,16 @@
 #include <string.h>
 #include <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+void try (const char *name, long long int param, int हालागा, int expected)
 {
-  if (value != expected)
+  if (हालागा != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
+	      name, param, expected, हालागा);
       support_record_failure ();
     }
   else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+    printf ("%s(%#llx) as expected %d\n", name, param, हालागा);
 }
 
 int

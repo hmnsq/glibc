@@ -120,17 +120,17 @@ cmdline_process_function (int c)
 #ifdef TEST_NAME
 /* Increase size of FUNC_LIST if assert is triggered at run-time.  */
 static struct libc_ifunc_impl func_list[32];
-static int func_count;
-static int impl_count __attribute__ ((unused)) = -1;
+static int func_बिलांग;
+static int impl_बिलांग __attribute__ ((unused)) = -1;
 static impl_t *impl_array __attribute__ ((unused));
 
 # define FOR_EACH_IMPL(impl, notall) \
   impl_t *impl;								\
-  int count;								\
-  if (impl_count == -1)							\
+  int बिलांग;								\
+  if (impl_बिलांग == -1)							\
     {									\
-      impl_count = 0;							\
-      if (func_count != 0)						\
+      impl_बिलांग = 0;							\
+      if (func_बिलांग != 0)						\
 	{								\
 	  int f;							\
 	  impl_t *skip = NULL, *a;					\
@@ -138,13 +138,13 @@ static impl_t *impl_array __attribute__ ((unused));
 	    if (strcmp (impl->name, TEST_NAME) == 0)			\
 	      skip = impl;						\
 	    else							\
-	      impl_count++;						\
-	  a = impl_array = xmalloc ((impl_count + func_count) *		\
+	      impl_बिलांग++;						\
+	  a = impl_array = xmalloc ((impl_बिलांग + func_बिलांग) *		\
 				    sizeof (impl_t));			\
 	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
 	    if (impl != skip)						\
 	      *a++ = *impl;						\
-	  for (f = 0; f < func_count; f++)				\
+	  for (f = 0; f < func_बिलांग; f++)				\
 	    if (func_list[f].usable)					\
 	      {								\
 		a->name = func_list[f].name;				\
@@ -152,16 +152,16 @@ static impl_t *impl_array __attribute__ ((unused));
 		a->test = 1;						\
 		a++;							\
 	      }								\
-	  impl_count = a - impl_array;					\
+	  impl_बिलांग = a - impl_array;					\
 	}								\
       else								\
         {								\
-	  impl_count = __stop_impls - __start_impls;			\
+	  impl_बिलांग = __stop_impls - __start_impls;			\
 	  impl_array = __start_impls;					\
         }								\
     }									\
   impl = impl_array;							\
-  for (count = 0; count < impl_count; ++count, ++impl)			\
+  for (बिलांग = 0; बिलांग < impl_बिलांग; ++बिलांग, ++impl)			\
     if (!notall || impl->test)
 #else
 # define FOR_EACH_IMPL(impl, notall) \
@@ -177,7 +177,7 @@ static void
 test_init (void)
 {
 #ifdef TEST_NAME
-  func_count = __libc_ifunc_impl_list (TEST_NAME, func_list,
+  func_बिलांग = __libc_ifunc_impl_list (TEST_NAME, func_list,
 				       (sizeof func_list
 					/ sizeof func_list[0]));
 #endif

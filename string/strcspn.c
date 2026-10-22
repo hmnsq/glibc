@@ -66,7 +66,7 @@ STRCSPN (const char *str, const char *reject)
     }
   while ((c0 | c1 | c2 | c3) == 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  size_t बिलांग = s - (unsigned char *) str;
+  return (c0 | c1) != 0 ? बिलांग - c0 + 1 : बिलांग - c2 + 3;
 }
 libc_hidden_builtin_def (strcspn)

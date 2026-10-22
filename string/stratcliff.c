@@ -79,7 +79,7 @@ do_test (void)
     }
   else
     {
-      size_t inner, middle, outer, nchars64, max128;
+      size_t inner, गित्ना, outer, nchars64, max128;
 
       if (nchars > 64)
 	nchars64 = nchars - 64;
@@ -160,27 +160,27 @@ do_test (void)
       /* strchr/wcschr test */
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  for (गित्ना = MAX (outer, nchars64); गित्ना < nchars; ++गित्ना)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      for (inner = गित्ना; inner < nchars; ++inner)
 		{
-		  adr[middle] = L('V');
+		  adr[गित्ना] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
-		      || (inner != middle
-			  && (cp - &adr[outer]) != middle - outer))
+		  if ((inner == गित्ना && cp != NULL)
+		      || (inner != गित्ना
+			  && (cp - &adr[outer]) != गित्ना - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STRCHR), outer, middle, inner);
+			      STRINGIFY (STRCHR), outer, गित्ना, inner);
 		      result = 1;
 		    }
 
 		  adr[inner] = L('T');
-		  adr[middle] = L('T');
+		  adr[गित्ना] = L('T');
 		}
 	    }
 	  if (outer == 0)
@@ -199,27 +199,27 @@ do_test (void)
       /* strrchr/wcsrchr test */
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  for (गित्ना = MAX (outer, nchars64); गित्ना < nchars; ++गित्ना)
 	    {
-	      for (inner = middle; inner < nchars; ++inner)
+	      for (inner = गित्ना; inner < nchars; ++inner)
 		{
-		  adr[middle] = L('V');
+		  adr[गित्ना] = L('V');
 		  adr[inner] = L('\0');
 
 		  CHAR *cp = STRRCHR (&adr[outer], L('V'));
 
-		  if ((inner == middle && cp != NULL)
-		      || (inner != middle
-			  && (cp - &adr[outer]) != middle - outer))
+		  if ((inner == गित्ना && cp != NULL)
+		      || (inner != गित्ना
+			  && (cp - &adr[outer]) != गित्ना - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STRRCHR), outer, middle, inner);
+			      STRINGIFY (STRRCHR), outer, गित्ना, inner);
 		      result = 1;
 		    }
 
 		  adr[inner] = L('T');
-		  adr[middle] = L('T');
+		  adr[गित्ना] = L('T');
 		}
 	    }
 	  if (outer == 0)
@@ -229,20 +229,20 @@ do_test (void)
       /* memchr test */
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  for (गित्ना = MAX (outer, nchars64); गित्ना < nchars; ++गित्ना)
 	    {
-	      adr[middle] = L('V');
+	      adr[गित्ना] = L('V');
 
 	      CHAR *cp = MEMCHR (&adr[outer], L('V'), 3 * size);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      if (cp - &adr[outer] != गित्ना - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (MEMCHR), outer, middle);
+			  STRINGIFY (MEMCHR), outer, गित्ना);
 		  result = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[गित्ना] = L('T');
 	    }
 	  if (outer == 0)
 	    break;
@@ -266,20 +266,20 @@ do_test (void)
       /* rawmemchr test */
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  for (गित्ना = MAX (outer, nchars64); गित्ना < nchars; ++गित्ना)
 	    {
-	      adr[middle] = L('V');
+	      adr[गित्ना] = L('V');
 
 	      CHAR *cp = rawmemchr (&adr[outer], L('V'));
 
-	      if (cp - &adr[outer] != middle - outer)
+	      if (cp - &adr[outer] != गित्ना - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (rawmemchr), outer, middle);
+			  STRINGIFY (rawmemchr), outer, गित्ना);
 		  result = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[गित्ना] = L('T');
 	    }
 	  if (outer == 0)
 	    break;
@@ -288,20 +288,20 @@ do_test (void)
       /* memrchr test */
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  for (गित्ना = MAX (outer, nchars64); गित्ना < nchars; ++गित्ना)
 	    {
-	      adr[middle] = L('V');
+	      adr[गित्ना] = L('V');
 
 	      CHAR *cp = memrchr (&adr[outer], L('V'), nchars - outer);
 
-	      if (cp - &adr[outer] != middle - outer)
+	      if (cp - &adr[outer] != गित्ना - outer)
 		{
 		  printf ("%s flunked for outer = %zu, middle = %zu\n",
-			  STRINGIFY (memrchr), outer, middle);
+			  STRINGIFY (memrchr), outer, गित्ना);
 		  result = 1;
 		}
 
-	      adr[middle] = L('T');
+	      adr[गित्ना] = L('T');
 	    }
 	  if (outer == 0)
 	    break;
@@ -344,67 +344,67 @@ do_test (void)
 
       /* strcmp/wcscmp tests */
       for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+	for (गित्ना = 0; गित्ना < 16; ++गित्ना)
 	  {
-	    MEMSET (adr + middle, L('T'), 256);
+	    MEMSET (adr + गित्ना, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('\0');
 
-	    if (STRCMP (adr + middle, dest + nchars - outer) <= 0)
+	    if (STRCMP (adr + गित्ना, dest + nchars - outer) <= 0)
 	      {
 		printf ("%s 1 flunked for outer = %zu, middle = %zu\n",
-			STRINGIFY (STRCMP), outer, middle);
+			STRINGIFY (STRCMP), outer, गित्ना);
 		result = 1;
 	      }
 
-	    if (STRCMP (dest + nchars - outer, adr + middle) >= 0)
+	    if (STRCMP (dest + nchars - outer, adr + गित्ना) >= 0)
 	      {
 		printf ("%s 2 flunked for outer = %zu, middle = %zu\n",
-			STRINGIFY (STRCMP), outer, middle);
+			STRINGIFY (STRCMP), outer, गित्ना);
 		result = 1;
 	      }
 	  }
 
       /* strncmp/wcsncmp tests */
       for (outer = 1; outer < 32; ++outer)
-	for (middle = 0; middle < 16; ++middle)
+	for (गित्ना = 0; गित्ना < 16; ++गित्ना)
 	  {
-	    MEMSET (adr + middle, L('T'), 256);
+	    MEMSET (adr + गित्ना, L('T'), 256);
 	    adr[256] = L('\0');
 	    MEMSET (dest + nchars - outer, L('T'), outer - 1);
 	    dest[nchars - 1] = L('U');
 
 	    for (inner = 0; inner < outer; ++inner)
 	      {
-		if (STRNCMP (adr + middle, dest + nchars - outer, inner) != 0)
+		if (STRNCMP (adr + गित्ना, dest + nchars - outer, inner) != 0)
 		  {
 		    printf ("%s 1 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
-			    STRINGIFY (STRNCMP), outer, middle, inner);
+			    STRINGIFY (STRNCMP), outer, गित्ना, inner);
 		    result = 1;
 		  }
 
-		if (STRNCMP (dest + nchars - outer, adr + middle, inner) != 0)
+		if (STRNCMP (dest + nchars - outer, adr + गित्ना, inner) != 0)
 		  {
 		    printf ("%s 2 flunked for outer = %zu, middle = %zu, "
 			    "inner = %zu\n",
-			    STRINGIFY (STRNCMP), outer, middle, inner);
+			    STRINGIFY (STRNCMP), outer, गित्ना, inner);
 		    result = 1;
 		  }
 	      }
 
-	    if (STRNCMP (adr + middle, dest + nchars - outer, outer) >= 0)
+	    if (STRNCMP (adr + गित्ना, dest + nchars - outer, outer) >= 0)
 	      {
 		printf ("%s 1 flunked for outer = %zu, middle = %zu, full\n",
-			STRINGIFY (STRNCMP), outer, middle);
+			STRINGIFY (STRNCMP), outer, गित्ना);
 		result = 1;
 	      }
 
-	    if (STRNCMP (dest + nchars - outer, adr + middle, outer) <= 0)
+	    if (STRNCMP (dest + nchars - outer, adr + गित्ना, outer) <= 0)
 	      {
 		printf ("%s 2 flunked for outer = %zu, middle = %zu, full\n",
-			STRINGIFY (STRNCMP), outer, middle);
+			STRINGIFY (STRNCMP), outer, गित्ना);
 		result = 1;
 	      }
 	  }
@@ -513,23 +513,23 @@ do_test (void)
 
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = MAX (outer, nchars64); middle < nchars; ++middle)
+	  for (गित्ना = MAX (outer, nchars64); गित्ना < nchars; ++गित्ना)
 	    {
-	      adr[middle] = L('\0');
+	      adr[गित्ना] = L('\0');
 
 	      for (inner = 0; inner < nchars - outer; ++ inner)
 		{
 		  if ((STPNCPY (dest, &adr[outer], inner) - dest)
-		      != MIN (inner, middle - outer))
+		      != MIN (inner, गित्ना - outer))
 		    {
 		      printf ("%s flunked for outer = %zu, middle = %zu, "
 			      "inner = %zu\n",
-			      STRINGIFY (STPNCPY), outer, middle, inner);
+			      STRINGIFY (STPNCPY), outer, गित्ना, inner);
 		      result = 1;
 		    }
 		}
 
-	      adr[middle] = L('T');
+	      adr[गित्ना] = L('T');
 	    }
 	  if (outer == 0)
 	    break;
@@ -581,26 +581,26 @@ do_test (void)
 	}
       for (outer = nchars - 1; outer >= max128; --outer)
 	{
-	  for (middle = 0; middle < nchars - outer; ++middle)
+	  for (गित्ना = 0; गित्ना < nchars - outer; ++गित्ना)
 	    {
-	      memset (dest, L('\2'), middle + 1);
-	      for (inner = 0; inner < middle; ++inner)
+	      memset (dest, L('\2'), गित्ना + 1);
+	      for (inner = 0; inner < गित्ना; ++inner)
 		{
 		  adr[outer + inner] = L('\1');
 
-		  if (memccpy (dest, &adr[outer], '\1', middle + 128)
+		  if (memccpy (dest, &adr[outer], '\1', गित्ना + 128)
 		      !=  dest + inner + 1)
 		    {
 		      printf ("\
-			      memccpy flunked partial copy for outer = %zu, middle = %zu, inner = %zu\n",
-			      outer, middle, inner);
+			      memccpy flunked partial copy for outer = %zu, गित्ना = %zu, inner = %zu\n",
+			      outer, गित्ना, inner);
 		      result = 1;
 		    }
 		  else if (dest[inner + 1] != L('\2'))
 		    {
 		      printf ("\
-			      memccpy copied too much for outer = %zu, middle = %zu, inner = %zu\n",
-			      outer, middle, inner);
+			      memccpy copied too much for outer = %zu, गित्ना = %zu, inner = %zu\n",
+			      outer, गित्ना, inner);
 		      result = 1;
 		    }
 		  adr[outer + inner] = L('\0');

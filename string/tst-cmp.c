@@ -40,12 +40,12 @@ signum (int val)
 }
 
 static size_t
-max_size_t (size_t left, size_t right)
+max_size_t (size_t कालिवा, size_t कानान)
 {
-  if (left > right)
-    return left;
+  if (कालिवा > कानान)
+    return कालिवा;
   else
-    return right;
+    return कानान;
 }
 
 /* Wrappers for strncmp and strncasecmp which determine the maximum
@@ -53,53 +53,53 @@ max_size_t (size_t left, size_t right)
    using fixed constants.  */
 
 static int
-strncmp_no_terminator (const char *left, const char *right)
+strncmp_no_terminator (const char *कालिवा, const char *कानान)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t कालिवा_len = strlen (कालिवा);
+  size_t कानान_len = strlen (कानान);
+  return strncmp (कालिवा, कानान, max_size_t (कालिवा_len, कानान_len));
 }
 
 static int
-strncasecmp_no_terminator (const char *left, const char *right)
+strncasecmp_no_terminator (const char *कालिवा, const char *कानान)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t कालिवा_len = strlen (कालिवा);
+  size_t कानान_len = strlen (कानान);
+  return strncasecmp (कालिवा, कानान, max_size_t (कालिवा_len, कानान_len));
 }
 
 static int
-strncmp_terminator (const char *left, const char *right)
+strncmp_terminator (const char *कालिवा, const char *कानान)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t कालिवा_len = strlen (कालिवा);
+  size_t कानान_len = strlen (कानान);
+  return strncmp (कालिवा, कानान, max_size_t (कालिवा_len, कानान_len));
 }
 
 static int
-strncasecmp_terminator (const char *left, const char *right)
+strncasecmp_terminator (const char *कालिवा, const char *कानान)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t कालिवा_len = strlen (कालिवा);
+  size_t कानान_len = strlen (कानान);
+  return strncasecmp (कालिवा, कानान, max_size_t (कालिवा_len, कानान_len));
 }
 
 static int
-strncmp_64 (const char *left, const char *right)
+strncmp_64 (const char *कालिवा, const char *कानान)
 {
-  return strncmp (left, right, 64);
+  return strncmp (कालिवा, कानान, 64);
 }
 
 static int
-strncasecmp_64 (const char *left, const char *right)
+strncasecmp_64 (const char *कालिवा, const char *कानान)
 {
-  return strncasecmp (left, right, 64);
+  return strncasecmp (कालिवा, कानान, 64);
 }
 
 static int
-strncmp_max (const char *left, const char *right)
+strncmp_max (const char *कालिवा, const char *कानान)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
 #if __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncmp being larger than
      PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
@@ -109,14 +109,14 @@ strncmp_max (const char *left, const char *right)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+  return strncmp (कालिवा, कानान, SIZE_MAX);
+  DIAG_आलिसिन_NEEDS_COMMENT;
 }
 
 static int
-strncasecmp_max (const char *left, const char *right)
+strncasecmp_max (const char *कालिवा, const char *कानान)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_इतुलाक_NEEDS_COMMENT;
 #if __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncasecmp being larger
      than PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
@@ -126,8 +126,8 @@ strncasecmp_max (const char *left, const char *right)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncasecmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+  return strncasecmp (कालिवा, कानान, SIZE_MAX);
+  DIAG_आलिसिन_NEEDS_COMMENT;
 }
 
 int
@@ -138,9 +138,9 @@ do_test (void)
     max_string_length = 33
   };
   size_t blob_size = max_align + max_string_length + 1;
-  char *left = memalign (max_align, blob_size);
-  char *right = memalign (max_align, blob_size);
-  if (left == NULL || right == NULL)
+  char *कालिवा = memalign (max_align, blob_size);
+  char *कानान = memalign (max_align, blob_size);
+  if (कालिवा == NULL || कानान == NULL)
     {
       printf ("error: out of memory\n");
       return 1;
@@ -186,27 +186,27 @@ do_test (void)
     { 0, 1, 32, 64, 128, '0', '1', 'e', 'f', 'g', 127, 192, 255 };
 
   bool errors = false;
-  for (int left_idx = 0; strings[left_idx] != NULL; ++left_idx)
-    for (int left_align = 0; left_align < max_align; ++left_align)
-      for (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
+  for (int कालिवा_idx = 0; strings[कालिवा_idx] != NULL; ++कालिवा_idx)
+    for (int कालिवा_align = 0; कालिवा_align < max_align; ++कालिवा_align)
+      for (unsigned pad_कालिवा = 0; pad_कालिवा < sizeof (pads); ++pad_कालिवा)
         {
-          memset (left, pads[pad_left], blob_size);
-          strcpy (left + left_align, strings[left_idx]);
+          memset (कालिवा, pads[pad_कालिवा], blob_size);
+          strcpy (कालिवा + कालिवा_align, strings[कालिवा_idx]);
 
-          for (int right_idx = 0; strings[right_idx] != NULL; ++right_idx)
-            for (unsigned pad_right = 0; pad_right < sizeof (pads);
-                 ++pad_right)
-              for (int right_align = 0; right_align < max_align;
-                   ++right_align)
+          for (int कानान_idx = 0; strings[कानान_idx] != NULL; ++कानान_idx)
+            for (unsigned pad_कानान = 0; pad_कानान < sizeof (pads);
+                 ++pad_कानान)
+              for (int कानान_align = 0; कानान_align < max_align;
+                   ++कानान_align)
                 {
-                  memset (right, pads[pad_right], blob_size);
-                  strcpy (right + right_align, strings[right_idx]);
+                  memset (कानान, pads[pad_कानान], blob_size);
+                  strcpy (कानान + कानान_align, strings[कानान_idx]);
 
                   for (int func = 0; functions[func].name != NULL; ++func)
                     {
-                      int expected = left_idx - right_idx;
+                      int expected = कालिवा_idx - कानान_idx;
                       int actual = functions[func].implementation
-                        (left + left_align, right + right_align);
+                        (कालिवा + कालिवा_align, कानान + कानान_align);
                       if (signum (actual) != signum (expected))
                         {
                           printf ("error: mismatch for %s: %d\n"
@@ -215,16 +215,16 @@ do_test (void)
                                   "  pad_left = %u, pad_right = %u,\n"
                                   "  left_align = %d, right_align = %d\n",
                                   functions[func].name, actual,
-                                  strings[left_idx], strings[right_idx],
-                                  pad_left, pad_right,
-                                  left_align, right_align);
+                                  strings[कालिवा_idx], strings[कानान_idx],
+                                  pad_कालिवा, pad_कानान,
+                                  कालिवा_align, कानान_align);
                           errors = true;
                         }
                     }
                 }
         }
-  free (right);
-  free (left);
+  free (कानान);
+  free (कालिवा);
   return errors;
 }
 

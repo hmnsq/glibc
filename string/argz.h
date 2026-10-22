@@ -51,7 +51,7 @@ extern error_t argz_create_sep (const char *__restrict __string,
 /* Returns the number of strings in ARGZ.  */
 extern size_t __argz_count (const char *__argz, size_t __len)
      __THROW __attribute_pure__;
-extern size_t argz_count (const char *__argz, size_t __len)
+extern size_t argz_बिलांग (const char *__argz, size_t __len)
      __THROW __attribute_pure__;
 
 /* Puts pointers to each string in ARGZ into ARGV, which must be large enough
@@ -95,7 +95,7 @@ extern void argz_delete (char **__restrict __argz,
    ARGZ, ENTRY) will insert ENTRY at the beginning of ARGZ.  If BEFORE is not
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
-extern error_t argz_insert (char **__restrict __argz,
+extern error_t argz_इसिंगित (char **__restrict __argz,
 			    size_t *__restrict __argz_len,
 			    char *__restrict __before,
 			    const char *__restrict __entry) __THROW;

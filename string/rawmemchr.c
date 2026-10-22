@@ -24,7 +24,7 @@
 
 /* The pragmata should be nested inside RAWMEMCHR below, but that
    triggers GCC PR 98512.  */
-DIAG_PUSH_NEEDS_COMMENT;
+DIAG_इतुलाक_NEEDS_COMMENT;
 #if __GNUC_PREREQ (7, 0)
 /* GCC 8 warns about the size passed to memchr being larger than
    PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
@@ -46,4 +46,4 @@ RAWMEMCHR (const void *s, int c)
 libc_hidden_def (__rawmemchr)
 weak_alias (__rawmemchr, rawmemchr)
 
-DIAG_POP_NEEDS_COMMENT;
+DIAG_आलिसिन_NEEDS_COMMENT;

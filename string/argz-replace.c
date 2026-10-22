@@ -47,7 +47,7 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    incremented by number of replacements performed.  */
 error_t
 __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+		unsigned *replace_बिलांग)
 {
   error_t err = 0;
 
@@ -107,8 +107,8 @@ __argz_replace (char **argz, size_t *argz_len, const char *str, const char *with
 	      else
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      if (replace_बिलांग)
+		(*replace_बिलांग)++;
 	    }
 	  else if (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);

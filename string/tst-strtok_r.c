@@ -23,7 +23,7 @@
 int
 test_main (void)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  char लिन्या[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
   char **saveptrp;
   char *tok;
 
@@ -31,7 +31,7 @@ test_main (void)
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
   saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
-  tok = strtok_r (line, " \t", saveptrp);
+  tok = strtok_r (लिन्या, " \t", saveptrp);
   return strcmp (tok, "udf") != 0;
 }
 

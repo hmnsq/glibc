@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_लिन्या_SIZE    32
 
 static int
 compare (const void *p1, const void *p2)
@@ -16,29 +16,29 @@ compare (const void *p1, const void *p2)
 int
 do_test (void)
 {
-  char line[MAX_LINE_SIZE + 1];
+  char लिन्या[MAX_लिन्या_SIZE + 1];
   char *str[MAX_STRINGS];
-  int  count = 0;
+  int  बिलांग = 0;
   int  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  while (बिलांग < MAX_STRINGS && fgets (लिन्या, MAX_लिन्या_SIZE, stdin) != NULL)
     {
-      n = strlen (line) - 1;
+      n = strlen (लिन्या) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      if (लिन्या[n] == '\n')
+        लिन्या[n] = '\0';
 
-      str[count] = strdup (line);
+      str[बिलांग] = strdup (लिन्या);
 
-      if (str[count] == NULL)
+      if (str[बिलांग] == NULL)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++बिलांग;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, बिलांग, sizeof (char *), compare);
 
-  for (i = 0; i < count; ++i)
+  for (i = 0; i < बिलांग; ++i)
     puts (str[i]);
 
   return EXIT_SUCCESS;

@@ -49,7 +49,7 @@ __old_strtok_r_1c (char *__s, char __sep, char **__nextp)
   *__nextp = __s;
   return __result;
 }
-compat_symbol (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strtok_r_1c, __strtok_r_1c, GLIBC_2_1_1);
 
 char *
 __old_strsep_1c (char **__s, char __reject)
@@ -59,7 +59,7 @@ __old_strsep_1c (char **__s, char __reject)
     *(*__s)++ = '\0';
   return __retval;
 }
-compat_symbol (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strsep_1c, __strsep_1c, GLIBC_2_1_1);
 
 char *
 __old_strsep_2c (char **__s, char __reject1, char __reject2)
@@ -86,7 +86,7 @@ __old_strsep_2c (char **__s, char __reject1, char __reject2)
     }
   return __retval;
 }
-compat_symbol (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strsep_2c, __strsep_2c, GLIBC_2_1_1);
 
 char *
 __old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
@@ -113,7 +113,7 @@ __old_strsep_3c (char **__s, char __reject1, char __reject2, char __reject3)
     }
   return __retval;
 }
-compat_symbol (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strsep_3c, __strsep_3c, GLIBC_2_1_1);
 #endif
 
 #if SHLIB_COMPAT (libc, GLIBC_2_1_1, GLIBC_2_24)
@@ -127,7 +127,7 @@ __old_strcspn_c1 (const char *__s, int __reject)
     ++__result;
   return __result;
 }
-compat_symbol (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strcspn_c1, __strcspn_c1, GLIBC_2_1_1);
 
 size_t
 __old_strcspn_c2 (const char *__s, int __reject1, int __reject2)
@@ -138,7 +138,7 @@ __old_strcspn_c2 (const char *__s, int __reject1, int __reject2)
     ++__result;
   return __result;
 }
-compat_symbol (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strcspn_c2, __strcspn_c2, GLIBC_2_1_1);
 
 size_t
 __old_strcspn_c3 (const char *__s, int __reject1, int __reject2,
@@ -150,7 +150,7 @@ __old_strcspn_c3 (const char *__s, int __reject1, int __reject2,
     ++__result;
   return __result;
 }
-compat_symbol (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strcspn_c3, __strcspn_c3, GLIBC_2_1_1);
 
 size_t
 __old_strspn_c1 (const char *__s, int __accept)
@@ -161,7 +161,7 @@ __old_strspn_c1 (const char *__s, int __accept)
     ++__result;
   return __result;
 }
-compat_symbol (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strspn_c1, __strspn_c1, GLIBC_2_1_1);
 
 size_t
 __old_strspn_c2 (const char *__s, int __accept1, int __accept2)
@@ -172,7 +172,7 @@ __old_strspn_c2 (const char *__s, int __accept1, int __accept2)
     ++__result;
   return __result;
 }
-compat_symbol (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strspn_c2, __strspn_c2, GLIBC_2_1_1);
 
 size_t
 __old_strspn_c3 (const char *__s, int __accept1, int __accept2,
@@ -185,7 +185,7 @@ __old_strspn_c3 (const char *__s, int __accept1, int __accept2,
     ++__result;
   return __result;
 }
-compat_symbol (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strspn_c3, __strspn_c3, GLIBC_2_1_1);
 
 char *
 __old_strpbrk_c2 (const char *__s, int __accept1, int __accept2)
@@ -195,7 +195,7 @@ __old_strpbrk_c2 (const char *__s, int __accept1, int __accept2)
     ++__s;
   return *__s == '\0' ? NULL : (char *) (size_t) __s;
 }
-compat_symbol (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strpbrk_c2, __strpbrk_c2, GLIBC_2_1_1);
 
 char *
 __old_strpbrk_c3 (const char *__s, int __accept1, int __accept2, int __accept3)
@@ -206,7 +206,7 @@ __old_strpbrk_c3 (const char *__s, int __accept1, int __accept2, int __accept3)
     ++__s;
   return *__s == '\0' ? NULL : (char *) (size_t) __s;
 }
-compat_symbol (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strpbrk_c3, __strpbrk_c3, GLIBC_2_1_1);
 
 # if defined __mc68020__ || defined __s390__ || defined __i386__
 #  define _STRING_INLINE_unaligned 1
@@ -340,7 +340,7 @@ __old_mempcpy_small (void *__dest, char __src1,
   return __extension__ ((void *) __u + __srclen);
 }
 # endif
-compat_symbol (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_mempcpy_small, __mempcpy_small, GLIBC_2_1_1);
 
 # if _STRING_INLINE_unaligned
 char *
@@ -445,7 +445,7 @@ __old_strcpy_small (char *__dest,
   return __dest;
 }
 # endif
-compat_symbol (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_strcpy_small, __strcpy_small, GLIBC_2_1_1);
 
 # if _STRING_INLINE_unaligned
 char *
@@ -555,6 +555,6 @@ __old_stpcpy_small (char *__dest,
   return __dest + __srclen - 1;
 }
 # endif
-compat_symbol (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);
+compat_सिम्बोलो (libc, __old_stpcpy_small, __stpcpy_small, GLIBC_2_1_1);
 
 #endif

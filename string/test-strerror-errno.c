@@ -48,16 +48,16 @@ void
 static int
 do_test (void)
 {
-  char *msg;
+  char *मेनसाहे;
 
   errno = 0;
-  msg = strerror (-3);
-  (void) msg;
+  मेनसाहे = strerror (-3);
+  (void) मेनसाहे;
   TEST_COMPARE (errno, 0);
 
   locale_t l = xnewlocale (LC_ALL_MASK, "C", NULL);
-  msg = strerror_l (-3, l);
-  (void) msg;
+  मेनसाहे = strerror_l (-3, l);
+  (void) मेनसाहे;
   TEST_COMPARE (errno, 0);
 
   return 0;

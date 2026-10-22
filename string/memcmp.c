@@ -36,7 +36,7 @@
 # include <endian.h>
 
 # if __BYTE_ORDER == __BIG_ENDIAN
-#  define WORDS_BIGENDIAN
+#  define मगा_सालिता_BIGENDIAN
 # endif
 
 #else	/* Not in the GNU C library.  */
@@ -51,7 +51,7 @@
 /* Type to use for unaligned operations.  */
 typedef unsigned char byte;
 
-# ifndef WORDS_BIGENDIAN
+# ifndef मगा_सालिता_BIGENDIAN
 #  define MERGE(w0, sh_1, w1, sh_2) (((w0) >> (sh_1)) | ((w1) << (sh_2)))
 # else
 #  define MERGE(w0, sh_1, w1, sh_2) (((w0) << (sh_1)) | ((w1) >> (sh_2)))
@@ -59,7 +59,7 @@ typedef unsigned char byte;
 
 #endif	/* In the GNU C library.  */
 
-#ifdef WORDS_BIGENDIAN
+#ifdef मगा_सालिता_BIGENDIAN
 # define CMP_LT_OR_GT(a, b) ((a) > (b) ? 1 : -1)
 #else
 # define CMP_LT_OR_GT(a, b) memcmp_bytes ((a), (b))
@@ -78,7 +78,7 @@ typedef unsigned char byte;
 
    3. Compare the few remaining bytes.  */
 
-#ifndef WORDS_BIGENDIAN
+#ifndef मगा_सालिता_BIGENDIAN
 /* memcmp_bytes -- Compare A and B bytewise in the byte order of the machine.
    A and B are known to be different.
    This is needed only on little-endian machines.  */

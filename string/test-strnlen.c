@@ -29,7 +29,7 @@
 # define MEMSET memset
 # define CHAR char
 # define BIG_CHAR CHAR_MAX
-# define MIDDLE_CHAR 127
+# define गित्ना_CHAR 127
 # define SIMPLE_STRNLEN simple_strnlen
 #else
 # include <wchar.h>
@@ -37,7 +37,7 @@
 # define MEMSET wmemset
 # define CHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
-# define MIDDLE_CHAR 1121
+# define गित्ना_CHAR 1121
 # define SIMPLE_STRNLEN simple_wcsnlen
 #endif /* !WIDE */
 
@@ -303,22 +303,22 @@ test_main (void)
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (0, i, i - 1, MIDDLE_CHAR);
-      do_test (0, i, i, MIDDLE_CHAR);
-      do_test (0, i, i + 1, MIDDLE_CHAR);
+      do_test (0, i, i - 1, गित्ना_CHAR);
+      do_test (0, i, i, गित्ना_CHAR);
+      do_test (0, i, i + 1, गित्ना_CHAR);
     }
 
   for (i = 1; i < 8; ++i)
     {
-      do_test (i, i, i - 1, MIDDLE_CHAR);
-      do_test (i, i, i, MIDDLE_CHAR);
-      do_test (i, i, i + 1, MIDDLE_CHAR);
+      do_test (i, i, i - 1, गित्ना_CHAR);
+      do_test (i, i, i, गित्ना_CHAR);
+      do_test (i, i, i + 1, गित्ना_CHAR);
     }
 
   for (i = 2; i <= 10; ++i)
     {
-      do_test (0, 1 << i, 5000, MIDDLE_CHAR);
-      do_test (1, 1 << i, 5000, MIDDLE_CHAR);
+      do_test (0, 1 << i, 5000, गित्ना_CHAR);
+      do_test (1, 1 << i, 5000, गित्ना_CHAR);
     }
 
   for (i = 1; i < 8; ++i)

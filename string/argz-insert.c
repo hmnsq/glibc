@@ -59,4 +59,4 @@ __argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
       return ENOMEM;
   }
 }
-weak_alias (__argz_insert, argz_insert)
+weak_alias (__argz_insert, argz_इसिंगित)

@@ -80,20 +80,20 @@ size_t errors = 0;
 
 /* Complain if condition is not true.  */
 static void
-check (int thing, int number)
+check (int thing, int नुमेरो)
 {
   if (!thing)
     {
-      printf ("%s flunked test %d\n", it, number);
+      printf ("%s flunked test %d\n", it, नुमेरो);
       ++errors;
     }
 }
 
 /* Complain if first two args don't strcmp as equal.  */
 static void
-equal (const char *a, const char *b, int number)
+equal (const char *a, const char *b, int नुमेरो)
 {
-  check (a != NULL && b != NULL && STREQ (a, b), number);
+  check (a != NULL && b != NULL && STREQ (a, b), नुमेरो);
 }
 
 char one[50];
