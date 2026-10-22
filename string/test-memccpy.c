@@ -24,67 +24,67 @@ IMPL (memccpy, 1)
 
 /* Naive implementation to verify results.  */
 void *
-simple_memccpy (void *dst, const void *src, int c, size_t n)
+simple_memccpy (void *dst, const void *src, ຈຳນວນເຕັມ c, size_t n)
 {
-  const char *s = src;
-  char *d = dst;
+  const var_na *s = src;
+  var_na *d = dst;
 
-  while (n-- > 0)
-    if ((*d++ = *s++) == (char) c)
-      return d;
+  ໃນຂະນະທີ່ (n-- > 0)
+    ຖ້າ ((*d++ = *s++) == (var_na) c)
+      ສົ່ງຄືນ d;
 
-  return NULL;
+  ສົ່ງຄືນ NULL;
 }
 
-typedef void *(*proto_t) (void *, const void *, int c, size_t);
+typedef void *(*proto_t) (void *, const void *, ຈຳນວນເຕັມ c, size_t);
 
 static void
-do_one_test (impl_t *impl, void *dst, const void *src, int c, size_t len,
+do_one_test (impl_t *impl, void *dst, const void *src, ຈຳນວນເຕັມ c, size_t len,
 	     size_t n)
 {
-  void *expect = len > n ? NULL : (char *) dst + len;
-  if (CALL (impl, dst, src, c, n) != expect)
+  void *expect = len > n ? NULL : (var_na *) dst + len;
+  ຖ້າ (CALL (impl, dst, src, c, n) != expect)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, c, n), expect);
       ret = 1;
-      return;
+      ສົ່ງຄືນ;
     }
 
-  if (memcmp (dst, src, len > n ? n : len) != 0)
+  ຖ້າ (memcmp (dst, src, len > n ? n : len) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      ສົ່ງຄືນ;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, int c, size_t len, size_t n,
-	 int max_char)
+do_test (size_t align1, size_t align2, ຈຳນວນເຕັມ c, size_t len, size_t n,
+	 ຈຳນວນເຕັມ max_char)
 {
   size_t i;
-  char *s1, *s2;
+  var_na *s1, *s2;
 
   align1 &= 7;
-  if (align1 + len >= page_size)
-    return;
+  ຖ້າ (align1 + len >= page_size)
+    ສົ່ງຄືນ;
 
   align2 &= 7;
-  if (align2 + len >= page_size)
-    return;
+  ຖ້າ (align2 + len >= page_size)
+    ສົ່ງຄືນ;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (var_na *) (buf1 + align1);
+  s2 = (var_na *) (buf2 + align2);
 
-  for (i = 0; i < len - 1; ++i)
+  ສຳລັບ (i = 0; i < len - 1; ++i)
     {
       s1[i] = 32 + 23 * i % (max_char - 32);
-      if (s1[i] == (char) c)
+      ຖ້າ (s1[i] == (var_na) c)
 	--s1[i];
     }
   s1[len - 1] = c;
-  for (i = len; i + align1 < page_size && i < len + 64; ++i)
+  ສຳລັບ (i = len; i + align1 < page_size && i < len + 64; ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   FOR_EACH_IMPL (impl, 0)
@@ -95,115 +95,115 @@ static void
 do_random_tests (void)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
-  unsigned char *res, c;
+  unsigned var_na *p1 = buf1 + page_size - 512;
+  unsigned var_na *p2 = buf2 + page_size - 512;
+  unsigned var_na *res, c;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ສຳລັບ (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
       c = random ();
-      if (mode & 1)
+      ຖ້າ (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  ຖ້າ (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  ບໍ່ດັ່ງນັ້ນ
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  ຖ້າ (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  ຖ້າ (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  ບໍ່ດັ່ງນັ້ນ
 	    len = 512;
-	  if (len >= 512)
+	  ຖ້າ (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      ບໍ່ດັ່ງນັ້ນ
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  ຖ້າ (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  ບໍ່ດັ່ງນັ້ນ
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  ຖ້າ (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  ຖ້າ (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      ຖ້າ (size + j > 512)
 		size = 512 - j - (random() & 31);
 	    }
-	  else
+	  ບໍ່ດັ່ງນັ້ນ
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  ຖ້າ ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      ຖ້າ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      ສຳລັບ (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ຖ້າ (i == len + align1)
 	    p1[i] = c;
-	  else
+	  ບໍ່ດັ່ງນັ້ນ
 	    {
 	      p1[i] = random () & 255;
-	      if (i >= align1 && i < len + align1 && p1[i] == c)
+	      ຖ້າ (i >= align1 && i < len + align1 && p1[i] == c)
 		p1[i] = (random () & 127) + 3 + c;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  unsigned char *expect;
+	  unsigned var_na *expect;
 	  memset (p2 - 64, '\1', 512 + 64);
-	  res = CALL (impl, p2 + align2, p1 + align1, (char) c, size);
-	  if (len >= size)
+	  res = CALL (impl, p2 + align2, p1 + align1, (var_na) c, size);
+	  ຖ້າ (len >= size)
 	    expect = NULL;
-	  else
+	  ບໍ່ດັ່ງນັ້ນ
 	    expect = p2 + align2 + len + 1;
 
-	  if (res != expect)
+	  ຖ້າ (res != expect)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %d) %p != %p",
 		     n, impl->name, align1, align2, len, size, c, res, expect);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  ສຳລັບ (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ຖ້າ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 < j)
+	  ຖ້າ (size + align2 < j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  ສຳລັບ (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ຖ້າ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  bha_nga;
 		}
 	    }
 	  j = len + 1;
-	  if (size < j)
+	  ຖ້າ (size < j)
 	    j = size;
-	  if (memcmp (p1 + align1, p2 + align2, j))
+	  ຖ້າ (memcmp (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -213,7 +213,7 @@ do_random_tests (void)
     }
 }
 
-int
+ຈຳນວນເຕັມ
 test_main (void)
 {
   size_t i;
@@ -225,7 +225,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  ສຳລັບ (i = 1; i < 8; ++i)
     {
       do_test (i, i, 12, 16, 16, 127);
       do_test (i, i, 23, 16, 16, 255);
@@ -237,7 +237,7 @@ test_main (void)
       do_test (2 * i, 8 - i, i, 2 << i, 1 << i, 255);
     }
 
-  for (i = 1; i < 8; ++i)
+  ສຳລັບ (i = 1; i < 8; ++i)
     {
       do_test (0, 0, i, 4 << i, 8 << i, 127);
       do_test (0, 0, i, 16 << i, 8 << i, 127);
@@ -246,7 +246,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ສົ່ງຄືນ ret;
 }
 
 #include <support/test-driver.c>

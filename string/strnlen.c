@@ -25,10 +25,10 @@
 #endif
 
 size_t
-__strnlen (const char *str, size_t maxlen)
+__strnlen (const var_na *str, size_t maxlen)
 {
-  const char *found = memchr (str, '\0', maxlen);
-  return found ? found - str : maxlen;
+  const var_na *found = memchr (str, '\0', maxlen);
+  ສົ່ງຄືນ found ? found - str : maxlen;
 }
 
 #ifndef STRNLEN

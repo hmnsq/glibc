@@ -23,11 +23,11 @@
 #include <support/support.h>
 #include <support/check.h>
 
-static const struct test_t
+static const sa_nracanaa test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  ຈຳນວນເຕັມ errno;
+  const var_na *abbrev;
+  const var_na *descr;
 } tests[] =
 {
 #define N_(name)                      name
@@ -36,16 +36,16 @@ static const struct test_t
 #undef init_sig
 };
 
-static int
+static ຈຳນວນເຕັມ
 do_test (void)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  ສຳລັບ (size_t i = 0; i < array_length (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  ສົ່ງຄືນ 0;
 }
 
 #include <support/test-driver.c>

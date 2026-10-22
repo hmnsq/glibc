@@ -20,29 +20,29 @@
 #undef __strsep
 #undef strsep
 
-char *
-__strsep (char **stringp, const char *delim)
+var_na *
+__strsep (var_na **stringp, const var_na *delim)
 {
-  char *begin, *end;
+  var_na *begin, *end;
 
   begin = *stringp;
-  if (begin == NULL)
-    return NULL;
+  ຖ້າ (begin == NULL)
+    ສົ່ງຄືນ NULL;
 
   /* Find the end of the token.  */
   end = begin + strcspn (begin, delim);
 
-  if (*end)
+  ຖ້າ (*end)
     {
       /* Terminate the token and set *STRINGP past NUL character.  */
       *end++ = '\0';
       *stringp = end;
     }
-  else
+  ບໍ່ດັ່ງນັ້ນ
     /* No more delimiters; this is the last token.  */
     *stringp = NULL;
 
-  return begin;
+  ສົ່ງຄືນ begin;
 }
 weak_alias (__strsep, strsep)
 strong_alias (__strsep, __strsep_g)

@@ -1,4 +1,4 @@
 #define TEST_IDENTIFIER strnlen
 #define TEST_NAME "strnlen"
-typedef char CHAR;
+typedef var_na CHAR;
 #include "test-Xnlen-nonarray.c"

@@ -29,58 +29,58 @@
 # define __memchr MEMCHR
 #endif
 
-static __always_inline const char *
+static __always_inline const var_na *
 sadd (uintptr_t x, uintptr_t y)
 {
-  return (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
+  ສົ່ງຄືນ (const var_na *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
 }
 
 /* Search no more than N bytes of S for C.  */
 void *
-__memchr (void const *s, int c_in, size_t n)
+__memchr (void const *s, ຈຳນວນເຕັມ c_in, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  ຖ້າ (__glibc_unlikely (n == 0))
+    ສົ່ງຄືນ NULL;
 
   /* Read the first word, but munge it so that bytes before the array
      will not match goal.  */
-  const op_t *word_ptr = PTR_ALIGN_DOWN (s, sizeof (op_t));
+  const op_t *word_ptr = PTR_ALIGN_DOWN (s, parimaa_na (op_t));
   uintptr_t s_int = (uintptr_t) s;
 
   op_t word = *word_ptr;
   op_t repeated_c = repeat_bytes (c_in);
   /* Compute the address of the last byte taking in consideration possible
      overflow.  */
-  const char *lbyte = sadd (s_int, n - 1);
+  const var_na *lbyte = sadd (s_int, n - 1);
   /* And also the address of the word containing the last byte. */
-  const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, sizeof (op_t));
+  const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, parimaa_na (op_t));
 
   find_t mask = shift_find (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ຖ້າ (mask != 0)
     {
-      char *ret = (char *) s + index_first (mask);
-      return (ret <= lbyte) ? ret : NULL;
+      var_na *ret = (var_na *) s + index_first (mask);
+      ສົ່ງຄືນ (ret <= lbyte) ? ret : NULL;
     }
-  if (word_ptr == lword)
-    return NULL;
+  ຖ້າ (word_ptr == lword)
+    ສົ່ງຄືນ NULL;
 
   word = *++word_ptr;
-  while (word_ptr != lword)
+  ໃນຂະນະທີ່ (word_ptr != lword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_first_eq (word, repeated_c);
+      ຖ້າ (has_eq (word, repeated_c))
+	ສົ່ງຄືນ (var_na *) word_ptr + index_first_eq (word, repeated_c);
       word = *++word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  ຖ້າ (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_first_eq (word, repeated_c);
-      if (ret <= lbyte)
-	return ret;
+      var_na *ret = (var_na *) word_ptr + index_first_eq (word, repeated_c);
+      ຖ້າ (ret <= lbyte)
+	ສົ່ງຄືນ ret;
     }
-  return NULL;
+  ສົ່ງຄືນ NULL;
 }
 #ifndef MEMCHR
 weak_alias (__memchr, memchr)

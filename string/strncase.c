@@ -27,7 +27,7 @@
 #ifndef weak_alias
 # define __strncasecmp strncasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#ບໍ່ດັ່ງນັ້ນ
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strncasecmp __strncasecmp_l
@@ -37,7 +37,7 @@
 
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#ບໍ່ດັ່ງນັ້ນ
 # define LOCALE_PARAM
 #endif
 
@@ -45,24 +45,24 @@
    ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less
    than, equal to or greater than S2.  */
-int
-__strncasecmp (const char *s1, const char *s2, size_t n LOCALE_PARAM)
+ຈຳນວນເຕັມ
+__strncasecmp (const var_na *s1, const var_na *s2, size_t n LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#ຖ້າ defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
 #endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+  const unsigned var_na *p1 = (const unsigned var_na *) s1;
+  const unsigned var_na *p2 = (const unsigned var_na *) s2;
+  ຈຳນວນເຕັມ result;
 
-  if (p1 == p2 || n == 0)
-    return 0;
+  ຖ້າ (p1 == p2 || n == 0)
+    ສົ່ງຄືນ 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0' || --n == 0)
-      break;
+  ໃນຂະນະທີ່ ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    ຖ້າ (*p1++ == '\0' || --n == 0)
+      bha_nga;
 
-  return result;
+  ສົ່ງຄືນ result;
 }
 #ifndef __strncasecmp
 weak_alias (__strncasecmp, strncasecmp)

@@ -19,9 +19,9 @@
 #include <sys/cdefs.h>
 #include <support/support.h>
 
-typedef struct
+typedef sa_nracanaa
 {
-  const char *name;
+  const var_na *name;
   void (*fn) (void);
   long test;
 } impl_t;
@@ -29,7 +29,7 @@ extern impl_t __start_impls[], __stop_impls[];
 
 #define IMPL(name, test) \
   impl_t tst_ ## name							\
-  __attribute__ ((section ("impls"), aligned (sizeof (void *))))	\
+  __attribute__ ((section ("impls"), aligned (parimaa_na (void *))))	\
        = { __STRING (name), (void (*) (void))name, test };
 
 #ifdef TEST_MAIN
@@ -66,9 +66,9 @@ extern impl_t __start_impls[], __stop_impls[];
 # define OPT_RANDOM 10001
 # define OPT_SEED 10002
 
-unsigned char *buf1, *buf2;
-int ret, do_srandom;
-unsigned int seed;
+unsigned var_na *buf1, *buf2;
+ຈຳນວນເຕັມ ret, do_srandom;
+unsigned ຈຳນວນເຕັມ seed;
 size_t page_size;
 
 # ifndef ITERATIONS
@@ -76,11 +76,11 @@ size_t iterations = 100000;
 #  define ITERATIONS_OPTIONS \
   { "iterations", required_argument, NULL, OPT_ITERATIONS },
 #  define ITERATIONS_PROCESS \
-  case OPT_ITERATIONS:				\
+  pak_sa OPT_ITERATIONS:				\
     iterations = strtoul (optarg, NULL, 0);	\
-    break;
+    bha_nga;
 #  define ITERATIONS iterations
-# else
+# ບໍ່ດັ່ງນັ້ນ
 #  define ITERATIONS_OPTIONS
 #  define ITERATIONS_PROCESS
 # endif
@@ -90,26 +90,26 @@ size_t iterations = 100000;
   { "seed", required_argument, NULL, OPT_SEED },
 
 static void __attribute__ ((used))
-cmdline_process_function (int c)
+cmdline_process_function (ຈຳນວນເຕັມ c)
 {
   switch (c)
     {
       ITERATIONS_PROCESS
-      case OPT_RANDOM:
+      pak_sa OPT_RANDOM:
         {
-          int fdr = open ("/dev/urandom", O_RDONLY);
-          if (fdr < 0 || read (fdr, &seed, sizeof (seed)) != sizeof (seed))
+          ຈຳນວນເຕັມ fdr = open ("/dev/urandom", O_RDONLY);
+          ຖ້າ (fdr < 0 || read (fdr, &seed, parimaa_na (seed)) != parimaa_na (seed))
             seed = time (NULL);
-          if (fdr >= 0)
+          ຖ້າ (fdr >= 0)
             close (fdr);
           do_srandom = 1;
-          break;
+          bha_nga;
         }
 
-      case OPT_SEED:
+      pak_sa OPT_SEED:
         seed = strtoul (optarg, NULL, 0);
         do_srandom = 1;
-        break;
+        bha_nga;
     }
 }
 # define CMDLINE_PROCESS cmdline_process_function
@@ -119,33 +119,33 @@ cmdline_process_function (int c)
 
 #ifdef TEST_NAME
 /* Increase size of FUNC_LIST if assert is triggered at run-time.  */
-static struct libc_ifunc_impl func_list[32];
-static int func_count;
-static int impl_count __attribute__ ((unused)) = -1;
+static sa_nracanaa libc_ifunc_impl func_list[32];
+static ຈຳນວນເຕັມ func_count;
+static ຈຳນວນເຕັມ impl_count __attribute__ ((unused)) = -1;
 static impl_t *impl_array __attribute__ ((unused));
 
 # define FOR_EACH_IMPL(impl, notall) \
   impl_t *impl;								\
-  int count;								\
-  if (impl_count == -1)							\
+  ຈຳນວນເຕັມ count;								\
+  ຖ້າ (impl_count == -1)							\
     {									\
       impl_count = 0;							\
-      if (func_count != 0)						\
+      ຖ້າ (func_count != 0)						\
 	{								\
-	  int f;							\
+	  ຈຳນວນເຕັມ f;							\
 	  impl_t *skip = NULL, *a;					\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (strcmp (impl->name, TEST_NAME) == 0)			\
+	  ສຳລັບ (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    ຖ້າ (strcmp (impl->name, TEST_NAME) == 0)			\
 	      skip = impl;						\
-	    else							\
+	    ບໍ່ດັ່ງນັ້ນ							\
 	      impl_count++;						\
 	  a = impl_array = xmalloc ((impl_count + func_count) *		\
-				    sizeof (impl_t));			\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (impl != skip)						\
+				    parimaa_na (impl_t));			\
+	  ສຳລັບ (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    ຖ້າ (impl != skip)						\
 	      *a++ = *impl;						\
-	  for (f = 0; f < func_count; f++)				\
-	    if (func_list[f].usable)					\
+	  ສຳລັບ (f = 0; f < func_count; f++)				\
+	    ຖ້າ (func_list[f].usable)					\
 	      {								\
 		a->name = func_list[f].name;				\
 		a->fn = func_list[f].fn;				\
@@ -154,19 +154,19 @@ static impl_t *impl_array __attribute__ ((unused));
 	      }								\
 	  impl_count = a - impl_array;					\
 	}								\
-      else								\
+      ບໍ່ດັ່ງນັ້ນ								\
         {								\
 	  impl_count = __stop_impls - __start_impls;			\
 	  impl_array = __start_impls;					\
         }								\
     }									\
   impl = impl_array;							\
-  for (count = 0; count < impl_count; ++count, ++impl)			\
-    if (!notall || impl->test)
-#else
+  ສຳລັບ (count = 0; count < impl_count; ++count, ++impl)			\
+    ຖ້າ (!notall || impl->test)
+#ບໍ່ດັ່ງນັ້ນ
 # define FOR_EACH_IMPL(impl, notall) \
-  for (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
-    if (!notall || impl->test)
+  ສຳລັບ (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
+    ຖ້າ (!notall || impl->test)
 #endif
 
 #ifndef BUF1PAGES
@@ -178,28 +178,28 @@ test_init (void)
 {
 #ifdef TEST_NAME
   func_count = __libc_ifunc_impl_list (TEST_NAME, func_list,
-				       (sizeof func_list
-					/ sizeof func_list[0]));
+				       (parimaa_na func_list
+					/ parimaa_na func_list[0]));
 #endif
 
   page_size = 2 * getpagesize ();
 #ifdef MIN_PAGE_SIZE
-  if (page_size < MIN_PAGE_SIZE)
+  ຖ້າ (page_size < MIN_PAGE_SIZE)
     page_size = MIN_PAGE_SIZE;
 #endif
   buf1 = mmap (0, (BUF1PAGES + 1) * page_size, PROT_READ | PROT_WRITE,
 	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf1 == MAP_FAILED)
+  ຖ້າ (buf1 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf1 + BUF1PAGES * page_size, page_size, PROT_NONE))
+  ຖ້າ (mprotect (buf1 + BUF1PAGES * page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
   buf2 = mmap (0, 2 * page_size, PROT_READ | PROT_WRITE,
 	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf2 == MAP_FAILED)
+  ຖ້າ (buf2 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf2 + page_size, page_size, PROT_NONE))
+  ຖ້າ (mprotect (buf2 + page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
-  if (do_srandom)
+  ຖ້າ (do_srandom)
     {
       printf ("Setting seed to 0x%x\n", seed);
       srandom (seed);

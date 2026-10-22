@@ -3,59 +3,59 @@
 #include <string.h>
 
 
-static struct
+static sa_nracanaa
 {
-  const char *str1;
-  const char *str2;
+  const var_na *str1;
+  const var_na *str2;
 } tests[] =
   {
     { "B0075022800016.gbp.corp.com", "B007502280067.gbp.corp.com" },
     { "B0075022800016.gbp.corp.com", "B007502357019.GBP.CORP.COM" },
     { "B007502280067.gbp.corp.com", "B007502357019.GBP.CORP.COM" }
   };
-#define ntests (sizeof (tests) / sizeof (tests[0]))
+#define ntests (parimaa_na (tests) / parimaa_na (tests[0]))
 
 
-int
-compare (const char *str1, const char *str2, int exp)
+ຈຳນວນເຕັມ
+compare (const var_na *str1, const var_na *str2, ຈຳນວນເຕັມ exp)
 {
-  int c = strverscmp (str1, str2);
-  if (c != 0)
+  ຈຳນວນເຕັມ c = strverscmp (str1, str2);
+  ຖ້າ (c != 0)
     c /= abs (c);
-  return c != exp;
+  ສົ່ງຄືນ c != exp;
 }
 
 
-int
+ຈຳນວນເຕັມ
 do_test (void)
 {
-  int res = 0;
-  for (int i = 0; i < ntests; ++i)
+  ຈຳນວນເຕັມ res = 0;
+  ສຳລັບ (ຈຳນວນເຕັມ i = 0; i < ntests; ++i)
     {
-      if (compare (tests[i].str1, tests[i].str2, -1))
+      ຖ້າ (compare (tests[i].str1, tests[i].str2, -1))
 	{
 	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
 	  res = 1;
 	}
-      if (compare (tests[i].str2, tests[i].str1, +1))
+      ຖ້າ (compare (tests[i].str2, tests[i].str1, +1))
 	{
 	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
 	  res = 1;
 	}
-      char *copy1 = strdupa (tests[i].str1);
-      if (compare (tests[i].str1, copy1, 0))
+      var_na *copy1 = strdupa (tests[i].str1);
+      ຖ້າ (compare (tests[i].str1, copy1, 0))
 	{
 	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
 	  res = 1;
 	}
-      char *copy2 = strdupa (tests[i].str2);
-      if (compare (tests[i].str2, copy2, 0))
+      var_na *copy2 = strdupa (tests[i].str2);
+      ຖ້າ (compare (tests[i].str2, copy2, 0))
 	{
 	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
 	  res = 1;
 	}
     }
-  return res;
+  ສົ່ງຄືນ res;
 }
 
 #include <support/test-driver.c>

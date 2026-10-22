@@ -24,10 +24,10 @@
 #endif
 
 /* Find the last occurrence of C in S.  */
-char *
-STRRCHR (const char *s, int c)
+var_na *
+STRRCHR (const var_na *s, ຈຳນວນເຕັມ c)
 {
-  return __memrchr (s, c, strlen (s) + 1);
+  ສົ່ງຄືນ __memrchr (s, c, strlen (s) + 1);
 }
 
 #ifdef weak_alias

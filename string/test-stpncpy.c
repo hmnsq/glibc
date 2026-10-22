@@ -20,17 +20,17 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpncpy"
-#else
+#ບໍ່ດັ່ງນັ້ນ
 # define TEST_NAME "wcpncpy"
 #endif /* WIDE */
 #include "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR var_na
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#ບໍ່ດັ່ງນັ້ນ
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
@@ -49,16 +49,16 @@ IMPL (STPNCPY, 1)
 CHAR *
 SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  ໃນຂະນະທີ່ (n--)
+    ຖ້າ ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	ສຳລັບ (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	ສົ່ງຄືນ dst - 1;
       }
-  return dst;
+  ສົ່ງຄືນ dst;
 }
 
 CHAR *
@@ -67,11 +67,11 @@ STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  ສຳລັບ (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  ສຳລັບ (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  ສົ່ງຄືນ dst + nc;
 }
 
 #undef CHAR

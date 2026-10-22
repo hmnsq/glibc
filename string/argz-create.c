@@ -24,29 +24,29 @@
    ARGZ, and the total length in LEN.  If a memory allocation error occurs,
    ENOMEM is returned, otherwise 0.  */
 error_t
-__argz_create (char *const argv[], char **argz, size_t *len)
+__argz_create (var_na *const argv[], var_na **argz, size_t *len)
 {
-  int argc;
+  ຈຳນວນເຕັມ argc;
   size_t tlen = 0;
-  char *const *ap;
-  char *p;
+  var_na *const *ap;
+  var_na *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
+  ສຳລັບ (argc = 0; argv[argc] != NULL; ++argc)
     tlen += strlen (argv[argc]) + 1;
 
-  if (tlen == 0)
+  ຖ້າ (tlen == 0)
     *argz = NULL;
-  else
+  ບໍ່ດັ່ງນັ້ນ
     {
       *argz = malloc (tlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      ຖ້າ (*argz == NULL)
+	ສົ່ງຄືນ ENOMEM;
 
-      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+      ສຳລັບ (p = *argz, ap = argv; *ap; ++ap, ++p)
 	p = __stpcpy (p, *ap);
     }
   *len = tlen;
 
-  return 0;
+  ສົ່ງຄືນ 0;
 }
 weak_alias (__argz_create, argz_create)

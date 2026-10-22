@@ -18,8 +18,8 @@
 
 #include <stdio.h>
 
-const char *
-strerrorname_np (int errnum)
+const var_na *
+strerrorname_np (ຈຳນວນເຕັມ errnum)
 {
-  return __get_errname (errnum);
+  ສົ່ງຄືນ __get_errname (errnum);
 }

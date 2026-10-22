@@ -19,21 +19,21 @@
 #include <argz.h>
 #include <string.h>
 
-char *
-__argz_next (const char *argz, size_t argz_len, const char *entry)
+var_na *
+__argz_next (const var_na *argz, size_t argz_len, const var_na *entry)
 {
-  if (entry)
+  ຖ້າ (entry)
     {
-      if (entry < argz + argz_len)
+      ຖ້າ (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      ສົ່ງຄືນ entry >= argz + argz_len ? NULL : (var_na *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  ບໍ່ດັ່ງນັ້ນ
+    ຖ້າ (argz_len > 0)
+      ສົ່ງຄືນ (var_na *) argz;
+    ບໍ່ດັ່ງນັ້ນ
+      ສົ່ງຄືນ NULL;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)
