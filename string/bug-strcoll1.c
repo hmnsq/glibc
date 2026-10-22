@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <locale.h>
 
-int
-main (void)
+പൂർണ്ണസംഖ്യ
+പ്രധാന (ശൂന്യം)
 {
-  const char t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
-  const char t2[] = "00000-00000.COM";
-  int res1;
-  int res2;
+  സ്ഥിരം അക്ഷരം t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
+  സ്ഥിരം അക്ഷരം t2[] = "00000-00000.COM";
+  പൂർണ്ണസംഖ്യ res1;
+  പൂർണ്ണസംഖ്യ res2;
 
   setlocale (LC_ALL, "en_US.ISO-8859-1");
 
@@ -17,7 +17,7 @@ main (void)
   res2 = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, res2);
 
-  return ((res1 == 0 && res2 != 0)
+  തിരികെ ((res1 == 0 && res2 != 0)
 	  || (res1 != 0 && res2 == 0)
 	  || (res1 < 0 && res2 < 0)
 	  || (res1 > 0 && res2 > 0));

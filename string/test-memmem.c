@@ -20,72 +20,72 @@
 #define TEST_NAME "memmem"
 #define BUF1PAGES 20
 #define ITERATIONS 500
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+തരനിർവചനം അക്ഷരം *(*proto_t) (സ്ഥിരം ശൂന്യം *, size_t, സ്ഥിരം ശൂന്യം *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+ശൂന്യം *
+simple_memmem (സ്ഥിരം ശൂന്യം *haystack, size_t haystack_len, സ്ഥിരം ശൂന്യം *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  സ്ഥിരം അക്ഷരം *begin;
+  സ്ഥിരം അക്ഷരം *സ്ഥിരം last_possible
+    = (സ്ഥിരം അക്ഷരം *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  എങ്കിൽ (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    തിരികെ (ശൂന്യം *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  എങ്കിൽ (__glibc_unlikely (haystack_len < needle_len))
+    തിരികെ ശൂന്യ;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  വേണ്ടി (begin = (സ്ഥിരം അക്ഷരം *) haystack; begin <= last_possible; ++begin)
+    എങ്കിൽ (begin[0] == ((സ്ഥിരം അക്ഷരം *) needle)[0]
+        && !memcmp ((സ്ഥിരം ശൂന്യം *) &begin[1],
+		    (സ്ഥിരം ശൂന്യം *) ((സ്ഥിരം അക്ഷരം *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      തിരികെ (ശൂന്യം *) begin;
 
-  return NULL;
+  തിരികെ ശൂന്യ;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+check_result (impl_t *impl, സ്ഥിരം ശൂന്യം *haystack, size_t haystack_len,
+	     സ്ഥിരം ശൂന്യം *needle, size_t needle_len, സ്ഥിരം ശൂന്യം *expected)
 {
-  void *res;
+  ശൂന്യം *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  എങ്കിൽ (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      തിരികെ -1;
     }
 
-  return 0;
+  തിരികെ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, സ്ഥിരം ശൂന്യം *haystack, size_t haystack_len,
+	     സ്ഥിരം ശൂന്യം *needle, size_t needle_len, സ്ഥിരം ശൂന്യം *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  എങ്കിൽ (check_result (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    തിരികെ;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+സ്ഥിതം ശൂന്യം
+do_test (സ്ഥിരം അക്ഷരം *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  അക്ഷരം tmpbuf[len];
 
   memcpy (tmpbuf, buf1 + idx, len);
   memcpy (buf1 + idx, str, len);
@@ -96,23 +96,23 @@ do_test (const char *str, size_t len, size_t idx)
   memcpy (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+സ്ഥിതം ശൂന്യം
+do_random_tests (ശൂന്യം)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  വേണ്ടി (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      അക്ഷരം tmpbuf[32];
 
       size_t shift = random () % 11;
       size_t rel = random () % ((2 << (shift + 1)) * 64);
       size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
+      size_t len = random () % (വലുപ്പം (tmpbuf) - 1) + 1;
       len = MIN (len, BUF1PAGES * page_size - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      വേണ്ടി (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  അക്ഷരം ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
@@ -125,24 +125,24 @@ do_random_tests (void)
     }
 }
 
-static void
-check1 (void)
+സ്ഥിതം ശൂന്യം
+check1 (ശൂന്യം)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  സ്ഥിരം അക്ഷരം തിരയൽ_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  സ്ഥിരം അക്ഷരം pattern[2] = { 0x78, 0x56 };
+  ശൂന്യം *തിരയൽ_buf = (ശൂന്യം *) buf1 + page_size - വലുപ്പം തിരയൽ_buf_data;
+  ശൂന്യം *exp_result;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  memcpy (തിരയൽ_buf, തിരയൽ_buf_data, വലുപ്പം തിരയൽ_buf_data);
+  exp_result = simple_memmem (തിരയൽ_buf, വലുപ്പം തിരയൽ_buf_data,
+			      pattern, വലുപ്പം pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_result (impl, തിരയൽ_buf, വലുപ്പം തിരയൽ_buf_data,
+		  pattern, വലുപ്പം pattern, exp_result);
 }
 
-static const char *const strs[] =
+സ്ഥിതം സ്ഥിരം അക്ഷരം *സ്ഥിരം strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   size_t i;
 
@@ -164,11 +164,11 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  വേണ്ടി (i = 0; i < BUF1PAGES * page_size; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  വേണ്ടി (i = 0; i < വലുപ്പം (strs) / വലുപ്പം (strs[0]); ++i)
+    വേണ്ടി (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
 
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

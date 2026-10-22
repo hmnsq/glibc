@@ -23,62 +23,62 @@
 /* Make sure we test the optimized inline functions.  */
 #define __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#അന്തര്ഭാവ <errno.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <strings.h>
+#അന്തര്ഭാവ <fcntl.h>
 
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  പൂർണ്ണസംഖ്യ status;
+  പൂർണ്ണസംഖ്യ errors = 0;
+  അക്ഷരം buf1[1000];
+  അക്ഷരം *cp;
+  അക്ഷരം ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  എങ്കിൽ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  എങ്കിൽ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  എങ്കിൽ (strchr ("hello world", ch++) == ശൂന്യ)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  സ്ഥിരം അക്ഷരം * സ്ഥിരം hw = "hello world";
+  എങ്കിൽ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  എങ്കിൽ (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  അല്ലെങ്കിൽ
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  തിരികെ status;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

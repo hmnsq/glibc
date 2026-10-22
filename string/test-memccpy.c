@@ -18,192 +18,192 @@
 
 #define TEST_MAIN
 #define TEST_NAME "memccpy"
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 IMPL (memccpy, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memccpy (void *dst, const void *src, int c, size_t n)
+ശൂന്യം *
+simple_memccpy (ശൂന്യം *dst, സ്ഥിരം ശൂന്യം *src, പൂർണ്ണസംഖ്യ c, size_t n)
 {
-  const char *s = src;
-  char *d = dst;
+  സ്ഥിരം അക്ഷരം *s = src;
+  അക്ഷരം *d = dst;
 
-  while (n-- > 0)
-    if ((*d++ = *s++) == (char) c)
-      return d;
+  ആകുമ്പോൾ (n-- > 0)
+    എങ്കിൽ ((*d++ = *s++) == (അക്ഷരം) c)
+      തിരികെ d;
 
-  return NULL;
+  തിരികെ ശൂന്യ;
 }
 
-typedef void *(*proto_t) (void *, const void *, int c, size_t);
+തരനിർവചനം ശൂന്യം *(*proto_t) (ശൂന്യം *, സ്ഥിരം ശൂന്യം *, പൂർണ്ണസംഖ്യ c, size_t);
 
-static void
-do_one_test (impl_t *impl, void *dst, const void *src, int c, size_t len,
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, ശൂന്യം *dst, സ്ഥിരം ശൂന്യം *src, പൂർണ്ണസംഖ്യ c, size_t len,
 	     size_t n)
 {
-  void *expect = len > n ? NULL : (char *) dst + len;
-  if (CALL (impl, dst, src, c, n) != expect)
+  ശൂന്യം *expect = len > n ? ശൂന്യ : (അക്ഷരം *) dst + len;
+  എങ്കിൽ (CALL (impl, dst, src, c, n) != expect)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, c, n), expect);
       ret = 1;
-      return;
+      തിരികെ;
     }
 
-  if (memcmp (dst, src, len > n ? n : len) != 0)
+  എങ്കിൽ (memcmp (dst, src, len > n ? n : len) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      തിരികെ;
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, int c, size_t len, size_t n,
-	 int max_char)
+സ്ഥിതം ശൂന്യം
+do_test (size_t align1, size_t align2, പൂർണ്ണസംഖ്യ c, size_t len, size_t n,
+	 പൂർണ്ണസംഖ്യ max_char)
 {
   size_t i;
-  char *s1, *s2;
+  അക്ഷരം *s1, *s2;
 
   align1 &= 7;
-  if (align1 + len >= page_size)
-    return;
+  എങ്കിൽ (align1 + len >= page_size)
+    തിരികെ;
 
   align2 &= 7;
-  if (align2 + len >= page_size)
-    return;
+  എങ്കിൽ (align2 + len >= page_size)
+    തിരികെ;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (അക്ഷരം *) (buf1 + align1);
+  s2 = (അക്ഷരം *) (buf2 + align2);
 
-  for (i = 0; i < len - 1; ++i)
+  വേണ്ടി (i = 0; i < len - 1; ++i)
     {
       s1[i] = 32 + 23 * i % (max_char - 32);
-      if (s1[i] == (char) c)
+      എങ്കിൽ (s1[i] == (അക്ഷരം) c)
 	--s1[i];
     }
   s1[len - 1] = c;
-  for (i = len; i + align1 < page_size && i < len + 64; ++i)
+  വേണ്ടി (i = len; i + align1 < page_size && i < len + 64; ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   FOR_EACH_IMPL (impl, 0)
     do_one_test (impl, s2, s1, c, len, n);
 }
 
-static void
-do_random_tests (void)
+സ്ഥിതം ശൂന്യം
+do_random_tests (ശൂന്യം)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
-  unsigned char *res, c;
+  unsigned അക്ഷരം *p1 = buf1 + page_size - 512;
+  unsigned അക്ഷരം *p2 = buf2 + page_size - 512;
+  unsigned അക്ഷരം *res, c;
 
-  for (n = 0; n < ITERATIONS; n++)
+  വേണ്ടി (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
       c = random ();
-      if (mode & 1)
+      എങ്കിൽ (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  എങ്കിൽ (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  അല്ലെങ്കിൽ
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  എങ്കിൽ (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  എങ്കിൽ (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  അല്ലെങ്കിൽ
 	    len = 512;
-	  if (len >= 512)
+	  എങ്കിൽ (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      അല്ലെങ്കിൽ
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  എങ്കിൽ (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  അല്ലെങ്കിൽ
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  എങ്കിൽ (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  എങ്കിൽ (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      എങ്കിൽ (size + j > 512)
 		size = 512 - j - (random() & 31);
 	    }
-	  else
+	  അല്ലെങ്കിൽ
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  എങ്കിൽ ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      എങ്കിൽ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      വേണ്ടി (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  എങ്കിൽ (i == len + align1)
 	    p1[i] = c;
-	  else
+	  അല്ലെങ്കിൽ
 	    {
 	      p1[i] = random () & 255;
-	      if (i >= align1 && i < len + align1 && p1[i] == c)
+	      എങ്കിൽ (i >= align1 && i < len + align1 && p1[i] == c)
 		p1[i] = (random () & 127) + 3 + c;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  unsigned char *expect;
+	  unsigned അക്ഷരം *expect;
 	  memset (p2 - 64, '\1', 512 + 64);
-	  res = CALL (impl, p2 + align2, p1 + align1, (char) c, size);
-	  if (len >= size)
-	    expect = NULL;
-	  else
+	  res = CALL (impl, p2 + align2, p1 + align1, (അക്ഷരം) c, size);
+	  എങ്കിൽ (len >= size)
+	    expect = ശൂന്യ;
+	  അല്ലെങ്കിൽ
 	    expect = p2 + align2 + len + 1;
 
-	  if (res != expect)
+	  എങ്കിൽ (res != expect)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %d) %p != %p",
 		     n, impl->name, align1, align2, len, size, c, res, expect);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  വേണ്ടി (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      എങ്കിൽ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  നിർത്തുക;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 < j)
+	  എങ്കിൽ (size + align2 < j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  വേണ്ടി (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      എങ്കിൽ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  നിർത്തുക;
 		}
 	    }
 	  j = len + 1;
-	  if (size < j)
+	  എങ്കിൽ (size < j)
 	    j = size;
-	  if (memcmp (p1 + align1, p2 + align2, j))
+	  എങ്കിൽ (memcmp (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -213,8 +213,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   size_t i;
 
@@ -225,7 +225,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (i, i, 12, 16, 16, 127);
       do_test (i, i, 23, 16, 16, 255);
@@ -237,7 +237,7 @@ test_main (void)
       do_test (2 * i, 8 - i, i, 2 << i, 1 << i, 255);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (0, 0, i, 4 << i, 8 << i, 127);
       do_test (0, 0, i, 16 << i, 8 << i, 127);
@@ -246,7 +246,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

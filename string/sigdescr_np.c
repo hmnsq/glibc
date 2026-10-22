@@ -16,19 +16,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <signal.h>
+#അന്തര്ഭാവ <array_length.h>
 
-const char *
-__sigdescr_np (int signum)
+സ്ഥിരം അക്ഷരം *
+__sigdescr_np (പൂർണ്ണസംഖ്യ signum)
 {
-  const char *descr = NULL;
+  സ്ഥിരം അക്ഷരം *descr = ശൂന്യ;
 
-  if (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
+  എങ്കിൽ (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
     descr = __sys_siglist[signum];
 
-  return descr;
+  തിരികെ descr;
 }
 libc_hidden_def (__sigdescr_np)
 weak_alias (__sigdescr_np, sigdescr_np)

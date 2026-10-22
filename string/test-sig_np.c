@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <signal.h>
+#അന്തര്ഭാവ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#അന്തര്ഭാവ <support/support.h>
+#അന്തര്ഭാവ <support/check.h>
 
-static const struct test_t
+സ്ഥിതം സ്ഥിരം ഘടന test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  പൂർണ്ണസംഖ്യ errno;
+  സ്ഥിരം അക്ഷരം *abbrev;
+  സ്ഥിരം അക്ഷരം *descr;
 } tests[] =
 {
 #define N_(name)                      name
 #define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
+#അന്തര്ഭാവ <siglist.h>
 #undef init_sig
 };
 
-static int
-do_test (void)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  വേണ്ടി (size_t i = 0; i < array_length (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

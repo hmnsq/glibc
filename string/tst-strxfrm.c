@@ -1,49 +1,49 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#അന്തര്ഭാവ <locale.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
 
 
-char const string[] = "";
+അക്ഷരം സ്ഥിരം string[] = "";
 
 
-static int
-test (const char *locale)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+test (സ്ഥിരം അക്ഷരം *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  അക്ഷരം *buf;
   locale_t loc;
-  int result = 0;
+  പൂർണ്ണസംഖ്യ result = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  എങ്കിൽ (setlocale (LC_COLLATE, locale) == ശൂന്യ)
     {
       printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      തിരികെ 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
+  bufsize = strxfrm (ശൂന്യ, string, 0) + 1;
   buf = malloc (bufsize);
-  if (buf == NULL)
+  എങ്കിൽ (buf == ശൂന്യ)
     {
       printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      തിരികെ 1;
     }
   r = strxfrm (buf, string, bufsize);
   l = strlen (buf);
-  if (r != l)
+  എങ്കിൽ (r != l)
     {
        printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
        result = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, ശൂന്യ);
 
   r = strxfrm_l (buf, string, bufsize, loc);
   l = strlen (buf);
-  if (r != l)
+  എങ്കിൽ (r != l)
     {
        printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -52,22 +52,22 @@ test (const char *locale)
 
   freelocale (loc);
 
-  free (buf);
+  സ്വതന്ത്രം (buf);
 
-  return result;
+  തിരികെ result;
 }
 
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  int result = 0;
+  പൂർണ്ണസംഖ്യ result = 0;
 
   result |= test ("C");
   result |= test ("en_US.ISO-8859-1");
   result |= test ("de_DE.UTF-8");
 
-  return result;
+  തിരികെ result;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

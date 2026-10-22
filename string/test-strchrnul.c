@@ -18,4 +18,4 @@
    <https://www.gnu.org/licenses/>.  */
 
 #define USE_FOR_STRCHRNUL 1
-#include "test-strchr.c"
+#അന്തര്ഭാവ "test-strchr.c"

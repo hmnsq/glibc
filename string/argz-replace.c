@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+സ്ഥിതം ശൂന്യം
+str_append (അക്ഷരം **to, size_t *to_len, സ്ഥിരം അക്ഷരം *buf, സ്ഥിരം size_t buf_len)
 {
   size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  അക്ഷരം *new_to = realloc (*to, new_len + 1);
 
-  if (new_to)
+  എങ്കിൽ (new_to)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
+      *((അക്ഷരം *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
       *to = new_to;
       *to_len = new_len;
     }
-  else
+  അല്ലെങ്കിൽ
     {
-      free (*to);
-      *to = NULL;
+      സ്വതന്ത്രം (*to);
+      *to = ശൂന്യ;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (അക്ഷരം **argz, size_t *argz_len, സ്ഥിരം അക്ഷരം *str, സ്ഥിരം അക്ഷരം *with,
+		unsigned *replace_എണ്ണം)
 {
   error_t err = 0;
 
-  if (str && *str)
+  എങ്കിൽ (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      അക്ഷരം *arg = ശൂന്യ;
+      അക്ഷരം *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      അക്ഷരം *dst = ശൂന്യ;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      പൂർണ്ണസംഖ്യ delayed_copy = 1;	/* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      ആകുമ്പോൾ (!err && (arg = argz_next (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  അക്ഷരം *match = strstr (arg, str);
+	  എങ്കിൽ (match)
 	    {
-	      char *from = match + str_len;
+	      അക്ഷരം *from = match + str_len;
 	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      അക്ഷരം *to = __strndup (arg, to_len);
 
-	      while (to && from)
+	      ആകുമ്പോൾ (to && from)
 		{
 		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  എങ്കിൽ (to)
 		    {
 		      match = strstr (from, str);
-		      if (match)
+		      എങ്കിൽ (match)
 			{
 			  str_append (&to, &to_len, from, match - from);
 			  from = match + str_len;
 			}
-		      else
+		      അല്ലെങ്കിൽ
 			{
 			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  from = ശൂന്യ;
 			}
 		    }
 		}
 
-	      if (to)
+	      എങ്കിൽ (to)
 		{
-		  if (delayed_copy)
+		  എങ്കിൽ (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      എങ്കിൽ (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
+		  എങ്കിൽ (! err)
 		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  സ്വതന്ത്രം (to);
 		}
-	      else
+	      അല്ലെങ്കിൽ
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      എങ്കിൽ (replace_എണ്ണം)
+		(*replace_എണ്ണം)++;
 	    }
-	  else if (! delayed_copy)
+	  അല്ലെങ്കിൽ എങ്കിൽ (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      എങ്കിൽ (! err)
 	{
-	  if (! delayed_copy)
+	  എങ്കിൽ (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      സ്വതന്ത്രം (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      അല്ലെങ്കിൽ എങ്കിൽ (dst_len > 0)
+	സ്വതന്ത്രം (dst);
     }
 
-  return err;
+  തിരികെ err;
 }
 weak_alias (__argz_replace, argz_replace)

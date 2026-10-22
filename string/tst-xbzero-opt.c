@@ -40,17 +40,17 @@
 
 #define _GNU_SOURCE 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#അന്തര്ഭാവ <errno.h>
+#അന്തര്ഭാവ <signal.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <ucontext.h>
+#അന്തര്ഭാവ <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+സ്ഥിതം സ്ഥിരം unsigned അക്ഷരം test_pattern[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,7 +60,7 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
+#define PATTERN_SIZE (വലുപ്പം test_pattern)
 #define PATTERN_REPS 32
 #define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
 
@@ -95,84 +95,84 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+സ്ഥിതം ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+സ്ഥിതം __attribute_optimization_barrier__ പൂർണ്ണസംഖ്യ
+use_test_buffer (unsigned അക്ഷരം *buf)
 {
-  unsigned int sum = 0;
+  unsigned പൂർണ്ണസംഖ്യ sum = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  വേണ്ടി (unsigned പൂർണ്ണസംഖ്യ i = 0; i < PATTERN_REPS; i++)
     sum += buf[i * PATTERN_SIZE];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  തിരികെ (sum == 2 * PATTERN_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#എങ്കിൽ defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#അല്ലെങ്കിൽ
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
 #endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+സ്ഥിതം വരിയിൽ ALWAYS_INLINE ശൂന്യം
+prepare_test_buffer (unsigned അക്ഷരം *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  വേണ്ടി (unsigned പൂർണ്ണസംഖ്യ i = 0; i < PATTERN_REPS; i++)
     memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
 
-  if (swapcontext (&uc_co, &uc_main))
+  എങ്കിൽ (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  എങ്കിൽ (use_test_buffer (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+സ്ഥിതം ശൂന്യം
+setup_no_clear (ശൂന്യം)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned അക്ഷരം buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+സ്ഥിതം ശൂന്യം
+setup_ordinary_clear (ശൂന്യം)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned അക്ഷരം buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
   memset (buf, 0, TEST_BUFFER_SIZE);
 }
 
-static void
-setup_explicit_clear (void)
+സ്ഥിതം ശൂന്യം
+setup_explicit_clear (ശൂന്യം)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned അക്ഷരം buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
 #ifdef TEST_MEMSET_EXPLICIT
   memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
+#അല്ലെങ്കിൽ
   explicit_bzero (buf, TEST_BUFFER_SIZE);
 #endif
 }
 
-enum test_expectation
+എണ്ണൽ test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+ഘടന subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  ശൂന്യം (*setup_subtest) (ശൂന്യം);
+  സ്ഥിരം അക്ഷരം *label;
+  എണ്ണൽ test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+സ്ഥിതം സ്ഥിരം ഘടന subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+സ്ഥിതം സ്ഥിരം ഘടന subtest subtests[] =
 {
   { setup_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
@@ -182,13 +182,13 @@ static const struct subtest subtests[] =
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+സ്ഥിതം ശൂന്യം
+test_coroutine (ശൂന്യം)
 {
-  while (cur_subtest->setup_subtest)
+  ആകുമ്പോൾ (cur_subtest->setup_subtest)
     {
       cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      എങ്കിൽ (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+സ്ഥിതം പൂർണ്ണസംഖ്യ test_status;
+സ്ഥിതം unsigned അക്ഷരം *co_അട്ടി_buffer;
+സ്ഥിതം size_t co_അട്ടി_size;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+സ്ഥിതം unsigned പൂർണ്ണസംഖ്യ
+എണ്ണം_test_patterns (unsigned അക്ഷരം *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  unsigned അക്ഷരം *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
+  എങ്കിൽ (!first)
+    തിരികെ 0;
+  unsigned പൂർണ്ണസംഖ്യ cnt = 0;
+  വേണ്ടി (unsigned പൂർണ്ണസംഖ്യ i = 0; i < PATTERN_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      unsigned അക്ഷരം *p = first + i*PATTERN_SIZE;
+      എങ്കിൽ (p + PATTERN_SIZE - buf > bufsiz)
+	നിർത്തുക;
+      എങ്കിൽ (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
 	cnt++;
     }
-  return cnt;
+  തിരികെ cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+സ്ഥിതം ശൂന്യം
+check_test_buffer (എണ്ണൽ test_expectation expected,
+		   സ്ഥിരം അക്ഷരം *label, സ്ഥിരം അക്ഷരം *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  unsigned പൂർണ്ണസംഖ്യ cnt = എണ്ണം_test_patterns (co_അട്ടി_buffer, co_അട്ടി_size);
+  തിരഞ്ഞെടുപ്പ് (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
+    അവസ്ഥ EXPECT_NONE:
+      എങ്കിൽ (cnt == 0)
 	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+      അല്ലെങ്കിൽ
 	{
 	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
 	  test_status = 1;
 	}
-      break;
+      നിർത്തുക;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
+    അവസ്ഥ EXPECT_SOME:
+      എങ്കിൽ (cnt > 0)
 	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+      അല്ലെങ്കിൽ
 	{
 	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
 	  test_status = 1;
 	}
-      break;
+      നിർത്തുക;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
+     അവസ്ഥ EXPECT_ALL:
+      എങ്കിൽ (cnt == PATTERN_REPS)
 	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
 		PATTERN_REPS, cnt);
-      else
+      അല്ലെങ്കിൽ
 	{
 	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
 		  PATTERN_REPS, cnt);
 	  test_status = 1;
 	}
-      break;
+      നിർത്തുക;
 
-    case NO_EXPECTATIONS:
+    അവസ്ഥ NO_EXPECTATIONS:
       printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      നിർത്തുക;
 
-    default:
+    സ്ഥിരസ്ഥിതി:
       printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
+	      label, stage, (പൂർണ്ണസംഖ്യ)expected);
       test_status = 1;
     }
 }
 
-static void
-test_loop (void)
+സ്ഥിതം ശൂന്യം
+test_loop (ശൂന്യം)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  ആകുമ്പോൾ (cur_subtest->setup_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      എങ്കിൽ (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      എങ്കിൽ (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  എങ്കിൽ (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
   size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  എങ്കിൽ (page_alignment < വലുപ്പം (ശൂന്യം *))
+    page_alignment = വലുപ്പം (ശൂന്യം *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_അട്ടി_size = SIGSTKSZ + TEST_BUFFER_SIZE;
+  എങ്കിൽ (co_അട്ടി_size < page_alignment * 4)
+    co_അട്ടി_size = page_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  ശൂന്യം *p;
+  പൂർണ്ണസംഖ്യ err = posix_memalign (&p, page_alignment, co_അട്ടി_size);
+  എങ്കിൽ (err || !p)
     {
       printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      തിരികെ 2;
     }
-  co_stack_buffer = p;
+  co_അട്ടി_buffer = p;
 
-  if (getcontext (&uc_co))
+  എങ്കിൽ (getcontext (&uc_co))
     {
       printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      തിരികെ 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_അട്ടി_buffer;
+  uc_co.uc_stack.ss_size = co_അട്ടി_size;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  തിരികെ test_status;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

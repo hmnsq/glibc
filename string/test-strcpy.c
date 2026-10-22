@@ -26,9 +26,9 @@
 # define STRCMP wcscmp
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
-#else
-# define CHAR char
-# define UCHAR unsigned char
+#അല്ലെങ്കിൽ
+# define CHAR അക്ഷരം
+# define UCHAR unsigned അക്ഷരം
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
@@ -42,13 +42,13 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strcpy"
-# else
+# അല്ലെങ്കിൽ
 #  define TEST_NAME "wcscpy"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRCPY strcpy
-# else
+# അല്ലെങ്കിൽ
 #  define STRCPY wcscpy
 # endif
 
@@ -71,7 +71,7 @@ IMPL (STRCPY, 1)
 #  define __stpcpy __stpcpy_default
 #  include "string/strcpy.c"
 IMPL (__strcpy_default, 1)
-# else
+# അല്ലെങ്കിൽ
 #  define __wcslen wcslen
 #  define __wmemcpy wmemcpy
 #  define WCSCPY __wcscpy_default
@@ -80,32 +80,32 @@ IMPL (__wcscpy_default, 1)
 # endif
 #endif
 
-typedef CHAR *(*proto_t) (CHAR *, const CHAR *);
+തരനിർവചനം CHAR *(*proto_t) (CHAR *, സ്ഥിരം CHAR *);
 
-static void
-do_one_test (impl_t *impl, CHAR *dst, const CHAR *src,
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, CHAR *dst, സ്ഥിരം CHAR *src,
 	     size_t len __attribute__((unused)))
 {
-  if (CALL (impl, dst, src) != STRCPY_RESULT (dst, len))
+  എങ്കിൽ (CALL (impl, dst, src) != STRCPY_RESULT (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src), STRCPY_RESULT (dst, len));
       ret = 1;
-      return;
+      തിരികെ;
     }
 
-  if (STRCMP (dst, src) != 0)
+  എങ്കിൽ (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     impl->name, dst, src);
       ret = 1;
-      return;
+      തിരികെ;
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+സ്ഥിതം ശൂന്യം
+do_test (size_t align1, size_t align2, size_t len, പൂർണ്ണസംഖ്യ max_char)
 {
   size_t i;
   CHAR *s1, *s2;
@@ -113,17 +113,17 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  എങ്കിൽ ((align1 + len) * വലുപ്പം (CHAR) >= page_size)
+    തിരികെ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  എങ്കിൽ ((align2 + len) * വലുപ്പം (CHAR) >= page_size)
+    തിരികെ;
 
   s1 = (CHAR *) (buf1) + align1;
   s2 = (CHAR *) (buf2) + align2;
 
-  for (i = 0; i < len; i++)
+  വേണ്ടി (i = 0; i < len; i++)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
@@ -131,15 +131,15 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
     do_one_test (impl, s2, s1, len);
 }
 
-static void
-do_random_tests (void)
+സ്ഥിതം ശൂന്യം
+do_random_tests (ശൂന്യം)
 {
   size_t i, j, n, align1, align2, len;
   UCHAR *p1 = (UCHAR *) (buf1 + page_size) - 512;
   UCHAR *p2 = (UCHAR *) (buf2 + page_size) - 512;
   UCHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  വേണ്ടി (n = 0; n < ITERATIONS; n++)
     {
       /* For wcsrchr: align1 and align2 here mean align not in bytes,
 	 but in wchar_ts, in bytes it will equal to align * (sizeof
@@ -147,28 +147,28 @@ do_random_tests (void)
 	 0 to 63 since some assembly implementations have separate
 	 prolog for alignments more 48. */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / വലുപ്പം (CHAR));
+      എങ്കിൽ (random () & 1)
+	align2 = random () & (63 / വലുപ്പം (CHAR));
+      അല്ലെങ്കിൽ
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      എങ്കിൽ (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      എങ്കിൽ (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      എങ്കിൽ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      വേണ്ടി (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  എങ്കിൽ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  അല്ലെങ്കിൽ
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      എങ്കിൽ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -177,34 +177,34 @@ do_random_tests (void)
 	{
 	  MEMSET (p2 - 64, '\1', 512 + 64);
 	  res = (UCHAR *) CALL (impl, (CHAR *) (p2 + align2), (CHAR *) (p1 + align1));
-	  if (res != STRCPY_RESULT (p2 + align2, len))
+	  എങ്കിൽ (res != STRCPY_RESULT (p2 + align2, len))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd) %p != %p",
 		     n, impl->name, align1, align2, len, res,
 		     STRCPY_RESULT (p2 + align2, len));
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  വേണ്ടി (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      എങ്കിൽ (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  നിർത്തുക;
 		}
 	    }
-	  for (j = align2 + len + 1; j < 512; ++j)
+	  വേണ്ടി (j = align2 + len + 1; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      എങ്കിൽ (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  നിർത്തുക;
 		}
 	    }
-	  if (MEMCMP (p1 + align1, p2 + align2, len + 1))
+	  എങ്കിൽ (MEMCMP (p1 + align1, p2 + align2, len + 1))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -214,8 +214,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   size_t i;
 
@@ -226,7 +226,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 16; ++i)
+  വേണ്ടി (i = 0; i < 16; ++i)
     {
       do_test (0, 0, i, SMALL_CHAR);
       do_test (0, 0, i, BIG_CHAR);
@@ -234,13 +234,13 @@ test_main (void)
       do_test (i, 0, i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, SMALL_CHAR);
       do_test (8 - i, 2 * i, 8 << i, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, SMALL_CHAR);
       do_test (2 * i, i, 8 << i, BIG_CHAR);
@@ -249,7 +249,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

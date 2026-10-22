@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#അന്തര്ഭാവ <endian.h>
+#അന്തര്ഭാവ <stddef.h>
 
-int i;
+പൂർണ്ണസംഖ്യ i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = വലുപ്പം (htobe16 (i));
+size_t s1 = വലുപ്പം (htole16 (i));
+size_t s2 = വലുപ്പം (be16toh (i));
+size_t s3 = വലുപ്പം (le16toh (i));
+size_t s4 = വലുപ്പം (htobe32 (i));
+size_t s5 = വലുപ്പം (htole32 (i));
+size_t s6 = വലുപ്പം (be32toh (i));
+size_t s7 = വലുപ്പം (le32toh (i));
+size_t s8 = വലുപ്പം (htobe64 (i));
+size_t s9 = വലുപ്പം (htole64 (i));
+size_t s10 = വലുപ്പം (be64toh (i));
+size_t s11 = വലുപ്പം (le64toh (i));
 
-static int
-do_test (void)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
   /* This is a compilation test.  */
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

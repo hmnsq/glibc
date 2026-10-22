@@ -16,7 +16,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#അന്തര്ഭാവ <support/check.h>
 
 #ifdef WIDE
 # include <wchar.h>
@@ -28,8 +28,8 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define TCS TEST_COMPARE_STRING_WIDE
-#else
-# define CHAR char
+#അല്ലെങ്കിൽ
+# define CHAR അക്ഷരം
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
@@ -44,49 +44,49 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strdup"
-# else
+# അല്ലെങ്കിൽ
 #  define TEST_NAME "wcsdup"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRDUP strdup
-# else
+# അല്ലെങ്കിൽ
 #  define STRDUP wcsdup
 # endif
 #endif
 
-typedef CHAR *(*proto_t) (const CHAR *);
+തരനിർവചനം CHAR *(*proto_t) (സ്ഥിരം CHAR *);
 
-static void
-do_zero_len_test (void)
+സ്ഥിതം ശൂന്യം
+do_zero_len_test (ശൂന്യം)
 {
   CHAR src[1] = { '\0' };
   CHAR *dst = STRDUP (src);
 
   TCS (dst, src);
-  free (dst);
+  സ്വതന്ത്രം (dst);
 }
 
-static void
-do_one_test (const CHAR *src,
+സ്ഥിതം ശൂന്യം
+do_one_test (സ്ഥിരം CHAR *src,
 	     size_t len __attribute__((unused)))
 {
   CHAR *dst = STRDUP (src);
 
-  if (STRCMP (dst, src) != 0)
+  എങ്കിൽ (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     TEST_NAME, dst, src);
       ret = 1;
-      free (dst);
-      return;
+      സ്വതന്ത്രം (dst);
+      തിരികെ;
     }
-  free (dst);
+  സ്വതന്ത്രം (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+സ്ഥിതം ശൂന്യം
+do_test (size_t align1, size_t align2, size_t len, പൂർണ്ണസംഖ്യ max_char)
 {
   size_t i;
   CHAR *s1;
@@ -94,30 +94,30 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  എങ്കിൽ ((align1 + len) * വലുപ്പം (CHAR) >= page_size)
+    തിരികെ;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  എങ്കിൽ ((align2 + len) * വലുപ്പം (CHAR) >= page_size)
+    തിരികെ;
 
   s1 = (CHAR *) (buf1) + align1;
 
-  for (i = 0; i < len; i++)
+  വേണ്ടി (i = 0; i < len; i++)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
   do_one_test (s1, len);
 }
 
-static void
-do_random_tests (void)
+സ്ഥിതം ശൂന്യം
+do_random_tests (ശൂന്യം)
 {
   size_t i, j, n, align1, align2, len;
   CHAR *p1 = (CHAR *)(buf1 + page_size) - 512;
   CHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  വേണ്ടി (n = 0; n < ITERATIONS; n++)
     {
       /* align1 and align2 are expressed as wchar_t and not in bytes for wide
      char test, and thus it will be equal to align times wchar_t size.
@@ -126,41 +126,41 @@ do_random_tests (void)
      since some assembly implementations have separate prolog for alignments
      more 48.  */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / വലുപ്പം (CHAR));
+      എങ്കിൽ (random () & 1)
+	align2 = random () & (63 / വലുപ്പം (CHAR));
+      അല്ലെങ്കിൽ
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      എങ്കിൽ (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      എങ്കിൽ (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      എങ്കിൽ (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      വേണ്ടി (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  എങ്കിൽ (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  അല്ലെങ്കിൽ
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      എങ്കിൽ (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
 
       res =  STRDUP(p1 + align1);
       TCS (res, (p1 + align1));
-      free (res);
+      സ്വതന്ത്രം (res);
     }
 }
 
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   size_t i;
 
@@ -170,7 +170,7 @@ test_main (void)
   printf ("\t%s", TEST_NAME);
   putchar ('\n');
 
-  for (i = 0; i < 16; ++i)
+  വേണ്ടി (i = 0; i < 16; ++i)
     {
       do_test (0, 0, i, SMALL_CHAR);
       do_test (0, 0, i, BIG_CHAR);
@@ -178,13 +178,13 @@ test_main (void)
       do_test (i, 0, i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, SMALL_CHAR);
       do_test (8 - i, 2 * i, 8 << i, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, SMALL_CHAR);
       do_test (2 * i, i, 8 << i, BIG_CHAR);
@@ -195,7 +195,7 @@ test_main (void)
   do_zero_len_test ();
   do_random_tests ();
 
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

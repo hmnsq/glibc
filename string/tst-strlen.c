@@ -2,56 +2,56 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <string.h>
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  സ്ഥിതം സ്ഥിരം size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  അക്ഷരം basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  വേണ്ടി (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      അക്ഷരം *buf = basebuf + base;
+      size_t വാക്കുകൾ;
 
-      for (words = 0; words < 4; ++words)
+      വേണ്ടി (വാക്കുകൾ = 0; വാക്കുകൾ < 4; ++വാക്കുകൾ)
 	{
 	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  memset (buf, 'a', വാക്കുകൾ * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  വേണ്ടി (last = 0; last < 16; ++last)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[വാക്കുകൾ * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
+	      buf[വാക്കുകൾ * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
+	      buf[വാക്കുകൾ * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
+	      buf[വാക്കുകൾ * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
+	      buf[വാക്കുകൾ * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      എങ്കിൽ (strlen (buf) != വാക്കുകൾ * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+strlen failed വേണ്ടി base=%zu, വാക്കുകൾ=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, വാക്കുകൾ, last,
+			  strlen (buf), വാക്കുകൾ * 4 + lens[last]);
+		  തിരികെ 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      എങ്കിൽ (strnlen (buf, -1) != വാക്കുകൾ * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+strnlen failed വേണ്ടി base=%zu, വാക്കുകൾ=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, വാക്കുകൾ, last,
+			  strnlen (buf, -1), വാക്കുകൾ * 4 + lens[last]);
+		  തിരികെ 1;
 		}
 	    }
 	}
     }
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

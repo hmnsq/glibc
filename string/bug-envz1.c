@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <envz.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
 
-static const struct
+സ്ഥിതം സ്ഥിരം ഘടന
 {
-  const char *s;
-  int in_result;
+  സ്ഥിരം അക്ഷരം *s;
+  പൂർണ്ണസംഖ്യ in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (വലുപ്പം (strs) / വലുപ്പം (strs[0]))
 
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  അക്ഷരം *str = malloc (100);
+  എങ്കിൽ (str == ശൂന്യ)
     {
       puts ("out of memory");
-      return 1;
+      തിരികെ 1;
     }
 
-  char **argz = &str;
+  അക്ഷരം **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  വേണ്ടി (പൂർണ്ണസംഖ്യ i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  പൂർണ്ണസംഖ്യ result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  വേണ്ടി (പൂർണ്ണസംഖ്യ i = 0; i < nstrs; ++i)
+    എങ്കിൽ (strs[i].in_result)
       {
-        char name[2];
+        അക്ഷരം name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        അക്ഷരം *e = envz_entry (*argz, size, name);
+        എങ്കിൽ (e == ശൂന്യ)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        അല്ലെങ്കിൽ എങ്കിൽ (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -68,8 +68,8 @@ do_test (void)
           }
       }
 
-  free (*argz);
-  return result;
+  സ്വതന്ത്രം (*argz);
+  തിരികെ result;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

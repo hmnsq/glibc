@@ -19,21 +19,21 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strspn"
-#else
+#അല്ലെങ്കിൽ
 # define TEST_NAME "wcsspn"
 #endif /* WIDE */
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 #ifndef WIDE
 # define STRSPN strspn
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR അക്ഷരം
+# define UCHAR unsigned അക്ഷരം
 # define SIMPLE_STRSPN simple_strspn
 # define STRLEN strlen
 # define STRCHR strchr
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#അല്ലെങ്കിൽ
 # include <wchar.h>
 # define STRSPN wcsspn
 # define CHAR wchar_t
@@ -45,72 +45,72 @@
 # define SMALL_CHAR 1273
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
+തരനിർവചനം size_t (*proto_t) (സ്ഥിരം CHAR *, സ്ഥിരം CHAR *);
 
 IMPL (STRSPN, 1)
 
 /* Naive implementation to verify results.  */
 size_t
-SIMPLE_STRSPN (const CHAR *s, const CHAR *acc)
+SIMPLE_STRSPN (സ്ഥിരം CHAR *s, സ്ഥിരം CHAR *acc)
 {
-  const CHAR *r, *str = s;
+  സ്ഥിരം CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
+  ആകുമ്പോൾ ((c = *s++) != '\0')
     {
-      for (r = acc; *r != '\0'; ++r)
-	if (*r == c)
-	  break;
-      if (*r == '\0')
-	return s - str - 1;
+      വേണ്ടി (r = acc; *r != '\0'; ++r)
+	എങ്കിൽ (*r == c)
+	  നിർത്തുക;
+      എങ്കിൽ (*r == '\0')
+	തിരികെ s - str - 1;
     }
-  return s - str - 1;
+  തിരികെ s - str - 1;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, const CHAR *acc, size_t exp_res)
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, സ്ഥിരം CHAR *s, സ്ഥിരം CHAR *acc, size_t exp_res)
 {
   size_t res = CALL (impl, s, acc);
-  if (res != exp_res)
+  എങ്കിൽ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-	     (void *) res, (void *) exp_res);
+	     (ശൂന്യം *) res, (ശൂന്യം *) exp_res);
       ret = 1;
-      return;
+      തിരികെ;
     }
 }
 
-static void
+സ്ഥിതം ശൂന്യം
 do_test (size_t align, size_t pos, size_t len)
 {
   size_t i;
   CHAR *acc, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240 || ! len)
-    return;
+  എങ്കിൽ ((align + pos + 10) * വലുപ്പം (CHAR) >= page_size || len > 240 || ! len)
+    തിരികെ;
 
   acc = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  വേണ്ടി (i = 0; i < len; ++i)
     {
       acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      എങ്കിൽ (!acc[i])
 	acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      എങ്കിൽ (!acc[i])
 	acc[i] = 1 + (random () & SMALL_CHAR);
     }
   acc[len] = '\0';
 
-  for (i = 0; i < pos; ++i)
+  വേണ്ടി (i = 0; i < pos; ++i)
     s[i] = acc[random () % len];
   s[pos] = random () & BIG_CHAR;
-  if (STRCHR (acc, s[pos]))
+  എങ്കിൽ (STRCHR (acc, s[pos]))
     s[pos] = '\0';
-  else
+  അല്ലെങ്കിൽ
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      വേണ്ടി (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
@@ -119,61 +119,61 @@ do_test (size_t align, size_t pos, size_t len)
     do_one_test (impl, s, acc, pos);
 }
 
-static void
-do_random_tests (void)
+സ്ഥിതം ശൂന്യം
+do_random_tests (ശൂന്യം)
 {
   size_t i, j, n, align, pos, alen, len;
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
   UCHAR *acc;
 
-  for (n = 0; n < ITERATIONS; n++)
+  വേണ്ടി (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
-      if (random () & 1)
+      എങ്കിൽ (random () & 1)
 	alen = random () & 63;
-      else
+      അല്ലെങ്കിൽ
 	alen = random () & 15;
-      if (!alen)
+      എങ്കിൽ (!alen)
 	pos = 0;
-      else
+      അല്ലെങ്കിൽ
 	pos = random () & 511;
-      if (pos + align >= 511)
+      എങ്കിൽ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      എങ്കിൽ (len + align >= 512)
 	len = 511 - align - (random () & 7);
       acc = (UCHAR *) (buf2 + page_size) - alen - 1 - (random () & 7);
-      for (i = 0; i < alen; ++i)
+      വേണ്ടി (i = 0; i < alen; ++i)
 	{
 	  acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  എങ്കിൽ (!acc[i])
 	    acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  എങ്കിൽ (!acc[i])
 	    acc[i] = 1 + (random () & SMALL_CHAR);
 	}
       acc[i] = '\0';
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      എങ്കിൽ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      വേണ്ടി (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  എങ്കിൽ (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  അല്ലെങ്കിൽ എങ്കിൽ (i == pos + align)
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) acc, p[i]))
+	      എങ്കിൽ (STRCHR ((CHAR *) acc, p[i]))
 		p[i] = '\0';
 	    }
-	  else if (i < align || i > pos + align)
+	  അല്ലെങ്കിൽ എങ്കിൽ (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  അല്ലെങ്കിൽ
 	    p[i] = acc [random () % alen];
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align),
+	എങ്കിൽ (CALL (impl, (CHAR *) (p + align),
 		  (CHAR *) acc) != (pos < len ? pos : len))
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %zd != %zd",
@@ -185,8 +185,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   size_t i;
 
@@ -197,26 +197,26 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 32; ++i)
+  വേണ്ടി (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  വേണ്ടി (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

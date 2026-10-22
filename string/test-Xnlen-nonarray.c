@@ -25,25 +25,25 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#അന്തര്ഭാവ <array_length.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <support/check.h>
+#അന്തര്ഭാവ <support/next_to_fault.h>
+#അന്തര്ഭാവ <support/test-driver.h>
+#അന്തര്ഭാവ <sys/param.h>
+#അന്തര്ഭാവ <unistd.h>
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+തരനിർവചനം __typeof (TEST_IDENTIFIER) *proto_t;
 
 #define TEST_MAIN
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
-  enum { buffer_length = 256 };
+  എണ്ണൽ { buffer_length = 256 };
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
 
   test_init ();
@@ -76,47 +76,47 @@ test_main (void)
     The length argument must not be greater than buffer_length -
     start_offset, and the result is the length argument.  */
 
-  struct support_next_to_fault ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
+  ഘടന support_next_to_fault ntf
+    = support_next_to_fault_allocate (buffer_length * വലുപ്പം (CHAR));
   CHAR *buffer = (CHAR *) ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
+      വേണ്ടി (size_t i = 0; i < buffer_length; ++i)
         buffer[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      വേണ്ടി (പൂർണ്ണസംഖ്യ zero_എണ്ണം = 0; zero_എണ്ണം <= buffer_length; ++zero_എണ്ണം)
         {
-          if (zero_count > 0)
-            buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
+          എങ്കിൽ (zero_എണ്ണം > 0)
+            buffer[buffer_length - zero_എണ്ണം] = 0;
+          പൂർണ്ണസംഖ്യ a_എണ്ണം = buffer_length - zero_എണ്ണം;
+          വേണ്ടി (പൂർണ്ണസംഖ്യ start_offset = 0; start_offset <= buffer_length;
                ++start_offset)
             {
               CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
+              എങ്കിൽ (start_offset == buffer_length)
                 TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
+              അല്ലെങ്കിൽ എങ്കിൽ (zero_എണ്ണം > 0)
+                വേണ്ടി (പൂർണ്ണസംഖ്യ length_argument = 0;
                      length_argument <= 2 * buffer_length;
                      ++length_argument)
                   {
-                    if (test_verbose)
+                    എങ്കിൽ (test_verbose)
                       printf ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
-                              zero_count, a_count, start_offset,
+                              zero_എണ്ണം, a_എണ്ണം, start_offset,
                               length_argument);
-                    if (start_offset < a_count)
+                    എങ്കിൽ (start_offset < a_എണ്ണം)
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                    MIN (a_count - start_offset,
+                                    MIN (a_എണ്ണം - start_offset,
                                          length_argument));
-                    else
+                    അല്ലെങ്കിൽ
                       TEST_COMPARE (CALL (impl, start_pointer, length_argument),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
+              അല്ലെങ്കിൽ
+                വേണ്ടി (പൂർണ്ണസംഖ്യ length_argument = 0;
                      length_argument <= buffer_length - start_offset;
                      ++length_argument)
                   TEST_COMPARE (CALL (impl, start_pointer, length_argument),
@@ -127,7 +127,7 @@ test_main (void)
 
   support_next_to_fault_free (&ntf);
 
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

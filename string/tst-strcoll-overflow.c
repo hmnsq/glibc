@@ -15,14 +15,14 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <locale.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
+#അന്തര്ഭാവ <locale.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <stdint.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
 
-#include <support/check.h>
-#include <support/test-driver.h>
+#അന്തര്ഭാവ <support/check.h>
+#അന്തര്ഭാവ <support/test-driver.h>
 
 /* Verify that strcoll does not crash for large strings for which it
    cannot cache weight lookup results.  The size is large enough to
@@ -30,25 +30,25 @@
    64-bit.  */
 #define SIZE 0x40000000ul
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  TEST_VERIFY_EXIT (setlocale (LC_COLLATE, "en_GB.UTF-8") != NULL);
+  TEST_VERIFY_EXIT (setlocale (LC_COLLATE, "en_GB.UTF-8") != ശൂന്യ);
 
-  char *p = malloc (SIZE);
-  if (p == NULL)
+  അക്ഷരം *p = malloc (SIZE);
+  എങ്കിൽ (p == ശൂന്യ)
     {
       puts ("info: could not allocate memory, cannot run test");
-      return EXIT_UNSUPPORTED;
+      തിരികെ EXIT_UNSUPPORTED;
     }
 
   memset (p, 'x', SIZE - 1);
   p[SIZE - 1] = 0;
   printf ("info: strcoll result: %d\n", strcoll (p, p));
-  return 0;
+  തിരികെ 0;
 }
 
 /* This test can rung for a long time, but it should complete within
    this time on reasonably current hardware.  */
 #define TIMEOUT 300
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

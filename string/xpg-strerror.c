@@ -15,32 +15,32 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <assert.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/param.h>
+#അന്തര്ഭാവ <assert.h>
+#അന്തര്ഭാവ <errno.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <sys/param.h>
 
 
 /* Fill buf with a string describing the errno code in ERRNUM.  */
-int
-__xpg_strerror_r (int errnum, char *buf, size_t buflen)
+പൂർണ്ണസംഖ്യ
+__xpg_strerror_r (പൂർണ്ണസംഖ്യ errnum, അക്ഷരം *buf, size_t buflen)
 {
-  const char *estr = __strerror_r (errnum, buf, buflen);
+  സ്ഥിരം അക്ഷരം *estr = __strerror_r (errnum, buf, buflen);
 
   /* We know that __strerror_r returns buf (with a dynamically computed
      string) if errnum is invalid, otherwise it returns a string whose
      storage has indefinite extent.  */
-  if (estr == buf)
-    return EINVAL;
-  else
+  എങ്കിൽ (estr == buf)
+    തിരികെ EINVAL;
+  അല്ലെങ്കിൽ
     {
       size_t estrlen = strlen (estr);
 
       /* Terminate the string in any case.  */
-      if (buflen > 0)
-	*((char *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
+      എങ്കിൽ (buflen > 0)
+	*((അക്ഷരം *) __mempcpy (buf, estr, MIN (buflen - 1, estrlen))) = '\0';
 
-      return buflen <= estrlen ? ERANGE : 0;
+      തിരികെ buflen <= estrlen ? ERANGE : 0;
     }
 }

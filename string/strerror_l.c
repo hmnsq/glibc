@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libintl.h>
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#അന്തര്ഭാവ <libintl.h>
+#അന്തര്ഭാവ <locale.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <tls-internal.h>
+#അന്തര്ഭാവ <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+സ്ഥിതം സ്ഥിരം അക്ഷരം *
+translate (സ്ഥിരം അക്ഷരം *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  സ്ഥിരം അക്ഷരം *res = _(str);
   __uselocale (oldloc);
-  return res;
+  തിരികെ res;
 }
 
-static char *
+സ്ഥിതം അക്ഷരം *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  തിരികെ (അക്ഷരം *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+അക്ഷരം *
+__strerror_l (പൂർണ്ണസംഖ്യ errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  പൂർണ്ണസംഖ്യ saved_errno = errno;
+  അക്ഷരം *err = (അക്ഷരം *) __get_errlist (errnum);
+  എങ്കിൽ (__glibc_unlikely (err == ശൂന്യ))
     {
-      if (__libc_initial)
+      എങ്കിൽ (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  ഘടന tls_internal_t *tls_internal = __glibc_tls_internal ();
+	  സ്വതന്ത്രം (tls_internal->strerror_l_buf);
+	  എങ്കിൽ (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  അല്ലെങ്കിൽ
 	    {
 	      /* The memory was freed above.  */
-	      tls_internal->strerror_l_buf = NULL;
+	      tls_internal->strerror_l_buf = ശൂന്യ;
 	      /* Provide a fallback translation.  */
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      അല്ലെങ്കിൽ
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  അല്ലെങ്കിൽ
+    err = (അക്ഷരം *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  തിരികെ err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

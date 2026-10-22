@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#അന്തര്ഭാവ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+സ്ഥിതം അക്ഷരം *
+simple_strcasestr (സ്ഥിരം അക്ഷരം *s1, സ്ഥിരം അക്ഷരം *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  എങ്കിൽ (s2len > s1len)
+    തിരികെ ശൂന്യ;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  വേണ്ടി (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      വേണ്ടി (j = 0; j < s2len; ++j)
+	എങ്കിൽ (tolower (s1[i + j]) != tolower (s2[j]))
+	  നിർത്തുക;
+      എങ്കിൽ (j == s2len)
+	തിരികെ (അക്ഷരം *) s1 + i;
     }
 
-  return NULL;
+  തിരികെ ശൂന്യ;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+തരനിർവചനം അക്ഷരം *(*proto_t) (സ്ഥിരം അക്ഷരം *, സ്ഥിരം അക്ഷരം *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+check_result (impl_t *impl, സ്ഥിരം അക്ഷരം *s1, സ്ഥിരം അക്ഷരം *s2,
+	      അക്ഷരം *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  അക്ഷരം *result = CALL (impl, s1, s2);
+  എങ്കിൽ (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == ശൂന്യ) ? "(null)" : result,
+	     (exp_result == ശൂന്യ) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      തിരികെ -1;
     }
-  return 0;
+  തിരികെ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, സ്ഥിരം അക്ഷരം *s1, സ്ഥിരം അക്ഷരം *s2, അക്ഷരം *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  എങ്കിൽ (check_result (impl, s1, s2, exp_result) < 0)
+    തിരികെ;
 }
 
 
-static void
+സ്ഥിതം ശൂന്യം
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 പൂർണ്ണസംഖ്യ fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  അക്ഷരം *s1 = (അക്ഷരം *) (buf1 + align1);
+  അക്ഷരം *s2 = (അക്ഷരം *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  സ്ഥിതം സ്ഥിരം അക്ഷരം d[] = "1234567890abcxyz";
+#define dl (വലുപ്പം (d) - 1)
+  അക്ഷരം *ss2 = s2;
+  വേണ്ടി (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  എങ്കിൽ (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      അക്ഷരം *ss1 = s1;
+      വേണ്ടി (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  അല്ലെങ്കിൽ
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      വേണ്ടി (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? ശൂന്യ : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+സ്ഥിതം ശൂന്യം
+check1 (ശൂന്യം)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  സ്ഥിരം അക്ഷരം s1[] = "AOKB";
+  സ്ഥിരം അക്ഷരം s2[] = "OK";
+  അക്ഷരം *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  വേണ്ടി (size_t klen = 2; klen < 32; ++klen)
+    വേണ്ടി (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

@@ -19,9 +19,9 @@
 #ifndef _ARGZ_H
 #define _ARGZ_H	1
 
-#include <features.h>
-#include <errno.h>
-#include <string.h>		/* Need size_t, and strchr is called below.  */
+#അന്തര്ഭാവ <features.h>
+#അന്തര്ഭാവ <errno.h>
+#അന്തര്ഭാവ <string.h>		/* Need size_t, and strchr is called below.  */
 
 __BEGIN_DECLS
 
@@ -29,65 +29,65 @@ __BEGIN_DECLS
    operating system.  */
 #ifndef __error_t_defined
 # define __error_t_defined 1
-typedef int error_t;
+തരനിർവചനം പൂർണ്ണസംഖ്യ error_t;
 #endif
 
 /* Make a '\0' separated arg vector from a unix argv vector, returning it in
    ARGZ, and the total length in LEN.  If a memory allocation error occurs,
    ENOMEM is returned, otherwise 0.  The result can be destroyed using free. */
-extern error_t __argz_create (char *const __argv[], char **__restrict __argz,
+ബാഹ്യ error_t __argz_create (അക്ഷരം *സ്ഥിരം __argv[], അക്ഷരം **__restrict __argz,
 			      size_t *__restrict __len) __THROW;
-extern error_t argz_create (char *const __argv[], char **__restrict __argz,
+ബാഹ്യ error_t argz_create (അക്ഷരം *സ്ഥിരം __argv[], അക്ഷരം **__restrict __argz,
 			    size_t *__restrict __len) __THROW;
 
 /* Make a '\0' separated arg vector from a SEP separated list in
    STRING, returning it in ARGZ, and the total length in LEN.  If a
    memory allocation error occurs, ENOMEM is returned, otherwise 0.
    The result can be destroyed using free.  */
-extern error_t argz_create_sep (const char *__restrict __string,
-				int __sep, char **__restrict __argz,
+ബാഹ്യ error_t argz_create_sep (സ്ഥിരം അക്ഷരം *__restrict __string,
+				പൂർണ്ണസംഖ്യ __sep, അക്ഷരം **__restrict __argz,
 				size_t *__restrict __len) __THROW;
 
 /* Returns the number of strings in ARGZ.  */
-extern size_t __argz_count (const char *__argz, size_t __len)
+ബാഹ്യ size_t __argz_count (സ്ഥിരം അക്ഷരം *__argz, size_t __len)
      __THROW __attribute_pure__;
-extern size_t argz_count (const char *__argz, size_t __len)
+ബാഹ്യ size_t argz_എണ്ണം (സ്ഥിരം അക്ഷരം *__argz, size_t __len)
      __THROW __attribute_pure__;
 
 /* Puts pointers to each string in ARGZ into ARGV, which must be large enough
    to hold them all.  */
-extern void __argz_extract (const char *__restrict __argz, size_t __len,
-			    char **__restrict __argv) __THROW;
-extern void argz_extract (const char *__restrict __argz, size_t __len,
-			  char **__restrict __argv) __THROW;
+ബാഹ്യ ശൂന്യം __argz_extract (സ്ഥിരം അക്ഷരം *__restrict __argz, size_t __len,
+			    അക്ഷരം **__restrict __argv) __THROW;
+ബാഹ്യ ശൂന്യം argz_extract (സ്ഥിരം അക്ഷരം *__restrict __argz, size_t __len,
+			  അക്ഷരം **__restrict __argv) __THROW;
 
 /* Make '\0' separated arg vector ARGZ printable by converting all the '\0's
    except the last into the character SEP.  */
-extern void __argz_stringify (char *__argz, size_t __len, int __sep) __THROW;
-extern void argz_stringify (char *__argz, size_t __len, int __sep) __THROW;
+ബാഹ്യ ശൂന്യം __argz_stringify (അക്ഷരം *__argz, size_t __len, പൂർണ്ണസംഖ്യ __sep) __THROW;
+ബാഹ്യ ശൂന്യം argz_stringify (അക്ഷരം *__argz, size_t __len, പൂർണ്ണസംഖ്യ __sep) __THROW;
 
 /* Append BUF, of length BUF_LEN to the argz vector in ARGZ & ARGZ_LEN.  */
-extern error_t argz_append (char **__restrict __argz,
+ബാഹ്യ error_t argz_append (അക്ഷരം **__restrict __argz,
 			    size_t *__restrict __argz_len,
-			    const char *__restrict __buf, size_t __buf_len)
+			    സ്ഥിരം അക്ഷരം *__restrict __buf, size_t __buf_len)
      __THROW;
 
 /* Append STR to the argz vector in ARGZ & ARGZ_LEN.  */
-extern error_t argz_add (char **__restrict __argz,
+ബാഹ്യ error_t argz_add (അക്ഷരം **__restrict __argz,
 			 size_t *__restrict __argz_len,
-			 const char *__restrict __str) __THROW;
+			 സ്ഥിരം അക്ഷരം *__restrict __str) __THROW;
 
 /* Append SEP separated list in STRING to the argz vector in ARGZ &
    ARGZ_LEN.  */
-extern error_t argz_add_sep (char **__restrict __argz,
+ബാഹ്യ error_t argz_add_sep (അക്ഷരം **__restrict __argz,
 			     size_t *__restrict __argz_len,
-			     const char *__restrict __string, int __delim)
+			     സ്ഥിരം അക്ഷരം *__restrict __string, പൂർണ്ണസംഖ്യ __delim)
      __THROW;
 
 /* Delete ENTRY from ARGZ & ARGZ_LEN, if it appears there.  */
-extern void argz_delete (char **__restrict __argz,
+ബാഹ്യ ശൂന്യം argz_delete (അക്ഷരം **__restrict __argz,
 			 size_t *__restrict __argz_len,
-			 char *__restrict __entry) __THROW;
+			 അക്ഷരം *__restrict __entry) __THROW;
 
 /* Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
    existing entry in ARGZ; if BEFORE is NULL, ENTRY is appended to the end.
@@ -95,19 +95,19 @@ extern void argz_delete (char **__restrict __argz,
    ARGZ, ENTRY) will insert ENTRY at the beginning of ARGZ.  If BEFORE is not
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
-extern error_t argz_insert (char **__restrict __argz,
+ബാഹ്യ error_t argz_തിരുകുക (അക്ഷരം **__restrict __argz,
 			    size_t *__restrict __argz_len,
-			    char *__restrict __before,
-			    const char *__restrict __entry) __THROW;
+			    അക്ഷരം *__restrict __before,
+			    സ്ഥിരം അക്ഷരം *__restrict __entry) __THROW;
 
 /* Replace any occurrences of the string STR in ARGZ with WITH, reallocating
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
-extern error_t argz_replace (char **__restrict __argz,
+ബാഹ്യ error_t argz_replace (അക്ഷരം **__restrict __argz,
 			     size_t *__restrict __argz_len,
-			     const char *__restrict __str,
-			     const char *__restrict __with,
-			     unsigned int *__restrict __replace_count);
+			     സ്ഥിരം അക്ഷരം *__restrict __str,
+			     സ്ഥിരം അക്ഷരം *__restrict __with,
+			     unsigned പൂർണ്ണസംഖ്യ *__restrict __replace_count);
 
 /* Returns the next entry in ARGZ & ARGZ_LEN after ENTRY, or NULL if there
    are no more.  If entry is NULL, then the first entry is returned.  This
@@ -123,31 +123,31 @@ extern error_t argz_replace (char **__restrict __argz,
     for (entry = argz; entry; entry = argz_next (argz, argz_len, entry))
       ...;
 */
-extern char *__argz_next (const char *__restrict __argz, size_t __argz_len,
-			  const char *__restrict __entry) __THROW;
-extern char *argz_next (const char *__restrict __argz, size_t __argz_len,
-			const char *__restrict __entry) __THROW;
+ബാഹ്യ അക്ഷരം *__argz_next (സ്ഥിരം അക്ഷരം *__restrict __argz, size_t __argz_len,
+			  സ്ഥിരം അക്ഷരം *__restrict __entry) __THROW;
+ബാഹ്യ അക്ഷരം *argz_next (സ്ഥിരം അക്ഷരം *__restrict __argz, size_t __argz_len,
+			സ്ഥിരം അക്ഷരം *__restrict __entry) __THROW;
 
 #ifdef __USE_EXTERN_INLINES
-__extern_inline char *
-__NTH (__argz_next (const char *__argz, size_t __argz_len,
-		    const char *__entry))
+__extern_inline അക്ഷരം *
+__NTH (__argz_next (സ്ഥിരം അക്ഷരം *__argz, size_t __argz_len,
+		    സ്ഥിരം അക്ഷരം *__entry))
 {
-  if (__entry)
+  എങ്കിൽ (__entry)
     {
-      if (__entry < __argz + __argz_len)
+      എങ്കിൽ (__entry < __argz + __argz_len)
 	__entry = strchr (__entry, '\0') + 1;
 
-      return __entry >= __argz + __argz_len ? (char *) NULL : (char *) __entry;
+      തിരികെ __entry >= __argz + __argz_len ? (അക്ഷരം *) ശൂന്യ : (അക്ഷരം *) __entry;
     }
-  else
-    return __argz_len > 0 ? (char *) __argz : NULL;
+  അല്ലെങ്കിൽ
+    തിരികെ __argz_len > 0 ? (അക്ഷരം *) __argz : ശൂന്യ;
 }
-__extern_inline char *
-__NTH (argz_next (const char *__argz, size_t __argz_len,
-		  const char *__entry))
+__extern_inline അക്ഷരം *
+__NTH (argz_next (സ്ഥിരം അക്ഷരം *__argz, size_t __argz_len,
+		  സ്ഥിരം അക്ഷരം *__entry))
 {
-  return __argz_next (__argz, __argz_len, __entry);
+  തിരികെ __argz_next (__argz, __argz_len, __entry);
 }
 #endif /* Use extern inlines.  */
 

@@ -17,9 +17,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
+#അന്തര്ഭാവ <stdint.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <ctype.h>
 
 /* states: S_N: normal, S_I: comparing integral part, S_F: comparing
            fractionnal parts, S_Z: idem but with leading Zeroes only */
@@ -38,15 +38,15 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
-__strverscmp (const char *s1, const char *s2)
+പൂർണ്ണസംഖ്യ
+__strverscmp (സ്ഥിരം അക്ഷരം *s1, സ്ഥിരം അക്ഷരം *s2)
 {
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
+  സ്ഥിരം unsigned അക്ഷരം *p1 = (സ്ഥിരം unsigned അക്ഷരം *) s1;
+  സ്ഥിരം unsigned അക്ഷരം *p2 = (സ്ഥിരം unsigned അക്ഷരം *) s2;
 
   /* Symbol(s)    0       [1-9]   others
      Transition   (10) 0  (01) d  (00) x   */
-  static const uint8_t next_state[] =
+  സ്ഥിതം സ്ഥിരം uint8_t next_state[] =
   {
       /* state    x    d    0  */
       /* S_N */  S_N, S_I, S_Z,
@@ -55,7 +55,7 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  S_N, S_F, S_Z
   };
 
-  static const int8_t result_type[] =
+  സ്ഥിതം സ്ഥിരം int8_t result_type[] =
   {
       /* state   x/x  x/d  x/0  d/x  d/d  d/0  0/x  0/d  0/0  */
 
@@ -65,19 +65,19 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  എങ്കിൽ (p1 == p2)
+    തിരികെ 0;
 
-  unsigned char c1 = *p1++;
-  unsigned char c2 = *p2++;
+  unsigned അക്ഷരം c1 = *p1++;
+  unsigned അക്ഷരം c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  പൂർണ്ണസംഖ്യ state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  പൂർണ്ണസംഖ്യ diff;
+  ആകുമ്പോൾ ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      എങ്കിൽ (c1 == '\0')
+	തിരികെ diff;
 
       state = next_state[state];
       c1 = *p1++;
@@ -87,20 +87,20 @@ __strverscmp (const char *s1, const char *s2)
 
   state = result_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
 
-  switch (state)
+  തിരഞ്ഞെടുപ്പ് (state)
   {
-    case CMP:
-      return diff;
+    അവസ്ഥ CMP:
+      തിരികെ diff;
 
-    case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+    അവസ്ഥ LEN:
+      ആകുമ്പോൾ (isdigit (*p1++))
+	എങ്കിൽ (!isdigit (*p2++))
+	  തിരികെ 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      തിരികെ isdigit (*p2) ? -1 : diff;
 
-    default:
-      return state;
+    സ്ഥിരസ്ഥിതി:
+      തിരികെ state;
   }
 }
 libc_hidden_def (__strverscmp)

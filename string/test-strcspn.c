@@ -21,18 +21,18 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strcspn"
-#else
+#അല്ലെങ്കിൽ
 # define TEST_NAME "wcscspn"
 #endif /* WIDE */
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 #ifndef WIDE
 # define STRCSPN strcspn
-# define CHAR char
+# define CHAR അക്ഷരം
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
 # define STRLEN strlen
-#else
+#അല്ലെങ്കിൽ
 # include <wchar.h>
 # define STRCSPN wcscspn
 # define CHAR wchar_t
@@ -41,40 +41,40 @@
 # define STRLEN wcslen
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+തരനിർവചനം size_t (*proto_t) (സ്ഥിരം CHAR *, സ്ഥിരം CHAR *);
+size_t SIMPLE_STRCSPN (സ്ഥിരം CHAR *, സ്ഥിരം CHAR *);
+size_t STUPID_STRCSPN (സ്ഥിരം CHAR *, സ്ഥിരം CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
 size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+SIMPLE_STRCSPN (സ്ഥിരം CHAR *s, സ്ഥിരം CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  സ്ഥിരം CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  ആകുമ്പോൾ ((c = *s++) != '\0')
+    വേണ്ടി (r = rej; *r != '\0'; ++r)
+      എങ്കിൽ (*r == c)
+	തിരികെ s - str - 1;
+  തിരികെ s - str - 1;
 }
 
 size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+STUPID_STRCSPN (സ്ഥിരം CHAR *s, സ്ഥിരം CHAR *rej)
 {
   size_t ns = STRLEN (s), nrej = STRLEN (rej);
   size_t i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  വേണ്ടി (i = 0; i < ns; ++i)
+    വേണ്ടി (j = 0; j < nrej; ++j)
+      എങ്കിൽ (s[i] == rej[j])
+	തിരികെ i;
+  തിരികെ i;
 }
 
 #undef CHAR
 #undef STRLEN
-#include "test-strpbrk.c"
+#അന്തര്ഭാവ "test-strpbrk.c"

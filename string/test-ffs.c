@@ -15,41 +15,41 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/check.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+ശൂന്യം try (സ്ഥിരം അക്ഷരം *name, long long പൂർണ്ണസംഖ്യ param, പൂർണ്ണസംഖ്യ മൂല്യം, പൂർണ്ണസംഖ്യ expected)
 {
-  if (value != expected)
+  എങ്കിൽ (മൂല്യം != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
+	      name, param, expected, മൂല്യം);
       support_record_failure ();
     }
-  else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+  അല്ലെങ്കിൽ
+    printf ("%s(%#llx) as expected %d\n", name, param, മൂല്യം);
 }
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  int i;
+  പൂർണ്ണസംഖ്യ i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  വേണ്ടി (i=0 ; i < 8 * വലുപ്പം (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  വേണ്ടി (i=0 ; i < 8 * വലുപ്പം (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, പൂർണ്ണസംഖ്യ);
+  TEST (ffsl, long പൂർണ്ണസംഖ്യ);
+  TEST (ffsll, long long പൂർണ്ണസംഖ്യ);
 
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

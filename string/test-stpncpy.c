@@ -20,17 +20,17 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpncpy"
-#else
+#അല്ലെങ്കിൽ
 # define TEST_NAME "wcpncpy"
 #endif /* WIDE */
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR അക്ഷരം
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#അല്ലെങ്കിൽ
 # include <wchar.h>
 # define CHAR wchar_t
 # define SIMPLE_STPNCPY simple_wcpncpy
@@ -39,40 +39,40 @@
 # define STRNLEN wcsnlen
 #endif /* WIDE */
 
-CHAR *SIMPLE_STPNCPY (CHAR *, const CHAR *, size_t);
-CHAR *STUPID_STPNCPY (CHAR *, const CHAR *, size_t);
+CHAR *SIMPLE_STPNCPY (CHAR *, സ്ഥിരം CHAR *, size_t);
+CHAR *STUPID_STPNCPY (CHAR *, സ്ഥിരം CHAR *, size_t);
 
 IMPL (STUPID_STPNCPY, 0)
 IMPL (SIMPLE_STPNCPY, 0)
 IMPL (STPNCPY, 1)
 
 CHAR *
-SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STPNCPY (CHAR *dst, സ്ഥിരം CHAR *src, size_t n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  ആകുമ്പോൾ (n--)
+    എങ്കിൽ ((*dst++ = *src++) == '\0')
       {
 	size_t i;
 
-	for (i = 0; i < n; ++i)
+	വേണ്ടി (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	തിരികെ dst - 1;
       }
-  return dst;
+  തിരികെ dst;
 }
 
 CHAR *
-STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+STUPID_STPNCPY (CHAR *dst, സ്ഥിരം CHAR *src, size_t n)
 {
   size_t nc = STRNLEN (src, n);
   size_t i;
 
-  for (i = 0; i < nc; ++i)
+  വേണ്ടി (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  വേണ്ടി (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  തിരികെ dst + nc;
 }
 
 #undef CHAR
-#include "test-strncpy.c"
+#അന്തര്ഭാവ "test-strncpy.c"

@@ -1,26 +1,26 @@
 #undef __USE_STRING_INLINES
 #define __USE_STRING_INLINES
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <libc-diag.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <libc-diag.h>
 
-int
-main (void)
+പൂർണ്ണസംഖ്യ
+പ്രധാന (ശൂന്യം)
 {
-  const char *a = "abc";
-  const char *b = a;
+  സ്ഥിരം അക്ഷരം *a = "abc";
+  സ്ഥിരം അക്ഷരം *b = a;
 
-  DIAG_PUSH_NEEDS_COMMENT;
+  DIAG_തള്ളുക_NEEDS_COMMENT;
   /* GCC 9 correctly warns that this call to strspn is useless.  That
      is deliberate; this test is verifying that a side effect in an
      argument still occurs when the call itself is useless and could
      be optimized to return a constant.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strspn (b++, "");
-  DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  DIAG_എടുക്കുക_NEEDS_COMMENT;
+  എങ്കിൽ (b != a + 1)
+    തിരികെ 1;
 
-  return 0;
+  തിരികെ 0;
 }

@@ -18,21 +18,21 @@
 
 #define TEST_MAIN
 #define BUF1PAGES 1
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
-  char **saveptrp;
-  char *tok;
+  അക്ഷരം വരി[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  അക്ഷരം **saveptrp;
+  അക്ഷരം *tok;
 
   test_init ();
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
-  saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
-  tok = strtok_r (line, " \t", saveptrp);
-  return strcmp (tok, "udf") != 0;
+  saveptrp = (അക്ഷരം **) (buf1 + page_size - വലുപ്പം (*saveptrp));
+  tok = strtok_r (വരി, " \t", saveptrp);
+  തിരികെ strcmp (tok, "udf") != 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

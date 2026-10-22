@@ -15,8 +15,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stddef.h>
-#include <string.h>
+#അന്തര്ഭാവ <stddef.h>
+#അന്തര്ഭാവ <string.h>
 
 #undef strcpy
 /* Disable internal stpcpy optimization, otherwise the __stpcpy might it
@@ -28,10 +28,10 @@
 #endif
 
 /* Copy SRC to DEST.  */
-char *
-STRCPY (char *dest, const char *src)
+അക്ഷരം *
+STRCPY (അക്ഷരം *dest, സ്ഥിരം അക്ഷരം *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  തിരികെ dest;
 }
 libc_hidden_builtin_def (strcpy)

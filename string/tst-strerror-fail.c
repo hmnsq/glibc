@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#അന്തര്ഭാവ <locale.h>
+#അന്തര്ഭാവ <stdbool.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <support/check.h>
+#അന്തര്ഭാവ <support/namespace.h>
+#അന്തര്ഭാവ <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+സ്ഥിതം അസ്ഥിര bool fail_malloc;
 
-void *
+ശൂന്യം *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  എങ്കിൽ (fail_malloc)
+    തിരികെ ശൂന്യ;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  സ്ഥിതം ശൂന്യം *(*original_malloc) (size_t);
+  എങ്കിൽ (original_malloc == ശൂന്യ)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  തിരികെ original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+സ്ഥിതം ശൂന്യം
+test_strerror (ശൂന്യം *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  സ്ഥിരം അക്ഷരം *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+സ്ഥിതം ശൂന്യം
+test_strerror_l (ശൂന്യം *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  സ്ഥിരം അക്ഷരം *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, ശൂന്യ);
+  support_isolate_in_subprocess (test_strerror_l, ശൂന്യ);
 
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

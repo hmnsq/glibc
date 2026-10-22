@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <random-bits.h>
-#include <unistd.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <random-bits.h>
+#അന്തര്ഭാവ <unistd.h>
 
-char *
-strfry (char *string)
+അക്ഷരം *
+strfry (അക്ഷരം *string)
 {
-  static int init;
-  static struct random_data rdata;
+  സ്ഥിതം പൂർണ്ണസംഖ്യ init;
+  സ്ഥിതം ഘടന random_data rdata;
 
-  if (!init)
+  എങ്കിൽ (!init)
     {
-      static char state[32];
-      rdata.state = NULL;
+      സ്ഥിതം അക്ഷരം state[32];
+      rdata.state = ശൂന്യ;
       __initstate_r (random_bits (),
-		     state, sizeof (state), &rdata);
+		     state, വലുപ്പം (state), &rdata);
       init = 1;
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  എങ്കിൽ (len > 0)
+    വേണ്ടി (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
 	j = j % (len - i) + i;
 
-	char c = string[i];
+	അക്ഷരം c = string[i];
 	string[i] = string[j];
 	string[j] = c;
       }
 
-  return string;
+  തിരികെ string;
 }

@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <stdio.h>
+#അന്തര്ഭാവ <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_വരി_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+compare (സ്ഥിരം ശൂന്യം *p1, സ്ഥിരം ശൂന്യം *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  തിരികെ strverscmp (*((അക്ഷരം **) p1), *((അക്ഷരം **) p2));
 }
 
-int
-do_test (void)
+പൂർണ്ണസംഖ്യ
+do_test (ശൂന്യം)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  അക്ഷരം വരി[MAX_വരി_SIZE + 1];
+  അക്ഷരം *str[MAX_STRINGS];
+  പൂർണ്ണസംഖ്യ  എണ്ണം = 0;
+  പൂർണ്ണസംഖ്യ  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  ആകുമ്പോൾ (എണ്ണം < MAX_STRINGS && fgets (വരി, MAX_വരി_SIZE, stdin) != ശൂന്യ)
     {
-      n = strlen (line) - 1;
+      n = strlen (വരി) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      എങ്കിൽ (വരി[n] == '\n')
+        വരി[n] = '\0';
 
-      str[count] = strdup (line);
+      str[എണ്ണം] = strdup (വരി);
 
-      if (str[count] == NULL)
+      എങ്കിൽ (str[എണ്ണം] == ശൂന്യ)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++എണ്ണം;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, എണ്ണം, വലുപ്പം (അക്ഷരം *), compare);
 
-  for (i = 0; i < count; ++i)
+  വേണ്ടി (i = 0; i < എണ്ണം; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  തിരികെ EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

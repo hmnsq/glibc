@@ -19,10 +19,10 @@
 #define TEST_MAIN
 #ifdef WIDE
 # define TEST_NAME "wcsrchr"
-#else
+#അല്ലെങ്കിൽ
 # define TEST_NAME "strrchr"
 #endif
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 #ifdef WIDE
 # include <wchar.h>
@@ -31,15 +31,15 @@
 # define UCHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#else
+#അല്ലെങ്കിൽ
 # define STRRCHR strrchr
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR അക്ഷരം
+# define UCHAR unsigned അക്ഷരം
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
 #endif
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+തരനിർവചനം CHAR *(*proto_t) (സ്ഥിരം CHAR *, പൂർണ്ണസംഖ്യ);
 
 IMPL (STRRCHR, 1)
 
@@ -61,28 +61,28 @@ IMPL (STRRCHR, 1)
 # define STRRCHR __strrchr_default
 # include "string/strrchr.c"
 # define STRRCHR_DEFAULT __strrchr_default
-#else
+#അല്ലെങ്കിൽ
 # define WCSRCHR __wcsrchr_default
 # include "wcsmbs/wcsrchr.c"
 # define STRRCHR_DEFAULT __wcsrchr_default
 #endif
 IMPL (STRRCHR_DEFAULT, 1)
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, int c, CHAR *exp_res)
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, സ്ഥിരം CHAR *s, പൂർണ്ണസംഖ്യ c, CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  എങ്കിൽ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      തിരികെ;
     }
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+സ്ഥിതം ശൂന്യം
+do_test (size_t align, size_t pos, size_t len, പൂർണ്ണസംഖ്യ seek_char, പൂർണ്ണസംഖ്യ max_char)
 /* For wcsrchr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
@@ -92,103 +92,103 @@ do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
   CHAR *buf = (CHAR *) buf1;
 
   align &= 7;
-  if ( (align + len) * sizeof (CHAR) >= page_size)
-    return;
+  എങ്കിൽ ( (align + len) * വലുപ്പം (CHAR) >= page_size)
+    തിരികെ;
 
-  for (i = 0; i < len; ++i)
+  വേണ്ടി (i = 0; i < len; ++i)
     {
       buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      എങ്കിൽ (!buf[align + i])
 	buf[align + i] = (random () * random ()) & max_char;
-      if (!buf[align + i])
+      എങ്കിൽ (!buf[align + i])
 	buf[align + i] = 1;
-      if ((i > pos || pos >= len) && buf[align + i] == seek_char)
+      എങ്കിൽ ((i > pos || pos >= len) && buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 10 + (random () & 15);
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  എങ്കിൽ (pos < len)
     {
       buf[align + pos] = seek_char;
       result = (CHAR *) (buf + align + pos);
     }
-  else if (seek_char == 0)
+  അല്ലെങ്കിൽ എങ്കിൽ (seek_char == 0)
     result = (CHAR *) (buf + align + len);
-  else
-    result = NULL;
+  അല്ലെങ്കിൽ
+    result = ശൂന്യ;
 
   FOR_EACH_IMPL (impl, 0)
     do_one_test (impl, (CHAR *) (buf + align), seek_char, result);
 }
 
-static void
-do_random_tests (void)
+സ്ഥിതം ശൂന്യം
+do_random_tests (ശൂന്യം)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
+  പൂർണ്ണസംഖ്യ seek_char;
   CHAR *result;
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  വേണ്ടി (n = 0; n < ITERATIONS; n++)
     {
-      align = random () & (63 / sizeof (CHAR));
+      align = random () & (63 / വലുപ്പം (CHAR));
       /* For wcsrchr: align here means align not in bytes, but in wchar_ts,
 	 in bytes it will equal to align * (sizeof (wchar_t)).
 	 For strrchr we need to check all alignments from 0 to 63 since
 	 some assembly implementations have separate prolog for alignments
 	 more 48. */
       pos = random () & 511;
-      if (pos + align >= 511)
+      എങ്കിൽ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
-      if (pos >= len)
+      എങ്കിൽ (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      എങ്കിൽ (len + align >= 512)
 	len = 511 - align - (random () & 7);
       seek_char = random () & 255;
-      if (seek_char && pos == len)
+      എങ്കിൽ (seek_char && pos == len)
 	{
-	  if (pos)
+	  എങ്കിൽ (pos)
 	    --pos;
-	  else
+	  അല്ലെങ്കിൽ
 	    ++len;
 	}
       j = len + align + 64;
-      if (j > 512)
+      എങ്കിൽ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      വേണ്ടി (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  എങ്കിൽ (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  അല്ലെങ്കിൽ എങ്കിൽ (i == len + align)
 	    p[i] = 0;
-	  else
+	  അല്ലെങ്കിൽ
 	    {
 	      p[i] = random () & 255;
-	      if (((i > pos + align && i < len + align) || pos > len)
+	      എങ്കിൽ (((i > pos + align && i < len + align) || pos > len)
 		  && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      എങ്കിൽ (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  എങ്കിൽ (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
+      എങ്കിൽ (pos <= len)
 	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
+      അല്ലെങ്കിൽ എങ്കിൽ (seek_char == 0)
 	result = (CHAR *) (p + len + align);
-      else
-	result = NULL;
+      അല്ലെങ്കിൽ
+	result = ശൂന്യ;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	എങ്കിൽ (CALL (impl, (CHAR *) (p + align), seek_char) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
@@ -198,8 +198,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   size_t i;
 
@@ -210,44 +210,44 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 23, SMALL_CHAR);
       do_test (i, 16 << i, 2048, 23, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 23, SMALL_CHAR);
       do_test (i, 64, 256, 23, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  വേണ്ടി (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23, SMALL_CHAR);
       do_test (0, i, i + 1, 23, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 2048, 0, SMALL_CHAR);
       do_test (i, 16 << i, 2048, 0, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  വേണ്ടി (i = 1; i < 8; ++i)
     {
       do_test (i, 64, 256, 0, SMALL_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  വേണ്ടി (i = 0; i < 32; ++i)
     {
       do_test (0, i, i + 1, 0, SMALL_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 
   do_random_tests ();
-  return ret;
+  തിരികെ ret;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

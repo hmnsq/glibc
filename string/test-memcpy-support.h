@@ -27,137 +27,137 @@
 #define TEST_MAIN
 #define TEST_NAME "memcpy"
 #define TIMEOUT (8 * 60)
-#include "test-string.h"
+#അന്തര്ഭാവ "test-string.h"
 
 IMPL (memcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memcpy (char *dst, const char *src, size_t n)
+അക്ഷരം *
+simple_memcpy (അക്ഷരം *dst, സ്ഥിരം അക്ഷരം *src, size_t n)
 {
-  char *ret = dst;
-  while (n--)
+  അക്ഷരം *ret = dst;
+  ആകുമ്പോൾ (n--)
     *dst++ = *src++;
-  return ret;
+  തിരികെ ret;
 }
 
 #endif
-typedef char *(*proto_t) (char *, const char *, size_t);
-typedef uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
+തരനിർവചനം അക്ഷരം *(*proto_t) (അക്ഷരം *, സ്ഥിരം അക്ഷരം *, size_t);
+തരനിർവചനം uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
 
-static void
-do_one_test (impl_t *impl, char *dst, const char *src, size_t len)
+സ്ഥിതം ശൂന്യം
+do_one_test (impl_t *impl, അക്ഷരം *dst, സ്ഥിരം അക്ഷരം *src, size_t len)
 {
   size_t i;
 
   /* Must clear the destination buffer set by the previous run.  */
-  for (i = 0; i < len; i++)
+  വേണ്ടി (i = 0; i < len; i++)
     dst[i] = 0;
 
-  if (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
+  എങ്കിൽ (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
              CALL (impl, dst, src, len), MEMCPY_RESULT (dst, len));
       ret = 1;
-      return;
+      തിരികെ;
     }
 
-  if (memcmp (dst, src, len) != 0)
+  എങ്കിൽ (memcmp (dst, src, len) != 0)
     {
       error (0, 0,
              "Wrong result in function %s dst %p \"%.*s\" src %p \"%.*s\" len "
              "%zu",
-             impl->name, dst, (int)len, dst, src, (int)len, src, len);
+             impl->name, dst, (പൂർണ്ണസംഖ്യ)len, dst, src, (പൂർണ്ണസംഖ്യ)len, src, len);
       ret = 1;
-      return;
+      തിരികെ;
     }
 }
 
-static void
+സ്ഥിതം ശൂന്യം
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  അക്ഷരം *s1, *s2;
 
   align1 &= 4095;
-  if (align1 + len >= page_size)
-    return;
+  എങ്കിൽ (align1 + len >= page_size)
+    തിരികെ;
 
   align2 &= 4095;
-  if (align2 + len >= page_size)
-    return;
+  എങ്കിൽ (align2 + len >= page_size)
+    തിരികെ;
 
-  s1 = (char *)(buf1 + align1);
-  s2 = (char *)(buf2 + align2);
-  for (size_t repeats = 0; repeats < 2; ++repeats)
+  s1 = (അക്ഷരം *)(buf1 + align1);
+  s2 = (അക്ഷരം *)(buf2 + align2);
+  വേണ്ടി (size_t repeats = 0; repeats < 2; ++repeats)
     {
-      for (i = 0, j = 1; i < len; i++, j += 23)
+      വേണ്ടി (i = 0, j = 1; i < len; i++, j += 23)
         s1[i] = j;
 
       FOR_EACH_IMPL (impl, 0)
       do_one_test (impl, s2, s1, len);
 
-      s1 = (char *) (buf2 + align1);
-      s2 = (char *) (buf1 + align2);
+      s1 = (അക്ഷരം *) (buf2 + align1);
+      s2 = (അക്ഷരം *) (buf1 + align2);
     }
 }
 
-static void
+സ്ഥിതം ശൂന്യം
 do_test1 (size_t align1, size_t align2, size_t size)
 {
-  void *large_buf;
+  ശൂന്യം *large_buf;
   size_t mmap_size, region_size;
 
   align1 &= (page_size - 1);
-  if (align1 == 0)
+  എങ്കിൽ (align1 == 0)
     align1 = page_size;
 
   align2 &= (page_size - 1);
-  if (align2 == 0)
+  എങ്കിൽ (align2 == 0)
     align2 = page_size;
 
   region_size = (size + page_size - 1) & (~(page_size - 1));
 
   mmap_size = region_size * 2 + 3 * page_size;
-  large_buf = mmap (NULL, mmap_size, PROT_READ | PROT_WRITE,
+  large_buf = mmap (ശൂന്യ, mmap_size, PROT_READ | PROT_WRITE,
                     MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (large_buf == MAP_FAILED)
+  എങ്കിൽ (large_buf == MAP_FAILED)
     {
       puts ("Failed to allocate large_buf, skipping do_test");
-      return;
+      തിരികെ;
     }
-  if (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
+  എങ്കിൽ (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
 
-  size_t array_size = size / sizeof (uint32_t);
+  size_t array_size = size / വലുപ്പം (uint32_t);
   unaligned_uint32_t *dest = large_buf + align1;
   unaligned_uint32_t *src = large_buf + region_size + 2 * page_size + align2;
   size_t i;
-  for (size_t repeats = 0; repeats < 2; repeats++)
+  വേണ്ടി (size_t repeats = 0; repeats < 2; repeats++)
     {
-      for (i = 0; i < array_size; i++)
+      വേണ്ടി (i = 0; i < array_size; i++)
         src[i] = (uint32_t)i;
       FOR_EACH_IMPL (impl, 0)
 	{
 	  memset (dest, -1, size);
-	  CALL (impl, (char *)dest, (char *)src, size);
-	  if (memcmp (src, dest, size))
+	  CALL (impl, (അക്ഷരം *)dest, (അക്ഷരം *)src, size);
+	  എങ്കിൽ (memcmp (src, dest, size))
 	    {
-	      for (i = 0; i < array_size; i++)
-		if (dest[i] != src[i])
+	      വേണ്ടി (i = 0; i < array_size; i++)
+		എങ്കിൽ (dest[i] != src[i])
 		  {
 		    error (0, 0,
 			   "Wrong result in function %s dst \"%p\" src \"%p\" "
 			   "offset \"%zd\"",
 			   impl->name, dest, src, i);
 		    ret = 1;
-		    munmap ((void *)large_buf, mmap_size);
-		    return;
+		    munmap ((ശൂന്യം *)large_buf, mmap_size);
+		    തിരികെ;
 		  }
 	    }
 	}
       dest = large_buf + region_size + 2 * page_size + align1;
       src = large_buf + align2;
     }
-  munmap ((void *)large_buf, mmap_size);
+  munmap ((ശൂന്യം *)large_buf, mmap_size);
 }

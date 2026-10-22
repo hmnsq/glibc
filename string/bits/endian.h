@@ -32,7 +32,7 @@
 #define	__PDP_ENDIAN	3412
 
 /* This file defines `__BYTE_ORDER' for the particular machine.  */
-#include <bits/endianness.h>
+#അന്തര്ഭാവ <bits/endianness.h>
 
 /* Some machines may need to use a different endianness for floating point
    values.  */
@@ -40,9 +40,9 @@
 # define __FLOAT_WORD_ORDER __BYTE_ORDER
 #endif
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#എങ്കിൽ __BYTE_ORDER == __LITTLE_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) LO, HI
-#elif __BYTE_ORDER == __BIG_ENDIAN
+#അല്ലെങ്കിലെങ്കിൽ __BYTE_ORDER == __BIG_ENDIAN
 # define __LONG_LONG_PAIR(HI, LO) HI, LO
 #endif
 

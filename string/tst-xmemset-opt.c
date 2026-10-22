@@ -1,2 +1,2 @@
 #define TEST_MEMSET_EXPLICIT 1
-#include "tst-xbzero-opt.c"
+#അന്തര്ഭാവ "tst-xbzero-opt.c"

@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#അന്തര്ഭാവ <string.h>
 
 #undef __memccpy
 #undef memccpy
@@ -27,16 +27,16 @@
 /* Copy no more than N bytes of SRC to DEST, stopping when C is found.
    Return the position in DEST one byte past where C was copied, or
    NULL if C was not found in the first N bytes of SRC.  */
-void *
-__memccpy (void *dest, const void *src, int c, size_t n)
+ശൂന്യം *
+__memccpy (ശൂന്യം *dest, സ്ഥിരം ശൂന്യം *src, പൂർണ്ണസംഖ്യ c, size_t n)
 {
-  void *p = memchr (src, c, n);
+  ശൂന്യം *p = memchr (src, c, n);
 
-  if (p != NULL)
-    return __mempcpy (dest, src, p - src + 1);
+  എങ്കിൽ (p != ശൂന്യ)
+    തിരികെ __mempcpy (dest, src, p - src + 1);
 
   memcpy (dest, src, n);
-  return NULL;
+  തിരികെ ശൂന്യ;
 }
 
 weak_alias (__memccpy, memccpy)

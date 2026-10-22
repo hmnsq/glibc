@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#അന്തര്ഭാവ <argz.h>
+#അന്തര്ഭാവ <string.h>
 
-char *
-__argz_next (const char *argz, size_t argz_len, const char *entry)
+അക്ഷരം *
+__argz_next (സ്ഥിരം അക്ഷരം *argz, size_t argz_len, സ്ഥിരം അക്ഷരം *entry)
 {
-  if (entry)
+  എങ്കിൽ (entry)
     {
-      if (entry < argz + argz_len)
+      എങ്കിൽ (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      തിരികെ entry >= argz + argz_len ? ശൂന്യ : (അക്ഷരം *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  അല്ലെങ്കിൽ
+    എങ്കിൽ (argz_len > 0)
+      തിരികെ (അക്ഷരം *) argz;
+    അല്ലെങ്കിൽ
+      തിരികെ ശൂന്യ;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)

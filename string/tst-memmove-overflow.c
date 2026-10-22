@@ -23,61 +23,61 @@
    the allocation are unshared, and contain a specific non-repeating
    bit pattern.  */
 
-#include <array_length.h>
-#include <libc-diag.h>
-#include <stdint.h>
-#include <string.h>
-#include <support/blob_repeat.h>
-#include <support/check.h>
-#include <support/xunistd.h>
-#include <sys/mman.h>
-#include <unistd.h>
+#അന്തര്ഭാവ <array_length.h>
+#അന്തര്ഭാവ <libc-diag.h>
+#അന്തര്ഭാവ <stdint.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <support/blob_repeat.h>
+#അന്തര്ഭാവ <support/check.h>
+#അന്തര്ഭാവ <support/xunistd.h>
+#അന്തര്ഭാവ <sys/mman.h>
+#അന്തര്ഭാവ <unistd.h>
 
 #define TEST_MAIN
 #define TEST_NAME "memmove"
-#include "test-string.h"
-#include <support/test-driver.h>
+#അന്തര്ഭാവ "test-string.h"
+#അന്തര്ഭാവ <support/test-driver.h>
 
 IMPL (memmove, 1)
 
 /* Size of the part of the allocation which is not shared, at the
    start and the end of the overall allocation.  4 MiB.  */
-enum { unshared_size = (size_t) 4U << 20 };
+എണ്ണൽ { unshared_size = (size_t) 4U << 20 };
 
 /* The allocation is 2 GiB plus 8 MiB.  This should work with all page
    sizes that occur in practice.  */
-enum { allocation_size = ((size_t) 2U << 30) + 2 * unshared_size };
+എണ്ണൽ { allocation_size = ((size_t) 2U << 30) + 2 * unshared_size };
 
 /* Compute the expected byte at the given index.  This is used to
    produce a non-repeating pattern.  */
-static inline unsigned char
-expected_value (size_t index)
+സ്ഥിതം വരിയിൽ unsigned അക്ഷരം
+expected_മൂല്യം (size_t index)
 {
   uint32_t randomized = 0x9e3779b9 * index; /* Based on golden ratio.  */
-  return randomized >> 25;	/* Result is in the range [0, 127].  */
+  തിരികെ randomized >> 25;	/* Result is in the range [0, 127].  */
 }
 
 /* Used to count mismatches up to a limit, to avoid creating a huge
    test output file.  */
-static unsigned int mismatch_count;
+സ്ഥിതം unsigned പൂർണ്ണസംഖ്യ mismatch_എണ്ണം;
 
 /* Check ACTUAL == EXPECTED.  Use INDEX for error reporting.  Exit the
    process after too many errors.  */
-static inline void
-check_one_index (size_t index, unsigned char actual, unsigned char expected)
+സ്ഥിതം വരിയിൽ ശൂന്യം
+check_one_index (size_t index, unsigned അക്ഷരം actual, unsigned അക്ഷരം expected)
 {
-  if (actual != expected)
+  എങ്കിൽ (actual != expected)
     {
       printf ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
 	      index, actual, expected);
-      ++mismatch_count;
-      if (mismatch_count > 200)
+      ++mismatch_എണ്ണം;
+      എങ്കിൽ (mismatch_എണ്ണം > 200)
 	FAIL_EXIT1 ("bailing out due to too many errors");
     }
 }
 
-static int
-test_main (void)
+സ്ഥിതം പൂർണ്ണസംഖ്യ
+test_main (ശൂന്യം)
 {
   test_init ();
 
@@ -91,21 +91,21 @@ test_main (void)
       TEST_COMPARE (unshared_size % xsysconf (_SC_PAGESIZE), 0);
 
       /* The repeating pattern has the MSB set in all bytes.  */
-      unsigned char repeating_pattern[128];
-      for (unsigned int i = 0; i < array_length (repeating_pattern); ++i)
+      unsigned അക്ഷരം repeating_pattern[128];
+      വേണ്ടി (unsigned പൂർണ്ണസംഖ്യ i = 0; i < array_length (repeating_pattern); ++i)
 	repeating_pattern[i] = 0x80 | i;
 
-      struct support_blob_repeat repeat
+      ഘടന support_blob_repeat repeat
 	= support_blob_repeat_allocate_shared (repeating_pattern,
-					       sizeof (repeating_pattern),
+					       വലുപ്പം (repeating_pattern),
 					       (allocation_size
-						/ sizeof (repeating_pattern)));
-      if (repeat.start == NULL)
+						/ വലുപ്പം (repeating_pattern)));
+      എങ്കിൽ (repeat.start == ശൂന്യ)
 	FAIL_UNSUPPORTED ("repeated blob allocation failed: %m");
       TEST_COMPARE (repeat.size, allocation_size);
 
       /* Unshared the start and the end of the allocation.  */
-      unsigned char *start = repeat.start;
+      unsigned അക്ഷരം *start = repeat.start;
       xmmap (start, unshared_size,
 	     PROT_READ | PROT_WRITE,
 	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
@@ -114,61 +114,61 @@ test_main (void)
 	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
 
       /* Initialize the non-repeating pattern.  */
-      for (size_t i = 0; i < unshared_size; ++i)
-	start[i] = expected_value (i);
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      വേണ്ടി (size_t i = 0; i < unshared_size; ++i)
+	start[i] = expected_മൂല്യം (i);
+      വേണ്ടി (size_t i = allocation_size - unshared_size; i < allocation_size;
 	   ++i)
-	start[i] = expected_value (i);
+	start[i] = expected_മൂല്യം (i);
 
       /* Make sure that there was really no sharing.  */
-      asm volatile ("" ::: "memory");
-      for (size_t i = 0; i < unshared_size; ++i)
-	TEST_COMPARE (start[i], expected_value (i));
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      asm അസ്ഥിര ("" ::: "memory");
+      വേണ്ടി (size_t i = 0; i < unshared_size; ++i)
+	TEST_COMPARE (start[i], expected_മൂല്യം (i));
+      വേണ്ടി (size_t i = allocation_size - unshared_size; i < allocation_size;
 	   ++i)
-	TEST_COMPARE (start[i], expected_value (i));
+	TEST_COMPARE (start[i], expected_മൂല്യം (i));
 
       /* Used for a nicer error diagnostic using
 	 TEST_COMPARE_BLOB.  */
-      unsigned char expected_start[128];
-      memcpy (expected_start, start + 1, sizeof (expected_start));
-      unsigned char expected_end[128];
+      unsigned അക്ഷരം expected_start[128];
+      memcpy (expected_start, start + 1, വലുപ്പം (expected_start));
+      unsigned അക്ഷരം expected_end[128];
       memcpy (expected_end,
-	      start + allocation_size - sizeof (expected_end),
-	      sizeof (expected_end));
+	      start + allocation_size - വലുപ്പം (expected_end),
+	      വലുപ്പം (expected_end));
 
       /* Move the entire allocation forward by one byte.  */
-      DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (8, 0)
+      DIAG_തള്ളുക_NEEDS_COMMENT;
+#എങ്കിൽ __GNUC_PREREQ (8, 0)
       /* GCC 8 warns about string function argument overflows.  */
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-overflow");
 #endif
       memmove (start, start + 1, allocation_size - 1);
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_എടുക്കുക_NEEDS_COMMENT;
 
       /* Check that the unshared of the memory region have been
 	 shifted as expected.  The TEST_COMPARE_BLOB checks are
 	 redundant, but produce nicer diagnostics.  */
-      asm volatile ("" ::: "memory");
-      TEST_COMPARE_BLOB (expected_start, sizeof (expected_start),
-			 start, sizeof (expected_start));
-      TEST_COMPARE_BLOB (expected_end, sizeof (expected_end),
-			 start + allocation_size - sizeof (expected_end) - 1,
-			 sizeof (expected_end));
-      for (size_t i = 0; i < unshared_size - 1; ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+      asm അസ്ഥിര ("" ::: "memory");
+      TEST_COMPARE_BLOB (expected_start, വലുപ്പം (expected_start),
+			 start, വലുപ്പം (expected_start));
+      TEST_COMPARE_BLOB (expected_end, വലുപ്പം (expected_end),
+			 start + allocation_size - വലുപ്പം (expected_end) - 1,
+			 വലുപ്പം (expected_end));
+      വേണ്ടി (size_t i = 0; i < unshared_size - 1; ++i)
+	check_one_index (i, start[i], expected_മൂല്യം (i + 1));
       /* The gap between the checked start and end area of the mapping
 	 has shared mappings at unspecified boundaries, so do not
 	 check the expected values in the middle.  */
-      for (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
+      വേണ്ടി (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
 	   ++i)
-	check_one_index (i, start[i], expected_value (i + 1));
+	check_one_index (i, start[i], expected_മൂല്യം (i + 1));
 
       support_blob_repeat_free (&repeat);
     }
 
-  return 0;
+  തിരികെ 0;
 }
 
-#include <support/test-driver.c>
+#അന്തര്ഭാവ <support/test-driver.c>

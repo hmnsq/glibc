@@ -19,10 +19,10 @@
 #ifndef _BYTESWAP_H
 #define _BYTESWAP_H	1
 
-#include <features.h>
+#അന്തര്ഭാവ <features.h>
 
 /* Get the machine specific, optimized definitions.  */
-#include <bits/byteswap.h>
+#അന്തര്ഭാവ <bits/byteswap.h>
 
 
 /* The following definitions must all be macros, otherwise some

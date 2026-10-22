@@ -16,10 +16,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <malloc.h>
-#include <string.h>
+#അന്തര്ഭാവ <malloc.h>
+#അന്തര്ഭാവ <string.h>
 
-#include <envz.h>
+#അന്തര്ഭാവ <envz.h>
 
 /* The character separating names from values in an envz.  */
 #define SEP '='
@@ -27,57 +27,57 @@
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.
    If NAME contains the separator character, only the portion before it is
    used in the comparison.  */
-char *
-envz_entry (const char *envz, size_t envz_len, const char *name)
+അക്ഷരം *
+envz_entry (സ്ഥിരം അക്ഷരം *envz, size_t envz_len, സ്ഥിരം അക്ഷരം *name)
 {
-  while (envz_len)
+  ആകുമ്പോൾ (envz_len)
     {
-      const char *p = name;
-      const char *entry = envz;	/* Start of this entry. */
+      സ്ഥിരം അക്ഷരം *p = name;
+      സ്ഥിരം അക്ഷരം *entry = envz;	/* Start of this entry. */
 
       /* See how far NAME and ENTRY match.  */
-      while (envz_len && *p == *envz && *p && *p != SEP)
+      ആകുമ്പോൾ (envz_len && *p == *envz && *p && *p != SEP)
 	p++, envz++, envz_len--;
 
-      if ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
+      എങ്കിൽ ((*envz == '\0' || *envz == SEP) && (*p == '\0' || *p == SEP))
 	/* Bingo! */
-	return (char *) entry;
+	തിരികെ (അക്ഷരം *) entry;
 
       /* No match, skip to the next entry.  */
-      while (envz_len && *envz)
+      ആകുമ്പോൾ (envz_len && *envz)
 	envz++, envz_len--;
-      if (envz_len)
+      എങ്കിൽ (envz_len)
 	envz++, envz_len--;	/* skip '\0' */
     }
 
-  return NULL;
+  തിരികെ ശൂന്യ;
 }
 libc_hidden_def (envz_entry)
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-char *
-envz_get (const char *envz, size_t envz_len, const char *name)
+അക്ഷരം *
+envz_get (സ്ഥിരം അക്ഷരം *envz, size_t envz_len, സ്ഥിരം അക്ഷരം *name)
 {
-  char *entry = envz_entry (envz, envz_len, name);
-  if (entry)
+  അക്ഷരം *entry = envz_entry (envz, envz_len, name);
+  എങ്കിൽ (entry)
     {
-      while (*entry && *entry != SEP)
+      ആകുമ്പോൾ (*entry && *entry != SEP)
 	entry++;
-      if (*entry)
+      എങ്കിൽ (*entry)
 	entry++;
-      else
-	entry = NULL;		/* A null entry.  */
+      അല്ലെങ്കിൽ
+	entry = ശൂന്യ;		/* A null entry.  */
     }
-  return entry;
+  തിരികെ entry;
 }
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
-void
-envz_remove (char **envz, size_t *envz_len, const char *name)
+ശൂന്യം
+envz_remove (അക്ഷരം **envz, size_t *envz_len, സ്ഥിരം അക്ഷരം *name)
 {
-  char *entry = envz_entry (*envz, *envz_len, name);
-  if (entry)
+  അക്ഷരം *entry = envz_entry (*envz, *envz_len, name);
+  എങ്കിൽ (entry)
     argz_delete (envz, envz_len, entry);
 }
 libc_hidden_def (envz_remove)
@@ -89,56 +89,56 @@ libc_hidden_def (envz_remove)
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
 error_t
-envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
+envz_add (അക്ഷരം **envz, size_t *envz_len, സ്ഥിരം അക്ഷരം *name, സ്ഥിരം അക്ഷരം *മൂല്യം)
 {
   envz_remove (envz, envz_len, name);
 
-  if (value)
+  എങ്കിൽ (മൂല്യം)
     /* Add the new value, if there is one.  */
     {
       size_t name_len = strlen (name);
-      size_t value_len = strlen (value);
+      size_t മൂല്യം_len = strlen (മൂല്യം);
       size_t old_envz_len = *envz_len;
-      size_t new_envz_len = old_envz_len + name_len + 1 + value_len + 1;
-      char *new_envz = realloc (*envz, new_envz_len);
+      size_t new_envz_len = old_envz_len + name_len + 1 + മൂല്യം_len + 1;
+      അക്ഷരം *new_envz = realloc (*envz, new_envz_len);
 
-      if (new_envz)
+      എങ്കിൽ (new_envz)
 	{
 	  memcpy (new_envz + old_envz_len, name, name_len);
 	  new_envz[old_envz_len + name_len] = SEP;
-	  memcpy (new_envz + old_envz_len + name_len + 1, value, value_len);
+	  memcpy (new_envz + old_envz_len + name_len + 1, മൂല്യം, മൂല്യം_len);
 	  new_envz[new_envz_len - 1] = 0;
 
 	  *envz = new_envz;
 	  *envz_len = new_envz_len;
 
-	  return 0;
+	  തിരികെ 0;
 	}
-      else
-	return ENOMEM;
+      അല്ലെങ്കിൽ
+	തിരികെ ENOMEM;
     }
-  else
+  അല്ലെങ്കിൽ
     /* Add a null entry.  */
-    return __argz_add (envz, envz_len, name);
+    തിരികെ __argz_add (envz, envz_len, name);
 }
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
 error_t
-envz_merge (char **envz, size_t *envz_len, const char *envz2,
-	    size_t envz2_len, int override)
+envz_merge (അക്ഷരം **envz, size_t *envz_len, സ്ഥിരം അക്ഷരം *envz2,
+	    size_t envz2_len, പൂർണ്ണസംഖ്യ override)
 {
   error_t err = 0;
 
-  while (envz2_len && ! err)
+  ആകുമ്പോൾ (envz2_len && ! err)
     {
-      char *old = envz_entry (*envz, *envz_len, envz2);
+      അക്ഷരം *old = envz_entry (*envz, *envz_len, envz2);
       size_t new_len = strlen (envz2) + 1;
 
-      if (! old)
+      എങ്കിൽ (! old)
 	err = __argz_append (envz, envz_len, envz2, new_len);
-      else if (override)
+      അല്ലെങ്കിൽ എങ്കിൽ (override)
 	{
 	  argz_delete (envz, envz_len, old);
 	  err = __argz_append (envz, envz_len, envz2, new_len);
@@ -148,23 +148,23 @@ envz_merge (char **envz, size_t *envz_len, const char *envz2,
       envz2_len -= new_len;
     }
 
-  return err;
+  തിരികെ err;
 }
 
 /* Remove null entries.  */
-void
-envz_strip (char **envz, size_t *envz_len)
+ശൂന്യം
+envz_strip (അക്ഷരം **envz, size_t *envz_len)
 {
-  char *entry = *envz;
-  size_t left = *envz_len;
-  while (left)
+  അക്ഷരം *entry = *envz;
+  size_t ഇടത് = *envz_len;
+  ആകുമ്പോൾ (ഇടത്)
     {
       size_t entry_len = strlen (entry) + 1;
-      left -= entry_len;
-      if (! strchr (entry, SEP))
+      ഇടത് -= entry_len;
+      എങ്കിൽ (! strchr (entry, SEP))
 	/* Null entry. */
-	memmove (entry, entry + entry_len, left);
-      else
+	memmove (entry, entry + entry_len, ഇടത്);
+      അല്ലെങ്കിൽ
 	entry += entry_len;
     }
   *envz_len = entry - *envz;

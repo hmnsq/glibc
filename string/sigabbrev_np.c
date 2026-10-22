@@ -16,18 +16,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#അന്തര്ഭാവ <string.h>
+#അന്തര്ഭാവ <signal.h>
+#അന്തര്ഭാവ <array_length.h>
 
-const char *
-sigabbrev_np (int signum)
+സ്ഥിരം അക്ഷരം *
+sigabbrev_np (പൂർണ്ണസംഖ്യ signum)
 {
-  const char *abbrev = NULL;
+  സ്ഥിരം അക്ഷരം *abbrev = ശൂന്യ;
 
-  if (signum >= 0 && signum <= NSIG
+  എങ്കിൽ (signum >= 0 && signum <= NSIG
       && signum < array_length (__sys_sigabbrev))
     abbrev = __sys_sigabbrev[signum];
 
-  return abbrev;
+  തിരികെ abbrev;
 }

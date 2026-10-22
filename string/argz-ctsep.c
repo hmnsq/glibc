@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#അന്തര്ഭാവ <argz.h>
+#അന്തര്ഭാവ <errno.h>
+#അന്തര്ഭാവ <stdlib.h>
+#അന്തര്ഭാവ <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (സ്ഥിരം അക്ഷരം *string, പൂർണ്ണസംഖ്യ delim, അക്ഷരം **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  എങ്കിൽ (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      സ്ഥിരം അക്ഷരം *rp;
+      അക്ഷരം *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (അക്ഷരം *) malloc (nlen);
+      എങ്കിൽ (*argz == ശൂന്യ)
+	തിരികെ ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      ചെയ്യുക
+	എങ്കിൽ (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    എങ്കിൽ (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    അല്ലെങ്കിൽ
 	      --nlen;
 	  }
-	else
+	അല്ലെങ്കിൽ
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ആകുമ്പോൾ (*rp++ != '\0');
 
-      if (nlen == 0)
+      എങ്കിൽ (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  സ്വതന്ത്രം (*argz);
+	  *argz = ശൂന്യ;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  അല്ലെങ്കിൽ
     {
-      *argz = NULL;
+      *argz = ശൂന്യ;
       *len = 0;
     }
 
-  return 0;
+  തിരികെ 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)
