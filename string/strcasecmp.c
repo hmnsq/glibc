@@ -15,53 +15,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#यदि_परिभाषितम् HAVE_CONFIG_H
 # include <config.h>
-#endif
+#यदि_अन्तः
 
-#include <ctype.h>
-#include <string.h>
+#अन्तर्भाव <ctype.h>
+#अन्तर्भाव <string.h>
 
-#ifndef _LIBC
+#यदि_अपरिभाषितम् _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#अन्यथा
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_अन्तर्_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#यदि_अन्तः
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#यदि_परिभाषितम् USE_अन्तर्_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#अन्यथा
 # define LOCALE_PARAM
-#endif
+#यदि_अन्तः
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+पूर्णाङ्क
+__strcasecmp (ध्रुव वर्ण *s1, ध्रुव वर्ण *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#यदि defined _LIBC && !defined USE_अन्तर्_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#यदि_अन्तः
+  ध्रुव अचिह्नित वर्ण *p1 = (ध्रुव अचिह्नित वर्ण *) s1;
+  ध्रुव अचिह्नित वर्ण *p2 = (ध्रुव अचिह्नित वर्ण *) s2;
+  पूर्णाङ्क परिणाम;
 
-  if (p1 == p2)
-    return 0;
+  यदि (p1 == p2)
+    प्रत्यागम 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  यावत् ((परिणाम = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    यदि (*p1++ == '\0')
+      भङ्ग;
 
-  return result;
+  प्रत्यागम परिणाम;
 }
-#ifndef __strcasecmp
+#यदि_अपरिभाषितम् __strcasecmp
 libc_hidden_def (__strcasecmp)
 weak_alias (__strcasecmp, strcasecmp)
-#endif
+#यदि_अन्तः

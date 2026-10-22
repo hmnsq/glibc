@@ -17,45 +17,45 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <memcopy.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <memcopy.h>
 
 /* All this is so that bcopy.c can #include
    this file after defining some things.  */
-#ifndef	a1
-#define	a1	dest	/* First arg is DEST.  */
-#define	a1const
-#define	a2	src	/* Second arg is SRC.  */
-#define	a2const	const
-#undef memmove
-#endif
-#if	!defined(RETURN) || !defined(rettype)
-#define	RETURN(s)	return (s)	/* Return DEST.  */
-#define	rettype		void *
-#endif
+#यदि_अपरिभाषितम्	a1
+#परिभाषय	a1	dest	/* First arg is DEST.  */
+#परिभाषय	a1const
+#परिभाषय	a2	src	/* Second arg is SRC.  */
+#परिभाषय	a2const	ध्रुव
+#अपरिभाषय memmove
+#यदि_अन्तः
+#यदि	!defined(RETURN) || !defined(rettype)
+#परिभाषय	RETURN(s)	प्रत्यागम (s)	/* Return DEST.  */
+#परिभाषय	rettype		शून्य *
+#यदि_अन्तः
 
-#ifndef MEMMOVE
-#define MEMMOVE memmove
-#endif
+#यदि_अपरिभाषितम् MEMMOVE
+#परिभाषय MEMMOVE memmove
+#यदि_अन्तः
 
 rettype
-inhibit_loop_to_libcall
-MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
+inhibit_loop_गन्तव्यम्_libcall
+MEMMOVE (a1const शून्य *a1, a2const शून्य *a2, size_t len)
 {
-  unsigned long int dstp = (long int) dest;
-  unsigned long int srcp = (long int) src;
+  अचिह्नित दीर्घ पूर्णाङ्क dstp = (दीर्घ पूर्णाङ्क) dest;
+  अचिह्नित दीर्घ पूर्णाङ्क srcp = (दीर्घ पूर्णाङ्क) src;
 
   /* This test makes the forward copying code be used whenever possible.
      Reduces the working set.  */
-  if (dstp - srcp >= len)	/* *Unsigned* compare!  */
+  यदि (dstp - srcp >= len)	/* *Unsigned* compare!  */
     {
       /* Copy from the beginning to the end.  */
 
-#if MEMCPY_OK_FOR_FWD_MEMMOVE
-      dest = memcpy (dest, src, len);
-#else
+#यदि MEMCPY_OK_FOR_FWD_MEMMOVE
+      dest = स्मृतिं_प्रतिलिख (dest, src, len);
+#अन्यथा
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      यदि (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= (-dstp) % OPSIZ;
@@ -78,16 +78,16 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
 
       /* There are just a few bytes to copy.  Use byte memory operations.  */
       BYTE_COPY_FWD (dstp, srcp, len);
-#endif /* MEMCPY_OK_FOR_FWD_MEMMOVE */
+#यदि_अन्तः /* MEMCPY_OK_FOR_FWD_MEMMOVE */
     }
-  else
+  अन्यथा
     {
       /* Copy from the end to the beginning.  */
       srcp += len;
       dstp += len;
 
       /* If there not too few bytes to copy, use word copy.  */
-      if (len >= OP_T_THRES)
+      यदि (len >= OP_T_THRES)
 	{
 	  /* Copy just a few bytes to make DSTP aligned.  */
 	  len -= dstp % OPSIZ;
@@ -109,6 +109,6 @@ MEMMOVE (a1const void *a1, a2const void *a2, size_t len)
 
   RETURN (dest);
 }
-#ifndef memmove
+#यदि_अपरिभाषितम् memmove
 libc_hidden_builtin_def (memmove)
-#endif
+#यदि_अन्तः

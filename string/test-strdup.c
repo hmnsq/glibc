@@ -16,9 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#अन्तर्भाव <support/check.h>
 
-#ifdef WIDE
+#यदि_परिभाषितम् WIDE
 # include <wchar.h>
 # define CHAR wchar_t
 # define sfmt "ls"
@@ -28,65 +28,65 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define TCS TEST_COMPARE_STRING_WIDE
-#else
-# define CHAR char
+#अन्यथा
+# define CHAR वर्ण
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-# define STRCMP strcmp
+# define STRCMP वाक्यं_तुलय
 # define MEMCMP memcmp
-# define MEMSET memset
+# define MEMSET स्मृतिं_पूरय
 # define TCS TEST_COMPARE_STRING
-#endif
+#यदि_अन्तः
 
-#ifndef STRDUP_RESULT
-# define STRDUP_RESULT(dst, len) dst
+#यदि_अपरिभाषितम् STRDUP_परिणाम
+# define STRDUP_परिणाम(dst, len) dst
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strdup"
-# else
+# अन्यथा
 #  define TEST_NAME "wcsdup"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRDUP strdup
-# else
+# अन्यथा
 #  define STRDUP wcsdup
 # endif
-#endif
+#यदि_अन्तः
 
-typedef CHAR *(*proto_t) (const CHAR *);
+प्रकारनिर्देश CHAR *(*proto_t) (ध्रुव CHAR *);
 
-static void
-do_zero_len_test (void)
+स्थिर शून्य
+do_zero_len_test (शून्य)
 {
   CHAR src[1] = { '\0' };
   CHAR *dst = STRDUP (src);
 
   TCS (dst, src);
-  free (dst);
+  मुक्त (dst);
 }
 
-static void
-do_one_test (const CHAR *src,
-	     size_t len __attribute__((unused)))
+स्थिर शून्य
+do_one_test (ध्रुव CHAR *src,
+	     size_t len __attribute__((अप्रयुक्तम्)))
 {
   CHAR *dst = STRDUP (src);
 
-  if (STRCMP (dst, src) != 0)
+  यदि (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     TEST_NAME, dst, src);
       ret = 1;
-      free (dst);
-      return;
+      मुक्त (dst);
+      प्रत्यागम;
     }
-  free (dst);
+  मुक्त (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+स्थिर शून्य
+do_test (size_t align1, size_t align2, size_t len, पूर्णाङ्क max_char)
 {
   size_t i;
   CHAR *s1;
@@ -94,30 +94,30 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  यदि ((align1 + len) * परिमाण (CHAR) >= page_आकार)
+    प्रत्यागम;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  यदि ((align2 + len) * परिमाण (CHAR) >= page_आकार)
+    प्रत्यागम;
 
   s1 = (CHAR *) (buf1) + align1;
 
-  for (i = 0; i < len; i++)
+  प्रति (i = 0; i < len; i++)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
   do_one_test (s1, len);
 }
 
-static void
-do_random_tests (void)
+स्थिर शून्य
+do_random_tests (शून्य)
 {
   size_t i, j, n, align1, align2, len;
-  CHAR *p1 = (CHAR *)(buf1 + page_size) - 512;
+  CHAR *p1 = (CHAR *)(buf1 + page_आकार) - 512;
   CHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  प्रति (n = 0; n < ITERATIONS; n++)
     {
       /* align1 and align2 are expressed as wchar_t and not in bytes for wide
      char test, and thus it will be equal to align times wchar_t size.
@@ -126,51 +126,51 @@ do_random_tests (void)
      since some assembly implementations have separate prolog for alignments
      more 48.  */
 
-      align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
-	align2 = random () & (63 / sizeof (CHAR));
-      else
+      align1 = random () & (63 / परिमाण (CHAR));
+      यदि (random () & 1)
+	align2 = random () & (63 / परिमाण (CHAR));
+      अन्यथा
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      यदि (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      यदि (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      यदि (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      प्रति (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  यदि (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  अन्यथा
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      यदि (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
 
       res =  STRDUP(p1 + align1);
       TCS (res, (p1 + align1));
-      free (res);
+      मुक्त (res);
     }
 }
 
 
-int
-test_main (void)
+पूर्णाङ्क
+test_main (शून्य)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%23s", "");
-  printf ("\t%s", TEST_NAME);
-  putchar ('\n');
+  प्रारूप_लिख ("%23s", "");
+  प्रारूप_लिख ("\t%s", TEST_NAME);
+  अक्षरं_लिख ('\n');
 
-  for (i = 0; i < 16; ++i)
+  प्रति (i = 0; i < 16; ++i)
     {
       do_test (0, 0, i, SMALL_CHAR);
       do_test (0, 0, i, BIG_CHAR);
@@ -178,13 +178,13 @@ test_main (void)
       do_test (i, 0, i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, SMALL_CHAR);
       do_test (8 - i, 2 * i, 8 << i, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, SMALL_CHAR);
       do_test (2 * i, i, 8 << i, BIG_CHAR);
@@ -195,7 +195,7 @@ test_main (void)
   do_zero_len_test ();
   do_random_tests ();
 
-  return ret;
+  प्रत्यागम ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

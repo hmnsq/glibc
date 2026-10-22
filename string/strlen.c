@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#अन्तर्भाव <libc-pointer-arith.h>
+#अन्तर्भाव <string-fzb.h>
+#अन्तर्भाव <string-fzc.h>
+#अन्तर्भाव <string-fzi.h>
+#अन्तर्भाव <string-shift.h>
+#अन्तर्भाव <string.h>
 
-#ifdef STRLEN
+#यदि_परिभाषितम् STRLEN
 # define __strlen STRLEN
-#endif
+#यदि_अन्तः
 
 /* Return the length of the null-terminated string STR.  Scan for
    the null terminator quickly by testing four bytes at a time.  */
 size_t
-__strlen (const char *str)
+__strlen (ध्रुव वर्ण *str)
 {
   /* Align pointer to sizeof op_t.  */
-  const uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t*) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  ध्रुव uintptr_t s_int = (uintptr_t) str;
+  ध्रुव op_t *word_ptr = (ध्रुव op_t*) PTR_ALIGN_अधस्तात् (str, परिमाण (op_t));
 
   op_t word = *word_ptr;
-  find_t mask = shift_find (find_zero_all (word), s_int);
-  if (mask != 0)
-    return index_first (mask);
+  find_t आवरणम् = सरणम्_find (find_zero_all (word), s_int);
+  यदि (आवरणम् != 0)
+    प्रत्यागम सूचकांक_first (आवरणम्);
 
-  do
+  कुरु
     word = *++word_ptr;
-  while (! has_zero (word));
+  यावत् (! has_zero (word));
 
-  return ((const char *) word_ptr) + index_first_zero (word) - str;
+  प्रत्यागम ((ध्रुव वर्ण *) word_ptr) + सूचकांक_first_zero (word) - str;
 }
-#ifndef STRLEN
-weak_alias (__strlen, strlen)
-libc_hidden_builtin_def (strlen)
-#endif
+#यदि_अपरिभाषितम् STRLEN
+weak_alias (__strlen, वाक्यदैर्घ्यम्)
+libc_hidden_builtin_def (वाक्यदैर्घ्यम्)
+#यदि_अन्तः

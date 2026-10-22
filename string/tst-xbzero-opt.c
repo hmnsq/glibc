@@ -38,19 +38,19 @@
    printf, but we know the OS won't erase it, so we can do all the
    checks and printing from the normal stack.  */
 
-#define _GNU_SOURCE 1
+#परिभाषय _GNU_SOURCE 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#अन्तर्भाव <errno.h>
+#अन्तर्भाव <signal.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <ucontext.h>
+#अन्तर्भाव <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+स्थिर ध्रुव अचिह्नित वर्ण test_आदर्शः[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,9 +60,9 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
-#define PATTERN_REPS 32
-#define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
+#परिभाषय आदर्शः_आकार (परिमाण test_आदर्शः)
+#परिभाषय आदर्शः_REPS 32
+#परिभाषय TEST_बफर_आकार (आदर्शः_आकार * आदर्शः_REPS)
 
 /* There are three subtests, two of which are sanity checks.
    Each test follows this sequence:
@@ -95,100 +95,100 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+स्थिर ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+स्थिर __attribute_optimization_barrier__ पूर्णाङ्क
+use_test_बफर (अचिह्नित वर्ण *buf)
 {
-  unsigned int sum = 0;
+  अचिह्नित पूर्णाङ्क योग = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    sum += buf[i * PATTERN_SIZE];
+  प्रति (अचिह्नित पूर्णाङ्क i = 0; i < आदर्शः_REPS; i++)
+    योग += buf[i * आदर्शः_आकार];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  प्रत्यागम (योग == 2 * आदर्शः_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#यदि defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#अन्यथा
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
-#endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+#यदि_अन्तः
+स्थिर अन्तःस्थ ALWAYS_INLINE शून्य
+prepare_test_बफर (अचिह्नित वर्ण *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
-    memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
+  प्रति (अचिह्नित पूर्णाङ्क i = 0; i < आदर्शः_REPS; i++)
+    स्मृतिं_प्रतिलिख (buf + i*आदर्शः_आकार, test_आदर्शः, आदर्शः_आकार);
 
-  if (swapcontext (&uc_co, &uc_main))
+  यदि (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  यदि (use_test_बफर (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+स्थिर शून्य
+सज्जता_no_clear (शून्य)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
+  अचिह्नित वर्ण buf[TEST_बफर_आकार];
+  prepare_test_बफर (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+स्थिर शून्य
+सज्जता_ordinary_clear (शून्य)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-  memset (buf, 0, TEST_BUFFER_SIZE);
+  अचिह्नित वर्ण buf[TEST_बफर_आकार];
+  prepare_test_बफर (buf);
+  स्मृतिं_पूरय (buf, 0, TEST_बफर_आकार);
 }
 
-static void
-setup_explicit_clear (void)
+स्थिर शून्य
+सज्जता_explicit_clear (शून्य)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
-  prepare_test_buffer (buf);
-#ifdef TEST_MEMSET_EXPLICIT
-  memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
-  explicit_bzero (buf, TEST_BUFFER_SIZE);
-#endif
+  अचिह्नित वर्ण buf[TEST_बफर_आकार];
+  prepare_test_बफर (buf);
+#यदि_परिभाषितम् TEST_MEMSET_EXPLICIT
+  memset_explicit (buf, 0, TEST_बफर_आकार);
+#अन्यथा
+  explicit_bzero (buf, TEST_बफर_आकार);
+#यदि_अन्तः
 }
 
-enum test_expectation
+गणना test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+संरचना subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  शून्य (*सज्जता_subtest) (शून्य);
+  ध्रुव वर्ण *label;
+  गणना test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+स्थिर ध्रुव संरचना subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+स्थिर ध्रुव संरचना subtest subtests[] =
 {
-  { setup_no_clear,       "no clear",       EXPECT_SOME },
+  { सज्जता_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
      optimizations.  */
-  { setup_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
-  { setup_explicit_clear, "explicit clear", EXPECT_NONE },
+  { सज्जता_ordinary_clear, "ordinary clear", NO_EXPECTATIONS },
+  { सज्जता_explicit_clear, "explicit clear", EXPECT_NONE },
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+स्थिर शून्य
+test_coroutine (शून्य)
 {
-  while (cur_subtest->setup_subtest)
+  यावत् (cur_subtest->सज्जता_subtest)
     {
-      cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      cur_subtest->सज्जता_subtest ();
+      यदि (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+स्थिर पूर्णाङ्क test_स्थितिः;
+स्थिर अचिह्नित वर्ण *co_राशिः_बफर;
+स्थिर size_t co_राशिः_आकार;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+स्थिर अचिह्नित पूर्णाङ्क
+गणनम्_test_patterns (अचिह्नित वर्ण *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  अचिह्नित वर्ण *first = memmem (buf, bufsiz, test_आदर्शः, आदर्शः_आकार);
+  यदि (!first)
+    प्रत्यागम 0;
+  अचिह्नित पूर्णाङ्क cnt = 0;
+  प्रति (अचिह्नित पूर्णाङ्क i = 0; i < आदर्शः_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      अचिह्नित वर्ण *p = first + i*आदर्शः_आकार;
+      यदि (p + आदर्शः_आकार - buf > bufsiz)
+	भङ्ग;
+      यदि (memcmp (p, test_आदर्शः, आदर्शः_आकार) == 0)
 	cnt++;
     }
-  return cnt;
+  प्रत्यागम cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+स्थिर शून्य
+check_test_बफर (गणना test_expectation expected,
+		   ध्रुव वर्ण *label, ध्रुव वर्ण *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  अचिह्नित पूर्णाङ्क cnt = गणनम्_test_patterns (co_राशिः_बफर, co_राशिः_आकार);
+  विकल्प (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
-	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+    पक्ष EXPECT_NONE:
+      यदि (cnt == 0)
+	प्रारूप_लिख ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
+      अन्यथा
 	{
-	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
-	  test_status = 1;
+	  प्रारूप_लिख ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
+	  test_स्थितिः = 1;
 	}
-      break;
+      भङ्ग;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
-	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+    पक्ष EXPECT_SOME:
+      यदि (cnt > 0)
+	प्रारूप_लिख ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
+      अन्यथा
 	{
-	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
-	  test_status = 1;
+	  प्रारूप_लिख ("FAIL: %s/%s: expected some got 0\n", label, stage);
+	  test_स्थितिः = 1;
 	}
-      break;
+      भङ्ग;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
-	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
-		PATTERN_REPS, cnt);
-      else
+     पक्ष EXPECT_ALL:
+      यदि (cnt == आदर्शः_REPS)
+	प्रारूप_लिख ("PASS: %s/%s: expected %d got %d\n", label, stage,
+		आदर्शः_REPS, cnt);
+      अन्यथा
 	{
-	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
-		  PATTERN_REPS, cnt);
-	  test_status = 1;
+	  प्रारूप_लिख ("FAIL: %s/%s: expected %d got %d\n", label, stage,
+		  आदर्शः_REPS, cnt);
+	  test_स्थितिः = 1;
 	}
-      break;
+      भङ्ग;
 
-    case NO_EXPECTATIONS:
-      printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
+    पक्ष NO_EXPECTATIONS:
+      प्रारूप_लिख ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      भङ्ग;
 
-    default:
-      printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
-      test_status = 1;
+    स्वभाव:
+      प्रारूप_लिख ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
+	      label, stage, (पूर्णाङ्क)expected);
+      test_स्थितिः = 1;
     }
 }
 
-static void
-test_loop (void)
+स्थिर शून्य
+test_loop (शून्य)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  यावत् (cur_subtest->सज्जता_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      यदि (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      check_test_बफर (EXPECT_ALL, cur_subtest->label, "prepare");
+      यदि (swapcontext (&uc_main, &uc_co))
 	abort ();
-      check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
+      check_test_बफर (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  यदि (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
   size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  यदि (page_alignment < परिमाण (शून्य *))
+    page_alignment = परिमाण (शून्य *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_राशिः_आकार = SIGSTKSZ + TEST_बफर_आकार;
+  यदि (co_राशिः_आकार < page_alignment * 4)
+    co_राशिः_आकार = page_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  शून्य *p;
+  पूर्णाङ्क err = posix_memalign (&p, page_alignment, co_राशिः_आकार);
+  यदि (err || !p)
     {
-      printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      प्रारूप_लिख ("ERROR: allocating alt stack: %s\n", strerror (err));
+      प्रत्यागम 2;
     }
-  co_stack_buffer = p;
+  co_राशिः_बफर = p;
 
-  if (getcontext (&uc_co))
+  यदि (getcontext (&uc_co))
     {
-      printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      प्रारूप_लिख ("ERROR: allocating coroutine context: %s\n", strerror (err));
+      प्रत्यागम 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_राशिः_बफर;
+  uc_co.uc_stack.ss_size = co_राशिः_आकार;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  प्रत्यागम test_स्थितिः;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

@@ -15,40 +15,40 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#यदि_परिभाषितम् HAVE_CONFIG_H
+#अन्तर्भाव <config.h>
+#यदि_अन्तः
 
-#if defined _LIBC || defined  STDC_HEADERS
+#यदि defined _LIBC || defined  STDC_शीर्षकाणि
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
-#endif
+#अन्यथा
+वर्ण *स्मृतिं_देहि ();
+वर्ण *स्मृतिं_प्रतिलिख ();
+#यदि_अन्तः
 
-#undef __strdup
-#undef strdup
+#अपरिभाषय __strdup
+#अपरिभाषय strdup
 
-#ifndef weak_alias
+#यदि_अपरिभाषितम् weak_alias
 # define __strdup strdup
-#endif
+#यदि_अन्तः
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+वर्ण *
+__strdup (ध्रुव वर्ण *s)
 {
-  size_t len = strlen (s) + 1;
-  void *new = malloc (len);
+  size_t len = वाक्यदैर्घ्यम् (s) + 1;
+  शून्य *new = स्मृतिं_देहि (len);
 
-  if (new == NULL)
-    return NULL;
+  यदि (new == रिक्त)
+    प्रत्यागम रिक्त;
 
-  return (char *) memcpy (new, s, len);
+  प्रत्यागम (वर्ण *) स्मृतिं_प्रतिलिख (new, s, len);
 }
-#ifdef libc_hidden_def
+#यदि_परिभाषितम् libc_hidden_def
 libc_hidden_def (__strdup)
-#endif
-#ifdef weak_alias
+#यदि_अन्तः
+#यदि_परिभाषितम् weak_alias
 weak_alias (__strdup, strdup)
-#endif
+#यदि_अन्तः

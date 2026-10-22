@@ -16,58 +16,58 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#अन्तर्भाव <support/check.h>
 
-#define TEST_MAIN
-#include "test-string.h"
+#परिभाषय TEST_MAIN
+#अन्तर्भाव "test-string.h"
 
-static void
-do_one_test (const char *src, size_t len, size_t n)
+स्थिर शून्य
+do_one_test (ध्रुव वर्ण *src, size_t len, size_t n)
 {
-  char *dst = strndup (src, n);
-  size_t s = (len > n ? n: len) * sizeof (char);
+  वर्ण *dst = strndup (src, n);
+  size_t s = (len > n ? n: len) * परिमाण (वर्ण);
 
   TEST_COMPARE_BLOB (dst, s, src, s);
 
-  free (dst);
+  मुक्त (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+स्थिर शून्य
+do_test (size_t align1, size_t align2, size_t len, size_t n, पूर्णाङ्क max_char)
 {
   size_t i;
-  char *s1;
+  वर्ण *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  यदि ((align1 + len) * परिमाण (वर्ण) >= page_आकार)
+    प्रत्यागम;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  यदि ((align2 + len) * परिमाण (वर्ण) >= page_आकार)
+    प्रत्यागम;
 
-  s1 = (char *) (buf1) + align1;
+  s1 = (वर्ण *) (buf1) + align1;
 
-  for (i = 0; i < len; ++i)
+  प्रति (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  प्रति (i = len + 1; (i + align1) * परिमाण (वर्ण) < page_आकार && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   do_one_test (s1, len, n);
 }
 
-static void
-do_page_tests (void)
+स्थिर शून्य
+do_page_tests (शून्य)
 {
-  char *s1;
-  const size_t maxoffset = 64;
+  वर्ण *s1;
+  ध्रुव size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (char *) buf1 + BUF1PAGES * page_size / sizeof (char) - maxoffset;
+  s1 = (वर्ण *) buf1 + BUF1_पृष्ठानि * page_आकार / परिमाण (वर्ण) - maxoffset;
 
-  memset (s1, 'a', maxoffset - 1);
+  स्मृतिं_पूरय (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
 
   /* Both strings are bounded to a page with read/write access and the next
@@ -78,101 +78,101 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
-    for (size_t off2 = 0; off2 < maxoffset; off2++)
+  प्रति (size_t off1 = 0; off1 < maxoffset; off1++)
+    प्रति (size_t off2 = 0; off2 < maxoffset; off2++)
       do_one_test (s1 + off1, maxoffset - off1 - 1,
 		   maxoffset + (maxoffset - off2));
 }
 
-static void
-do_random_tests (void)
+स्थिर शून्य
+do_random_tests (शून्य)
 {
-  size_t i, j, n, align1, align2, len, size, mode;
-  char *p1 = (char *) (buf1 + page_size) - 512;
-  char *res;
+  size_t i, j, n, align1, align2, len, आकार, बहुलकम्;
+  वर्ण *p1 = (वर्ण *) (buf1 + page_आकार) - 512;
+  वर्ण *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  प्रति (n = 0; n < ITERATIONS; n++)
     {
-      mode = random ();
-      if (mode & 1)
+      बहुलकम् = random ();
+      यदि (बहुलकम् & 1)
 	{
-	  size = random () & 255;
-	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  आकार = random () & 255;
+	  align1 = 512 - आकार - (random () & 15);
+	  यदि (बहुलकम् & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  अन्यथा
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  यदि (बहुलकम् & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
-	    len = size - (random () & 31);
-	  else
+	  यदि (बहुलकम् & 8)
+	    len = आकार - (random () & 31);
+	  अन्यथा
 	    len = 512;
-	  if (len >= 512)
+	  यदि (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      अन्यथा
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  यदि (बहुलकम् & 2)
 	    align2 = random () & 31;
-	  else
+	  अन्यथा
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  यदि (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  यदि (बहुलकम् & 4)
 	    {
-	      size = random () & 511;
-	      if (size + j > 512)
-		size = 512 - j - (random () & 31);
+	      आकार = random () & 511;
+	      यदि (आकार + j > 512)
+		आकार = 512 - j - (random () & 31);
 	    }
-	  else
-	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  अन्यथा
+	    आकार = 512 - j;
+	  यदि ((बहुलकम् & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      यदि (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      प्रति (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  यदि (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  अन्यथा
 	    {
 	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      यदि (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
-	res = (char *) strndup ((char *) (p1 + align1), size);
+	res = (वर्ण *) strndup ((वर्ण *) (p1 + align1), आकार);
 	j = len + 1;
-	if (size < j)
-	  j = size;
-	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
-	free (res);
+	यदि (आकार < j)
+	  j = आकार;
+	TEST_COMPARE_BLOB (res, j, (वर्ण *) (p1 + align1), j);
+	मुक्त (res);
     }
 }
 
-int
-test_main (void)
+पूर्णाङ्क
+test_main (शून्य)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%28s", "");
-  printf ("\t%s", "strndup");
-  putchar ('\n');
+  प्रारूप_लिख ("%28s", "");
+  प्रारूप_लिख ("\t%s", "strndup");
+  अक्षरं_लिख ('\n');
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, 127);
       do_test (i, i, 16, 16, CHAR_MAX);
@@ -184,7 +184,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, CHAR_MAX);
     }
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, 127);
       do_test (0, 0, 16 << i, 8 << i, 127);
@@ -194,7 +194,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  प्रत्यागम ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

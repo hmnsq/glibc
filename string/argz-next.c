@@ -16,25 +16,25 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#अन्तर्भाव <argz.h>
+#अन्तर्भाव <string.h>
 
-char *
-__argz_next (const char *argz, size_t argz_len, const char *entry)
+वर्ण *
+__argz_next (ध्रुव वर्ण *argz, size_t argz_len, ध्रुव वर्ण *प्रविष्टिः)
 {
-  if (entry)
+  यदि (प्रविष्टिः)
     {
-      if (entry < argz + argz_len)
-	entry = strchr (entry, '\0') + 1;
+      यदि (प्रविष्टिः < argz + argz_len)
+	प्रविष्टिः = strchr (प्रविष्टिः, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      प्रत्यागम प्रविष्टिः >= argz + argz_len ? रिक्त : (वर्ण *) प्रविष्टिः;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  अन्यथा
+    यदि (argz_len > 0)
+      प्रत्यागम (वर्ण *) argz;
+    अन्यथा
+      प्रत्यागम रिक्त;
 }
 libc_hidden_def (__argz_next)
-static_weak_alias (__argz_next, argz_next)
-libc_hidden_weak (argz_next)
+static_weak_alias (__argz_next, argz_अग्र)
+libc_hidden_weak (argz_अग्र)

@@ -25,16 +25,16 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#अन्तर्भाव <array_length.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <support/check.h>
+#अन्तर्भाव <support/next_to_fault.h>
+#अन्तर्भाव <support/test-driver.h>
+#अन्तर्भाव <sys/param.h>
+#अन्तर्भाव <unistd.h>
 
 /* Much shorter than test-Xnlen-nonarray.c because of deeply nested loops.  */
-enum { buffer_length = 80 };
+गणना { बफर_दीर्घता = 80 };
 
 /* The test buffer layout follows what is described test-Xnlen-nonarray.c,
    except that there two buffers, left and right.  The variables
@@ -42,134 +42,134 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+स्थिर पूर्णाङ्क
+string_दीर्घता (पूर्णाङ्क a_गणनम्, पूर्णाङ्क start_विस्थापनम्)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  यदि (start_विस्थापनम् == बफर_दीर्घता || start_विस्थापनम् >= a_गणनम्)
+    प्रत्यागम 0;
+  अन्यथा
+    प्रत्यागम a_गणनम् - start_विस्थापनम्;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+स्थिर पूर्णाङ्क
+अधिकतमम्_दीर्घता (पूर्णाङ्क start_विस्थापनम्, पूर्णाङ्क zero_गणनम्)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  यदि (start_विस्थापनम् == बफर_दीर्घता)
+    प्रत्यागम 0;
+  अन्यथा यदि (zero_गणनम् > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    प्रत्यागम बफर_दीर्घता + 32;
+  अन्यथा
+    प्रत्यागम बफर_दीर्घता - start_विस्थापनम्;
 }
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+प्रकारनिर्देश __typeof (TEST_IDENTIFIER) *proto_t;
 
-#define TEST_MAIN
-#include "test-string.h"
+#परिभाषय TEST_MAIN
+#अन्तर्भाव "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+स्थिर पूर्णाङ्क
+test_main (शून्य)
 {
-  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
+  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= बफर_दीर्घता);
   test_init ();
 
-  struct support_next_to_fault left_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *right_buffer = (CHAR *) right_ntf.buffer;
+  संरचना support_अग्र_गन्तव्यम्_fault वामः_ntf
+    = support_अग्र_गन्तव्यम्_fault_allocate (बफर_दीर्घता * परिमाण (CHAR));
+  CHAR *वामः_बफर = (CHAR *) वामः_ntf.बफर;
+  संरचना support_अग्र_गन्तव्यम्_fault दक्षिणः_ntf
+    = support_अग्र_गन्तव्यम्_fault_allocate (बफर_दीर्घता * परिमाण (CHAR));
+  CHAR *दक्षिणः_बफर = (CHAR *) दक्षिणः_ntf.बफर;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        left_buffer[i] = 'A';
+      प्रारूप_लिख ("info: testing %s\n", impl->name);
+      प्रति (size_t i = 0; i < बफर_दीर्घता; ++i)
+        वामः_बफर[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
-           ++left_zero_count)
+      प्रति (पूर्णाङ्क वामः_zero_गणनम् = 0; वामः_zero_गणनम् <= बफर_दीर्घता;
+           ++वामः_zero_गणनम्)
         {
-          if (left_zero_count > 0)
-            left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
-            right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
-               ++right_zero_count)
+          यदि (वामः_zero_गणनम् > 0)
+            वामः_बफर[बफर_दीर्घता - वामः_zero_गणनम्] = 0;
+          पूर्णाङ्क वामः_a_गणनम् = बफर_दीर्घता - वामः_zero_गणनम्;
+          प्रति (size_t i = 0; i < बफर_दीर्घता; ++i)
+            दक्षिणः_बफर[i] = 'A';
+          प्रति (पूर्णाङ्क दक्षिणः_zero_गणनम् = 0; दक्षिणः_zero_गणनम् <= बफर_दीर्घता;
+               ++दक्षिणः_zero_गणनम्)
             {
-              if (right_zero_count > 0)
-                right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
-                   left_start_offset <= buffer_length;
-                   ++left_start_offset)
+              यदि (दक्षिणः_zero_गणनम् > 0)
+                दक्षिणः_बफर[बफर_दीर्घता - दक्षिणः_zero_गणनम्] = 0;
+              पूर्णाङ्क दक्षिणः_a_गणनम् = बफर_दीर्घता - दक्षिणः_zero_गणनम्;
+              प्रति (पूर्णाङ्क वामः_start_विस्थापनम् = 0;
+                   वामः_start_विस्थापनम् <= बफर_दीर्घता;
+                   ++वामः_start_विस्थापनम्)
                 {
-                  CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
-                    = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
-                    = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
-                       right_start_offset <= buffer_length;
-                       ++right_start_offset)
+                  CHAR *वामः_start_pointer = वामः_बफर + वामः_start_विस्थापनम्;
+                  पूर्णाङ्क वामः_maxlen
+                    = अधिकतमम्_दीर्घता (वामः_start_विस्थापनम्, वामः_zero_गणनम्);
+                  पूर्णाङ्क वामः_दीर्घता
+                    = string_दीर्घता (वामः_a_गणनम्, वामः_start_विस्थापनम्);
+                  प्रति (पूर्णाङ्क दक्षिणः_start_विस्थापनम् = 0;
+                       दक्षिणः_start_विस्थापनम् <= बफर_दीर्घता;
+                       ++दक्षिणः_start_विस्थापनम्)
                     {
-                      CHAR *right_start_pointer
-                        = right_buffer + right_start_offset;
-                      int right_maxlen
-                        = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
-                        = string_length (right_a_count, right_start_offset);
+                      CHAR *दक्षिणः_start_pointer
+                        = दक्षिणः_बफर + दक्षिणः_start_विस्थापनम्;
+                      पूर्णाङ्क दक्षिणः_maxlen
+                        = अधिकतमम्_दीर्घता (दक्षिणः_start_विस्थापनम्, दक्षिणः_zero_गणनम्);
+                      पूर्णाङ्क दक्षिणः_दीर्घता
+                        = string_दीर्घता (दक्षिणः_a_गणनम्, दक्षिणः_start_विस्थापनम्);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      पूर्णाङ्क maxlen = MIN (वामः_maxlen, दक्षिणः_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
-                           ++length_argument)
+                      प्रति (पूर्णाङ्क दीर्घता_तर्कः = 0; दीर्घता_तर्कः <= maxlen;
+                           ++दीर्घता_तर्कः)
                         {
-                          if (test_verbose)
+                          यदि (test_verbose)
                             {
-                              printf ("left: zero_count=%d"
+                              प्रारूप_लिख ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      left_zero_count, left_a_count,
-                                      left_start_offset);
-                              printf ("right: zero_count=%d"
+                                      वामः_zero_गणनम्, वामः_a_गणनम्,
+                                      वामः_start_विस्थापनम्);
+                              प्रारूप_लिख ("right: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      right_zero_count, right_a_count,
-                                      right_start_offset);
-                              printf ("length argument: %d\n",
-                                      length_argument);
+                                      दक्षिणः_zero_गणनम्, दक्षिणः_a_गणनम्,
+                                      दक्षिणः_start_विस्थापनम्);
+                              प्रारूप_लिख ("length argument: %d\n",
+                                      दीर्घता_तर्कः);
                             }
 
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
-                            = MIN (left_length, length_argument);
-                          int right_effective
-                            = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          पूर्णाङ्क वामः_effective
+                            = MIN (वामः_दीर्घता, दीर्घता_तर्कः);
+                          पूर्णाङ्क दक्षिणः_effective
+                            = MIN (दक्षिणः_दीर्घता, दीर्घता_तर्कः);
+                          यदि (वामः_effective == दक्षिणः_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument), 0);
-                          else if (left_effective < right_effective)
+                                                वामः_start_pointer,
+                                                दक्षिणः_start_pointer,
+                                                दीर्घता_तर्कः), 0);
+                          अन्यथा यदि (वामः_effective < दक्षिणः_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument) < 0, 1);
-                          else
+                                                वामः_start_pointer,
+                                                दक्षिणः_start_pointer,
+                                                दीर्घता_तर्कः) < 0, 1);
+                          अन्यथा
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
-                                                length_argument) > 0, 1);
+                                                वामः_start_pointer,
+                                                दक्षिणः_start_pointer,
+                                                दीर्घता_तर्कः) > 0, 1);
                         }
                     }
                 }
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  प्रत्यागम 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

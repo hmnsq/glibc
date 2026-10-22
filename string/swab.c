@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <unistd.h>
+#अन्तर्भाव <unistd.h>
 
-void
-swab (const void *bfrom, void *bto, ssize_t n)
+शून्य
+swab (ध्रुव शून्य *bfrom, शून्य *bto, ssize_t n)
 {
-  const char *from = (const char *) bfrom;
-  char *to = (char *) bto;
+  ध्रुव वर्ण *from = (ध्रुव वर्ण *) bfrom;
+  वर्ण *गन्तव्यम् = (वर्ण *) bto;
 
   n &= ~((ssize_t) 1);
-  while (n > 1)
+  यावत् (n > 1)
     {
-      const char b0 = from[--n], b1 = from[--n];
-      to[n] = b0;
-      to[n + 1] = b1;
+      ध्रुव वर्ण b0 = from[--n], b1 = from[--n];
+      गन्तव्यम्[n] = b0;
+      गन्तव्यम्[n + 1] = b1;
     }
 }

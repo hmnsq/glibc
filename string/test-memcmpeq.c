@@ -16,6 +16,6 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define BAD_RESULT(result, expec) ((!(result)) != (!(expec)))
-#define TEST_MEMCMPEQ 1
-#include "test-memcmp.c"
+#परिभाषय BAD_परिणाम(परिणाम, expec) ((!(परिणाम)) != (!(expec)))
+#परिभाषय TEST_MEMCMPEQ 1
+#अन्तर्भाव "test-memcmp.c"

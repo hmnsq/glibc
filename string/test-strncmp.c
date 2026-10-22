@@ -16,19 +16,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_LEN (getpagesize () * 3)
-#define MIN_PAGE_SIZE (TEST_LEN + 2 * getpagesize ())
+#परिभाषय TEST_LEN (getpagesize () * 3)
+#परिभाषय MIN_PAGE_आकार (TEST_LEN + 2 * getpagesize ())
 
-#define TEST_MAIN
-#ifdef WIDE
+#परिभाषय TEST_MAIN
+#यदि_परिभाषितम् WIDE
 # define TEST_NAME "wcsncmp"
-#else
+#अन्यथा
 # define TEST_NAME "strncmp"
-#endif
-#define TIMEOUT (5 * 60)
-#include "test-string.h"
+#यदि_अन्तः
+#परिभाषय TIMEOUT (5 * 60)
+#अन्तर्भाव "test-string.h"
 
-#ifdef WIDE
+#यदि_परिभाषितम् WIDE
 # include <wchar.h>
 
 # define L(str) L##str
@@ -45,97 +45,97 @@
 
 /* Wcsncmp uses signed semantics for comparison, not unsigned.
    Avoid using subtraction since possible overflow */
-int
-simple_wcsncmp (const CHAR *s1, const CHAR *s2, size_t n)
+पूर्णाङ्क
+simple_wcsncmp (ध्रुव CHAR *s1, ध्रुव CHAR *s2, size_t n)
 {
   wchar_t c1, c2;
 
-  while (n--)
+  यावत् (n--)
     {
       c1 = *s1++;
       c2 = *s2++;
-      if (c1 == L('\0') || c1 != c2)
-	return c1 > c2 ? 1 : (c1 < c2 ? -1 : 0);
+      यदि (c1 == L('\0') || c1 != c2)
+	प्रत्यागम c1 > c2 ? 1 : (c1 < c2 ? -1 : 0);
     }
-  return 0;
+  प्रत्यागम 0;
 }
 
-#else
+#अन्यथा
 # define L(str) str
-# define STRNCMP strncmp
-# define STRCPY strcpy
+# define STRNCMP वाक्ये_तुलय
+# define STRCPY वाक्यं_प्रतिलिख
 # define STRDUP strdup
-# define MEMCPY memcpy
+# define MEMCPY स्मृतिं_प्रतिलिख
 # define SIMPLE_STRNCMP simple_strncmp
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR वर्ण
+# define UCHAR अचिह्नित वर्ण
 # define CHARBYTES 1
 # define CHAR__MAX CHAR_MAX
 # define CHAR__MIN CHAR_MIN
 
 /* Strncmp uses unsigned semantics for comparison. */
-int
-simple_strncmp (const char *s1, const char *s2, size_t n)
+पूर्णाङ्क
+simple_strncmp (ध्रुव वर्ण *s1, ध्रुव वर्ण *s2, size_t n)
 {
-  int ret = 0;
+  पूर्णाङ्क ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1 - * (unsigned char *) s2++) == 0
+  यावत् (n-- && (ret = *(अचिह्नित वर्ण *) s1 - * (अचिह्नित वर्ण *) s2++) == 0
 	 && *s1++);
-  return ret;
+  प्रत्यागम ret;
 }
 
-#endif
+#यदि_अन्तः
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+प्रकारनिर्देश पूर्णाङ्क (*proto_t) (ध्रुव CHAR *, ध्रुव CHAR *, size_t);
 
 IMPL (STRNCMP, 1)
 
 /* Also check the default implementation.  */
-#undef STRNCMP
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef attribute_hidden
-#define attribute_hidden
-#ifndef WIDE
+#अपरिभाषय STRNCMP
+#अपरिभाषय libc_hidden_builtin_def
+#परिभाषय libc_hidden_builtin_def(a)
+#अपरिभाषय attribute_hidden
+#परिभाषय attribute_hidden
+#यदि_अपरिभाषितम् WIDE
 # define STRNCMP __strncmp_default
 # include "string/strncmp.c"
 # define STRNCMP_DEFAULT STRNCMP
-#else
+#अन्यथा
 # define WCSNCMP __wcsncmp_default
 # include "wcsmbs/wcsncmp.c"
 # define STRNCMP_DEFAULT WCSNCMP
-#endif
+#यदि_अन्तः
 IMPL (STRNCMP_DEFAULT, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t n,
-	     int exp_result)
+स्थिर पूर्णाङ्क
+check_परिणाम (impl_t *impl, ध्रुव CHAR *s1, ध्रुव CHAR *s2, size_t n,
+	     पूर्णाङ्क exp_परिणाम)
 {
-  int result = CALL (impl, s1, s2, n);
-  if ((exp_result == 0 && result != 0)
-      || (exp_result < 0 && result >= 0)
-      || (exp_result > 0 && result <= 0))
+  पूर्णाङ्क परिणाम = CALL (impl, s1, s2, n);
+  यदि ((exp_परिणाम == 0 && परिणाम != 0)
+      || (exp_परिणाम < 0 && परिणाम >= 0)
+      || (exp_परिणाम > 0 && परिणाम <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
-	     result, exp_result);
+	     परिणाम, exp_परिणाम);
       ret = 1;
-      return -1;
+      प्रत्यागम -1;
     }
 
-  return 0;
+  प्रत्यागम 0;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t n,
-	     int exp_result)
+स्थिर शून्य
+do_one_test (impl_t *impl, ध्रुव CHAR *s1, ध्रुव CHAR *s2, size_t n,
+	     पूर्णाङ्क exp_परिणाम)
 {
-  if (check_result (impl, s1, s2, n, exp_result) < 0)
-    return;
+  यदि (check_परिणाम (impl, s1, s2, n, exp_परिणाम) < 0)
+    प्रत्यागम;
 }
 
-static void
-do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
-	 int exp_result)
+स्थिर शून्य
+do_test_सीमा (size_t align1, size_t align2, size_t len, size_t n, पूर्णाङ्क max_char,
+	 पूर्णाङ्क exp_परिणाम)
 {
   size_t i, align_n;
   CHAR *s1, *s2;
@@ -143,202 +143,202 @@ do_test_limit (size_t align1, size_t align2, size_t len, size_t n, int max_char,
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
-  if (n == 0)
+  यदि (n == 0)
     {
-      s1 = (CHAR *) (buf1 + page_size);
-      s2 = (CHAR *) (buf2 + page_size);
+      s1 = (CHAR *) (buf1 + page_आकार);
+      s2 = (CHAR *) (buf2 + page_आकार);
 
       FOR_EACH_IMPL (impl, 0)
 	do_one_test (impl, s1, s2, n, 0);
 
-      return;
+      प्रत्यागम;
     }
 
   align1 &= 15;
   align2 &= 15;
-  align_n = (page_size - n * CHARBYTES) & 15;
+  align_n = (page_आकार - n * CHARBYTES) & 15;
 
-  s1 = (CHAR *) (buf1 + page_size - n * CHARBYTES);
-  s2 = (CHAR *) (buf2 + page_size - n * CHARBYTES);
+  s1 = (CHAR *) (buf1 + page_आकार - n * CHARBYTES);
+  s2 = (CHAR *) (buf2 + page_आकार - n * CHARBYTES);
 
-  if (align1 < align_n)
-    s1 = (CHAR *) ((char *) s1 - (align_n - align1));
+  यदि (align1 < align_n)
+    s1 = (CHAR *) ((वर्ण *) s1 - (align_n - align1));
 
-  if (align2 < align_n)
-    s2 = (CHAR *) ((char *) s2 - (align_n - align2));
+  यदि (align2 < align_n)
+    s2 = (CHAR *) ((वर्ण *) s2 - (align_n - align2));
 
-  for (i = 0; i < n; i++)
+  प्रति (i = 0; i < n; i++)
     s1[i] = s2[i] = 1 + 23 * i % max_char;
 
-  if (len < n)
+  यदि (len < n)
     {
       s1[len] = 0;
       s2[len] = 0;
-      if (exp_result < 0)
+      यदि (exp_परिणाम < 0)
 	s2[len] = 32;
-      else if (exp_result > 0)
+      अन्यथा यदि (exp_परिणाम > 0)
 	s1[len] = 64;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, n, exp_result);
+    do_one_test (impl, s1, s2, n, exp_परिणाम);
 }
 
-static void
-do_test_n (size_t align1, size_t align2, size_t len, size_t n, int n_in_bounds,
-           int max_char, int exp_result)
+स्थिर शून्य
+do_test_n (size_t align1, size_t align2, size_t len, size_t n, पूर्णाङ्क n_अन्तर्_bounds,
+           पूर्णाङ्क max_char, पूर्णाङ्क exp_परिणाम)
 {
   size_t i, buf_bound;
-  CHAR *s1, *s2, *s1_end, *s2_end;
+  CHAR *s1, *s2, *s1_अन्तः, *s2_अन्तः;
 
   align1 &= ~(CHARBYTES - 1);
   align2 &= ~(CHARBYTES - 1);
 
-  if (n == 0)
-    return;
+  यदि (n == 0)
+    प्रत्यागम;
 
-  buf_bound = n_in_bounds ? n : len;
+  buf_bound = n_अन्तर्_bounds ? n : len;
 
   align1 &= getpagesize () - 1;
-  if (align1 + (buf_bound + 2) * CHARBYTES >= page_size)
-    return;
+  यदि (align1 + (buf_bound + 2) * CHARBYTES >= page_आकार)
+    प्रत्यागम;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (buf_bound + 2) * CHARBYTES >= page_size)
-    return;
+  यदि (align2 + (buf_bound + 2) * CHARBYTES >= page_आकार)
+    प्रत्यागम;
 
   s1 = (CHAR *)(buf1 + align1);
   s2 = (CHAR *)(buf2 + align2);
 
-  if (n_in_bounds)
+  यदि (n_अन्तर्_bounds)
     {
-      s1[n] = 24 + exp_result;
+      s1[n] = 24 + exp_परिणाम;
       s2[n] = 23;
     }
 
-  for (i = 0; i < buf_bound; i++)
+  प्रति (i = 0; i < buf_bound; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % max_char;
 
   s1[len] = 0;
   s2[len] = 0;
-  if (exp_result < 0)
+  यदि (exp_परिणाम < 0)
     s2[len] = 32;
-  else if (exp_result > 0)
+  अन्यथा यदि (exp_परिणाम > 0)
     s1[len] = 64;
-  if (len >= n)
-    s2[n - 1] -= exp_result;
+  यदि (len >= n)
+    s2[n - 1] -= exp_परिणाम;
 
   /* Ensure that both s1 and s2 are valid null terminated strings. This is
    * required by the standard. */
-  s1_end = (CHAR *)(buf1 + MIN_PAGE_SIZE - CHARBYTES);
-  s2_end = (CHAR *)(buf2 + MIN_PAGE_SIZE - CHARBYTES);
-  *s1_end = 0;
-  *s2_end = 0;
+  s1_अन्तः = (CHAR *)(buf1 + MIN_PAGE_आकार - CHARBYTES);
+  s2_अन्तः = (CHAR *)(buf2 + MIN_PAGE_आकार - CHARBYTES);
+  *s1_अन्तः = 0;
+  *s2_अन्तः = 0;
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, n, exp_result);
+    do_one_test (impl, s1, s2, n, exp_परिणाम);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char,
-         int exp_result)
+स्थिर शून्य
+do_test (size_t align1, size_t align2, size_t len, size_t n, पूर्णाङ्क max_char,
+         पूर्णाङ्क exp_परिणाम)
 {
-  do_test_n (align1, align2, len, n, 1, max_char, exp_result);
+  do_test_n (align1, align2, len, n, 1, max_char, exp_परिणाम);
 }
 
-static void
+स्थिर शून्य
 do_page_test (size_t offset1, size_t offset2, CHAR *s2)
 {
   CHAR *s1;
-  int exp_result;
+  पूर्णाङ्क exp_परिणाम;
 
-  if (offset1 * CHARBYTES  >= page_size || offset2 * CHARBYTES >= page_size)
-    return;
+  यदि (offset1 * CHARBYTES  >= page_आकार || offset2 * CHARBYTES >= page_आकार)
+    प्रत्यागम;
 
   s1 = (CHAR *) buf1;
   s1 += offset1;
   s2 += offset2;
 
-  exp_result= *s1;
+  exp_परिणाम= *s1;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      check_result (impl, s1, s2, page_size, -exp_result);
-      check_result (impl, s2, s1, page_size, exp_result);
+      check_परिणाम (impl, s1, s2, page_आकार, -exp_परिणाम);
+      check_परिणाम (impl, s2, s1, page_आकार, exp_परिणाम);
     }
 }
 
-static void
-do_random_tests (void)
+स्थिर शून्य
+do_random_tests (शून्य)
 {
-  size_t i, j, n, align1, align2, pos, len1, len2, size;
-  int result;
-  long r;
-  UCHAR *p1 = (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
-  UCHAR *p2 = (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
+  size_t i, j, n, align1, align2, pos, len1, len2, आकार;
+  पूर्णाङ्क परिणाम;
+  दीर्घ r;
+  UCHAR *p1 = (UCHAR *) (buf1 + page_आकार - 512 * CHARBYTES);
+  UCHAR *p2 = (UCHAR *) (buf2 + page_आकार - 512 * CHARBYTES);
 
-  for (n = 0; n < ITERATIONS; n++)
+  प्रति (n = 0; n < ITERATIONS; n++)
     {
       align1 = random () & 31;
-      if (random () & 1)
+      यदि (random () & 1)
 	align2 = random () & 31;
-      else
+      अन्यथा
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
-      size = random () & 511;
+      आकार = random () & 511;
       j = align1 > align2 ? align1 : align2;
-      if (pos + j >= 511)
+      यदि (pos + j >= 511)
 	pos = 510 - j - (random () & 7);
       len1 = random () & 511;
-      if (pos >= len1 && (random () & 1))
+      यदि (pos >= len1 && (random () & 1))
 	len1 = pos + (random () & 7);
-      if (len1 + j >= 512)
+      यदि (len1 + j >= 512)
 	len1 = 511 - j - (random () & 7);
-      if (pos >= len1)
+      यदि (pos >= len1)
 	len2 = len1;
-      else
+      अन्यथा
 	len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
       j = (pos > len2 ? pos : len2) + align1 + 64;
-      if (j > 512)
+      यदि (j > 512)
 	j = 512;
-      for (i = 0; i < j; ++i)
+      प्रति (i = 0; i < j; ++i)
 	{
 	  p1[i] = random () & 255;
-	  if (i < len1 + align1 && !p1[i])
+	  यदि (i < len1 + align1 && !p1[i])
 	    {
 	      p1[i] = random () & 255;
-	      if (!p1[i])
+	      यदि (!p1[i])
 		p1[i] = 1 + (random () & 127);
 	    }
 	}
-      for (i = 0; i < j; ++i)
+      प्रति (i = 0; i < j; ++i)
 	{
 	  p2[i] = random () & 255;
-	  if (i < len2 + align2 && !p2[i])
+	  यदि (i < len2 + align2 && !p2[i])
 	    {
 	      p2[i] = random () & 255;
-	      if (!p2[i])
+	      यदि (!p2[i])
 		p2[i] = 1 + (random () & 127);
 	    }
 	}
 
-      result = 0;
+      परिणाम = 0;
       MEMCPY (p2 + align2, p1 + align1, pos);
-      if (pos < len1)
+      यदि (pos < len1)
 	{
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  यदि (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      यदि (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (pos < size)
+	  यदि (pos < आकार)
 	    {
-	      if (p1[align1 + pos] < p2[align2 + pos])
-		result = -1;
-	      else
-		result = 1;
+	      यदि (p1[align1 + pos] < p2[align2 + pos])
+		परिणाम = -1;
+	      अन्यथा
+		परिणाम = 1;
 	    }
 	}
       p1[len1 + align1] = 0;
@@ -346,29 +346,29 @@ do_random_tests (void)
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2), size);
+	  r = CALL (impl, (CHAR *) (p1 + align1), (CHAR *) (p2 + align2), आकार);
 	  /* Test whether on 64-bit architectures where ABI requires
 	     callee to promote has the promotion been done.  */
 	  asm ("" : "=g" (r) : "0" (r));
-	  if ((r == 0 && result)
-	      || (r < 0 && result >= 0)
-	      || (r > 0 && result <= 0))
+	  यदि ((r == 0 && परिणाम)
+	      || (r < 0 && परिणाम >= 0)
+	      || (r > 0 && परिणाम <= 0))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
-		     n, impl->name, align1, align2, len1, len2, pos, size, r, result, p1, p2);
+		     n, impl->name, align1, align2, len1, len2, pos, आकार, r, परिणाम, p1, p2);
 	      ret = 1;
 	    }
 	}
     }
 }
 
-static void
-check1 (void)
+स्थिर शून्य
+check1 (शून्य)
 {
   CHAR *s1 = (CHAR *) (buf1 + 0xb2c);
   CHAR *s2 = (CHAR *) (buf1 + 0xfd8);
-  size_t i, offset;
-  int exp_result;
+  size_t i, विस्थापनम्;
+  पूर्णाङ्क exp_परिणाम;
 
   STRCPY(s1, L("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrs"));
   STRCPY(s2, L("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkLMNOPQRSTUV"));
@@ -377,70 +377,70 @@ check1 (void)
   s1[4] = CHAR__MAX;
   s2[4] = CHAR__MIN;
 
-  for (offset = 0; offset < 6; offset++)
+  प्रति (विस्थापनम् = 0; विस्थापनम् < 6; विस्थापनम्++)
     {
-      for (i = 0; i < 80; i++)
+      प्रति (i = 0; i < 80; i++)
 	{
-	  exp_result = SIMPLE_STRNCMP (s1 + offset, s2 + offset, i);
+	  exp_परिणाम = SIMPLE_STRNCMP (s1 + विस्थापनम्, s2 + विस्थापनम्, i);
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1 + offset, s2 + offset, i, exp_result);
+	    check_परिणाम (impl, s1 + विस्थापनम्, s2 + विस्थापनम्, i, exp_परिणाम);
 	}
     }
 }
 
-static void
-check2 (void)
+स्थिर शून्य
+check2 (शून्य)
 {
   size_t i;
   CHAR *s1, *s2;
 
   s1 = (CHAR *) buf1;
-  for (i = 0; i < (page_size / CHARBYTES) - 1; i++)
+  प्रति (i = 0; i < (page_आकार / CHARBYTES) - 1; i++)
     s1[i] = 23;
   s1[i] = 0;
 
   s2 = STRDUP (s1);
 
-  for (i = 0; i < 64; ++i)
+  प्रति (i = 0; i < 64; ++i)
     do_page_test ((3988 / CHARBYTES) + i, (2636 / CHARBYTES), s2);
 
-  free (s2);
+  मुक्त (s2);
 }
 
-static void
-check3 (void)
+स्थिर शून्य
+check3 (शून्य)
 {
   /* To trigger bug 25933, we need a size that is equal to the vector
      length times 4. In the case of AVX2 for Intel, we need 32 * 4.  We
      make this test generic and run it for all architectures as additional
      boundary testing for such related algorithms.  */
-  size_t size = 32 * 4;
-  CHAR *s1 = (CHAR *) (buf1 + (BUF1PAGES - 1) * page_size);
-  CHAR *s2 = (CHAR *) (buf2 + (BUF1PAGES - 1) * page_size);
-  int exp_result;
+  size_t आकार = 32 * 4;
+  CHAR *s1 = (CHAR *) (buf1 + (BUF1_पृष्ठानि - 1) * page_आकार);
+  CHAR *s2 = (CHAR *) (buf2 + (BUF1_पृष्ठानि - 1) * page_आकार);
+  पूर्णाङ्क exp_परिणाम;
 
-  memset (s1, 'a', page_size);
-  memset (s2, 'a', page_size);
-  s1[(page_size / CHARBYTES) - 1] = (CHAR) 0;
+  स्मृतिं_पूरय (s1, 'a', page_आकार);
+  स्मृतिं_पूरय (s2, 'a', page_आकार);
+  s1[(page_आकार / CHARBYTES) - 1] = (CHAR) 0;
 
   /* Iterate over a size that is just below where we expect the bug to
      trigger up to the size we expect will trigger the bug e.g. [99-128].
      Likewise iterate the start of two strings between 30 and 31 bytes
      away from the boundary to simulate alignment changes.  */
-  for (size_t s = 99; s <= size; s++)
-    for (size_t s1a = 30; s1a < 32; s1a++)
-      for (size_t s2a = 30; s2a < 32; s2a++)
+  प्रति (size_t s = 99; s <= आकार; s++)
+    प्रति (size_t s1a = 30; s1a < 32; s1a++)
+      प्रति (size_t s2a = 30; s2a < 32; s2a++)
 	{
-	  CHAR *s1p = s1 + (page_size / CHARBYTES - s) - s1a;
-	  CHAR *s2p = s2 + (page_size / CHARBYTES - s) - s2a;
-	  exp_result = SIMPLE_STRNCMP (s1p, s2p, s);
+	  CHAR *s1p = s1 + (page_आकार / CHARBYTES - s) - s1a;
+	  CHAR *s2p = s2 + (page_आकार / CHARBYTES - s) - s2a;
+	  exp_परिणाम = SIMPLE_STRNCMP (s1p, s2p, s);
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1p, s2p, s, exp_result);
+	    check_परिणाम (impl, s1p, s2p, s, exp_परिणाम);
 	}
 }
 
-static void
-check4 (void)
+स्थिर शून्य
+check4 (शून्य)
 {
   /* To trigger bug 28895; We need 1) both s1 and s2 to be within 32 bytes of
      the end of the page. 2) For there to be no mismatch/null byte before the
@@ -448,149 +448,149 @@ check4 (void)
      cross the page. And 4) for there to be either mismatch/null bytes before
      the start of the strings.  */
 
-  size_t size = 10;
-  size_t addr_mask = (getpagesize () - 1) ^ (sizeof (CHAR) - 1);
-  CHAR *s1 = (CHAR *)(buf1 + (addr_mask & 0xffa));
-  CHAR *s2 = (CHAR *)(buf2 + (addr_mask & 0xfed));
-  int exp_result;
+  size_t आकार = 10;
+  size_t addr_आवरणम् = (getpagesize () - 1) ^ (परिमाण (CHAR) - 1);
+  CHAR *s1 = (CHAR *)(buf1 + (addr_आवरणम् & 0xffa));
+  CHAR *s2 = (CHAR *)(buf2 + (addr_आवरणम् & 0xfed));
+  पूर्णाङ्क exp_परिणाम;
 
   STRCPY (s1, L ("tst-tlsmod%"));
   STRCPY (s2, L ("tst-tls-manydynamic73mod"));
-  exp_result = SIMPLE_STRNCMP (s1, s2, size);
+  exp_परिणाम = SIMPLE_STRNCMP (s1, s2, आकार);
   FOR_EACH_IMPL (impl, 0)
-  check_result (impl, s1, s2, size, exp_result);
+  check_परिणाम (impl, s1, s2, आकार, exp_परिणाम);
 }
 
-static void
-check5 (void)
+स्थिर शून्य
+check5 (शून्य)
 {
-  const CHAR *s1 = L ("abc");
+  ध्रुव CHAR *s1 = L ("abc");
   CHAR *s2 = STRDUP (s1);
 
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, SIZE_MAX, 0);
+    check_परिणाम (impl, s1, s2, SIZE_MAX, 0);
 
-  free (s2);
+  मुक्त (s2);
 }
 
-static void
-check_overflow (void)
+स्थिर शून्य
+check_अतिप्रवाहः (शून्य)
 {
-  size_t i, j, of_mask, of_idx;
-  const size_t of_masks[]
+  size_t i, j, सम्बन्धि_आवरणम्, सम्बन्धि_idx;
+  ध्रुव size_t सम्बन्धि_masks[]
       = { ULONG_MAX, LONG_MIN, ULONG_MAX - (ULONG_MAX >> 2),
           ((size_t)LONG_MAX) >> 1 };
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
-  for (of_idx = 0; of_idx < sizeof (of_masks) / sizeof (of_masks[0]); ++of_idx)
+  ध्रुव size_t test_len = MIN(TEST_LEN, 3 * 4096);
+  प्रति (सम्बन्धि_idx = 0; सम्बन्धि_idx < परिमाण (सम्बन्धि_masks) / परिमाण (सम्बन्धि_masks[0]); ++सम्बन्धि_idx)
     {
-      of_mask = of_masks[of_idx];
-      for (j = 0; j < 160; ++j)
+      सम्बन्धि_आवरणम् = सम्बन्धि_masks[सम्बन्धि_idx];
+      प्रति (j = 0; j < 160; ++j)
         {
-          for (i = 1; i <= 161; i += (32 / sizeof (CHAR)))
+          प्रति (i = 1; i <= 161; i += (32 / परिमाण (CHAR)))
             {
-              do_test_n (j, 0, i, of_mask, 0, 127, 0);
-              do_test_n (j, 0, i, of_mask, 0, 127, 1);
-              do_test_n (j, 0, i, of_mask, 0, 127, -1);
+              do_test_n (j, 0, i, सम्बन्धि_आवरणम्, 0, 127, 0);
+              do_test_n (j, 0, i, सम्बन्धि_आवरणम्, 0, 127, 1);
+              do_test_n (j, 0, i, सम्बन्धि_आवरणम्, 0, 127, -1);
 
-              do_test_n (j, 0, i, of_mask - j / 2, 0, 127, 0);
-              do_test_n (j, 0, i, of_mask - j * 2, 0, 127, 1);
-              do_test_n (j, 0, i, of_mask - j, 0, 127, -1);
+              do_test_n (j, 0, i, सम्बन्धि_आवरणम् - j / 2, 0, 127, 0);
+              do_test_n (j, 0, i, सम्बन्धि_आवरणम् - j * 2, 0, 127, 1);
+              do_test_n (j, 0, i, सम्बन्धि_आवरणम् - j, 0, 127, -1);
 
-              do_test_n (j / 2, j, i, of_mask, 0, 127, 0);
-              do_test_n (j / 2, j, i, of_mask, 0, 127, 1);
-              do_test_n (j / 2, j, i, of_mask, 0, 127, -1);
+              do_test_n (j / 2, j, i, सम्बन्धि_आवरणम्, 0, 127, 0);
+              do_test_n (j / 2, j, i, सम्बन्धि_आवरणम्, 0, 127, 1);
+              do_test_n (j / 2, j, i, सम्बन्धि_आवरणम्, 0, 127, -1);
 
-              do_test_n (j / 2, j, i, of_mask - j, 0, 127, 0);
-              do_test_n (j / 2, j, i, of_mask - j / 2, 0, 127, 1);
-              do_test_n (j / 2, j, i, of_mask - j * 2, 0, 127, -1);
+              do_test_n (j / 2, j, i, सम्बन्धि_आवरणम् - j, 0, 127, 0);
+              do_test_n (j / 2, j, i, सम्बन्धि_आवरणम् - j / 2, 0, 127, 1);
+              do_test_n (j / 2, j, i, सम्बन्धि_आवरणम् - j * 2, 0, 127, -1);
 
-              do_test_n (0, j, i, of_mask - j * 2, 0, 127, 0);
-              do_test_n (0, j, i, of_mask - j, 0, 127, 1);
-              do_test_n (0, j, i, of_mask - j / 2, 0, 127, -1);
+              do_test_n (0, j, i, सम्बन्धि_आवरणम् - j * 2, 0, 127, 0);
+              do_test_n (0, j, i, सम्बन्धि_आवरणम् - j, 0, 127, 1);
+              do_test_n (0, j, i, सम्बन्धि_आवरणम् - j / 2, 0, 127, -1);
 
-              do_test_n (getpagesize () - j - 1, 0, i, of_mask, 0, 127, 0);
-              do_test_n (getpagesize () - j - 1, 0, i, of_mask, 0, 127, 1);
-              do_test_n (getpagesize () - j - 1, 0, i, of_mask, 0, 127, -1);
+              do_test_n (getpagesize () - j - 1, 0, i, सम्बन्धि_आवरणम्, 0, 127, 0);
+              do_test_n (getpagesize () - j - 1, 0, i, सम्बन्धि_आवरणम्, 0, 127, 1);
+              do_test_n (getpagesize () - j - 1, 0, i, सम्बन्धि_आवरणम्, 0, 127, -1);
 
-              do_test_n (getpagesize () - j - 1, 0, i, of_mask - j / 2, 0, 127,
+              do_test_n (getpagesize () - j - 1, 0, i, सम्बन्धि_आवरणम् - j / 2, 0, 127,
                          0);
-              do_test_n (getpagesize () - j - 1, 0, i, of_mask - j * 2, 0, 127,
+              do_test_n (getpagesize () - j - 1, 0, i, सम्बन्धि_आवरणम् - j * 2, 0, 127,
                          1);
-              do_test_n (getpagesize () - j - 1, 0, i, of_mask - j, 0, 127,
+              do_test_n (getpagesize () - j - 1, 0, i, सम्बन्धि_आवरणम् - j, 0, 127,
                          -1);
 
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1, i,
-                         of_mask, 0, 127, 0);
+                         सम्बन्धि_आवरणम्, 0, 127, 0);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1, i,
-                         of_mask, 0, 127, 1);
+                         सम्बन्धि_आवरणम्, 0, 127, 1);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1, i,
-                         of_mask, 0, 127, -1);
+                         सम्बन्धि_आवरणम्, 0, 127, -1);
 
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1, i,
-                         of_mask - j, 0, 127, 0);
+                         सम्बन्धि_आवरणम् - j, 0, 127, 0);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1, i,
-                         of_mask - j / 2, 0, 127, 1);
+                         सम्बन्धि_आवरणम् - j / 2, 0, 127, 1);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1, i,
-                         of_mask - j * 2, 0, 127, -1);
+                         सम्बन्धि_आवरणम् - j * 2, 0, 127, -1);
             }
 
-          for (i = 1; i < test_len; i += i)
+          प्रति (i = 1; i < test_len; i += i)
             {
-              do_test_n (j, 0, i - 1, of_mask, 0, 127, 0);
-              do_test_n (j, 0, i - 1, of_mask, 0, 127, 1);
-              do_test_n (j, 0, i - 1, of_mask, 0, 127, -1);
+              do_test_n (j, 0, i - 1, सम्बन्धि_आवरणम्, 0, 127, 0);
+              do_test_n (j, 0, i - 1, सम्बन्धि_आवरणम्, 0, 127, 1);
+              do_test_n (j, 0, i - 1, सम्बन्धि_आवरणम्, 0, 127, -1);
 
-              do_test_n (j, 0, i - 1, of_mask - j / 2, 0, 127, 0);
-              do_test_n (j, 0, i - 1, of_mask - j * 2, 0, 127, 1);
-              do_test_n (j, 0, i - 1, of_mask - j, 0, 127, -1);
+              do_test_n (j, 0, i - 1, सम्बन्धि_आवरणम् - j / 2, 0, 127, 0);
+              do_test_n (j, 0, i - 1, सम्बन्धि_आवरणम् - j * 2, 0, 127, 1);
+              do_test_n (j, 0, i - 1, सम्बन्धि_आवरणम् - j, 0, 127, -1);
 
-              do_test_n (j / 2, j, i - 1, of_mask, 0, 127, 0);
-              do_test_n (j / 2, j, i - 1, of_mask, 0, 127, 1);
-              do_test_n (j / 2, j, i - 1, of_mask, 0, 127, -1);
+              do_test_n (j / 2, j, i - 1, सम्बन्धि_आवरणम्, 0, 127, 0);
+              do_test_n (j / 2, j, i - 1, सम्बन्धि_आवरणम्, 0, 127, 1);
+              do_test_n (j / 2, j, i - 1, सम्बन्धि_आवरणम्, 0, 127, -1);
 
-              do_test_n (j / 2, j, i - 1, of_mask - j, 0, 127, 0);
-              do_test_n (j / 2, j, i - 1, of_mask - j / 2, 0, 127, 1);
-              do_test_n (j / 2, j, i - 1, of_mask - j * 2, 0, 127, -1);
+              do_test_n (j / 2, j, i - 1, सम्बन्धि_आवरणम् - j, 0, 127, 0);
+              do_test_n (j / 2, j, i - 1, सम्बन्धि_आवरणम् - j / 2, 0, 127, 1);
+              do_test_n (j / 2, j, i - 1, सम्बन्धि_आवरणम् - j * 2, 0, 127, -1);
 
-              do_test_n (0, j, i - 1, of_mask - j * 2, 0, 127, 0);
-              do_test_n (0, j, i - 1, of_mask - j, 0, 127, 1);
-              do_test_n (0, j, i - 1, of_mask - j / 2, 0, 127, -1);
+              do_test_n (0, j, i - 1, सम्बन्धि_आवरणम् - j * 2, 0, 127, 0);
+              do_test_n (0, j, i - 1, सम्बन्धि_आवरणम् - j, 0, 127, 1);
+              do_test_n (0, j, i - 1, सम्बन्धि_आवरणम् - j / 2, 0, 127, -1);
 
-              do_test_n (getpagesize () - j - 1, 0, i - 1, of_mask, 0, 127, 0);
-              do_test_n (getpagesize () - j - 1, 0, i - 1, of_mask, 0, 127, 1);
-              do_test_n (getpagesize () - j - 1, 0, i - 1, of_mask, 0, 127,
+              do_test_n (getpagesize () - j - 1, 0, i - 1, सम्बन्धि_आवरणम्, 0, 127, 0);
+              do_test_n (getpagesize () - j - 1, 0, i - 1, सम्बन्धि_आवरणम्, 0, 127, 1);
+              do_test_n (getpagesize () - j - 1, 0, i - 1, सम्बन्धि_आवरणम्, 0, 127,
                          -1);
 
-              do_test_n (getpagesize () - j - 1, 0, i - 1, of_mask - j / 2, 0,
+              do_test_n (getpagesize () - j - 1, 0, i - 1, सम्बन्धि_आवरणम् - j / 2, 0,
                          127, 0);
-              do_test_n (getpagesize () - j - 1, 0, i - 1, of_mask - j * 2, 0,
+              do_test_n (getpagesize () - j - 1, 0, i - 1, सम्बन्धि_आवरणम् - j * 2, 0,
                          127, 1);
-              do_test_n (getpagesize () - j - 1, 0, i - 1, of_mask - j, 0, 127,
+              do_test_n (getpagesize () - j - 1, 0, i - 1, सम्बन्धि_आवरणम् - j, 0, 127,
                          -1);
 
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1,
-                         i - 1, of_mask, 0, 127, 0);
+                         i - 1, सम्बन्धि_आवरणम्, 0, 127, 0);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1,
-                         i - 1, of_mask, 0, 127, 1);
+                         i - 1, सम्बन्धि_आवरणम्, 0, 127, 1);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1,
-                         i - 1, of_mask, 0, 127, -1);
+                         i - 1, सम्बन्धि_आवरणम्, 0, 127, -1);
 
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1,
-                         i - 1, of_mask - j, 0, 127, 0);
+                         i - 1, सम्बन्धि_आवरणम् - j, 0, 127, 0);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1,
-                         i - 1, of_mask - j / 2, 0, 127, 1);
+                         i - 1, सम्बन्धि_आवरणम् - j / 2, 0, 127, 1);
               do_test_n (getpagesize () - j - 1, getpagesize () - 2 * j - 1,
-                         i - 1, of_mask - j * 2, 0, 127, -1);
+                         i - 1, सम्बन्धि_आवरणम् - j * 2, 0, 127, -1);
             }
         }
     }
 }
 
-int
-test_main (void)
+पूर्णाङ्क
+test_main (शून्य)
 {
   size_t i, j, k;
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
+  ध्रुव size_t test_len = MIN(TEST_LEN, 3 * 4096);
   test_init ();
 
   check1 ();
@@ -599,12 +599,12 @@ test_main (void)
   check4 ();
   check5 ();
 
-  printf ("%23s", "");
+  प्रारूप_लिख ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    प्रारूप_लिख ("\t%s", impl->name);
+  अक्षरं_लिख ('\n');
 
-  for (i =0; i < 16; ++i)
+  प्रति (i =0; i < 16; ++i)
     {
       do_test (0, 0, 8, i, 127, 0);
       do_test (0, 0, 8, i, 127, -1);
@@ -626,7 +626,7 @@ test_main (void)
       do_test (i, 3 * i, 8, i, 255, -1);
     }
 
-  for (i = 1; i < 8; ++i)
+  प्रति (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, 16 << i, 127, 0);
       do_test (0, 0, 8 << i, 16 << i, 127, 1);
@@ -640,27 +640,27 @@ test_main (void)
       do_test (2 * i, i, 8 << i, 16 << i, 255, 1);
     }
 
-  do_test_limit (0, 0, 0, 0, 127, 0);
-  do_test_limit (4, 0, 21, 20, 127, 0);
-  do_test_limit (0, 4, 21, 20, 127, 0);
-  do_test_limit (8, 0, 25, 24, 127, 0);
-  do_test_limit (0, 8, 25, 24, 127, 0);
+  do_test_सीमा (0, 0, 0, 0, 127, 0);
+  do_test_सीमा (4, 0, 21, 20, 127, 0);
+  do_test_सीमा (0, 4, 21, 20, 127, 0);
+  do_test_सीमा (8, 0, 25, 24, 127, 0);
+  do_test_सीमा (0, 8, 25, 24, 127, 0);
 
-  for (i = 0; i < 8; ++i)
+  प्रति (i = 0; i < 8; ++i)
     {
-      do_test_limit (0, 0, 17 - i, 16 - i, 127, 0);
-      do_test_limit (0, 0, 17 - i, 16 - i, 255, 0);
-      do_test_limit (0, 0, 15 - i, 16 - i, 127, 0);
-      do_test_limit (0, 0, 15 - i, 16 - i, 127, 1);
-      do_test_limit (0, 0, 15 - i, 16 - i, 127, -1);
-      do_test_limit (0, 0, 15 - i, 16 - i, 255, 0);
-      do_test_limit (0, 0, 15 - i, 16 - i, 255, 1);
-      do_test_limit (0, 0, 15 - i, 16 - i, 255, -1);
+      do_test_सीमा (0, 0, 17 - i, 16 - i, 127, 0);
+      do_test_सीमा (0, 0, 17 - i, 16 - i, 255, 0);
+      do_test_सीमा (0, 0, 15 - i, 16 - i, 127, 0);
+      do_test_सीमा (0, 0, 15 - i, 16 - i, 127, 1);
+      do_test_सीमा (0, 0, 15 - i, 16 - i, 127, -1);
+      do_test_सीमा (0, 0, 15 - i, 16 - i, 255, 0);
+      do_test_सीमा (0, 0, 15 - i, 16 - i, 255, 1);
+      do_test_सीमा (0, 0, 15 - i, 16 - i, 255, -1);
     }
 
-  for (j = 0; j < 160; ++j)
+  प्रति (j = 0; j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      प्रति (i = 0; i < test_len;)
         {
           do_test_n (getpagesize () - j - 1, 0, i, i + 1, 0, 127, 0);
           do_test_n (getpagesize () - j - 1, 0, i, i + 1, 0, 127, 1);
@@ -722,7 +722,7 @@ test_main (void)
           do_test_n (j, getpagesize () - j - 1, i, ULONG_MAX - i, 0, 127, 1);
           do_test_n (j, getpagesize () - j - 1, i, ULONG_MAX - i, 0, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          प्रति (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i - 1, i,
                        127, 0);
@@ -746,38 +746,38 @@ test_main (void)
                        i, 127, 1);
             }
 
-          if (i < 32)
+          यदि (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          अन्यथा यदि (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          अन्यथा यदि (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              यदि (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          अन्यथा यदि (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          अन्यथा
             {
               i += 1;
             }
         }
     }
 
-  check_overflow ();
+  check_अतिप्रवाहः ();
   do_random_tests ();
-  return ret;
+  प्रत्यागम ret;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

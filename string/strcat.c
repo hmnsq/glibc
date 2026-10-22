@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#undef strcat
+#अपरिभाषय वाक्यं_योजय
 
-#ifndef STRCAT
-# define STRCAT strcat
-#endif
+#यदि_अपरिभाषितम् STRCAT
+# define STRCAT वाक्यं_योजय
+#यदि_अन्तः
 
 /* Append SRC on the end of DEST.  */
-char *
-STRCAT (char *dest, const char *src)
+वर्ण *
+STRCAT (वर्ण *dest, ध्रुव वर्ण *src)
 {
-  strcpy (dest + strlen (dest), src);
-  return dest;
+  वाक्यं_प्रतिलिख (dest + वाक्यदैर्घ्यम् (dest), src);
+  प्रत्यागम dest;
 }
-libc_hidden_builtin_def (strcat)
+libc_hidden_builtin_def (वाक्यं_योजय)

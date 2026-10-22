@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stddef.h>
-#include <string.h>
+#अन्तर्भाव <stddef.h>
+#अन्तर्भाव <string.h>
 
-#undef strcpy
+#अपरिभाषय वाक्यं_प्रतिलिख
 /* Disable internal stpcpy optimization, otherwise the __stpcpy might it
    generate a strcpy call.  */
-#undef __stpcpy
+#अपरिभाषय __stpcpy
 
-#ifndef STRCPY
-# define STRCPY strcpy
-#endif
+#यदि_अपरिभाषितम् STRCPY
+# define STRCPY वाक्यं_प्रतिलिख
+#यदि_अन्तः
 
 /* Copy SRC to DEST.  */
-char *
-STRCPY (char *dest, const char *src)
+वर्ण *
+STRCPY (वर्ण *dest, ध्रुव वर्ण *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  प्रत्यागम dest;
 }
-libc_hidden_builtin_def (strcpy)
+libc_hidden_builtin_def (वाक्यं_प्रतिलिख)

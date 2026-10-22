@@ -15,40 +15,40 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <locale.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
+#अन्तर्भाव <locale.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <stdint.h>
+#अन्तर्भाव <stdlib.h>
+#अन्तर्भाव <string.h>
 
-#include <support/check.h>
-#include <support/test-driver.h>
+#अन्तर्भाव <support/check.h>
+#अन्तर्भाव <support/test-driver.h>
 
 /* Verify that strcoll does not crash for large strings for which it
    cannot cache weight lookup results.  The size is large enough to
    cause integer overflows on 32-bit as well as buffer overflows on
    64-bit.  */
-#define SIZE 0x40000000ul
+#परिभाषय आकार_2 0x40000000ul
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
-  TEST_VERIFY_EXIT (setlocale (LC_COLLATE, "en_GB.UTF-8") != NULL);
+  TEST_VERIFY_EXIT (setlocale (LC_COLLATE, "en_GB.UTF-8") != रिक्त);
 
-  char *p = malloc (SIZE);
-  if (p == NULL)
+  वर्ण *p = स्मृतिं_देहि (आकार_2);
+  यदि (p == रिक्त)
     {
-      puts ("info: could not allocate memory, cannot run test");
-      return EXIT_UNSUPPORTED;
+      पङ्क्तिं_लिख ("info: could not allocate memory, cannot run test");
+      प्रत्यागम EXIT_UNSUPPORTED;
     }
 
-  memset (p, 'x', SIZE - 1);
-  p[SIZE - 1] = 0;
-  printf ("info: strcoll result: %d\n", strcoll (p, p));
-  return 0;
+  स्मृतिं_पूरय (p, 'x', आकार_2 - 1);
+  p[आकार_2 - 1] = 0;
+  प्रारूप_लिख ("info: strcoll result: %d\n", strcoll (p, p));
+  प्रत्यागम 0;
 }
 
 /* This test can rung for a long time, but it should complete within
    this time on reasonably current hardware.  */
-#define TIMEOUT 300
-#include <support/test-driver.c>
+#परिभाषय TIMEOUT 300
+#अन्तर्भाव <support/test-driver.c>

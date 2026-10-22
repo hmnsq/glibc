@@ -15,5 +15,5 @@
    You should have received a copy of the GNU Lesser General Public
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
-#define TEST_MEMSET_EXPLICIT
-#include "test-memset.c"
+#परिभाषय TEST_MEMSET_EXPLICIT
+#अन्तर्भाव "test-memset.c"

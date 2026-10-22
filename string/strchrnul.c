@@ -15,42 +15,42 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#अन्तर्भाव <libc-pointer-arith.h>
+#अन्तर्भाव <string-fzb.h>
+#अन्तर्भाव <string-fzc.h>
+#अन्तर्भाव <string-fzi.h>
+#अन्तर्भाव <string-shift.h>
+#अन्तर्भाव <string.h>
 
-#undef __strchrnul
-#undef strchrnul
+#अपरिभाषय __strchrnul
+#अपरिभाषय strchrnul
 
-#ifdef STRCHRNUL
+#यदि_परिभाषितम् STRCHRNUL
 # define __strchrnul STRCHRNUL
-#endif
+#यदि_अन्तः
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
-char *
-__strchrnul (const char *str, int c_in)
+वर्ण *
+__strchrnul (ध्रुव वर्ण *str, पूर्णाङ्क c_अन्तर्)
 {
   /* Align pointer to sizeof op_t.  */
   uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  ध्रुव op_t *word_ptr = (ध्रुव op_t *) PTR_ALIGN_अधस्तात् (str, परिमाण (op_t));
 
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t repeated_c = repeat_अष्टकानि (c_अन्तर्);
 
   op_t word = *word_ptr;
-  find_t mask = shift_find (find_zero_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
-    return (char *) str + index_first (mask);
+  find_t आवरणम् = सरणम्_find (find_zero_eq_all (word, repeated_c), s_int);
+  यदि (आवरणम् != 0)
+    प्रत्यागम (वर्ण *) str + सूचकांक_first (आवरणम्);
 
-  do
+  कुरु
     word = *++word_ptr;
-  while (! has_zero_eq (word, repeated_c));
+  यावत् (! has_zero_eq (word, repeated_c));
 
-  return (char *) word_ptr + index_first_zero_eq (word, repeated_c);
+  प्रत्यागम (वर्ण *) word_ptr + सूचकांक_first_zero_eq (word, repeated_c);
 }
-#ifndef STRCHRNUL
+#यदि_अपरिभाषितम् STRCHRNUL
 libc_hidden_def (__strchrnul)
 weak_alias (__strchrnul, strchrnul)
-#endif
+#यदि_अन्तः

@@ -15,28 +15,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _LIBC
+#यदि_अपरिभाषितम् _LIBC
 # include <config.h>
-#endif
+#यदि_अन्तः
 
-#include <string.h>
+#अन्तर्भाव <string.h>
 
-#ifndef _LIBC
+#यदि_अपरिभाषितम् _LIBC
 # define __memmem	memmem
-#endif
+#यदि_अन्तः
 
-#define RETURN_TYPE void *
-#define AVAILABLE(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
-#define FASTSEARCH(S,C,N) (void*) memchr ((void *)(S), (C), (N))
-#include "str-two-way.h"
+#परिभाषय RETURN_TYPE शून्य *
+#परिभाषय उपलब्धम्(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
+#परिभाषय FASTSEARCH(S,C,N) (शून्य*) memchr ((शून्य *)(S), (C), (N))
+#अन्तर्भाव "str-two-way.h"
 
-#undef memmem
+#अपरिभाषय memmem
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#परिभाषय hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % परिमाण (सरणम्))
 
 /* Fast memmem algorithm with guaranteed linear-time performance.
    Small needles up to size 2 use a dedicated linear search.  Longer needles
@@ -49,80 +49,80 @@
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-void *
-__memmem (const void *haystack, size_t hs_len,
-	  const void *needle, size_t ne_len)
+शून्य *
+__memmem (ध्रुव शून्य *haystack, size_t hs_len,
+	  ध्रुव शून्य *needle, size_t ne_len)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  ध्रुव अचिह्नित वर्ण *hs = (ध्रुव अचिह्नित वर्ण *) haystack;
+  ध्रुव अचिह्नित वर्ण *ne = (ध्रुव अचिह्नित वर्ण *) needle;
 
-  if (ne_len == 0)
-    return (void *) hs;
-  if (ne_len == 1)
-    return (void *) memchr (hs, ne[0], hs_len);
+  यदि (ne_len == 0)
+    प्रत्यागम (शून्य *) hs;
+  यदि (ne_len == 1)
+    प्रत्यागम (शून्य *) memchr (hs, ne[0], hs_len);
 
   /* Ensure haystack length is >= needle length.  */
-  if (hs_len < ne_len)
-    return NULL;
+  यदि (hs_len < ne_len)
+    प्रत्यागम रिक्त;
 
-  const unsigned char *end = hs + hs_len - ne_len;
+  ध्रुव अचिह्नित वर्ण *अन्तः = hs + hs_len - ne_len;
 
-  if (ne_len == 2)
+  यदि (ne_len == 2)
     {
       uint32_t nw = ne[0] << 16 | ne[1], hw = hs[0] << 16 | hs[1];
-      for (hs++; hs <= end && hw != nw; )
+      प्रति (hs++; hs <= अन्तः && hw != nw; )
 	hw = hw << 16 | *++hs;
-      return hw == nw ? (void *)hs - 1 : NULL;
+      प्रत्यागम hw == nw ? (शून्य *)hs - 1 : रिक्त;
     }
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__builtin_expect (ne_len > 256, 0))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  यदि (__builtin_expect (ne_len > 256, 0))
+    प्रत्यागम two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  uint8_t shift[256];
+  uint8_t सरणम्[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
-  size_t offset = 0;
+  size_t विस्थापनम् = 0;
 
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
-    shift[hash2 (ne + i)] = i;
+  स्मृतिं_पूरय (सरणम्, 0, परिमाण (सरणम्));
+  प्रति (पूर्णाङ्क i = 1; i < m1; i++)
+    सरणम्[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
-  shift1 = m1 - shift[hash2 (ne + m1)];
-  shift[hash2 (ne + m1)] = m1;
+  shift1 = m1 - सरणम्[hash2 (ne + m1)];
+  सरणम्[hash2 (ne + m1)] = m1;
 
-  for ( ; hs <= end; )
+  प्रति ( ; hs <= अन्तः; )
     {
       /* Skip past character pairs not in the needle.  */
-      do
+      कुरु
 	{
 	  hs += m1;
-	  tmp = shift[hash2 (hs)];
+	  tmp = सरणम्[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      यावत् (tmp == 0 && hs <= अन्तः);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      यदि (tmp < m1)
+	अनुवर्त;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      यदि (m1 < 15 || memcmp (hs + विस्थापनम्, ne + विस्थापनम्, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  यदि (memcmp (hs, ne, m1) == 0)
+	    प्रत्यागम (शून्य *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
-	  offset = (offset >= 8 ? offset : m1) - 8;
+	  विस्थापनम् = (विस्थापनम् >= 8 ? विस्थापनम् : m1) - 8;
 	}
 
       /* Skip based on matching the hash of the needle end.  */
       hs += shift1;
     }
-  return NULL;
+  प्रत्यागम रिक्त;
 }
 libc_hidden_def (__memmem)
 static_weak_alias (__memmem, memmem)

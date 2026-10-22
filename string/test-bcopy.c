@@ -16,5 +16,5 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_BCOPY
-#include "test-memmove.c"
+#परिभाषय TEST_BCOPY
+#अन्तर्भाव "test-memmove.c"

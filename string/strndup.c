@@ -15,42 +15,42 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#यदि_परिभाषितम् HAVE_CONFIG_H
 # include "config.h"
-#endif
+#यदि_अन्तः
 
-#include <stdio.h>
-#include <sys/types.h>
+#अन्तर्भाव <stdio.h>
+#अन्तर्भाव <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#यदि defined _LIBC || defined STDC_शीर्षकाणि
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-#endif
+#अन्यथा
+वर्ण *स्मृतिं_देहि ();
+#यदि_अन्तः
 
-#undef __strndup
-#undef strndup
+#अपरिभाषय __strndup
+#अपरिभाषय strndup
 
-#ifndef weak_alias
+#यदि_अपरिभाषितम् weak_alias
 # define __strndup strndup
-#endif
+#यदि_अन्तः
 
-char *
-__strndup (const char *s, size_t n)
+वर्ण *
+__strndup (ध्रुव वर्ण *s, size_t n)
 {
   size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  वर्ण *new = (वर्ण *) स्मृतिं_देहि (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  यदि (new == रिक्त)
+    प्रत्यागम रिक्त;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  प्रत्यागम (वर्ण *) स्मृतिं_प्रतिलिख (new, s, len);
 }
-#ifdef libc_hidden_def
+#यदि_परिभाषितम् libc_hidden_def
 libc_hidden_def (__strndup)
-#endif
-#ifdef weak_alias
+#यदि_अन्तः
+#यदि_परिभाषितम् weak_alias
 weak_alias (__strndup, strndup)
-#endif
+#यदि_अन्तः
