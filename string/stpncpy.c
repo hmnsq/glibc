@@ -15,37 +15,37 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#अगर_घोषित HAVE_CONFIG_H
 # include <config.h>
-#endif
+#पूर्ण_अगर
 
-#ifdef _LIBC
+#अगर_घोषित _LIBC
 # include <string.h>
-#else
+#अन्यथा
 # include <sys/types.h>
-#endif
+#पूर्ण_अगर
 
-#ifndef STPNCPY
+#अगर_अघोषित STPNCPY
 # ifdef weak_alias
 #  define STPNCPY	__stpncpy
 weak_alias (__stpncpy, stpncpy)
-# else
+# अन्यथा
 #  define STPNCPY	stpncpy
 # endif
-#endif
+#पूर्ण_अगर
 
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the terminating '\0' in DEST, if any, or else DEST + N.  */
-char *
-STPNCPY (char *dest, const char *src, size_t n)
+अक्षर *
+STPNCPY (अक्षर *dest, स्थिर अक्षर *src, माप_प्रकार n)
 {
-  size_t size = __strnlen (src, n);
-  memcpy (dest, src, size);
-  dest += size;
-  if (size == n)
-    return dest;
-  return memset (dest, '\0', n - size);
+  माप_प्रकार आकार = __strnlen (src, n);
+  स_नकल (dest, src, आकार);
+  dest += आकार;
+  अगर (आकार == n)
+    वापस dest;
+  वापस स_रखो (dest, '\0', n - आकार);
 }
-#ifdef weak_alias
+#अगर_घोषित weak_alias
 libc_hidden_def (__stpncpy)
-#endif
+#पूर्ण_अगर

@@ -16,143 +16,143 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <locale.h>
-#include <ctype.h>
+#समावेश <locale.h>
+#समावेश <ctype.h>
 
-#define TEST_LEN (getpagesize () * 3)
-#define MIN_PAGE_SIZE (TEST_LEN + 2 * getpagesize ())
+#घोषणा TEST_LEN (getpagesize () * 3)
+#घोषणा MIN_PAGE_आकार (TEST_LEN + 2 * getpagesize ())
 
-#define TEST_MAIN
-#define TEST_NAME "strncasecmp"
-#define TIMEOUT (5 * 60)
-#include "test-string.h"
+#घोषणा TEST_MAIN
+#घोषणा TEST_NAME "strncasecmp"
+#घोषणा TIMEOUT (5 * 60)
+#समावेश "test-string.h"
 
-typedef int (*proto_t) (const char *, const char *, size_t);
-static int simple_strncasecmp (const char *, const char *, size_t);
+प्रकार पूर्णांक (*proto_t) (स्थिर अक्षर *, स्थिर अक्षर *, माप_प्रकार);
+अटल पूर्णांक simple_strncasecmp (स्थिर अक्षर *, स्थिर अक्षर *, माप_प्रकार);
 
 IMPL (strncasecmp, 1)
 
 /* Naive implementation to verify results.  */
-static int
-simple_strncasecmp (const char *s1, const char *s2, size_t n)
+अटल पूर्णांक
+simple_strncasecmp (स्थिर अक्षर *s1, स्थिर अक्षर *s2, माप_प्रकार n)
 {
-  int ret;
+  पूर्णांक ret;
 
-  if (n == 0)
-    return 0;
+  अगर (n == 0)
+    वापस 0;
 
-  while ((ret = ((unsigned char) tolower (*s1)
-		 - (unsigned char) tolower (*s2))) == 0
+  जबतक ((ret = ((अचिन्हित अक्षर) छोटे (*s1)
+		 - (अचिन्हित अक्षर) छोटे (*s2))) == 0
 	 && *s1++)
     {
-      if (--n == 0)
-	return 0;
+      अगर (--n == 0)
+	वापस 0;
       ++s2;
     }
-  return ret;
+  वापस ret;
 }
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2, size_t n,
-	      int exp_result)
+अटल पूर्णांक
+check_परिणाम (impl_t *impl, स्थिर अक्षर *s1, स्थिर अक्षर *s2, माप_प्रकार n,
+	      पूर्णांक exp_परिणाम)
 {
-  int result = CALL (impl, s1, s2, n);
-  if ((exp_result == 0 && result != 0)
-      || (exp_result < 0 && result >= 0)
-      || (exp_result > 0 && result <= 0))
+  पूर्णांक परिणाम = CALL (impl, s1, s2, n);
+  अगर ((exp_परिणाम == 0 && परिणाम != 0)
+      || (exp_परिणाम < 0 && परिणाम >= 0)
+      || (exp_परिणाम > 0 && परिणाम <= 0))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
-	     result, exp_result);
+	     परिणाम, exp_परिणाम);
       ret = 1;
-      return -1;
+      वापस -1;
     }
 
-  return 0;
+  वापस 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, size_t n,
-	     int exp_result)
+अटल व्योम
+do_one_test (impl_t *impl, स्थिर अक्षर *s1, स्थिर अक्षर *s2, माप_प्रकार n,
+	     पूर्णांक exp_परिणाम)
 {
-  if (check_result (impl, s1, s2, n, exp_result) < 0)
-    return;
+  अगर (check_परिणाम (impl, s1, s2, n, exp_परिणाम) < 0)
+    वापस;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t n, size_t len, int max_char,
-	 int exp_result)
+अटल व्योम
+do_test (माप_प्रकार align1, माप_प्रकार align2, माप_प्रकार n, माप_प्रकार len, पूर्णांक max_char,
+	 पूर्णांक exp_परिणाम)
 {
-  size_t i;
-  char *s1, *s2;
+  माप_प्रकार i;
+  अक्षर *s1, *s2;
 
-  if (len == 0)
-    return;
+  अगर (len == 0)
+    वापस;
 
   align1 &= getpagesize () - 1;
-  if (align1 + (len + 2) >= page_size)
-    return;
+  अगर (align1 + (len + 2) >= page_आकार)
+    वापस;
 
   align2 &= getpagesize () - 1;
-  if (align2 + (len + 2) >= page_size)
-    return;
+  अगर (align2 + (len + 2) >= page_आकार)
+    वापस;
 
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (अक्षर *) (buf1 + align1);
+  s2 = (अक्षर *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  क्रम (i = 0; i < len; i++)
     {
-      s1[i] = toupper (1 + 23 * i % max_char);
-      s2[i] = tolower (s1[i]);
+      s1[i] = बड़े (1 + 23 * i % max_char);
+      s2[i] = छोटे (s1[i]);
     }
 
   s1[len] = s2[len] = 0;
   s1[len + 1] = 23;
-  s2[len + 1] = 24 + exp_result;
+  s2[len + 1] = 24 + exp_परिणाम;
 
-  if ((s2[len - 1] == 'z' && exp_result == -1)
-      || (s2[len - 1] == 'a' && exp_result == 1))
-    s1[len - 1] += exp_result;
-  else if ((s1[len - 1] == 'Z' + 1 && exp_result == 1)
-           || (s1[len - 1] == 'A' - 1 && exp_result == -1))
-    s1[len - 1] = tolower (s2[len - 1]) + exp_result;
-  else
-    s2[len - 1] -= exp_result;
+  अगर ((s2[len - 1] == 'z' && exp_परिणाम == -1)
+      || (s2[len - 1] == 'a' && exp_परिणाम == 1))
+    s1[len - 1] += exp_परिणाम;
+  अन्यथा अगर ((s1[len - 1] == 'Z' + 1 && exp_परिणाम == 1)
+           || (s1[len - 1] == 'A' - 1 && exp_परिणाम == -1))
+    s1[len - 1] = छोटे (s2[len - 1]) + exp_परिणाम;
+  अन्यथा
+    s2[len - 1] -= exp_परिणाम;
 
   /* For some locals this is not guaranteed yet.  */
-  if (tolower (s1[len - 1]) - tolower (s2[len - 1]) != exp_result)
+  अगर (छोटे (s1[len - 1]) - छोटे (s2[len - 1]) != exp_परिणाम)
     {
-      if (exp_result == -1)
+      अगर (exp_परिणाम == -1)
         {
-          s1[len - 1] = tolower ('a');
-          s2[len - 1] = toupper (tolower ('a') - 1);
+          s1[len - 1] = छोटे ('a');
+          s2[len - 1] = बड़े (छोटे ('a') - 1);
         }
-      else if (exp_result == 0)
-        s1[len - 1] = toupper (s2[len - 1]);
-      else
+      अन्यथा अगर (exp_परिणाम == 0)
+        s1[len - 1] = बड़े (s2[len - 1]);
+      अन्यथा
         {
-          s1[len - 1] = tolower ('a');
-          s2[len - 1] = toupper (tolower ('a') + 1);
+          s1[len - 1] = छोटे ('a');
+          s2[len - 1] = बड़े (छोटे ('a') + 1);
         }
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, n, exp_result);
+    do_one_test (impl, s1, s2, n, exp_परिणाम);
 }
 
-static void
-do_page_tests (void)
+अटल व्योम
+do_page_tests (व्योम)
 {
-  char *s1, *s2;
-  int exp_result;
-  const size_t maxoffset = 64;
+  अक्षर *s1, *s2;
+  पूर्णांक exp_परिणाम;
+  स्थिर माप_प्रकार maxoffset = 64;
 
-  s1 = (char *) buf1 + BUF1PAGES * page_size - maxoffset;
-  memset (s1, 'a', maxoffset - 1);
+  s1 = (अक्षर *) buf1 + BUF1PAGES * page_आकार - maxoffset;
+  स_रखो (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
 
-  s2 = (char *) buf2 + page_size - maxoffset;
-  memset (s2, 'a', maxoffset - 1);
+  s2 = (अक्षर *) buf2 + page_आकार - maxoffset;
+  स_रखो (s2, 'a', maxoffset - 1);
   s2[maxoffset - 1] = '\0';
 
   /* At this point s1 and s2 point to distinct memory regions containing
@@ -165,109 +165,109 @@ do_page_tests (void)
      inputs with a size larger than the string (so memory access outside
      the expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
+  क्रम (माप_प्रकार off1 = 0; off1 < maxoffset; off1++)
     {
-      for (size_t off2 = 0; off2 < maxoffset; off2++)
+      क्रम (माप_प्रकार off2 = 0; off2 < maxoffset; off2++)
 	{
-	  exp_result = (off1 == off2)
+	  exp_परिणाम = (off1 == off2)
 			? 0
 			: off1 < off2
 			  ? 'a'
 			  : -'a';
 
 	  FOR_EACH_IMPL (impl, 0)
-	    check_result (impl, s1 + off1, s2 + off2, maxoffset + 1,
-			  exp_result);
+	    check_परिणाम (impl, s1 + off1, s2 + off2, maxoffset + 1,
+			  exp_परिणाम);
 	}
     }
 }
 
-static void
-do_random_tests (void)
+अटल व्योम
+do_random_tests (व्योम)
 {
-  size_t i, j, n, align1, align2, pos, len1, len2;
-  int result;
-  long r;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
+  माप_प्रकार i, j, n, align1, align2, pos, len1, len2;
+  पूर्णांक परिणाम;
+  दीर्घ r;
+  अचिन्हित अक्षर *p1 = buf1 + page_आकार - 512;
+  अचिन्हित अक्षर *p2 = buf2 + page_आकार - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  क्रम (n = 0; n < ITERATIONS; n++)
     {
       align1 = random () & 31;
-      if (random () & 1)
+      अगर (random () & 1)
 	align2 = random () & 31;
-      else
+      अन्यथा
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1 > align2 ? align1 : align2;
-      if (pos + j >= 511)
+      अगर (pos + j >= 511)
 	pos = 510 - j - (random () & 7);
       len1 = random () & 511;
-      if (pos >= len1 && (random () & 1))
+      अगर (pos >= len1 && (random () & 1))
 	len1 = pos + (random () & 7);
-      if (len1 + j >= 512)
+      अगर (len1 + j >= 512)
 	len1 = 511 - j - (random () & 7);
-      if (pos >= len1)
+      अगर (pos >= len1)
 	len2 = len1;
-      else
+      अन्यथा
 	len2 = len1 + (len1 != 511 - j ? random () % (511 - j - len1) : 0);
       j = (pos > len2 ? pos : len2) + align1 + 64;
-      if (j > 512)
+      अगर (j > 512)
 	j = 512;
-      for (i = 0; i < j; ++i)
+      क्रम (i = 0; i < j; ++i)
 	{
-	  p1[i] = tolower (random () & 255);
-	  if (i < len1 + align1 && !p1[i])
+	  p1[i] = छोटे (random () & 255);
+	  अगर (i < len1 + align1 && !p1[i])
 	    {
-	      p1[i] = tolower (random () & 255);
-	      if (!p1[i])
-		p1[i] = tolower (1 + (random () & 127));
+	      p1[i] = छोटे (random () & 255);
+	      अगर (!p1[i])
+		p1[i] = छोटे (1 + (random () & 127));
 	    }
 	}
-      for (i = 0; i < j; ++i)
+      क्रम (i = 0; i < j; ++i)
 	{
-	  p2[i] = toupper (random () & 255);
-	  if (i < len2 + align2 && !p2[i])
+	  p2[i] = बड़े (random () & 255);
+	  अगर (i < len2 + align2 && !p2[i])
 	    {
-	      p2[i] = toupper (random () & 255);
-	      if (!p2[i])
-		toupper (p2[i] = 1 + (random () & 127));
+	      p2[i] = बड़े (random () & 255);
+	      अगर (!p2[i])
+		बड़े (p2[i] = 1 + (random () & 127));
 	    }
 	}
 
-      result = 0;
-      memcpy (p2 + align2, p1 + align1, pos);
-      if (pos < len1)
+      परिणाम = 0;
+      स_नकल (p2 + align2, p1 + align1, pos);
+      अगर (pos < len1)
 	{
-	  if (tolower (p2[align2 + pos]) == p1[align1 + pos])
+	  अगर (छोटे (p2[align2 + pos]) == p1[align1 + pos])
 	    {
-	      p2[align2 + pos] = toupper (random () & 255);
-	      if (tolower (p2[align2 + pos]) == p1[align1 + pos])
-		p2[align2 + pos] = toupper (p1[align1 + pos]
+	      p2[align2 + pos] = बड़े (random () & 255);
+	      अगर (छोटे (p2[align2 + pos]) == p1[align1 + pos])
+		p2[align2 + pos] = बड़े (p1[align1 + pos]
 					    + 3 + (random () & 127));
 	    }
 
-	  if (p1[align1 + pos] < tolower (p2[align2 + pos]))
-	    result = -1;
-	  else
-	    result = 1;
+	  अगर (p1[align1 + pos] < छोटे (p2[align2 + pos]))
+	    परिणाम = -1;
+	  अन्यथा
+	    परिणाम = 1;
 	}
       p1[len1 + align1] = 0;
       p2[len2 + align2] = 0;
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (char *) (p1 + align1), (char *) (p2 + align2),
+	  r = CALL (impl, (अक्षर *) (p1 + align1), (अक्षर *) (p2 + align2),
 		    pos + 1 + (random () & 255));
 	  /* Test whether on 64-bit architectures where ABI requires
 	     callee to promote has the promotion been done.  */
-	  asm ("" : "=g" (r) : "0" (r));
-	  if ((r == 0 && result)
-	      || (r < 0 && result >= 0)
-	      || (r > 0 && result <= 0))
+	  यंत्र ("" : "=g" (r) : "0" (r));
+	  अगर ((r == 0 && परिणाम)
+	      || (r < 0 && परिणाम >= 0)
+	      || (r > 0 && परिणाम <= 0))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
-		     n, impl->name, align1, align2, len1, len2, pos, r, result, p1, p2);
+		     n, impl->name, align1, align2, len1, len2, pos, r, परिणाम, p1, p2);
 	      ret = 1;
 	    }
 	}
@@ -275,39 +275,39 @@ do_random_tests (void)
 }
 
 /* Regression test for BZ #12205 */
-static void
-bz12205 (void)
+अटल व्योम
+bz12205 (व्योम)
 {
-  static char cp [4096+16] __attribute__ ((aligned(4096)));
-  static char gotrel[4096] __attribute__ ((aligned(4096)));
-  char *s1 = cp + 0xffa;
-  char *s2 = gotrel + 0xcbe;
-  int exp_result;
-  size_t n = 6;
+  अटल अक्षर cp [4096+16] __attribute__ ((aligned(4096)));
+  अटल अक्षर gotrel[4096] __attribute__ ((aligned(4096)));
+  अक्षर *s1 = cp + 0xffa;
+  अक्षर *s2 = gotrel + 0xcbe;
+  पूर्णांक exp_परिणाम;
+  माप_प्रकार n = 6;
 
-  strcpy (s1, "gottpoff");
-  strcpy (s2, "GOTPLT");
+  म_नकल (s1, "gottpoff");
+  म_नकल (s2, "GOTPLT");
 
-  exp_result = simple_strncasecmp (s1, s2, n);
+  exp_परिणाम = simple_strncasecmp (s1, s2, n);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, n, exp_result);
+    check_परिणाम (impl, s1, s2, n, exp_परिणाम);
 }
 
 /* Regression test for BZ #14195 */
-static void
-bz14195 (void)
+अटल व्योम
+bz14195 (व्योम)
 {
-  const char *empty_string  = "";
+  स्थिर अक्षर *empty_string  = "";
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, empty_string, "", 5, 0);
+    check_परिणाम (impl, empty_string, "", 5, 0);
 }
 
-static void
-test_locale (const char *locale, int extra_tests)
+अटल व्योम
+test_locale (स्थिर अक्षर *locale, पूर्णांक extra_tests)
 {
-  size_t i, j, k;
-  const size_t test_len = MIN(TEST_LEN, 3 * 4096);
-  if (setlocale (LC_CTYPE, locale) == NULL)
+  माप_प्रकार i, j, k;
+  स्थिर माप_प्रकार test_len = MIN(TEST_LEN, 3 * 4096);
+  अगर (रखो_क्षेत्र (LC_CTYPE, locale) == शून्य)
     {
       error (0, 0, "cannot set locale \"%s\"", locale);
       ret = 1;
@@ -316,12 +316,12 @@ test_locale (const char *locale, int extra_tests)
   bz12205 ();
   bz14195 ();
 
-  printf ("%23s", locale);
+  म_लिखो ("%23s", locale);
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-  for (i = 1; i < 16; ++i)
+  क्रम (i = 1; i < 16; ++i)
     {
       do_test (i, i, i - 1, i, 127, 0);
 
@@ -334,7 +334,7 @@ test_locale (const char *locale, int extra_tests)
       do_test (i, i, i + 1, i, 127, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  क्रम (i = 1; i < 10; ++i)
     {
       do_test (0, 0, (2 << i) - 1, 2 << i, 127, 0);
       do_test (0, 0, 2 << i, 2 << i, 254, 0);
@@ -355,7 +355,7 @@ test_locale (const char *locale, int extra_tests)
       do_test (0, 0, (2 << i) + 10, 2 << i, 254, -1);
     }
 
-  for (i = 1; i < 8; ++i)
+  क्रम (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, (8 << i) - 1, 8 << i, 127, 0);
       do_test (i, 2 * i, 8 << i, 8 << i, 127, 0);
@@ -378,9 +378,9 @@ test_locale (const char *locale, int extra_tests)
       do_test (2 * i, i, (8 << i) + 100, 8 << i, 254, -1);
     }
 
-  for (j = 0; extra_tests && j < 160; ++j)
+  क्रम (j = 0; extra_tests && j < 160; ++j)
     {
-      for (i = 0; i < test_len;)
+      क्रम (i = 0; i < test_len;)
         {
             do_test (getpagesize () - j - 1, 0, i + 1, i, 127, 0);
             do_test (getpagesize () - j - 1, 0, i + 1, i, 127, 1);
@@ -389,13 +389,13 @@ test_locale (const char *locale, int extra_tests)
             do_test (getpagesize () - j - 1, 0, i, i, 127, 0);
             do_test (getpagesize () - j - 1, 0, i - 1, i, 127, 0);
 
-            do_test (getpagesize () - j - 1, 0, ULONG_MAX, i, 127, 0);
-            do_test (getpagesize () - j - 1, 0, ULONG_MAX, i, 127, 1);
-            do_test (getpagesize () - j - 1, 0, ULONG_MAX, i, 127, -1);
+            do_test (getpagesize () - j - 1, 0, अच_दीर्घ_उच्च, i, 127, 0);
+            do_test (getpagesize () - j - 1, 0, अच_दीर्घ_उच्च, i, 127, 1);
+            do_test (getpagesize () - j - 1, 0, अच_दीर्घ_उच्च, i, 127, -1);
 
-            do_test (getpagesize () - j - 1, 0, ULONG_MAX - i, i, 127, 0);
-            do_test (getpagesize () - j - 1, 0, ULONG_MAX - i, i, 127, 1);
-            do_test (getpagesize () - j - 1, 0, ULONG_MAX - i, i, 127, -1);
+            do_test (getpagesize () - j - 1, 0, अच_दीर्घ_उच्च - i, i, 127, 0);
+            do_test (getpagesize () - j - 1, 0, अच_दीर्घ_उच्च - i, i, 127, 1);
+            do_test (getpagesize () - j - 1, 0, अच_दीर्घ_उच्च - i, i, 127, -1);
 
             do_test (getpagesize () - j - 1, j, i + 1, i, 127, 0);
             do_test (getpagesize () - j - 1, j, i + 1, i, 127, 1);
@@ -404,13 +404,13 @@ test_locale (const char *locale, int extra_tests)
             do_test (getpagesize () - j - 1, j, i, i, 127, 0);
             do_test (getpagesize () - j - 1, j, i - 1, i, 127, 0);
 
-            do_test (getpagesize () - j - 1, j, ULONG_MAX, i, 127, 0);
-            do_test (getpagesize () - j - 1, j, ULONG_MAX, i, 127, 1);
-            do_test (getpagesize () - j - 1, j, ULONG_MAX, i, 127, -1);
+            do_test (getpagesize () - j - 1, j, अच_दीर्घ_उच्च, i, 127, 0);
+            do_test (getpagesize () - j - 1, j, अच_दीर्घ_उच्च, i, 127, 1);
+            do_test (getpagesize () - j - 1, j, अच_दीर्घ_उच्च, i, 127, -1);
 
-            do_test (getpagesize () - j - 1, j, ULONG_MAX - i, i, 127, 0);
-            do_test (getpagesize () - j - 1, j, ULONG_MAX - i, i, 127, 1);
-            do_test (getpagesize () - j - 1, j, ULONG_MAX - i, i, 127, -1);
+            do_test (getpagesize () - j - 1, j, अच_दीर्घ_उच्च - i, i, 127, 0);
+            do_test (getpagesize () - j - 1, j, अच_दीर्घ_उच्च - i, i, 127, 1);
+            do_test (getpagesize () - j - 1, j, अच_दीर्घ_उच्च - i, i, 127, -1);
 
             do_test (0, getpagesize () - j - 1, i + 1, i, 127, 0);
             do_test (0, getpagesize () - j - 1, i + 1, i, 127, 1);
@@ -419,13 +419,13 @@ test_locale (const char *locale, int extra_tests)
             do_test (0, getpagesize () - j - 1, i, i, 127, 0);
             do_test (0, getpagesize () - j - 1, i - 1, i, 127, 0);
 
-            do_test (0, getpagesize () - j - 1, ULONG_MAX, i, 127, 0);
-            do_test (0, getpagesize () - j - 1, ULONG_MAX, i, 127, 1);
-            do_test (0, getpagesize () - j - 1, ULONG_MAX, i, 127, -1);
+            do_test (0, getpagesize () - j - 1, अच_दीर्घ_उच्च, i, 127, 0);
+            do_test (0, getpagesize () - j - 1, अच_दीर्घ_उच्च, i, 127, 1);
+            do_test (0, getpagesize () - j - 1, अच_दीर्घ_उच्च, i, 127, -1);
 
-            do_test (0, getpagesize () - j - 1, ULONG_MAX - i, i, 127, 0);
-            do_test (0, getpagesize () - j - 1, ULONG_MAX - i, i, 127, 1);
-            do_test (0, getpagesize () - j - 1, ULONG_MAX - i, i, 127, -1);
+            do_test (0, getpagesize () - j - 1, अच_दीर्घ_उच्च - i, i, 127, 0);
+            do_test (0, getpagesize () - j - 1, अच_दीर्घ_उच्च - i, i, 127, 1);
+            do_test (0, getpagesize () - j - 1, अच_दीर्घ_उच्च - i, i, 127, -1);
 
             do_test (j, getpagesize () - j - 1, i + 1, i, 127, 0);
             do_test (j, getpagesize () - j - 1, i + 1, i, 127, 1);
@@ -434,15 +434,15 @@ test_locale (const char *locale, int extra_tests)
             do_test (j, getpagesize () - j - 1, i, i, 127, 0);
             do_test (j, getpagesize () - j - 1, i - 1, i, 127, 0);
 
-            do_test (j, getpagesize () - j - 1, ULONG_MAX, i, 127, 0);
-            do_test (j, getpagesize () - j - 1, ULONG_MAX, i, 127, 1);
-            do_test (j, getpagesize () - j - 1, ULONG_MAX, i, 127, -1);
+            do_test (j, getpagesize () - j - 1, अच_दीर्घ_उच्च, i, 127, 0);
+            do_test (j, getpagesize () - j - 1, अच_दीर्घ_उच्च, i, 127, 1);
+            do_test (j, getpagesize () - j - 1, अच_दीर्घ_उच्च, i, 127, -1);
 
-            do_test (j, getpagesize () - j - 1, ULONG_MAX - i, i, 127, 0);
-            do_test (j, getpagesize () - j - 1, ULONG_MAX - i, i, 127, 1);
-            do_test (j, getpagesize () - j - 1, ULONG_MAX - i, i, 127, -1);
+            do_test (j, getpagesize () - j - 1, अच_दीर्घ_उच्च - i, i, 127, 0);
+            do_test (j, getpagesize () - j - 1, अच_दीर्घ_उच्च - i, i, 127, 1);
+            do_test (j, getpagesize () - j - 1, अच_दीर्घ_उच्च - i, i, 127, -1);
 
-          for (k = 2; k <= 128; k += k)
+          क्रम (k = 2; k <= 128; k += k)
             {
               do_test (getpagesize () - k, getpagesize () - j - 1, i - 1, i,
                        127, 0);
@@ -465,29 +465,29 @@ test_locale (const char *locale, int extra_tests)
               do_test (getpagesize () - k - 1, getpagesize () - j - 1, i + 1,
                        i, 127, 1);
             }
-          if (i < 32)
+          अगर (i < 32)
             {
               i += 1;
             }
-          else if (i < 161)
+          अन्यथा अगर (i < 161)
             {
               i += 7;
             }
-          else if (i + 161 < test_len)
+          अन्यथा अगर (i + 161 < test_len)
             {
               i += 31;
               i *= 17;
               i /= 16;
-              if (i + 161 > test_len)
+              अगर (i + 161 > test_len)
                 {
                   i = test_len - 160;
                 }
             }
-          else if (i + 32 < test_len)
+          अन्यथा अगर (i + 32 < test_len)
             {
               i += 7;
             }
-          else
+          अन्यथा
             {
               i += 1;
             }
@@ -498,8 +498,8 @@ test_locale (const char *locale, int extra_tests)
   do_page_tests ();
 }
 
-int
-test_main (void)
+पूर्णांक
+test_main (व्योम)
 {
   test_init ();
 
@@ -509,7 +509,7 @@ test_main (void)
   test_locale ("tr_TR.ISO-8859-9", 0);
   test_locale ("tr_TR.UTF-8", 0);
 
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

@@ -19,15 +19,15 @@
  * SVID
  */
 
-#ifndef	_MEMORY_H
-#define	_MEMORY_H	1
+#अगर_अघोषित	_MEMORY_H
+#घोषणा	_MEMORY_H	1
 
-#include <features.h>
+#समावेश <features.h>
 
 
-#ifndef	_STRING_H
+#अगर_अघोषित	_STRING_H
 # include <string.h>
-#endif	/* string.h  */
+#पूर्ण_अगर	/* string.h  */
 
 
-#endif	/* memory.h  */
+#पूर्ण_अगर	/* memory.h  */

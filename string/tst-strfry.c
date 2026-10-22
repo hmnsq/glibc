@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#समावेश <stdio.h>
+#समावेश <string.h>
 
-int
-do_test (void)
+पूर्णांक
+do_test (व्योम)
 {
-  char str[] = "this is a test";
+  अक्षर str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  वापस 0;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

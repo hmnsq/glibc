@@ -15,53 +15,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#अगर_घोषित HAVE_CONFIG_H
 # include <config.h>
-#endif
+#पूर्ण_अगर
 
-#include <ctype.h>
-#include <string.h>
+#समावेश <ctype.h>
+#समावेश <string.h>
 
-#ifndef _LIBC
+#अगर_अघोषित _LIBC
 # define __strcasecmp strcasecmp
-# define TOLOWER(Ch) tolower (Ch)
-#else
+# define TOLOWER(Ch) छोटे (Ch)
+#अन्यथा
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#पूर्ण_अगर
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#अगर_घोषित USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#अन्यथा
 # define LOCALE_PARAM
-#endif
+#पूर्ण_अगर
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+पूर्णांक
+__strcasecmp (स्थिर अक्षर *s1, स्थिर अक्षर *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#अगर defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#पूर्ण_अगर
+  स्थिर अचिन्हित अक्षर *p1 = (स्थिर अचिन्हित अक्षर *) s1;
+  स्थिर अचिन्हित अक्षर *p2 = (स्थिर अचिन्हित अक्षर *) s2;
+  पूर्णांक परिणाम;
 
-  if (p1 == p2)
-    return 0;
+  अगर (p1 == p2)
+    वापस 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  जबतक ((परिणाम = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    अगर (*p1++ == '\0')
+      अवरोध;
 
-  return result;
+  वापस परिणाम;
 }
-#ifndef __strcasecmp
+#अगर_अघोषित __strcasecmp
 libc_hidden_def (__strcasecmp)
 weak_alias (__strcasecmp, strcasecmp)
-#endif
+#पूर्ण_अगर

@@ -20,139 +20,139 @@
    characters in the padding.  It is partly a regression test for bug
    20327.  */
 
-#include <limits.h>
-#include <malloc.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libc-diag.h>
+#समावेश <limits.h>
+#समावेश <malloc.h>
+#समावेश <stdbool.h>
+#समावेश <stdint.h>
+#समावेश <stdlib.h>
+#समावेश <string.h>
+#समावेश <libc-diag.h>
 
-static int
-signum (int val)
+अटल पूर्णांक
+signum (पूर्णांक val)
 {
-  if (val < 0)
-    return -1;
-  if (val > 0)
-    return 1;
-  else
-    return 0;
+  अगर (val < 0)
+    वापस -1;
+  अगर (val > 0)
+    वापस 1;
+  अन्यथा
+    वापस 0;
 }
 
-static size_t
-max_size_t (size_t left, size_t right)
+अटल माप_प्रकार
+max_आकार_t (माप_प्रकार बायाँ, माप_प्रकार दायाँ)
 {
-  if (left > right)
-    return left;
-  else
-    return right;
+  अगर (बायाँ > दायाँ)
+    वापस बायाँ;
+  अन्यथा
+    वापस दायाँ;
 }
 
 /* Wrappers for strncmp and strncasecmp which determine the maximum
    string length in some, either based on the input string length, or
    using fixed constants.  */
 
-static int
-strncmp_no_terminator (const char *left, const char *right)
+अटल पूर्णांक
+strncmp_no_terminator (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  माप_प्रकार बायाँ_len = म_माप (बायाँ);
+  माप_प्रकार दायाँ_len = म_माप (दायाँ);
+  वापस म_भेदन (बायाँ, दायाँ, max_आकार_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncasecmp_no_terminator (const char *left, const char *right)
+अटल पूर्णांक
+strncasecmp_no_terminator (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  माप_प्रकार बायाँ_len = म_माप (बायाँ);
+  माप_प्रकार दायाँ_len = म_माप (दायाँ);
+  वापस strncasecmp (बायाँ, दायाँ, max_आकार_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncmp_terminator (const char *left, const char *right)
+अटल पूर्णांक
+strncmp_terminator (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  माप_प्रकार बायाँ_len = म_माप (बायाँ);
+  माप_प्रकार दायाँ_len = म_माप (दायाँ);
+  वापस म_भेदन (बायाँ, दायाँ, max_आकार_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncasecmp_terminator (const char *left, const char *right)
+अटल पूर्णांक
+strncasecmp_terminator (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  माप_प्रकार बायाँ_len = म_माप (बायाँ);
+  माप_प्रकार दायाँ_len = म_माप (दायाँ);
+  वापस strncasecmp (बायाँ, दायाँ, max_आकार_t (बायाँ_len, दायाँ_len));
 }
 
-static int
-strncmp_64 (const char *left, const char *right)
+अटल पूर्णांक
+strncmp_64 (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  return strncmp (left, right, 64);
+  वापस म_भेदन (बायाँ, दायाँ, 64);
 }
 
-static int
-strncasecmp_64 (const char *left, const char *right)
+अटल पूर्णांक
+strncasecmp_64 (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  return strncasecmp (left, right, 64);
+  वापस strncasecmp (बायाँ, दायाँ, 64);
 }
 
-static int
-strncmp_max (const char *left, const char *right)
+अटल पूर्णांक
+strncmp_max (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_धकेलो_NEEDS_COMMENT;
+#अगर __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncmp being larger than
      PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
-#endif
-#if __GNUC_PREREQ (11, 0)
+#पूर्ण_अगर
+#अगर __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
-#endif
-  return strncmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+#पूर्ण_अगर
+  वापस म_भेदन (बायाँ, दायाँ, SIZE_MAX);
+  DIAG_निकालो_NEEDS_COMMENT;
 }
 
-static int
-strncasecmp_max (const char *left, const char *right)
+अटल पूर्णांक
+strncasecmp_max (स्थिर अक्षर *बायाँ, स्थिर अक्षर *दायाँ)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_धकेलो_NEEDS_COMMENT;
+#अगर __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncasecmp being larger
      than PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
-#endif
-#if __GNUC_PREREQ (11, 0)
+#पूर्ण_अगर
+#अगर __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
-#endif
-  return strncasecmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+#पूर्ण_अगर
+  वापस strncasecmp (बायाँ, दायाँ, SIZE_MAX);
+  DIAG_निकालो_NEEDS_COMMENT;
 }
 
-int
-do_test (void)
+पूर्णांक
+do_test (व्योम)
 {
-  enum {
+  क्रमागत {
     max_align = 64,
-    max_string_length = 33
+    max_string_लंबाई = 33
   };
-  size_t blob_size = max_align + max_string_length + 1;
-  char *left = memalign (max_align, blob_size);
-  char *right = memalign (max_align, blob_size);
-  if (left == NULL || right == NULL)
+  माप_प्रकार blob_आकार = max_align + max_string_लंबाई + 1;
+  अक्षर *बायाँ = memalign (max_align, blob_आकार);
+  अक्षर *दायाँ = memalign (max_align, blob_आकार);
+  अगर (बायाँ == शून्य || दायाँ == शून्य)
     {
-      printf ("error: out of memory\n");
-      return 1;
+      म_लिखो ("error: out of memory\n");
+      वापस 1;
     }
 
-  const struct
+  स्थिर काष्ठा
   {
-    const char *name;
-    int (*implementation) (const char *, const char *);
+    स्थिर अक्षर *name;
+    पूर्णांक (*implementation) (स्थिर अक्षर *, स्थिर अक्षर *);
   } functions[] =
       {
-        { "strcmp", strcmp },
+        { "strcmp", म_भेद },
         { "strcasecmp", strcasecmp },
         { "strncmp (without NUL)", strncmp_no_terminator},
         { "strncasecmp (without NUL)", strncasecmp_no_terminator},
@@ -162,9 +162,9 @@ do_test (void)
         { "strncasecmp (length 64)", strncasecmp_64},
         { "strncmp (length SIZE_MAX)", strncmp_max},
         { "strncasecmp (length SIZE_MAX)", strncasecmp_max},
-        { NULL, NULL }
+        { शून्य, शून्य }
       };
-  const char *const strings[] =
+  स्थिर अक्षर *स्थिर strings[] =
     {
       "",
       "0",
@@ -180,56 +180,56 @@ do_test (void)
       "23456789abcdef",
       "23456789abcdefg",
       "abcdefghijklmnopqrstuvwxyzABCDEF",
-      NULL
+      शून्य
     };
-  const unsigned char pads[] =
+  स्थिर अचिन्हित अक्षर pads[] =
     { 0, 1, 32, 64, 128, '0', '1', 'e', 'f', 'g', 127, 192, 255 };
 
   bool errors = false;
-  for (int left_idx = 0; strings[left_idx] != NULL; ++left_idx)
-    for (int left_align = 0; left_align < max_align; ++left_align)
-      for (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
+  क्रम (पूर्णांक बायाँ_idx = 0; strings[बायाँ_idx] != शून्य; ++बायाँ_idx)
+    क्रम (पूर्णांक बायाँ_align = 0; बायाँ_align < max_align; ++बायाँ_align)
+      क्रम (अचिन्हित pad_बायाँ = 0; pad_बायाँ < माप (pads); ++pad_बायाँ)
         {
-          memset (left, pads[pad_left], blob_size);
-          strcpy (left + left_align, strings[left_idx]);
+          स_रखो (बायाँ, pads[pad_बायाँ], blob_आकार);
+          म_नकल (बायाँ + बायाँ_align, strings[बायाँ_idx]);
 
-          for (int right_idx = 0; strings[right_idx] != NULL; ++right_idx)
-            for (unsigned pad_right = 0; pad_right < sizeof (pads);
-                 ++pad_right)
-              for (int right_align = 0; right_align < max_align;
-                   ++right_align)
+          क्रम (पूर्णांक दायाँ_idx = 0; strings[दायाँ_idx] != शून्य; ++दायाँ_idx)
+            क्रम (अचिन्हित pad_दायाँ = 0; pad_दायाँ < माप (pads);
+                 ++pad_दायाँ)
+              क्रम (पूर्णांक दायाँ_align = 0; दायाँ_align < max_align;
+                   ++दायाँ_align)
                 {
-                  memset (right, pads[pad_right], blob_size);
-                  strcpy (right + right_align, strings[right_idx]);
+                  स_रखो (दायाँ, pads[pad_दायाँ], blob_आकार);
+                  म_नकल (दायाँ + दायाँ_align, strings[दायाँ_idx]);
 
-                  for (int func = 0; functions[func].name != NULL; ++func)
+                  क्रम (पूर्णांक func = 0; functions[func].name != शून्य; ++func)
                     {
-                      int expected = left_idx - right_idx;
-                      int actual = functions[func].implementation
-                        (left + left_align, right + right_align);
-                      if (signum (actual) != signum (expected))
+                      पूर्णांक expected = बायाँ_idx - दायाँ_idx;
+                      पूर्णांक actual = functions[func].implementation
+                        (बायाँ + बायाँ_align, दायाँ + दायाँ_align);
+                      अगर (signum (actual) != signum (expected))
                         {
-                          printf ("error: mismatch for %s: %d\n"
+                          म_लिखो ("error: mismatch for %s: %d\n"
                                   "  left:  \"%s\"\n"
                                   "  right: \"%s\"\n"
                                   "  pad_left = %u, pad_right = %u,\n"
                                   "  left_align = %d, right_align = %d\n",
                                   functions[func].name, actual,
-                                  strings[left_idx], strings[right_idx],
-                                  pad_left, pad_right,
-                                  left_align, right_align);
+                                  strings[बायाँ_idx], strings[दायाँ_idx],
+                                  pad_बायाँ, pad_दायाँ,
+                                  बायाँ_align, दायाँ_align);
                           errors = true;
                         }
                     }
                 }
         }
-  free (right);
-  free (left);
-  return errors;
+  मुक्त (दायाँ);
+  मुक्त (बायाँ);
+  वापस errors;
 }
 
 /* The nested loops need a long time to complete on slower
    machines.  */
-#define TIMEOUT 600
+#घोषणा TIMEOUT 600
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

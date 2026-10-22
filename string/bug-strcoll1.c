@@ -1,23 +1,23 @@
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#समावेश <stdio.h>
+#समावेश <string.h>
+#समावेश <locale.h>
 
-int
-main (void)
+पूर्णांक
+मुख्य (व्योम)
 {
-  const char t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
-  const char t2[] = "00000-00000.COM";
-  int res1;
-  int res2;
+  स्थिर अक्षर t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
+  स्थिर अक्षर t2[] = "00000-00000.COM";
+  पूर्णांक res1;
+  पूर्णांक res2;
 
-  setlocale (LC_ALL, "en_US.ISO-8859-1");
+  रखो_क्षेत्र (LC_ALL, "en_US.ISO-8859-1");
 
   res1 = strcoll (t1, t2);
-  printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, res1);
+  म_लिखो ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, res1);
   res2 = strcoll (t2, t1);
-  printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, res2);
+  म_लिखो ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, res2);
 
-  return ((res1 == 0 && res2 != 0)
+  वापस ((res1 == 0 && res2 != 0)
 	  || (res1 != 0 && res2 == 0)
 	  || (res1 < 0 && res2 < 0)
 	  || (res1 > 0 && res2 > 0));

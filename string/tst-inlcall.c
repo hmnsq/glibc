@@ -16,69 +16,69 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#अगर_अघोषित _GNU_SOURCE
+#घोषणा _GNU_SOURCE
+#पूर्ण_अगर
 
 /* Make sure we test the optimized inline functions.  */
-#define __USE_STRING_INLINES	1
+#घोषणा __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#समावेश <errno.h>
+#समावेश <stdio.h>
+#समावेश <stdlib.h>
+#समावेश <string.h>
+#समावेश <strings.h>
+#समावेश <fcntl.h>
 
 
-int
-do_test (void)
+पूर्णांक
+do_test (व्योम)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  पूर्णांक status;
+  पूर्णांक errors = 0;
+  अक्षर buf1[1000];
+  अक्षर *cp;
+  अक्षर ch;
 
-  cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  cp = म_नकल (buf1, "hello world");
+  अगर (म_भेद ("hello world", cp++) != 0)
     {
-      puts ("strcmp test 1 failed");
+      माला_दो ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  अगर (म_भेद (cp++, "hello world") != 0)
     {
-      puts ("strcmp test 2 failed");
+      माला_दो ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  अगर (म_अक्षर ("hello world", ch++) == शून्य)
     {
-      puts ("strchr test 1 failed");
+      माला_दो ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  स्थिर अक्षर * स्थिर hw = "hello world";
+  अगर (strpbrk (hw, "o") - hw != 4)
     {
-      puts ("strpbrk test 1 failed");
+      माला_दो ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  अगर (errors == 0)
     {
-      status = EXIT_SUCCESS;
-      puts ("No errors.");
+      status = निकास_सफल;
+      माला_दो ("No errors.");
     }
-  else
+  अन्यथा
     {
-      status = EXIT_FAILURE;
-      printf ("%d errors.\n", errors);
+      status = निकास_त्रुटि;
+      म_लिखो ("%d errors.\n", errors);
     }
-  return status;
+  वापस status;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

@@ -17,20 +17,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
+#समावेश <stdint.h>
+#समावेश <string.h>
+#समावेश <ctype.h>
 
 /* states: S_N: normal, S_I: comparing integral part, S_F: comparing
            fractionnal parts, S_Z: idem but with leading Zeroes only */
-#define  S_N    0x0
-#define  S_I    0x3
-#define  S_F    0x6
-#define  S_Z    0x9
+#घोषणा  S_N    0x0
+#घोषणा  S_I    0x3
+#घोषणा  S_F    0x6
+#घोषणा  S_Z    0x9
 
 /* result_type: CMP: return diff; LEN: compare using len_diff/diff */
-#define  CMP    2
-#define  LEN    3
+#घोषणा  CMP    2
+#घोषणा  LEN    3
 
 
 /* Compare S1 and S2 as strings holding indices/version numbers,
@@ -38,15 +38,15 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
-__strverscmp (const char *s1, const char *s2)
+पूर्णांक
+__strverscmp (स्थिर अक्षर *s1, स्थिर अक्षर *s2)
 {
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
+  स्थिर अचिन्हित अक्षर *p1 = (स्थिर अचिन्हित अक्षर *) s1;
+  स्थिर अचिन्हित अक्षर *p2 = (स्थिर अचिन्हित अक्षर *) s2;
 
   /* Symbol(s)    0       [1-9]   others
      Transition   (10) 0  (01) d  (00) x   */
-  static const uint8_t next_state[] =
+  अटल स्थिर uint8_t अग्र_state[] =
   {
       /* state    x    d    0  */
       /* S_N */  S_N, S_I, S_Z,
@@ -55,7 +55,7 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  S_N, S_F, S_Z
   };
 
-  static const int8_t result_type[] =
+  अटल स्थिर int8_t परिणाम_type[] =
   {
       /* state   x/x  x/d  x/0  d/x  d/d  d/0  0/x  0/d  0/0  */
 
@@ -65,42 +65,42 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  अगर (p1 == p2)
+    वापस 0;
 
-  unsigned char c1 = *p1++;
-  unsigned char c2 = *p2++;
+  अचिन्हित अक्षर c1 = *p1++;
+  अचिन्हित अक्षर c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  पूर्णांक state = S_N + ((c1 == '0') + (है_अंक (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  पूर्णांक diff;
+  जबतक ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      अगर (c1 == '\0')
+	वापस diff;
 
-      state = next_state[state];
+      state = अग्र_state[state];
       c1 = *p1++;
       c2 = *p2++;
-      state += (c1 == '0') + (isdigit (c1) != 0);
+      state += (c1 == '0') + (है_अंक (c1) != 0);
     }
 
-  state = result_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
+  state = परिणाम_type[state * 3 + (((c2 == '0') + (है_अंक (c2) != 0)))];
 
-  switch (state)
+  चयन (state)
   {
-    case CMP:
-      return diff;
+    हाल CMP:
+      वापस diff;
 
-    case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+    हाल LEN:
+      जबतक (है_अंक (*p1++))
+	अगर (!है_अंक (*p2++))
+	  वापस 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      वापस है_अंक (*p2) ? -1 : diff;
 
-    default:
-      return state;
+    शेष:
+      वापस state;
   }
 }
 libc_hidden_def (__strverscmp)

@@ -16,101 +16,101 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#घोषणा TEST_MAIN
+#अगर_अघोषित WIDE
 # define TEST_NAME "strspn"
-#else
+#अन्यथा
 # define TEST_NAME "wcsspn"
-#endif /* WIDE */
-#include "test-string.h"
+#पूर्ण_अगर /* WIDE */
+#समावेश "test-string.h"
 
-#ifndef WIDE
-# define STRSPN strspn
-# define CHAR char
-# define UCHAR unsigned char
+#अगर_अघोषित WIDE
+# define STRSPN म_अखोज
+# define CHAR अक्षर
+# define UCHAR अचिन्हित अक्षर
 # define SIMPLE_STRSPN simple_strspn
-# define STRLEN strlen
-# define STRCHR strchr
-# define BIG_CHAR CHAR_MAX
+# define STRLEN म_माप
+# define STRCHR म_अक्षर
+# define BIG_CHAR अक्षर_उच्च
 # define SMALL_CHAR 127
-#else
+#अन्यथा
 # include <wchar.h>
 # define STRSPN wcsspn
-# define CHAR wchar_t
-# define UCHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
+# define UCHAR ब_अक्षर_प्रकार
 # define SIMPLE_STRSPN simple_wcsspn
 # define STRLEN wcslen
 # define STRCHR wcschr
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#endif /* WIDE */
+#पूर्ण_अगर /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
+प्रकार माप_प्रकार (*proto_t) (स्थिर CHAR *, स्थिर CHAR *);
 
 IMPL (STRSPN, 1)
 
 /* Naive implementation to verify results.  */
-size_t
-SIMPLE_STRSPN (const CHAR *s, const CHAR *acc)
+माप_प्रकार
+SIMPLE_STRSPN (स्थिर CHAR *s, स्थिर CHAR *acc)
 {
-  const CHAR *r, *str = s;
+  स्थिर CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
+  जबतक ((c = *s++) != '\0')
     {
-      for (r = acc; *r != '\0'; ++r)
-	if (*r == c)
-	  break;
-      if (*r == '\0')
-	return s - str - 1;
+      क्रम (r = acc; *r != '\0'; ++r)
+	अगर (*r == c)
+	  अवरोध;
+      अगर (*r == '\0')
+	वापस s - str - 1;
     }
-  return s - str - 1;
+  वापस s - str - 1;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, const CHAR *acc, size_t exp_res)
+अटल व्योम
+do_one_test (impl_t *impl, स्थिर CHAR *s, स्थिर CHAR *acc, माप_प्रकार exp_res)
 {
-  size_t res = CALL (impl, s, acc);
-  if (res != exp_res)
+  माप_प्रकार res = CALL (impl, s, acc);
+  अगर (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-	     (void *) res, (void *) exp_res);
+	     (व्योम *) res, (व्योम *) exp_res);
       ret = 1;
-      return;
+      वापस;
     }
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len)
+अटल व्योम
+do_test (माप_प्रकार align, माप_प्रकार pos, माप_प्रकार len)
 {
-  size_t i;
+  माप_प्रकार i;
   CHAR *acc, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240 || ! len)
-    return;
+  अगर ((align + pos + 10) * माप (CHAR) >= page_आकार || len > 240 || ! len)
+    वापस;
 
   acc = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  क्रम (i = 0; i < len; ++i)
     {
       acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      अगर (!acc[i])
 	acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      अगर (!acc[i])
 	acc[i] = 1 + (random () & SMALL_CHAR);
     }
   acc[len] = '\0';
 
-  for (i = 0; i < pos; ++i)
+  क्रम (i = 0; i < pos; ++i)
     s[i] = acc[random () % len];
   s[pos] = random () & BIG_CHAR;
-  if (STRCHR (acc, s[pos]))
+  अगर (STRCHR (acc, s[pos]))
     s[pos] = '\0';
-  else
+  अन्यथा
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      क्रम (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
@@ -119,61 +119,61 @@ do_test (size_t align, size_t pos, size_t len)
     do_one_test (impl, s, acc, pos);
 }
 
-static void
-do_random_tests (void)
+अटल व्योम
+do_random_tests (व्योम)
 {
-  size_t i, j, n, align, pos, alen, len;
-  UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
+  माप_प्रकार i, j, n, align, pos, alen, len;
+  UCHAR *p = (UCHAR *) (buf1 + page_आकार) - 512;
   UCHAR *acc;
 
-  for (n = 0; n < ITERATIONS; n++)
+  क्रम (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
-      if (random () & 1)
+      अगर (random () & 1)
 	alen = random () & 63;
-      else
+      अन्यथा
 	alen = random () & 15;
-      if (!alen)
+      अगर (!alen)
 	pos = 0;
-      else
+      अन्यथा
 	pos = random () & 511;
-      if (pos + align >= 511)
+      अगर (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      अगर (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      acc = (UCHAR *) (buf2 + page_size) - alen - 1 - (random () & 7);
-      for (i = 0; i < alen; ++i)
+      acc = (UCHAR *) (buf2 + page_आकार) - alen - 1 - (random () & 7);
+      क्रम (i = 0; i < alen; ++i)
 	{
 	  acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  अगर (!acc[i])
 	    acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  अगर (!acc[i])
 	    acc[i] = 1 + (random () & SMALL_CHAR);
 	}
       acc[i] = '\0';
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      अगर (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      क्रम (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  अगर (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  अन्यथा अगर (i == pos + align)
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) acc, p[i]))
+	      अगर (STRCHR ((CHAR *) acc, p[i]))
 		p[i] = '\0';
 	    }
-	  else if (i < align || i > pos + align)
+	  अन्यथा अगर (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  अन्यथा
 	    p[i] = acc [random () % alen];
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align),
+	अगर (CALL (impl, (CHAR *) (p + align),
 		  (CHAR *) acc) != (pos < len ? pos : len))
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %zd != %zd",
@@ -185,38 +185,38 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+पूर्णांक
+test_main (व्योम)
 {
-  size_t i;
+  माप_प्रकार i;
 
   test_init ();
 
-  printf ("%32s", "");
+  म_लिखो ("%32s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-  for (i = 0; i < 32; ++i)
+  क्रम (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  क्रम (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  क्रम (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  क्रम (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

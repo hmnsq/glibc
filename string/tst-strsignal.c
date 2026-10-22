@@ -17,48 +17,48 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdio.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <array_length.h>
+#समावेश <string.h>
+#समावेश <stdio.h>
+#समावेश <signal.h>
+#समावेश <stdlib.h>
+#समावेश <locale.h>
+#समावेश <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#समावेश <support/support.h>
+#समावेश <support/check.h>
 
-static int
-do_test (void)
+अटल पूर्णांक
+do_test (व्योम)
 {
   unsetenv ("LANGUAGE");
 
   xsetlocale (LC_ALL, "C");
 
-  TEST_COMPARE_STRING (strsignal (SIGINT),     "Interrupt");
+  TEST_COMPARE_STRING (strsignal (संक_विघ्न),     "Interrupt");
   TEST_COMPARE_STRING (strsignal (-1),         "Unknown signal -1");
-#ifdef SIGRTMIN
-  if (SIGRTMIN < SIGRTMAX)
+#अगर_घोषित SIGRTMIN
+  अगर (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),   "Real-time signal 0");
-#endif
-#ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+#पूर्ण_अगर
+#अगर_घोषित SIGRTMAX
+  अगर (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Unknown signal 65");
-#endif
+#पूर्ण_अगर
 
   xsetlocale (LC_ALL, "pt_BR.UTF-8");
 
-  TEST_COMPARE_STRING (strsignal (SIGINT),    "Interrup\xc3\xa7\xc3\xa3\x6f");
+  TEST_COMPARE_STRING (strsignal (संक_विघ्न),    "Interrup\xc3\xa7\xc3\xa3\x6f");
   TEST_COMPARE_STRING (strsignal (-1),        "Sinal desconhecido -1");
-#ifdef SIGRTMI
-  if (SIGRTMIN < SIGRTMAX)
+#अगर_घोषित SIGRTMI
+  अगर (SIGRTMIN < SIGRTMAX)
     TEST_COMPARE_STRING (strsignal (SIGRTMIN),  "Sinal de tempo-real 0");
-#endif
-#ifdef SIGRTMAX
-  if (SIGRTMAX == 64)
+#पूर्ण_अगर
+#अगर_घोषित SIGRTMAX
+  अगर (SIGRTMAX == 64)
     TEST_COMPARE_STRING (strsignal (SIGRTMAX+1), "Sinal desconhecido 65");
-#endif
+#पूर्ण_अगर
 
-  return 0;
+  वापस 0;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

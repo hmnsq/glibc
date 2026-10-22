@@ -15,40 +15,40 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#अगर_घोषित HAVE_CONFIG_H
+#समावेश <config.h>
+#पूर्ण_अगर
 
-#if defined _LIBC || defined  STDC_HEADERS
+#अगर defined _LIBC || defined  STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
-char *memcpy ();
-#endif
+#अन्यथा
+अक्षर *दो_स्मृति ();
+अक्षर *स_नकल ();
+#पूर्ण_अगर
 
-#undef __strdup
-#undef strdup
+#अघोषित __strdup
+#अघोषित strdup
 
-#ifndef weak_alias
+#अगर_अघोषित weak_alias
 # define __strdup strdup
-#endif
+#पूर्ण_अगर
 
 /* Duplicate S, returning an identical malloc'd string.  */
-char *
-__strdup (const char *s)
+अक्षर *
+__strdup (स्थिर अक्षर *s)
 {
-  size_t len = strlen (s) + 1;
-  void *new = malloc (len);
+  माप_प्रकार len = म_माप (s) + 1;
+  व्योम *new = दो_स्मृति (len);
 
-  if (new == NULL)
-    return NULL;
+  अगर (new == शून्य)
+    वापस शून्य;
 
-  return (char *) memcpy (new, s, len);
+  वापस (अक्षर *) स_नकल (new, s, len);
 }
-#ifdef libc_hidden_def
+#अगर_घोषित libc_hidden_def
 libc_hidden_def (__strdup)
-#endif
-#ifdef weak_alias
+#पूर्ण_अगर
+#अगर_घोषित weak_alias
 weak_alias (__strdup, strdup)
-#endif
+#पूर्ण_अगर

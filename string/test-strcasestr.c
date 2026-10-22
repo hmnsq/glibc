@@ -16,137 +16,137 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "strcasestr"
-#include "test-string.h"
+#घोषणा TEST_MAIN
+#घोषणा TEST_NAME "strcasestr"
+#समावेश "test-string.h"
 
 
-#define STRCASESTR c_strcasestr
-#define NO_ALIAS
-#define __strncasecmp strncasecmp
-#define __strnlen strnlen
-#include "strcasestr.c"
+#घोषणा STRCASESTR c_strcasestr
+#घोषणा NO_ALIAS
+#घोषणा __strncasecmp strncasecmp
+#घोषणा __strnlen strnlen
+#समावेश "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+अटल अक्षर *
+simple_strcasestr (स्थिर अक्षर *s1, स्थिर अक्षर *s2)
 {
-  ssize_t s1len = strlen (s1);
-  ssize_t s2len = strlen (s2);
+  ssize_t s1len = म_माप (s1);
+  ssize_t s2len = म_माप (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  अगर (s2len > s1len)
+    वापस शून्य;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  क्रम (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
-      size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      माप_प्रकार j;
+      क्रम (j = 0; j < s2len; ++j)
+	अगर (छोटे (s1[i + j]) != छोटे (s2[j]))
+	  अवरोध;
+      अगर (j == s2len)
+	वापस (अक्षर *) s1 + i;
     }
 
-  return NULL;
+  वापस शून्य;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+प्रकार अक्षर *(*proto_t) (स्थिर अक्षर *, स्थिर अक्षर *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+अटल पूर्णांक
+check_परिणाम (impl_t *impl, स्थिर अक्षर *s1, स्थिर अक्षर *s2,
+	      अक्षर *exp_परिणाम)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  अक्षर *परिणाम = CALL (impl, s1, s2);
+  अगर (परिणाम != exp_परिणाम)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (परिणाम == शून्य) ? "(null)" : परिणाम,
+	     (exp_परिणाम == शून्य) ? "(null)" : exp_परिणाम);
       ret = 1;
-      return -1;
+      वापस -1;
     }
-  return 0;
+  वापस 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+अटल व्योम
+do_one_test (impl_t *impl, स्थिर अक्षर *s1, स्थिर अक्षर *s2, अक्षर *exp_परिणाम)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  अगर (check_परिणाम (impl, s1, s2, exp_परिणाम) < 0)
+    वापस;
 }
 
 
-static void
-do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+अटल व्योम
+do_test (माप_प्रकार align1, माप_प्रकार align2, माप_प्रकार len1, माप_प्रकार len2,
+	 पूर्णांक fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  अक्षर *s1 = (अक्षर *) (buf1 + align1);
+  अक्षर *s2 = (अक्षर *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  अटल स्थिर अक्षर d[] = "1234567890abcxyz";
+#घोषणा dl (माप (d) - 1)
+  अक्षर *ss2 = s2;
+  क्रम (माप_प्रकार l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
-      size_t t = l > dl ? dl : l;
+      माप_प्रकार t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  अगर (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      अक्षर *ss1 = s1;
+      क्रम (माप_प्रकार l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
-	  size_t t = l > dl ? dl : l;
-	  memcpy (ss1, d, t);
+	  माप_प्रकार t = l > dl ? dl : l;
+	  स_नकल (ss1, d, t);
 	  ++ss1[len2 > 7 ? 7 : len2 - 1];
 	  ss1 += t;
 	}
     }
-  else
+  अन्यथा
     {
-      memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
-	s1[len1 - len2 + i] = toupper (s2[i]);
+      स_रखो (s1, '0', len1);
+      क्रम (माप_प्रकार i = 0; i < len2; ++i)
+	s1[len1 - len2 + i] = बड़े (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? शून्य : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+अटल व्योम
+check1 (व्योम)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  स्थिर अक्षर s1[] = "AOKB";
+  स्थिर अक्षर s2[] = "OK";
+  अक्षर *exp_परिणाम;
 
-  exp_result = simple_strcasestr (s1, s2);
+  exp_परिणाम = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_परिणाम (impl, s1, s2, exp_परिणाम);
 }
 
-static int
-test_main (void)
+अटल पूर्णांक
+test_main (व्योम)
 {
   test_init ();
 
   check1 ();
 
-  printf ("%23s", "");
+  म_लिखो ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  क्रम (माप_प्रकार klen = 2; klen < 32; ++klen)
+    क्रम (माप_प्रकार hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -185,10 +185,10 @@ test_main (void)
 	do_test (15, 15, hlen, klen, 1);
       }
 
-  do_test (0, 0, page_size - 1, 16, 0);
-  do_test (0, 0, page_size - 1, 16, 1);
+  do_test (0, 0, page_आकार - 1, 16, 0);
+  do_test (0, 0, page_आकार - 1, 16, 1);
 
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

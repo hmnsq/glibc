@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#समावेश <string.h>
+#समावेश <signal.h>
+#समावेश <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#समावेश <support/support.h>
+#समावेश <support/check.h>
 
-static const struct test_t
+अटल स्थिर काष्ठा test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  पूर्णांक त्रुटि_सं;
+  स्थिर अक्षर *abbrev;
+  स्थिर अक्षर *descr;
 } tests[] =
 {
-#define N_(name)                      name
-#define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
-#undef init_sig
+#घोषणा N_(name)                      name
+#घोषणा init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
+#समावेश <siglist.h>
+#अघोषित init_sig
 };
 
-static int
-do_test (void)
+अटल पूर्णांक
+do_test (व्योम)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  क्रम (माप_प्रकार i = 0; i < array_लंबाई (tests); i++)
     {
-      TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
-      TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
+      TEST_COMPARE_STRING (sigabbrev_np (tests[i].त्रुटि_सं), tests[i].abbrev);
+      TEST_COMPARE_STRING (sigdescr_np (tests[i].त्रुटि_सं), tests[i].descr);
     }
 
-  return 0;
+  वापस 0;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

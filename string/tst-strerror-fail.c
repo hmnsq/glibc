@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#समावेश <locale.h>
+#समावेश <stdbool.h>
+#समावेश <stdlib.h>
+#समावेश <string.h>
+#समावेश <support/check.h>
+#समावेश <support/namespace.h>
+#समावेश <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+अटल अस्थिर bool fail_malloc;
 
-void *
-malloc (size_t size)
+व्योम *
+दो_स्मृति (माप_प्रकार आकार)
 {
-  if (fail_malloc)
-    return NULL;
+  अगर (fail_malloc)
+    वापस शून्य;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
-    original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  अटल व्योम *(*original_malloc) (माप_प्रकार);
+  अगर (original_malloc == शून्य)
+    original_malloc = xdlsym (RTLD_अग्र, "malloc");
+  वापस original_malloc (आकार);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+अटल व्योम
+test_strerror (व्योम *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  स्थिर अक्षर *s = म_त्रुटि (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+अटल व्योम
+test_strerror_l (व्योम *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  स्थिर अक्षर *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+अटल पूर्णांक
+do_test (व्योम)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, शून्य);
+  support_isolate_in_subprocess (test_strerror_l, शून्य);
 
-  return 0;
+  वापस 0;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

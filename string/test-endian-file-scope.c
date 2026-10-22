@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#समावेश <endian.h>
+#समावेश <stddef.h>
 
-int i;
+पूर्णांक i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+माप_प्रकार s0 = माप (htobe16 (i));
+माप_प्रकार s1 = माप (htole16 (i));
+माप_प्रकार s2 = माप (be16toh (i));
+माप_प्रकार s3 = माप (le16toh (i));
+माप_प्रकार s4 = माप (htobe32 (i));
+माप_प्रकार s5 = माप (htole32 (i));
+माप_प्रकार s6 = माप (be32toh (i));
+माप_प्रकार s7 = माप (le32toh (i));
+माप_प्रकार s8 = माप (htobe64 (i));
+माप_प्रकार s9 = माप (htole64 (i));
+माप_प्रकार s10 = माप (be64toh (i));
+माप_प्रकार s11 = माप (le64toh (i));
 
-static int
-do_test (void)
+अटल पूर्णांक
+do_test (व्योम)
 {
   /* This is a compilation test.  */
-  return 0;
+  वापस 0;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

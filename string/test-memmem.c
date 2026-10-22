@@ -16,133 +16,133 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "memmem"
-#define BUF1PAGES 20
-#define ITERATIONS 500
-#include "test-string.h"
+#घोषणा TEST_MAIN
+#घोषणा TEST_NAME "memmem"
+#घोषणा BUF1PAGES 20
+#घोषणा ITERATIONS 500
+#समावेश "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+प्रकार अक्षर *(*proto_t) (स्थिर व्योम *, माप_प्रकार, स्थिर व्योम *, माप_प्रकार);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
-	       size_t needle_len)
+व्योम *
+simple_memmem (स्थिर व्योम *haystack, माप_प्रकार haystack_len, स्थिर व्योम *needle,
+	       माप_प्रकार needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  स्थिर अक्षर *begin;
+  स्थिर अक्षर *स्थिर last_possible
+    = (स्थिर अक्षर *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  अगर (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    वापस (व्योम *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  अगर (__glibc_unlikely (haystack_len < needle_len))
+    वापस शून्य;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  क्रम (begin = (स्थिर अक्षर *) haystack; begin <= last_possible; ++begin)
+    अगर (begin[0] == ((स्थिर अक्षर *) needle)[0]
+        && !स_भेद ((स्थिर व्योम *) &begin[1],
+		    (स्थिर व्योम *) ((स्थिर अक्षर *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      वापस (व्योम *) begin;
 
-  return NULL;
+  वापस शून्य;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+अटल पूर्णांक
+check_परिणाम (impl_t *impl, स्थिर व्योम *haystack, माप_प्रकार haystack_len,
+	     स्थिर व्योम *needle, माप_प्रकार needle_len, स्थिर व्योम *expected)
 {
-  void *res;
+  व्योम *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  अगर (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      वापस -1;
     }
 
-  return 0;
+  वापस 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+अटल व्योम
+do_one_test (impl_t *impl, स्थिर व्योम *haystack, माप_प्रकार haystack_len,
+	     स्थिर व्योम *needle, माप_प्रकार needle_len, स्थिर व्योम *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  अगर (check_परिणाम (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    वापस;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+अटल व्योम
+do_test (स्थिर अक्षर *str, माप_प्रकार len, माप_प्रकार idx)
 {
-  char tmpbuf[len];
+  अक्षर tmpbuf[len];
 
-  memcpy (tmpbuf, buf1 + idx, len);
-  memcpy (buf1 + idx, str, len);
+  स_नकल (tmpbuf, buf1 + idx, len);
+  स_नकल (buf1 + idx, str, len);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, buf1, BUF1PAGES * page_size, str, len, buf1 + idx);
+    do_one_test (impl, buf1, BUF1PAGES * page_आकार, str, len, buf1 + idx);
 
-  memcpy (buf1 + idx, tmpbuf, len);
+  स_नकल (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+अटल व्योम
+do_random_tests (व्योम)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  क्रम (माप_प्रकार n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      अक्षर tmpbuf[32];
 
-      size_t shift = random () % 11;
-      size_t rel = random () % ((2 << (shift + 1)) * 64);
-      size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
-      len = MIN (len, BUF1PAGES * page_size - idx - 1);
-      memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      माप_प्रकार shift = random () % 11;
+      माप_प्रकार rel = random () % ((2 << (shift + 1)) * 64);
+      माप_प्रकार idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_आकार - 2);
+      माप_प्रकार len = random () % (माप (tmpbuf) - 1) + 1;
+      len = MIN (len, BUF1PAGES * page_आकार - idx - 1);
+      स_नकल (tmpbuf, buf1 + idx, len);
+      क्रम (माप_प्रकार i = random () % len / 2 + 1; i > 0; --i)
 	{
-	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  माप_प्रकार off = random () % len;
+	  अक्षर ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
 
       FOR_EACH_IMPL (impl, 0)
-	do_one_test (impl, buf1, BUF1PAGES * page_size, buf1 + idx, len,
+	do_one_test (impl, buf1, BUF1PAGES * page_आकार, buf1 + idx, len,
 		     buf1 + idx);
 
-      memcpy (buf1 + idx, tmpbuf, len);
+      स_नकल (buf1 + idx, tmpbuf, len);
     }
 }
 
-static void
-check1 (void)
+अटल व्योम
+check1 (व्योम)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  स्थिर अक्षर खोज_buf_तथ्य[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  स्थिर अक्षर pattern[2] = { 0x78, 0x56 };
+  व्योम *खोज_buf = (व्योम *) buf1 + page_आकार - माप खोज_buf_तथ्य;
+  व्योम *exp_परिणाम;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  स_नकल (खोज_buf, खोज_buf_तथ्य, माप खोज_buf_तथ्य);
+  exp_परिणाम = simple_memmem (खोज_buf, माप खोज_buf_तथ्य,
+			      pattern, माप pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_परिणाम (impl, खोज_buf, माप खोज_buf_तथ्य,
+		  pattern, माप pattern, exp_परिणाम);
 }
 
-static const char *const strs[] =
+अटल स्थिर अक्षर *स्थिर strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,33 +150,33 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+पूर्णांक
+test_main (व्योम)
 {
-  size_t i;
+  माप_प्रकार i;
 
   test_init ();
 
   check1 ();
 
-  printf ("%23s", "");
+  म_लिखो ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  क्रम (i = 0; i < BUF1PAGES * page_आकार; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  क्रम (i = 0; i < माप (strs) / माप (strs[0]); ++i)
+    क्रम (माप_प्रकार j = 0; j < 120; j += 7)
       {
-	size_t len = strlen (strs[i]);
+	माप_प्रकार len = म_माप (strs[i]);
 
 	do_test (strs[i], len, j);
       }
 
   do_random_tests ();
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

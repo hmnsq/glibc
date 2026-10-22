@@ -26,71 +26,71 @@
  * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de	*/
 
 /* Specification.  */
-#include <string.h>
+#समावेश <string.h>
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <strings.h>
+#समावेश <ctype.h>
+#समावेश <stdbool.h>
+#समावेश <strings.h>
 
-#define TOLOWER(Ch) tolower (Ch)
+#घोषणा TOLOWER(Ch) छोटे (Ch)
 
 /* Two-Way algorithm.  */
-#define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
+#घोषणा RETURN_TYPE अक्षर *
+#घोषणा AVAILABLE(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((व्योम*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#define CHECK_EOL (1)
-#define RET0_IF_0(a) if (!a) goto ret0
-#define CANON_ELEMENT(c) TOLOWER (c)
-#define CMP_FUNC(p1, p2, l)				\
-  __strncasecmp ((const char *) (p1), (const char *) (p2), l)
-#include "str-two-way.h"
+#घोषणा CHECK_EOL (1)
+#घोषणा RET0_IF_0(a) अगर (!a) जाओ ret0
+#घोषणा CANON_ELEMENT(c) TOLOWER (c)
+#घोषणा CMP_FUNC(p1, p2, l)				\
+  __strncasecmp ((स्थिर अक्षर *) (p1), (स्थिर अक्षर *) (p2), l)
+#समावेश "str-two-way.h"
 
-#undef strcasestr
-#undef __strcasestr
+#अघोषित strcasestr
+#अघोषित __strcasestr
 
-#ifndef STRCASESTR
-#define STRCASESTR __strcasestr
-#endif
+#अगर_अघोषित STRCASESTR
+#घोषणा STRCASESTR __strcasestr
+#पूर्ण_अगर
 
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using
    case-insensitive comparison.  This function gives unspecified
    results in multibyte locales.  */
-char *
-STRCASESTR (const char *haystack, const char *needle)
+अक्षर *
+STRCASESTR (स्थिर अक्षर *haystack, स्थिर अक्षर *needle)
 {
-  size_t needle_len; /* Length of NEEDLE.  */
-  size_t haystack_len; /* Known minimum length of HAYSTACK.  */
+  माप_प्रकार needle_len; /* Length of NEEDLE.  */
+  माप_प्रकार haystack_len; /* Known minimum length of HAYSTACK.  */
 
   /* Handle empty NEEDLE special case.  */
-  if (needle[0] == '\0')
-    return (char *) haystack;
+  अगर (needle[0] == '\0')
+    वापस (अक्षर *) haystack;
 
   /* Ensure HAYSTACK length is at least as long as NEEDLE length.
      Since a match may occur early on in a huge HAYSTACK, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  needle_len = strlen (needle);
+  needle_len = म_माप (needle);
   haystack_len = __strnlen (haystack, needle_len + 256);
-  if (haystack_len < needle_len)
-    return NULL;
+  अगर (haystack_len < needle_len)
+    वापस शून्य;
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See
      ISO C 99 section 6.2.6.1.  */
-  if (needle_len < LONG_NEEDLE_THRESHOLD)
-    return two_way_short_needle ((const unsigned char *) haystack,
+  अगर (needle_len < LONG_NEEDLE_THRESHOLD)
+    वापस two_way_short_needle ((स्थिर अचिन्हित अक्षर *) haystack,
 				 haystack_len,
-				 (const unsigned char *) needle,
+				 (स्थिर अचिन्हित अक्षर *) needle,
 				 needle_len);
-  return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
-			      (const unsigned char *) needle,
+  वापस two_way_long_needle ((स्थिर अचिन्हित अक्षर *) haystack, haystack_len,
+			      (स्थिर अचिन्हित अक्षर *) needle,
 			      needle_len);
 }
 
-#undef LONG_NEEDLE_THRESHOLD
+#अघोषित LONG_NEEDLE_THRESHOLD
 
-#ifndef NO_ALIAS
+#अगर_अघोषित NO_ALIAS
 weak_alias (__strcasestr, strcasestr)
-#endif
+#पूर्ण_अगर

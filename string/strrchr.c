@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#समावेश <string.h>
 
-#undef strrchr
+#अघोषित म_खोजप
 
-#ifndef STRRCHR
-# define STRRCHR strrchr
-#endif
+#अगर_अघोषित STRRCHR
+# define STRRCHR म_खोजप
+#पूर्ण_अगर
 
 /* Find the last occurrence of C in S.  */
-char *
-STRRCHR (const char *s, int c)
+अक्षर *
+STRRCHR (स्थिर अक्षर *s, पूर्णांक c)
 {
-  return __memrchr (s, c, strlen (s) + 1);
+  वापस __memrchr (s, c, म_माप (s) + 1);
 }
 
-#ifdef weak_alias
-#undef rindex
-weak_alias (strrchr, rindex)
-#endif
-libc_hidden_builtin_def (strrchr)
+#अगर_घोषित weak_alias
+#अघोषित rindex
+weak_alias (म_खोजप, rindex)
+#पूर्ण_अगर
+libc_hidden_builtin_def (म_खोजप)

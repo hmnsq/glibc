@@ -17,50 +17,50 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <dlfcn.h>
-#include <errno.h>
-#include <string.h>
+#समावेश <dlfcn.h>
+#समावेश <errno.h>
+#समावेश <string.h>
 
-#include <support/check.h>
-#include <support/support.h>
+#समावेश <support/check.h>
+#समावेश <support/support.h>
 
 /* malloc is allowed to change errno to a value different than 0, even when
    there is no actual error.  This happens for example when the memory
    allocation through sbrk fails.  Simulate this by interposing our own
    malloc implementation which sets errno to ENOMEM and calls the original
    malloc.  */
-void
-*malloc (size_t size)
+व्योम
+*दो_स्मृति (माप_प्रकार आकार)
 {
-  static void *(*real_malloc) (size_t size);
+  अटल व्योम *(*real_malloc) (माप_प्रकार आकार);
 
-  if (!real_malloc)
-    real_malloc = dlsym (RTLD_NEXT, "malloc");
+  अगर (!real_malloc)
+    real_malloc = dlsym (RTLD_अग्र, "malloc");
 
-  errno = ENOMEM;
+  त्रुटि_सं = ENOMEM;
 
-  return (*real_malloc) (size);
+  वापस (*real_malloc) (आकार);
 }
 
 /* strerror must not change the value of errno.  Unfortunately due to GCC bug
    #88576, this happens when -fmath-errno is used.  This simple test checks
    that it doesn't happen.  */
-static int
-do_test (void)
+अटल पूर्णांक
+do_test (व्योम)
 {
-  char *msg;
+  अक्षर *संदेश;
 
-  errno = 0;
-  msg = strerror (-3);
-  (void) msg;
-  TEST_COMPARE (errno, 0);
+  त्रुटि_सं = 0;
+  संदेश = म_त्रुटि (-3);
+  (व्योम) संदेश;
+  TEST_COMPARE (त्रुटि_सं, 0);
 
-  locale_t l = xnewlocale (LC_ALL_MASK, "C", NULL);
-  msg = strerror_l (-3, l);
-  (void) msg;
-  TEST_COMPARE (errno, 0);
+  locale_t l = xnewlocale (LC_ALL_MASK, "C", शून्य);
+  संदेश = strerror_l (-3, l);
+  (व्योम) संदेश;
+  TEST_COMPARE (त्रुटि_सं, 0);
 
-  return 0;
+  वापस 0;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

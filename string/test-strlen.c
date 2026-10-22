@@ -16,71 +16,71 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#घोषणा TEST_MAIN
+#अगर_अघोषित WIDE
 # define TEST_NAME "strlen"
-#else
+#अन्यथा
 # define TEST_NAME "wcslen"
-#endif
-#include "test-string.h"
+#पूर्ण_अगर
+#समावेश "test-string.h"
 
-#ifndef WIDE
-# define STRLEN strlen
-# define CHAR char
-# define MAX_CHAR CHAR_MAX
-#else
+#अगर_अघोषित WIDE
+# define STRLEN म_माप
+# define CHAR अक्षर
+# define MAX_CHAR अक्षर_उच्च
+#अन्यथा
 # include <wchar.h>
 # define STRLEN wcslen
-# define CHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
 # define MAX_CHAR WCHAR_MAX
-#endif
+#पूर्ण_अगर
 
-typedef size_t (*proto_t) (const CHAR *);
+प्रकार माप_प्रकार (*proto_t) (स्थिर CHAR *);
 
 IMPL (STRLEN, 1)
 
 /* Also check the generic implementation.  */
-#undef STRLEN
-#undef static_weak_alias
-#define static_weak_alias(a, b)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#ifndef WIDE
+#अघोषित STRLEN
+#अघोषित static_weak_alias
+#घोषणा static_weak_alias(a, b)
+#अघोषित libc_hidden_builtin_def
+#घोषणा libc_hidden_builtin_def(a)
+#अगर_अघोषित WIDE
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 IMPL (__strlen_default, 1)
-#else
+#अन्यथा
 # define WCSLEN __wcslen_default
 # include "wcsmbs/wcslen.c"
 IMPL (__wcslen_default, 1)
-#endif
+#पूर्ण_अगर
 
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, size_t exp_len)
+अटल व्योम
+do_one_test (impl_t *impl, स्थिर CHAR *s, माप_प्रकार exp_len)
 {
-  size_t len = CALL (impl, s);
-  if (len != exp_len)
+  माप_प्रकार len = CALL (impl, s);
+  अगर (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      वापस;
     }
 }
 
-static void
-do_test (size_t align, size_t len)
+अटल व्योम
+do_test (माप_प्रकार align, माप_प्रकार len)
 {
-  size_t i;
+  माप_प्रकार i;
 
-  align &= (getpagesize () / sizeof (CHAR)) - 1;
-  if (align + sizeof (CHAR) * len >= page_size)
-    return;
+  align &= (getpagesize () / माप (CHAR)) - 1;
+  अगर (align + माप (CHAR) * len >= page_आकार)
+    वापस;
 
   CHAR *buf = (CHAR *) (buf1);
 
-  for (i = 0; i < len; ++i)
+  क्रम (i = 0; i < len; ++i)
     buf[align + i] = 1 + 11111 * i % MAX_CHAR;
   buf[align + len] = 0;
 
@@ -88,36 +88,36 @@ do_test (size_t align, size_t len)
     do_one_test (impl, (CHAR *) (buf + align), len);
 }
 
-static void
-do_random_tests (void)
+अटल व्योम
+do_random_tests (व्योम)
 {
-  size_t i, j, n, align, len;
-  CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  माप_प्रकार i, j, n, align, len;
+  CHAR *p = (CHAR *) (buf1 + page_आकार - 512 * माप (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  क्रम (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      अगर (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      अगर (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      क्रम (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  अगर (i == len + align)
 	    p[i] = 0;
-	  else
+	  अन्यथा
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      अगर (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align)) != len)
+	अगर (CALL (impl, (CHAR *) (p + align)) != len)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd) %zd != %zd, p %p",
 		   n, impl->name, align, CALL (impl, (CHAR *) (p + align)),
@@ -127,40 +127,40 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+पूर्णांक
+test_main (व्योम)
 {
-  size_t i;
+  माप_प्रकार i;
 
   test_init ();
 
-  printf ("%20s", "");
+  म_लिखो ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
   /* Checking with only 4 * N alignments for wcslen, other alignments are wrong for wchar_t type arrays*/
 
-  for (i = 1; i < 8; ++i)
+  क्रम (i = 1; i < 8; ++i)
   {
-    do_test (sizeof (CHAR) * i, i);
+    do_test (माप (CHAR) * i, i);
     do_test (0, i);
   }
 
-  for (i = 2; i <= 12; ++i)
+  क्रम (i = 2; i <= 12; ++i)
     {
       do_test (0, 1 << i);
-      do_test (sizeof (CHAR) * 7, 1 << i);
-      do_test (sizeof (CHAR) * i, 1 << i);
-      do_test (sizeof (CHAR) * i, (size_t)((1 << i) / 1.5));
+      do_test (माप (CHAR) * 7, 1 << i);
+      do_test (माप (CHAR) * i, 1 << i);
+      do_test (माप (CHAR) * i, (माप_प्रकार)((1 << i) / 1.5));
     }
 
   /* Test strings near page boundary */
 
-  size_t maxlength = 64 / sizeof (CHAR) - 1;
-  size_t pagesize = getpagesize () / sizeof (CHAR);
+  माप_प्रकार maxlength = 64 / माप (CHAR) - 1;
+  माप_प्रकार pagesize = getpagesize () / माप (CHAR);
 
-  for (i = maxlength ; i > 1; --i)
+  क्रम (i = maxlength ; i > 1; --i)
     {
       /* String stays on the same page.  */
       do_test (pagesize - i, i - 1);
@@ -169,7 +169,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

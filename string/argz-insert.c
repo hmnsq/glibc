@@ -16,9 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#समावेश <argz.h>
+#समावेश <string.h>
+#समावेश <stdlib.h>
 
 /* Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
    existing entry in ARGZ; if BEFORE is NULL, ENTRY is appended to the end.
@@ -27,36 +27,36 @@
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
 error_t
-__argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+__argz_insert (अक्षर **argz, माप_प्रकार *argz_len, अक्षर *before, स्थिर अक्षर *entry)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  अगर (! before)
+    वापस __argz_add (argz, argz_len, entry);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  अगर (before < *argz || before >= *argz + *argz_len)
+    वापस EINVAL;
 
-  if (before > *argz)
+  अगर (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    जबतक (before[-1])
       before--;
 
   {
-    size_t after_before = *argz_len - (before - *argz);
-    size_t entry_len = strlen  (entry) + 1;
-    size_t new_argz_len = *argz_len + entry_len;
-    char *new_argz = realloc (*argz, new_argz_len);
+    माप_प्रकार after_before = *argz_len - (before - *argz);
+    माप_प्रकार entry_len = म_माप  (entry) + 1;
+    माप_प्रकार new_argz_len = *argz_len + entry_len;
+    अक्षर *new_argz = पुनः_स्मृति (*argz, new_argz_len);
 
-    if (new_argz)
+    अगर (new_argz)
       {
 	before = new_argz + (before - *argz);
-	memmove (before + entry_len, before, after_before);
-	memmove (before, entry, entry_len);
+	स_हटाओ (before + entry_len, before, after_before);
+	स_हटाओ (before, entry, entry_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	वापस 0;
       }
-    else
-      return ENOMEM;
+    अन्यथा
+      वापस ENOMEM;
   }
 }
-weak_alias (__argz_insert, argz_insert)
+weak_alias (__argz_insert, argz_जोड़ो)

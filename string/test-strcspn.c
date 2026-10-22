@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define STRPBRK_RESULT(s, pos) (pos)
-#define RES_TYPE size_t
-#define TEST_MAIN
-#ifndef WIDE
+#घोषणा STRPBRK_परिणाम(s, pos) (pos)
+#घोषणा RES_TYPE माप_प्रकार
+#घोषणा TEST_MAIN
+#अगर_अघोषित WIDE
 # define TEST_NAME "strcspn"
-#else
+#अन्यथा
 # define TEST_NAME "wcscspn"
-#endif /* WIDE */
-#include "test-string.h"
+#पूर्ण_अगर /* WIDE */
+#समावेश "test-string.h"
 
-#ifndef WIDE
-# define STRCSPN strcspn
-# define CHAR char
+#अगर_अघोषित WIDE
+# define STRCSPN म_खोज
+# define CHAR अक्षर
 # define SIMPLE_STRCSPN simple_strcspn
 # define STUPID_STRCSPN stupid_strcspn
-# define STRLEN strlen
-#else
+# define STRLEN म_माप
+#अन्यथा
 # include <wchar.h>
 # define STRCSPN wcscspn
-# define CHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
 # define SIMPLE_STRCSPN simple_wcscspn
 # define STUPID_STRCSPN stupid_wcscspn
 # define STRLEN wcslen
-#endif /* WIDE */
+#पूर्ण_अगर /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
-size_t SIMPLE_STRCSPN (const CHAR *, const CHAR *);
-size_t STUPID_STRCSPN (const CHAR *, const CHAR *);
+प्रकार माप_प्रकार (*proto_t) (स्थिर CHAR *, स्थिर CHAR *);
+माप_प्रकार SIMPLE_STRCSPN (स्थिर CHAR *, स्थिर CHAR *);
+माप_प्रकार STUPID_STRCSPN (स्थिर CHAR *, स्थिर CHAR *);
 
 IMPL (STUPID_STRCSPN, 0)
 IMPL (SIMPLE_STRCSPN, 0)
 IMPL (STRCSPN, 1)
 
-size_t
-SIMPLE_STRCSPN (const CHAR *s, const CHAR *rej)
+माप_प्रकार
+SIMPLE_STRCSPN (स्थिर CHAR *s, स्थिर CHAR *rej)
 {
-  const CHAR *r, *str = s;
+  स्थिर CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
-    for (r = rej; *r != '\0'; ++r)
-      if (*r == c)
-	return s - str - 1;
-  return s - str - 1;
+  जबतक ((c = *s++) != '\0')
+    क्रम (r = rej; *r != '\0'; ++r)
+      अगर (*r == c)
+	वापस s - str - 1;
+  वापस s - str - 1;
 }
 
-size_t
-STUPID_STRCSPN (const CHAR *s, const CHAR *rej)
+माप_प्रकार
+STUPID_STRCSPN (स्थिर CHAR *s, स्थिर CHAR *rej)
 {
-  size_t ns = STRLEN (s), nrej = STRLEN (rej);
-  size_t i, j;
+  माप_प्रकार ns = STRLEN (s), nrej = STRLEN (rej);
+  माप_प्रकार i, j;
 
-  for (i = 0; i < ns; ++i)
-    for (j = 0; j < nrej; ++j)
-      if (s[i] == rej[j])
-	return i;
-  return i;
+  क्रम (i = 0; i < ns; ++i)
+    क्रम (j = 0; j < nrej; ++j)
+      अगर (s[i] == rej[j])
+	वापस i;
+  वापस i;
 }
 
-#undef CHAR
-#undef STRLEN
-#include "test-strpbrk.c"
+#अघोषित CHAR
+#अघोषित STRLEN
+#समावेश "test-strpbrk.c"

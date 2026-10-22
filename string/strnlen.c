@@ -15,24 +15,24 @@
    License along with the GNU C Library; see the file COPYING.LIB.  If
    not, see <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#समावेश <string.h>
 
 /* Find the length of S, but scan at most MAXLEN characters.  If no
    '\0' terminator is found in that many characters, return MAXLEN.  */
 
-#ifdef STRNLEN
+#अगर_घोषित STRNLEN
 # define __strnlen STRNLEN
-#endif
+#पूर्ण_अगर
 
-size_t
-__strnlen (const char *str, size_t maxlen)
+माप_प्रकार
+__strnlen (स्थिर अक्षर *str, माप_प्रकार maxlen)
 {
-  const char *found = memchr (str, '\0', maxlen);
-  return found ? found - str : maxlen;
+  स्थिर अक्षर *found = स_प्रथम (str, '\0', maxlen);
+  वापस found ? found - str : maxlen;
 }
 
-#ifndef STRNLEN
+#अगर_अघोषित STRNLEN
 weak_alias (__strnlen, strnlen)
 libc_hidden_def (__strnlen)
 libc_hidden_def (strnlen)
-#endif
+#पूर्ण_अगर

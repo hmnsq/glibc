@@ -16,37 +16,37 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <stdlib.h>
-#include <string.h>
+#समावेश <argz.h>
+#समावेश <stdlib.h>
+#समावेश <string.h>
 
 /* Make a '\0' separated arg vector from a unix argv vector, returning it in
    ARGZ, and the total length in LEN.  If a memory allocation error occurs,
    ENOMEM is returned, otherwise 0.  */
 error_t
-__argz_create (char *const argv[], char **argz, size_t *len)
+__argz_create (अक्षर *स्थिर argv[], अक्षर **argz, माप_प्रकार *len)
 {
-  int argc;
-  size_t tlen = 0;
-  char *const *ap;
-  char *p;
+  पूर्णांक argc;
+  माप_प्रकार tlen = 0;
+  अक्षर *स्थिर *ap;
+  अक्षर *p;
 
-  for (argc = 0; argv[argc] != NULL; ++argc)
-    tlen += strlen (argv[argc]) + 1;
+  क्रम (argc = 0; argv[argc] != शून्य; ++argc)
+    tlen += म_माप (argv[argc]) + 1;
 
-  if (tlen == 0)
-    *argz = NULL;
-  else
+  अगर (tlen == 0)
+    *argz = शून्य;
+  अन्यथा
     {
-      *argz = malloc (tlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = दो_स्मृति (tlen);
+      अगर (*argz == शून्य)
+	वापस ENOMEM;
 
-      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+      क्रम (p = *argz, ap = argv; *ap; ++ap, ++p)
 	p = __stpcpy (p, *ap);
     }
   *len = tlen;
 
-  return 0;
+  वापस 0;
 }
 weak_alias (__argz_create, argz_create)

@@ -1,84 +1,84 @@
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
+#समावेश <locale.h>
+#समावेश <stdio.h>
+#समावेश <string.h>
 
-int
-do_test (void)
+पूर्णांक
+do_test (व्योम)
 {
-  static const char test_locale[] = "de_DE.UTF-8";
+  अटल स्थिर अक्षर test_locale[] = "de_DE.UTF-8";
 
-  int res = 0;
+  पूर्णांक res = 0;
 
-  char buf[20];
-  size_t l1 = strxfrm (NULL, "ab", 0);
-  size_t l2 = strxfrm (buf, "ab", 1);
-  size_t l3 = strxfrm (buf, "ab", sizeof (buf));
-  if (l3 < sizeof (buf) && strlen (buf) != l3)
+  अक्षर buf[20];
+  माप_प्रकार l1 = strxfrm (शून्य, "ab", 0);
+  माप_प्रकार l2 = strxfrm (buf, "ab", 1);
+  माप_प्रकार l3 = strxfrm (buf, "ab", माप (buf));
+  अगर (l3 < माप (buf) && म_माप (buf) != l3)
     {
-      puts ("C locale l3 test failed");
+      माला_दो ("C locale l3 test failed");
       res = 1;
     }
 
-  size_t l4 = strxfrm (buf, "ab", l1 + 1);
-  if (l4 < l1 + 1 && strlen (buf) != l4)
+  माप_प्रकार l4 = strxfrm (buf, "ab", l1 + 1);
+  अगर (l4 < l1 + 1 && म_माप (buf) != l4)
     {
-      puts ("C locale l4 test failed");
+      माला_दो ("C locale l4 test failed");
       res = 1;
     }
 
   buf[l1] = 'Z';
-  size_t l5 = strxfrm (buf, "ab", l1);
-  if (buf[l1] != 'Z')
+  माप_प्रकार l5 = strxfrm (buf, "ab", l1);
+  अगर (buf[l1] != 'Z')
     {
-      puts ("C locale l5 test failed");
+      माला_दो ("C locale l5 test failed");
       res = 1;
     }
 
-  if (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
+  अगर (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
     {
-      puts ("C locale retval test failed");
+      माला_दो ("C locale retval test failed");
       res = 1;
     }
 
-  if (setlocale (LC_ALL, test_locale) == NULL)
+  अगर (रखो_क्षेत्र (LC_ALL, test_locale) == शून्य)
     {
-      printf ("cannot set locale \"%s\"\n", test_locale);
+      म_लिखो ("cannot set locale \"%s\"\n", test_locale);
       res = 1;
     }
-  else
+  अन्यथा
     {
-      l1 = strxfrm (NULL, "ab", 0);
+      l1 = strxfrm (शून्य, "ab", 0);
       l2 = strxfrm (buf, "ab", 1);
-      l3 = strxfrm (buf, "ab", sizeof (buf));
-      if (l3 < sizeof (buf) && strlen (buf) != l3)
+      l3 = strxfrm (buf, "ab", माप (buf));
+      अगर (l3 < माप (buf) && म_माप (buf) != l3)
 	{
-	  puts ("UTF-8 locale l3 test failed");
+	  माला_दो ("UTF-8 locale l3 test failed");
 	  res = 1;
 	}
 
       l4 = strxfrm (buf, "ab", l1 + 1);
-      if (l4 < l1 + 1 && strlen (buf) != l4)
+      अगर (l4 < l1 + 1 && म_माप (buf) != l4)
 	{
-	  puts ("UTF-8 locale l4 test failed");
+	  माला_दो ("UTF-8 locale l4 test failed");
 	  res = 1;
 	}
 
       buf[l1] = 'Z';
       l5 = strxfrm (buf, "ab", l1);
-      if (buf[l1] != 'Z')
+      अगर (buf[l1] != 'Z')
 	{
-	  puts ("UTF-8 locale l5 test failed");
+	  माला_दो ("UTF-8 locale l5 test failed");
 	  res = 1;
 	}
 
-      if (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
+      अगर (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
 	{
-	  puts ("UTF-8 locale retval test failed");
+	  माला_दो ("UTF-8 locale retval test failed");
 	  res = 1;
 	}
     }
 
-  return res;
+  वापस res;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

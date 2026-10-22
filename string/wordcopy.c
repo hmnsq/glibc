@@ -18,8 +18,8 @@
 
 /* BE VERY CAREFUL IF YOU CHANGE THIS CODE...!  */
 
-#include <stddef.h>
-#include <libc-diag.h>
+#समावेश <stddef.h>
+#समावेश <libc-diag.h>
 /* Compiling with -O1 might warn that 'a2' and 'a3' may be used
    uninitialized.  There are only two ways to arrive at labels 'do4', 'do3'
    or 'do1', all of which use 'a2' or 'a3' in the MERGE macro: either from
@@ -28,81 +28,81 @@
 
    Since the usage is within the MERGE macro we disable the
    warning in the definition, but only in this file.  */
-DIAG_PUSH_NEEDS_COMMENT;
+DIAG_धकेलो_NEEDS_COMMENT;
 DIAG_IGNORE_NEEDS_COMMENT_GCC (6, "-Wmaybe-uninitialized");
-#include <memcopy.h>
-DIAG_POP_NEEDS_COMMENT;
+#समावेश <memcopy.h>
+DIAG_निकालो_NEEDS_COMMENT;
 
 /* _wordcopy_fwd_aligned -- Copy block beginning at SRCP to
    block beginning at DSTP with LEN `op_t' words (not LEN bytes!).
    Both SRCP and DSTP should be aligned for memory operations on `op_t's.  */
 
-#ifndef WORDCOPY_FWD_ALIGNED
+#अगर_अघोषित WORDCOPY_FWD_ALIGNED
 # define WORDCOPY_FWD_ALIGNED _wordcopy_fwd_aligned
-#endif
+#पूर्ण_अगर
 
-void
-WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
+व्योम
+WORDCOPY_FWD_ALIGNED (दीर्घ पूर्णांक dstp, दीर्घ पूर्णांक srcp, माप_प्रकार len)
 {
   op_t a0, a1;
 
-  switch (len % 8)
+  चयन (len % 8)
     {
-    case 2:
+    हाल 2:
       a0 = ((op_t *) srcp)[0];
       srcp -= 6 * OPSIZ;
       dstp -= 7 * OPSIZ;
       len += 6;
-      goto do1;
-    case 3:
+      जाओ do1;
+    हाल 3:
       a1 = ((op_t *) srcp)[0];
       srcp -= 5 * OPSIZ;
       dstp -= 6 * OPSIZ;
       len += 5;
-      goto do2;
-    case 4:
+      जाओ do2;
+    हाल 4:
       a0 = ((op_t *) srcp)[0];
       srcp -= 4 * OPSIZ;
       dstp -= 5 * OPSIZ;
       len += 4;
-      goto do3;
-    case 5:
+      जाओ do3;
+    हाल 5:
       a1 = ((op_t *) srcp)[0];
       srcp -= 3 * OPSIZ;
       dstp -= 4 * OPSIZ;
       len += 3;
-      goto do4;
-    case 6:
+      जाओ do4;
+    हाल 6:
       a0 = ((op_t *) srcp)[0];
       srcp -= 2 * OPSIZ;
       dstp -= 3 * OPSIZ;
       len += 2;
-      goto do5;
-    case 7:
+      जाओ do5;
+    हाल 7:
       a1 = ((op_t *) srcp)[0];
       srcp -= 1 * OPSIZ;
       dstp -= 2 * OPSIZ;
       len += 1;
-      goto do6;
+      जाओ do6;
 
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    हाल 0:
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	वापस;
       a0 = ((op_t *) srcp)[0];
       srcp -= 0 * OPSIZ;
       dstp -= 1 * OPSIZ;
-      goto do7;
-    case 1:
+      जाओ do7;
+    हाल 1:
       a1 = ((op_t *) srcp)[0];
       srcp -=-1 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do8;			/* No-op.  */
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	जाओ do0;
+      जाओ do8;			/* No-op.  */
     }
 
-  do
+  करो
     {
     do8:
       a0 = ((op_t *) srcp)[0];
@@ -111,10 +111,10 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
 	 do-while loop iteration or directly via the earlier switch 'case 1:'
 	 case. The switch case always sets 'a1' and all previous loop
 	 iterations will also have set 'a1' before the use.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_धकेलो_NEEDS_COMMENT;
       DIAG_IGNORE_NEEDS_COMMENT_GCC (6, "-Wmaybe-uninitialized");
       ((op_t *) dstp)[0] = a1;
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_निकालो_NEEDS_COMMENT;
     do7:
       a1 = ((op_t *) srcp)[1];
       ((op_t *) dstp)[1] = a0;
@@ -141,7 +141,7 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  जबतक (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -154,15 +154,15 @@ WORDCOPY_FWD_ALIGNED (long int dstp, long int srcp, size_t len)
    DSTP should be aligned for memory operations on `op_t's, but SRCP must
    *not* be aligned.  */
 
-#ifndef WORDCOPY_FWD_DEST_ALIGNED
+#अगर_अघोषित WORDCOPY_FWD_DEST_ALIGNED
 # define WORDCOPY_FWD_DEST_ALIGNED _wordcopy_fwd_dest_aligned
-#endif
+#पूर्ण_अगर
 
-void
-WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+व्योम
+WORDCOPY_FWD_DEST_ALIGNED (दीर्घ पूर्णांक dstp, दीर्घ पूर्णांक srcp, माप_प्रकार len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  पूर्णांक sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -174,43 +174,43 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
      it points in the middle of.  */
   srcp &= -OPSIZ;
 
-  switch (len % 4)
+  चयन (len % 4)
     {
-    case 2:
+    हाल 2:
       a1 = ((op_t *) srcp)[0];
       a2 = ((op_t *) srcp)[1];
       srcp -= 1 * OPSIZ;
       dstp -= 3 * OPSIZ;
       len += 2;
-      goto do1;
-    case 3:
+      जाओ do1;
+    हाल 3:
       a0 = ((op_t *) srcp)[0];
       a1 = ((op_t *) srcp)[1];
       srcp -= 0 * OPSIZ;
       dstp -= 2 * OPSIZ;
       len += 1;
-      goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      जाओ do2;
+    हाल 0:
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	वापस;
       a3 = ((op_t *) srcp)[0];
       a0 = ((op_t *) srcp)[1];
       srcp -=-1 * OPSIZ;
       dstp -= 1 * OPSIZ;
       len += 0;
-      goto do3;
-    case 1:
+      जाओ do3;
+    हाल 1:
       a2 = ((op_t *) srcp)[0];
       a3 = ((op_t *) srcp)[1];
       srcp -=-2 * OPSIZ;
       dstp -= 0 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do4;			/* No-op.  */
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	जाओ do0;
+      जाओ do4;			/* No-op.  */
     }
 
-  do
+  करो
     {
     do4:
       a0 = ((op_t *) srcp)[0];
@@ -229,7 +229,7 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  जबतक (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -242,80 +242,80 @@ WORDCOPY_FWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
    (not LEN bytes!).  Both SRCP and DSTP should be aligned for memory
    operations on `op_t's.  */
 
-#ifndef WORDCOPY_BWD_ALIGNED
+#अगर_अघोषित WORDCOPY_BWD_ALIGNED
 # define WORDCOPY_BWD_ALIGNED _wordcopy_bwd_aligned
-#endif
+#पूर्ण_अगर
 
-void
-WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
+व्योम
+WORDCOPY_BWD_ALIGNED (दीर्घ पूर्णांक dstp, दीर्घ पूर्णांक srcp, माप_प्रकार len)
 {
   op_t a0, a1;
 
-  switch (len % 8)
+  चयन (len % 8)
     {
-    case 2:
+    हाल 2:
       srcp -= 2 * OPSIZ;
       dstp -= 1 * OPSIZ;
       a0 = ((op_t *) srcp)[1];
       len += 6;
-      goto do1;
-    case 3:
+      जाओ do1;
+    हाल 3:
       srcp -= 3 * OPSIZ;
       dstp -= 2 * OPSIZ;
       a1 = ((op_t *) srcp)[2];
       len += 5;
-      goto do2;
-    case 4:
+      जाओ do2;
+    हाल 4:
       srcp -= 4 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[3];
       len += 4;
-      goto do3;
-    case 5:
+      जाओ do3;
+    हाल 5:
       srcp -= 5 * OPSIZ;
       dstp -= 4 * OPSIZ;
       a1 = ((op_t *) srcp)[4];
       len += 3;
-      goto do4;
-    case 6:
+      जाओ do4;
+    हाल 6:
       srcp -= 6 * OPSIZ;
       dstp -= 5 * OPSIZ;
       a0 = ((op_t *) srcp)[5];
       len += 2;
-      goto do5;
-    case 7:
+      जाओ do5;
+    हाल 7:
       srcp -= 7 * OPSIZ;
       dstp -= 6 * OPSIZ;
       a1 = ((op_t *) srcp)[6];
       len += 1;
-      goto do6;
+      जाओ do6;
 
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+    हाल 0:
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	वापस;
       srcp -= 8 * OPSIZ;
       dstp -= 7 * OPSIZ;
       a0 = ((op_t *) srcp)[7];
-      goto do7;
-    case 1:
+      जाओ do7;
+    हाल 1:
       srcp -= 9 * OPSIZ;
       dstp -= 8 * OPSIZ;
       a1 = ((op_t *) srcp)[8];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do8;			/* No-op.  */
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	जाओ do0;
+      जाओ do8;			/* No-op.  */
     }
 
-  do
+  करो
     {
     do8:
       a0 = ((op_t *) srcp)[7];
       /* Check the comment on WORDCOPY_FWD_ALIGNED.  */
-      DIAG_PUSH_NEEDS_COMMENT;
+      DIAG_धकेलो_NEEDS_COMMENT;
       DIAG_IGNORE_NEEDS_COMMENT_GCC (6, "-Wmaybe-uninitialized");
       ((op_t *) dstp)[7] = a1;
-      DIAG_POP_NEEDS_COMMENT;
+      DIAG_निकालो_NEEDS_COMMENT;
     do7:
       a1 = ((op_t *) srcp)[6];
       ((op_t *) dstp)[6] = a0;
@@ -342,7 +342,7 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 8 * OPSIZ;
       len -= 8;
     }
-  while (len != 0);
+  जबतक (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
@@ -355,15 +355,15 @@ WORDCOPY_BWD_ALIGNED (long int dstp, long int srcp, size_t len)
    words (not LEN bytes!).  DSTP should be aligned for memory
    operations on `op_t', but SRCP must *not* be aligned.  */
 
-#ifndef WORDCOPY_BWD_DEST_ALIGNED
+#अगर_अघोषित WORDCOPY_BWD_DEST_ALIGNED
 # define WORDCOPY_BWD_DEST_ALIGNED _wordcopy_bwd_dest_aligned
-#endif
+#पूर्ण_अगर
 
-void
-WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
+व्योम
+WORDCOPY_BWD_DEST_ALIGNED (दीर्घ पूर्णांक dstp, दीर्घ पूर्णांक srcp, माप_प्रकार len)
 {
   op_t a0, a1, a2, a3;
-  int sh_1, sh_2;
+  पूर्णांक sh_1, sh_2;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp to make it aligned for copy.  */
@@ -376,42 +376,42 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
   srcp &= -OPSIZ;
   srcp += OPSIZ;
 
-  switch (len % 4)
+  चयन (len % 4)
     {
-    case 2:
+    हाल 2:
       srcp -= 3 * OPSIZ;
       dstp -= 1 * OPSIZ;
       a2 = ((op_t *) srcp)[2];
       a1 = ((op_t *) srcp)[1];
       len += 2;
-      goto do1;
-    case 3:
+      जाओ do1;
+    हाल 3:
       srcp -= 4 * OPSIZ;
       dstp -= 2 * OPSIZ;
       a3 = ((op_t *) srcp)[3];
       a2 = ((op_t *) srcp)[2];
       len += 1;
-      goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return;
+      जाओ do2;
+    हाल 0:
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	वापस;
       srcp -= 5 * OPSIZ;
       dstp -= 3 * OPSIZ;
       a0 = ((op_t *) srcp)[4];
       a3 = ((op_t *) srcp)[3];
-      goto do3;
-    case 1:
+      जाओ do3;
+    हाल 1:
       srcp -= 6 * OPSIZ;
       dstp -= 4 * OPSIZ;
       a1 = ((op_t *) srcp)[5];
       a0 = ((op_t *) srcp)[4];
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
-      goto do4;			/* No-op.  */
+      अगर (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	जाओ do0;
+      जाओ do4;			/* No-op.  */
     }
 
-  do
+  करो
     {
     do4:
       a3 = ((op_t *) srcp)[3];
@@ -430,7 +430,7 @@ WORDCOPY_BWD_DEST_ALIGNED (long int dstp, long int srcp, size_t len)
       dstp -= 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  जबतक (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */

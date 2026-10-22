@@ -16,207 +16,207 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#अगर_अघोषित _GNU_SOURCE
+#घोषणा _GNU_SOURCE
+#पूर्ण_अगर
 
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#if !defined DO_STRING_INLINES
-#undef __USE_STRING_INLINES
-#endif
+#अगर !defined DO_STRING_INLINES
+#अघोषित __USE_STRING_INLINES
+#पूर्ण_अगर
 
-#include <sys/cdefs.h>
-#include <libc-diag.h>
+#समावेश <sys/cdefs.h>
+#समावेश <libc-diag.h>
 
 /* Triggered by strncpy fortify wrapper when it is enabled.  */
-#if __GNUC_PREREQ (8, 0)
+#अगर __GNUC_PREREQ (8, 0)
 DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-truncation");
-#endif
+#पूर्ण_अगर
 
 /* When building with fortify enabled, GCC < 12 issues a warning on the
    fortify strncat wrapper might overflow the destination buffer (the
    failure is tied to -Werror).
    Triggered by strncat fortify wrapper when it is enabled.  */
-#if __GNUC_PREREQ (11, 0)
+#अगर __GNUC_PREREQ (11, 0)
 DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
-#endif
+#पूर्ण_अगर
 
-#include <errno.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#समावेश <errno.h>
+#समावेश <stdint.h>
+#समावेश <stdio.h>
+#समावेश <stdlib.h>
+#समावेश <string.h>
+#समावेश <strings.h>
+#समावेश <fcntl.h>
 
-static __typeof (bzero) * volatile bzero_indirect = bzero;
-static __typeof (memset) * volatile memset_indirect = memset;
+अटल __typeof (bzero) * अस्थिर bzero_indirect = bzero;
+अटल __typeof (स_रखो) * अस्थिर memset_indirect = स_रखो;
 
-#undef bzero
-#undef memset
+#अघोषित bzero
+#अघोषित स_रखो
 
-#define bzero bzero_indirect
-#define memset memset_indirect
+#घोषणा bzero bzero_indirect
+#घोषणा स_रखो memset_indirect
 
 /* This file tests a range of corner cases of string functions,
    including cases where truncation occurs or where sizes specified
    are larger than the actual buffers, which result in various
    warnings.  */
 DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
-#if __GNUC_PREREQ (5, 0)
+#अगर __GNUC_PREREQ (5, 0)
 DIAG_IGNORE_NEEDS_COMMENT (5.0, "-Wmemset-transposed-args");
-#endif
-#if __GNUC_PREREQ (7, 0)
+#पूर्ण_अगर
+#अगर __GNUC_PREREQ (7, 0)
 DIAG_IGNORE_NEEDS_COMMENT (9, "-Wrestrict");
 DIAG_IGNORE_NEEDS_COMMENT (7, "-Wstringop-overflow=");
-#endif
+#पूर्ण_अगर
 
 
-#define	STREQ(a, b)	(strcmp((a), (b)) == 0)
+#घोषणा	STREQ(a, b)	(म_भेद((a), (b)) == 0)
 
-const char *it = "<UNSET>";	/* Routine name for message routines. */
-size_t errors = 0;
+स्थिर अक्षर *it = "<UNSET>";	/* Routine name for message routines. */
+माप_प्रकार errors = 0;
 
 /* Complain if condition is not true.  */
-static void
-check (int thing, int number)
+अटल व्योम
+check (पूर्णांक thing, पूर्णांक संख्या)
 {
-  if (!thing)
+  अगर (!thing)
     {
-      printf ("%s flunked test %d\n", it, number);
+      म_लिखो ("%s flunked test %d\n", it, संख्या);
       ++errors;
     }
 }
 
 /* Complain if first two args don't strcmp as equal.  */
-static void
-equal (const char *a, const char *b, int number)
+अटल व्योम
+equal (स्थिर अक्षर *a, स्थिर अक्षर *b, पूर्णांक संख्या)
 {
-  check (a != NULL && b != NULL && STREQ (a, b), number);
+  check (a != शून्य && b != शून्य && STREQ (a, b), संख्या);
 }
 
-char one[50];
-char two[50];
-char *cp;
+अक्षर one[50];
+अक्षर two[50];
+अक्षर *cp;
 
-static void
-test_strcmp (void)
+अटल व्योम
+test_strcmp (व्योम)
 {
   it = "strcmp";
-  check (strcmp ("", "") == 0, 1);		/* Trivial case. */
-  check (strcmp ("a", "a") == 0, 2);		/* Identity. */
-  check (strcmp ("abc", "abc") == 0, 3);	/* Multicharacter. */
-  check (strcmp ("abc", "abcd") < 0, 4);	/* Length mismatches. */
-  check (strcmp ("abcd", "abc") > 0, 5);
-  check (strcmp ("abcd", "abce") < 0, 6);	/* Honest miscompares. */
-  check (strcmp ("abce", "abcd") > 0, 7);
-  check (strcmp ("a\203", "a") > 0, 8);		/* Tricky if char signed. */
-  check (strcmp ("a\203", "a\003") > 0, 9);
+  check (म_भेद ("", "") == 0, 1);		/* Trivial case. */
+  check (म_भेद ("a", "a") == 0, 2);		/* Identity. */
+  check (म_भेद ("abc", "abc") == 0, 3);	/* Multicharacter. */
+  check (म_भेद ("abc", "abcd") < 0, 4);	/* Length mismatches. */
+  check (म_भेद ("abcd", "abc") > 0, 5);
+  check (म_भेद ("abcd", "abce") < 0, 6);	/* Honest miscompares. */
+  check (म_भेद ("abce", "abcd") > 0, 7);
+  check (म_भेद ("a\203", "a") > 0, 8);		/* Tricky if char signed. */
+  check (म_भेद ("a\203", "a\003") > 0, 9);
 
   {
-    char buf1[0x40], buf2[0x40];
-    int i, j;
-    for (i=0; i < 0x10; i++)
-      for (j = 0; j < 0x10; j++)
+    अक्षर buf1[0x40], buf2[0x40];
+    पूर्णांक i, j;
+    क्रम (i=0; i < 0x10; i++)
+      क्रम (j = 0; j < 0x10; j++)
 	{
-	  int k;
-	  for (k = 0; k < 0x3f; k++)
+	  पूर्णांक k;
+	  क्रम (k = 0; k < 0x3f; k++)
 	    {
 	      buf1[k] = '0' ^ (k & 4);
 	      buf2[k] = '4' ^ (k & 4);
 	    }
 	  buf1[i] = buf1[0x3f] = 0;
 	  buf2[j] = buf2[0x3f] = 0;
-	  for (k = 0; k < 0xf; k++)
+	  क्रम (k = 0; k < 0xf; k++)
 	    {
-	      int cnum = 0x10+0x10*k+0x100*j+0x1000*i;
-	      check (strcmp (buf1+i,buf2+j) == 0, cnum);
+	      पूर्णांक cnum = 0x10+0x10*k+0x100*j+0x1000*i;
+	      check (म_भेद (buf1+i,buf2+j) == 0, cnum);
 	      buf1[i+k] = 'A' + i + k;
 	      buf1[i+k+1] = 0;
-	      check (strcmp (buf1+i,buf2+j) > 0, cnum+1);
-	      check (strcmp (buf2+j,buf1+i) < 0, cnum+2);
+	      check (म_भेद (buf1+i,buf2+j) > 0, cnum+1);
+	      check (म_भेद (buf2+j,buf1+i) < 0, cnum+2);
 	      buf2[j+k] = 'B' + i + k;
 	      buf2[j+k+1] = 0;
-	      check (strcmp (buf1+i,buf2+j) < 0, cnum+3);
-	      check (strcmp (buf2+j,buf1+i) > 0, cnum+4);
+	      check (म_भेद (buf1+i,buf2+j) < 0, cnum+3);
+	      check (म_भेद (buf2+j,buf1+i) > 0, cnum+4);
 	      buf2[j+k] = 'A' + i + k;
 	      buf1[i] = 'A' + i + 0x80;
-	      check (strcmp (buf1+i,buf2+j) > 0, cnum+5);
-	      check (strcmp (buf2+j,buf1+i) < 0, cnum+6);
+	      check (म_भेद (buf1+i,buf2+j) > 0, cnum+5);
+	      check (म_भेद (buf2+j,buf1+i) < 0, cnum+6);
 	      buf1[i] = 'A' + i;
 	    }
 	}
   }
 }
 
-#define SIMPLE_COPY(fn, n, str, ntest) \
-  do {									      \
-    int __n;								      \
-    char *cp;								      \
-    for (__n = 0; __n < (int) sizeof (one); ++__n)			      \
+#घोषणा SIMPLE_COPY(fn, n, str, ntest) \
+  करो {									      \
+    पूर्णांक __n;								      \
+    अक्षर *cp;								      \
+    क्रम (__n = 0; __n < (पूर्णांक) माप (one); ++__n)			      \
       one[__n] = 'Z';							      \
     fn (one, str);							      \
-    for (cp = one, __n = 0; __n < n; ++__n, ++cp)			      \
+    क्रम (cp = one, __n = 0; __n < n; ++__n, ++cp)			      \
       check (*cp == '0' + (n % 10), ntest);				      \
     check (*cp == '\0', ntest);						      \
-  } while (0)
+  } जबतक (0)
 
-static void
-test_strcpy (void)
+अटल व्योम
+test_strcpy (व्योम)
 {
-  int i;
+  पूर्णांक i;
   it = "strcpy";
-  check (strcpy (one, "abcd") == one, 1); /* Returned value. */
+  check (म_नकल (one, "abcd") == one, 1); /* Returned value. */
   equal (one, "abcd", 2);		/* Basic test. */
 
-  (void) strcpy (one, "x");
+  (व्योम) म_नकल (one, "x");
   equal (one, "x", 3);			/* Writeover. */
   equal (one+2, "cd", 4);		/* Wrote too much? */
 
-  (void) strcpy (two, "hi there");
-  (void) strcpy (one, two);
+  (व्योम) म_नकल (two, "hi there");
+  (व्योम) म_नकल (one, two);
   equal (one, "hi there", 5);		/* Basic test encore. */
   equal (two, "hi there", 6);		/* Stomped on source? */
 
-  (void) strcpy (one, "");
+  (व्योम) म_नकल (one, "");
   equal (one, "", 7);			/* Boundary condition. */
 
-  for (i = 0; i < 16; i++)
+  क्रम (i = 0; i < 16; i++)
     {
-      (void) strcpy (one + i, "hi there");	/* Unaligned destination. */
+      (व्योम) म_नकल (one + i, "hi there");	/* Unaligned destination. */
       equal (one + i, "hi there", 8 + (i * 2));
-      (void) strcpy (two, one + i);		/* Unaligned source. */
+      (व्योम) म_नकल (two, one + i);		/* Unaligned source. */
       equal (two, "hi there", 9 + (i * 2));
     }
 
-  SIMPLE_COPY(strcpy, 0, "", 41);
-  SIMPLE_COPY(strcpy, 1, "1", 42);
-  SIMPLE_COPY(strcpy, 2, "22", 43);
-  SIMPLE_COPY(strcpy, 3, "333", 44);
-  SIMPLE_COPY(strcpy, 4, "4444", 45);
-  SIMPLE_COPY(strcpy, 5, "55555", 46);
-  SIMPLE_COPY(strcpy, 6, "666666", 47);
-  SIMPLE_COPY(strcpy, 7, "7777777", 48);
-  SIMPLE_COPY(strcpy, 8, "88888888", 49);
-  SIMPLE_COPY(strcpy, 9, "999999999", 50);
-  SIMPLE_COPY(strcpy, 10, "0000000000", 51);
-  SIMPLE_COPY(strcpy, 11, "11111111111", 52);
-  SIMPLE_COPY(strcpy, 12, "222222222222", 53);
-  SIMPLE_COPY(strcpy, 13, "3333333333333", 54);
-  SIMPLE_COPY(strcpy, 14, "44444444444444", 55);
-  SIMPLE_COPY(strcpy, 15, "555555555555555", 56);
-  SIMPLE_COPY(strcpy, 16, "6666666666666666", 57);
+  SIMPLE_COPY(म_नकल, 0, "", 41);
+  SIMPLE_COPY(म_नकल, 1, "1", 42);
+  SIMPLE_COPY(म_नकल, 2, "22", 43);
+  SIMPLE_COPY(म_नकल, 3, "333", 44);
+  SIMPLE_COPY(म_नकल, 4, "4444", 45);
+  SIMPLE_COPY(म_नकल, 5, "55555", 46);
+  SIMPLE_COPY(म_नकल, 6, "666666", 47);
+  SIMPLE_COPY(म_नकल, 7, "7777777", 48);
+  SIMPLE_COPY(म_नकल, 8, "88888888", 49);
+  SIMPLE_COPY(म_नकल, 9, "999999999", 50);
+  SIMPLE_COPY(म_नकल, 10, "0000000000", 51);
+  SIMPLE_COPY(म_नकल, 11, "11111111111", 52);
+  SIMPLE_COPY(म_नकल, 12, "222222222222", 53);
+  SIMPLE_COPY(म_नकल, 13, "3333333333333", 54);
+  SIMPLE_COPY(म_नकल, 14, "44444444444444", 55);
+  SIMPLE_COPY(म_नकल, 15, "555555555555555", 56);
+  SIMPLE_COPY(म_नकल, 16, "6666666666666666", 57);
 
   /* Simple test using implicitly coerced `void *' arguments.  */
-  const void *src = "frobozz";
-  void *dst = one;
-  check (strcpy (dst, src) == dst, 1);
+  स्थिर व्योम *src = "frobozz";
+  व्योम *dst = one;
+  check (म_नकल (dst, src) == dst, 1);
   equal (dst, "frobozz", 2);
 }
 
-static void
-test_stpcpy (void)
+अटल व्योम
+test_stpcpy (व्योम)
 {
   it = "stpcpy";
   check ((stpcpy (one, "a") - one) == 1, 1);
@@ -297,11 +297,11 @@ test_stpcpy (void)
   SIMPLE_COPY(stpcpy, 16, "6666666666666666", 59);
 }
 
-static void
-test_stpncpy (void)
+अटल व्योम
+test_stpncpy (व्योम)
 {
   it = "stpncpy";
-  memset (one, 'x', sizeof (one));
+  स_रखो (one, 'x', माप (one));
   check (stpncpy (one, "abc", 2) == one + 2, 1);
   check (stpncpy (one, "abc", 3) == one + 3, 2);
   check (stpncpy (one, "abc", 4) == one + 3, 3);
@@ -312,341 +312,341 @@ test_stpncpy (void)
   check (one[4] == '\0' && one[5] == '\0' && one[6] == 'x', 8);
 }
 
-static void
-test_strcat (void)
+अटल व्योम
+test_strcat (व्योम)
 {
   it = "strcat";
-  (void) strcpy (one, "ijk");
-  check (strcat (one, "lmn") == one, 1); /* Returned value. */
+  (व्योम) म_नकल (one, "ijk");
+  check (म_जोड़ो (one, "lmn") == one, 1); /* Returned value. */
   equal (one, "ijklmn", 2);		/* Basic test. */
 
-  (void) strcpy (one, "x");
-  (void) strcat (one, "yz");
+  (व्योम) म_नकल (one, "x");
+  (व्योम) म_जोड़ो (one, "yz");
   equal (one, "xyz", 3);			/* Writeover. */
   equal (one+4, "mn", 4);			/* Wrote too much? */
 
-  (void) strcpy (one, "gh");
-  (void) strcpy (two, "ef");
-  (void) strcat (one, two);
+  (व्योम) म_नकल (one, "gh");
+  (व्योम) म_नकल (two, "ef");
+  (व्योम) म_जोड़ो (one, two);
   equal (one, "ghef", 5);			/* Basic test encore. */
   equal (two, "ef", 6);			/* Stomped on source? */
 
-  (void) strcpy (one, "");
-  (void) strcat (one, "");
+  (व्योम) म_नकल (one, "");
+  (व्योम) म_जोड़ो (one, "");
   equal (one, "", 7);			/* Boundary conditions. */
-  (void) strcpy (one, "ab");
-  (void) strcat (one, "");
+  (व्योम) म_नकल (one, "ab");
+  (व्योम) म_जोड़ो (one, "");
   equal (one, "ab", 8);
-  (void) strcpy (one, "");
-  (void) strcat (one, "cd");
+  (व्योम) म_नकल (one, "");
+  (व्योम) म_जोड़ो (one, "cd");
   equal (one, "cd", 9);
 
-  int ntest = 10;
-  char buf1[80] __attribute__ ((aligned (16)));
-  char buf2[32] __attribute__ ((aligned (16)));
-  for (size_t n1 = 0; n1 < 16; ++n1)
-    for (size_t n2 = 0; n2 < 16; ++n2)
-      for (size_t n3 = 0; n3 < 32; ++n3)
+  पूर्णांक ntest = 10;
+  अक्षर buf1[80] __attribute__ ((aligned (16)));
+  अक्षर buf2[32] __attribute__ ((aligned (16)));
+  क्रम (माप_प्रकार n1 = 0; n1 < 16; ++n1)
+    क्रम (माप_प्रकार n2 = 0; n2 < 16; ++n2)
+      क्रम (माप_प्रकार n3 = 0; n3 < 32; ++n3)
 	{
-	  size_t olderrors = errors;
+	  माप_प्रकार olderrors = errors;
 
-	  memset (buf1, 'b', sizeof (buf1));
+	  स_रखो (buf1, 'b', माप (buf1));
 
-	  memset (buf1 + n2, 'a', n3);
+	  स_रखो (buf1 + n2, 'a', n3);
 	  buf1[n2 + n3] = '\0';
-	  strcpy (buf2 + n1, "123");
+	  म_नकल (buf2 + n1, "123");
 
-	  check (strcat (buf1 + n2, buf2 + n1) == buf1 + n2, ntest);
-	  if (errors == olderrors)
-	    for (size_t i = 0; i < sizeof (buf1); ++i)
+	  check (म_जोड़ो (buf1 + n2, buf2 + n1) == buf1 + n2, ntest);
+	  अगर (errors == olderrors)
+	    क्रम (माप_प्रकार i = 0; i < माप (buf1); ++i)
 	      {
-		if (i < n2)
+		अगर (i < n2)
 		  check (buf1[i] == 'b', ntest);
-		else if (i < n2 + n3)
+		अन्यथा अगर (i < n2 + n3)
 		  check (buf1[i] == 'a', ntest);
-		else if (i < n2 + n3 + 3)
+		अन्यथा अगर (i < n2 + n3 + 3)
 		  check (buf1[i] == "123"[i - (n2 + n3)], ntest);
-		else if (i == n2 + n3 + 3)
+		अन्यथा अगर (i == n2 + n3 + 3)
 		  check (buf1[i] == '\0', ntest);
-		else
+		अन्यथा
 		  check (buf1[i] == 'b', ntest);
 
-		if (errors != olderrors)
+		अगर (errors != olderrors)
 		  {
-		    printf ("n1=%zu, n2=%zu, n3=%zu, buf1=%02hhx",
+		    म_लिखो ("n1=%zu, n2=%zu, n3=%zu, buf1=%02hhx",
 			    n1, n2, n3, buf1[0]);
-		    for (size_t j = 1; j < sizeof (buf1); ++j)
-		      printf (",%02hhx", buf1[j]);
+		    क्रम (माप_प्रकार j = 1; j < माप (buf1); ++j)
+		      म_लिखो (",%02hhx", buf1[j]);
 		    putchar_unlocked ('\n');
-		    break;
+		    अवरोध;
 		  }
 	      }
 	}
 }
 
-static void
-test_strncat (void)
+अटल व्योम
+test_strncat (व्योम)
 {
   /* First test it as strcat, with big counts, then test the count
      mechanism.  */
   it = "strncat";
-  (void) strcpy (one, "ijk");
-  check (strncat (one, "lmn", 99) == one, 1);	/* Returned value. */
+  (व्योम) म_नकल (one, "ijk");
+  check (म_जोड़न (one, "lmn", 99) == one, 1);	/* Returned value. */
   equal (one, "ijklmn", 2);		/* Basic test. */
 
-  (void) strcpy (one, "x");
-  (void) strncat (one, "yz", 99);
+  (व्योम) म_नकल (one, "x");
+  (व्योम) म_जोड़न (one, "yz", 99);
   equal (one, "xyz", 3);		/* Writeover. */
   equal (one+4, "mn", 4);		/* Wrote too much? */
 
-  (void) strcpy (one, "gh");
-  (void) strcpy (two, "ef");
+  (व्योम) म_नकल (one, "gh");
+  (व्योम) म_नकल (two, "ef");
   /* When building with fortify enabled, GCC 6 issues an warning the fortify
      wrapper might overflow the destination buffer.  However, GCC does not
      provide a specific flag to disable the warning (the failure is tied to
      -Werror).  So to avoid disable all errors, only enable the check for
      GCC 7 or newer.  */
-#if __GNUC_PREREQ (7, 0)
-  (void) strncat (one, two, 99);
+#अगर __GNUC_PREREQ (7, 0)
+  (व्योम) म_जोड़न (one, two, 99);
   equal (one, "ghef", 5);			/* Basic test encore. */
-#else
+#अन्यथा
   equal (one, "gh", 2);
-#endif
+#पूर्ण_अगर
   equal (two, "ef", 6);			/* Stomped on source? */
 
-  (void) strcpy (one, "");
-  (void) strncat (one, "", 99);
+  (व्योम) म_नकल (one, "");
+  (व्योम) म_जोड़न (one, "", 99);
   equal (one, "", 7);			/* Boundary conditions. */
-  (void) strcpy (one, "ab");
-  (void) strncat (one, "", 99);
+  (व्योम) म_नकल (one, "ab");
+  (व्योम) म_जोड़न (one, "", 99);
   equal (one, "ab", 8);
-  (void) strcpy (one, "");
-  (void) strncat (one, "cd", 99);
+  (व्योम) म_नकल (one, "");
+  (व्योम) म_जोड़न (one, "cd", 99);
   equal (one, "cd", 9);
 
-  (void) strcpy (one, "ab");
-  (void) strncat (one, "cdef", 2);
+  (व्योम) म_नकल (one, "ab");
+  (व्योम) म_जोड़न (one, "cdef", 2);
   equal (one, "abcd", 10);			/* Count-limited. */
 
-  (void) strncat (one, "gh", 0);
+  (व्योम) म_जोड़न (one, "gh", 0);
   equal (one, "abcd", 11);			/* Zero count. */
 
-  (void) strncat (one, "gh", 2);
+  (व्योम) म_जोड़न (one, "gh", 2);
   equal (one, "abcdgh", 12);		/* Count and length equal. */
 
-  (void) strncat (one, "ij", (size_t)-1);	/* set sign bit in count */
+  (व्योम) म_जोड़न (one, "ij", (माप_प्रकार)-1);	/* set sign bit in count */
   equal (one, "abcdghij", 13);
 
-  int ntest = 14;
-  char buf1[80] __attribute__ ((aligned (16)));
-  char buf2[32] __attribute__ ((aligned (16)));
-  for (size_t n1 = 0; n1 < 16; ++n1)
-    for (size_t n2 = 0; n2 < 16; ++n2)
-      for (size_t n3 = 0; n3 < 32; ++n3)
-	for (size_t n4 = 0; n4 < 16; ++n4)
+  पूर्णांक ntest = 14;
+  अक्षर buf1[80] __attribute__ ((aligned (16)));
+  अक्षर buf2[32] __attribute__ ((aligned (16)));
+  क्रम (माप_प्रकार n1 = 0; n1 < 16; ++n1)
+    क्रम (माप_प्रकार n2 = 0; n2 < 16; ++n2)
+      क्रम (माप_प्रकार n3 = 0; n3 < 32; ++n3)
+	क्रम (माप_प्रकार n4 = 0; n4 < 16; ++n4)
 	  {
-	    size_t olderrors = errors;
+	    माप_प्रकार olderrors = errors;
 
-	    memset (buf1, 'b', sizeof (buf1));
+	    स_रखो (buf1, 'b', माप (buf1));
 
-	    memset (buf1 + n2, 'a', n3);
+	    स_रखो (buf1 + n2, 'a', n3);
 	    buf1[n2 + n3] = '\0';
-	    strcpy (buf2 + n1, "123");
+	    म_नकल (buf2 + n1, "123");
 
-	    check (strncat (buf1 + n2, buf2 + n1, ~((size_t) 0) - n4)
+	    check (म_जोड़न (buf1 + n2, buf2 + n1, ~((माप_प्रकार) 0) - n4)
 		   == buf1 + n2, ntest);
-	    if (errors == olderrors)
-	      for (size_t i = 0; i < sizeof (buf1); ++i)
+	    अगर (errors == olderrors)
+	      क्रम (माप_प्रकार i = 0; i < माप (buf1); ++i)
 		{
-		  if (i < n2)
+		  अगर (i < n2)
 		    check (buf1[i] == 'b', ntest);
-		  else if (i < n2 + n3)
+		  अन्यथा अगर (i < n2 + n3)
 		    check (buf1[i] == 'a', ntest);
-		  else if (i < n2 + n3 + 3)
+		  अन्यथा अगर (i < n2 + n3 + 3)
 		    check (buf1[i] == "123"[i - (n2 + n3)], ntest);
-		  else if (i == n2 + n3 + 3)
+		  अन्यथा अगर (i == n2 + n3 + 3)
 		    check (buf1[i] == '\0', ntest);
-		  else
+		  अन्यथा
 		    check (buf1[i] == 'b', ntest);
 
-		  if (errors != olderrors)
+		  अगर (errors != olderrors)
 		    {
-		      printf ("n1=%zu, n2=%zu, n3=%zu, n4=%zu, buf1=%02hhx",
+		      म_लिखो ("n1=%zu, n2=%zu, n3=%zu, n4=%zu, buf1=%02hhx",
 			      n1, n2, n3, n4, buf1[0]);
-		      for (size_t j = 1; j < sizeof (buf1); ++j)
-			printf (",%02hhx", buf1[j]);
+		      क्रम (माप_प्रकार j = 1; j < माप (buf1); ++j)
+			म_लिखो (",%02hhx", buf1[j]);
 		      putchar_unlocked ('\n');
-		      break;
+		      अवरोध;
 		    }
 		}
 	  }
 }
 
-static void
-test_strncmp (void)
+अटल व्योम
+test_strncmp (व्योम)
 {
   /* First test as strcmp with big counts, then test count code.  */
   it = "strncmp";
-  check (strncmp ("", "", 99) == 0, 1);	/* Trivial case. */
-  check (strncmp ("a", "a", 99) == 0, 2);	/* Identity. */
-  check (strncmp ("abc", "abc", 99) == 0, 3);	/* Multicharacter. */
-  check (strncmp ("abc", "abcd", 99) < 0, 4);	/* Length unequal. */
-  check (strncmp ("abcd", "abc", 99) > 0, 5);
-  check (strncmp ("abcd", "abce", 99) < 0, 6);	/* Honestly unequal. */
-  check (strncmp ("abce", "abcd", 99) > 0, 7);
-  check (strncmp ("a\203", "a", 2) > 0, 8);	/* Tricky if '\203' < 0 */
-  check (strncmp ("a\203", "a\003", 2) > 0, 9);
-  check (strncmp ("abce", "abcd", 3) == 0, 10);	/* Count limited. */
-  check (strncmp ("abce", "abc", 3) == 0, 11);	/* Count == length. */
-  check (strncmp ("abcd", "abce", 4) < 0, 12);	/* Nudging limit. */
-  check (strncmp ("abc", "def", 0) == 0, 13);	/* Zero count. */
-  check (strncmp ("abc", "", (size_t)-1) > 0, 14);	/* set sign bit in count */
-  check (strncmp ("abc", "abc", (size_t)-2) == 0, 15);
+  check (म_भेदन ("", "", 99) == 0, 1);	/* Trivial case. */
+  check (म_भेदन ("a", "a", 99) == 0, 2);	/* Identity. */
+  check (म_भेदन ("abc", "abc", 99) == 0, 3);	/* Multicharacter. */
+  check (म_भेदन ("abc", "abcd", 99) < 0, 4);	/* Length unequal. */
+  check (म_भेदन ("abcd", "abc", 99) > 0, 5);
+  check (म_भेदन ("abcd", "abce", 99) < 0, 6);	/* Honestly unequal. */
+  check (म_भेदन ("abce", "abcd", 99) > 0, 7);
+  check (म_भेदन ("a\203", "a", 2) > 0, 8);	/* Tricky if '\203' < 0 */
+  check (म_भेदन ("a\203", "a\003", 2) > 0, 9);
+  check (म_भेदन ("abce", "abcd", 3) == 0, 10);	/* Count limited. */
+  check (म_भेदन ("abce", "abc", 3) == 0, 11);	/* Count == length. */
+  check (म_भेदन ("abcd", "abce", 4) < 0, 12);	/* Nudging limit. */
+  check (म_भेदन ("abc", "def", 0) == 0, 13);	/* Zero count. */
+  check (म_भेदन ("abc", "", (माप_प्रकार)-1) > 0, 14);	/* set sign bit in count */
+  check (म_भेदन ("abc", "abc", (माप_प्रकार)-2) == 0, 15);
 }
 
-static void
-test_strncpy (void)
+अटल व्योम
+test_strncpy (व्योम)
 {
   /* Testing is a bit different because of odd semantics.  */
   it = "strncpy";
-  check (strncpy (one, "abc", 4) == one, 1);	/* Returned value. */
+  check (म_नकलन (one, "abc", 4) == one, 1);	/* Returned value. */
   equal (one, "abc", 2);			/* Did the copy go right? */
 
-  (void) strcpy (one, "abcdefgh");
-  (void) strncpy (one, "xyz", 2);
+  (व्योम) म_नकल (one, "abcdefgh");
+  (व्योम) म_नकलन (one, "xyz", 2);
   equal (one, "xycdefgh", 3);			/* Copy cut by count. */
 
-  (void) strcpy (one, "abcdefgh");
-  (void) strncpy (one, "xyz", 3);		/* Copy cut just before NUL. */
+  (व्योम) म_नकल (one, "abcdefgh");
+  (व्योम) म_नकलन (one, "xyz", 3);		/* Copy cut just before NUL. */
   equal (one, "xyzdefgh", 4);
 
-  (void) strcpy (one, "abcdefgh");
-  (void) strncpy (one, "xyz", 4);		/* Copy just includes NUL. */
+  (व्योम) म_नकल (one, "abcdefgh");
+  (व्योम) म_नकलन (one, "xyz", 4);		/* Copy just includes NUL. */
   equal (one, "xyz", 5);
   equal (one+4, "efgh", 6);			/* Wrote too much? */
 
-  (void) strcpy (one, "abcdefgh");
-  (void) strncpy (one, "xyz", 5);		/* Copy includes padding. */
+  (व्योम) म_नकल (one, "abcdefgh");
+  (व्योम) म_नकलन (one, "xyz", 5);		/* Copy includes padding. */
   equal (one, "xyz", 7);
   equal (one+4, "", 8);
   equal (one+5, "fgh", 9);
 
-  (void) strcpy (one, "abc");
-  (void) strncpy (one, "xyz", 0);		/* Zero-length copy. */
+  (व्योम) म_नकल (one, "abc");
+  (व्योम) म_नकलन (one, "xyz", 0);		/* Zero-length copy. */
   equal (one, "abc", 10);
 
-  (void) strncpy (one, "", 2);		/* Zero-length source. */
+  (व्योम) म_नकलन (one, "", 2);		/* Zero-length source. */
   equal (one, "", 11);
   equal (one+1, "", 12);
   equal (one+2, "c", 13);
 
-  (void) strcpy (one, "hi there");
-  (void) strncpy (two, one, 9);
+  (व्योम) म_नकल (one, "hi there");
+  (व्योम) म_नकलन (two, one, 9);
   equal (two, "hi there", 14);		/* Just paranoia. */
   equal (one, "hi there", 15);		/* Stomped on source? */
 }
 
-static void
-test_strlen (void)
+अटल व्योम
+test_strlen (व्योम)
 {
   it = "strlen";
-  check (strlen ("") == 0, 1);		/* Empty. */
-  check (strlen ("a") == 1, 2);		/* Single char. */
-  check (strlen ("abcd") == 4, 3);	/* Multiple chars. */
+  check (म_माप ("") == 0, 1);		/* Empty. */
+  check (म_माप ("a") == 1, 2);		/* Single char. */
+  check (म_माप ("abcd") == 4, 3);	/* Multiple chars. */
   {
-    char buf[4096];
-    int i;
-    char *p;
-    for (i=0; i < 0x100; i++)
+    अक्षर buf[4096];
+    पूर्णांक i;
+    अक्षर *p;
+    क्रम (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
-	strcpy (p, "OK");
-	strcpy (p+3, "BAD/WRONG");
-	check (strlen (p) == 2, 4+i);
+	p = (अक्षर *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
+	म_नकल (p, "OK");
+	म_नकल (p+3, "BAD/WRONG");
+	check (म_माप (p) == 2, 4+i);
       }
    }
 }
 
-static void
-test_strnlen (void)
+अटल व्योम
+test_strnlen (व्योम)
 {
   it = "strnlen";
   check (strnlen ("", 10) == 0, 1);		/* Empty. */
   check (strnlen ("a", 10) == 1, 2);		/* Single char. */
   check (strnlen ("abcd", 10) == 4, 3);		/* Multiple chars. */
-  check (strnlen ("foo", (size_t) -1) == 3, 4);	/* limits of n. */
+  check (strnlen ("foo", (माप_प्रकार) -1) == 3, 4);	/* limits of n. */
   check (strnlen ("abcd", 0) == 0, 5);		/* Restricted. */
   check (strnlen ("abcd", 1) == 1, 6);		/* Restricted. */
   check (strnlen ("abcd", 2) == 2, 7);		/* Restricted. */
   check (strnlen ("abcd", 3) == 3, 8);		/* Restricted. */
   check (strnlen ("abcd", 4) == 4, 9);		/* Restricted. */
 
-  char buf[4096];
-  for (int i = 0; i < 0x100; ++i)
+  अक्षर buf[4096];
+  क्रम (पूर्णांक i = 0; i < 0x100; ++i)
     {
-      char *p = (char *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
-      strcpy (p, "OK");
-      strcpy (p + 3, "BAD/WRONG");
+      अक्षर *p = (अक्षर *) ((uintptr_t)(buf + 0xff) & ~0xff) + i;
+      म_नकल (p, "OK");
+      म_नकल (p + 3, "BAD/WRONG");
       check (strnlen (p, 100) == 2, 10 + i);
     }
 }
 
-static void
-test_strchr (void)
+अटल व्योम
+test_strchr (व्योम)
 {
   it = "strchr";
-  check (strchr ("abcd", 'z') == NULL, 1);	/* Not found. */
-  (void) strcpy (one, "abcd");
-  check (strchr (one, 'c') == one+2, 2);	/* Basic test. */
-  check (strchr (one, 'd') == one+3, 3);	/* End of string. */
-  check (strchr (one, 'a') == one, 4);		/* Beginning. */
-  check (strchr (one, '\0') == one+4, 5);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
-  check (strchr (one, 'b') == one+1, 6);	/* Finding first. */
-  (void) strcpy (one, "");
-  check (strchr (one, 'b') == NULL, 7);		/* Empty string. */
-  check (strchr (one, '\0') == one, 8);		/* NUL in empty string. */
+  check (म_अक्षर ("abcd", 'z') == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल (one, "abcd");
+  check (म_अक्षर (one, 'c') == one+2, 2);	/* Basic test. */
+  check (म_अक्षर (one, 'd') == one+3, 3);	/* End of string. */
+  check (म_अक्षर (one, 'a') == one, 4);		/* Beginning. */
+  check (म_अक्षर (one, '\0') == one+4, 5);	/* Finding NUL. */
+  (व्योम) म_नकल (one, "ababa");
+  check (म_अक्षर (one, 'b') == one+1, 6);	/* Finding first. */
+  (व्योम) म_नकल (one, "");
+  check (म_अक्षर (one, 'b') == शून्य, 7);		/* Empty string. */
+  check (म_अक्षर (one, '\0') == one, 8);		/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
-    for (i=0; i < 0x100; i++)
+    अक्षर buf[4096];
+    पूर्णांक i;
+    अक्षर *p;
+    क्रम (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
-	strcpy (p, "OK");
-	strcpy (p+3, "BAD/WRONG");
-	check (strchr (p, '/') == NULL, 9+i);
+	p = (अक्षर *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	म_नकल (p, "OK");
+	म_नकल (p+3, "BAD/WRONG");
+	check (म_अक्षर (p, '/') == शून्य, 9+i);
       }
    }
 }
 
-static void
-test_strchrnul (void)
+अटल व्योम
+test_strchrnul (व्योम)
 {
-  const char *os;
+  स्थिर अक्षर *os;
   it = "strchrnul";
   cp = strchrnul ((os = "abcd"), 'z');
   check (*cp == '\0', 1);			/* Not found. */
   check (cp == os + 4, 2);
-  (void) strcpy (one, "abcd");
+  (व्योम) म_नकल (one, "abcd");
   check (strchrnul (one, 'c') == one+2, 3);	/* Basic test. */
   check (strchrnul (one, 'd') == one+3, 4);	/* End of string. */
   check (strchrnul (one, 'a') == one, 5);	/* Beginning. */
   check (strchrnul (one, '\0') == one+4, 6);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
+  (व्योम) म_नकल (one, "ababa");
   check (strchrnul (one, 'b') == one+1, 7);	/* Finding first. */
-  (void) strcpy (one, "");
+  (व्योम) म_नकल (one, "");
   check (strchrnul (one, 'b') == one, 8);	/* Empty string. */
   check (strchrnul (one, '\0') == one, 9);	/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
-    for (i=0; i < 0x100; i++)
+    अक्षर buf[4096];
+    पूर्णांक i;
+    अक्षर *p;
+    क्रम (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
-	strcpy (p, "OK");
-	strcpy (p+3, "BAD/WRONG");
+	p = (अक्षर *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	म_नकल (p, "OK");
+	म_नकल (p+3, "BAD/WRONG");
 	cp = strchrnul (p, '/');
 	check (*cp == '\0', 9+2*i);
 	check (cp == p+2, 10+2*i);
@@ -654,117 +654,117 @@ test_strchrnul (void)
    }
 }
 
-static void
-test_rawmemchr (void)
+अटल व्योम
+test_rawmemchr (व्योम)
 {
   it = "rawmemchr";
-  (void) strcpy (one, "abcd");
+  (व्योम) म_नकल (one, "abcd");
   check (rawmemchr (one, 'c') == one+2, 1);	/* Basic test. */
   check (rawmemchr (one, 'd') == one+3, 2);	/* End of string. */
   check (rawmemchr (one, 'a') == one, 3);		/* Beginning. */
   check (rawmemchr (one, '\0') == one+4, 4);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
+  (व्योम) म_नकल (one, "ababa");
   check (rawmemchr (one, 'b') == one+1, 5);	/* Finding first. */
-  (void) strcpy (one, "");
+  (व्योम) म_नकल (one, "");
   check (rawmemchr (one, '\0') == one, 6);	/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
-    for (i=0; i < 0x100; i++)
+    अक्षर buf[4096];
+    पूर्णांक i;
+    अक्षर *p;
+    क्रम (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
-	strcpy (p, "OK");
-	strcpy (p+3, "BAD/WRONG");
+	p = (अक्षर *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	म_नकल (p, "OK");
+	म_नकल (p+3, "BAD/WRONG");
 	check (rawmemchr (p, 'R') == p+8, 6+i);
       }
    }
 }
 
-static void
-test_index (void)
+अटल व्योम
+test_सूचकांक (व्योम)
 {
   it = "index";
-  check (index ("abcd", 'z') == NULL, 1);	/* Not found. */
-  (void) strcpy (one, "abcd");
-  check (index (one, 'c') == one+2, 2);	/* Basic test. */
-  check (index (one, 'd') == one+3, 3);	/* End of string. */
-  check (index (one, 'a') == one, 4);	/* Beginning. */
-  check (index (one, '\0') == one+4, 5);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
-  check (index (one, 'b') == one+1, 6);	/* Finding first. */
-  (void) strcpy (one, "");
-  check (index (one, 'b') == NULL, 7);	/* Empty string. */
-  check (index (one, '\0') == one, 8);	/* NUL in empty string. */
+  check (सूचकांक ("abcd", 'z') == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल (one, "abcd");
+  check (सूचकांक (one, 'c') == one+2, 2);	/* Basic test. */
+  check (सूचकांक (one, 'd') == one+3, 3);	/* End of string. */
+  check (सूचकांक (one, 'a') == one, 4);	/* Beginning. */
+  check (सूचकांक (one, '\0') == one+4, 5);	/* Finding NUL. */
+  (व्योम) म_नकल (one, "ababa");
+  check (सूचकांक (one, 'b') == one+1, 6);	/* Finding first. */
+  (व्योम) म_नकल (one, "");
+  check (सूचकांक (one, 'b') == शून्य, 7);	/* Empty string. */
+  check (सूचकांक (one, '\0') == one, 8);	/* NUL in empty string. */
 }
 
-static void
-test_strrchr (void)
+अटल व्योम
+test_strrchr (व्योम)
 {
   it = "strrchr";
-  check (strrchr ("abcd", 'z') == NULL, 1);	/* Not found. */
-  (void) strcpy (one, "abcd");
-  check (strrchr (one, 'c') == one+2, 2);	/* Basic test. */
-  check (strrchr (one, 'd') == one+3, 3);	/* End of string. */
-  check (strrchr (one, 'a') == one, 4);		/* Beginning. */
-  check (strrchr (one, '\0') == one+4, 5);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
-  check (strrchr (one, 'b') == one+3, 6);	/* Finding last. */
-  (void) strcpy (one, "");
-  check (strrchr (one, 'b') == NULL, 7);	/* Empty string. */
-  check (strrchr (one, '\0') == one, 8);	/* NUL in empty string. */
+  check (म_खोजप ("abcd", 'z') == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल (one, "abcd");
+  check (म_खोजप (one, 'c') == one+2, 2);	/* Basic test. */
+  check (म_खोजप (one, 'd') == one+3, 3);	/* End of string. */
+  check (म_खोजप (one, 'a') == one, 4);		/* Beginning. */
+  check (म_खोजप (one, '\0') == one+4, 5);	/* Finding NUL. */
+  (व्योम) म_नकल (one, "ababa");
+  check (म_खोजप (one, 'b') == one+3, 6);	/* Finding last. */
+  (व्योम) म_नकल (one, "");
+  check (म_खोजप (one, 'b') == शून्य, 7);	/* Empty string. */
+  check (म_खोजप (one, '\0') == one, 8);	/* NUL in empty string. */
   {
-    char buf[4096];
-    int i;
-    char *p;
-    for (i=0; i < 0x100; i++)
+    अक्षर buf[4096];
+    पूर्णांक i;
+    अक्षर *p;
+    क्रम (i=0; i < 0x100; i++)
       {
-	p = (char *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
-	strcpy (p, "OK");
-	strcpy (p+3, "BAD/WRONG");
-	check (strrchr (p, '/') == NULL, 9+i);
+	p = (अक्षर *) ((uintptr_t) (buf + 0xff) & ~0xff) + i;
+	म_नकल (p, "OK");
+	म_नकल (p+3, "BAD/WRONG");
+	check (म_खोजप (p, '/') == शून्य, 9+i);
       }
    }
 }
 
-static void
-test_memrchr (void)
+अटल व्योम
+test_memrchr (व्योम)
 {
-  size_t l;
+  माप_प्रकार l;
   it = "memrchr";
-  check (memrchr ("abcd", 'z', 5) == NULL, 1);	/* Not found. */
-  (void) strcpy (one, "abcd");
-  l = strlen (one) + 1;
+  check (memrchr ("abcd", 'z', 5) == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल (one, "abcd");
+  l = म_माप (one) + 1;
   check (memrchr (one, 'c', l) == one+2, 2);	/* Basic test. */
   check (memrchr (one, 'd', l) == one+3, 3);	/* End of string. */
   check (memrchr (one, 'a', l) == one, 4);		/* Beginning. */
   check (memrchr (one, '\0', l) == one+4, 5);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
-  l = strlen (one) + 1;
+  (व्योम) म_नकल (one, "ababa");
+  l = म_माप (one) + 1;
   check (memrchr (one, 'b', l) == one+3, 6);	/* Finding last. */
-  (void) strcpy (one, "");
-  l = strlen (one) + 1;
-  check (memrchr (one, 'b', l) == NULL, 7);	/* Empty string. */
+  (व्योम) म_नकल (one, "");
+  l = म_माप (one) + 1;
+  check (memrchr (one, 'b', l) == शून्य, 7);	/* Empty string. */
   check (memrchr (one, '\0', l) == one, 8);	/* NUL in empty string. */
 
   /* now test all possible alignment and length combinations to catch
      bugs due to unrolled loops (assuming unrolling is limited to no
      more than 128 byte chunks: */
   {
-    char buf[128 + sizeof (long)];
-    long align, len, i, pos, n = 9;
+    अक्षर buf[128 + माप (दीर्घ)];
+    दीर्घ align, len, i, pos, n = 9;
 
-    for (align = 0; align < (long) sizeof (long); ++align) {
-      for (len = 0; len < (long) (sizeof (buf) - align); ++len) {
-	for (i = 0; i < len; ++i)
+    क्रम (align = 0; align < (दीर्घ) माप (दीर्घ); ++align) {
+      क्रम (len = 0; len < (दीर्घ) (माप (buf) - align); ++len) {
+	क्रम (i = 0; i < len; ++i)
 	  buf[align + i] = 'x';		/* don't depend on memset... */
 
-	for (pos = len - 1; pos >= 0; --pos) {
-#if 0
-	  printf("align %d, len %d, pos %d\n", align, len, pos);
-#endif
+	क्रम (pos = len - 1; pos >= 0; --pos) {
+#अगर 0
+	  म_लिखो("align %d, len %d, pos %d\n", align, len, pos);
+#पूर्ण_अगर
 	  check(memrchr(buf + align, 'x', len) == buf + align + pos, n++);
-	  check(memrchr(buf + align + pos + 1, 'x', len - (pos + 1)) == NULL,
+	  check(memrchr(buf + align + pos + 1, 'x', len - (pos + 1)) == शून्य,
 		n++);
 	  buf[align + pos] = '-';
 	}
@@ -773,247 +773,247 @@ test_memrchr (void)
   }
 }
 
-static void
-test_rindex (void)
+अटल व्योम
+test_rindex (व्योम)
 {
   it = "rindex";
-  check (rindex ("abcd", 'z') == NULL, 1);	/* Not found. */
-  (void) strcpy (one, "abcd");
+  check (rindex ("abcd", 'z') == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल (one, "abcd");
   check (rindex (one, 'c') == one+2, 2);	/* Basic test. */
   check (rindex (one, 'd') == one+3, 3);	/* End of string. */
   check (rindex (one, 'a') == one, 4);	/* Beginning. */
   check (rindex (one, '\0') == one+4, 5);	/* Finding NUL. */
-  (void) strcpy (one, "ababa");
+  (व्योम) म_नकल (one, "ababa");
   check (rindex (one, 'b') == one+3, 6);	/* Finding last. */
-  (void) strcpy (one, "");
-  check (rindex (one, 'b') == NULL, 7);	/* Empty string. */
+  (व्योम) म_नकल (one, "");
+  check (rindex (one, 'b') == शून्य, 7);	/* Empty string. */
   check (rindex (one, '\0') == one, 8);	/* NUL in empty string. */
 }
 
-static void
-test_strpbrk (void)
+अटल व्योम
+test_strpbrk (व्योम)
 {
   it = "strpbrk";
-  check(strpbrk("abcd", "z") == NULL, 1);	/* Not found. */
-  (void) strcpy(one, "abcd");
+  check(strpbrk("abcd", "z") == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल(one, "abcd");
   check(strpbrk(one, "c") == one+2, 2);	/* Basic test. */
   check(strpbrk(one, "d") == one+3, 3);	/* End of string. */
   check(strpbrk(one, "a") == one, 4);	/* Beginning. */
-  check(strpbrk(one, "") == NULL, 5);	/* Empty search list. */
+  check(strpbrk(one, "") == शून्य, 5);	/* Empty search list. */
   check(strpbrk(one, "cb") == one+1, 6);	/* Multiple search. */
-  (void) strcpy(one, "abcabdea");
+  (व्योम) म_नकल(one, "abcabdea");
   check(strpbrk(one, "b") == one+1, 7);	/* Finding first. */
   check(strpbrk(one, "cb") == one+1, 8);	/* With multiple search. */
   check(strpbrk(one, "db") == one+1, 9);	/* Another variant. */
-  (void) strcpy(one, "");
-  check(strpbrk(one, "bc") == NULL, 10);	/* Empty string. */
-  (void) strcpy(one, "");
-  check(strpbrk(one, "bcd") == NULL, 11);	/* Empty string. */
-  (void) strcpy(one, "");
-  check(strpbrk(one, "bcde") == NULL, 12);	/* Empty string. */
-  check(strpbrk(one, "") == NULL, 13);	/* Both strings empty. */
-  (void) strcpy(one, "abcabdea");
+  (व्योम) म_नकल(one, "");
+  check(strpbrk(one, "bc") == शून्य, 10);	/* Empty string. */
+  (व्योम) म_नकल(one, "");
+  check(strpbrk(one, "bcd") == शून्य, 11);	/* Empty string. */
+  (व्योम) म_नकल(one, "");
+  check(strpbrk(one, "bcde") == शून्य, 12);	/* Empty string. */
+  check(strpbrk(one, "") == शून्य, 13);	/* Both strings empty. */
+  (व्योम) म_नकल(one, "abcabdea");
   check(strpbrk(one, "befg") == one+1, 14);	/* Finding first. */
   check(strpbrk(one, "cbr") == one+1, 15);	/* With multiple search. */
   check(strpbrk(one, "db") == one+1, 16);	/* Another variant. */
   check(strpbrk(one, "efgh") == one+6, 17);	/* And yet another. */
 }
 
-static void
-test_strstr (void)
+अटल व्योम
+test_strstr (व्योम)
 {
   it = "strstr";
-  check(strstr("abcd", "z") == NULL, 1);	/* Not found. */
-  check(strstr("abcd", "abx") == NULL, 2);	/* Dead end. */
-  (void) strcpy(one, "abcd");
-  check(strstr(one, "c") == one+2, 3);	/* Basic test. */
-  check(strstr(one, "bc") == one+1, 4);	/* Multichar. */
-  check(strstr(one, "d") == one+3, 5);	/* End of string. */
-  check(strstr(one, "cd") == one+2, 6);	/* Tail of string. */
-  check(strstr(one, "abc") == one, 7);	/* Beginning. */
-  check(strstr(one, "abcd") == one, 8);	/* Exact match. */
-  check(strstr(one, "abcde") == NULL, 9);	/* Too long. */
-  check(strstr(one, "de") == NULL, 10);	/* Past end. */
-  check(strstr(one, "") == one, 11);	/* Finding empty. */
-  (void) strcpy(one, "ababa");
-  check(strstr(one, "ba") == one+1, 12);	/* Finding first. */
-  (void) strcpy(one, "");
-  check(strstr(one, "b") == NULL, 13);	/* Empty string. */
-  check(strstr(one, "") == one, 14);	/* Empty in empty string. */
-  (void) strcpy(one, "bcbca");
-  check(strstr(one, "bca") == one+2, 15);	/* False start. */
-  (void) strcpy(one, "bbbcabbca");
-  check(strstr(one, "bbca") == one+1, 16);	/* With overlap. */
+  check(म_माला("abcd", "z") == शून्य, 1);	/* Not found. */
+  check(म_माला("abcd", "abx") == शून्य, 2);	/* Dead end. */
+  (व्योम) म_नकल(one, "abcd");
+  check(म_माला(one, "c") == one+2, 3);	/* Basic test. */
+  check(म_माला(one, "bc") == one+1, 4);	/* Multichar. */
+  check(म_माला(one, "d") == one+3, 5);	/* End of string. */
+  check(म_माला(one, "cd") == one+2, 6);	/* Tail of string. */
+  check(म_माला(one, "abc") == one, 7);	/* Beginning. */
+  check(म_माला(one, "abcd") == one, 8);	/* Exact match. */
+  check(म_माला(one, "abcde") == शून्य, 9);	/* Too long. */
+  check(म_माला(one, "de") == शून्य, 10);	/* Past end. */
+  check(म_माला(one, "") == one, 11);	/* Finding empty. */
+  (व्योम) म_नकल(one, "ababa");
+  check(म_माला(one, "ba") == one+1, 12);	/* Finding first. */
+  (व्योम) म_नकल(one, "");
+  check(म_माला(one, "b") == शून्य, 13);	/* Empty string. */
+  check(म_माला(one, "") == one, 14);	/* Empty in empty string. */
+  (व्योम) म_नकल(one, "bcbca");
+  check(म_माला(one, "bca") == one+2, 15);	/* False start. */
+  (व्योम) म_नकल(one, "bbbcabbca");
+  check(म_माला(one, "bbca") == one+1, 16);	/* With overlap. */
 }
 
-static void
-test_strspn (void)
+अटल व्योम
+test_strspn (व्योम)
 {
   it = "strspn";
-  check(strspn("abcba", "abc") == 5, 1);	/* Whole string. */
-  check(strspn("abcba", "ab") == 2, 2);	/* Partial. */
-  check(strspn("abc", "qx") == 0, 3);	/* None. */
-  check(strspn("", "ab") == 0, 4);	/* Null string. */
-  check(strspn("abc", "") == 0, 5);	/* Null search list. */
+  check(म_अखोज("abcba", "abc") == 5, 1);	/* Whole string. */
+  check(म_अखोज("abcba", "ab") == 2, 2);	/* Partial. */
+  check(म_अखोज("abc", "qx") == 0, 3);	/* None. */
+  check(म_अखोज("", "ab") == 0, 4);	/* Null string. */
+  check(म_अखोज("abc", "") == 0, 5);	/* Null search list. */
 }
 
-static void
-test_strcspn (void)
+अटल व्योम
+test_strcspn (व्योम)
 {
   it = "strcspn";
-  check(strcspn("abcba", "qx") == 5, 1);	/* Whole string. */
-  check(strcspn("abcba", "cx") == 2, 2);	/* Partial. */
-  check(strcspn("abc", "abc") == 0, 3);	/* None. */
-  check(strcspn("", "ab") == 0, 4);	/* Null string. */
-  check(strcspn("abc", "") == 3, 5);	/* Null search list. */
+  check(म_खोज("abcba", "qx") == 5, 1);	/* Whole string. */
+  check(म_खोज("abcba", "cx") == 2, 2);	/* Partial. */
+  check(म_खोज("abc", "abc") == 0, 3);	/* None. */
+  check(म_खोज("", "ab") == 0, 4);	/* Null string. */
+  check(म_खोज("abc", "") == 3, 5);	/* Null search list. */
 }
 
-static void
-test_strtok (void)
+अटल व्योम
+test_strtok (व्योम)
 {
   it = "strtok";
-  (void) strcpy(one, "first, second, third");
-  equal(strtok(one, ", "), "first", 1);	/* Basic test. */
+  (व्योम) म_नकल(one, "first, second, third");
+  equal(म_मोहर(one, ", "), "first", 1);	/* Basic test. */
   equal(one, "first", 2);
-  equal(strtok((char *)NULL, ", "), "second", 3);
-  equal(strtok((char *)NULL, ", "), "third", 4);
-  check(strtok((char *)NULL, ", ") == NULL, 5);
-  (void) strcpy(one, ", first, ");
-  equal(strtok(one, ", "), "first", 6);	/* Extra delims, 1 tok. */
-  check(strtok((char *)NULL, ", ") == NULL, 7);
-  (void) strcpy(one, "1a, 1b; 2a, 2b");
-  equal(strtok(one, ", "), "1a", 8);	/* Changing delim lists. */
-  equal(strtok((char *)NULL, "; "), "1b", 9);
-  equal(strtok((char *)NULL, ", "), "2a", 10);
-  (void) strcpy(two, "x-y");
-  equal(strtok(two, "-"), "x", 11);	/* New string before done. */
-  equal(strtok((char *)NULL, "-"), "y", 12);
-  check(strtok((char *)NULL, "-") == NULL, 13);
-  (void) strcpy(one, "a,b, c,, ,d");
-  equal(strtok(one, ", "), "a", 14);	/* Different separators. */
-  equal(strtok((char *)NULL, ", "), "b", 15);
-  equal(strtok((char *)NULL, " ,"), "c", 16);	/* Permute list too. */
-  equal(strtok((char *)NULL, " ,"), "d", 17);
-  check(strtok((char *)NULL, ", ") == NULL, 18);
-  check(strtok((char *)NULL, ", ") == NULL, 19);	/* Persistence. */
-  (void) strcpy(one, ", ");
-  check(strtok(one, ", ") == NULL, 20);	/* No tokens. */
-  (void) strcpy(one, "");
-  check(strtok(one, ", ") == NULL, 21);	/* Empty string. */
-  (void) strcpy(one, "abc");
-  equal(strtok(one, ", "), "abc", 22);	/* No delimiters. */
-  check(strtok((char *)NULL, ", ") == NULL, 23);
-  (void) strcpy(one, "abc");
-  equal(strtok(one, ""), "abc", 24);	/* Empty delimiter list. */
-  check(strtok((char *)NULL, "") == NULL, 25);
-  (void) strcpy(one, "abcdefgh");
-  (void) strcpy(one, "a,b,c");
-  equal(strtok(one, ","), "a", 26);	/* Basics again... */
-  equal(strtok((char *)NULL, ","), "b", 27);
-  equal(strtok((char *)NULL, ","), "c", 28);
-  check(strtok((char *)NULL, ",") == NULL, 29);
+  equal(म_मोहर((अक्षर *)शून्य, ", "), "second", 3);
+  equal(म_मोहर((अक्षर *)शून्य, ", "), "third", 4);
+  check(म_मोहर((अक्षर *)शून्य, ", ") == शून्य, 5);
+  (व्योम) म_नकल(one, ", first, ");
+  equal(म_मोहर(one, ", "), "first", 6);	/* Extra delims, 1 tok. */
+  check(म_मोहर((अक्षर *)शून्य, ", ") == शून्य, 7);
+  (व्योम) म_नकल(one, "1a, 1b; 2a, 2b");
+  equal(म_मोहर(one, ", "), "1a", 8);	/* Changing delim lists. */
+  equal(म_मोहर((अक्षर *)शून्य, "; "), "1b", 9);
+  equal(म_मोहर((अक्षर *)शून्य, ", "), "2a", 10);
+  (व्योम) म_नकल(two, "x-y");
+  equal(म_मोहर(two, "-"), "x", 11);	/* New string before done. */
+  equal(म_मोहर((अक्षर *)शून्य, "-"), "y", 12);
+  check(म_मोहर((अक्षर *)शून्य, "-") == शून्य, 13);
+  (व्योम) म_नकल(one, "a,b, c,, ,d");
+  equal(म_मोहर(one, ", "), "a", 14);	/* Different separators. */
+  equal(म_मोहर((अक्षर *)शून्य, ", "), "b", 15);
+  equal(म_मोहर((अक्षर *)शून्य, " ,"), "c", 16);	/* Permute list too. */
+  equal(म_मोहर((अक्षर *)शून्य, " ,"), "d", 17);
+  check(म_मोहर((अक्षर *)शून्य, ", ") == शून्य, 18);
+  check(म_मोहर((अक्षर *)शून्य, ", ") == शून्य, 19);	/* Persistence. */
+  (व्योम) म_नकल(one, ", ");
+  check(म_मोहर(one, ", ") == शून्य, 20);	/* No tokens. */
+  (व्योम) म_नकल(one, "");
+  check(म_मोहर(one, ", ") == शून्य, 21);	/* Empty string. */
+  (व्योम) म_नकल(one, "abc");
+  equal(म_मोहर(one, ", "), "abc", 22);	/* No delimiters. */
+  check(म_मोहर((अक्षर *)शून्य, ", ") == शून्य, 23);
+  (व्योम) म_नकल(one, "abc");
+  equal(म_मोहर(one, ""), "abc", 24);	/* Empty delimiter list. */
+  check(म_मोहर((अक्षर *)शून्य, "") == शून्य, 25);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) म_नकल(one, "a,b,c");
+  equal(म_मोहर(one, ","), "a", 26);	/* Basics again... */
+  equal(म_मोहर((अक्षर *)शून्य, ","), "b", 27);
+  equal(म_मोहर((अक्षर *)शून्य, ","), "c", 28);
+  check(म_मोहर((अक्षर *)शून्य, ",") == शून्य, 29);
   equal(one+6, "gh", 30);			/* Stomped past end? */
   equal(one, "a", 31);			/* Stomped old tokens? */
   equal(one+2, "b", 32);
   equal(one+4, "c", 33);
 }
 
-static void
-test_strtok_r (void)
+अटल व्योम
+test_strtok_r (व्योम)
 {
   it = "strtok_r";
-  (void) strcpy(one, "first, second, third");
-  cp = NULL;	/* Always initialize cp to make sure it doesn't point to some old data.  */
+  (व्योम) म_नकल(one, "first, second, third");
+  cp = शून्य;	/* Always initialize cp to make sure it doesn't point to some old data.  */
   equal(strtok_r(one, ", ", &cp), "first", 1);	/* Basic test. */
   equal(one, "first", 2);
-  equal(strtok_r((char *)NULL, ", ", &cp), "second", 3);
-  equal(strtok_r((char *)NULL, ", ", &cp), "third", 4);
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 5);
-  (void) strcpy(one, ", first, ");
-  cp = NULL;
+  equal(strtok_r((अक्षर *)शून्य, ", ", &cp), "second", 3);
+  equal(strtok_r((अक्षर *)शून्य, ", ", &cp), "third", 4);
+  check(strtok_r((अक्षर *)शून्य, ", ", &cp) == शून्य, 5);
+  (व्योम) म_नकल(one, ", first, ");
+  cp = शून्य;
   equal(strtok_r(one, ", ", &cp), "first", 6);	/* Extra delims, 1 tok. */
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 7);
-  (void) strcpy(one, "1a, 1b; 2a, 2b");
-  cp = NULL;
+  check(strtok_r((अक्षर *)शून्य, ", ", &cp) == शून्य, 7);
+  (व्योम) म_नकल(one, "1a, 1b; 2a, 2b");
+  cp = शून्य;
   equal(strtok_r(one, ", ", &cp), "1a", 8);	/* Changing delim lists. */
-  equal(strtok_r((char *)NULL, "; ", &cp), "1b", 9);
-  equal(strtok_r((char *)NULL, ", ", &cp), "2a", 10);
-  (void) strcpy(two, "x-y");
-  cp = NULL;
+  equal(strtok_r((अक्षर *)शून्य, "; ", &cp), "1b", 9);
+  equal(strtok_r((अक्षर *)शून्य, ", ", &cp), "2a", 10);
+  (व्योम) म_नकल(two, "x-y");
+  cp = शून्य;
   equal(strtok_r(two, "-", &cp), "x", 11);	/* New string before done. */
-  equal(strtok_r((char *)NULL, "-", &cp), "y", 12);
-  check(strtok_r((char *)NULL, "-", &cp) == NULL, 13);
-  (void) strcpy(one, "a,b, c,, ,d");
-  cp = NULL;
+  equal(strtok_r((अक्षर *)शून्य, "-", &cp), "y", 12);
+  check(strtok_r((अक्षर *)शून्य, "-", &cp) == शून्य, 13);
+  (व्योम) म_नकल(one, "a,b, c,, ,d");
+  cp = शून्य;
   equal(strtok_r(one, ", ", &cp), "a", 14);	/* Different separators. */
-  equal(strtok_r((char *)NULL, ", ", &cp), "b", 15);
-  equal(strtok_r((char *)NULL, " ,", &cp), "c", 16);	/* Permute list too. */
-  equal(strtok_r((char *)NULL, " ,", &cp), "d", 17);
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 18);
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 19);	/* Persistence. */
-  (void) strcpy(one, ", ");
-  cp = NULL;
-  check(strtok_r(one, ", ", &cp) == NULL, 20);	/* No tokens. */
-  (void) strcpy(one, "");
-  cp = NULL;
-  check(strtok_r(one, ", ", &cp) == NULL, 21);	/* Empty string. */
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 22);	/* Persistence. */
-  (void) strcpy(one, "abc");
-  cp = NULL;
+  equal(strtok_r((अक्षर *)शून्य, ", ", &cp), "b", 15);
+  equal(strtok_r((अक्षर *)शून्य, " ,", &cp), "c", 16);	/* Permute list too. */
+  equal(strtok_r((अक्षर *)शून्य, " ,", &cp), "d", 17);
+  check(strtok_r((अक्षर *)शून्य, ", ", &cp) == शून्य, 18);
+  check(strtok_r((अक्षर *)शून्य, ", ", &cp) == शून्य, 19);	/* Persistence. */
+  (व्योम) म_नकल(one, ", ");
+  cp = शून्य;
+  check(strtok_r(one, ", ", &cp) == शून्य, 20);	/* No tokens. */
+  (व्योम) म_नकल(one, "");
+  cp = शून्य;
+  check(strtok_r(one, ", ", &cp) == शून्य, 21);	/* Empty string. */
+  check(strtok_r((अक्षर *)शून्य, ", ", &cp) == शून्य, 22);	/* Persistence. */
+  (व्योम) म_नकल(one, "abc");
+  cp = शून्य;
   equal(strtok_r(one, ", ", &cp), "abc", 23);	/* No delimiters. */
-  check(strtok_r((char *)NULL, ", ", &cp) == NULL, 24);
-  (void) strcpy(one, "abc");
-  cp = NULL;
+  check(strtok_r((अक्षर *)शून्य, ", ", &cp) == शून्य, 24);
+  (व्योम) म_नकल(one, "abc");
+  cp = शून्य;
   equal(strtok_r(one, "", &cp), "abc", 25);	/* Empty delimiter list. */
-  check(strtok_r((char *)NULL, "", &cp) == NULL, 26);
-  (void) strcpy(one, "abcdefgh");
-  (void) strcpy(one, "a,b,c");
-  cp = NULL;
+  check(strtok_r((अक्षर *)शून्य, "", &cp) == शून्य, 26);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) म_नकल(one, "a,b,c");
+  cp = शून्य;
   equal(strtok_r(one, ",", &cp), "a", 27);	/* Basics again... */
-  equal(strtok_r((char *)NULL, ",", &cp), "b", 28);
-  equal(strtok_r((char *)NULL, ",", &cp), "c", 29);
-  check(strtok_r((char *)NULL, ",", &cp) == NULL, 30);
+  equal(strtok_r((अक्षर *)शून्य, ",", &cp), "b", 28);
+  equal(strtok_r((अक्षर *)शून्य, ",", &cp), "c", 29);
+  check(strtok_r((अक्षर *)शून्य, ",", &cp) == शून्य, 30);
   equal(one+6, "gh", 31);			/* Stomped past end? */
   equal(one, "a", 32);				/* Stomped old tokens? */
   equal(one+2, "b", 33);
   equal(one+4, "c", 34);
-  strcpy (one, ":::");
-  cp = NULL;
-  check (strtok_r (one, ":", &cp) == NULL, 35);	/* Must store pointer in cp. */
-  check (strtok_r (NULL, ":", &cp) == NULL, 36);
+  म_नकल (one, ":::");
+  cp = शून्य;
+  check (strtok_r (one, ":", &cp) == शून्य, 35);	/* Must store pointer in cp. */
+  check (strtok_r (शून्य, ":", &cp) == शून्य, 36);
 }
 
-static void
-test_strsep (void)
+अटल व्योम
+test_strsep (व्योम)
 {
-  char *ptr;
+  अक्षर *ptr;
   it = "strsep";
-  cp = strcpy(one, "first, second, third");
+  cp = म_नकल(one, "first, second, third");
   equal(strsep(&cp, ", "), "first", 1);	/* Basic test. */
   equal(one, "first", 2);
   equal(strsep(&cp, ", "), "", 3);
   equal(strsep(&cp, ", "), "second", 4);
   equal(strsep(&cp, ", "), "", 5);
   equal(strsep(&cp, ", "), "third", 6);
-  check(strsep(&cp, ", ") == NULL, 7);
-  cp = strcpy(one, ", first, ");
+  check(strsep(&cp, ", ") == शून्य, 7);
+  cp = म_नकल(one, ", first, ");
   equal(strsep(&cp, ", "), "", 8);
   equal(strsep(&cp, ", "), "", 9);
   equal(strsep(&cp, ", "), "first", 10);	/* Extra delims, 1 tok. */
   equal(strsep(&cp, ", "), "", 11);
   equal(strsep(&cp, ", "), "", 12);
-  check(strsep(&cp, ", ") == NULL, 13);
-  cp = strcpy(one, "1a, 1b; 2a, 2b");
+  check(strsep(&cp, ", ") == शून्य, 13);
+  cp = म_नकल(one, "1a, 1b; 2a, 2b");
   equal(strsep(&cp, ", "), "1a", 14);	/* Changing delim lists. */
   equal(strsep(&cp, ", "), "", 15);
   equal(strsep(&cp, "; "), "1b", 16);
   equal(strsep(&cp, ", "), "", 17);
   equal(strsep(&cp, ", "), "2a", 18);
-  cp = strcpy(two, "x-y");
+  cp = म_नकल(two, "x-y");
   equal(strsep(&cp, "-"), "x", 19);	/* New string before done. */
   equal(strsep(&cp, "-"), "y", 20);
-  check(strsep(&cp, "-") == NULL, 21);
-  cp = strcpy(one, "a,b, c,, ,d ");
+  check(strsep(&cp, "-") == शून्य, 21);
+  cp = म_नकल(one, "a,b, c,, ,d ");
   equal(strsep(&cp, ", "), "a", 22);	/* Different separators. */
   equal(strsep(&cp, ", "), "b", 23);
   equal(strsep(&cp, " ,"), "", 24);
@@ -1023,44 +1023,44 @@ test_strsep (void)
   equal(strsep(&cp, " ,"), "", 28);
   equal(strsep(&cp, " ,"), "d", 29);
   equal(strsep(&cp, " ,"), "", 30);
-  check(strsep(&cp, ", ") == NULL, 31);
-  check(strsep(&cp, ", ") == NULL, 32);	/* Persistence. */
-  cp = strcpy(one, ", ");
+  check(strsep(&cp, ", ") == शून्य, 31);
+  check(strsep(&cp, ", ") == शून्य, 32);	/* Persistence. */
+  cp = म_नकल(one, ", ");
   equal(strsep(&cp, ", "), "", 33);
   equal(strsep(&cp, ", "), "", 34);
   equal(strsep(&cp, ", "), "", 35);
-  check(strsep(&cp, ", ") == NULL, 36);	/* No tokens. */
-  cp = strcpy(one, "");
+  check(strsep(&cp, ", ") == शून्य, 36);	/* No tokens. */
+  cp = म_नकल(one, "");
   equal(strsep(&cp, ", "), "", 37);
-  check(strsep(&cp, ", ") == NULL, 38);	/* Empty string. */
-  cp = strcpy(one, "abc");
+  check(strsep(&cp, ", ") == शून्य, 38);	/* Empty string. */
+  cp = म_नकल(one, "abc");
   equal(strsep(&cp, ", "), "abc", 39);	/* No delimiters. */
-  check(strsep(&cp, ", ") == NULL, 40);
-  cp = strcpy(one, "abc");
+  check(strsep(&cp, ", ") == शून्य, 40);
+  cp = म_नकल(one, "abc");
   equal(strsep(&cp, ""), "abc", 41);	/* Empty delimiter list. */
-  check(strsep(&cp, "") == NULL, 42);
-  (void) strcpy(one, "abcdefgh");
-  cp = strcpy(one, "a,b,c");
+  check(strsep(&cp, "") == शून्य, 42);
+  (व्योम) म_नकल(one, "abcdefgh");
+  cp = म_नकल(one, "a,b,c");
   equal(strsep(&cp, ","), "a", 43);	/* Basics again... */
   equal(strsep(&cp, ","), "b", 44);
   equal(strsep(&cp, ","), "c", 45);
-  check(strsep(&cp, ",") == NULL, 46);
+  check(strsep(&cp, ",") == शून्य, 46);
   equal(one+6, "gh", 47);		/* Stomped past end? */
   equal(one, "a", 48);			/* Stomped old tokens? */
   equal(one+2, "b", 49);
   equal(one+4, "c", 50);
 
   {
-    char text[] = "This,is,a,test";
-    char *list = strdupa (text);
+    अक्षर text[] = "This,is,a,test";
+    अक्षर *list = strdupa (text);
     equal (strsep (&list, ","), "This", 51);
     equal (strsep (&list, ","), "is", 52);
     equal (strsep (&list, ","), "a", 53);
     equal (strsep (&list, ","), "test", 54);
-    check (strsep (&list, ",") == NULL, 55);
+    check (strsep (&list, ",") == शून्य, 55);
   }
 
-  cp = strcpy(one, "a,b, c,, ,d,");
+  cp = म_नकल(one, "a,b, c,, ,d,");
   equal(strsep(&cp, ","), "a", 56);	/* Different separators. */
   equal(strsep(&cp, ","), "b", 57);
   equal(strsep(&cp, ","), " c", 58);	/* Permute list too. */
@@ -1068,10 +1068,10 @@ test_strsep (void)
   equal(strsep(&cp, ","), " ", 60);
   equal(strsep(&cp, ","), "d", 61);
   equal(strsep(&cp, ","), "", 62);
-  check(strsep(&cp, ",") == NULL, 63);
-  check(strsep(&cp, ",") == NULL, 64);	/* Persistence. */
+  check(strsep(&cp, ",") == शून्य, 63);
+  check(strsep(&cp, ",") == शून्य, 64);	/* Persistence. */
 
-  cp = strcpy(one, "a,b, c,, ,d,");
+  cp = म_नकल(one, "a,b, c,, ,d,");
   equal(strsep(&cp, "xy,"), "a", 65);	/* Different separators. */
   equal(strsep(&cp, "x,y"), "b", 66);
   equal(strsep(&cp, ",xy"), " c", 67);	/* Permute list too. */
@@ -1079,111 +1079,111 @@ test_strsep (void)
   equal(strsep(&cp, "x,y"), " ", 69);
   equal(strsep(&cp, ",xy"), "d", 70);
   equal(strsep(&cp, "xy,"), "", 71);
-  check(strsep(&cp, "x,y") == NULL, 72);
-  check(strsep(&cp, ",xy") == NULL, 73);	/* Persistence. */
+  check(strsep(&cp, "x,y") == शून्य, 72);
+  check(strsep(&cp, ",xy") == शून्य, 73);	/* Persistence. */
 
-  cp = strcpy(one, "ABC");
+  cp = म_नकल(one, "ABC");
   one[4] = ':';
   equal(strsep(&cp, "C"), "AB", 74);	/* Access beyond NUL.  */
   ptr = strsep(&cp, ":");
   equal(ptr, "", 75);
   check(ptr == one + 3, 76);
-  check(cp == NULL, 77);
+  check(cp == शून्य, 77);
 
-  cp = strcpy(one, "ABC");
+  cp = म_नकल(one, "ABC");
   one[4] = ':';
   equal(strsep(&cp, "CD"), "AB", 78);	/* Access beyond NUL.  */
   ptr = strsep(&cp, ":.");
   equal(ptr, "", 79);
   check(ptr == one + 3, 80);
 
-  cp = strcpy(one, "ABC");		/* No token in string.  */
+  cp = म_नकल(one, "ABC");		/* No token in string.  */
   equal(strsep(&cp, ","), "ABC", 81);
-  check(cp == NULL, 82);
+  check(cp == शून्य, 82);
 
   *one = '\0';				/* Empty string. */
   cp = one;
   ptr = strsep(&cp, ",");
   equal(ptr, "", 83);
   check(ptr == one, 84);
-  check(cp == NULL, 85);
+  check(cp == शून्य, 85);
 
   *one = '\0';				/* Empty string and no token. */
   cp = one;
   ptr = strsep(&cp, "");
   equal(ptr, "", 86);
   check(ptr == one , 87);
-  check(cp == NULL, 88);
+  check(cp == शून्य, 88);
 }
 
-static void
-test_memcmp (void)
+अटल व्योम
+test_memcmp (व्योम)
 {
-  int cnt = 1;
-  char one[21];
-  char two[21];
+  पूर्णांक cnt = 1;
+  अक्षर one[21];
+  अक्षर two[21];
 
   it = "memcmp";
-  check(memcmp("a", "a", 1) == 0, cnt++);	/* Identity. */
-  check(memcmp("abc", "abc", 3) == 0, cnt++);	/* Multicharacter. */
-  check(memcmp("abcd", "abcf", 4) < 0, cnt++);	/* Honestly unequal. */
-  check(memcmp("abcf", "abcd", 4) > 0, cnt++);
-  check(memcmp("alph", "cold", 4) < 0, cnt++);
-  check(memcmp("a\203", "a\003", 2) > 0, cnt++);
-  check(memcmp("a\003", "a\203", 2) < 0, cnt++);
-  check(memcmp("a\003bc", "a\203bc", 2) < 0, cnt++);
-  check(memcmp("abc\203", "abc\003", 4) > 0, cnt++);
-  check(memcmp("abc\003", "abc\203", 4) < 0, cnt++);
-  check(memcmp("abcf", "abcd", 3) == 0, cnt++);	/* Count limited. */
-  check(memcmp("abc", "def", 0) == 0, cnt++);	/* Zero count. */
+  check(स_भेद("a", "a", 1) == 0, cnt++);	/* Identity. */
+  check(स_भेद("abc", "abc", 3) == 0, cnt++);	/* Multicharacter. */
+  check(स_भेद("abcd", "abcf", 4) < 0, cnt++);	/* Honestly unequal. */
+  check(स_भेद("abcf", "abcd", 4) > 0, cnt++);
+  check(स_भेद("alph", "cold", 4) < 0, cnt++);
+  check(स_भेद("a\203", "a\003", 2) > 0, cnt++);
+  check(स_भेद("a\003", "a\203", 2) < 0, cnt++);
+  check(स_भेद("a\003bc", "a\203bc", 2) < 0, cnt++);
+  check(स_भेद("abc\203", "abc\003", 4) > 0, cnt++);
+  check(स_भेद("abc\003", "abc\203", 4) < 0, cnt++);
+  check(स_भेद("abcf", "abcd", 3) == 0, cnt++);	/* Count limited. */
+  check(स_भेद("abc", "def", 0) == 0, cnt++);	/* Zero count. */
   /* Comparisons with shifting 4-byte boundaries. */
-  for (int i = 0; i < 4; ++i)
+  क्रम (पूर्णांक i = 0; i < 4; ++i)
     {
-      char *a = one + i;
-      char *b = two + i;
-      memcpy(a, "--------11112222", 16);
-      memcpy(b, "--------33334444", 16);
-      check(memcmp(b, a, 16) > 0, cnt++);
-      check(memcmp(a, b, 16) < 0, cnt++);
+      अक्षर *a = one + i;
+      अक्षर *b = two + i;
+      स_नकल(a, "--------11112222", 16);
+      स_नकल(b, "--------33334444", 16);
+      check(स_भेद(b, a, 16) > 0, cnt++);
+      check(स_भेद(a, b, 16) < 0, cnt++);
     }
 }
 
-static void
-test_memchr (void)
+अटल व्योम
+test_memchr (व्योम)
 {
   it = "memchr";
-  check(memchr("abcd", 'z', 4) == NULL, 1);	/* Not found. */
-  (void) strcpy(one, "abcd");
-  check(memchr(one, 'c', 4) == one+2, 2);	/* Basic test. */
-  check(memchr(one, ~0xff|'c', 4) == one+2, 2);	/* ignore highorder bits. */
-  check(memchr(one, 'd', 4) == one+3, 3);	/* End of string. */
-  check(memchr(one, 'a', 4) == one, 4);	/* Beginning. */
-  check(memchr(one, '\0', 5) == one+4, 5);	/* Finding NUL. */
-  (void) strcpy(one, "ababa");
-  check(memchr(one, 'b', 5) == one+1, 6);	/* Finding first. */
-  check(memchr(one, 'b', 0) == NULL, 7);	/* Zero count. */
-  check(memchr(one, 'a', 1) == one, 8);	/* Singleton case. */
-  (void) strcpy(one, "a\203b");
-  check(memchr(one, 0203, 3) == one+1, 9);	/* Unsignedness. */
+  check(स_प्रथम("abcd", 'z', 4) == शून्य, 1);	/* Not found. */
+  (व्योम) म_नकल(one, "abcd");
+  check(स_प्रथम(one, 'c', 4) == one+2, 2);	/* Basic test. */
+  check(स_प्रथम(one, ~0xff|'c', 4) == one+2, 2);	/* ignore highorder bits. */
+  check(स_प्रथम(one, 'd', 4) == one+3, 3);	/* End of string. */
+  check(स_प्रथम(one, 'a', 4) == one, 4);	/* Beginning. */
+  check(स_प्रथम(one, '\0', 5) == one+4, 5);	/* Finding NUL. */
+  (व्योम) म_नकल(one, "ababa");
+  check(स_प्रथम(one, 'b', 5) == one+1, 6);	/* Finding first. */
+  check(स_प्रथम(one, 'b', 0) == शून्य, 7);	/* Zero count. */
+  check(स_प्रथम(one, 'a', 1) == one, 8);	/* Singleton case. */
+  (व्योम) म_नकल(one, "a\203b");
+  check(स_प्रथम(one, 0203, 3) == one+1, 9);	/* Unsignedness. */
 
   /* now test all possible alignment and length combinations to catch
      bugs due to unrolled loops (assuming unrolling is limited to no
      more than 128 byte chunks: */
   {
-    char buf[128 + sizeof (long)];
-    long align, len, i, pos;
+    अक्षर buf[128 + माप (दीर्घ)];
+    दीर्घ align, len, i, pos;
 
-    for (align = 0; align < (long) sizeof (long); ++align) {
-      for (len = 0; len < (long) (sizeof (buf) - align); ++len) {
-	for (i = 0; i < len; ++i) {
+    क्रम (align = 0; align < (दीर्घ) माप (दीर्घ); ++align) {
+      क्रम (len = 0; len < (दीर्घ) (माप (buf) - align); ++len) {
+	क्रम (i = 0; i < len; ++i) {
 	  buf[align + i] = 'x';		/* don't depend on memset... */
 	}
-	for (pos = 0; pos < len; ++pos) {
-#if 0
-	  printf("align %d, len %d, pos %d\n", align, len, pos);
-#endif
-	  check(memchr(buf + align, 'x', len) == buf + align + pos, 10);
-	  check(memchr(buf + align, 'x', pos) == NULL, 11);
+	क्रम (pos = 0; pos < len; ++pos) {
+#अगर 0
+	  म_लिखो("align %d, len %d, pos %d\n", align, len, pos);
+#पूर्ण_अगर
+	  check(स_प्रथम(buf + align, 'x', len) == buf + align + pos, 10);
+	  check(स_प्रथम(buf + align, 'x', pos) == शून्य, 11);
 	  buf[align + pos] = '-';
 	}
       }
@@ -1191,72 +1191,72 @@ test_memchr (void)
   }
 }
 
-static void
-test_memcpy (void)
+अटल व्योम
+test_memcpy (व्योम)
 {
-  int i;
+  पूर्णांक i;
   it = "memcpy";
-  check(memcpy(one, "abc", 4) == one, 1);	/* Returned value. */
+  check(स_नकल(one, "abc", 4) == one, 1);	/* Returned value. */
   equal(one, "abc", 2);			/* Did the copy go right? */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) memcpy(one+1, "xyz", 2);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) स_नकल(one+1, "xyz", 2);
   equal(one, "axydefgh", 3);		/* Basic test. */
 
-  (void) strcpy(one, "abc");
-  (void) memcpy(one, "xyz", 0);
+  (व्योम) म_नकल(one, "abc");
+  (व्योम) स_नकल(one, "xyz", 0);
   equal(one, "abc", 4);			/* Zero-length copy. */
 
-  (void) strcpy(one, "hi there");
-  (void) strcpy(two, "foo");
-  (void) memcpy(two, one, 9);
+  (व्योम) म_नकल(one, "hi there");
+  (व्योम) म_नकल(two, "foo");
+  (व्योम) स_नकल(two, one, 9);
   equal(two, "hi there", 5);		/* Just paranoia. */
   equal(one, "hi there", 6);		/* Stomped on source? */
 
-  for (i = 0; i < 16; i++)
+  क्रम (i = 0; i < 16; i++)
     {
-      const char *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-      strcpy (one, x);
-      check (memcpy (one + i, "hi there", 9) == one + i,
+      स्थिर अक्षर *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      म_नकल (one, x);
+      check (स_नकल (one + i, "hi there", 9) == one + i,
 	     7 + (i * 6));		/* Unaligned destination. */
-      check (memcmp (one, x, i) == 0, 8 + (i * 6));  /* Wrote under? */
+      check (स_भेद (one, x, i) == 0, 8 + (i * 6));  /* Wrote under? */
       equal (one + i, "hi there", 9 + (i * 6));
       check (one[i + 9] == 'x', 10 + (i * 6));       /* Wrote over? */
-      check (memcpy (two, one + i, 9) == two,
+      check (स_नकल (two, one + i, 9) == two,
 	     11 + (i * 6));		/* Unaligned source. */
       equal (two, "hi there", 12 + (i * 6));
     }
 }
 
-static void
-test_mempcpy (void)
+अटल व्योम
+test_mempcpy (व्योम)
 {
-  int i;
+  पूर्णांक i;
   it = "mempcpy";
   check(mempcpy(one, "abc", 4) == one + 4, 1);	/* Returned value. */
   equal(one, "abc", 2);			/* Did the copy go right? */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) mempcpy(one+1, "xyz", 2);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) mempcpy(one+1, "xyz", 2);
   equal(one, "axydefgh", 3);		/* Basic test. */
 
-  (void) strcpy(one, "abc");
-  (void) mempcpy(one, "xyz", 0);
+  (व्योम) म_नकल(one, "abc");
+  (व्योम) mempcpy(one, "xyz", 0);
   equal(one, "abc", 4);			/* Zero-length copy. */
 
-  (void) strcpy(one, "hi there");
-  (void) strcpy(two, "foo");
-  (void) mempcpy(two, one, 9);
+  (व्योम) म_नकल(one, "hi there");
+  (व्योम) म_नकल(two, "foo");
+  (व्योम) mempcpy(two, one, 9);
   equal(two, "hi there", 5);		/* Just paranoia. */
   equal(one, "hi there", 6);		/* Stomped on source? */
 
-  for (i = 0; i < 16; i++)
+  क्रम (i = 0; i < 16; i++)
     {
-      const char *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-      strcpy (one, x);
+      स्थिर अक्षर *x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      म_नकल (one, x);
       check (mempcpy (one + i, "hi there", 9) == one + i + 9,
 	     7 + (i * 6));		/* Unaligned destination. */
-      check (memcmp (one, x, i) == 0, 8 + (i * 6));  /* Wrote under? */
+      check (स_भेद (one, x, i) == 0, 8 + (i * 6));  /* Wrote under? */
       equal (one + i, "hi there", 9 + (i * 6));
       check (one[i + 9] == 'x', 10 + (i * 6));       /* Wrote over? */
       check (mempcpy (two, one + i, 9) == two + 9,
@@ -1265,137 +1265,137 @@ test_mempcpy (void)
     }
 }
 
-static void
-test_memmove (void)
+अटल व्योम
+test_memmove (व्योम)
 {
   it = "memmove";
-  check(memmove(one, "abc", 4) == one, 1);	/* Returned value. */
+  check(स_हटाओ(one, "abc", 4) == one, 1);	/* Returned value. */
   equal(one, "abc", 2);			/* Did the copy go right? */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) memmove(one+1, "xyz", 2);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) स_हटाओ(one+1, "xyz", 2);
   equal(one, "axydefgh", 3);		/* Basic test. */
 
-  (void) strcpy(one, "abc");
-  (void) memmove(one, "xyz", 0);
+  (व्योम) म_नकल(one, "abc");
+  (व्योम) स_हटाओ(one, "xyz", 0);
   equal(one, "abc", 4);			/* Zero-length copy. */
 
-  (void) strcpy(one, "hi there");
-  (void) strcpy(two, "foo");
-  (void) memmove(two, one, 9);
+  (व्योम) म_नकल(one, "hi there");
+  (व्योम) म_नकल(two, "foo");
+  (व्योम) स_हटाओ(two, one, 9);
   equal(two, "hi there", 5);		/* Just paranoia. */
   equal(one, "hi there", 6);		/* Stomped on source? */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) memmove(one+1, one, 9);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) स_हटाओ(one+1, one, 9);
   equal(one, "aabcdefgh", 7);		/* Overlap, right-to-left. */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) memmove(one+1, one+2, 7);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) स_हटाओ(one+1, one+2, 7);
   equal(one, "acdefgh", 8);		/* Overlap, left-to-right. */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) memmove(one, one, 9);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) स_हटाओ(one, one, 9);
   equal(one, "abcdefgh", 9);		/* 100% overlap. */
 }
 
-static void
-test_memccpy (void)
+अटल व्योम
+test_memccpy (व्योम)
 {
   /* First test like memcpy, then the search part The SVID, the only
      place where memccpy is mentioned, says overlap might fail, so we
      don't try it.  Besides, it's hard to see the rationale for a
      non-left-to-right memccpy.  */
   it = "memccpy";
-  check(memccpy(one, "abc", 'q', 4) == NULL, 1);	/* Returned value. */
+  check(memccpy(one, "abc", 'q', 4) == शून्य, 1);	/* Returned value. */
   equal(one, "abc", 2);			/* Did the copy go right? */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) memccpy(one+1, "xyz", 'q', 2);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) memccpy(one+1, "xyz", 'q', 2);
   equal(one, "axydefgh", 3);		/* Basic test. */
 
-  (void) strcpy(one, "abc");
-  (void) memccpy(one, "xyz", 'q', 0);
+  (व्योम) म_नकल(one, "abc");
+  (व्योम) memccpy(one, "xyz", 'q', 0);
   equal(one, "abc", 4);			/* Zero-length copy. */
 
-  (void) strcpy(one, "hi there");
-  (void) strcpy(two, "foo");
-  (void) memccpy(two, one, 'q', 9);
+  (व्योम) म_नकल(one, "hi there");
+  (व्योम) म_नकल(two, "foo");
+  (व्योम) memccpy(two, one, 'q', 9);
   equal(two, "hi there", 5);		/* Just paranoia. */
   equal(one, "hi there", 6);		/* Stomped on source? */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) strcpy(two, "horsefeathers");
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) म_नकल(two, "horsefeathers");
   check(memccpy(two, one, 'f', 9) == two+6, 7);	/* Returned value. */
   equal(one, "abcdefgh", 8);		/* Source intact? */
   equal(two, "abcdefeathers", 9);		/* Copy correct? */
 
-  (void) strcpy(one, "abcd");
-  (void) strcpy(two, "bumblebee");
+  (व्योम) म_नकल(one, "abcd");
+  (व्योम) म_नकल(two, "bumblebee");
   check(memccpy(two, one, 'a', 4) == two+1, 10);	/* First char. */
   equal(two, "aumblebee", 11);
   check(memccpy(two, one, 'd', 4) == two+4, 12);	/* Last char. */
   equal(two, "abcdlebee", 13);
-  (void) strcpy(one, "xyz");
+  (व्योम) म_नकल(one, "xyz");
   check(memccpy(two, one, 'x', 1) == two+1, 14);	/* Singleton. */
   equal(two, "xbcdlebee", 15);
 }
 
-static void
-test_memset (void)
+अटल व्योम
+test_memset (व्योम)
 {
-  int i;
+  पूर्णांक i;
 
   it = "memset";
-  (void) strcpy(one, "abcdefgh");
-  check(memset(one+1, 'x', 3) == one+1, 1);	/* Return value. */
+  (व्योम) म_नकल(one, "abcdefgh");
+  check(स_रखो(one+1, 'x', 3) == one+1, 1);	/* Return value. */
   equal(one, "axxxefgh", 2);		/* Basic test. */
 
-  (void) memset(one+2, 'y', 0);
+  (व्योम) स_रखो(one+2, 'y', 0);
   equal(one, "axxxefgh", 3);		/* Zero-length set. */
 
-  (void) memset(one+5, 0, 1);
+  (व्योम) स_रखो(one+5, 0, 1);
   equal(one, "axxxe", 4);			/* Zero fill. */
   equal(one+6, "gh", 5);			/* And the leftover. */
 
-  (void) memset(one+2, 010045, 1);
+  (व्योम) स_रखो(one+2, 010045, 1);
   equal(one, "ax\045xe", 6);		/* Unsigned char convert. */
 
   /* Non-8bit fill character.  */
-  memset (one, 0x101, sizeof (one));
-  for (i = 0; i < (int) sizeof (one); ++i)
+  स_रखो (one, 0x101, माप (one));
+  क्रम (i = 0; i < (पूर्णांक) माप (one); ++i)
     check (one[i] == '\01', 7);
 
   /* Test for more complex versions of memset, for all alignments and
      lengths up to 256. This test takes a little while, perhaps it should
      be made weaker?  */
   {
-    char data[512];
-    int j;
-    int k;
-    int c;
+    अक्षर तथ्य[512];
+    पूर्णांक j;
+    पूर्णांक k;
+    पूर्णांक c;
 
-    for (i = 0; i < 512; i++)
-      data[i] = 'x';
-    for (c = 0; c <= 'y'; c += 'y')  /* check for memset(,0,) and
+    क्रम (i = 0; i < 512; i++)
+      तथ्य[i] = 'x';
+    क्रम (c = 0; c <= 'y'; c += 'y')  /* check for memset(,0,) and
 					memset(,'y',) */
-      for (j = 0; j < 256; j++)
-	for (i = 0; i < 256; i++)
+      क्रम (j = 0; j < 256; j++)
+	क्रम (i = 0; i < 256; i++)
 	  {
-	    memset (data + i, c, j);
-	    for (k = 0; k < i; k++)
-	      if (data[k] != 'x')
-		goto fail;
-	    for (k = i; k < i+j; k++)
+	    स_रखो (तथ्य + i, c, j);
+	    क्रम (k = 0; k < i; k++)
+	      अगर (तथ्य[k] != 'x')
+		जाओ fail;
+	    क्रम (k = i; k < i+j; k++)
 	      {
-		if (data[k] != c)
-		  goto fail;
-		data[k] = 'x';
+		अगर (तथ्य[k] != c)
+		  जाओ fail;
+		तथ्य[k] = 'x';
 	      }
-	    for (k = i+j; k < 512; k++)
-	      if (data[k] != 'x')
-		goto fail;
-	    continue;
+	    क्रम (k = i+j; k < 512; k++)
+	      अगर (तथ्य[k] != 'x')
+		जाओ fail;
+	    जारी;
 
 	  fail:
 	    check (0, 8 + i + j * 256 + (c != 0) * 256 * 256);
@@ -1403,71 +1403,71 @@ test_memset (void)
   }
 }
 
-static void
-test_bcopy (void)
+अटल व्योम
+test_bcopy (व्योम)
 {
   /* Much like memcpy.  Berklix manual is silent about overlap, so
      don't test it.  */
   it = "bcopy";
-  (void) bcopy("abc", one, 4);
+  (व्योम) bcopy("abc", one, 4);
   equal(one, "abc", 1);			/* Simple copy. */
 
-  (void) strcpy(one, "abcdefgh");
-  (void) bcopy("xyz", one+1, 2);
+  (व्योम) म_नकल(one, "abcdefgh");
+  (व्योम) bcopy("xyz", one+1, 2);
   equal(one, "axydefgh", 2);		/* Basic test. */
 
-  (void) strcpy(one, "abc");
-  (void) bcopy("xyz", one, 0);
+  (व्योम) म_नकल(one, "abc");
+  (व्योम) bcopy("xyz", one, 0);
   equal(one, "abc", 3);			/* Zero-length copy. */
 
-  (void) strcpy(one, "hi there");
-  (void) strcpy(two, "foo");
-  (void) bcopy(one, two, 9);
+  (व्योम) म_नकल(one, "hi there");
+  (व्योम) म_नकल(two, "foo");
+  (व्योम) bcopy(one, two, 9);
   equal(two, "hi there", 4);		/* Just paranoia. */
   equal(one, "hi there", 5);		/* Stomped on source? */
 }
 
-static void
-test_bzero (void)
+अटल व्योम
+test_bzero (व्योम)
 {
   it = "bzero";
-  (void) strcpy(one, "abcdef");
+  (व्योम) म_नकल(one, "abcdef");
   bzero(one+2, 2);
   equal(one, "ab", 1);			/* Basic test. */
   equal(one+3, "", 2);
   equal(one+4, "ef", 3);
 
-  (void) strcpy(one, "abcdef");
+  (व्योम) म_नकल(one, "abcdef");
   bzero(one+2, 0);
   equal(one, "abcdef", 4);		/* Zero-length copy. */
 }
 
-static void
-test_strndup (void)
+अटल व्योम
+test_strndup (व्योम)
 {
-  char *p, *q;
+  अक्षर *p, *q;
   it = "strndup";
   p = strndup("abcdef", 12);
-  check(p != NULL, 1);
-  if (p != NULL)
+  check(p != शून्य, 1);
+  अगर (p != शून्य)
     {
       equal(p, "abcdef", 2);
       q = strndup(p + 1, 2);
-      check(q != NULL, 3);
-      if (q != NULL)
+      check(q != शून्य, 3);
+      अगर (q != शून्य)
 	equal(q, "bc", 4);
-      free (q);
+      मुक्त (q);
     }
-  free (p);
+  मुक्त (p);
   p = strndup("abc def", 3);
-  check(p != NULL, 5);
-  if (p != NULL)
+  check(p != शून्य, 5);
+  अगर (p != शून्य)
     equal(p, "abc", 6);
-  free (p);
+  मुक्त (p);
 }
 
-static void
-test_bcmp (void)
+अटल व्योम
+test_bcmp (व्योम)
 {
   it = "bcmp";
   check(bcmp("a", "a", 1) == 0, 1);	/* Identity. */
@@ -1479,8 +1479,8 @@ test_bcmp (void)
   check(bcmp("abc", "def", 0) == 0, 8);	/* Zero count. */
 }
 
-static void
-test_memcmpeq (void)
+अटल व्योम
+test_memcmpeq (व्योम)
 {
   it = "__memcmpeq";
   check (__memcmpeq ("a", "a", 1) == 0, 1); /* Identity.  */
@@ -1492,17 +1492,17 @@ test_memcmpeq (void)
   check (__memcmpeq ("abc", "def", 0) == 0, 8); /* Zero count.  */
 }
 
-static void
-test_strerror (void)
+अटल व्योम
+test_strerror (व्योम)
 {
   it = "strerror";
-  check(strerror(EDOM) != 0, 1);
-  check(strerror(ERANGE) != 0, 2);
-  check(strerror(ENOENT) != 0, 3);
+  check(म_त्रुटि(गलत_तर्क) != 0, 1);
+  check(म_त्रुटि(दुस्फल) != 0, 2);
+  check(म_त्रुटि(ENOENT) != 0, 3);
 }
 
-static void
-test_strcasecmp (void)
+अटल व्योम
+test_strcasecmp (व्योम)
 {
   it = "strcasecmp";
   /* Note that the locale is "C".  */
@@ -1520,8 +1520,8 @@ test_strcasecmp (void)
   check(strcasecmp("AbC", "ab") > 0, 12);
 }
 
-static void
-test_strncasecmp (void)
+अटल व्योम
+test_strncasecmp (व्योम)
 {
   it = "strncasecmp";
   /* Note that the locale is "C".  */
@@ -1547,10 +1547,10 @@ test_strncasecmp (void)
   check(strncasecmp("ADC", "abcd", 2) > 0, 20);
 }
 
-int
-main (void)
+पूर्णांक
+मुख्य (व्योम)
 {
-  int status;
+  पूर्णांक status;
 
   /* Test strcmp first because we use it to test other things.  */
   test_strcmp ();
@@ -1592,7 +1592,7 @@ main (void)
   test_rawmemchr ();
 
   /* index - just like strchr.  */
-  test_index ();
+  test_सूचकांक ();
 
   /* strrchr.  */
   test_strrchr ();
@@ -1669,16 +1669,16 @@ main (void)
   /* strncasecmp.  Without locale dependencies.  */
   test_strncasecmp ();
 
-  if (errors == 0)
+  अगर (errors == 0)
     {
-      status = EXIT_SUCCESS;
-      puts("No errors.");
+      status = निकास_सफल;
+      माला_दो("No errors.");
     }
-  else
+  अन्यथा
     {
-      status = EXIT_FAILURE;
-      printf("%zd errors.\n", errors);
+      status = निकास_त्रुटि;
+      म_लिखो("%zd errors.\n", errors);
     }
 
-  return status;
+  वापस status;
 }

@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libintl.h>
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#समावेश <libintl.h>
+#समावेश <locale.h>
+#समावेश <stdio.h>
+#समावेश <string.h>
+#समावेश <tls-internal.h>
+#समावेश <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+अटल स्थिर अक्षर *
+translate (स्थिर अक्षर *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  स्थिर अक्षर *res = _(str);
   __uselocale (oldloc);
-  return res;
+  वापस res;
 }
 
-static char *
+अटल अक्षर *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  वापस (अक्षर *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+अक्षर *
+__strerror_l (पूर्णांक errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  पूर्णांक saved_errno = त्रुटि_सं;
+  अक्षर *err = (अक्षर *) __get_errlist (errnum);
+  अगर (__glibc_unlikely (err == शून्य))
     {
-      if (__libc_initial)
+      अगर (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  काष्ठा tls_internal_t *tls_internal = __glibc_tls_internal ();
+	  मुक्त (tls_internal->strerror_l_buf);
+	  अगर (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  अन्यथा
 	    {
 	      /* The memory was freed above.  */
-	      tls_internal->strerror_l_buf = NULL;
+	      tls_internal->strerror_l_buf = शून्य;
 	      /* Provide a fallback translation.  */
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      अन्यथा
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  अन्यथा
+    err = (अक्षर *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  वापस err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

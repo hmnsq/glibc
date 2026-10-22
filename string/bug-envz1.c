@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#समावेश <stdio.h>
+#समावेश <envz.h>
+#समावेश <stdlib.h>
+#समावेश <string.h>
 
-static const struct
+अटल स्थिर काष्ठा
 {
-  const char *s;
-  int in_result;
+  स्थिर अक्षर *s;
+  पूर्णांक in_परिणाम;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,54 +22,54 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#घोषणा nstrs (माप (strs) / माप (strs[0]))
 
 
-int
-do_test (void)
+पूर्णांक
+do_test (व्योम)
 {
 
-  size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  माप_प्रकार आकार = 0;
+  अक्षर *str = दो_स्मृति (100);
+  अगर (str == शून्य)
     {
-      puts ("out of memory");
-      return 1;
+      माला_दो ("out of memory");
+      वापस 1;
     }
 
-  char **argz = &str;
+  अक्षर **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
-    argz_add_sep (argz, &size, strs[i].s, '\0');
+  क्रम (पूर्णांक i = 0; i < nstrs; ++i)
+    argz_add_sep (argz, &आकार, strs[i].s, '\0');
 
-  printf ("calling envz_strip with size=%zu\n", size);
-  envz_strip (argz, &size);
+  म_लिखो ("calling envz_strip with size=%zu\n", आकार);
+  envz_strip (argz, &आकार);
 
-  int result = 0;
-  printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  पूर्णांक परिणाम = 0;
+  म_लिखो ("new size=%zu\n", आकार);
+  क्रम (पूर्णांक i = 0; i < nstrs; ++i)
+    अगर (strs[i].in_परिणाम)
       {
-        char name[2];
+        अक्षर name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        अक्षर *e = envz_entry (*argz, आकार, name);
+        अगर (e == शून्य)
           {
-            printf ("entry '%s' not found\n", name);
-            result = 1;
+            म_लिखो ("entry '%s' not found\n", name);
+            परिणाम = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        अन्यथा अगर (म_भेद (e, strs[i].s) != 0)
           {
-            printf ("entry '%s' does not match: is '%s', expected '%s'\n",
+            म_लिखो ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
-            result = 1;
+            परिणाम = 1;
           }
       }
 
-  free (*argz);
-  return result;
+  मुक्त (*argz);
+  वापस परिणाम;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

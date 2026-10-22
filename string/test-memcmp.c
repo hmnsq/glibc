@@ -16,206 +16,206 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_MEMCMPEQ
+#घोषणा TEST_MAIN
+#अगर_घोषित TEST_MEMCMPEQ
 # define TEST_NAME "__memcmpeq"
-#elif defined WIDE
+#या_अगर defined WIDE
 # define TEST_NAME "wmemcmp"
-#else
+#अन्यथा
 # define TEST_NAME "memcmp"
-#endif
+#पूर्ण_अगर
 
-#include "test-string.h"
-#ifdef WIDE
+#समावेश "test-string.h"
+#अगर_घोषित WIDE
 # include <inttypes.h>
 # include <wchar.h>
 
 # define MEMCMP wmemcmp
 # define MEMCPY wmemcpy
 # define SIMPLE_MEMCMP simple_wmemcmp
-# define CHAR wchar_t
-# define UCHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
+# define UCHAR ब_अक्षर_प्रकार
 # define CHARBYTES 4
 # define CHAR__MIN WCHAR_MIN
 # define CHAR__MAX WCHAR_MAX
 
-int
-SIMPLE_MEMCMP (const wchar_t *s1, const wchar_t *s2, size_t n)
+पूर्णांक
+SIMPLE_MEMCMP (स्थिर ब_अक्षर_प्रकार *s1, स्थिर ब_अक्षर_प्रकार *s2, माप_प्रकार n)
 {
-  int ret = 0;
+  पूर्णांक ret = 0;
   /* Warning!
 	wmemcmp has to use SIGNED comparison for elements.
 	memcmp has to use UNSIGNED comparison for elements.
   */
-  while (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
-  return ret;
+  जबतक (n-- && (ret = *s1 < *s2 ? -1 : *s1 == *s2 ? 0 : 1) == 0) {s1++; s2++;}
+  वापस ret;
 }
-#else
+#अन्यथा
 # include <limits.h>
 # ifdef TEST_MEMCMPEQ
 #  define MEMCMP __memcmpeq
 #  define SIMPLE_MEMCMP simple_memcmpeq
-# else
-#  define MEMCMP memcmp
+# अन्यथा
+#  define MEMCMP स_भेद
 #  define SIMPLE_MEMCMP simple_memcmp
 # endif
-# define MEMCPY memcpy
-# define CHAR char
+# define MEMCPY स_नकल
+# define CHAR अक्षर
 # define MAX_CHAR 255
-# define UCHAR unsigned char
+# define UCHAR अचिन्हित अक्षर
 # define CHARBYTES 1
-# define CHAR__MIN CHAR_MIN
-# define CHAR__MAX CHAR_MAX
+# define CHAR__MIN अक्षर_न्यून
+# define CHAR__MAX अक्षर_उच्च
 
-int
-SIMPLE_MEMCMP (const char *s1, const char *s2, size_t n)
+पूर्णांक
+SIMPLE_MEMCMP (स्थिर अक्षर *s1, स्थिर अक्षर *s2, माप_प्रकार n)
 {
-  int ret = 0;
+  पूर्णांक ret = 0;
 
-  while (n-- && (ret = *(unsigned char *) s1++ - *(unsigned char *) s2++) == 0);
-  return ret;
+  जबतक (n-- && (ret = *(अचिन्हित अक्षर *) s1++ - *(अचिन्हित अक्षर *) s2++) == 0);
+  वापस ret;
 }
-#endif
+#पूर्ण_अगर
 
-#ifndef BAD_RESULT
-# define BAD_RESULT(result, expec)                                      \
-    (((result) == 0 && (expec)) || ((result) < 0 && (expec) >= 0) ||    \
-     ((result) > 0 && (expec) <= 0))
+#अगर_अघोषित BAD_परिणाम
+# define BAD_परिणाम(परिणाम, expec)                                      \
+    (((परिणाम) == 0 && (expec)) || ((परिणाम) < 0 && (expec) >= 0) ||    \
+     ((परिणाम) > 0 && (expec) <= 0))
 # endif
 
-typedef int (*proto_t) (const CHAR *, const CHAR *, size_t);
+प्रकार पूर्णांक (*proto_t) (स्थिर CHAR *, स्थिर CHAR *, माप_प्रकार);
 
 IMPL (MEMCMP, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	      int exp_result)
+अटल पूर्णांक
+check_परिणाम (impl_t *impl, स्थिर CHAR *s1, स्थिर CHAR *s2, माप_प्रकार len,
+	      पूर्णांक exp_परिणाम)
 {
-  int result = CALL (impl, s1, s2, len);
-  if (BAD_RESULT(result, exp_result))
+  पूर्णांक परिणाम = CALL (impl, s1, s2, len);
+  अगर (BAD_परिणाम(परिणाम, exp_परिणाम))
     {
       error (0, 0, "Wrong result in function %s %d %d", impl->name,
-	     result, exp_result);
+	     परिणाम, exp_परिणाम);
       ret = 1;
-      return -1;
+      वापस -1;
     }
 
-  return 0;
+  वापस 0;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s1, const CHAR *s2, size_t len,
-	     int exp_result)
+अटल व्योम
+do_one_test (impl_t *impl, स्थिर CHAR *s1, स्थिर CHAR *s2, माप_प्रकार len,
+	     पूर्णांक exp_परिणाम)
 {
-  if (check_result (impl, s1, s2, len, exp_result) < 0)
-    return;
+  अगर (check_परिणाम (impl, s1, s2, len, exp_परिणाम) < 0)
+    वापस;
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, int exp_result)
+अटल व्योम
+do_test (माप_प्रकार align1, माप_प्रकार align2, माप_प्रकार len, पूर्णांक exp_परिणाम)
 {
-  size_t i;
+  माप_प्रकार i;
   CHAR *s1, *s2;
 
   align1 &= (4096 - CHARBYTES);
-  if (align1 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  अगर (align1 + (len + 1) * CHARBYTES >= page_आकार)
+    वापस;
 
   align2 &= (4096 - CHARBYTES);
-  if (align2 + (len + 1) * CHARBYTES >= page_size)
-    return;
+  अगर (align2 + (len + 1) * CHARBYTES >= page_आकार)
+    वापस;
 
   s1 = (CHAR *) (buf1 + align1);
   s2 = (CHAR *) (buf2 + align2);
 
-  for (i = 0; i < len; i++)
+  क्रम (i = 0; i < len; i++)
     s1[i] = s2[i] = 1 + (23 << ((CHARBYTES - 1) * 8)) * i % CHAR__MAX;
 
-  if (len)
+  अगर (len)
     {
       s1[len] = align1;
       s2[len] = align2;
-      s2[len - 1] -= exp_result;
+      s2[len - 1] -= exp_परिणाम;
     }
-  else
+  अन्यथा
     {
-      exp_result = 0;
+      exp_परिणाम = 0;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, len, exp_result);
+    do_one_test (impl, s1, s2, len, exp_परिणाम);
 }
 
-static void
-do_random_tests (void)
+अटल व्योम
+do_random_tests (व्योम)
 {
-  size_t i, j, n, align1, align2, pos, len;
-  int result;
-  long r;
-  UCHAR *p1 =  (UCHAR *) (buf1 + page_size - 512 * CHARBYTES);
-  UCHAR *p2 =  (UCHAR *) (buf2 + page_size - 512 * CHARBYTES);
+  माप_प्रकार i, j, n, align1, align2, pos, len;
+  पूर्णांक परिणाम;
+  दीर्घ r;
+  UCHAR *p1 =  (UCHAR *) (buf1 + page_आकार - 512 * CHARBYTES);
+  UCHAR *p2 =  (UCHAR *) (buf2 + page_आकार - 512 * CHARBYTES);
 
-  for (n = 0; n < ITERATIONS; n++)
+  क्रम (n = 0; n < ITERATIONS; n++)
     {
    align1 = random () & 31;
-      if (random () & 1)
+      अगर (random () & 1)
 	align2 = random () & 31;
-      else
+      अन्यथा
 	align2 = align1 + (random () & 24);
       pos = random () & 511;
       j = align1;
-      if (align2 > j)
+      अगर (align2 > j)
 	j = align2;
-      if (pos + j >= 512)
+      अगर (pos + j >= 512)
 	pos = 511 - j - (random () & 7);
       len = random () & 511;
-      if (len + j >= 512)
+      अगर (len + j >= 512)
 	len = 511 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512) j = 512;
-      for (i = 0; i < j; ++i)
+      अगर (j > 512) j = 512;
+      क्रम (i = 0; i < j; ++i)
 	p1[i] = random () & 255;
-      for (i = 0; i < j; ++i)
+      क्रम (i = 0; i < j; ++i)
 	p2[i] = random () & 255;
 
-      result = 0;
-      if (pos >= len)
-	MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, len);
-      else
+      परिणाम = 0;
+      अगर (pos >= len)
+	MEMCPY ((CHAR *) p2 + align2, (स्थिर CHAR *) p1 + align1, len);
+      अन्यथा
 	{
-	  MEMCPY ((CHAR *) p2 + align2, (const CHAR *) p1 + align1, pos);
-	  if (p2[align2 + pos] == p1[align1 + pos])
+	  MEMCPY ((CHAR *) p2 + align2, (स्थिर CHAR *) p1 + align1, pos);
+	  अगर (p2[align2 + pos] == p1[align1 + pos])
 	    {
 	      p2[align2 + pos] = random () & 255;
-	      if (p2[align2 + pos] == p1[align1 + pos])
+	      अगर (p2[align2 + pos] == p1[align1 + pos])
 		p2[align2 + pos] = p1[align1 + pos] + 3 + (random () & 127);
 	    }
 
-	  if (p1[align1 + pos] < p2[align2 + pos])
-	    result = -1;
-	  else
-	    result = 1;
+	  अगर (p1[align1 + pos] < p2[align2 + pos])
+	    परिणाम = -1;
+	  अन्यथा
+	    परिणाम = 1;
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  r = CALL (impl, (CHAR *) p1 + align1, (const CHAR *) p2 + align2,
+	  r = CALL (impl, (CHAR *) p1 + align1, (स्थिर CHAR *) p2 + align2,
 		    len);
-	  if (BAD_RESULT(r, result))
+	  अगर (BAD_परिणाम(r, परिणाम))
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd) %ld != %d, p1 %p p2 %p",
-		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, result, p1, p2);
+		     n, impl->name, align1 * CHARBYTES & 63,  align2 * CHARBYTES & 63, len, pos, r, परिणाम, p1, p2);
 	      ret = 1;
 	    }
 	}
     }
 }
 
-static void
-check1 (void)
+अटल व्योम
+check1 (व्योम)
 {
   CHAR s1[116], s2[116];
-  int n, exp_result;
+  पूर्णांक n, exp_परिणाम;
 
   s1[0] = -108;
   s2[0] = -108;
@@ -451,61 +451,61 @@ check1 (void)
   s2[115] = 1;
 
   n = 116;
-  for (size_t i = 0; i < n; i++)
-    for (size_t len = 0; len <= n - i; ++len)
+  क्रम (माप_प्रकार i = 0; i < n; i++)
+    क्रम (माप_प्रकार len = 0; len <= n - i; ++len)
       {
-	exp_result = SIMPLE_MEMCMP (s1 + i, s2 + i, len);
+	exp_परिणाम = SIMPLE_MEMCMP (s1 + i, s2 + i, len);
 	FOR_EACH_IMPL (impl, 0)
-	  check_result (impl, s1 + i, s2 + i, len, exp_result);
+	  check_परिणाम (impl, s1 + i, s2 + i, len, exp_परिणाम);
       }
 }
 
 /* This test checks that memcmp doesn't overrun buffers.  */
-static void
-check2 (void)
+अटल व्योम
+check2 (व्योम)
 {
-  size_t max_length = page_size / sizeof (CHAR);
+  माप_प्रकार max_लंबाई = page_आकार / माप (CHAR);
 
   /* Initialize buf2 to the same values as buf1.  The bug requires the
      last compared byte to be different.  */
-  memcpy (buf2, buf1, page_size);
-  ((char *) buf2)[page_size - 1] ^= 0x11;
+  स_नकल (buf2, buf1, page_आकार);
+  ((अक्षर *) buf2)[page_आकार - 1] ^= 0x11;
 
-  for (size_t length = 1; length < max_length; length++)
+  क्रम (माप_प्रकार लंबाई = 1; लंबाई < max_लंबाई; लंबाई++)
     {
-      CHAR *s1 = (CHAR *) buf1 + max_length - length;
-      CHAR *s2 = (CHAR *) buf2 + max_length - length;
+      CHAR *s1 = (CHAR *) buf1 + max_लंबाई - लंबाई;
+      CHAR *s2 = (CHAR *) buf2 + max_लंबाई - लंबाई;
 
-      const int exp_result = SIMPLE_MEMCMP (s1, s2, length);
+      स्थिर पूर्णांक exp_परिणाम = SIMPLE_MEMCMP (s1, s2, लंबाई);
 
       FOR_EACH_IMPL (impl, 0)
-	check_result (impl, s1, s2, length, exp_result);
+	check_परिणाम (impl, s1, s2, लंबाई, exp_परिणाम);
     }
 }
 
-int
-test_main (void)
+पूर्णांक
+test_main (व्योम)
 {
-  size_t i;
+  माप_प्रकार i;
 
   test_init ();
 
   check1 ();
   check2 ();
 
-  printf ("%23s", "");
+  म_लिखो ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-  for (i = 1; i < 32; ++i)
+  क्रम (i = 1; i < 32; ++i)
     {
       do_test (i * CHARBYTES, i * CHARBYTES, i, 0);
       do_test (i * CHARBYTES, i * CHARBYTES, i, 1);
       do_test (i * CHARBYTES, i * CHARBYTES, i, -1);
     }
 
-  for (i = 0; i < 32; ++i)
+  क्रम (i = 0; i < 32; ++i)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -524,7 +524,7 @@ test_main (void)
       do_test (4000, 95, i, -1);
     }
 
-  for (i = 33; i < 385; i += 32)
+  क्रम (i = 33; i < 385; i += 32)
     {
       do_test (0, 0, i, 0);
       do_test (0, 0, i, 1);
@@ -534,7 +534,7 @@ test_main (void)
       do_test (i, i, i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  क्रम (i = 1; i < 10; ++i)
     {
       do_test (0, 0, 2 << i, 0);
       do_test (0, 0, 2 << i, 1);
@@ -551,7 +551,7 @@ test_main (void)
       do_test (i, i, 16 << i, -1);
     }
 
-  for (i = 1; i < 10; ++i)
+  क्रम (i = 1; i < 10; ++i)
     {
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 0);
       do_test (i * CHARBYTES, 2 * (i * CHARBYTES), 8 << i, 1);
@@ -559,7 +559,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>

@@ -16,230 +16,230 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_BZERO
+#घोषणा TEST_MAIN
+#अगर_घोषित TEST_BZERO
 # ifdef TEST_EXPLICIT_BZERO
 #  define TEST_NAME "explicit_bzero"
-# else
+# अन्यथा
 #  define TEST_NAME "bzero"
 # endif
-#else
+#अन्यथा
 # ifndef WIDE
 #  ifdef TEST_MEMSET_EXPLICIT
 #   define TEST_NAME "memset_explicit"
-#  else
+#  अन्यथा
 #   define TEST_NAME "memset"
 #  endif
-# else
+# अन्यथा
 #  define TEST_NAME "wmemset"
 # endif /* WIDE */
-#endif /* !TEST_BZERO */
-#define MIN_PAGE_SIZE 131072
-#include "test-string.h"
+#पूर्ण_अगर /* !TEST_BZERO */
+#घोषणा MIN_PAGE_आकार 131072
+#समावेश "test-string.h"
 
-#ifndef WIDE
+#अगर_अघोषित WIDE
 # ifdef TEST_MEMSET_EXPLICIT
 #  define MEMSET memset_explicit
-# else
-#  define MEMSET memset
+# अन्यथा
+#  define MEMSET स_रखो
 # endif
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR अक्षर
+# define UCHAR अचिन्हित अक्षर
 # define SIMPLE_MEMSET simple_memset
-# define MEMCMP memcmp
-# define BIG_CHAR CHAR_MAX
-#else
+# define MEMCMP स_भेद
+# define BIG_CHAR अक्षर_उच्च
+#अन्यथा
 # include <wchar.h>
 # define MEMSET wmemset
-# define CHAR wchar_t
-# define UCHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
+# define UCHAR ब_अक्षर_प्रकार
 # define SIMPLE_MEMSET simple_wmemset
 # define MEMCMP wmemcmp
 # define BIG_CHAR WCHAR_MAX
-#endif /* WIDE */
+#पूर्ण_अगर /* WIDE */
 
-#ifdef TEST_BZERO
-typedef void (*proto_t) (char *, size_t);
+#अगर_घोषित TEST_BZERO
+प्रकार व्योम (*proto_t) (अक्षर *, माप_प्रकार);
 # ifdef TEST_EXPLICIT_BZERO
 IMPL (explicit_bzero, 1)
-# else
+# अन्यथा
 IMPL (bzero, 1)
 # endif
-#else
-typedef CHAR *(*proto_t) (CHAR *, int, size_t);
+#अन्यथा
+प्रकार CHAR *(*proto_t) (CHAR *, पूर्णांक, माप_प्रकार);
 IMPL (MEMSET, 1)
-#endif /* !TEST_BZERO */
+#पूर्ण_अगर /* !TEST_BZERO */
 
 /* Naive implementation to verify results.  */
 CHAR *
 test_cc_inhibit_loop_to_libcall
-SIMPLE_MEMSET (CHAR *s, int c, size_t n)
+SIMPLE_MEMSET (CHAR *s, पूर्णांक c, माप_प्रकार n)
 {
   CHAR *r = s, *end = s + n;
-  while (r < end)
+  जबतक (r < end)
     *r++ = c;
-  return s;
+  वापस s;
 }
 
-static void
-do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int space_below, int space_above)
+अटल व्योम
+do_one_test (impl_t *impl, CHAR *s, पूर्णांक c __attribute ((unused)), माप_प्रकार n, पूर्णांक space_below, पूर्णांक space_above)
 {
   CHAR buf[n];
   CHAR sentinel = ~c;
-  if (space_below)
+  अगर (space_below)
       s[-1] = sentinel;
-  if (space_above)
+  अगर (space_above)
       s[n] = sentinel;
   SIMPLE_MEMSET(s, ~c, n);
-#ifdef TEST_BZERO
+#अगर_घोषित TEST_BZERO
   SIMPLE_MEMSET (buf, 0, n);
   CALL (impl, s, n);
-  if (memcmp (s, buf, n) != 0
+  अगर (स_भेद (s, buf, n) != 0
       || (space_below && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#else
+#अन्यथा
   CHAR *res = CALL (impl, s, c, n);
-  if (res != s
+  अगर (res != s
       || SIMPLE_MEMSET (buf, c, n) != buf
       || MEMCMP (s, buf, n) != 0
       || (space_below && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#endif /* !TEST_BZERO */
+#पूर्ण_अगर /* !TEST_BZERO */
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      वापस;
     }
 }
 
-static void
-do_test (size_t align, int c, size_t len)
+अटल व्योम
+do_test (माप_प्रकार align, पूर्णांक c, माप_प्रकार len)
 {
-  int space_below, space_above;
+  पूर्णांक space_below, space_above;
   align &= 4095;
-  if ((align + len) * sizeof (CHAR) > page_size)
-    return;
+  अगर ((align + len) * माप (CHAR) > page_आकार)
+    वापस;
 
   space_below = !!align;
-  space_above = !((align + len + 1) * sizeof (CHAR) > page_size);
+  space_above = !((align + len + 1) * माप (CHAR) > page_आकार);
 
   FOR_EACH_IMPL (impl, 0)
     do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_below, space_above);
 }
 
-#ifndef TEST_BZERO
-static void
-do_random_tests (void)
+#अगर_अघोषित TEST_BZERO
+अटल व्योम
+do_random_tests (व्योम)
 {
-  size_t i, j, k, n, align, len, size;
-  int c, o;
+  माप_प्रकार i, j, k, n, align, len, आकार;
+  पूर्णांक c, o;
   UCHAR *p, *res;
   UCHAR *p2 = (UCHAR *) buf2;
 
-  for (i = 0; i < 65536 / sizeof (CHAR); ++i)
+  क्रम (i = 0; i < 65536 / माप (CHAR); ++i)
     p2[i] = random () & BIG_CHAR;
 
-  for (n = 0; n < ITERATIONS; n++)
+  क्रम (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 31) == 0)
-	size = 65536 / sizeof (CHAR);
-      else
-	size = 512;
-      p = (UCHAR *) (buf1 + page_size) - size;
-      len = random () & (size - 1);
-      align = size - len - (random () & 31);
-      if (align > size)
-	align = size - len;
-      if ((random () & 7) == 0)
+      अगर ((random () & 31) == 0)
+	आकार = 65536 / माप (CHAR);
+      अन्यथा
+	आकार = 512;
+      p = (UCHAR *) (buf1 + page_आकार) - आकार;
+      len = random () & (आकार - 1);
+      align = आकार - len - (random () & 31);
+      अगर (align > आकार)
+	align = आकार - len;
+      अगर ((random () & 7) == 0)
 	align &= ~63;
-      if ((random () & 7) == 0)
+      अगर ((random () & 7) == 0)
 	c = 0;
-      else
+      अन्यथा
 	c = random () & BIG_CHAR;
       o = random () & BIG_CHAR;
-      if (o == c)
+      अगर (o == c)
 	o = (c + 1) & BIG_CHAR;
       j = len + align + 128;
-      if (j > size)
-	j = size;
-      if (align >= 128)
+      अगर (j > आकार)
+	j = आकार;
+      अगर (align >= 128)
 	k = align - 128;
-      else
+      अन्यथा
 	k = 0;
-      for (i = k; i < align; ++i)
+      क्रम (i = k; i < align; ++i)
 	p[i] = o;
-      for (i = align + len; i < j; ++i)
+      क्रम (i = align + len; i < j; ++i)
 	p[i] = o;
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  for (i = 0; i < len; ++i)
+	  क्रम (i = 0; i < len; ++i)
 	    {
 	      p[i + align] = p2[i];
-	      if (p[i + align] == c)
+	      अगर (p[i + align] == c)
 		p[i + align] = o;
 	    }
 	  res = (UCHAR *) CALL (impl, (CHAR *) p + align, c, len);
-	  if (res != p + align)
+	  अगर (res != p + align)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd) %p != %p",
 		     n, impl->name, align, c, len, res, p + align);
 	      ret = 1;
 	    }
-	  for (i = k; i < align; ++i)
-	    if (p[i] != o)
+	  क्रम (i = k; i < align; ++i)
+	    अगर (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage before %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		अवरोध;
 	      }
-	  for (; i < align + len; ++i)
-	    if (p[i] != c)
+	  क्रम (; i < align + len; ++i)
+	    अगर (p[i] != c)
 	      {
 		error (0, 0, "Iteration %zd - not cleared correctly %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		अवरोध;
 	      }
-	  for (; i < j; ++i)
-	    if (p[i] != o)
+	  क्रम (; i < j; ++i)
+	    अगर (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage after %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		अवरोध;
 	      }
 	}
     }
 }
-#endif /* !TEST_BZERO */
+#पूर्ण_अगर /* !TEST_BZERO */
 
-int
-test_main (void)
+पूर्णांक
+test_main (व्योम)
 {
-  size_t i;
-  int c = 0;
+  माप_प्रकार i;
+  पूर्णांक c = 0;
 
   test_init ();
 
-  printf ("%24s", "");
+  म_लिखो ("%24s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    म_लिखो ("\t%s", impl->name);
+  अक्षर_दो ('\n');
 
-#ifndef TEST_BZERO
-  for (c = -65; c <= 130; c += 65)
-#endif
+#अगर_अघोषित TEST_BZERO
+  क्रम (c = -65; c <= 130; c += 65)
+#पूर्ण_अगर
     {
-      for (i = 0; i < 18; ++i)
+      क्रम (i = 0; i < 18; ++i)
 	do_test (0, c, 1 << i);
-      for (i = 1; i < 64; ++i)
+      क्रम (i = 1; i < 64; ++i)
 	{
 	  do_test (i, c, i);
 	  do_test (4096 - i, c, i);
 	  do_test (4095, c, i);
-	  if (i & (i - 1))
+	  अगर (i & (i - 1))
 	    do_test (0, c, i);
 	}
       do_test (1, c, 14);
@@ -248,11 +248,11 @@ test_main (void)
       do_test (2, c, 25);
     }
 
-#ifndef TEST_BZERO
+#अगर_अघोषित TEST_BZERO
   do_random_tests ();
-#endif
+#पूर्ण_अगर
 
-  return ret;
+  वापस ret;
 }
 
-#include <support/test-driver.c>
+#समावेश <support/test-driver.c>
