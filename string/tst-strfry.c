@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#شامل <stdio.h>
+#شامل <string.h>
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
-  char str[] = "this is a test";
+  نویسه str[] = "this is a test";
 
   strfry (str);
 
-  return 0;
+  بازگشت 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

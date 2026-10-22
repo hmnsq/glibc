@@ -19,14 +19,14 @@
 # include "config.h"
 #endif
 
-#include <stdio.h>
-#include <sys/types.h>
+#شامل <stdio.h>
+#شامل <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#اگر defined _LIBC || defined STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
-char *malloc ();
+#وگرنه
+نویسه *malloc ();
 #endif
 
 #undef __strndup
@@ -36,17 +36,17 @@ char *malloc ();
 # define __strndup strndup
 #endif
 
-char *
-__strndup (const char *s, size_t n)
+نویسه *
+__strndup (ثابت نویسه *s, size_t n)
 {
   size_t len = __strnlen (s, n);
-  char *new = (char *) malloc (len + 1);
+  نویسه *new = (نویسه *) malloc (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  اگر (new == پوچ)
+    بازگشت پوچ;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  بازگشت (نویسه *) memcpy (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strndup)

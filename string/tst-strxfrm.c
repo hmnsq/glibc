@@ -1,49 +1,49 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#شامل <locale.h>
+#شامل <stdio.h>
+#شامل <stdlib.h>
+#شامل <string.h>
 
 
-char const string[] = "";
+نویسه ثابت string[] = "";
 
 
-static int
-test (const char *locale)
+ایستا صحیح
+test (ثابت نویسه *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  نویسه *buf;
   locale_t loc;
-  int result = 0;
+  صحیح result = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  اگر (setlocale (LC_COLLATE, locale) == پوچ)
     {
       printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      بازگشت 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
+  bufsize = strxfrm (پوچ, string, 0) + 1;
   buf = malloc (bufsize);
-  if (buf == NULL)
+  اگر (buf == پوچ)
     {
       printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      بازگشت 1;
     }
   r = strxfrm (buf, string, bufsize);
   l = strlen (buf);
-  if (r != l)
+  اگر (r != l)
     {
        printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
        result = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, پوچ);
 
   r = strxfrm_l (buf, string, bufsize, loc);
   l = strlen (buf);
-  if (r != l)
+  اگر (r != l)
     {
        printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
@@ -52,22 +52,22 @@ test (const char *locale)
 
   freelocale (loc);
 
-  free (buf);
+  آزاد (buf);
 
-  return result;
+  بازگشت result;
 }
 
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
-  int result = 0;
+  صحیح result = 0;
 
   result |= test ("C");
   result |= test ("en_US.ISO-8859-1");
   result |= test ("de_DE.UTF-8");
 
-  return result;
+  بازگشت result;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

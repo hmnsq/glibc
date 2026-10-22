@@ -20,17 +20,17 @@
 #define MIN_PAGE_SIZE 131072
 #define TEST_MAIN
 #define TEST_NAME "mempcpy"
-#include "test-string.h"
+#شامل "test-string.h"
 
 IMPL (mempcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_mempcpy (char *dst, const char *src, size_t n)
+نویسه *
+simple_mempcpy (نویسه *dst, ثابت نویسه *src, size_t n)
 {
-  while (n--)
+  وقتی (n--)
     *dst++ = *src++;
-  return dst;
+  بازگشت dst;
 }
 
-#include "test-memcpy.c"
+#شامل "test-memcpy.c"

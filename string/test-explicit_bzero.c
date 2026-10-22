@@ -17,4 +17,4 @@
    <https://www.gnu.org/licenses/>.  */
 #define TEST_EXPLICIT_BZERO
 #define TEST_BZERO
-#include "test-memset.c"
+#شامل "test-memset.c"

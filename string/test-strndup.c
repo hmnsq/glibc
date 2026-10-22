@@ -16,56 +16,56 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <support/check.h>
+#شامل <support/check.h>
 
 #define TEST_MAIN
-#include "test-string.h"
+#شامل "test-string.h"
 
-static void
-do_one_test (const char *src, size_t len, size_t n)
+ایستا تهی
+do_one_test (ثابت نویسه *src, size_t len, size_t n)
 {
-  char *dst = strndup (src, n);
-  size_t s = (len > n ? n: len) * sizeof (char);
+  نویسه *dst = strndup (src, n);
+  size_t s = (len > n ? n: len) * اندازه (نویسه);
 
   TEST_COMPARE_BLOB (dst, s, src, s);
 
-  free (dst);
+  آزاد (dst);
 }
 
-static void
-do_test (size_t align1, size_t align2, size_t len, size_t n, int max_char)
+ایستا تهی
+do_test (size_t align1, size_t align2, size_t len, size_t n, صحیح max_char)
 {
   size_t i;
-  char *s1;
+  نویسه *s1;
 
   align1 &= 7;
-  if ((align1 + len) * sizeof (char) >= page_size)
-    return;
+  اگر ((align1 + len) * اندازه (نویسه) >= page_size)
+    بازگشت;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (char) >= page_size)
-    return;
+  اگر ((align2 + len) * اندازه (نویسه) >= page_size)
+    بازگشت;
 
-  s1 = (char *) (buf1) + align1;
+  s1 = (نویسه *) (buf1) + align1;
 
-  for (i = 0; i < len; ++i)
+  برای (i = 0; i < len; ++i)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
-  for (i = len + 1; (i + align1) * sizeof (char) < page_size && i < len + 64;
+  برای (i = len + 1; (i + align1) * اندازه (نویسه) < page_size && i < len + 64;
        ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   do_one_test (s1, len, n);
 }
 
-static void
-do_page_tests (void)
+ایستا تهی
+do_page_tests (تهی)
 {
-  char *s1;
-  const size_t maxoffset = 64;
+  نویسه *s1;
+  ثابت size_t maxoffset = 64;
 
   /* Put s1 at the maxoffset from the edge of buf1's last page.  */
-  s1 = (char *) buf1 + BUF1PAGES * page_size / sizeof (char) - maxoffset;
+  s1 = (نویسه *) buf1 + BUF1PAGES * page_size / اندازه (نویسه) - maxoffset;
 
   memset (s1, 'a', maxoffset - 1);
   s1[maxoffset - 1] = '\0';
@@ -78,91 +78,91 @@ do_page_tests (void)
      for both inputs with a size larger than s1 (so memory access outside the
      expected memory regions might trigger invalid access).  */
 
-  for (size_t off1 = 0; off1 < maxoffset; off1++)
-    for (size_t off2 = 0; off2 < maxoffset; off2++)
+  برای (size_t off1 = 0; off1 < maxoffset; off1++)
+    برای (size_t off2 = 0; off2 < maxoffset; off2++)
       do_one_test (s1 + off1, maxoffset - off1 - 1,
 		   maxoffset + (maxoffset - off2));
 }
 
-static void
-do_random_tests (void)
+ایستا تهی
+do_random_tests (تهی)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  char *p1 = (char *) (buf1 + page_size) - 512;
-  char *res;
+  نویسه *p1 = (نویسه *) (buf1 + page_size) - 512;
+  نویسه *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  برای (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
-      if (mode & 1)
+      اگر (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  اگر (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  وگرنه
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  اگر (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  اگر (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  وگرنه
 	    len = 512;
-	  if (len >= 512)
+	  اگر (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      وگرنه
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  اگر (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  وگرنه
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  اگر (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  اگر (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      اگر (size + j > 512)
 		size = 512 - j - (random () & 31);
 	    }
-	  else
+	  وگرنه
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  اگر ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      اگر (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      برای (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  اگر (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  وگرنه
 	    {
 	      p1[i] = random () & CHAR_MAX;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      اگر (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & 127) + 3;
 	    }
 	}
 
-	res = (char *) strndup ((char *) (p1 + align1), size);
+	res = (نویسه *) strndup ((نویسه *) (p1 + align1), size);
 	j = len + 1;
-	if (size < j)
+	اگر (size < j)
 	  j = size;
-	TEST_COMPARE_BLOB (res, j, (char *) (p1 + align1), j);
-	free (res);
+	TEST_COMPARE_BLOB (res, j, (نویسه *) (p1 + align1), j);
+	آزاد (res);
     }
 }
 
-int
-test_main (void)
+صحیح
+test_main (تهی)
 {
   size_t i;
 
@@ -172,7 +172,7 @@ test_main (void)
   printf ("\t%s", "strndup");
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  برای (i = 1; i < 8; ++i)
     {
       do_test (i, i, 16, 16, 127);
       do_test (i, i, 16, 16, CHAR_MAX);
@@ -184,7 +184,7 @@ test_main (void)
       do_test (2 * i, 8 - i, 2 << i, 1 << i, CHAR_MAX);
     }
 
-  for (i = 1; i < 8; ++i)
+  برای (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 4 << i, 8 << i, 127);
       do_test (0, 0, 16 << i, 8 << i, 127);
@@ -194,7 +194,7 @@ test_main (void)
 
   do_random_tests ();
   do_page_tests ();
-  return ret;
+  بازگشت ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

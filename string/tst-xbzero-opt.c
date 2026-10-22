@@ -40,17 +40,17 @@
 
 #define _GNU_SOURCE 1
 
-#include <errno.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#شامل <errno.h>
+#شامل <signal.h>
+#شامل <stdio.h>
+#شامل <stdlib.h>
+#شامل <string.h>
+#شامل <ucontext.h>
+#شامل <unistd.h>
 
 /* A byte pattern that is unlikely to occur by chance: the first 16
    prime numbers (OEIS A000040).  */
-static const unsigned char test_pattern[16] =
+ایستا ثابت unsigned نویسه test_pattern[16] =
 {
   2, 3, 5, 7,  11, 13, 17, 19,  23, 29, 31, 37,  41, 43, 47, 53
 };
@@ -60,7 +60,7 @@ static const unsigned char test_pattern[16] =
    test pattern, so we fill a modest-sized buffer with copies of it
    and check whether any of them survived.  */
 
-#define PATTERN_SIZE (sizeof test_pattern)
+#define PATTERN_SIZE (اندازه test_pattern)
 #define PATTERN_REPS 32
 #define TEST_BUFFER_SIZE (PATTERN_SIZE * PATTERN_REPS)
 
@@ -95,84 +95,84 @@ static const unsigned char test_pattern[16] =
    and expects _not_ to find the test buffer, which is the real
    test.  */
 
-static ucontext_t uc_main, uc_co;
+ایستا ucontext_t uc_main, uc_co;
 
-static __attribute_optimization_barrier__ int
-use_test_buffer (unsigned char *buf)
+ایستا __attribute_optimization_barrier__ صحیح
+use_test_buffer (unsigned نویسه *buf)
 {
-  unsigned int sum = 0;
+  unsigned صحیح sum = 0;
 
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  برای (unsigned صحیح i = 0; i < PATTERN_REPS; i++)
     sum += buf[i * PATTERN_SIZE];
 
-  return (sum == 2 * PATTERN_REPS) ? 0 : 1;
+  بازگشت (sum == 2 * PATTERN_REPS) ? 0 : 1;
 }
 
 /* Always check the test buffer immediately after filling it; this
    makes externally visible side effects depend on the buffer existing
    and having been filled in.  */
-#if defined __CET__ && !__glibc_has_attribute (__indirect_return__)
+#اگر defined __CET__ && !__glibc_has_attribute (__indirect_return__)
 /* Note: swapcontext returns via indirect branch when SHSTK is enabled.
    Without indirect_return attribute, swapcontext is marked with
    returns_twice attribute, which prevents always_inline to work.  */
 # define ALWAYS_INLINE
-#else
+#وگرنه
 # define ALWAYS_INLINE	__attribute__ ((always_inline))
 #endif
-static inline ALWAYS_INLINE void
-prepare_test_buffer (unsigned char *buf)
+ایستا درونخطی ALWAYS_INLINE تهی
+prepare_test_buffer (unsigned نویسه *buf)
 {
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  برای (unsigned صحیح i = 0; i < PATTERN_REPS; i++)
     memcpy (buf + i*PATTERN_SIZE, test_pattern, PATTERN_SIZE);
 
-  if (swapcontext (&uc_co, &uc_main))
+  اگر (swapcontext (&uc_co, &uc_main))
     abort ();
 
   /* Force the compiler to really copy the pattern to buf.  */
-  if (use_test_buffer (buf))
+  اگر (use_test_buffer (buf))
     abort ();
 }
 
-static void
-setup_no_clear (void)
+ایستا تهی
+setup_no_clear (تهی)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned نویسه buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
 }
 
-static void
-setup_ordinary_clear (void)
+ایستا تهی
+setup_ordinary_clear (تهی)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned نویسه buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
   memset (buf, 0, TEST_BUFFER_SIZE);
 }
 
-static void
-setup_explicit_clear (void)
+ایستا تهی
+setup_explicit_clear (تهی)
 {
-  unsigned char buf[TEST_BUFFER_SIZE];
+  unsigned نویسه buf[TEST_BUFFER_SIZE];
   prepare_test_buffer (buf);
 #ifdef TEST_MEMSET_EXPLICIT
   memset_explicit (buf, 0, TEST_BUFFER_SIZE);
-#else
+#وگرنه
   explicit_bzero (buf, TEST_BUFFER_SIZE);
 #endif
 }
 
-enum test_expectation
+شمارش test_expectation
   {
     EXPECT_NONE, EXPECT_SOME, EXPECT_ALL, NO_EXPECTATIONS
   };
-struct subtest
+ساختار subtest
 {
-  void (*setup_subtest) (void);
-  const char *label;
-  enum test_expectation expected;
+  تهی (*setup_subtest) (تهی);
+  ثابت نویسه *label;
+  شمارش test_expectation expected;
 };
-static const struct subtest *cur_subtest;
+ایستا ثابت ساختار subtest *cur_subtest;
 
-static const struct subtest subtests[] =
+ایستا ثابت ساختار subtest subtests[] =
 {
   { setup_no_clear,       "no clear",       EXPECT_SOME },
   /* The memset may happen or not, depending on compiler
@@ -182,13 +182,13 @@ static const struct subtest subtests[] =
   { 0,                    0,                -1          }
 };
 
-static void
-test_coroutine (void)
+ایستا تهی
+test_coroutine (تهی)
 {
-  while (cur_subtest->setup_subtest)
+  وقتی (cur_subtest->setup_subtest)
     {
       cur_subtest->setup_subtest ();
-      if (swapcontext (&uc_co, &uc_main))
+      اگر (swapcontext (&uc_co, &uc_main))
 	abort ();
     }
 }
@@ -196,130 +196,130 @@ test_coroutine (void)
 /* All the code above this point runs on the coroutine stack.
    All the code below this point runs on the main stack.  */
 
-static int test_status;
-static unsigned char *co_stack_buffer;
-static size_t co_stack_size;
+ایستا صحیح test_status;
+ایستا unsigned نویسه *co_پشته_buffer;
+ایستا size_t co_پشته_size;
 
-static unsigned int
-count_test_patterns (unsigned char *buf, size_t bufsiz)
+ایستا unsigned صحیح
+شمار_test_patterns (unsigned نویسه *buf, size_t bufsiz)
 {
-  unsigned char *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
-  if (!first)
-    return 0;
-  unsigned int cnt = 0;
-  for (unsigned int i = 0; i < PATTERN_REPS; i++)
+  unsigned نویسه *first = memmem (buf, bufsiz, test_pattern, PATTERN_SIZE);
+  اگر (!first)
+    بازگشت 0;
+  unsigned صحیح cnt = 0;
+  برای (unsigned صحیح i = 0; i < PATTERN_REPS; i++)
     {
-      unsigned char *p = first + i*PATTERN_SIZE;
-      if (p + PATTERN_SIZE - buf > bufsiz)
-	break;
-      if (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
+      unsigned نویسه *p = first + i*PATTERN_SIZE;
+      اگر (p + PATTERN_SIZE - buf > bufsiz)
+	بشکن;
+      اگر (memcmp (p, test_pattern, PATTERN_SIZE) == 0)
 	cnt++;
     }
-  return cnt;
+  بازگشت cnt;
 }
 
-static void
-check_test_buffer (enum test_expectation expected,
-		   const char *label, const char *stage)
+ایستا تهی
+check_test_buffer (شمارش test_expectation expected,
+		   ثابت نویسه *label, ثابت نویسه *stage)
 {
-  unsigned int cnt = count_test_patterns (co_stack_buffer, co_stack_size);
-  switch (expected)
+  unsigned صحیح cnt = شمار_test_patterns (co_پشته_buffer, co_پشته_size);
+  انتخاب (expected)
     {
-    case EXPECT_NONE:
-      if (cnt == 0)
+    حالت EXPECT_NONE:
+      اگر (cnt == 0)
 	printf ("PASS: %s/%s: expected 0 got %d\n", label, stage, cnt);
-      else
+      وگرنه
 	{
 	  printf ("FAIL: %s/%s: expected 0 got %d\n", label, stage, cnt);
 	  test_status = 1;
 	}
-      break;
+      بشکن;
 
-    case EXPECT_SOME:
-      if (cnt > 0)
+    حالت EXPECT_SOME:
+      اگر (cnt > 0)
 	printf ("PASS: %s/%s: expected some got %d\n", label, stage, cnt);
-      else
+      وگرنه
 	{
 	  printf ("FAIL: %s/%s: expected some got 0\n", label, stage);
 	  test_status = 1;
 	}
-      break;
+      بشکن;
 
-     case EXPECT_ALL:
-      if (cnt == PATTERN_REPS)
+     حالت EXPECT_ALL:
+      اگر (cnt == PATTERN_REPS)
 	printf ("PASS: %s/%s: expected %d got %d\n", label, stage,
 		PATTERN_REPS, cnt);
-      else
+      وگرنه
 	{
 	  printf ("FAIL: %s/%s: expected %d got %d\n", label, stage,
 		  PATTERN_REPS, cnt);
 	  test_status = 1;
 	}
-      break;
+      بشکن;
 
-    case NO_EXPECTATIONS:
+    حالت NO_EXPECTATIONS:
       printf ("INFO: %s/%s: found %d patterns%s\n", label, stage, cnt,
 	      cnt == 0 ? " (memset not eliminated)" : "");
-      break;
+      بشکن;
 
-    default:
+    پیشفرض:
       printf ("ERROR: %s/%s: invalid value for 'expected' = %d\n",
-	      label, stage, (int)expected);
+	      label, stage, (صحیح)expected);
       test_status = 1;
     }
 }
 
-static void
-test_loop (void)
+ایستا تهی
+test_loop (تهی)
 {
   cur_subtest = subtests;
-  while (cur_subtest->setup_subtest)
+  وقتی (cur_subtest->setup_subtest)
     {
-      if (swapcontext (&uc_main, &uc_co))
+      اگر (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (EXPECT_ALL, cur_subtest->label, "prepare");
-      if (swapcontext (&uc_main, &uc_co))
+      اگر (swapcontext (&uc_main, &uc_co))
 	abort ();
       check_test_buffer (cur_subtest->expected, cur_subtest->label, "test");
       cur_subtest++;
     }
   /* Terminate the coroutine.  */
-  if (swapcontext (&uc_main, &uc_co))
+  اگر (swapcontext (&uc_main, &uc_co))
     abort ();
 }
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
   size_t page_alignment = sysconf (_SC_PAGESIZE);
-  if (page_alignment < sizeof (void *))
-    page_alignment = sizeof (void *);
+  اگر (page_alignment < اندازه (تهی *))
+    page_alignment = اندازه (تهی *);
 
-  co_stack_size = SIGSTKSZ + TEST_BUFFER_SIZE;
-  if (co_stack_size < page_alignment * 4)
-    co_stack_size = page_alignment * 4;
+  co_پشته_size = SIGSTKSZ + TEST_BUFFER_SIZE;
+  اگر (co_پشته_size < page_alignment * 4)
+    co_پشته_size = page_alignment * 4;
 
-  void *p;
-  int err = posix_memalign (&p, page_alignment, co_stack_size);
-  if (err || !p)
+  تهی *p;
+  صحیح err = posix_memalign (&p, page_alignment, co_پشته_size);
+  اگر (err || !p)
     {
       printf ("ERROR: allocating alt stack: %s\n", strerror (err));
-      return 2;
+      بازگشت 2;
     }
-  co_stack_buffer = p;
+  co_پشته_buffer = p;
 
-  if (getcontext (&uc_co))
+  اگر (getcontext (&uc_co))
     {
       printf ("ERROR: allocating coroutine context: %s\n", strerror (err));
-      return 2;
+      بازگشت 2;
     }
-  uc_co.uc_stack.ss_sp   = co_stack_buffer;
-  uc_co.uc_stack.ss_size = co_stack_size;
+  uc_co.uc_stack.ss_sp   = co_پشته_buffer;
+  uc_co.uc_stack.ss_size = co_پشته_size;
   uc_co.uc_link          = &uc_main;
   makecontext (&uc_co, test_coroutine, 0);
 
   test_loop ();
-  return test_status;
+  بازگشت test_status;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

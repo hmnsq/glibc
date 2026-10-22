@@ -16,22 +16,22 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#شامل <argz.h>
+#شامل <string.h>
 
 /* Make '\0' separated arg vector ARGZ printable by converting all the '\0's
    except the last into the character SEP.  */
-void
-__argz_stringify (char *argz, size_t len, int sep)
+تهی
+__argz_stringify (نویسه *argz, size_t len, صحیح sep)
 {
-  if (len > 0)
-    while (1)
+  اگر (len > 0)
+    وقتی (1)
       {
 	size_t part_len = __strnlen (argz, len);
 	argz += part_len;
 	len -= part_len;
-	if (len-- <= 1)		/* includes final '\0' we want to stop at */
-	  break;
+	اگر (len-- <= 1)		/* includes final '\0' we want to stop at */
+	  بشکن;
 	*argz++ = sep;
       }
 }

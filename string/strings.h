@@ -18,106 +18,106 @@
 #ifndef	_STRINGS_H
 #define	_STRINGS_H	1
 
-#include <features.h>
+#شامل <features.h>
 #define __need_size_t
-#include <stddef.h>
+#شامل <stddef.h>
 
 /* Tell the caller that we provide correct C++ prototypes.  */
-#if defined __cplusplus && __GNUC_PREREQ (4, 4)
+#اگر defined __cplusplus && __GNUC_PREREQ (4, 4)
 # define __CORRECT_ISO_CPP_STRINGS_H_PROTO
 #endif
 
 __BEGIN_DECLS
 
-#if defined __USE_MISC || !defined __USE_XOPEN2K8
+#اگر defined __USE_MISC || !defined __USE_XOPEN2K8
 /* Compare N bytes of S1 and S2 (same as memcmp).  */
-extern int bcmp (const void *__s1, const void *__s2, size_t __n)
+بیرونی صحیح bcmp (ثابت تهی *__s1, ثابت تهی *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Copy N bytes of SRC to DEST (like memmove, but args reversed).  */
-extern void bcopy (const void *__src, void *__dest, size_t __n)
+بیرونی تهی bcopy (ثابت تهی *__src, تهی *__dest, size_t __n)
   __THROW __nonnull ((1, 2));
 
 /* Set N bytes of S to 0.  */
-extern void bzero (void *__s, size_t __n) __THROW __nonnull ((1));
+بیرونی تهی bzero (تهی *__s, size_t __n) __THROW __nonnull ((1));
 
 /* Find the first occurrence of C in S (same as strchr).  */
 # ifdef __CORRECT_ISO_CPP_STRINGS_H_PROTO
-extern "C++"
+بیرونی "C++"
 {
-extern char *index (char *__s, int __c)
+بیرونی نویسه *index (نویسه *__s, صحیح __c)
      __THROW __asm ("index") __attribute_pure__ __nonnull ((1));
-extern const char *index (const char *__s, int __c)
+بیرونی ثابت نویسه *index (ثابت نویسه *__s, صحیح __c)
      __THROW __asm ("index") __attribute_pure__ __nonnull ((1));
 
-#  if defined __OPTIMIZE__
-__extern_always_inline char *
-index (char *__s, int __c) __THROW
+#  اگر defined __OPTIMIZE__
+__extern_always_inline نویسه *
+index (نویسه *__s, صحیح __c) __THROW
 {
-  return __builtin_index (__s, __c);
+  بازگشت __builtin_index (__s, __c);
 }
 
-__extern_always_inline const char *
-index (const char *__s, int __c) __THROW
+__extern_always_inline ثابت نویسه *
+index (ثابت نویسه *__s, صحیح __c) __THROW
 {
-  return __builtin_index (__s, __c);
+  بازگشت __builtin_index (__s, __c);
 }
 #  endif
 }
-# else
-extern char *index (const char *__s, int __c)
+# وگرنه
+بیرونی نویسه *index (ثابت نویسه *__s, صحیح __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 
 /* Find the last occurrence of C in S (same as strrchr).  */
 # ifdef __CORRECT_ISO_CPP_STRINGS_H_PROTO
-extern "C++"
+بیرونی "C++"
 {
-extern char *rindex (char *__s, int __c)
+بیرونی نویسه *rindex (نویسه *__s, صحیح __c)
      __THROW __asm ("rindex") __attribute_pure__ __nonnull ((1));
-extern const char *rindex (const char *__s, int __c)
+بیرونی ثابت نویسه *rindex (ثابت نویسه *__s, صحیح __c)
      __THROW __asm ("rindex") __attribute_pure__ __nonnull ((1));
 
-#  if defined __OPTIMIZE__
-__extern_always_inline char *
-rindex (char *__s, int __c) __THROW
+#  اگر defined __OPTIMIZE__
+__extern_always_inline نویسه *
+rindex (نویسه *__s, صحیح __c) __THROW
 {
-  return __builtin_rindex (__s, __c);
+  بازگشت __builtin_rindex (__s, __c);
 }
 
-__extern_always_inline const char *
-rindex (const char *__s, int __c) __THROW
+__extern_always_inline ثابت نویسه *
+rindex (ثابت نویسه *__s, صحیح __c) __THROW
 {
-  return __builtin_rindex (__s, __c);
+  بازگشت __builtin_rindex (__s, __c);
 }
 #  endif
 }
-# else
-extern char *rindex (const char *__s, int __c)
+# وگرنه
+بیرونی نویسه *rindex (ثابت نویسه *__s, صحیح __c)
      __THROW __attribute_pure__ __nonnull ((1));
 # endif
 #endif
 
-#if defined __USE_MISC || !defined __USE_XOPEN2K8 || defined __USE_XOPEN2K8XSI
+#اگر defined __USE_MISC || !defined __USE_XOPEN2K8 || defined __USE_XOPEN2K8XSI
 /* Return the position of the first bit set in I, or 0 if none are set.
    The least-significant bit is position 1, the most-significant 32.  */
-extern int ffs (int __i) __THROW __attribute_const__;
+بیرونی صحیح ffs (صحیح __i) __THROW __attribute_const__;
 #endif
 
 /* The following two functions are non-standard but necessary for non-32 bit
    platforms.  */
 # ifdef	__USE_MISC
-extern int ffsl (long int __l) __THROW __attribute_const__;
-__extension__ extern int ffsll (long long int __ll)
+بیرونی صحیح ffsl (long صحیح __l) __THROW __attribute_const__;
+__extension__ بیرونی صحیح ffsll (long long صحیح __ll)
      __THROW __attribute_const__;
 # endif
 
 /* Compare S1 and S2, ignoring case.  */
-extern int strcasecmp (const char *__s1, const char *__s2)
+بیرونی صحیح strcasecmp (ثابت نویسه *__s1, ثابت نویسه *__s2)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 /* Compare no more than N chars of S1 and S2, ignoring case.  */
-extern int strncasecmp (const char *__s1, const char *__s2, size_t __n)
+بیرونی صحیح strncasecmp (ثابت نویسه *__s1, ثابت نویسه *__s2, size_t __n)
      __THROW __attribute_pure__ __nonnull ((1, 2));
 
 #ifdef	__USE_XOPEN2K8
@@ -125,22 +125,22 @@ extern int strncasecmp (const char *__s1, const char *__s2, size_t __n)
 # include <bits/types/locale_t.h>
 
 /* Compare S1 and S2, ignoring case, using collation rules from LOC.  */
-extern int strcasecmp_l (const char *__s1, const char *__s2, locale_t __loc)
+بیرونی صحیح strcasecmp_l (ثابت نویسه *__s1, ثابت نویسه *__s2, locale_t __loc)
      __THROW __attribute_pure__ __nonnull ((1, 2, 3));
 
 /* Compare no more than N chars of S1 and S2, ignoring case, using
    collation rules from LOC.  */
-extern int strncasecmp_l (const char *__s1, const char *__s2,
+بیرونی صحیح strncasecmp_l (ثابت نویسه *__s1, ثابت نویسه *__s2,
 			  size_t __n, locale_t __loc)
      __THROW __attribute_pure__ __nonnull ((1, 2, 4));
 #endif
 
 __END_DECLS
 
-#if __GNUC_PREREQ (3,4) && __USE_FORTIFY_LEVEL > 0 \
+#اگر __GNUC_PREREQ (3,4) && __USE_FORTIFY_LEVEL > 0 \
     && defined __fortify_function
 /* Functions with security checks.  */
-# if defined __USE_MISC || !defined __USE_XOPEN2K8
+# اگر defined __USE_MISC || !defined __USE_XOPEN2K8
 #  include <bits/strings_fortified.h>
 # endif
 #endif

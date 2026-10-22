@@ -15,15 +15,15 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#شامل <string.h>
 
-void *
-memfrob (void *s, size_t n)
+تهی *
+memfrob (تهی *s, size_t n)
 {
-  char *p = (char *) s;
+  نویسه *p = (نویسه *) s;
 
-  while (n-- > 0)
+  وقتی (n-- > 0)
     *p++ ^= 42;
 
-  return s;
+  بازگشت s;
 }

@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <random-bits.h>
-#include <unistd.h>
+#شامل <string.h>
+#شامل <stdlib.h>
+#شامل <random-bits.h>
+#شامل <unistd.h>
 
-char *
-strfry (char *string)
+نویسه *
+strfry (نویسه *string)
 {
-  static int init;
-  static struct random_data rdata;
+  ایستا صحیح init;
+  ایستا ساختار random_data rdata;
 
-  if (!init)
+  اگر (!init)
     {
-      static char state[32];
-      rdata.state = NULL;
+      ایستا نویسه state[32];
+      rdata.state = پوچ;
       __initstate_r (random_bits (),
-		     state, sizeof (state), &rdata);
+		     state, اندازه (state), &rdata);
       init = 1;
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  اگر (len > 0)
+    برای (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
 	j = j % (len - i) + i;
 
-	char c = string[i];
+	نویسه c = string[i];
 	string[i] = string[j];
 	string[j] = c;
       }
 
-  return string;
+  بازگشت string;
 }

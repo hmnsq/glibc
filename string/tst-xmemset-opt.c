@@ -1,2 +1,2 @@
 #define TEST_MEMSET_EXPLICIT 1
-#include "tst-xbzero-opt.c"
+#شامل "tst-xbzero-opt.c"

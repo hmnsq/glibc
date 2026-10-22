@@ -16,31 +16,31 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
+#شامل <stdint.h>
+#شامل <string.h>
 
 size_t
-__strlcat (char *__restrict dest, const char *__restrict src, size_t size)
+__strlcat (نویسه *__restrict dest, ثابت نویسه *__restrict src, size_t size)
 {
   size_t src_length = strlen (src);
 
   /* Our implementation strlcat supports dest == NULL if size == 0
      (for consistency with snprintf and strlcpy), but strnlen does
      not, so we have to cover this case explicitly.  */
-  if (size == 0)
-    return src_length;
+  اگر (size == 0)
+    بازگشت src_length;
 
   size_t dest_length = __strnlen (dest, size);
-  if (dest_length != size)
+  اگر (dest_length != size)
     {
       /* Copy at most the remaining number of characters in the
 	 destination buffer.  Leave for the NUL terminator.  */
       size_t to_copy = size - dest_length - 1;
       /* But not more than what is available in the source string.  */
-      if (to_copy > src_length)
+      اگر (to_copy > src_length)
 	to_copy = src_length;
 
-      char *target = dest + dest_length;
+      نویسه *target = dest + dest_length;
       memcpy (target, src, to_copy);
       target[to_copy] = '\0';
     }
@@ -51,9 +51,9 @@ __strlcat (char *__restrict dest, const char *__restrict src, size_t size)
      (which the static_assert checks), then by the pigeonhole
      principle, the two input strings must overlap, which is
      undefined.  */
-  _Static_assert (sizeof (uintptr_t) == sizeof (size_t),
+  _Static_assert (اندازه (uintptr_t) == اندازه (size_t),
 		  "theoretical maximum object size covers address space");
-  return dest_length + src_length;
+  بازگشت dest_length + src_length;
 }
 libc_hidden_def (__strlcat)
 weak_alias (__strlcat, strlcat)

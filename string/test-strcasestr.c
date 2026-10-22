@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#شامل "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#شامل "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+ایستا نویسه *
+simple_strcasestr (ثابت نویسه *s1, ثابت نویسه *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  اگر (s2len > s1len)
+    بازگشت پوچ;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  برای (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      برای (j = 0; j < s2len; ++j)
+	اگر (tolower (s1[i + j]) != tolower (s2[j]))
+	  بشکن;
+      اگر (j == s2len)
+	بازگشت (نویسه *) s1 + i;
     }
 
-  return NULL;
+  بازگشت پوچ;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+تعریفنوع نویسه *(*proto_t) (ثابت نویسه *, ثابت نویسه *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+ایستا صحیح
+check_result (impl_t *impl, ثابت نویسه *s1, ثابت نویسه *s2,
+	      نویسه *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  نویسه *result = CALL (impl, s1, s2);
+  اگر (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == پوچ) ? "(null)" : result,
+	     (exp_result == پوچ) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      بازگشت -1;
     }
-  return 0;
+  بازگشت 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+ایستا تهی
+do_one_test (impl_t *impl, ثابت نویسه *s1, ثابت نویسه *s2, نویسه *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  اگر (check_result (impl, s1, s2, exp_result) < 0)
+    بازگشت;
 }
 
 
-static void
+ایستا تهی
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 صحیح fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  نویسه *s1 = (نویسه *) (buf1 + align1);
+  نویسه *s2 = (نویسه *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  ایستا ثابت نویسه d[] = "1234567890abcxyz";
+#define dl (اندازه (d) - 1)
+  نویسه *ss2 = s2;
+  برای (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  اگر (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      نویسه *ss1 = s1;
+      برای (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  وگرنه
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      برای (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? پوچ : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+ایستا تهی
+check1 (تهی)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ثابت نویسه s1[] = "AOKB";
+  ثابت نویسه s2[] = "OK";
+  نویسه *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+ایستا صحیح
+test_main (تهی)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  برای (size_t klen = 2; klen < 32; ++klen)
+    برای (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  بازگشت ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

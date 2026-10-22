@@ -16,76 +16,76 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#شامل <stdio.h>
+#شامل <string.h>
+#شامل <locale.h>
 
 /* An incorrect strcoll optimization resulted in incorrect
    results from strcoll for cs_CZ and da_DK.  */
 
-int
-test_cs_CZ (void)
+صحیح
+test_cs_CZ (تهی)
 {
-  const char t1[] = "config";
-  const char t2[] = "choose";
-  if (setlocale (LC_ALL, "cs_CZ.UTF-8") == NULL)
+  ثابت نویسه t1[] = "config";
+  ثابت نویسه t2[] = "choose";
+  اگر (setlocale (LC_ALL, "cs_CZ.UTF-8") == پوچ)
     {
       perror ("setlocale");
-      return 1;
+      بازگشت 1;
     }
   /* In Czech the digraph ch sorts after c, therefore we expect
      config to sort before choose.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  صحیح a = strcoll (t1, t2);
+  صحیح b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  اگر (a < 0 && b > 0)
     {
       puts ("PASS: config < choose");
-      return 0;
+      بازگشت 0;
     }
-  else
+  وگرنه
     {
       puts ("FAIL: Wrong sorting in cs_CZ.UTF-8.");
-      return 1;
+      بازگشت 1;
     }
 }
 
-int
-test_da_DK (void)
+صحیح
+test_da_DK (تهی)
 {
-  const char t1[] = "AS";
-  const char t2[] = "AA";
-  if (setlocale (LC_ALL, "da_DK.ISO-8859-1") == NULL)
+  ثابت نویسه t1[] = "AS";
+  ثابت نویسه t2[] = "AA";
+  اگر (setlocale (LC_ALL, "da_DK.ISO-8859-1") == پوچ)
     {
       perror ("setlocale");
-      return 1;
+      بازگشت 1;
     }
   /* AA should be treated as the last letter of the Danish alphabet,
      hence sorting after AS.  */
-  int a = strcoll (t1, t2);
-  int b = strcoll (t2, t1);
+  صحیح a = strcoll (t1, t2);
+  صحیح b = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t1, t2, a);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, b);
-  if (a < 0 && b > 0)
+  اگر (a < 0 && b > 0)
     {
       puts ("PASS: AS < AA");
-      return 0;
+      بازگشت 0;
     }
-  else
+  وگرنه
     {
       puts ("FAIL: Wrong sorting in da_DK.ISO-8859-1");
-      return 1;
+      بازگشت 1;
     }
 }
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
-  int err = 0;
+  صحیح err = 0;
   err |= test_cs_CZ ();
   err |= test_da_DK ();
-  return err;
+  بازگشت err;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

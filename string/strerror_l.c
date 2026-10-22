@@ -15,62 +15,62 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libintl.h>
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#شامل <libintl.h>
+#شامل <locale.h>
+#شامل <stdio.h>
+#شامل <string.h>
+#شامل <tls-internal.h>
+#شامل <libc-internal.h>
 
-static const char *
-translate (const char *str, locale_t loc)
+ایستا ثابت نویسه *
+translate (ثابت نویسه *str, locale_t loc)
 {
   locale_t oldloc = __uselocale (loc);
-  const char *res = _(str);
+  ثابت نویسه *res = _(str);
   __uselocale (oldloc);
-  return res;
+  بازگشت res;
 }
 
-static char *
+ایستا نویسه *
 unknown_error (locale_t loc)
 {
-  return (char *) translate ("Unknown error", loc);
+  بازگشت (نویسه *) translate ("Unknown error", loc);
 }
 
 
 /* Return a string describing the errno code in ERRNUM.  */
-char *
-__strerror_l (int errnum, locale_t loc)
+نویسه *
+__strerror_l (صحیح errnum, locale_t loc)
 {
-  int saved_errno = errno;
-  char *err = (char *) __get_errlist (errnum);
-  if (__glibc_unlikely (err == NULL))
+  صحیح saved_errno = errno;
+  نویسه *err = (نویسه *) __get_errlist (errnum);
+  اگر (__glibc_unlikely (err == پوچ))
     {
-      if (__libc_initial)
+      اگر (__libc_initial)
 	{
-	  struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-	  free (tls_internal->strerror_l_buf);
-	  if (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
+	  ساختار tls_internal_t *tls_internal = __glibc_tls_internal ();
+	  آزاد (tls_internal->strerror_l_buf);
+	  اگر (__asprintf (&tls_internal->strerror_l_buf, "%s%d",
 			  translate ("Unknown error ", loc), errnum) > 0)
 	    err = tls_internal->strerror_l_buf;
-	  else
+	  وگرنه
 	    {
 	      /* The memory was freed above.  */
-	      tls_internal->strerror_l_buf = NULL;
+	      tls_internal->strerror_l_buf = پوچ;
 	      /* Provide a fallback translation.  */
 	      err = unknown_error (loc);
 	    }
 	}
-      else
+      وگرنه
 	/* Secondary namespaces use a different malloc, so cannot
 	   participate in the buffer management.  */
 	err = unknown_error (loc);
     }
-  else
-    err = (char *) translate (err, loc);
+  وگرنه
+    err = (نویسه *) translate (err, loc);
 
   __set_errno (saved_errno);
-  return err;
+  بازگشت err;
 }
 weak_alias (__strerror_l, strerror_l)
 libc_hidden_def (__strerror_l)

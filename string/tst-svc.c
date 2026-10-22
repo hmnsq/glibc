@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#شامل <stdlib.h>
+#شامل <stdio.h>
+#شامل <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_سطر_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+ایستا صحیح
+compare (ثابت تهی *p1, ثابت تهی *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  بازگشت strverscmp (*((نویسه **) p1), *((نویسه **) p2));
 }
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  نویسه سطر[MAX_سطر_SIZE + 1];
+  نویسه *str[MAX_STRINGS];
+  صحیح  شمار = 0;
+  صحیح  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  وقتی (شمار < MAX_STRINGS && fgets (سطر, MAX_سطر_SIZE, stdin) != پوچ)
     {
-      n = strlen (line) - 1;
+      n = strlen (سطر) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      اگر (سطر[n] == '\n')
+        سطر[n] = '\0';
 
-      str[count] = strdup (line);
+      str[شمار] = strdup (سطر);
 
-      if (str[count] == NULL)
+      اگر (str[شمار] == پوچ)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++شمار;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, شمار, اندازه (نویسه *), compare);
 
-  for (i = 0; i < count; ++i)
+  برای (i = 0; i < شمار; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  بازگشت EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

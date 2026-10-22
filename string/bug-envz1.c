@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#شامل <stdio.h>
+#شامل <envz.h>
+#شامل <stdlib.h>
+#شامل <string.h>
 
-static const struct
+ایستا ثابت ساختار
 {
-  const char *s;
-  int in_result;
+  ثابت نویسه *s;
+  صحیح in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (اندازه (strs) / اندازه (strs[0]))
 
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  نویسه *str = malloc (100);
+  اگر (str == پوچ)
     {
       puts ("out of memory");
-      return 1;
+      بازگشت 1;
     }
 
-  char **argz = &str;
+  نویسه **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  برای (صحیح i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  صحیح result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  برای (صحیح i = 0; i < nstrs; ++i)
+    اگر (strs[i].in_result)
       {
-        char name[2];
+        نویسه name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        نویسه *e = envz_entry (*argz, size, name);
+        اگر (e == پوچ)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        وگرنه اگر (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -68,8 +68,8 @@ do_test (void)
           }
       }
 
-  free (*argz);
-  return result;
+  آزاد (*argz);
+  بازگشت result;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

@@ -18,21 +18,21 @@
 
 #define TEST_MAIN
 #define BUF1PAGES 1
-#include "test-string.h"
+#شامل "test-string.h"
 
-int
-test_main (void)
+صحیح
+test_main (تهی)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
-  char **saveptrp;
-  char *tok;
+  نویسه سطر[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  نویسه **saveptrp;
+  نویسه *tok;
 
   test_init ();
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
-  saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
-  tok = strtok_r (line, " \t", saveptrp);
-  return strcmp (tok, "udf") != 0;
+  saveptrp = (نویسه **) (buf1 + page_size - اندازه (*saveptrp));
+  tok = strtok_r (سطر, " \t", saveptrp);
+  بازگشت strcmp (tok, "udf") != 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

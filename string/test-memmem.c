@@ -20,72 +20,72 @@
 #define TEST_NAME "memmem"
 #define BUF1PAGES 20
 #define ITERATIONS 500
-#include "test-string.h"
+#شامل "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+تعریفنوع نویسه *(*proto_t) (ثابت تهی *, size_t, ثابت تهی *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+تهی *
+simple_memmem (ثابت تهی *haystack, size_t haystack_len, ثابت تهی *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  ثابت نویسه *begin;
+  ثابت نویسه *ثابت last_possible
+    = (ثابت نویسه *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  اگر (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    بازگشت (تهی *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  اگر (__glibc_unlikely (haystack_len < needle_len))
+    بازگشت پوچ;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  برای (begin = (ثابت نویسه *) haystack; begin <= last_possible; ++begin)
+    اگر (begin[0] == ((ثابت نویسه *) needle)[0]
+        && !memcmp ((ثابت تهی *) &begin[1],
+		    (ثابت تهی *) ((ثابت نویسه *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      بازگشت (تهی *) begin;
 
-  return NULL;
+  بازگشت پوچ;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ایستا صحیح
+check_result (impl_t *impl, ثابت تهی *haystack, size_t haystack_len,
+	     ثابت تهی *needle, size_t needle_len, ثابت تهی *expected)
 {
-  void *res;
+  تهی *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  اگر (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      بازگشت -1;
     }
 
-  return 0;
+  بازگشت 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ایستا تهی
+do_one_test (impl_t *impl, ثابت تهی *haystack, size_t haystack_len,
+	     ثابت تهی *needle, size_t needle_len, ثابت تهی *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  اگر (check_result (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    بازگشت;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+ایستا تهی
+do_test (ثابت نویسه *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  نویسه tmpbuf[len];
 
   memcpy (tmpbuf, buf1 + idx, len);
   memcpy (buf1 + idx, str, len);
@@ -96,23 +96,23 @@ do_test (const char *str, size_t len, size_t idx)
   memcpy (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+ایستا تهی
+do_random_tests (تهی)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  برای (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      نویسه tmpbuf[32];
 
       size_t shift = random () % 11;
       size_t rel = random () % ((2 << (shift + 1)) * 64);
       size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
+      size_t len = random () % (اندازه (tmpbuf) - 1) + 1;
       len = MIN (len, BUF1PAGES * page_size - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      برای (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  نویسه ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
@@ -125,24 +125,24 @@ do_random_tests (void)
     }
 }
 
-static void
-check1 (void)
+ایستا تهی
+check1 (تهی)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  ثابت نویسه جستجو_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  ثابت نویسه pattern[2] = { 0x78, 0x56 };
+  تهی *جستجو_buf = (تهی *) buf1 + page_size - اندازه جستجو_buf_data;
+  تهی *exp_result;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  memcpy (جستجو_buf, جستجو_buf_data, اندازه جستجو_buf_data);
+  exp_result = simple_memmem (جستجو_buf, اندازه جستجو_buf_data,
+			      pattern, اندازه pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_result (impl, جستجو_buf, اندازه جستجو_buf_data,
+		  pattern, اندازه pattern, exp_result);
 }
 
-static const char *const strs[] =
+ایستا ثابت نویسه *ثابت strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+صحیح
+test_main (تهی)
 {
   size_t i;
 
@@ -164,11 +164,11 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  برای (i = 0; i < BUF1PAGES * page_size; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  برای (i = 0; i < اندازه (strs) / اندازه (strs[0]); ++i)
+    برای (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
 
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  بازگشت ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

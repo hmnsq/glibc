@@ -15,55 +15,55 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#شامل <argz.h>
+#شامل <errno.h>
+#شامل <stdlib.h>
+#شامل <string.h>
 
 
 error_t
-__argz_create_sep (const char *string, int delim, char **argz, size_t *len)
+__argz_create_sep (ثابت نویسه *string, صحیح delim, نویسه **argz, size_t *len)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  اگر (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ثابت نویسه *rp;
+      نویسه *wp;
 
-      *argz = (char *) malloc (nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (نویسه *) malloc (nlen);
+      اگر (*argz == پوچ)
+	بازگشت ENOMEM;
 
       rp = string;
       wp = *argz;
-      do
-	if (*rp == delim)
+      انجامبده
+	اگر (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    اگر (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    وگرنه
 	      --nlen;
 	  }
-	else
+	وگرنه
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      وقتی (*rp++ != '\0');
 
-      if (nlen == 0)
+      اگر (nlen == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  آزاد (*argz);
+	  *argz = پوچ;
 	  *len = 0;
 	}
 
       *len = nlen;
     }
-  else
+  وگرنه
     {
-      *argz = NULL;
+      *argz = پوچ;
       *len = 0;
     }
 
-  return 0;
+  بازگشت 0;
 }
 weak_alias (__argz_create_sep, argz_create_sep)

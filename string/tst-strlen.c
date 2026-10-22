@@ -2,56 +2,56 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#شامل <stdio.h>
+#شامل <string.h>
 
-int
-do_test (void)
+صحیح
+do_test (تهی)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ایستا ثابت size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  نویسه basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  برای (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      نویسه *buf = basebuf + base;
+      size_t واژگان;
 
-      for (words = 0; words < 4; ++words)
+      برای (واژگان = 0; واژگان < 4; ++واژگان)
 	{
 	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  memset (buf, 'a', واژگان * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  برای (last = 0; last < 16; ++last)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[واژگان * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
+	      buf[واژگان * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
+	      buf[واژگان * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
+	      buf[واژگان * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
+	      buf[واژگان * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      اگر (strlen (buf) != واژگان * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+strlen failed برای base=%zu, واژگان=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, واژگان, last,
+			  strlen (buf), واژگان * 4 + lens[last]);
+		  بازگشت 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      اگر (strnlen (buf, -1) != واژگان * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+strnlen failed برای base=%zu, واژگان=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, واژگان, last,
+			  strnlen (buf, -1), واژگان * 4 + lens[last]);
+		  بازگشت 1;
 		}
 	    }
 	}
     }
-  return 0;
+  بازگشت 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

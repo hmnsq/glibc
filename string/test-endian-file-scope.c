@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#شامل <endian.h>
+#شامل <stddef.h>
 
-int i;
+صحیح i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = اندازه (htobe16 (i));
+size_t s1 = اندازه (htole16 (i));
+size_t s2 = اندازه (be16toh (i));
+size_t s3 = اندازه (le16toh (i));
+size_t s4 = اندازه (htobe32 (i));
+size_t s5 = اندازه (htole32 (i));
+size_t s6 = اندازه (be32toh (i));
+size_t s7 = اندازه (le32toh (i));
+size_t s8 = اندازه (htobe64 (i));
+size_t s9 = اندازه (htole64 (i));
+size_t s10 = اندازه (be64toh (i));
+size_t s11 = اندازه (le64toh (i));
 
-static int
-do_test (void)
+ایستا صحیح
+do_test (تهی)
 {
   /* This is a compilation test.  */
-  return 0;
+  بازگشت 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>
