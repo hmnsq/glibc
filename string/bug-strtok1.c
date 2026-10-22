@@ -1,27 +1,27 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <stdio.h>
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  ध्रुव वर्ण str[] = "axaaba";
+  वर्ण *token;
+  वर्ण *cp;
+  वर्ण *l;
+  पूर्णाङ्क result = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
   printf ("cp = %p, len = %zu\n", cp, strlen (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == रिक्त || strcmp (token, "x");
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "ab");
-  result |= token != NULL;
+  result |= token != रिक्त;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "a");
-  result |= token != NULL;
+  result |= token != रिक्त;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
 
   puts ("test strtok_r");
@@ -29,16 +29,16 @@ do_test (void)
   size_t len = strlen (cp);
   printf ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == रिक्त || strcmp (token, "x");
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != रिक्त || l != cp + len;
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != रिक्त || l != cp + len;
   printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
 
-  return result;
+  प्रत्यागम result;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

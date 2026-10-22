@@ -16,34 +16,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stdint.h>
+#अन्तर्भाव <endian.h>
+#अन्तर्भाव <stdint.h>
 
-int i;
+पूर्णाङ्क i;
 uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-int
-do_test (void)
+पूर्णाङ्क
+do_test (शून्य)
 {
   /* This is a compilation test.  */
-  extern __typeof (htobe16 (i)) u16;
-  extern __typeof (htole16 (i)) u16;
-  extern __typeof (be16toh (i)) u16;
-  extern __typeof (le16toh (i)) u16;
-  extern __typeof (htobe32 (i)) u32;
-  extern __typeof (htole32 (i)) u32;
-  extern __typeof (be32toh (i)) u32;
-  extern __typeof (le32toh (i)) u32;
-  extern __typeof (htobe64 (i)) u64;
-  extern __typeof (htole64 (i)) u64;
-  extern __typeof (be64toh (i)) u64;
-  extern __typeof (le64toh (i)) u64;
-  (void) u16;
-  (void) u32;
-  (void) u64;
-  return 0;
+  बाह्य __typeof (htobe16 (i)) u16;
+  बाह्य __typeof (htole16 (i)) u16;
+  बाह्य __typeof (be16toh (i)) u16;
+  बाह्य __typeof (le16toh (i)) u16;
+  बाह्य __typeof (htobe32 (i)) u32;
+  बाह्य __typeof (htole32 (i)) u32;
+  बाह्य __typeof (be32toh (i)) u32;
+  बाह्य __typeof (le32toh (i)) u32;
+  बाह्य __typeof (htobe64 (i)) u64;
+  बाह्य __typeof (htole64 (i)) u64;
+  बाह्य __typeof (be64toh (i)) u64;
+  बाह्य __typeof (le64toh (i)) u64;
+  (शून्य) u16;
+  (शून्य) u32;
+  (शून्य) u64;
+  प्रत्यागम 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>
