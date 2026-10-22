@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <argz.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
 
 /* Delete ENTRY from ARGZ & ARGZ_LEN, if any.  */
-void
-argz_delete (char **argz, size_t *argz_len, char *entry)
+ଶୂନ୍ୟ
+argz_delete (ଅକ୍ଷର **argz, size_t *argz_len, ଅକ୍ଷର *entry)
 {
-  if (entry)
+  ଯଦି (entry)
     /* Get rid of the old value for NAME.  */
     {
       size_t entry_len = strlen (entry) + 1;
       *argz_len -= entry_len;
       memmove (entry, entry + entry_len, *argz_len - (entry - *argz));
-      if (*argz_len == 0)
+      ଯଦି (*argz_len == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  ମୁକ୍ତ (*argz);
+	  *argz = ଖାଲି;
 	}
     }
 }

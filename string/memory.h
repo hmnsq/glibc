@@ -22,7 +22,7 @@
 #ifndef	_MEMORY_H
 #define	_MEMORY_H	1
 
-#include <features.h>
+#ଅନ୍ତର୍ଭାଵ <features.h>
 
 
 #ifndef	_STRING_H

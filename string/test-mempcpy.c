@@ -20,17 +20,17 @@
 #define MIN_PAGE_SIZE 131072
 #define TEST_MAIN
 #define TEST_NAME "mempcpy"
-#include "test-string.h"
+#ଅନ୍ତର୍ଭାଵ "test-string.h"
 
 IMPL (mempcpy, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_mempcpy (char *dst, const char *src, size_t n)
+ଅକ୍ଷର *
+simple_mempcpy (ଅକ୍ଷର *dst, ଅଚଳ ଅକ୍ଷର *src, size_t n)
 {
-  while (n--)
+  ଯେତେବେଳେ (n--)
     *dst++ = *src++;
-  return dst;
+  ଫେରନ୍ତୁ dst;
 }
 
-#include "test-memcpy.c"
+#ଅନ୍ତର୍ଭାଵ "test-memcpy.c"

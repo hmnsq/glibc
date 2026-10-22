@@ -16,92 +16,92 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <libc-diag.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <libc-diag.h>
 
-void *vp;
-const void *cvp;
-int *ip;
-const int *cip;
-char *cp;
-const char *ccp;
-int c;
+ଶୂନ୍ୟ *vp;
+ଅଚଳ ଶୂନ୍ୟ *cvp;
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା *ip;
+ଅଚଳ ପୂର୍ଣ୍ଣସଂଖ୍ୟା *cip;
+ଅକ୍ଷର *cp;
+ଅଚଳ ଅକ୍ଷର *ccp;
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା c;
 size_t sz;
 
-#define CHECK_TYPE(EXPR, TYPE)					\
-  _Static_assert (_Generic (EXPR, TYPE: 1), "type check")
+#define CHECK_TYPE(ପଦସମଷ୍ଟି, TYPE)					\
+  _Static_assert (_Generic (ପଦସମଷ୍ଟି, TYPE: 1), "type check")
 
-static int
-do_test (void)
+ସ୍ଥିର ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
   /* This is a compilation test.  */
-  CHECK_TYPE (memchr (vp, c, sz), void *);
-  CHECK_TYPE (memchr (cvp, c, sz), const void *);
-  CHECK_TYPE (memchr (ip, c, sz), void *);
-  CHECK_TYPE (memchr (cip, c, sz), const void *);
-  CHECK_TYPE (memchr (cp, c, sz), void *);
-  CHECK_TYPE (memchr (ccp, c, sz), const void *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (vp, c, sz), ଶୂନ୍ୟ *);
+  CHECK_TYPE (memchr (cvp, c, sz), ଅଚଳ ଶୂନ୍ୟ *);
+  CHECK_TYPE (memchr (ip, c, sz), ଶୂନ୍ୟ *);
+  CHECK_TYPE (memchr (cip, c, sz), ଅଚଳ ଶୂନ୍ୟ *);
+  CHECK_TYPE (memchr (cp, c, sz), ଶୂନ୍ୟ *);
+  CHECK_TYPE (memchr (ccp, c, sz), ଅଚଳ ଶୂନ୍ୟ *);
+  DIAG_ଠେଲ_NEEDS_COMMENT;
   /* This deliberately tests the type of the result with a null
      pointer constant argument.  */
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (memchr (0, c, sz), void *);
-  CHECK_TYPE (memchr ((void *) 0, c, sz), void *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((memchr) (cvp, c, sz), void *);
-  CHECK_TYPE (strchr (vp, c), char *);
-  CHECK_TYPE (strchr (cvp, c), const char *);
-  CHECK_TYPE (strchr (cp, c), char *);
-  CHECK_TYPE (strchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (memchr (0, c, sz), ଶୂନ୍ୟ *);
+  CHECK_TYPE (memchr ((ଶୂନ୍ୟ *) 0, c, sz), ଶୂନ୍ୟ *);
+  DIAG_କାଢ଼_NEEDS_COMMENT;
+  CHECK_TYPE ((memchr) (cvp, c, sz), ଶୂନ୍ୟ *);
+  CHECK_TYPE (strchr (vp, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strchr (cvp, c), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strchr (cp, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strchr (ccp, c), ଅଚଳ ଅକ୍ଷର *);
+  DIAG_ଠେଲ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strchr (0, c), char *);
-  CHECK_TYPE (strchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strchr) (ccp, c), char *);
-  CHECK_TYPE (strpbrk (vp, vp), char *);
-  CHECK_TYPE (strpbrk (vp, cvp), char *);
-  CHECK_TYPE (strpbrk (cvp, vp), const char *);
-  CHECK_TYPE (strpbrk (cvp, cvp), const char *);
-  CHECK_TYPE (strpbrk (cp, cp), char *);
-  CHECK_TYPE (strpbrk (cp, ccp), char *);
-  CHECK_TYPE (strpbrk (ccp, cp), const char *);
-  CHECK_TYPE (strpbrk (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strchr (0, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strchr ((ଶୂନ୍ୟ *) 0, c), ଅକ୍ଷର *);
+  DIAG_କାଢ଼_NEEDS_COMMENT;
+  CHECK_TYPE ((strchr) (ccp, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (vp, vp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (vp, cvp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (cvp, vp), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (cvp, cvp), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (cp, cp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (cp, ccp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (ccp, cp), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (ccp, ccp), ଅଚଳ ଅକ୍ଷର *);
+  DIAG_ଠେଲ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strpbrk (0, cp), char *);
-  CHECK_TYPE (strpbrk (0, ccp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, cp), char *);
-  CHECK_TYPE (strpbrk ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strpbrk) (ccp, ccp), char *);
-  CHECK_TYPE (strrchr (vp, c), char *);
-  CHECK_TYPE (strrchr (cvp, c), const char *);
-  CHECK_TYPE (strrchr (cp, c), char *);
-  CHECK_TYPE (strrchr (ccp, c), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strpbrk (0, cp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk (0, ccp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk ((ଶୂନ୍ୟ *) 0, cp), ଅକ୍ଷର *);
+  CHECK_TYPE (strpbrk ((ଶୂନ୍ୟ *) 0, ccp), ଅକ୍ଷର *);
+  DIAG_କାଢ଼_NEEDS_COMMENT;
+  CHECK_TYPE ((strpbrk) (ccp, ccp), ଅକ୍ଷର *);
+  CHECK_TYPE (strrchr (vp, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strrchr (cvp, c), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strrchr (cp, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strrchr (ccp, c), ଅଚଳ ଅକ୍ଷର *);
+  DIAG_ଠେଲ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strrchr (0, c), char *);
-  CHECK_TYPE (strrchr ((void *) 0, c), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strrchr) (ccp, c), char *);
-  CHECK_TYPE (strstr (vp, vp), char *);
-  CHECK_TYPE (strstr (vp, cvp), char *);
-  CHECK_TYPE (strstr (cvp, vp), const char *);
-  CHECK_TYPE (strstr (cvp, cvp), const char *);
-  CHECK_TYPE (strstr (cp, cp), char *);
-  CHECK_TYPE (strstr (cp, ccp), char *);
-  CHECK_TYPE (strstr (ccp, cp), const char *);
-  CHECK_TYPE (strstr (ccp, ccp), const char *);
-  DIAG_PUSH_NEEDS_COMMENT;
+  CHECK_TYPE (strrchr (0, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strrchr ((ଶୂନ୍ୟ *) 0, c), ଅକ୍ଷର *);
+  DIAG_କାଢ଼_NEEDS_COMMENT;
+  CHECK_TYPE ((strrchr) (ccp, c), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (vp, vp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (vp, cvp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (cvp, vp), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (cvp, cvp), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (cp, cp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (cp, ccp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (ccp, cp), ଅଚଳ ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (ccp, ccp), ଅଚଳ ଅକ୍ଷର *);
+  DIAG_ଠେଲ_NEEDS_COMMENT;
   DIAG_IGNORE_NEEDS_COMMENT (14, "-Wnonnull");
-  CHECK_TYPE (strstr (0, cp), char *);
-  CHECK_TYPE (strstr (0, ccp), char *);
-  CHECK_TYPE (strstr ((void *) 0, cp), char *);
-  CHECK_TYPE (strstr ((void *) 0, ccp), char *);
-  DIAG_POP_NEEDS_COMMENT;
-  CHECK_TYPE ((strstr) (ccp, ccp), char *);
-  return 0;
+  CHECK_TYPE (strstr (0, cp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr (0, ccp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr ((ଶୂନ୍ୟ *) 0, cp), ଅକ୍ଷର *);
+  CHECK_TYPE (strstr ((ଶୂନ୍ୟ *) 0, ccp), ଅକ୍ଷର *);
+  DIAG_କାଢ଼_NEEDS_COMMENT;
+  CHECK_TYPE ((strstr) (ccp, ccp), ଅକ୍ଷର *);
+  ଫେରନ୍ତୁ 0;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

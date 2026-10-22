@@ -16,10 +16,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
 
-const char *
-strerrorname_np (int errnum)
+ଅଚଳ ଅକ୍ଷର *
+strerrorname_np (ପୂର୍ଣ୍ଣସଂଖ୍ୟା errnum)
 {
-  return __get_errname (errnum);
+  ଫେରନ୍ତୁ __get_errname (errnum);
 }

@@ -18,9 +18,9 @@
 
 #define TEST_MAIN
 #define TEST_NAME "memrchr"
-#include "test-string.h"
+#ଅନ୍ତର୍ଭାଵ "test-string.h"
 
-typedef char *(*proto_t) (const char *, int, size_t);
+ପ୍ରକାରବ୍ୟାଖ୍ୟା ଅକ୍ଷର *(*proto_t) (ଅଚଳ ଅକ୍ଷର *, ପୂର୍ଣ୍ଣସଂଖ୍ୟା, size_t);
 
 IMPL (memrchr, 1)
 
@@ -28,122 +28,122 @@ IMPL (memrchr, 1)
 #undef weak_alias
 #define weak_alias(a, b)
 #define MEMRCHR __memrchr_default
-#include "string/memrchr.c"
+#ଅନ୍ତର୍ଭାଵ "string/memrchr.c"
 IMPL (__memrchr_default, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memrchr (const char *s, int c, size_t n)
+ଅକ୍ଷର *
+simple_memrchr (ଅଚଳ ଅକ୍ଷର *s, ପୂର୍ଣ୍ଣସଂଖ୍ୟା c, size_t n)
 {
   s = s + n;
-  while (n--)
-    if (*--s == (char) c)
-      return (char *) s;
-  return NULL;
+  ଯେତେବେଳେ (n--)
+    ଯଦି (*--s == (ଅକ୍ଷର) c)
+      ଫେରନ୍ତୁ (ଅକ୍ଷର *) s;
+  ଫେରନ୍ତୁ ଖାଲି;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s, int c, size_t n, char *exp_res)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_one_test (impl_t *impl, ଅଚଳ ଅକ୍ଷର *s, ପୂର୍ଣ୍ଣସଂଖ୍ୟା c, size_t n, ଅକ୍ଷର *exp_res)
 {
-  char *res = CALL (impl, s, c, n);
-  if (res != exp_res)
+  ଅକ୍ଷର *res = CALL (impl, s, c, n);
+  ଯଦି (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, exp_res);
       ret = 1;
-      return;
+      ଫେରନ୍ତୁ;
     }
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_test (size_t align, size_t pos, size_t len, ପୂର୍ଣ୍ଣସଂଖ୍ୟା seek_char)
 {
   size_t i;
-  char *result;
+  ଅକ୍ଷର *result;
 
   align &= 7;
-  if (align + len >= page_size)
-    return;
+  ଯଦି (align + len >= page_size)
+    ଫେରନ୍ତୁ;
 
-  for (i = 0; i < len; ++i)
+  ପାଇଁ (i = 0; i < len; ++i)
     {
       buf1[align + i] = 1 + 23 * i % 127;
-      if (buf1[align + i] == seek_char)
+      ଯଦି (buf1[align + i] == seek_char)
         buf1[align + i] = seek_char + 1;
     }
   buf1[align + len] = 0;
 
-  if (pos < len)
+  ଯଦି (pos < len)
     {
       buf1[align + pos] = seek_char;
       buf1[align + len] = -seek_char;
-      result = (char *) (buf1 + align + pos);
+      result = (ଅକ୍ଷର *) (buf1 + align + pos);
     }
-  else
+  ଅନ୍ୟଥା
     {
-      result = NULL;
+      result = ଖାଲି;
       buf1[align + len] = seek_char;
     }
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (char *) (buf1 + align), seek_char, len, result);
+    do_one_test (impl, (ଅକ୍ଷର *) (buf1 + align), seek_char, len, result);
 }
 
-static void
-do_random_tests (void)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_random_tests (ଶୂନ୍ୟ)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  char *result;
-  unsigned char *p = buf1 + page_size - 512;
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା seek_char;
+  ଅକ୍ଷର *result;
+  unsigned ଅକ୍ଷର *p = buf1 + page_size - 512;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ପାଇଁ (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       pos = random () & 511;
-      if (pos + align >= 512)
+      ଯଦି (pos + align >= 512)
 	pos = 511 - align - (random () & 7);
       len = random () & 511;
-      if (pos >= len)
+      ଯଦି (pos >= len)
 	len = pos + (random () & 7);
-      if (len + align >= 512)
+      ଯଦି (len + align >= 512)
         len = 512 - align - (random () & 7);
       seek_char = random () & 255;
       j = len + align + 64;
-      if (j > 512)
+      ଯଦି (j > 512)
         j = 512;
 
-      for (i = 0; i < j; i++)
+      ପାଇଁ (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  ଯଦି (i == pos + align)
 	    p[i] = seek_char;
-	  else
+	  ଅନ୍ୟଥା
 	    {
 	      p[i] = random () & 255;
-	      if (p[i] == seek_char)
+	      ଯଦି (p[i] == seek_char)
 		p[i] = seek_char + 13;
 	    }
 	}
 
-      if (pos < len)
-	result = (char *) (p + pos + align);
-      else
-	result = NULL;
+      ଯଦି (pos < len)
+	result = (ଅକ୍ଷର *) (p + pos + align);
+      ଅନ୍ୟଥା
+	result = ଖାଲି;
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (char *) (p + align), seek_char, len) != result)
+	ଯଦି (CALL (impl, (ଅକ୍ଷର *) (p + align), seek_char, len) != result)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd, %zd) %p != %p, p %p",
 		   n, impl->name, align, seek_char, len, pos,
-		   CALL (impl, (char *) (p + align), seek_char, len),
+		   CALL (impl, (ଅକ୍ଷର *) (p + align), seek_char, len),
 		   result, p);
 	    ret = 1;
 	  }
     }
 }
 
-int
-test_main (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+test_main (ଶୂନ୍ୟ)
 {
   size_t i;
 
@@ -154,7 +154,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  ପାଇଁ (i = 1; i < 8; ++i)
     {
       /* Test len == 0.  */
       do_test (i, i, 0, 0);
@@ -171,7 +171,7 @@ test_main (void)
       do_test (i, i, 256, 0);
 
     }
-  for (i = 1; i < 32; ++i)
+  ପାଇଁ (i = 1; i < 32; ++i)
     {
       do_test (0, i, i + 1, 23);
       do_test (0, i, i + 1, 0);
@@ -185,7 +185,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ଫେରନ୍ତୁ ret;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

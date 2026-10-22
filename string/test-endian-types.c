@@ -16,34 +16,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stdint.h>
+#ଅନ୍ତର୍ଭାଵ <endian.h>
+#ଅନ୍ତର୍ଭାଵ <stdint.h>
 
-int i;
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା i;
 uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
   /* This is a compilation test.  */
-  extern __typeof (htobe16 (i)) u16;
-  extern __typeof (htole16 (i)) u16;
-  extern __typeof (be16toh (i)) u16;
-  extern __typeof (le16toh (i)) u16;
-  extern __typeof (htobe32 (i)) u32;
-  extern __typeof (htole32 (i)) u32;
-  extern __typeof (be32toh (i)) u32;
-  extern __typeof (le32toh (i)) u32;
-  extern __typeof (htobe64 (i)) u64;
-  extern __typeof (htole64 (i)) u64;
-  extern __typeof (be64toh (i)) u64;
-  extern __typeof (le64toh (i)) u64;
-  (void) u16;
-  (void) u32;
-  (void) u64;
-  return 0;
+  ବାହ୍ୟ __typeof (htobe16 (i)) u16;
+  ବାହ୍ୟ __typeof (htole16 (i)) u16;
+  ବାହ୍ୟ __typeof (be16toh (i)) u16;
+  ବାହ୍ୟ __typeof (le16toh (i)) u16;
+  ବାହ୍ୟ __typeof (htobe32 (i)) u32;
+  ବାହ୍ୟ __typeof (htole32 (i)) u32;
+  ବାହ୍ୟ __typeof (be32toh (i)) u32;
+  ବାହ୍ୟ __typeof (le32toh (i)) u32;
+  ବାହ୍ୟ __typeof (htobe64 (i)) u64;
+  ବାହ୍ୟ __typeof (htole64 (i)) u64;
+  ବାହ୍ୟ __typeof (be64toh (i)) u64;
+  ବାହ୍ୟ __typeof (le64toh (i)) u64;
+  (ଶୂନ୍ୟ) u16;
+  (ଶୂନ୍ୟ) u32;
+  (ଶୂନ୍ୟ) u64;
+  ଫେରନ୍ତୁ 0;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

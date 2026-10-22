@@ -17,23 +17,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <memcopy.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <memcopy.h>
 
 #ifndef MEMCPY
 # define MEMCPY memcpy
 #endif
 
-void *
-MEMCPY (void *dstpp, const void *srcpp, size_t len)
+ଶୂନ୍ୟ *
+MEMCPY (ଶୂନ୍ୟ *dstpp, ଅଚଳ ଶୂନ୍ୟ *srcpp, size_t len)
 {
-  unsigned long int dstp = (long int) dstpp;
-  unsigned long int srcp = (long int) srcpp;
+  unsigned long ପୂର୍ଣ୍ଣସଂଖ୍ୟା dstp = (long ପୂର୍ଣ୍ଣସଂଖ୍ୟା) dstpp;
+  unsigned long ପୂର୍ଣ୍ଣସଂଖ୍ୟା srcp = (long ପୂର୍ଣ୍ଣସଂଖ୍ୟା) srcpp;
 
   /* Copy from the beginning to the end.  */
 
   /* If there not too few bytes to copy, use word copy.  */
-  if (len >= OP_T_THRES)
+  ଯଦି (len >= OP_T_THRES)
     {
       /* Copy just a few bytes to make DSTP aligned.  */
       len -= (-dstp) % OPSIZ;
@@ -56,6 +56,6 @@ MEMCPY (void *dstpp, const void *srcpp, size_t len)
   /* There are just a few bytes to copy.  Use byte memory operations.  */
   BYTE_COPY_FWD (dstp, srcp, len);
 
-  return dstpp;
+  ଫେରନ୍ତୁ dstpp;
 }
 libc_hidden_builtin_def (MEMCPY)

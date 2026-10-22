@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_ଧାଡ଼ି_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+ସ୍ଥିର ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+compare (ଅଚଳ ଶୂନ୍ୟ *p1, ଅଚଳ ଶୂନ୍ୟ *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  ଫେରନ୍ତୁ strverscmp (*((ଅକ୍ଷର **) p1), *((ଅକ୍ଷର **) p2));
 }
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  ଅକ୍ଷର ଧାଡ଼ି[MAX_ଧାଡ଼ି_SIZE + 1];
+  ଅକ୍ଷର *str[MAX_STRINGS];
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା  ଗଣନା_2 = 0;
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  ଯେତେବେଳେ (ଗଣନା_2 < MAX_STRINGS && fgets (ଧାଡ଼ି, MAX_ଧାଡ଼ି_SIZE, stdin) != ଖାଲି)
     {
-      n = strlen (line) - 1;
+      n = strlen (ଧାଡ଼ି) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      ଯଦି (ଧାଡ଼ି[n] == '\n')
+        ଧାଡ଼ି[n] = '\0';
 
-      str[count] = strdup (line);
+      str[ଗଣନା_2] = strdup (ଧାଡ଼ି);
 
-      if (str[count] == NULL)
+      ଯଦି (str[ଗଣନା_2] == ଖାଲି)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++ଗଣନା_2;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, ଗଣନା_2, ଆକାର (ଅକ୍ଷର *), compare);
 
-  for (i = 0; i < count; ++i)
+  ପାଇଁ (i = 0; i < ଗଣନା_2; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  ଫେରନ୍ତୁ EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

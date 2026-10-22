@@ -16,9 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <argz.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
 
 /* Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
    existing entry in ARGZ; if BEFORE is NULL, ENTRY is appended to the end.
@@ -27,36 +27,36 @@
    in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
    ARGZ, ENOMEM is returned, else 0.  */
 error_t
-__argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+__argz_insert (ଅକ୍ଷର **argz, size_t *argz_len, ଅକ୍ଷର *before, ଅଚଳ ଅକ୍ଷର *entry)
 {
-  if (! before)
-    return __argz_add (argz, argz_len, entry);
+  ଯଦି (! before)
+    ଫେରନ୍ତୁ __argz_add (argz, argz_len, entry);
 
-  if (before < *argz || before >= *argz + *argz_len)
-    return EINVAL;
+  ଯଦି (before < *argz || before >= *argz + *argz_len)
+    ଫେରନ୍ତୁ EINVAL;
 
-  if (before > *argz)
+  ଯଦି (before > *argz)
     /* Make sure before is actually the beginning of an entry.  */
-    while (before[-1])
+    ଯେତେବେଳେ (before[-1])
       before--;
 
   {
     size_t after_before = *argz_len - (before - *argz);
     size_t entry_len = strlen  (entry) + 1;
     size_t new_argz_len = *argz_len + entry_len;
-    char *new_argz = realloc (*argz, new_argz_len);
+    ଅକ୍ଷର *new_argz = realloc (*argz, new_argz_len);
 
-    if (new_argz)
+    ଯଦି (new_argz)
       {
 	before = new_argz + (before - *argz);
 	memmove (before + entry_len, before, after_before);
 	memmove (before, entry, entry_len);
 	*argz = new_argz;
 	*argz_len = new_argz_len;
-	return 0;
+	ଫେରନ୍ତୁ 0;
       }
-    else
-      return ENOMEM;
+    ଅନ୍ୟଥା
+      ଫେରନ୍ତୁ ENOMEM;
   }
 }
-weak_alias (__argz_insert, argz_insert)
+weak_alias (__argz_insert, argz_ଭର୍ତ୍ତି)

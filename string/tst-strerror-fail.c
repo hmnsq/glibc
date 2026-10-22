@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#ଅନ୍ତର୍ଭାଵ <locale.h>
+#ଅନ୍ତର୍ଭାଵ <stdbool.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <support/check.h>
+#ଅନ୍ତର୍ଭାଵ <support/namespace.h>
+#ଅନ୍ତର୍ଭାଵ <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+ସ୍ଥିର ଅସ୍ଥିର bool fail_malloc;
 
-void *
+ଶୂନ୍ୟ *
 malloc (size_t size)
 {
-  if (fail_malloc)
-    return NULL;
+  ଯଦି (fail_malloc)
+    ଫେରନ୍ତୁ ଖାଲି;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
+  ସ୍ଥିର ଶୂନ୍ୟ *(*original_malloc) (size_t);
+  ଯଦି (original_malloc == ଖାଲି)
     original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  ଫେରନ୍ତୁ original_malloc (size);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+ସ୍ଥିର ଶୂନ୍ୟ
+test_strerror (ଶୂନ୍ୟ *closure)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  ଅଚଳ ଅକ୍ଷର *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+ସ୍ଥିର ଶୂନ୍ୟ
+test_strerror_l (ଶୂନ୍ୟ *closure)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  ଅଚଳ ଅକ୍ଷର *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+ସ୍ଥିର ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_in_subprocess (test_strerror, ଖାଲି);
+  support_isolate_in_subprocess (test_strerror_l, ଖାଲି);
 
-  return 0;
+  ଫେରନ୍ତୁ 0;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

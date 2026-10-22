@@ -1,27 +1,27 @@
 /* See BZ #2126.  */
-#include <string.h>
-#include <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  const char str[] = "axaaba";
-  char *token;
-  char *cp;
-  char *l;
-  int result = 0;
+  ଅଚଳ ଅକ୍ଷର str[] = "axaaba";
+  ଅକ୍ଷର *token;
+  ଅକ୍ଷର *cp;
+  ଅକ୍ଷର *l;
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା result = 0;
 
   puts ("test strtok");
   cp = strdupa (str);
   printf ("cp = %p, len = %zu\n", cp, strlen (cp));
   token = strtok (cp, "ab");
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == ଖାଲି || strcmp (token, "x");
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "ab");
-  result |= token != NULL;
+  result |= token != ଖାଲି;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
   token = strtok(0, "a");
-  result |= token != NULL;
+  result |= token != ଖାଲି;
   printf ("token: %s (%d)\n", token ? token : "NULL", result);
 
   puts ("test strtok_r");
@@ -29,16 +29,16 @@ do_test (void)
   size_t len = strlen (cp);
   printf ("cp = %p, len = %zu\n", cp, len);
   token = strtok_r (cp, "ab", &l);
-  result |= token == NULL || strcmp (token, "x");
+  result |= token == ଖାଲି || strcmp (token, "x");
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "ab", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != ଖାଲି || l != cp + len;
   printf ("token: %s, next = %p (%d)\n", token ? token : "NULL", l, result);
   token = strtok_r(0, "a", &l);
-  result |= token != NULL || l != cp + len;
+  result |= token != ଖାଲି || l != cp + len;
   printf ("token: %s,  next = %p (%d)\n", token ? token : "NULL", l, result);
 
-  return result;
+  ଫେରନ୍ତୁ result;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

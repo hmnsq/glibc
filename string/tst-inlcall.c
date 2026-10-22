@@ -23,62 +23,62 @@
 /* Make sure we test the optimized inline functions.  */
 #define __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#ଅନ୍ତର୍ଭାଵ <errno.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <strings.h>
+#ଅନ୍ତର୍ଭାଵ <fcntl.h>
 
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା status;
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା errors = 0;
+  ଅକ୍ଷର buf1[1000];
+  ଅକ୍ଷର *cp;
+  ଅକ୍ଷର ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  ଯଦି (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  ଯଦି (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  ଯଦି (strchr ("hello world", ch++) == ଖାଲି)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ଅଚଳ ଅକ୍ଷର * ଅଚଳ hw = "hello world";
+  ଯଦି (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  ଯଦି (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  ଅନ୍ୟଥା
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  ଫେରନ୍ତୁ status;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

@@ -15,22 +15,22 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 #ifndef STRING_TYPE
-# define STRING_TYPE char
+# define STRING_TYPE ଅକ୍ଷର
 # define STRCOLL strcoll
 # define STRCOLL_L __strcoll_l
 # define USE_HIDDEN_DEF
 #endif
 
-#include "../locale/localeinfo.h"
+#ଅନ୍ତର୍ଭାଵ "../locale/localeinfo.h"
 
 
-int
-STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+STRCOLL (ଅଚଳ STRING_TYPE *s1, ଅଚଳ STRING_TYPE *s2)
 {
-  return STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
+  ଫେରନ୍ତୁ STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
 }
 
 #ifdef USE_HIDDEN_DEF

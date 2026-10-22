@@ -18,192 +18,192 @@
 
 #define TEST_MAIN
 #define TEST_NAME "memccpy"
-#include "test-string.h"
+#ଅନ୍ତର୍ଭାଵ "test-string.h"
 
 IMPL (memccpy, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memccpy (void *dst, const void *src, int c, size_t n)
+ଶୂନ୍ୟ *
+simple_memccpy (ଶୂନ୍ୟ *dst, ଅଚଳ ଶୂନ୍ୟ *src, ପୂର୍ଣ୍ଣସଂଖ୍ୟା c, size_t n)
 {
-  const char *s = src;
-  char *d = dst;
+  ଅଚଳ ଅକ୍ଷର *s = src;
+  ଅକ୍ଷର *d = dst;
 
-  while (n-- > 0)
-    if ((*d++ = *s++) == (char) c)
-      return d;
+  ଯେତେବେଳେ (n-- > 0)
+    ଯଦି ((*d++ = *s++) == (ଅକ୍ଷର) c)
+      ଫେରନ୍ତୁ d;
 
-  return NULL;
+  ଫେରନ୍ତୁ ଖାଲି;
 }
 
-typedef void *(*proto_t) (void *, const void *, int c, size_t);
+ପ୍ରକାରବ୍ୟାଖ୍ୟା ଶୂନ୍ୟ *(*proto_t) (ଶୂନ୍ୟ *, ଅଚଳ ଶୂନ୍ୟ *, ପୂର୍ଣ୍ଣସଂଖ୍ୟା c, size_t);
 
-static void
-do_one_test (impl_t *impl, void *dst, const void *src, int c, size_t len,
+ସ୍ଥିର ଶୂନ୍ୟ
+do_one_test (impl_t *impl, ଶୂନ୍ୟ *dst, ଅଚଳ ଶୂନ୍ୟ *src, ପୂର୍ଣ୍ଣସଂଖ୍ୟା c, size_t len,
 	     size_t n)
 {
-  void *expect = len > n ? NULL : (char *) dst + len;
-  if (CALL (impl, dst, src, c, n) != expect)
+  ଶୂନ୍ୟ *expect = len > n ? ଖାଲି : (ଅକ୍ଷର *) dst + len;
+  ଯଦି (CALL (impl, dst, src, c, n) != expect)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, c, n), expect);
       ret = 1;
-      return;
+      ଫେରନ୍ତୁ;
     }
 
-  if (memcmp (dst, src, len > n ? n : len) != 0)
+  ଯଦି (memcmp (dst, src, len > n ? n : len) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      ଫେରନ୍ତୁ;
     }
 }
 
-static void
-do_test (size_t align1, size_t align2, int c, size_t len, size_t n,
-	 int max_char)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_test (size_t align1, size_t align2, ପୂର୍ଣ୍ଣସଂଖ୍ୟା c, size_t len, size_t n,
+	 ପୂର୍ଣ୍ଣସଂଖ୍ୟା max_char)
 {
   size_t i;
-  char *s1, *s2;
+  ଅକ୍ଷର *s1, *s2;
 
   align1 &= 7;
-  if (align1 + len >= page_size)
-    return;
+  ଯଦି (align1 + len >= page_size)
+    ଫେରନ୍ତୁ;
 
   align2 &= 7;
-  if (align2 + len >= page_size)
-    return;
+  ଯଦି (align2 + len >= page_size)
+    ଫେରନ୍ତୁ;
 
-  s1 = (char *) (buf1 + align1);
-  s2 = (char *) (buf2 + align2);
+  s1 = (ଅକ୍ଷର *) (buf1 + align1);
+  s2 = (ଅକ୍ଷର *) (buf2 + align2);
 
-  for (i = 0; i < len - 1; ++i)
+  ପାଇଁ (i = 0; i < len - 1; ++i)
     {
       s1[i] = 32 + 23 * i % (max_char - 32);
-      if (s1[i] == (char) c)
+      ଯଦି (s1[i] == (ଅକ୍ଷର) c)
 	--s1[i];
     }
   s1[len - 1] = c;
-  for (i = len; i + align1 < page_size && i < len + 64; ++i)
+  ପାଇଁ (i = len; i + align1 < page_size && i < len + 64; ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   FOR_EACH_IMPL (impl, 0)
     do_one_test (impl, s2, s1, c, len, n);
 }
 
-static void
-do_random_tests (void)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_random_tests (ଶୂନ୍ୟ)
 {
   size_t i, j, n, align1, align2, len, size, mode;
-  unsigned char *p1 = buf1 + page_size - 512;
-  unsigned char *p2 = buf2 + page_size - 512;
-  unsigned char *res, c;
+  unsigned ଅକ୍ଷର *p1 = buf1 + page_size - 512;
+  unsigned ଅକ୍ଷର *p2 = buf2 + page_size - 512;
+  unsigned ଅକ୍ଷର *res, c;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ପାଇଁ (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
       c = random ();
-      if (mode & 1)
+      ଯଦି (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  ଯଦି (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  ଅନ୍ୟଥା
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  ଯଦି (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  ଯଦି (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  ଅନ୍ୟଥା
 	    len = 512;
-	  if (len >= 512)
+	  ଯଦି (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      ଅନ୍ୟଥା
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  ଯଦି (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  ଅନ୍ୟଥା
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  ଯଦି (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  ଯଦି (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      ଯଦି (size + j > 512)
 		size = 512 - j - (random() & 31);
 	    }
-	  else
+	  ଅନ୍ୟଥା
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  ଯଦି ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      ଯଦି (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      ପାଇଁ (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  ଯଦି (i == len + align1)
 	    p1[i] = c;
-	  else
+	  ଅନ୍ୟଥା
 	    {
 	      p1[i] = random () & 255;
-	      if (i >= align1 && i < len + align1 && p1[i] == c)
+	      ଯଦି (i >= align1 && i < len + align1 && p1[i] == c)
 		p1[i] = (random () & 127) + 3 + c;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  unsigned char *expect;
+	  unsigned ଅକ୍ଷର *expect;
 	  memset (p2 - 64, '\1', 512 + 64);
-	  res = CALL (impl, p2 + align2, p1 + align1, (char) c, size);
-	  if (len >= size)
-	    expect = NULL;
-	  else
+	  res = CALL (impl, p2 + align2, p1 + align1, (ଅକ୍ଷର) c, size);
+	  ଯଦି (len >= size)
+	    expect = ଖାଲି;
+	  ଅନ୍ୟଥା
 	    expect = p2 + align2 + len + 1;
 
-	  if (res != expect)
+	  ଯଦି (res != expect)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %d) %p != %p",
 		     n, impl->name, align1, align2, len, size, c, res, expect);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  ପାଇଁ (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      ଯଦି (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ଭାଙ୍ଗ;
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 < j)
+	  ଯଦି (size + align2 < j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  ପାଇଁ (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      ଯଦି (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
 		  ret = 1;
-		  break;
+		  ଭାଙ୍ଗ;
 		}
 	    }
 	  j = len + 1;
-	  if (size < j)
+	  ଯଦି (size < j)
 	    j = size;
-	  if (memcmp (p1 + align1, p2 + align2, j))
+	  ଯଦି (memcmp (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -213,8 +213,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+test_main (ଶୂନ୍ୟ)
 {
   size_t i;
 
@@ -225,7 +225,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  ପାଇଁ (i = 1; i < 8; ++i)
     {
       do_test (i, i, 12, 16, 16, 127);
       do_test (i, i, 23, 16, 16, 255);
@@ -237,7 +237,7 @@ test_main (void)
       do_test (2 * i, 8 - i, i, 2 << i, 1 << i, 255);
     }
 
-  for (i = 1; i < 8; ++i)
+  ପାଇଁ (i = 1; i < 8; ++i)
     {
       do_test (0, 0, i, 4 << i, 8 << i, 127);
       do_test (0, 0, i, 16 << i, 8 << i, 127);
@@ -246,7 +246,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ଫେରନ୍ତୁ ret;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

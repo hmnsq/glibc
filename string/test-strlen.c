@@ -19,23 +19,23 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strlen"
-#else
+#ଅନ୍ୟଥା
 # define TEST_NAME "wcslen"
 #endif
-#include "test-string.h"
+#ଅନ୍ତର୍ଭାଵ "test-string.h"
 
 #ifndef WIDE
 # define STRLEN strlen
-# define CHAR char
+# define CHAR ଅକ୍ଷର
 # define MAX_CHAR CHAR_MAX
-#else
+#ଅନ୍ୟଥା
 # include <wchar.h>
 # define STRLEN wcslen
 # define CHAR wchar_t
 # define MAX_CHAR WCHAR_MAX
 #endif
 
-typedef size_t (*proto_t) (const CHAR *);
+ପ୍ରକାରବ୍ୟାଖ୍ୟା size_t (*proto_t) (ଅଚଳ CHAR *);
 
 IMPL (STRLEN, 1)
 
@@ -49,38 +49,38 @@ IMPL (STRLEN, 1)
 # define STRLEN __strlen_default
 # include "string/strlen.c"
 IMPL (__strlen_default, 1)
-#else
+#ଅନ୍ୟଥା
 # define WCSLEN __wcslen_default
 # include "wcsmbs/wcslen.c"
 IMPL (__wcslen_default, 1)
 #endif
 
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, size_t exp_len)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_one_test (impl_t *impl, ଅଚଳ CHAR *s, size_t exp_len)
 {
   size_t len = CALL (impl, s);
-  if (len != exp_len)
+  ଯଦି (len != exp_len)
     {
       error (0, 0, "Wrong result in function %s %zd %zd", impl->name,
 	     len, exp_len);
       ret = 1;
-      return;
+      ଫେରନ୍ତୁ;
     }
 }
 
-static void
+ସ୍ଥିର ଶୂନ୍ୟ
 do_test (size_t align, size_t len)
 {
   size_t i;
 
-  align &= (getpagesize () / sizeof (CHAR)) - 1;
-  if (align + sizeof (CHAR) * len >= page_size)
-    return;
+  align &= (getpagesize () / ଆକାର (CHAR)) - 1;
+  ଯଦି (align + ଆକାର (CHAR) * len >= page_size)
+    ଫେରନ୍ତୁ;
 
   CHAR *buf = (CHAR *) (buf1);
 
-  for (i = 0; i < len; ++i)
+  ପାଇଁ (i = 0; i < len; ++i)
     buf[align + i] = 1 + 11111 * i % MAX_CHAR;
   buf[align + len] = 0;
 
@@ -88,36 +88,36 @@ do_test (size_t align, size_t len)
     do_one_test (impl, (CHAR *) (buf + align), len);
 }
 
-static void
-do_random_tests (void)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_random_tests (ଶୂନ୍ୟ)
 {
   size_t i, j, n, align, len;
-  CHAR *p = (CHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  CHAR *p = (CHAR *) (buf1 + page_size - 512 * ଆକାର (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  ପାଇଁ (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
       len = random () & 511;
-      if (len + align > 510)
+      ଯଦି (len + align > 510)
 	len = 511 - align - (random () & 7);
       j = len + align + 64;
-      if (j > 512)
+      ଯଦି (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      ପାଇଁ (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  ଯଦି (i == len + align)
 	    p[i] = 0;
-	  else
+	  ଅନ୍ୟଥା
 	    {
 	      p[i] = random () & 255;
-	      if (i >= align && i < len + align && !p[i])
+	      ଯଦି (i >= align && i < len + align && !p[i])
 		p[i] = (random () & 127) + 1;
 	    }
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align)) != len)
+	ଯଦି (CALL (impl, (CHAR *) (p + align)) != len)
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd) %zd != %zd, p %p",
 		   n, impl->name, align, CALL (impl, (CHAR *) (p + align)),
@@ -127,8 +127,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+test_main (ଶୂନ୍ୟ)
 {
   size_t i;
 
@@ -141,26 +141,26 @@ test_main (void)
 
   /* Checking with only 4 * N alignments for wcslen, other alignments are wrong for wchar_t type arrays*/
 
-  for (i = 1; i < 8; ++i)
+  ପାଇଁ (i = 1; i < 8; ++i)
   {
-    do_test (sizeof (CHAR) * i, i);
+    do_test (ଆକାର (CHAR) * i, i);
     do_test (0, i);
   }
 
-  for (i = 2; i <= 12; ++i)
+  ପାଇଁ (i = 2; i <= 12; ++i)
     {
       do_test (0, 1 << i);
-      do_test (sizeof (CHAR) * 7, 1 << i);
-      do_test (sizeof (CHAR) * i, 1 << i);
-      do_test (sizeof (CHAR) * i, (size_t)((1 << i) / 1.5));
+      do_test (ଆକାର (CHAR) * 7, 1 << i);
+      do_test (ଆକାର (CHAR) * i, 1 << i);
+      do_test (ଆକାର (CHAR) * i, (size_t)((1 << i) / 1.5));
     }
 
   /* Test strings near page boundary */
 
-  size_t maxlength = 64 / sizeof (CHAR) - 1;
-  size_t pagesize = getpagesize () / sizeof (CHAR);
+  size_t maxlength = 64 / ଆକାର (CHAR) - 1;
+  size_t pagesize = getpagesize () / ଆକାର (CHAR);
 
-  for (i = maxlength ; i > 1; --i)
+  ପାଇଁ (i = maxlength ; i > 1; --i)
     {
       /* String stays on the same page.  */
       do_test (pagesize - i, i - 1);
@@ -169,7 +169,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  ଫେରନ୍ତୁ ret;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

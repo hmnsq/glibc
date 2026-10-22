@@ -1,25 +1,25 @@
 /* Testcase for strtok reported by Andrew Church <achurch@achurch.org>.  */
-#include <stdio.h>
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  ଅକ୍ଷର buf[1] = { 0 };
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  ଯଦି (strtok (buf, " ") != ଖାଲି)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  ଅନ୍ୟଥା ଯଦି (strtok (ଖାଲି, " ") != ଖାଲି)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  ଫେରନ୍ତୁ result;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

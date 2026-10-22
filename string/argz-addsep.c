@@ -15,43 +15,43 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <argz.h>
+#ଅନ୍ତର୍ଭାଵ <errno.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 
 error_t
-__argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+__argz_add_sep (ଅକ୍ଷର **argz, size_t *argz_len, ଅଚଳ ଅକ୍ଷର *string, ପୂର୍ଣ୍ଣସଂଖ୍ୟା delim)
 {
   size_t nlen = strlen (string) + 1;
 
-  if (nlen > 1)
+  ଯଦି (nlen > 1)
     {
-      const char *rp;
-      char *wp;
+      ଅଚଳ ଅକ୍ଷର *rp;
+      ଅକ୍ଷର *wp;
 
-      *argz = (char *) realloc (*argz, *argz_len + nlen);
-      if (*argz == NULL)
-	return ENOMEM;
+      *argz = (ଅକ୍ଷର *) realloc (*argz, *argz_len + nlen);
+      ଯଦି (*argz == ଖାଲି)
+	ଫେରନ୍ତୁ ENOMEM;
 
       wp = *argz + *argz_len;
       rp = string;
-      do
-	if (*rp == delim)
+      କର
+	ଯଦି (*rp == delim)
 	  {
-	    if (wp > *argz && wp[-1] != '\0')
+	    ଯଦି (wp > *argz && wp[-1] != '\0')
 	      *wp++ = '\0';
-	    else
+	    ଅନ୍ୟଥା
 	      --nlen;
 	  }
-	else
+	ଅନ୍ୟଥା
 	  *wp++ = *rp;
-      while (*rp++ != '\0');
+      ଯେତେବେଳେ (*rp++ != '\0');
 
       *argz_len += nlen;
     }
 
-  return 0;
+  ଫେରନ୍ତୁ 0;
 }
 weak_alias (__argz_add_sep, argz_add_sep)

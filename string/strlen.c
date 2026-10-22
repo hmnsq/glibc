@@ -15,12 +15,12 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <libc-pointer-arith.h>
+#ଅନ୍ତର୍ଭାଵ <string-fzb.h>
+#ଅନ୍ତର୍ଭାଵ <string-fzc.h>
+#ଅନ୍ତର୍ଭାଵ <string-fzi.h>
+#ଅନ୍ତର୍ଭାଵ <string-shift.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 #ifdef STRLEN
 # define __strlen STRLEN
@@ -29,22 +29,22 @@
 /* Return the length of the null-terminated string STR.  Scan for
    the null terminator quickly by testing four bytes at a time.  */
 size_t
-__strlen (const char *str)
+__strlen (ଅଚଳ ଅକ୍ଷର *str)
 {
   /* Align pointer to sizeof op_t.  */
-  const uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t*) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  ଅଚଳ uintptr_t s_int = (uintptr_t) str;
+  ଅଚଳ op_t *word_ptr = (ଅଚଳ op_t*) PTR_ALIGN_DOWN (str, ଆକାର (op_t));
 
   op_t word = *word_ptr;
   find_t mask = shift_find (find_zero_all (word), s_int);
-  if (mask != 0)
-    return index_first (mask);
+  ଯଦି (mask != 0)
+    ଫେରନ୍ତୁ index_first (mask);
 
-  do
+  କର
     word = *++word_ptr;
-  while (! has_zero (word));
+  ଯେତେବେଳେ (! has_zero (word));
 
-  return ((const char *) word_ptr) + index_first_zero (word) - str;
+  ଫେରନ୍ତୁ ((ଅଚଳ ଅକ୍ଷର *) word_ptr) + index_first_zero (word) - str;
 }
 #ifndef STRLEN
 weak_alias (__strlen, strlen)

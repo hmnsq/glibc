@@ -20,72 +20,72 @@
 #define TEST_NAME "memmem"
 #define BUF1PAGES 20
 #define ITERATIONS 500
-#include "test-string.h"
+#ଅନ୍ତର୍ଭାଵ "test-string.h"
 
-typedef char *(*proto_t) (const void *, size_t, const void *, size_t);
+ପ୍ରକାରବ୍ୟାଖ୍ୟା ଅକ୍ଷର *(*proto_t) (ଅଚଳ ଶୂନ୍ୟ *, size_t, ଅଚଳ ଶୂନ୍ୟ *, size_t);
 
 IMPL (memmem, 1)
 
 /* Naive implementation to verify results.  */
-void *
-simple_memmem (const void *haystack, size_t haystack_len, const void *needle,
+ଶୂନ୍ୟ *
+simple_memmem (ଅଚଳ ଶୂନ୍ୟ *haystack, size_t haystack_len, ଅଚଳ ଶୂନ୍ୟ *needle,
 	       size_t needle_len)
 {
-  const char *begin;
-  const char *const last_possible
-    = (const char *) haystack + haystack_len - needle_len;
+  ଅଚଳ ଅକ୍ଷର *begin;
+  ଅଚଳ ଅକ୍ଷର *ଅଚଳ last_possible
+    = (ଅଚଳ ଅକ୍ଷର *) haystack + haystack_len - needle_len;
 
-  if (needle_len == 0)
+  ଯଦି (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
        the beginning of the string.  */
-    return (void *) haystack;
+    ଫେରନ୍ତୁ (ଶୂନ୍ୟ *) haystack;
 
   /* Sanity check, otherwise the loop might search through the whole
      memory.  */
-  if (__glibc_unlikely (haystack_len < needle_len))
-    return NULL;
+  ଯଦି (__glibc_unlikely (haystack_len < needle_len))
+    ଫେରନ୍ତୁ ଖାଲି;
 
-  for (begin = (const char *) haystack; begin <= last_possible; ++begin)
-    if (begin[0] == ((const char *) needle)[0]
-        && !memcmp ((const void *) &begin[1],
-		    (const void *) ((const char *) needle + 1),
+  ପାଇଁ (begin = (ଅଚଳ ଅକ୍ଷର *) haystack; begin <= last_possible; ++begin)
+    ଯଦି (begin[0] == ((ଅଚଳ ଅକ୍ଷର *) needle)[0]
+        && !memcmp ((ଅଚଳ ଶୂନ୍ୟ *) &begin[1],
+		    (ଅଚଳ ଶୂନ୍ୟ *) ((ଅଚଳ ଅକ୍ଷର *) needle + 1),
 		    needle_len - 1))
-      return (void *) begin;
+      ଫେରନ୍ତୁ (ଶୂନ୍ୟ *) begin;
 
-  return NULL;
+  ଫେରନ୍ତୁ ଖାଲି;
 }
 
-static int
-check_result (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ସ୍ଥିର ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+check_result (impl_t *impl, ଅଚଳ ଶୂନ୍ୟ *haystack, size_t haystack_len,
+	     ଅଚଳ ଶୂନ୍ୟ *needle, size_t needle_len, ଅଚଳ ଶୂନ୍ୟ *expected)
 {
-  void *res;
+  ଶୂନ୍ୟ *res;
 
   res = CALL (impl, haystack, haystack_len, needle, needle_len);
-  if (res != expected)
+  ଯଦି (res != expected)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     res, expected);
       ret = 1;
-      return -1;
+      ଫେରନ୍ତୁ -1;
     }
 
-  return 0;
+  ଫେରନ୍ତୁ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const void *haystack, size_t haystack_len,
-	     const void *needle, size_t needle_len, const void *expected)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_one_test (impl_t *impl, ଅଚଳ ଶୂନ୍ୟ *haystack, size_t haystack_len,
+	     ଅଚଳ ଶୂନ୍ୟ *needle, size_t needle_len, ଅଚଳ ଶୂନ୍ୟ *expected)
 {
-  if (check_result (impl, haystack, haystack_len, needle, needle_len,
+  ଯଦି (check_result (impl, haystack, haystack_len, needle, needle_len,
 		    expected) < 0)
-    return;
+    ଫେରନ୍ତୁ;
 }
 
-static void
-do_test (const char *str, size_t len, size_t idx)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_test (ଅଚଳ ଅକ୍ଷର *str, size_t len, size_t idx)
 {
-  char tmpbuf[len];
+  ଅକ୍ଷର tmpbuf[len];
 
   memcpy (tmpbuf, buf1 + idx, len);
   memcpy (buf1 + idx, str, len);
@@ -96,23 +96,23 @@ do_test (const char *str, size_t len, size_t idx)
   memcpy (buf1 + idx, tmpbuf, len);
 }
 
-static void
-do_random_tests (void)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_random_tests (ଶୂନ୍ୟ)
 {
-  for (size_t n = 0; n < ITERATIONS; ++n)
+  ପାଇଁ (size_t n = 0; n < ITERATIONS; ++n)
     {
-      char tmpbuf[32];
+      ଅକ୍ଷର tmpbuf[32];
 
       size_t shift = random () % 11;
       size_t rel = random () % ((2 << (shift + 1)) * 64);
       size_t idx = MIN ((2 << shift) * 64 + rel, BUF1PAGES * page_size - 2);
-      size_t len = random () % (sizeof (tmpbuf) - 1) + 1;
+      size_t len = random () % (ଆକାର (tmpbuf) - 1) + 1;
       len = MIN (len, BUF1PAGES * page_size - idx - 1);
       memcpy (tmpbuf, buf1 + idx, len);
-      for (size_t i = random () % len / 2 + 1; i > 0; --i)
+      ପାଇଁ (size_t i = random () % len / 2 + 1; i > 0; --i)
 	{
 	  size_t off = random () % len;
-	  char ch = '0' + random () % 10;
+	  ଅକ୍ଷର ch = '0' + random () % 10;
 
 	  buf1[idx + off] = ch;
 	}
@@ -125,24 +125,24 @@ do_random_tests (void)
     }
 }
 
-static void
-check1 (void)
+ସ୍ଥିର ଶୂନ୍ୟ
+check1 (ଶୂନ୍ୟ)
 {
 
-  const char search_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
-  const char pattern[2] = { 0x78, 0x56 };
-  void *search_buf = (void *) buf1 + page_size - sizeof search_buf_data;
-  void *exp_result;
+  ଅଚଳ ଅକ୍ଷର ସନ୍ଧାନ_buf_data[5] = { 0x56, 0x34, 0x12, 0x78, 0x78 };
+  ଅଚଳ ଅକ୍ଷର pattern[2] = { 0x78, 0x56 };
+  ଶୂନ୍ୟ *ସନ୍ଧାନ_buf = (ଶୂନ୍ୟ *) buf1 + page_size - ଆକାର ସନ୍ଧାନ_buf_data;
+  ଶୂନ୍ୟ *exp_result;
 
-  memcpy (search_buf, search_buf_data, sizeof search_buf_data);
-  exp_result = simple_memmem (search_buf, sizeof search_buf_data,
-			      pattern, sizeof pattern);
+  memcpy (ସନ୍ଧାନ_buf, ସନ୍ଧାନ_buf_data, ଆକାର ସନ୍ଧାନ_buf_data);
+  exp_result = simple_memmem (ସନ୍ଧାନ_buf, ଆକାର ସନ୍ଧାନ_buf_data,
+			      pattern, ଆକାର pattern);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, search_buf, sizeof search_buf_data,
-		  pattern, sizeof pattern, exp_result);
+    check_result (impl, ସନ୍ଧାନ_buf, ଆକାର ସନ୍ଧାନ_buf_data,
+		  pattern, ଆକାର pattern, exp_result);
 }
 
-static const char *const strs[] =
+ସ୍ଥିର ଅଚଳ ଅକ୍ଷର *ଅଚଳ strs[] =
   {
     "00000", "00112233", "0123456789", "0000111100001111",
     "00000111110000022222", "012345678901234567890",
@@ -150,8 +150,8 @@ static const char *const strs[] =
   };
 
 
-int
-test_main (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+test_main (ଶୂନ୍ୟ)
 {
   size_t i;
 
@@ -164,11 +164,11 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < BUF1PAGES * page_size; ++i)
+  ପାଇଁ (i = 0; i < BUF1PAGES * page_size; ++i)
     buf1[i] = 60 + random () % 32;
 
-  for (i = 0; i < sizeof (strs) / sizeof (strs[0]); ++i)
-    for (size_t j = 0; j < 120; j += 7)
+  ପାଇଁ (i = 0; i < ଆକାର (strs) / ଆକାର (strs[0]); ++i)
+    ପାଇଁ (size_t j = 0; j < 120; j += 7)
       {
 	size_t len = strlen (strs[i]);
 
@@ -176,7 +176,7 @@ test_main (void)
       }
 
   do_random_tests ();
-  return ret;
+  ଫେରନ୍ତୁ ret;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

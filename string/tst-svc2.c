@@ -1,61 +1,61 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 
-static struct
+ସ୍ଥିର ସଂରଚନା
 {
-  const char *str1;
-  const char *str2;
+  ଅଚଳ ଅକ୍ଷର *str1;
+  ଅଚଳ ଅକ୍ଷର *str2;
 } tests[] =
   {
     { "B0075022800016.gbp.corp.com", "B007502280067.gbp.corp.com" },
     { "B0075022800016.gbp.corp.com", "B007502357019.GBP.CORP.COM" },
     { "B007502280067.gbp.corp.com", "B007502357019.GBP.CORP.COM" }
   };
-#define ntests (sizeof (tests) / sizeof (tests[0]))
+#define ntests (ଆକାର (tests) / ଆକାର (tests[0]))
 
 
-int
-compare (const char *str1, const char *str2, int exp)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+compare (ଅଚଳ ଅକ୍ଷର *str1, ଅଚଳ ଅକ୍ଷର *str2, ପୂର୍ଣ୍ଣସଂଖ୍ୟା exp)
 {
-  int c = strverscmp (str1, str2);
-  if (c != 0)
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା c = strverscmp (str1, str2);
+  ଯଦି (c != 0)
     c /= abs (c);
-  return c != exp;
+  ଫେରନ୍ତୁ c != exp;
 }
 
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  int res = 0;
-  for (int i = 0; i < ntests; ++i)
+  ପୂର୍ଣ୍ଣସଂଖ୍ୟା res = 0;
+  ପାଇଁ (ପୂର୍ଣ୍ଣସଂଖ୍ୟା i = 0; i < ntests; ++i)
     {
-      if (compare (tests[i].str1, tests[i].str2, -1))
+      ଯଦି (compare (tests[i].str1, tests[i].str2, -1))
 	{
 	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str1, tests[i].str2);
 	  res = 1;
 	}
-      if (compare (tests[i].str2, tests[i].str1, +1))
+      ଯଦି (compare (tests[i].str2, tests[i].str1, +1))
 	{
 	  printf ("FAIL: \"%s\" > \"%s\"\n", tests[i].str2, tests[i].str1);
 	  res = 1;
 	}
-      char *copy1 = strdupa (tests[i].str1);
-      if (compare (tests[i].str1, copy1, 0))
+      ଅକ୍ଷର *copy1 = strdupa (tests[i].str1);
+      ଯଦି (compare (tests[i].str1, copy1, 0))
 	{
 	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str1, copy1);
 	  res = 1;
 	}
-      char *copy2 = strdupa (tests[i].str2);
-      if (compare (tests[i].str2, copy2, 0))
+      ଅକ୍ଷର *copy2 = strdupa (tests[i].str2);
+      ଯଦି (compare (tests[i].str2, copy2, 0))
 	{
 	  printf ("FAIL: \"%s\" != \"%s\"\n", tests[i].str2, copy2);
 	  res = 1;
 	}
     }
-  return res;
+  ଫେରନ୍ତୁ res;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

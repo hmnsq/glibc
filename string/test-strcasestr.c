@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#ଅନ୍ତର୍ଭାଵ "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#ଅନ୍ତର୍ଭାଵ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+ସ୍ଥିର ଅକ୍ଷର *
+simple_strcasestr (ଅଚଳ ଅକ୍ଷର *s1, ଅଚଳ ଅକ୍ଷର *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ଯଦି (s2len > s1len)
+    ଫେରନ୍ତୁ ଖାଲି;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  ପାଇଁ (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      ପାଇଁ (j = 0; j < s2len; ++j)
+	ଯଦି (tolower (s1[i + j]) != tolower (s2[j]))
+	  ଭାଙ୍ଗ;
+      ଯଦି (j == s2len)
+	ଫେରନ୍ତୁ (ଅକ୍ଷର *) s1 + i;
     }
 
-  return NULL;
+  ଫେରନ୍ତୁ ଖାଲି;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+ପ୍ରକାରବ୍ୟାଖ୍ୟା ଅକ୍ଷର *(*proto_t) (ଅଚଳ ଅକ୍ଷର *, ଅଚଳ ଅକ୍ଷର *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+ସ୍ଥିର ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+check_result (impl_t *impl, ଅଚଳ ଅକ୍ଷର *s1, ଅଚଳ ଅକ୍ଷର *s2,
+	      ଅକ୍ଷର *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  ଅକ୍ଷର *result = CALL (impl, s1, s2);
+  ଯଦି (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == ଖାଲି) ? "(null)" : result,
+	     (exp_result == ଖାଲି) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      ଫେରନ୍ତୁ -1;
     }
-  return 0;
+  ଫେରନ୍ତୁ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+ସ୍ଥିର ଶୂନ୍ୟ
+do_one_test (impl_t *impl, ଅଚଳ ଅକ୍ଷର *s1, ଅଚଳ ଅକ୍ଷର *s2, ଅକ୍ଷର *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ଯଦି (check_result (impl, s1, s2, exp_result) < 0)
+    ଫେରନ୍ତୁ;
 }
 
 
-static void
+ସ୍ଥିର ଶୂନ୍ୟ
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 ପୂର୍ଣ୍ଣସଂଖ୍ୟା fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  ଅକ୍ଷର *s1 = (ଅକ୍ଷର *) (buf1 + align1);
+  ଅକ୍ଷର *s2 = (ଅକ୍ଷର *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  ସ୍ଥିର ଅଚଳ ଅକ୍ଷର d[] = "1234567890abcxyz";
+#define dl (ଆକାର (d) - 1)
+  ଅକ୍ଷର *ss2 = s2;
+  ପାଇଁ (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ଯଦି (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      ଅକ୍ଷର *ss1 = s1;
+      ପାଇଁ (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  ଅନ୍ୟଥା
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      ପାଇଁ (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? ଖାଲି : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+ସ୍ଥିର ଶୂନ୍ୟ
+check1 (ଶୂନ୍ୟ)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ଅଚଳ ଅକ୍ଷର s1[] = "AOKB";
+  ଅଚଳ ଅକ୍ଷର s2[] = "OK";
+  ଅକ୍ଷର *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+ସ୍ଥିର ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+test_main (ଶୂନ୍ୟ)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  ପାଇଁ (size_t klen = 2; klen < 32; ++klen)
+    ପାଇଁ (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  ଫେରନ୍ତୁ ret;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

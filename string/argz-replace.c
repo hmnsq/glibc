@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <argz.h>
+#ଅନ୍ତର୍ଭାଵ <stdlib.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
+#ଅନ୍ତର୍ଭାଵ <argz.h>
 
 /* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
    updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
    *TO's old value is freed, and *TO is set to 0.  */
-static void
-str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
+ସ୍ଥିର ଶୂନ୍ୟ
+str_append (ଅକ୍ଷର **to, size_t *to_len, ଅଚଳ ଅକ୍ଷର *buf, ଅଚଳ size_t buf_len)
 {
   size_t new_len = *to_len + buf_len;
-  char *new_to = realloc (*to, new_len + 1);
+  ଅକ୍ଷର *new_to = realloc (*to, new_len + 1);
 
-  if (new_to)
+  ଯଦି (new_to)
     {
-      *((char *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
+      *((ଅକ୍ଷର *) __mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
       *to = new_to;
       *to_len = new_len;
     }
-  else
+  ଅନ୍ୟଥା
     {
-      free (*to);
-      *to = NULL;
+      ମୁକ୍ତ (*to);
+      *to = ଖାଲି;
     }
 }
 
@@ -46,88 +46,88 @@ str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
    ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
    incremented by number of replacements performed.  */
 error_t
-__argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
-		unsigned *replace_count)
+__argz_replace (ଅକ୍ଷର **argz, size_t *argz_len, ଅଚଳ ଅକ୍ଷର *str, ଅଚଳ ଅକ୍ଷର *with,
+		unsigned *replace_ଗଣନା)
 {
   error_t err = 0;
 
-  if (str && *str)
+  ଯଦି (str && *str)
     {
-      char *arg = NULL;
-      char *src = *argz;
+      ଅକ୍ଷର *arg = ଖାଲି;
+      ଅକ୍ଷର *src = *argz;
       size_t src_len = *argz_len;
-      char *dst = NULL;
+      ଅକ୍ଷର *dst = ଖାଲି;
       size_t dst_len = 0;
-      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      ପୂର୍ଣ୍ଣସଂଖ୍ୟା delayed_copy = 1;	/* True while we've avoided copying anything.  */
       size_t str_len = strlen (str), with_len = strlen (with);
 
-      while (!err && (arg = argz_next (src, src_len, arg)))
+      ଯେତେବେଳେ (!err && (arg = argz_next (src, src_len, arg)))
 	{
-	  char *match = strstr (arg, str);
-	  if (match)
+	  ଅକ୍ଷର *match = strstr (arg, str);
+	  ଯଦି (match)
 	    {
-	      char *from = match + str_len;
+	      ଅକ୍ଷର *from = match + str_len;
 	      size_t to_len = match - arg;
-	      char *to = __strndup (arg, to_len);
+	      ଅକ୍ଷର *to = __strndup (arg, to_len);
 
-	      while (to && from)
+	      ଯେତେବେଳେ (to && from)
 		{
 		  str_append (&to, &to_len, with, with_len);
-		  if (to)
+		  ଯଦି (to)
 		    {
 		      match = strstr (from, str);
-		      if (match)
+		      ଯଦି (match)
 			{
 			  str_append (&to, &to_len, from, match - from);
 			  from = match + str_len;
 			}
-		      else
+		      ଅନ୍ୟଥା
 			{
 			  str_append (&to, &to_len, from, strlen (from));
-			  from = NULL;
+			  from = ଖାଲି;
 			}
 		    }
 		}
 
-	      if (to)
+	      ଯଦି (to)
 		{
-		  if (delayed_copy)
+		  ଯଦି (delayed_copy)
 		    /* We avoided copying SRC to DST until we found a match;
                        now that we've done so, copy everything from the start
                        of SRC.  */
 		    {
-		      if (arg > src)
+		      ଯଦି (arg > src)
 			err = __argz_append (&dst, &dst_len, src, (arg - src));
 		      delayed_copy = 0;
 		    }
-		  if (! err)
+		  ଯଦି (! err)
 		    err = __argz_add (&dst, &dst_len, to);
-		  free (to);
+		  ମୁକ୍ତ (to);
 		}
-	      else
+	      ଅନ୍ୟଥା
 		err = ENOMEM;
 
-	      if (replace_count)
-		(*replace_count)++;
+	      ଯଦି (replace_ଗଣନା)
+		(*replace_ଗଣନା)++;
 	    }
-	  else if (! delayed_copy)
+	  ଅନ୍ୟଥା ଯଦି (! delayed_copy)
 	    err = __argz_add (&dst, &dst_len, arg);
 	}
 
-      if (! err)
+      ଯଦି (! err)
 	{
-	  if (! delayed_copy)
+	  ଯଦି (! delayed_copy)
 	    /* We never found any instances of str.  */
 	    {
-	      free (src);
+	      ମୁକ୍ତ (src);
 	      *argz = dst;
 	      *argz_len = dst_len;
 	    }
 	}
-      else if (dst_len > 0)
-	free (dst);
+      ଅନ୍ୟଥା ଯଦି (dst_len > 0)
+	ମୁକ୍ତ (dst);
     }
 
-  return err;
+  ଫେରନ୍ତୁ err;
 }
 weak_alias (__argz_replace, argz_replace)

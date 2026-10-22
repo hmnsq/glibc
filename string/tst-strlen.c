@@ -2,56 +2,56 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <stdio.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
-int
-do_test (void)
+ପୂର୍ଣ୍ଣସଂଖ୍ୟା
+do_test (ଶୂନ୍ୟ)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ସ୍ଥିର ଅଚଳ size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  ଅକ୍ଷର basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  ପାଇଁ (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      ଅକ୍ଷର *buf = basebuf + base;
+      size_t ଶବ୍ଦଗୁଡ଼ିକ;
 
-      for (words = 0; words < 4; ++words)
+      ପାଇଁ (ଶବ୍ଦଗୁଡ଼ିକ = 0; ଶବ୍ଦଗୁଡ଼ିକ < 4; ++ଶବ୍ଦଗୁଡ଼ିକ)
 	{
 	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  memset (buf, 'a', ଶବ୍ଦଗୁଡ଼ିକ * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  ପାଇଁ (last = 0; last < 16; ++last)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[ଶବ୍ଦଗୁଡ଼ିକ * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
+	      buf[ଶବ୍ଦଗୁଡ଼ିକ * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
+	      buf[ଶବ୍ଦଗୁଡ଼ିକ * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
+	      buf[ଶବ୍ଦଗୁଡ଼ିକ * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
+	      buf[ଶବ୍ଦଗୁଡ଼ିକ * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      ଯଦି (strlen (buf) != ଶବ୍ଦଗୁଡ଼ିକ * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+strlen failed ପାଇଁ base=%zu, ଶବ୍ଦଗୁଡ଼ିକ=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, ଶବ୍ଦଗୁଡ଼ିକ, last,
+			  strlen (buf), ଶବ୍ଦଗୁଡ଼ିକ * 4 + lens[last]);
+		  ଫେରନ୍ତୁ 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      ଯଦି (strnlen (buf, -1) != ଶବ୍ଦଗୁଡ଼ିକ * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+strnlen failed ପାଇଁ base=%zu, ଶବ୍ଦଗୁଡ଼ିକ=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, ଶବ୍ଦଗୁଡ଼ିକ, last,
+			  strnlen (buf, -1), ଶବ୍ଦଗୁଡ଼ିକ * 4 + lens[last]);
+		  ଫେରନ୍ତୁ 1;
 		}
 	    }
 	}
     }
-  return 0;
+  ଫେରନ୍ତୁ 0;
 }
 
-#include <support/test-driver.c>
+#ଅନ୍ତର୍ଭାଵ <support/test-driver.c>

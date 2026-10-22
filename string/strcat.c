@@ -15,7 +15,7 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 #undef strcat
 
@@ -24,10 +24,10 @@
 #endif
 
 /* Append SRC on the end of DEST.  */
-char *
-STRCAT (char *dest, const char *src)
+ଅକ୍ଷର *
+STRCAT (ଅକ୍ଷର *dest, ଅଚଳ ଅକ୍ଷର *src)
 {
   strcpy (dest + strlen (dest), src);
-  return dest;
+  ଫେରନ୍ତୁ dest;
 }
 libc_hidden_builtin_def (strcat)

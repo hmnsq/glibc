@@ -15,11 +15,11 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ଅନ୍ତର୍ଭାଵ <string.h>
 
 /* Set N bytes of S to 0.  */
-void
-__bzero (void *s, size_t len)
+ଶୂନ୍ୟ
+__bzero (ଶୂନ୍ୟ *s, size_t len)
 {
   memset (s, '\0', len);
 }
