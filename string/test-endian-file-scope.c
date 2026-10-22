@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#अन्तर्भाव <endian.h>
+#अन्तर्भाव <stddef.h>
 
-int i;
+पूर्णाङ्क i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+माप_प्रकार s0 = परिमाण (htobe16 (i));
+माप_प्रकार s1 = परिमाण (htole16 (i));
+माप_प्रकार s2 = परिमाण (be16toh (i));
+माप_प्रकार s3 = परिमाण (le16toh (i));
+माप_प्रकार s4 = परिमाण (htobe32 (i));
+माप_प्रकार s5 = परिमाण (htole32 (i));
+माप_प्रकार s6 = परिमाण (be32toh (i));
+माप_प्रकार s7 = परिमाण (le32toh (i));
+माप_प्रकार s8 = परिमाण (htobe64 (i));
+माप_प्रकार s9 = परिमाण (htole64 (i));
+माप_प्रकार s10 = परिमाण (be64toh (i));
+माप_प्रकार s11 = परिमाण (le64toh (i));
 
-static int
-do_test (void)
+स्थिर पूर्णाङ्क
+do_test (शून्य)
 {
   /* This is a compilation test.  */
-  return 0;
+  प्रत्यागम 0;
 }
 
-#include <support/test-driver.c>
+#अन्तर्भाव <support/test-driver.c>

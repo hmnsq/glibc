@@ -16,12 +16,12 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
-#include <libc-pointer-arith.h>
+#अन्तर्भाव <string-fzb.h>
+#अन्तर्भाव <string-fzc.h>
+#अन्तर्भाव <string-fzi.h>
+#अन्तर्भाव <string-shift.h>
+#अन्तर्भाव <string.h>
+#अन्तर्भाव <libc-pointer-arith.h>
 
 #undef __memrchr
 #undef memrchr
@@ -30,49 +30,49 @@
 # define __memrchr MEMRCHR
 #endif
 
-void *
-__memrchr (const void *s, int c_in, size_t n)
+शून्य *
+__memrchr (ध्रुव शून्य *s, पूर्णाङ्क c_in, माप_प्रकार n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  यदि (__glibc_unlikely (n == 0))
+    प्रत्यागम रिक्त;
 
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
+  ध्रुव op_t *word_ptr = (ध्रुव op_t *) PTR_ALIGN_UP (s + n, परिमाण (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
 
   op_t word = *--word_ptr;
   op_t repeated_c = repeat_bytes (c_in);
 
   /* Compute the address of the word containing the initial byte. */
-  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ध्रुव op_t *sword = (ध्रुव op_t *) PTR_ALIGN_DOWN (s, परिमाण (op_t));
 
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
   find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  यदि (mask != 0)
     {
-      char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      वर्ण *ret = (वर्ण *) word_ptr + index_last (mask);
+      प्रत्यागम ret >= (वर्ण *) s ? ret : रिक्त;
     }
-  if (word_ptr == sword)
-    return NULL;
+  यदि (word_ptr == sword)
+    प्रत्यागम रिक्त;
   word = *--word_ptr;
 
-  while (word_ptr != sword)
+  यावत् (word_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
+      यदि (has_eq (word, repeated_c))
+	प्रत्यागम (वर्ण *) word_ptr + index_last_eq (word, repeated_c);
       word = *--word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  यदि (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      वर्ण *ret = (वर्ण *) word_ptr + index_last_eq (word, repeated_c);
+      यदि (ret >= (वर्ण *) s)
+	प्रत्यागम ret;
     }
-  return NULL;
+  प्रत्यागम रिक्त;
 }
 #ifndef MEMRCHR
 libc_hidden_def (__memrchr)

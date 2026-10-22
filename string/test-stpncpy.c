@@ -20,59 +20,59 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "stpncpy"
-#else
+#अन्यथा
 # define TEST_NAME "wcpncpy"
 #endif /* WIDE */
-#include "test-string.h"
+#अन्तर्भाव "test-string.h"
 #ifndef WIDE
-# define CHAR char
+# define CHAR वर्ण
 # define SIMPLE_STPNCPY simple_stpncpy
 # define STUPID_STPNCPY stupid_stpncpy
 # define STPNCPY stpncpy
 # define STRNLEN strnlen
-#else
+#अन्यथा
 # include <wchar.h>
-# define CHAR wchar_t
+# define CHAR ब_अक्षर_प्रकार
 # define SIMPLE_STPNCPY simple_wcpncpy
 # define STUPID_STPNCPY stupid_wcpncpy
 # define STPNCPY wcpncpy
 # define STRNLEN wcsnlen
 #endif /* WIDE */
 
-CHAR *SIMPLE_STPNCPY (CHAR *, const CHAR *, size_t);
-CHAR *STUPID_STPNCPY (CHAR *, const CHAR *, size_t);
+CHAR *SIMPLE_STPNCPY (CHAR *, ध्रुव CHAR *, माप_प्रकार);
+CHAR *STUPID_STPNCPY (CHAR *, ध्रुव CHAR *, माप_प्रकार);
 
 IMPL (STUPID_STPNCPY, 0)
 IMPL (SIMPLE_STPNCPY, 0)
 IMPL (STPNCPY, 1)
 
 CHAR *
-SIMPLE_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+SIMPLE_STPNCPY (CHAR *dst, ध्रुव CHAR *src, माप_प्रकार n)
 {
-  while (n--)
-    if ((*dst++ = *src++) == '\0')
+  यावत् (n--)
+    यदि ((*dst++ = *src++) == '\0')
       {
-	size_t i;
+	माप_प्रकार i;
 
-	for (i = 0; i < n; ++i)
+	प्रति (i = 0; i < n; ++i)
 	  dst[i] = '\0';
-	return dst - 1;
+	प्रत्यागम dst - 1;
       }
-  return dst;
+  प्रत्यागम dst;
 }
 
 CHAR *
-STUPID_STPNCPY (CHAR *dst, const CHAR *src, size_t n)
+STUPID_STPNCPY (CHAR *dst, ध्रुव CHAR *src, माप_प्रकार n)
 {
-  size_t nc = STRNLEN (src, n);
-  size_t i;
+  माप_प्रकार nc = STRNLEN (src, n);
+  माप_प्रकार i;
 
-  for (i = 0; i < nc; ++i)
+  प्रति (i = 0; i < nc; ++i)
     dst[i] = src[i];
-  for (; i < n; ++i)
+  प्रति (; i < n; ++i)
     dst[i] = '\0';
-  return dst + nc;
+  प्रत्यागम dst + nc;
 }
 
 #undef CHAR
-#include "test-strncpy.c"
+#अन्तर्भाव "test-strncpy.c"
