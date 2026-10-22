@@ -17,9 +17,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
+#ضمن <stdint.h>
+#ضمن <string.h>
+#ضمن <ctype.h>
 
 /* states: S_N: normal, S_I: comparing integral part, S_F: comparing
            fractionnal parts, S_Z: idem but with leading Zeroes only */
@@ -38,15 +38,15 @@
    equal to or greater than S2 (for more info, see the texinfo doc).
 */
 
-int
-__strverscmp (const char *s1, const char *s2)
+صحيح
+__strverscmp (ثابت حرف *s1, ثابت حرف *s2)
 {
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
+  ثابت unsigned حرف *p1 = (ثابت unsigned حرف *) s1;
+  ثابت unsigned حرف *p2 = (ثابت unsigned حرف *) s2;
 
   /* Symbol(s)    0       [1-9]   others
      Transition   (10) 0  (01) d  (00) x   */
-  static const uint8_t next_state[] =
+  ساكن ثابت uint8_t next_state[] =
   {
       /* state    x    d    0  */
       /* S_N */  S_N, S_I, S_Z,
@@ -55,7 +55,7 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  S_N, S_F, S_Z
   };
 
-  static const int8_t result_type[] =
+  ساكن ثابت int8_t result_type[] =
   {
       /* state   x/x  x/d  x/0  d/x  d/d  d/0  0/x  0/d  0/0  */
 
@@ -65,19 +65,19 @@ __strverscmp (const char *s1, const char *s2)
       /* S_Z */  CMP, +1,  +1,  -1,  CMP, CMP, -1,  CMP, CMP
   };
 
-  if (p1 == p2)
-    return 0;
+  𐡄𐡍 (p1 == p2)
+    أرجع 0;
 
-  unsigned char c1 = *p1++;
-  unsigned char c2 = *p2++;
+  unsigned حرف c1 = *p1++;
+  unsigned حرف c2 = *p2++;
   /* Hint: '0' is a digit too.  */
-  int state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
+  صحيح state = S_N + ((c1 == '0') + (isdigit (c1) != 0));
 
-  int diff;
-  while ((diff = c1 - c2) == 0)
+  صحيح diff;
+  طالما ((diff = c1 - c2) == 0)
     {
-      if (c1 == '\0')
-	return diff;
+      𐡄𐡍 (c1 == '\0')
+	أرجع diff;
 
       state = next_state[state];
       c1 = *p1++;
@@ -87,20 +87,20 @@ __strverscmp (const char *s1, const char *s2)
 
   state = result_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
 
-  switch (state)
+  بدل (state)
   {
-    case CMP:
-      return diff;
+    حالة CMP:
+      أرجع diff;
 
-    case LEN:
-      while (isdigit (*p1++))
-	if (!isdigit (*p2++))
-	  return 1;
+    حالة LEN:
+      طالما (isdigit (*p1++))
+	𐡄𐡍 (!isdigit (*p2++))
+	  أرجع 1;
 
-      return isdigit (*p2) ? -1 : diff;
+      أرجع isdigit (*p2) ? -1 : diff;
 
-    default:
-      return state;
+    افتراضي:
+      أرجع state;
   }
 }
 libc_hidden_def (__strverscmp)

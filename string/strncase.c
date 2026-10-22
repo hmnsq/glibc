@@ -21,13 +21,13 @@
 # include <config.h>
 #endif
 
-#include <string.h>
-#include <ctype.h>
+#ضمن <string.h>
+#ضمن <ctype.h>
 
 #ifndef weak_alias
 # define __strncasecmp strncasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#وإلا
 # include <locale/localeinfo.h>
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
 #  define __strncasecmp __strncasecmp_l
@@ -37,7 +37,7 @@
 
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#وإلا
 # define LOCALE_PARAM
 #endif
 
@@ -45,24 +45,24 @@
    ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less
    than, equal to or greater than S2.  */
-int
-__strncasecmp (const char *s1, const char *s2, size_t n LOCALE_PARAM)
+صحيح
+__strncasecmp (ثابت حرف *s1, ثابت حرف *s2, size_t n LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#𐡄𐡍 defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
 #endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+  ثابت unsigned حرف *p1 = (ثابت unsigned حرف *) s1;
+  ثابت unsigned حرف *p2 = (ثابت unsigned حرف *) s2;
+  صحيح result;
 
-  if (p1 == p2 || n == 0)
-    return 0;
+  𐡄𐡍 (p1 == p2 || n == 0)
+    أرجع 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0' || --n == 0)
-      break;
+  طالما ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    𐡄𐡍 (*p1++ == '\0' || --n == 0)
+      اكسر;
 
-  return result;
+  أرجع result;
 }
 #ifndef __strncasecmp
 weak_alias (__strncasecmp, strncasecmp)

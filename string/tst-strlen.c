@@ -2,28 +2,28 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#ضمن <stdio.h>
+#ضمن <string.h>
 
-int
-do_test (void)
+صحيح
+do_test (فراغ)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ساكن ثابت size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  حرف basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  لكل (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
+      حرف *buf = basebuf + base;
       size_t words;
 
-      for (words = 0; words < 4; ++words)
+      لكل (words = 0; words < 4; ++words)
 	{
 	  size_t last;
 	  memset (buf, 'a', words * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  لكل (last = 0; last < 16; ++last)
 	    {
 	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
 	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
@@ -31,27 +31,27 @@ do_test (void)
 	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
 	      buf[words * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      𐡄𐡍 (strlen (buf) != words * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
+strlen failed لكل base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
 			  base, words, last,
 			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  أرجع 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      𐡄𐡍 (strnlen (buf, -1) != words * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
+strnlen failed لكل base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
 			  base, words, last,
 			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  أرجع 1;
 		}
 	    }
 	}
     }
-  return 0;
+  أرجع 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>
