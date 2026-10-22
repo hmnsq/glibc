@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <random-bits.h>
-#include <unistd.h>
+#ضمن <string.h>
+#ضمن <stdlib.h>
+#ضمن <random-bits.h>
+#ضمن <unistd.h>
 
-char *
-strfry (char *string)
+حرف *
+strfry (حرف *string)
 {
-  static int init;
-  static struct random_data rdata;
+  ساكن صحيح init;
+  ساكن بنية random_data rdata;
 
-  if (!init)
+  ܐܢ (!init)
     {
-      static char state[32];
-      rdata.state = NULL;
+      ساكن حرف state[32];
+      rdata.state = عدم;
       __initstate_r (random_bits (),
-		     state, sizeof (state), &rdata);
+		     state, حجم (state), &rdata);
       init = 1;
     }
 
   size_t len = strlen (string);
-  if (len > 0)
-    for (size_t i = 0; i < len - 1; ++i)
+  ܐܢ (len > 0)
+    لكل (size_t i = 0; i < len - 1; ++i)
       {
 	int32_t j;
 	__random_r (&rdata, &j);
 	j = j % (len - i) + i;
 
-	char c = string[i];
+	حرف c = string[i];
 	string[i] = string[j];
 	string[j] = c;
       }
 
-  return string;
+  ܦܢܐ string;
 }

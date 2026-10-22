@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#ضمن <argz.h>
+#ضمن <string.h>
 
-char *
-__argz_next (const char *argz, size_t argz_len, const char *entry)
+حرف *
+__argz_next (ثابت حرف *argz, size_t argz_len, ثابت حرف *entry)
 {
-  if (entry)
+  ܐܢ (entry)
     {
-      if (entry < argz + argz_len)
+      ܐܢ (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      ܦܢܐ entry >= argz + argz_len ? عدم : (حرف *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  ܐܚܪܢܐ
+    ܐܢ (argz_len > 0)
+      ܦܢܐ (حرف *) argz;
+    ܐܚܪܢܐ
+      ܦܢܐ عدم;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)

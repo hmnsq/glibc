@@ -16,36 +16,36 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#ضمن <string.h>
+#ضمن <signal.h>
+#ضمن <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#ضمن <support/support.h>
+#ضمن <support/check.h>
 
-static const struct test_t
+ساكن ثابت بنية test_t
 {
-  int errno;
-  const char *abbrev;
-  const char *descr;
+  صحيح errno;
+  ثابت حرف *abbrev;
+  ثابت حرف *descr;
 } tests[] =
 {
 #define N_(name)                      name
 #define init_sig(sig, abbrev, desc)   { sig, abbrev, desc },
-#include <siglist.h>
+#ضمن <siglist.h>
 #undef init_sig
 };
 
-static int
-do_test (void)
+ساكن صحيح
+do_test (فراغ)
 {
-  for (size_t i = 0; i < array_length (tests); i++)
+  لكل (size_t i = 0; i < array_length (tests); i++)
     {
       TEST_COMPARE_STRING (sigabbrev_np (tests[i].errno), tests[i].abbrev);
       TEST_COMPARE_STRING (sigdescr_np (tests[i].errno), tests[i].descr);
     }
 
-  return 0;
+  ܦܢܐ 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

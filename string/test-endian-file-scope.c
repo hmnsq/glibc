@@ -16,29 +16,29 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stddef.h>
+#ضمن <endian.h>
+#ضمن <stddef.h>
 
-int i;
+صحيح i;
 
-size_t s0 = sizeof (htobe16 (i));
-size_t s1 = sizeof (htole16 (i));
-size_t s2 = sizeof (be16toh (i));
-size_t s3 = sizeof (le16toh (i));
-size_t s4 = sizeof (htobe32 (i));
-size_t s5 = sizeof (htole32 (i));
-size_t s6 = sizeof (be32toh (i));
-size_t s7 = sizeof (le32toh (i));
-size_t s8 = sizeof (htobe64 (i));
-size_t s9 = sizeof (htole64 (i));
-size_t s10 = sizeof (be64toh (i));
-size_t s11 = sizeof (le64toh (i));
+size_t s0 = حجم (htobe16 (i));
+size_t s1 = حجم (htole16 (i));
+size_t s2 = حجم (be16toh (i));
+size_t s3 = حجم (le16toh (i));
+size_t s4 = حجم (htobe32 (i));
+size_t s5 = حجم (htole32 (i));
+size_t s6 = حجم (be32toh (i));
+size_t s7 = حجم (le32toh (i));
+size_t s8 = حجم (htobe64 (i));
+size_t s9 = حجم (htole64 (i));
+size_t s10 = حجم (be64toh (i));
+size_t s11 = حجم (le64toh (i));
 
-static int
-do_test (void)
+ساكن صحيح
+do_test (فراغ)
 {
   /* This is a compilation test.  */
-  return 0;
+  ܦܢܐ 0;
 }
 
-#include <support/test-driver.c>
+#ضمن <support/test-driver.c>

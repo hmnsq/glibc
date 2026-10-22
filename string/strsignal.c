@@ -15,44 +15,44 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libintl.h>
-#include <tls-internal.h>
-#include <libc-internal.h>
+#ضمن <signal.h>
+#ضمن <stdio.h>
+#ضمن <stdlib.h>
+#ضمن <string.h>
+#ضمن <libintl.h>
+#ضمن <tls-internal.h>
+#ضمن <libc-internal.h>
 
 /* Return a string describing the meaning of the signal number SIGNUM.  */
-char *
-strsignal (int signum)
+حرف *
+strsignal (صحيح signum)
 {
-  const char *desc = __sigdescr_np (signum);
-  if (desc != NULL)
-    return _(desc);
+  ثابت حرف *desc = __sigdescr_np (signum);
+  ܐܢ (desc != عدم)
+    ܦܢܐ _(desc);
 
-  if (__libc_initial)
+  ܐܢ (__libc_initial)
     {
-      struct tls_internal_t *tls_internal = __glibc_tls_internal ();
-      free (tls_internal->strsignal_buf);
+      بنية tls_internal_t *tls_internal = __glibc_tls_internal ();
+      حرر (tls_internal->strsignal_buf);
 
-      int r;
+      صحيح r;
 #ifdef SIGRTMIN
-      if (signum >= SIGRTMIN && signum <= SIGRTMAX)
+      ܐܢ (signum >= SIGRTMIN && signum <= SIGRTMAX)
 	r = __asprintf (&tls_internal->strsignal_buf, _("Real-time signal %d"),
 			signum - SIGRTMIN);
-      else
+      ܐܚܪܢܐ
 #endif
 	r = __asprintf (&tls_internal->strsignal_buf, _("Unknown signal %d"),
 			signum);
 
-      if (r >= 0)
-	return tls_internal->strsignal_buf;
-      else
-	tls_internal->strsignal_buf = NULL;
+      ܐܢ (r >= 0)
+	ܦܢܐ tls_internal->strsignal_buf;
+      ܐܚܪܢܐ
+	tls_internal->strsignal_buf = عدم;
     }
   /* Fall through on asprintf error, and for !__libc_initial:
      secondary namespaces use a different malloc and cannot
      participate in the buffer management.  */
-  return _("Unknown signal");
+  ܦܢܐ _("Unknown signal");
 }

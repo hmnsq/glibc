@@ -15,22 +15,22 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ضمن <string.h>
 
 #ifndef STRING_TYPE
-# define STRING_TYPE char
+# define STRING_TYPE حرف
 # define STRCOLL strcoll
 # define STRCOLL_L __strcoll_l
 # define USE_HIDDEN_DEF
 #endif
 
-#include "../locale/localeinfo.h"
+#ضمن "../locale/localeinfo.h"
 
 
-int
-STRCOLL (const STRING_TYPE *s1, const STRING_TYPE *s2)
+صحيح
+STRCOLL (ثابت STRING_TYPE *s1, ثابت STRING_TYPE *s2)
 {
-  return STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
+  ܦܢܐ STRCOLL_L (s1, s2, _NL_CURRENT_LOCALE);
 }
 
 #ifdef USE_HIDDEN_DEF

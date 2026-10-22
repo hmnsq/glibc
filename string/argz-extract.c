@@ -16,20 +16,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
+#ضمن <argz.h>
 
 /* Puts pointers to each string in ARGZ, plus a terminating 0 element, into
    ARGV, which must be large enough to hold them all.  */
-void
-__argz_extract (const char *argz, size_t len, char **argv)
+فراغ
+__argz_extract (ثابت حرف *argz, size_t len, حرف **argv)
 {
-  while (len > 0)
+  ܟܡܐ (len > 0)
     {
       size_t part_len = strlen (argz);
-      *argv++ = (char *) argz;
+      *argv++ = (حرف *) argz;
       argz += part_len + 1;
       len -= part_len + 1;
     }
-  *argv = NULL;
+  *argv = عدم;
 }
 weak_alias (__argz_extract, argz_extract)
