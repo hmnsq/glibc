@@ -16,10 +16,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
+#ضمن <stdio.h>
 
-const char *
-strerrorname_np (int errnum)
+ثابت حرف *
+strerrorname_np (صحيح errnum)
 {
-  return __get_errname (errnum);
+  أرجع __get_errname (errnum);
 }
