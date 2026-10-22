@@ -15,41 +15,41 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <support/check.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
 
-void try (const char *name, long long int param, int value, int expected)
+ಶೂನ್ಯ try (ಧ್ರುವ ವರ್ಣ *name, long long ಪೂರ್ಣಾಙ್ಕ param, ಪೂರ್ಣಾಙ್ಕ ಮೌಲ್ಯ, ಪೂರ್ಣಾಙ್ಕ expected)
 {
-  if (value != expected)
+  ಯದಿ (ಮೌಲ್ಯ != expected)
     {
       printf ("%s(%#llx) expected %d got %d\n",
-	      name, param, expected, value);
+	      name, param, expected, ಮೌಲ್ಯ);
       support_record_failure ();
     }
-  else
-    printf ("%s(%#llx) as expected %d\n", name, param, value);
+  ಅನ್ಯಥಾ
+    printf ("%s(%#llx) as expected %d\n", name, param, ಮೌಲ್ಯ);
 }
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  int i;
+  ಪೂರ್ಣಾಙ್ಕ i;
 
 #define TEST(fct, type) \
   try (#fct, 0, fct ((type) 0), 0);					      \
-  for (i=0 ; i < 8 * sizeof (type); i++)				      \
+  ಪ್ರತಿ (i=0 ; i < 8 * ಪರಿಮಾಣ (type); i++)				      \
     try (#fct, 1ll << i, fct (((type) 1) << i), i + 1);			      \
-  for (i=0 ; i < 8 * sizeof (type) ; i++)				      \
+  ಪ್ರತಿ (i=0 ; i < 8 * ಪರಿಮಾಣ (type) ; i++)				      \
     try (#fct, (~((type) 0) >> i) << i, fct ((~((type) 0) >> i) << i), i + 1);\
   try (#fct, 0x80008000, fct ((type) 0x80008000), 16)
 
-  TEST (ffs, int);
-  TEST (ffsl, long int);
-  TEST (ffsll, long long int);
+  TEST (ffs, ಪೂರ್ಣಾಙ್ಕ);
+  TEST (ffsl, long ಪೂರ್ಣಾಙ್ಕ);
+  TEST (ffsll, long long ಪೂರ್ಣಾಙ್ಕ);
 
-  return 0;
+  ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

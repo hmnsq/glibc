@@ -1,26 +1,26 @@
-#include <locale.h>
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <locale.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  static const char test_locale[] = "de_DE.UTF-8";
+  ಸ್ಥಿರ ಧ್ರುವ ವರ್ಣ test_locale[] = "de_DE.UTF-8";
 
-  int res = 0;
+  ಪೂರ್ಣಾಙ್ಕ res = 0;
 
-  char buf[20];
-  size_t l1 = strxfrm (NULL, "ab", 0);
+  ವರ್ಣ buf[20];
+  size_t l1 = strxfrm (ರಿಕ್ತ, "ab", 0);
   size_t l2 = strxfrm (buf, "ab", 1);
-  size_t l3 = strxfrm (buf, "ab", sizeof (buf));
-  if (l3 < sizeof (buf) && strlen (buf) != l3)
+  size_t l3 = strxfrm (buf, "ab", ಪರಿಮಾಣ (buf));
+  ಯದಿ (l3 < ಪರಿಮಾಣ (buf) && strlen (buf) != l3)
     {
       puts ("C locale l3 test failed");
       res = 1;
     }
 
   size_t l4 = strxfrm (buf, "ab", l1 + 1);
-  if (l4 < l1 + 1 && strlen (buf) != l4)
+  ಯದಿ (l4 < l1 + 1 && strlen (buf) != l4)
     {
       puts ("C locale l4 test failed");
       res = 1;
@@ -28,36 +28,36 @@ do_test (void)
 
   buf[l1] = 'Z';
   size_t l5 = strxfrm (buf, "ab", l1);
-  if (buf[l1] != 'Z')
+  ಯದಿ (buf[l1] != 'Z')
     {
       puts ("C locale l5 test failed");
       res = 1;
     }
 
-  if (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
+  ಯದಿ (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
     {
       puts ("C locale retval test failed");
       res = 1;
     }
 
-  if (setlocale (LC_ALL, test_locale) == NULL)
+  ಯದಿ (setlocale (LC_ALL, test_locale) == ರಿಕ್ತ)
     {
       printf ("cannot set locale \"%s\"\n", test_locale);
       res = 1;
     }
-  else
+  ಅನ್ಯಥಾ
     {
-      l1 = strxfrm (NULL, "ab", 0);
+      l1 = strxfrm (ರಿಕ್ತ, "ab", 0);
       l2 = strxfrm (buf, "ab", 1);
-      l3 = strxfrm (buf, "ab", sizeof (buf));
-      if (l3 < sizeof (buf) && strlen (buf) != l3)
+      l3 = strxfrm (buf, "ab", ಪರಿಮಾಣ (buf));
+      ಯದಿ (l3 < ಪರಿಮಾಣ (buf) && strlen (buf) != l3)
 	{
 	  puts ("UTF-8 locale l3 test failed");
 	  res = 1;
 	}
 
       l4 = strxfrm (buf, "ab", l1 + 1);
-      if (l4 < l1 + 1 && strlen (buf) != l4)
+      ಯದಿ (l4 < l1 + 1 && strlen (buf) != l4)
 	{
 	  puts ("UTF-8 locale l4 test failed");
 	  res = 1;
@@ -65,20 +65,20 @@ do_test (void)
 
       buf[l1] = 'Z';
       l5 = strxfrm (buf, "ab", l1);
-      if (buf[l1] != 'Z')
+      ಯದಿ (buf[l1] != 'Z')
 	{
 	  puts ("UTF-8 locale l5 test failed");
 	  res = 1;
 	}
 
-      if (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
+      ಯದಿ (l1 != l2 || l1 != l3 || l1 != l4 || l1 != l5)
 	{
 	  puts ("UTF-8 locale retval test failed");
 	  res = 1;
 	}
     }
 
-  return res;
+  ಪ್ರತ್ಯಾಗಮ res;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

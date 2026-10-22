@@ -16,34 +16,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <endian.h>
-#include <stdint.h>
+#ಅನ್ತರ್ಭಾವ <endian.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
 
-int i;
+ಪೂರ್ಣಾಙ್ಕ i;
 uint16_t u16;
 uint32_t u32;
 uint64_t u64;
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
   /* This is a compilation test.  */
-  extern __typeof (htobe16 (i)) u16;
-  extern __typeof (htole16 (i)) u16;
-  extern __typeof (be16toh (i)) u16;
-  extern __typeof (le16toh (i)) u16;
-  extern __typeof (htobe32 (i)) u32;
-  extern __typeof (htole32 (i)) u32;
-  extern __typeof (be32toh (i)) u32;
-  extern __typeof (le32toh (i)) u32;
-  extern __typeof (htobe64 (i)) u64;
-  extern __typeof (htole64 (i)) u64;
-  extern __typeof (be64toh (i)) u64;
-  extern __typeof (le64toh (i)) u64;
-  (void) u16;
-  (void) u32;
-  (void) u64;
-  return 0;
+  ಬಾಹ್ಯ __typeof (htobe16 (i)) u16;
+  ಬಾಹ್ಯ __typeof (htole16 (i)) u16;
+  ಬಾಹ್ಯ __typeof (be16toh (i)) u16;
+  ಬಾಹ್ಯ __typeof (le16toh (i)) u16;
+  ಬಾಹ್ಯ __typeof (htobe32 (i)) u32;
+  ಬಾಹ್ಯ __typeof (htole32 (i)) u32;
+  ಬಾಹ್ಯ __typeof (be32toh (i)) u32;
+  ಬಾಹ್ಯ __typeof (le32toh (i)) u32;
+  ಬಾಹ್ಯ __typeof (htobe64 (i)) u64;
+  ಬಾಹ್ಯ __typeof (htole64 (i)) u64;
+  ಬಾಹ್ಯ __typeof (be64toh (i)) u64;
+  ಬಾಹ್ಯ __typeof (le64toh (i)) u64;
+  (ಶೂನ್ಯ) u16;
+  (ಶೂನ್ಯ) u32;
+  (ಶೂನ್ಯ) u64;
+  ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

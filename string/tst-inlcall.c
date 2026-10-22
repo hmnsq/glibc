@@ -23,62 +23,62 @@
 /* Make sure we test the optimized inline functions.  */
 #define __USE_STRING_INLINES	1
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <fcntl.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <strings.h>
+#ಅನ್ತರ್ಭಾವ <fcntl.h>
 
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  int status;
-  int errors = 0;
-  char buf1[1000];
-  char *cp;
-  char ch;
+  ಪೂರ್ಣಾಙ್ಕ status;
+  ಪೂರ್ಣಾಙ್ಕ errors = 0;
+  ವರ್ಣ buf1[1000];
+  ವರ್ಣ *cp;
+  ವರ್ಣ ch;
 
   cp = strcpy (buf1, "hello world");
-  if (strcmp ("hello world", cp++) != 0)
+  ಯದಿ (strcmp ("hello world", cp++) != 0)
     {
       puts ("strcmp test 1 failed");
       ++errors;
     }
 
   cp = buf1;
-  if (strcmp (cp++, "hello world") != 0)
+  ಯದಿ (strcmp (cp++, "hello world") != 0)
     {
       puts ("strcmp test 2 failed");
       ++errors;
     }
 
   ch = 'h';
-  if (strchr ("hello world", ch++) == NULL)
+  ಯದಿ (strchr ("hello world", ch++) == ರಿಕ್ತ)
     {
       puts ("strchr test 1 failed");
       ++errors;
     }
 
-  const char * const hw = "hello world";
-  if (strpbrk (hw, "o") - hw != 4)
+  ಧ್ರುವ ವರ್ಣ * ಧ್ರುವ hw = "hello world";
+  ಯದಿ (strpbrk (hw, "o") - hw != 4)
     {
       puts ("strpbrk test 1 failed");
       ++errors;
     }
 
-  if (errors == 0)
+  ಯದಿ (errors == 0)
     {
       status = EXIT_SUCCESS;
       puts ("No errors.");
     }
-  else
+  ಅನ್ಯಥಾ
     {
       status = EXIT_FAILURE;
       printf ("%d errors.\n", errors);
     }
-  return status;
+  ಪ್ರತ್ಯಾಗಮ status;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

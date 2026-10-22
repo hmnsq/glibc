@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <argz.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-char *
-__argz_next (const char *argz, size_t argz_len, const char *entry)
+ವರ್ಣ *
+__argz_next (ಧ್ರುವ ವರ್ಣ *argz, size_t argz_len, ಧ್ರುವ ವರ್ಣ *entry)
 {
-  if (entry)
+  ಯದಿ (entry)
     {
-      if (entry < argz + argz_len)
+      ಯದಿ (entry < argz + argz_len)
 	entry = strchr (entry, '\0') + 1;
 
-      return entry >= argz + argz_len ? NULL : (char *) entry;
+      ಪ್ರತ್ಯಾಗಮ entry >= argz + argz_len ? ರಿಕ್ತ : (ವರ್ಣ *) entry;
     }
-  else
-    if (argz_len > 0)
-      return (char *) argz;
-    else
-      return NULL;
+  ಅನ್ಯಥಾ
+    ಯದಿ (argz_len > 0)
+      ಪ್ರತ್ಯಾಗಮ (ವರ್ಣ *) argz;
+    ಅನ್ಯಥಾ
+      ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 }
 libc_hidden_def (__argz_next)
 static_weak_alias (__argz_next, argz_next)

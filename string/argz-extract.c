@@ -16,20 +16,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
+#ಅನ್ತರ್ಭಾವ <argz.h>
 
 /* Puts pointers to each string in ARGZ, plus a terminating 0 element, into
    ARGV, which must be large enough to hold them all.  */
-void
-__argz_extract (const char *argz, size_t len, char **argv)
+ಶೂನ್ಯ
+__argz_extract (ಧ್ರುವ ವರ್ಣ *argz, size_t len, ವರ್ಣ **argv)
 {
-  while (len > 0)
+  ಯಾವತ್ (len > 0)
     {
       size_t part_len = strlen (argz);
-      *argv++ = (char *) argz;
+      *argv++ = (ವರ್ಣ *) argz;
       argz += part_len + 1;
       len -= part_len + 1;
     }
-  *argv = NULL;
+  *argv = ರಿಕ್ತ;
 }
 weak_alias (__argz_extract, argz_extract)

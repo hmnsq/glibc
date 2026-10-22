@@ -18,21 +18,21 @@
 
 #define TEST_MAIN
 #define BUF1PAGES 1
-#include "test-string.h"
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
-int
-test_main (void)
+ಪೂರ್ಣಾಙ್ಕ
+test_main (ಶೂನ್ಯ)
 {
-  char line[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
-  char **saveptrp;
-  char *tok;
+  ವರ್ಣ ಸಾಲು[] = "udf 75868 1 - Live 0xffffffffa0bfb000\n";
+  ವರ್ಣ **saveptrp;
+  ವರ್ಣ *tok;
 
   test_init ();
 
   /* Check strtok_r won't write beyond the size of (*saveptrp).  */
-  saveptrp = (char **) (buf1 + page_size - sizeof (*saveptrp));
-  tok = strtok_r (line, " \t", saveptrp);
-  return strcmp (tok, "udf") != 0;
+  saveptrp = (ವರ್ಣ **) (buf1 + page_size - ಪರಿಮಾಣ (*saveptrp));
+  tok = strtok_r (ಸಾಲು, " \t", saveptrp);
+  ಪ್ರತ್ಯಾಗಮ strcmp (tok, "udf") != 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

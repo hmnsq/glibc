@@ -20,7 +20,7 @@
    <https://www.gnu.org/licenses/>.  */
 
 #define NO_MEMPCPY_STPCPY_REDIRECT
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
 #undef mempcpy
 #undef __mempcpy
@@ -29,10 +29,10 @@
 # define MEMPCPY __mempcpy
 #endif
 
-void *
-MEMPCPY (void *dest, const void *src, size_t len)
+ಶೂನ್ಯ *
+MEMPCPY (ಶೂನ್ಯ *dest, ಧ್ರುವ ಶೂನ್ಯ *src, size_t len)
 {
-  return memcpy (dest, src, len) + len;
+  ಪ್ರತ್ಯಾಗಮ memcpy (dest, src, len) + len;
 }
 libc_hidden_def (__mempcpy)
 static_weak_alias (__mempcpy, mempcpy)

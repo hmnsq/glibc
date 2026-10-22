@@ -15,9 +15,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdint.h>
-#include <libc-pointer-arith.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
+#ಅನ್ತರ್ಭಾವ <libc-pointer-arith.h>
 
 #undef strcspn
 
@@ -28,35 +28,35 @@
 /* Return the length of the maximum initial segment of S
    which contains no characters from REJECT.  */
 size_t
-STRCSPN (const char *str, const char *reject)
+STRCSPN (ಧ್ರುವ ವರ್ಣ *str, ಧ್ರುವ ವರ್ಣ *reject)
 {
-  if (__glibc_unlikely (reject[0] == '\0')
+  ಯದಿ (__glibc_unlikely (reject[0] == '\0')
       || __glibc_unlikely (reject[1] == '\0'))
-    return __strchrnul (str, reject [0]) - str;
+    ಪ್ರತ್ಯಾಗಮ __strchrnul (str, reject [0]) - str;
 
   /* Use multiple small memsets to enable inlining on most targets.  */
-  unsigned char table[256];
-  unsigned char *p = memset (table, 0, 64);
+  unsigned ವರ್ಣ table[256];
+  unsigned ವರ್ಣ *p = memset (table, 0, 64);
   memset (p + 64, 0, 64);
   memset (p + 128, 0, 64);
   memset (p + 192, 0, 64);
 
-  unsigned char *s = (unsigned char*) reject;
-  unsigned char tmp;
-  do
+  unsigned ವರ್ಣ *s = (unsigned ವರ್ಣ*) reject;
+  unsigned ವರ್ಣ tmp;
+  ಕುರು
     p[tmp = *s++] = 1;
-  while (tmp);
+  ಯಾವತ್ (tmp);
 
-  s = (unsigned char*) str;
-  if (p[s[0]]) return 0;
-  if (p[s[1]]) return 1;
-  if (p[s[2]]) return 2;
-  if (p[s[3]]) return 3;
+  s = (unsigned ವರ್ಣ*) str;
+  ಯದಿ (p[s[0]]) ಪ್ರತ್ಯಾಗಮ 0;
+  ಯದಿ (p[s[1]]) ಪ್ರತ್ಯಾಗಮ 1;
+  ಯದಿ (p[s[2]]) ಪ್ರತ್ಯಾಗಮ 2;
+  ಯದಿ (p[s[3]]) ಪ್ರತ್ಯಾಗಮ 3;
 
-  s = (unsigned char *) PTR_ALIGN_DOWN (s, 4);
+  s = (unsigned ವರ್ಣ *) PTR_ALIGN_DOWN (s, 4);
 
-  unsigned int c0, c1, c2, c3;
-  do
+  unsigned ಪೂರ್ಣಾಙ್ಕ c0, c1, c2, c3;
+  ಕುರು
     {
       s += 4;
       c0 = p[s[0]];
@@ -64,9 +64,9 @@ STRCSPN (const char *str, const char *reject)
       c2 = p[s[2]];
       c3 = p[s[3]];
     }
-  while ((c0 | c1 | c2 | c3) == 0);
+  ಯಾವತ್ ((c0 | c1 | c2 | c3) == 0);
 
-  size_t count = s - (unsigned char *) str;
-  return (c0 | c1) != 0 ? count - c0 + 1 : count - c2 + 3;
+  size_t ಎಣಿಕೆ = s - (unsigned ವರ್ಣ *) str;
+  ಪ್ರತ್ಯಾಗಮ (c0 | c1) != 0 ? ಎಣಿಕೆ - c0 + 1 : ಎಣಿಕೆ - c2 + 3;
 }
 libc_hidden_builtin_def (strcspn)

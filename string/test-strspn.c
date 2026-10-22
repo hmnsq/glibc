@@ -19,21 +19,21 @@
 #define TEST_MAIN
 #ifndef WIDE
 # define TEST_NAME "strspn"
-#else
+#ಅನ್ಯಥಾ
 # define TEST_NAME "wcsspn"
 #endif /* WIDE */
-#include "test-string.h"
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
 #ifndef WIDE
 # define STRSPN strspn
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR ವರ್ಣ
+# define UCHAR unsigned ವರ್ಣ
 # define SIMPLE_STRSPN simple_strspn
 # define STRLEN strlen
 # define STRCHR strchr
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#ಅನ್ಯಥಾ
 # include <wchar.h>
 # define STRSPN wcsspn
 # define CHAR wchar_t
@@ -45,72 +45,72 @@
 # define SMALL_CHAR 1273
 #endif /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
+ಪ್ರಕಾರನಿರ್ದೇಶ size_t (*proto_t) (ಧ್ರುವ CHAR *, ಧ್ರುವ CHAR *);
 
 IMPL (STRSPN, 1)
 
 /* Naive implementation to verify results.  */
 size_t
-SIMPLE_STRSPN (const CHAR *s, const CHAR *acc)
+SIMPLE_STRSPN (ಧ್ರುವ CHAR *s, ಧ್ರುವ CHAR *acc)
 {
-  const CHAR *r, *str = s;
+  ಧ್ರುವ CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
+  ಯಾವತ್ ((c = *s++) != '\0')
     {
-      for (r = acc; *r != '\0'; ++r)
-	if (*r == c)
-	  break;
-      if (*r == '\0')
-	return s - str - 1;
+      ಪ್ರತಿ (r = acc; *r != '\0'; ++r)
+	ಯದಿ (*r == c)
+	  ಭಙ್ಗ;
+      ಯದಿ (*r == '\0')
+	ಪ್ರತ್ಯಾಗಮ s - str - 1;
     }
-  return s - str - 1;
+  ಪ್ರತ್ಯಾಗಮ s - str - 1;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, const CHAR *acc, size_t exp_res)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಧ್ರುವ CHAR *s, ಧ್ರುವ CHAR *acc, size_t exp_res)
 {
   size_t res = CALL (impl, s, acc);
-  if (res != exp_res)
+  ಯದಿ (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-	     (void *) res, (void *) exp_res);
+	     (ಶೂನ್ಯ *) res, (ಶೂನ್ಯ *) exp_res);
       ret = 1;
-      return;
+      ಪ್ರತ್ಯಾಗಮ;
     }
 }
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_test (size_t align, size_t pos, size_t len)
 {
   size_t i;
   CHAR *acc, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240 || ! len)
-    return;
+  ಯದಿ ((align + pos + 10) * ಪರಿಮಾಣ (CHAR) >= page_size || len > 240 || ! len)
+    ಪ್ರತ್ಯಾಗಮ;
 
   acc = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  ಪ್ರತಿ (i = 0; i < len; ++i)
     {
       acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      ಯದಿ (!acc[i])
 	acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      ಯದಿ (!acc[i])
 	acc[i] = 1 + (random () & SMALL_CHAR);
     }
   acc[len] = '\0';
 
-  for (i = 0; i < pos; ++i)
+  ಪ್ರತಿ (i = 0; i < pos; ++i)
     s[i] = acc[random () % len];
   s[pos] = random () & BIG_CHAR;
-  if (STRCHR (acc, s[pos]))
+  ಯದಿ (STRCHR (acc, s[pos]))
     s[pos] = '\0';
-  else
+  ಅನ್ಯಥಾ
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      ಪ್ರತಿ (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
@@ -119,61 +119,61 @@ do_test (size_t align, size_t pos, size_t len)
     do_one_test (impl, s, acc, pos);
 }
 
-static void
-do_random_tests (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_random_tests (ಶೂನ್ಯ)
 {
   size_t i, j, n, align, pos, alen, len;
   UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
   UCHAR *acc;
 
-  for (n = 0; n < ITERATIONS; n++)
+  ಪ್ರತಿ (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
-      if (random () & 1)
+      ಯದಿ (random () & 1)
 	alen = random () & 63;
-      else
+      ಅನ್ಯಥಾ
 	alen = random () & 15;
-      if (!alen)
+      ಯದಿ (!alen)
 	pos = 0;
-      else
+      ಅನ್ಯಥಾ
 	pos = random () & 511;
-      if (pos + align >= 511)
+      ಯದಿ (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      ಯದಿ (len + align >= 512)
 	len = 511 - align - (random () & 7);
       acc = (UCHAR *) (buf2 + page_size) - alen - 1 - (random () & 7);
-      for (i = 0; i < alen; ++i)
+      ಪ್ರತಿ (i = 0; i < alen; ++i)
 	{
 	  acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  ಯದಿ (!acc[i])
 	    acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  ಯದಿ (!acc[i])
 	    acc[i] = 1 + (random () & SMALL_CHAR);
 	}
       acc[i] = '\0';
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      ಯದಿ (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      ಪ್ರತಿ (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  ಯದಿ (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  ಅನ್ಯಥಾ ಯದಿ (i == pos + align)
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) acc, p[i]))
+	      ಯದಿ (STRCHR ((CHAR *) acc, p[i]))
 		p[i] = '\0';
 	    }
-	  else if (i < align || i > pos + align)
+	  ಅನ್ಯಥಾ ಯದಿ (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  ಅನ್ಯಥಾ
 	    p[i] = acc [random () % alen];
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align),
+	ಯದಿ (CALL (impl, (CHAR *) (p + align),
 		  (CHAR *) acc) != (pos < len ? pos : len))
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %zd != %zd",
@@ -185,8 +185,8 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+ಪೂರ್ಣಾಙ್ಕ
+test_main (ಶೂನ್ಯ)
 {
   size_t i;
 
@@ -197,26 +197,26 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 0; i < 32; ++i)
+  ಪ್ರತಿ (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  ಪ್ರತಿ (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  ಪ್ರತಿ (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  ಪ್ರತಿ (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  ಪ್ರತ್ಯಾಗಮ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

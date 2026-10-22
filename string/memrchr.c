@@ -16,12 +16,12 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
-#include <libc-pointer-arith.h>
+#ಅನ್ತರ್ಭಾವ <string-fzb.h>
+#ಅನ್ತರ್ಭಾವ <string-fzc.h>
+#ಅನ್ತರ್ಭಾವ <string-fzi.h>
+#ಅನ್ತರ್ಭಾವ <string-shift.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <libc-pointer-arith.h>
 
 #undef __memrchr
 #undef memrchr
@@ -30,49 +30,49 @@
 # define __memrchr MEMRCHR
 #endif
 
-void *
-__memrchr (const void *s, int c_in, size_t n)
+ಶೂನ್ಯ *
+__memrchr (ಧ್ರುವ ಶೂನ್ಯ *s, ಪೂರ್ಣಾಙ್ಕ c_in, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  ಯದಿ (__glibc_unlikely (n == 0))
+    ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
+  ಧ್ರುವ op_t *word_ptr = (ಧ್ರುವ op_t *) PTR_ALIGN_UP (s + n, ಪರಿಮಾಣ (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
 
   op_t word = *--word_ptr;
   op_t repeated_c = repeat_bytes (c_in);
 
   /* Compute the address of the word containing the initial byte. */
-  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ಧ್ರುವ op_t *sword = (ಧ್ರುವ op_t *) PTR_ALIGN_DOWN (s, ಪರಿಮಾಣ (op_t));
 
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
   find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ಯದಿ (mask != 0)
     {
-      char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      ವರ್ಣ *ret = (ವರ್ಣ *) word_ptr + index_last (mask);
+      ಪ್ರತ್ಯಾಗಮ ret >= (ವರ್ಣ *) s ? ret : ರಿಕ್ತ;
     }
-  if (word_ptr == sword)
-    return NULL;
+  ಯದಿ (word_ptr == sword)
+    ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
   word = *--word_ptr;
 
-  while (word_ptr != sword)
+  ಯಾವತ್ (word_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
+      ಯದಿ (has_eq (word, repeated_c))
+	ಪ್ರತ್ಯಾಗಮ (ವರ್ಣ *) word_ptr + index_last_eq (word, repeated_c);
       word = *--word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  ಯದಿ (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      ವರ್ಣ *ret = (ವರ್ಣ *) word_ptr + index_last_eq (word, repeated_c);
+      ಯದಿ (ret >= (ವರ್ಣ *) s)
+	ಪ್ರತ್ಯಾಗಮ ret;
     }
-  return NULL;
+  ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 }
 #ifndef MEMRCHR
 libc_hidden_def (__memrchr)

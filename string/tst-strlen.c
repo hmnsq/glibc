@@ -2,56 +2,56 @@
    test the real implementation.  */
 #undef __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ಸ್ಥಿರ ಧ್ರುವ size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
+  ವರ್ಣ basebuf[24 + 32];
   size_t base;
 
-  for (base = 0; base < 32; ++base)
+  ಪ್ರತಿ (base = 0; base < 32; ++base)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      ವರ್ಣ *buf = basebuf + base;
+      size_t ಪದಗಳು;
 
-      for (words = 0; words < 4; ++words)
+      ಪ್ರತಿ (ಪದಗಳು = 0; ಪದಗಳು < 4; ++ಪದಗಳು)
 	{
 	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  memset (buf, 'a', ಪದಗಳು * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  ಪ್ರತಿ (last = 0; last < 16; ++last)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[ಪದಗಳು * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
+	      buf[ಪದಗಳು * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
+	      buf[ಪದಗಳು * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
+	      buf[ಪದಗಳು * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
+	      buf[ಪದಗಳು * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      ಯದಿ (strlen (buf) != ಪದಗಳು * 4 + lens[last])
 		{
 		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+strlen failed ಪ್ರತಿ base=%zu, ಪದಗಳು=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, ಪದಗಳು, last,
+			  strlen (buf), ಪದಗಳು * 4 + lens[last]);
+		  ಪ್ರತ್ಯಾಗಮ 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      ಯದಿ (strnlen (buf, -1) != ಪದಗಳು * 4 + lens[last])
 		{
 		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+strnlen failed ಪ್ರತಿ base=%zu, ಪದಗಳು=%zu, and last=%zu (is %zd, expected %zd)\n",
+			  base, ಪದಗಳು, last,
+			  strnlen (buf, -1), ಪದಗಳು * 4 + lens[last]);
+		  ಪ್ರತ್ಯಾಗಮ 1;
 		}
 	    }
 	}
     }
-  return 0;
+  ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

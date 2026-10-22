@@ -18,90 +18,90 @@
 
 #define TEST_MAIN
 #define TEST_NAME "strcasestr"
-#include "test-string.h"
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
 
 #define STRCASESTR c_strcasestr
 #define NO_ALIAS
 #define __strncasecmp strncasecmp
 #define __strnlen strnlen
-#include "strcasestr.c"
+#ಅನ್ತರ್ಭಾವ "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+ಸ್ಥಿರ ವರ್ಣ *
+simple_strcasestr (ಧ್ರುವ ವರ್ಣ *s1, ಧ್ರುವ ವರ್ಣ *s2)
 {
   ssize_t s1len = strlen (s1);
   ssize_t s2len = strlen (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  ಯದಿ (s2len > s1len)
+    ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  ಪ್ರತಿ (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      ಪ್ರತಿ (j = 0; j < s2len; ++j)
+	ಯದಿ (tolower (s1[i + j]) != tolower (s2[j]))
+	  ಭಙ್ಗ;
+      ಯದಿ (j == s2len)
+	ಪ್ರತ್ಯಾಗಮ (ವರ್ಣ *) s1 + i;
     }
 
-  return NULL;
+  ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+ಪ್ರಕಾರನಿರ್ದೇಶ ವರ್ಣ *(*proto_t) (ಧ್ರುವ ವರ್ಣ *, ಧ್ರುವ ವರ್ಣ *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+check_result (impl_t *impl, ಧ್ರುವ ವರ್ಣ *s1, ಧ್ರುವ ವರ್ಣ *s2,
+	      ವರ್ಣ *exp_result)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  ವರ್ಣ *result = CALL (impl, s1, s2);
+  ಯದಿ (result != exp_result)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (result == ರಿಕ್ತ) ? "(null)" : result,
+	     (exp_result == ರಿಕ್ತ) ? "(null)" : exp_result);
       ret = 1;
-      return -1;
+      ಪ್ರತ್ಯಾಗಮ -1;
     }
-  return 0;
+  ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+ಸ್ಥಿರ ಶೂನ್ಯ
+do_one_test (impl_t *impl, ಧ್ರುವ ವರ್ಣ *s1, ಧ್ರುವ ವರ್ಣ *s2, ವರ್ಣ *exp_result)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  ಯದಿ (check_result (impl, s1, s2, exp_result) < 0)
+    ಪ್ರತ್ಯಾಗಮ;
 }
 
 
-static void
+ಸ್ಥಿರ ಶೂನ್ಯ
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 ಪೂರ್ಣಾಙ್ಕ fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  ವರ್ಣ *s1 = (ವರ್ಣ *) (buf1 + align1);
+  ವರ್ಣ *s2 = (ವರ್ಣ *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  ಸ್ಥಿರ ಧ್ರುವ ವರ್ಣ d[] = "1234567890abcxyz";
+#define dl (ಪರಿಮಾಣ (d) - 1)
+  ವರ್ಣ *ss2 = s2;
+  ಪ್ರತಿ (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  ಯದಿ (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      ವರ್ಣ *ss1 = s1;
+      ಪ್ರತಿ (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
 	  memcpy (ss1, d, t);
@@ -109,32 +109,32 @@ do_test (size_t align1, size_t align2, size_t len1, size_t len2,
 	  ss1 += t;
 	}
     }
-  else
+  ಅನ್ಯಥಾ
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
+      ಪ್ರತಿ (size_t i = 0; i < len2; ++i)
 	s1[len1 - len2 + i] = toupper (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? ರಿಕ್ತ : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+ಸ್ಥಿರ ಶೂನ್ಯ
+check1 (ಶೂನ್ಯ)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ಧ್ರುವ ವರ್ಣ s1[] = "AOKB";
+  ಧ್ರುವ ವರ್ಣ s2[] = "OK";
+  ವರ್ಣ *exp_result;
 
   exp_result = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
     check_result (impl, s1, s2, exp_result);
 }
 
-static int
-test_main (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+test_main (ಶೂನ್ಯ)
 {
   test_init ();
 
@@ -145,8 +145,8 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  ಪ್ರತಿ (size_t klen = 2; klen < 32; ++klen)
+    ಪ್ರತಿ (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -188,7 +188,7 @@ test_main (void)
   do_test (0, 0, page_size - 1, 16, 0);
   do_test (0, 0, page_size - 1, 16, 1);
 
-  return ret;
+  ಪ್ರತ್ಯಾಗಮ ret;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

@@ -17,18 +17,18 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <locale.h>
-#include <array_length.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <errno.h>
+#ಅನ್ತರ್ಭಾವ <locale.h>
+#ಅನ್ತರ್ಭಾವ <array_length.h>
 
-#include <support/support.h>
-#include <support/check.h>
+#ಅನ್ತರ್ಭಾವ <support/support.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
 
-static int
-do_test (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
   unsetenv ("LANGUAGE");
 
@@ -38,7 +38,7 @@ do_test (void)
   TEST_COMPARE_STRING (strerror (-1),     "Unknown error -1");
 
   {
-    char buffer[32];
+    ವರ್ಣ buffer[32];
     TEST_COMPARE_STRING (strerror_r (EINVAL, buffer, 8),
 			 "Invalid argument");
     TEST_COMPARE_STRING (strerror_r (-1, buffer, 8),
@@ -49,7 +49,7 @@ do_test (void)
 			 "Unknown error -1");
   }
 
-  locale_t l = xnewlocale (LC_ALL_MASK, "pt_BR.UTF-8", NULL);
+  locale_t l = xnewlocale (LC_ALL_MASK, "pt_BR.UTF-8", ರಿಕ್ತ);
 
   TEST_COMPARE_STRING (strerror_l (EINVAL, l), "Argumento inv\303\241lido");
   TEST_COMPARE_STRING (strerror_l (-1, l),     "Erro desconhecido -1");
@@ -60,7 +60,7 @@ do_test (void)
   TEST_COMPARE_STRING (strerror (-1),     "Erro desconhecido -1");
 
   {
-    char buffer[32];
+    ವರ್ಣ buffer[32];
     TEST_COMPARE_STRING (strerror_r (EINVAL, buffer, 8),
 			 "Argumento inv\303\241lido");
     TEST_COMPARE_STRING (strerror_r (-1, buffer, 8),
@@ -73,7 +73,7 @@ do_test (void)
 
   freelocale (l);
 
-  return 0;
+  ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

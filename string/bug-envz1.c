@@ -1,13 +1,13 @@
 /* Test for bug BZ #2703.  */
-#include <stdio.h>
-#include <envz.h>
-#include <stdlib.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <envz.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-static const struct
+ಸ್ಥಿರ ಧ್ರುವ ಸಂರಚನಾ
 {
-  const char *s;
-  int in_result;
+  ಧ್ರುವ ವರ್ಣ *s;
+  ಪೂರ್ಣಾಙ್ಕ in_result;
 } strs[] =
 {
   { "a=1", 1 },
@@ -22,45 +22,45 @@ static const struct
   { "j", 0 }
 };
 
-#define nstrs (sizeof (strs) / sizeof (strs[0]))
+#define nstrs (ಪರಿಮಾಣ (strs) / ಪರಿಮಾಣ (strs[0]))
 
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
 
   size_t size = 0;
-  char *str = malloc (100);
-  if (str == NULL)
+  ವರ್ಣ *str = malloc (100);
+  ಯದಿ (str == ರಿಕ್ತ)
     {
       puts ("out of memory");
-      return 1;
+      ಪ್ರತ್ಯಾಗಮ 1;
     }
 
-  char **argz = &str;
+  ವರ್ಣ **argz = &str;
 
-  for (int i = 0; i < nstrs; ++i)
+  ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ i = 0; i < nstrs; ++i)
     argz_add_sep (argz, &size, strs[i].s, '\0');
 
   printf ("calling envz_strip with size=%zu\n", size);
   envz_strip (argz, &size);
 
-  int result = 0;
+  ಪೂರ್ಣಾಙ್ಕ result = 0;
   printf ("new size=%zu\n", size);
-  for (int i = 0; i < nstrs; ++i)
-    if (strs[i].in_result)
+  ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ i = 0; i < nstrs; ++i)
+    ಯದಿ (strs[i].in_result)
       {
-        char name[2];
+        ವರ್ಣ name[2];
         name[0] = strs[i].s[0];
         name[1] = '\0';
 
-        char *e = envz_entry (*argz, size, name);
-        if (e == NULL)
+        ವರ್ಣ *e = envz_entry (*argz, size, name);
+        ಯದಿ (e == ರಿಕ್ತ)
           {
             printf ("entry '%s' not found\n", name);
             result = 1;
           }
-        else if (strcmp (e, strs[i].s) != 0)
+        ಅನ್ಯಥಾ ಯದಿ (strcmp (e, strs[i].s) != 0)
           {
             printf ("entry '%s' does not match: is '%s', expected '%s'\n",
                     name, e, strs[i].s);
@@ -68,8 +68,8 @@ do_test (void)
           }
       }
 
-  free (*argz);
-  return result;
+  ಮುಕ್ತ (*argz);
+  ಪ್ರತ್ಯಾಗಮ result;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

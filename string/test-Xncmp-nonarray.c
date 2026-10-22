@@ -25,16 +25,16 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#ಅನ್ತರ್ಭಾವ <array_length.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <support/check.h>
+#ಅನ್ತರ್ಭಾವ <support/next_to_fault.h>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.h>
+#ಅನ್ತರ್ಭಾವ <sys/param.h>
+#ಅನ್ತರ್ಭಾವ <unistd.h>
 
 /* Much shorter than test-Xnlen-nonarray.c because of deeply nested loops.  */
-enum { buffer_length = 80 };
+ಗಣನಾ { buffer_length = 80 };
 
 /* The test buffer layout follows what is described test-Xnlen-nonarray.c,
    except that there two buffers, left and right.  The variables
@@ -42,108 +42,108 @@ enum { buffer_length = 80 };
 
 /* Return the maximum string length for a string that starts at
    start_offset.  */
-static int
-string_length (int a_count, int start_offset)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+string_length (ಪೂರ್ಣಾಙ್ಕ a_ಎಣಿಕೆ, ಪೂರ್ಣಾಙ್ಕ start_offset)
 {
-  if (start_offset == buffer_length || start_offset >= a_count)
-    return 0;
-  else
-    return a_count - start_offset;
+  ಯದಿ (start_offset == buffer_length || start_offset >= a_ಎಣಿಕೆ)
+    ಪ್ರತ್ಯಾಗಮ 0;
+  ಅನ್ಯಥಾ
+    ಪ್ರತ್ಯಾಗಮ a_ಎಣಿಕೆ - start_offset;
 }
 
 /* This is the valid maximum length argument computation for
    strnlen/wcsnlen.  See text-Xnlen-nonarray.c.  */
-static int
-maximum_length (int start_offset, int zero_count)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+maximum_length (ಪೂರ್ಣಾಙ್ಕ start_offset, ಪೂರ್ಣಾಙ್ಕ zero_ಎಣಿಕೆ)
 {
-  if (start_offset == buffer_length)
-    return 0;
-  else if (zero_count > 0)
+  ಯದಿ (start_offset == buffer_length)
+    ಪ್ರತ್ಯಾಗಮ 0;
+  ಅನ್ಯಥಾ ಯದಿ (zero_ಎಣಿಕೆ > 0)
     /* Effectively unbounded, but we need to stop fairly low,
        otherwise testing takes too long.  */
-    return buffer_length + 32;
-  else
-    return buffer_length - start_offset;
+    ಪ್ರತ್ಯಾಗಮ buffer_length + 32;
+  ಅನ್ಯಥಾ
+    ಪ್ರತ್ಯಾಗಮ buffer_length - start_offset;
 }
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+ಪ್ರಕಾರನಿರ್ದೇಶ __typeof (TEST_IDENTIFIER) *proto_t;
 
 #define TEST_MAIN
-#include "test-string.h"
+#ಅನ್ತರ್ಭಾವ "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+test_main (ಶೂನ್ಯ)
 {
   TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
   test_init ();
 
-  struct support_next_to_fault left_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *left_buffer = (CHAR *) left_ntf.buffer;
-  struct support_next_to_fault right_ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *right_buffer = (CHAR *) right_ntf.buffer;
+  ಸಂರಚನಾ support_next_to_fault ಎಡ_ntf
+    = support_next_to_fault_allocate (buffer_length * ಪರಿಮಾಣ (CHAR));
+  CHAR *ಎಡ_buffer = (CHAR *) ಎಡ_ntf.buffer;
+  ಸಂರಚನಾ support_next_to_fault ಬಲ_ntf
+    = support_next_to_fault_allocate (buffer_length * ಪರಿಮಾಣ (CHAR));
+  CHAR *ಬಲ_buffer = (CHAR *) ಬಲ_ntf.buffer;
 
   FOR_EACH_IMPL (impl, 0)
     {
       printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        left_buffer[i] = 'A';
+      ಪ್ರತಿ (size_t i = 0; i < buffer_length; ++i)
+        ಎಡ_buffer[i] = 'A';
 
-      for (int left_zero_count = 0; left_zero_count <= buffer_length;
-           ++left_zero_count)
+      ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಎಡ_zero_ಎಣಿಕೆ = 0; ಎಡ_zero_ಎಣಿಕೆ <= buffer_length;
+           ++ಎಡ_zero_ಎಣಿಕೆ)
         {
-          if (left_zero_count > 0)
-            left_buffer[buffer_length - left_zero_count] = 0;
-          int left_a_count = buffer_length - left_zero_count;
-          for (size_t i = 0; i < buffer_length; ++i)
-            right_buffer[i] = 'A';
-          for (int right_zero_count = 0; right_zero_count <= buffer_length;
-               ++right_zero_count)
+          ಯದಿ (ಎಡ_zero_ಎಣಿಕೆ > 0)
+            ಎಡ_buffer[buffer_length - ಎಡ_zero_ಎಣಿಕೆ] = 0;
+          ಪೂರ್ಣಾಙ್ಕ ಎಡ_a_ಎಣಿಕೆ = buffer_length - ಎಡ_zero_ಎಣಿಕೆ;
+          ಪ್ರತಿ (size_t i = 0; i < buffer_length; ++i)
+            ಬಲ_buffer[i] = 'A';
+          ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಬಲ_zero_ಎಣಿಕೆ = 0; ಬಲ_zero_ಎಣಿಕೆ <= buffer_length;
+               ++ಬಲ_zero_ಎಣಿಕೆ)
             {
-              if (right_zero_count > 0)
-                right_buffer[buffer_length - right_zero_count] = 0;
-              int right_a_count = buffer_length - right_zero_count;
-              for (int left_start_offset = 0;
-                   left_start_offset <= buffer_length;
-                   ++left_start_offset)
+              ಯದಿ (ಬಲ_zero_ಎಣಿಕೆ > 0)
+                ಬಲ_buffer[buffer_length - ಬಲ_zero_ಎಣಿಕೆ] = 0;
+              ಪೂರ್ಣಾಙ್ಕ ಬಲ_a_ಎಣಿಕೆ = buffer_length - ಬಲ_zero_ಎಣಿಕೆ;
+              ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಎಡ_start_offset = 0;
+                   ಎಡ_start_offset <= buffer_length;
+                   ++ಎಡ_start_offset)
                 {
-                  CHAR *left_start_pointer = left_buffer + left_start_offset;
-                  int left_maxlen
-                    = maximum_length (left_start_offset, left_zero_count);
-                  int left_length
-                    = string_length (left_a_count, left_start_offset);
-                  for (int right_start_offset = 0;
-                       right_start_offset <= buffer_length;
-                       ++right_start_offset)
+                  CHAR *ಎಡ_start_pointer = ಎಡ_buffer + ಎಡ_start_offset;
+                  ಪೂರ್ಣಾಙ್ಕ ಎಡ_maxlen
+                    = maximum_length (ಎಡ_start_offset, ಎಡ_zero_ಎಣಿಕೆ);
+                  ಪೂರ್ಣಾಙ್ಕ ಎಡ_length
+                    = string_length (ಎಡ_a_ಎಣಿಕೆ, ಎಡ_start_offset);
+                  ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಬಲ_start_offset = 0;
+                       ಬಲ_start_offset <= buffer_length;
+                       ++ಬಲ_start_offset)
                     {
-                      CHAR *right_start_pointer
-                        = right_buffer + right_start_offset;
-                      int right_maxlen
-                        = maximum_length (right_start_offset, right_zero_count);
-                      int right_length
-                        = string_length (right_a_count, right_start_offset);
+                      CHAR *ಬಲ_start_pointer
+                        = ಬಲ_buffer + ಬಲ_start_offset;
+                      ಪೂರ್ಣಾಙ್ಕ ಬಲ_maxlen
+                        = maximum_length (ಬಲ_start_offset, ಬಲ_zero_ಎಣಿಕೆ);
+                      ಪೂರ್ಣಾಙ್ಕ ಬಲ_length
+                        = string_length (ಬಲ_a_ಎಣಿಕೆ, ಬಲ_start_offset);
 
                       /* Maximum length is modelled after strnlen/wcsnlen,
                          and must be valid for both pointer arguments at
                          the same time.  */
-                      int maxlen = MIN (left_maxlen, right_maxlen);
+                      ಪೂರ್ಣಾಙ್ಕ maxlen = MIN (ಎಡ_maxlen, ಬಲ_maxlen);
 
-                      for (int length_argument = 0; length_argument <= maxlen;
+                      ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ length_argument = 0; length_argument <= maxlen;
                            ++length_argument)
                         {
-                          if (test_verbose)
+                          ಯದಿ (test_verbose)
                             {
                               printf ("left: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      left_zero_count, left_a_count,
-                                      left_start_offset);
+                                      ಎಡ_zero_ಎಣಿಕೆ, ಎಡ_a_ಎಣಿಕೆ,
+                                      ಎಡ_start_offset);
                               printf ("right: zero_count=%d"
                                       " a_count=%d start_offset=%d\n",
-                                      right_zero_count, right_a_count,
-                                      right_start_offset);
+                                      ಬಲ_zero_ಎಣಿಕೆ, ಬಲ_a_ಎಣಿಕೆ,
+                                      ಬಲ_start_offset);
                               printf ("length argument: %d\n",
                                       length_argument);
                             }
@@ -151,24 +151,24 @@ test_main (void)
                           /* Effective lengths bounded by length argument.
                              The effective length determines the
                              outcome of the comparison.  */
-                          int left_effective
-                            = MIN (left_length, length_argument);
-                          int right_effective
-                            = MIN (right_length, length_argument);
-                          if (left_effective == right_effective)
+                          ಪೂರ್ಣಾಙ್ಕ ಎಡ_effective
+                            = MIN (ಎಡ_length, length_argument);
+                          ಪೂರ್ಣಾಙ್ಕ ಬಲ_effective
+                            = MIN (ಬಲ_length, length_argument);
+                          ಯದಿ (ಎಡ_effective == ಬಲ_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                ಎಡ_start_pointer,
+                                                ಬಲ_start_pointer,
                                                 length_argument), 0);
-                          else if (left_effective < right_effective)
+                          ಅನ್ಯಥಾ ಯದಿ (ಎಡ_effective < ಬಲ_effective)
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                ಎಡ_start_pointer,
+                                                ಬಲ_start_pointer,
                                                 length_argument) < 0, 1);
-                          else
+                          ಅನ್ಯಥಾ
                             TEST_COMPARE (CALL (impl,
-                                                left_start_pointer,
-                                                right_start_pointer,
+                                                ಎಡ_start_pointer,
+                                                ಬಲ_start_pointer,
                                                 length_argument) > 0, 1);
                         }
                     }
@@ -177,7 +177,7 @@ test_main (void)
         }
     }
 
-  return 0;
+  ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

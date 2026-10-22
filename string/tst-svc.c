@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
 #define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#define  MAX_ಸಾಲು_SIZE    32
 
-static int
-compare (const void *p1, const void *p2)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+compare (ಧ್ರುವ ಶೂನ್ಯ *p1, ಧ್ರುವ ಶೂನ್ಯ *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  ಪ್ರತ್ಯಾಗಮ strverscmp (*((ವರ್ಣ **) p1), *((ವರ್ಣ **) p2));
 }
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  ವರ್ಣ ಸಾಲು[MAX_ಸಾಲು_SIZE + 1];
+  ವರ್ಣ *str[MAX_STRINGS];
+  ಪೂರ್ಣಾಙ್ಕ  ಎಣಿಕೆ = 0;
+  ಪೂರ್ಣಾಙ್ಕ  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  ಯಾವತ್ (ಎಣಿಕೆ < MAX_STRINGS && fgets (ಸಾಲು, MAX_ಸಾಲು_SIZE, stdin) != ರಿಕ್ತ)
     {
-      n = strlen (line) - 1;
+      n = strlen (ಸಾಲು) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      ಯದಿ (ಸಾಲು[n] == '\n')
+        ಸಾಲು[n] = '\0';
 
-      str[count] = strdup (line);
+      str[ಎಣಿಕೆ] = strdup (ಸಾಲು);
 
-      if (str[count] == NULL)
+      ಯದಿ (str[ಎಣಿಕೆ] == ರಿಕ್ತ)
         exit (EXIT_FAILURE);
 
-      ++count;
+      ++ಎಣಿಕೆ;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, ಎಣಿಕೆ, ಪರಿಮಾಣ (ವರ್ಣ *), compare);
 
-  for (i = 0; i < count; ++i)
+  ಪ್ರತಿ (i = 0; i < ಎಣಿಕೆ; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  ಪ್ರತ್ಯಾಗಮ EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

@@ -16,11 +16,11 @@
    <https://www.gnu.org/licenses/>.  */
 
 #define NO_MEMPCPY_STPCPY_REDIRECT
-#include <string.h>
-#include <stdint.h>
-#include <memcopy.h>
-#include <string-fzb.h>
-#include <string-misc.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
+#ಅನ್ತರ್ಭಾವ <memcopy.h>
+#ಅನ್ತರ್ಭಾವ <string-fzb.h>
+#ಅನ್ತರ್ಭಾವ <string-misc.h>
 
 #undef __stpcpy
 #undef stpcpy
@@ -29,37 +29,37 @@
 # define STPCPY __stpcpy
 #endif
 
-static __always_inline char *
+ಸ್ಥಿರ __always_inline ವರ್ಣ *
 write_byte_from_word (op_t *dest, op_t word)
 {
-  char *d = (char *) dest;
-  for (size_t i = 0; i < OPSIZ; i++, ++d)
+  ವರ್ಣ *d = (ವರ್ಣ *) dest;
+  ಪ್ರತಿ (size_t i = 0; i < OPSIZ; i++, ++d)
     {
-      char c = extractbyte (word, i);
+      ವರ್ಣ c = extractbyte (word, i);
       *d = c;
-      if (c == '\0')
-	break;
+      ಯದಿ (c == '\0')
+	ಭಙ್ಗ;
     }
-  return d;
+  ಪ್ರತ್ಯಾಗಮ d;
 }
 
-static __always_inline char *
-stpcpy_aligned_loop (op_t *restrict dst, const op_t *restrict src)
+ಸ್ಥಿರ __always_inline ವರ್ಣ *
+stpcpy_aligned_loop (op_t *restrict dst, ಧ್ರುವ op_t *restrict src)
 {
   op_t word;
-  while (1)
+  ಯಾವತ್ (1)
     {
       word = *src++;
-      if (has_zero (word))
-	break;
+      ಯದಿ (has_zero (word))
+	ಭಙ್ಗ;
       *dst++ = word;
     }
 
-  return write_byte_from_word (dst, word);
+  ಪ್ರತ್ಯಾಗಮ write_byte_from_word (dst, word);
 }
 
-static __always_inline char *
-stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
+ಸ್ಥಿರ __always_inline ವರ್ಣ *
+stpcpy_unaligned_loop (op_t *restrict dst, ಧ್ರುವ op_t *restrict src,
 		       uintptr_t ofs)
 {
   op_t w2a = *src++;
@@ -67,23 +67,23 @@ stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
   uintptr_t sh_2 = OPSIZ * CHAR_BIT - sh_1;
 
   op_t w2 = MERGE (w2a, sh_1, (op_t)-1, sh_2);
-  if (!has_zero (w2))
+  ಯದಿ (!has_zero (w2))
     {
       op_t w2b;
 
       /* Unaligned loop.  The invariant is that W2B, which is "ahead" of W1,
 	 does not contain end-of-string.  Therefore it is safe (and necessary)
 	 to read another word from each while we do not have a difference.  */
-      while (1)
+      ಯಾವತ್ (1)
 	{
 	  w2b = *src++;
 	  w2 = MERGE (w2a, sh_1, w2b, sh_2);
 	  /* Check if there is zero on w2a.  */
-	  if (has_zero (w2))
-	    goto out;
+	  ಯದಿ (has_zero (w2))
+	    ಗಚ್ಛ out;
 	  *dst++ = w2;
-	  if (has_zero (w2b))
-	    break;
+	  ಯದಿ (has_zero (w2b))
+	    ಭಙ್ಗ;
 	  w2a = w2b;
 	}
 
@@ -92,29 +92,29 @@ stpcpy_unaligned_loop (op_t *restrict dst, const op_t *restrict src,
     }
 
 out:
-  return write_byte_from_word (dst, w2);
+  ಪ್ರತ್ಯಾಗಮ write_byte_from_word (dst, w2);
 }
 
 
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
-char *
-STPCPY (char *dest, const char *src)
+ವರ್ಣ *
+STPCPY (ವರ್ಣ *dest, ಧ್ರುವ ವರ್ಣ *src)
 {
   /* Copy just a few bytes to make DEST aligned.  */
   size_t len = (-(uintptr_t) dest) % OPSIZ;
-  for (; len != 0; len--, ++dest)
+  ಪ್ರತಿ (; len != 0; len--, ++dest)
     {
-      char c = *src++;
+      ವರ್ಣ c = *src++;
       *dest = c;
-      if (c == '\0')
-	return dest;
+      ಯದಿ (c == '\0')
+	ಪ್ರತ್ಯಾಗಮ dest;
     }
 
   /* DEST is now aligned to op_t, SRC may or may not be.  */
   uintptr_t ofs = (uintptr_t) src % OPSIZ;
-  return ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (const op_t *) src)
+  ಪ್ರತ್ಯಾಗಮ ofs == 0 ? stpcpy_aligned_loop ((op_t*) dest, (ಧ್ರುವ op_t *) src)
 		  : stpcpy_unaligned_loop ((op_t*) dest,
-					   (const op_t *) (src - ofs) , ofs);
+					   (ಧ್ರುವ op_t *) (src - ofs) , ofs);
 }
 weak_alias (__stpcpy, stpcpy)
 libc_hidden_def (__stpcpy)

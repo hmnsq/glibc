@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <locale.h>
 
-int
-main (void)
+ಪೂರ್ಣಾಙ್ಕ
+main (ಶೂನ್ಯ)
 {
-  const char t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
-  const char t2[] = "00000-00000.COM";
-  int res1;
-  int res2;
+  ಧ್ರುವ ವರ್ಣ t1[] = "0-0-0-0-0-0-0-0-0-0.COM";
+  ಧ್ರುವ ವರ್ಣ t2[] = "00000-00000.COM";
+  ಪೂರ್ಣಾಙ್ಕ res1;
+  ಪೂರ್ಣಾಙ್ಕ res2;
 
   setlocale (LC_ALL, "en_US.ISO-8859-1");
 
@@ -17,7 +17,7 @@ main (void)
   res2 = strcoll (t2, t1);
   printf ("strcoll (\"%s\", \"%s\") = %d\n", t2, t1, res2);
 
-  return ((res1 == 0 && res2 != 0)
+  ಪ್ರತ್ಯಾಗಮ ((res1 == 0 && res2 != 0)
 	  || (res1 != 0 && res2 == 0)
 	  || (res1 < 0 && res2 < 0)
 	  || (res1 > 0 && res2 > 0));

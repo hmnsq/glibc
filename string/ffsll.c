@@ -15,31 +15,31 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <limits.h>
+#ಅನ್ತರ್ಭಾವ <limits.h>
 #define ffsl __something_else
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 #undef	ffsll
-#include <math-use-builtins.h>
-#include <libc-diag.h>
+#ಅನ್ತರ್ಭಾವ <math-use-builtins.h>
+#ಅನ್ತರ್ಭಾವ <libc-diag.h>
 
 /* Find the first bit set in I.  */
-int
-__ffsll (long long int i)
+ಪೂರ್ಣಾಙ್ಕ
+__ffsll (long long ಪೂರ್ಣಾಙ್ಕ i)
 {
-#if USE_FFSLL_BUILTIN
-  return __builtin_ffsll (i);
-#else
-  unsigned long long int x = i & -i;
+#ಯದಿ USE_FFSLL_BUILTIN
+  ಪ್ರತ್ಯಾಗಮ __builtin_ffsll (i);
+#ಅನ್ಯಥಾ
+  unsigned long long ಪೂರ್ಣಾಙ್ಕ x = i & -i;
 
-  if (x <= 0xffffffff)
-    return ffs (i);
-  else
-    return 32 + ffs (i >> 32);
+  ಯದಿ (x <= 0xffffffff)
+    ಪ್ರತ್ಯಾಗಮ ffs (i);
+  ಅನ್ಯಥಾ
+    ಪ್ರತ್ಯಾಗಮ 32 + ffs (i >> 32);
 #endif
 }
 static_weak_alias (__ffsll, ffsll)
 
-#if ULONG_MAX != UINT_MAX
+#ಯದಿ ULONG_MAX != UINT_MAX
 #undef ffsl
 static_weak_alias (__ffsll, ffsl)
 #endif

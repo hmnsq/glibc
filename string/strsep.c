@@ -15,34 +15,34 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
 #undef __strsep
 #undef strsep
 
-char *
-__strsep (char **stringp, const char *delim)
+ವರ್ಣ *
+__strsep (ವರ್ಣ **stringp, ಧ್ರುವ ವರ್ಣ *delim)
 {
-  char *begin, *end;
+  ವರ್ಣ *begin, *end;
 
   begin = *stringp;
-  if (begin == NULL)
-    return NULL;
+  ಯದಿ (begin == ರಿಕ್ತ)
+    ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 
   /* Find the end of the token.  */
   end = begin + strcspn (begin, delim);
 
-  if (*end)
+  ಯದಿ (*end)
     {
       /* Terminate the token and set *STRINGP past NUL character.  */
       *end++ = '\0';
       *stringp = end;
     }
-  else
+  ಅನ್ಯಥಾ
     /* No more delimiters; this is the last token.  */
-    *stringp = NULL;
+    *stringp = ರಿಕ್ತ;
 
-  return begin;
+  ಪ್ರತ್ಯಾಗಮ begin;
 }
 weak_alias (__strsep, strsep)
 strong_alias (__strsep, __strsep_g)

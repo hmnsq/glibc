@@ -1,25 +1,25 @@
 /* Testcase for strtok reported by Andrew Church <achurch@achurch.org>.  */
-#include <stdio.h>
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <stdio.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  char buf[1] = { 0 };
-  int result = 0;
+  ವರ್ಣ buf[1] = { 0 };
+  ಪೂರ್ಣಾಙ್ಕ result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  ಯದಿ (strtok (buf, " ") != ರಿಕ್ತ)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  ಅನ್ಯಥಾ ಯದಿ (strtok (ರಿಕ್ತ, " ") != ರಿಕ್ತ)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  ಪ್ರತ್ಯಾಗಮ result;
 }
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>

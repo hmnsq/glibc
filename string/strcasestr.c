@@ -26,26 +26,26 @@
  * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de	*/
 
 /* Specification.  */
-#include <string.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <strings.h>
+#ಅನ್ತರ್ಭಾವ <ctype.h>
+#ಅನ್ತರ್ಭಾವ <stdbool.h>
+#ಅನ್ತರ್ಭಾವ <strings.h>
 
 #define TOLOWER(Ch) tolower (Ch)
 
 /* Two-Way algorithm.  */
-#define RETURN_TYPE char *
+#define RETURN_TYPE ವರ್ಣ *
 #define AVAILABLE(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((ಶೂನ್ಯ*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
 #define CHECK_EOL (1)
-#define RET0_IF_0(a) if (!a) goto ret0
+#define RET0_IF_0(a) ಯದಿ (!a) ಗಚ್ಛ ret0
 #define CANON_ELEMENT(c) TOLOWER (c)
 #define CMP_FUNC(p1, p2, l)				\
-  __strncasecmp ((const char *) (p1), (const char *) (p2), l)
-#include "str-two-way.h"
+  __strncasecmp ((ಧ್ರುವ ವರ್ಣ *) (p1), (ಧ್ರುವ ವರ್ಣ *) (p2), l)
+#ಅನ್ತರ್ಭಾವ "str-two-way.h"
 
 #undef strcasestr
 #undef __strcasestr
@@ -58,34 +58,34 @@
 /* Find the first occurrence of NEEDLE in HAYSTACK, using
    case-insensitive comparison.  This function gives unspecified
    results in multibyte locales.  */
-char *
-STRCASESTR (const char *haystack, const char *needle)
+ವರ್ಣ *
+STRCASESTR (ಧ್ರುವ ವರ್ಣ *haystack, ಧ್ರುವ ವರ್ಣ *needle)
 {
   size_t needle_len; /* Length of NEEDLE.  */
   size_t haystack_len; /* Known minimum length of HAYSTACK.  */
 
   /* Handle empty NEEDLE special case.  */
-  if (needle[0] == '\0')
-    return (char *) haystack;
+  ಯದಿ (needle[0] == '\0')
+    ಪ್ರತ್ಯಾಗಮ (ವರ್ಣ *) haystack;
 
   /* Ensure HAYSTACK length is at least as long as NEEDLE length.
      Since a match may occur early on in a huge HAYSTACK, use strnlen
      and read ahead a few cachelines for improved performance.  */
   needle_len = strlen (needle);
   haystack_len = __strnlen (haystack, needle_len + 256);
-  if (haystack_len < needle_len)
-    return NULL;
+  ಯದಿ (haystack_len < needle_len)
+    ಪ್ರತ್ಯಾಗಮ ರಿಕ್ತ;
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See
      ISO C 99 section 6.2.6.1.  */
-  if (needle_len < LONG_NEEDLE_THRESHOLD)
-    return two_way_short_needle ((const unsigned char *) haystack,
+  ಯದಿ (needle_len < LONG_NEEDLE_THRESHOLD)
+    ಪ್ರತ್ಯಾಗಮ two_way_short_needle ((ಧ್ರುವ unsigned ವರ್ಣ *) haystack,
 				 haystack_len,
-				 (const unsigned char *) needle,
+				 (ಧ್ರುವ unsigned ವರ್ಣ *) needle,
 				 needle_len);
-  return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
-			      (const unsigned char *) needle,
+  ಪ್ರತ್ಯಾಗಮ two_way_long_needle ((ಧ್ರುವ unsigned ವರ್ಣ *) haystack, haystack_len,
+			      (ಧ್ರುವ unsigned ವರ್ಣ *) needle,
 			      needle_len);
 }
 

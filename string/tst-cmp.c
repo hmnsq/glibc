@@ -20,136 +20,136 @@
    characters in the padding.  It is partly a regression test for bug
    20327.  */
 
-#include <limits.h>
-#include <malloc.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libc-diag.h>
+#ಅನ್ತರ್ಭಾವ <limits.h>
+#ಅನ್ತರ್ಭಾವ <malloc.h>
+#ಅನ್ತರ್ಭಾವ <stdbool.h>
+#ಅನ್ತರ್ಭಾವ <stdint.h>
+#ಅನ್ತರ್ಭಾವ <stdlib.h>
+#ಅನ್ತರ್ಭಾವ <string.h>
+#ಅನ್ತರ್ಭಾವ <libc-diag.h>
 
-static int
-signum (int val)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+signum (ಪೂರ್ಣಾಙ್ಕ val)
 {
-  if (val < 0)
-    return -1;
-  if (val > 0)
-    return 1;
-  else
-    return 0;
+  ಯದಿ (val < 0)
+    ಪ್ರತ್ಯಾಗಮ -1;
+  ಯದಿ (val > 0)
+    ಪ್ರತ್ಯಾಗಮ 1;
+  ಅನ್ಯಥಾ
+    ಪ್ರತ್ಯಾಗಮ 0;
 }
 
-static size_t
-max_size_t (size_t left, size_t right)
+ಸ್ಥಿರ size_t
+max_size_t (size_t ಎಡ, size_t ಬಲ)
 {
-  if (left > right)
-    return left;
-  else
-    return right;
+  ಯದಿ (ಎಡ > ಬಲ)
+    ಪ್ರತ್ಯಾಗಮ ಎಡ;
+  ಅನ್ಯಥಾ
+    ಪ್ರತ್ಯಾಗಮ ಬಲ;
 }
 
 /* Wrappers for strncmp and strncasecmp which determine the maximum
    string length in some, either based on the input string length, or
    using fixed constants.  */
 
-static int
-strncmp_no_terminator (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncmp_no_terminator (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t ಎಡ_len = strlen (ಎಡ);
+  size_t ಬಲ_len = strlen (ಬಲ);
+  ಪ್ರತ್ಯಾಗಮ strncmp (ಎಡ, ಬಲ, max_size_t (ಎಡ_len, ಬಲ_len));
 }
 
-static int
-strncasecmp_no_terminator (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncasecmp_no_terminator (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t ಎಡ_len = strlen (ಎಡ);
+  size_t ಬಲ_len = strlen (ಬಲ);
+  ಪ್ರತ್ಯಾಗಮ strncasecmp (ಎಡ, ಬಲ, max_size_t (ಎಡ_len, ಬಲ_len));
 }
 
-static int
-strncmp_terminator (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncmp_terminator (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncmp (left, right, max_size_t (left_len, right_len));
+  size_t ಎಡ_len = strlen (ಎಡ);
+  size_t ಬಲ_len = strlen (ಬಲ);
+  ಪ್ರತ್ಯಾಗಮ strncmp (ಎಡ, ಬಲ, max_size_t (ಎಡ_len, ಬಲ_len));
 }
 
-static int
-strncasecmp_terminator (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncasecmp_terminator (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  size_t left_len = strlen (left);
-  size_t right_len = strlen (right);
-  return strncasecmp (left, right, max_size_t (left_len, right_len));
+  size_t ಎಡ_len = strlen (ಎಡ);
+  size_t ಬಲ_len = strlen (ಬಲ);
+  ಪ್ರತ್ಯಾಗಮ strncasecmp (ಎಡ, ಬಲ, max_size_t (ಎಡ_len, ಬಲ_len));
 }
 
-static int
-strncmp_64 (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncmp_64 (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  return strncmp (left, right, 64);
+  ಪ್ರತ್ಯಾಗಮ strncmp (ಎಡ, ಬಲ, 64);
 }
 
-static int
-strncasecmp_64 (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncasecmp_64 (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  return strncasecmp (left, right, 64);
+  ಪ್ರತ್ಯಾಗಮ strncasecmp (ಎಡ, ಬಲ, 64);
 }
 
-static int
-strncmp_max (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncmp_max (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_ತಳ್ಳು_NEEDS_COMMENT;
+#ಯದಿ __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncmp being larger than
      PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
 #endif
-#if __GNUC_PREREQ (11, 0)
+#ಯದಿ __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+  ಪ್ರತ್ಯಾಗಮ strncmp (ಎಡ, ಬಲ, SIZE_MAX);
+  DIAG_ತೆಗೆ_NEEDS_COMMENT;
 }
 
-static int
-strncasecmp_max (const char *left, const char *right)
+ಸ್ಥಿರ ಪೂರ್ಣಾಙ್ಕ
+strncasecmp_max (ಧ್ರುವ ವರ್ಣ *ಎಡ, ಧ್ರುವ ವರ್ಣ *ಬಲ)
 {
-  DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (7, 0)
+  DIAG_ತಳ್ಳು_NEEDS_COMMENT;
+#ಯದಿ __GNUC_PREREQ (7, 0)
   /* GCC 9 warns about the size passed to strncasecmp being larger
      than PTRDIFF_MAX; the use of SIZE_MAX is deliberate here.  */
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wstringop-overflow=");
 #endif
-#if __GNUC_PREREQ (11, 0)
+#ಯದಿ __GNUC_PREREQ (11, 0)
   /* Likewise GCC 11, with a different warning option.  */
   DIAG_IGNORE_NEEDS_COMMENT (11, "-Wstringop-overread");
 #endif
-  return strncasecmp (left, right, SIZE_MAX);
-  DIAG_POP_NEEDS_COMMENT;
+  ಪ್ರತ್ಯಾಗಮ strncasecmp (ಎಡ, ಬಲ, SIZE_MAX);
+  DIAG_ತೆಗೆ_NEEDS_COMMENT;
 }
 
-int
-do_test (void)
+ಪೂರ್ಣಾಙ್ಕ
+do_test (ಶೂನ್ಯ)
 {
-  enum {
+  ಗಣನಾ {
     max_align = 64,
     max_string_length = 33
   };
   size_t blob_size = max_align + max_string_length + 1;
-  char *left = memalign (max_align, blob_size);
-  char *right = memalign (max_align, blob_size);
-  if (left == NULL || right == NULL)
+  ವರ್ಣ *ಎಡ = memalign (max_align, blob_size);
+  ವರ್ಣ *ಬಲ = memalign (max_align, blob_size);
+  ಯದಿ (ಎಡ == ರಿಕ್ತ || ಬಲ == ರಿಕ್ತ)
     {
       printf ("error: out of memory\n");
-      return 1;
+      ಪ್ರತ್ಯಾಗಮ 1;
     }
 
-  const struct
+  ಧ್ರುವ ಸಂರಚನಾ
   {
-    const char *name;
-    int (*implementation) (const char *, const char *);
+    ಧ್ರುವ ವರ್ಣ *name;
+    ಪೂರ್ಣಾಙ್ಕ (*implementation) (ಧ್ರುವ ವರ್ಣ *, ಧ್ರುವ ವರ್ಣ *);
   } functions[] =
       {
         { "strcmp", strcmp },
@@ -162,9 +162,9 @@ do_test (void)
         { "strncasecmp (length 64)", strncasecmp_64},
         { "strncmp (length SIZE_MAX)", strncmp_max},
         { "strncasecmp (length SIZE_MAX)", strncasecmp_max},
-        { NULL, NULL }
+        { ರಿಕ್ತ, ರಿಕ್ತ }
       };
-  const char *const strings[] =
+  ಧ್ರುವ ವರ್ಣ *ಧ್ರುವ strings[] =
     {
       "",
       "0",
@@ -180,34 +180,34 @@ do_test (void)
       "23456789abcdef",
       "23456789abcdefg",
       "abcdefghijklmnopqrstuvwxyzABCDEF",
-      NULL
+      ರಿಕ್ತ
     };
-  const unsigned char pads[] =
+  ಧ್ರುವ unsigned ವರ್ಣ pads[] =
     { 0, 1, 32, 64, 128, '0', '1', 'e', 'f', 'g', 127, 192, 255 };
 
   bool errors = false;
-  for (int left_idx = 0; strings[left_idx] != NULL; ++left_idx)
-    for (int left_align = 0; left_align < max_align; ++left_align)
-      for (unsigned pad_left = 0; pad_left < sizeof (pads); ++pad_left)
+  ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಎಡ_idx = 0; strings[ಎಡ_idx] != ರಿಕ್ತ; ++ಎಡ_idx)
+    ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಎಡ_align = 0; ಎಡ_align < max_align; ++ಎಡ_align)
+      ಪ್ರತಿ (unsigned pad_ಎಡ = 0; pad_ಎಡ < ಪರಿಮಾಣ (pads); ++pad_ಎಡ)
         {
-          memset (left, pads[pad_left], blob_size);
-          strcpy (left + left_align, strings[left_idx]);
+          memset (ಎಡ, pads[pad_ಎಡ], blob_size);
+          strcpy (ಎಡ + ಎಡ_align, strings[ಎಡ_idx]);
 
-          for (int right_idx = 0; strings[right_idx] != NULL; ++right_idx)
-            for (unsigned pad_right = 0; pad_right < sizeof (pads);
-                 ++pad_right)
-              for (int right_align = 0; right_align < max_align;
-                   ++right_align)
+          ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಬಲ_idx = 0; strings[ಬಲ_idx] != ರಿಕ್ತ; ++ಬಲ_idx)
+            ಪ್ರತಿ (unsigned pad_ಬಲ = 0; pad_ಬಲ < ಪರಿಮಾಣ (pads);
+                 ++pad_ಬಲ)
+              ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ ಬಲ_align = 0; ಬಲ_align < max_align;
+                   ++ಬಲ_align)
                 {
-                  memset (right, pads[pad_right], blob_size);
-                  strcpy (right + right_align, strings[right_idx]);
+                  memset (ಬಲ, pads[pad_ಬಲ], blob_size);
+                  strcpy (ಬಲ + ಬಲ_align, strings[ಬಲ_idx]);
 
-                  for (int func = 0; functions[func].name != NULL; ++func)
+                  ಪ್ರತಿ (ಪೂರ್ಣಾಙ್ಕ func = 0; functions[func].name != ರಿಕ್ತ; ++func)
                     {
-                      int expected = left_idx - right_idx;
-                      int actual = functions[func].implementation
-                        (left + left_align, right + right_align);
-                      if (signum (actual) != signum (expected))
+                      ಪೂರ್ಣಾಙ್ಕ expected = ಎಡ_idx - ಬಲ_idx;
+                      ಪೂರ್ಣಾಙ್ಕ actual = functions[func].implementation
+                        (ಎಡ + ಎಡ_align, ಬಲ + ಬಲ_align);
+                      ಯದಿ (signum (actual) != signum (expected))
                         {
                           printf ("error: mismatch for %s: %d\n"
                                   "  left:  \"%s\"\n"
@@ -215,21 +215,21 @@ do_test (void)
                                   "  pad_left = %u, pad_right = %u,\n"
                                   "  left_align = %d, right_align = %d\n",
                                   functions[func].name, actual,
-                                  strings[left_idx], strings[right_idx],
-                                  pad_left, pad_right,
-                                  left_align, right_align);
+                                  strings[ಎಡ_idx], strings[ಬಲ_idx],
+                                  pad_ಎಡ, pad_ಬಲ,
+                                  ಎಡ_align, ಬಲ_align);
                           errors = true;
                         }
                     }
                 }
         }
-  free (right);
-  free (left);
-  return errors;
+  ಮುಕ್ತ (ಬಲ);
+  ಮುಕ್ತ (ಎಡ);
+  ಪ್ರತ್ಯಾಗಮ errors;
 }
 
 /* The nested loops need a long time to complete on slower
    machines.  */
 #define TIMEOUT 600
 
-#include <support/test-driver.c>
+#ಅನ್ತರ್ಭಾವ <support/test-driver.c>
