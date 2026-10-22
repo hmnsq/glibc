@@ -2,24 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 
-int
+целое
 do_test (void)
 {
   char buf[1] = { 0 };
-  int result = 0;
+  целое result = 0;
 
-  if (strtok (buf, " ") != NULL)
+  если (strtok (buf, " ") != NULL)
     {
       puts ("first strtok call did not return NULL");
       result = 1;
     }
-  else if (strtok (NULL, " ") != NULL)
+  иначе если (strtok (NULL, " ") != NULL)
     {
       puts ("second strtok call did not return NULL");
       result = 1;
     }
 
-  return result;
+  вернуть result;
 }
 
 #include <support/test-driver.c>

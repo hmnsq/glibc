@@ -32,15 +32,15 @@
 static __always_inline const char *
 sadd (uintptr_t x, uintptr_t y)
 {
-  return (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
+  вернуть (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
 }
 
 /* Search no more than N bytes of S for C.  */
 void *
-__memchr (void const *s, int c_in, size_t n)
+__memchr (void const *s, целое c_in, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  если (__glibc_unlikely (n == 0))
+    вернуть NULL;
 
   /* Read the first word, but munge it so that bytes before the array
      will not match goal.  */
@@ -56,31 +56,31 @@ __memchr (void const *s, int c_in, size_t n)
   const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, sizeof (op_t));
 
   find_t mask = shift_find (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  если (mask != 0)
     {
       char *ret = (char *) s + index_first (mask);
-      return (ret <= lbyte) ? ret : NULL;
+      вернуть (ret <= lbyte) ? ret : NULL;
     }
-  if (word_ptr == lword)
-    return NULL;
+  если (word_ptr == lword)
+    вернуть NULL;
 
   word = *++word_ptr;
-  while (word_ptr != lword)
+  пока (word_ptr != lword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_first_eq (word, repeated_c);
+      если (has_eq (word, repeated_c))
+	вернуть (char *) word_ptr + index_first_eq (word, repeated_c);
       word = *++word_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  если (has_eq (word, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
       char *ret = (char *) word_ptr + index_first_eq (word, repeated_c);
-      if (ret <= lbyte)
-	return ret;
+      если (ret <= lbyte)
+	вернуть ret;
     }
-  return NULL;
+  вернуть NULL;
 }
 #ifndef MEMCHR
 weak_alias (__memchr, memchr)

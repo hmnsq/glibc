@@ -32,6 +32,6 @@ char *
 STRCPY (char *dest, const char *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  вернуть dest;
 }
 libc_hidden_builtin_def (strcpy)

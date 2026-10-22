@@ -28,7 +28,7 @@
 # define MEMCMP wmemcmp
 # define MEMSET wmemset
 # define TCS TEST_COMPARE_STRING_WIDE
-#else
+#иначе
 # define CHAR char
 # define sfmt "s"
 # define BIG_CHAR CHAR_MAX
@@ -44,13 +44,13 @@
 # define TEST_MAIN
 # ifndef WIDE
 #  define TEST_NAME "strdup"
-# else
+# иначе
 #  define TEST_NAME "wcsdup"
 # endif
 # include "test-string.h"
 # ifndef WIDE
 #  define STRDUP strdup
-# else
+# иначе
 #  define STRDUP wcsdup
 # endif
 #endif
@@ -73,20 +73,20 @@ do_one_test (const CHAR *src,
 {
   CHAR *dst = STRDUP (src);
 
-  if (STRCMP (dst, src) != 0)
+  если (STRCMP (dst, src) != 0)
     {
       error (0, 0,
 	     "Wrong result in function %s dst \"%" sfmt "\" src \"%" sfmt "\"",
 	     TEST_NAME, dst, src);
       ret = 1;
       free (dst);
-      return;
+      вернуть;
     }
   free (dst);
 }
 
 static void
-do_test (size_t align1, size_t align2, size_t len, int max_char)
+do_test (size_t align1, size_t align2, size_t len, целое max_char)
 {
   size_t i;
   CHAR *s1;
@@ -94,16 +94,16 @@ do_test (size_t align1, size_t align2, size_t len, int max_char)
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
   align1 &= 7;
-  if ((align1 + len) * sizeof (CHAR) >= page_size)
-    return;
+  если ((align1 + len) * sizeof (CHAR) >= page_size)
+    вернуть;
 
   align2 &= 7;
-  if ((align2 + len) * sizeof (CHAR) >= page_size)
-    return;
+  если ((align2 + len) * sizeof (CHAR) >= page_size)
+    вернуть;
 
   s1 = (CHAR *) (buf1) + align1;
 
-  for (i = 0; i < len; i++)
+  для (i = 0; i < len; i++)
     s1[i] = 32 + 23 * i % (max_char - 32);
   s1[len] = 0;
 
@@ -117,7 +117,7 @@ do_random_tests (void)
   CHAR *p1 = (CHAR *)(buf1 + page_size) - 512;
   CHAR *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  для (n = 0; n < ITERATIONS; n++)
     {
       /* align1 and align2 are expressed as wchar_t and not in bytes for wide
      char test, and thus it will be equal to align times wchar_t size.
@@ -127,27 +127,27 @@ do_random_tests (void)
      more 48.  */
 
       align1 = random () & (63 / sizeof (CHAR));
-      if (random () & 1)
+      если (random () & 1)
 	align2 = random () & (63 / sizeof (CHAR));
-      else
+      иначе
 	align2 = align1 + (random () & 24);
       len = random () & 511;
       j = align1;
-      if (align2 > j)
+      если (align2 > j)
 	j = align2;
-      if (len + j >= 511)
+      если (len + j >= 511)
 	len = 510 - j - (random () & 7);
       j = len + align1 + 64;
-      if (j > 512)
+      если (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      для (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  если (i == len + align1)
 	    p1[i] = 0;
-	  else
+	  иначе
 	    {
 	      p1[i] = random () & BIG_CHAR;
-	      if (i >= align1 && i < len + align1 && !p1[i])
+	      если (i >= align1 && i < len + align1 && !p1[i])
 		p1[i] = (random () & SMALL_CHAR) + 3;
 	    }
 	}
@@ -159,7 +159,7 @@ do_random_tests (void)
 }
 
 
-int
+целое
 test_main (void)
 {
   size_t i;
@@ -170,7 +170,7 @@ test_main (void)
   printf ("\t%s", TEST_NAME);
   putchar ('\n');
 
-  for (i = 0; i < 16; ++i)
+  для (i = 0; i < 16; ++i)
     {
       do_test (0, 0, i, SMALL_CHAR);
       do_test (0, 0, i, BIG_CHAR);
@@ -178,13 +178,13 @@ test_main (void)
       do_test (i, 0, i, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  для (i = 1; i < 8; ++i)
     {
       do_test (0, 0, 8 << i, SMALL_CHAR);
       do_test (8 - i, 2 * i, 8 << i, SMALL_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  для (i = 1; i < 8; ++i)
     {
       do_test (i, 2 * i, 8 << i, SMALL_CHAR);
       do_test (2 * i, i, 8 << i, BIG_CHAR);
@@ -195,7 +195,7 @@ test_main (void)
   do_zero_len_test ();
   do_random_tests ();
 
-  return ret;
+  вернуть ret;
 }
 
 #include <support/test-driver.c>

@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <libc-diag.h>
 
-int
-main (void)
+целое
+основной (void)
 {
   const char *a = "abc";
   const char *b = a;
@@ -19,8 +19,8 @@ main (void)
   DIAG_IGNORE_NEEDS_COMMENT (9, "-Wunused-value");
   strspn (b++, "");
   DIAG_POP_NEEDS_COMMENT;
-  if (b != a + 1)
-    return 1;
+  если (b != a + 1)
+    вернуть 1;
 
-  return 0;
+  вернуть 0;
 }

@@ -54,29 +54,29 @@ static inline unsigned char
 expected_value (size_t index)
 {
   uint32_t randomized = 0x9e3779b9 * index; /* Based on golden ratio.  */
-  return randomized >> 25;	/* Result is in the range [0, 127].  */
+  вернуть randomized >> 25;	/* Result is in the range [0, 127].  */
 }
 
 /* Used to count mismatches up to a limit, to avoid creating a huge
    test output file.  */
-static unsigned int mismatch_count;
+static unsigned целое mismatch_count;
 
 /* Check ACTUAL == EXPECTED.  Use INDEX for error reporting.  Exit the
    process after too many errors.  */
 static inline void
 check_one_index (size_t index, unsigned char actual, unsigned char expected)
 {
-  if (actual != expected)
+  если (actual != expected)
     {
       printf ("error: mismatch at index %zu: expected 0x%02x, got 0x%02x\n",
 	      index, actual, expected);
       ++mismatch_count;
-      if (mismatch_count > 200)
+      если (mismatch_count > 200)
 	FAIL_EXIT1 ("bailing out due to too many errors");
     }
 }
 
-static int
+static целое
 test_main (void)
 {
   test_init ();
@@ -92,7 +92,7 @@ test_main (void)
 
       /* The repeating pattern has the MSB set in all bytes.  */
       unsigned char repeating_pattern[128];
-      for (unsigned int i = 0; i < array_length (repeating_pattern); ++i)
+      для (unsigned целое i = 0; i < array_length (repeating_pattern); ++i)
 	repeating_pattern[i] = 0x80 | i;
 
       struct support_blob_repeat repeat
@@ -100,7 +100,7 @@ test_main (void)
 					       sizeof (repeating_pattern),
 					       (allocation_size
 						/ sizeof (repeating_pattern)));
-      if (repeat.start == NULL)
+      если (repeat.start == NULL)
 	FAIL_UNSUPPORTED ("repeated blob allocation failed: %m");
       TEST_COMPARE (repeat.size, allocation_size);
 
@@ -114,17 +114,17 @@ test_main (void)
 	     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1);
 
       /* Initialize the non-repeating pattern.  */
-      for (size_t i = 0; i < unshared_size; ++i)
+      для (size_t i = 0; i < unshared_size; ++i)
 	start[i] = expected_value (i);
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      для (size_t i = allocation_size - unshared_size; i < allocation_size;
 	   ++i)
 	start[i] = expected_value (i);
 
       /* Make sure that there was really no sharing.  */
       asm volatile ("" ::: "memory");
-      for (size_t i = 0; i < unshared_size; ++i)
+      для (size_t i = 0; i < unshared_size; ++i)
 	TEST_COMPARE (start[i], expected_value (i));
-      for (size_t i = allocation_size - unshared_size; i < allocation_size;
+      для (size_t i = allocation_size - unshared_size; i < allocation_size;
 	   ++i)
 	TEST_COMPARE (start[i], expected_value (i));
 
@@ -139,7 +139,7 @@ test_main (void)
 
       /* Move the entire allocation forward by one byte.  */
       DIAG_PUSH_NEEDS_COMMENT;
-#if __GNUC_PREREQ (8, 0)
+#если __GNUC_PREREQ (8, 0)
       /* GCC 8 warns about string function argument overflows.  */
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Warray-bounds");
       DIAG_IGNORE_NEEDS_COMMENT (8, "-Wstringop-overflow");
@@ -156,19 +156,19 @@ test_main (void)
       TEST_COMPARE_BLOB (expected_end, sizeof (expected_end),
 			 start + allocation_size - sizeof (expected_end) - 1,
 			 sizeof (expected_end));
-      for (size_t i = 0; i < unshared_size - 1; ++i)
+      для (size_t i = 0; i < unshared_size - 1; ++i)
 	check_one_index (i, start[i], expected_value (i + 1));
       /* The gap between the checked start and end area of the mapping
 	 has shared mappings at unspecified boundaries, so do not
 	 check the expected values in the middle.  */
-      for (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
+      для (size_t i = allocation_size - unshared_size; i < allocation_size - 1;
 	   ++i)
 	check_one_index (i, start[i], expected_value (i + 1));
 
       support_blob_repeat_free (&repeat);
     }
 
-  return 0;
+  вернуть 0;
 }
 
 #include <support/test-driver.c>

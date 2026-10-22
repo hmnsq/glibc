@@ -24,67 +24,67 @@ IMPL (memccpy, 1)
 
 /* Naive implementation to verify results.  */
 void *
-simple_memccpy (void *dst, const void *src, int c, size_t n)
+simple_memccpy (void *dst, const void *src, целое c, size_t n)
 {
   const char *s = src;
   char *d = dst;
 
-  while (n-- > 0)
-    if ((*d++ = *s++) == (char) c)
-      return d;
+  пока (n-- > 0)
+    если ((*d++ = *s++) == (char) c)
+      вернуть d;
 
-  return NULL;
+  вернуть NULL;
 }
 
-typedef void *(*proto_t) (void *, const void *, int c, size_t);
+typedef void *(*proto_t) (void *, const void *, целое c, size_t);
 
 static void
-do_one_test (impl_t *impl, void *dst, const void *src, int c, size_t len,
+do_one_test (impl_t *impl, void *dst, const void *src, целое c, size_t len,
 	     size_t n)
 {
   void *expect = len > n ? NULL : (char *) dst + len;
-  if (CALL (impl, dst, src, c, n) != expect)
+  если (CALL (impl, dst, src, c, n) != expect)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
 	     CALL (impl, dst, src, c, n), expect);
       ret = 1;
-      return;
+      вернуть;
     }
 
-  if (memcmp (dst, src, len > n ? n : len) != 0)
+  если (memcmp (dst, src, len > n ? n : len) != 0)
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      вернуть;
     }
 }
 
 static void
-do_test (size_t align1, size_t align2, int c, size_t len, size_t n,
-	 int max_char)
+do_test (size_t align1, size_t align2, целое c, size_t len, size_t n,
+	 целое max_char)
 {
   size_t i;
   char *s1, *s2;
 
   align1 &= 7;
-  if (align1 + len >= page_size)
-    return;
+  если (align1 + len >= page_size)
+    вернуть;
 
   align2 &= 7;
-  if (align2 + len >= page_size)
-    return;
+  если (align2 + len >= page_size)
+    вернуть;
 
   s1 = (char *) (buf1 + align1);
   s2 = (char *) (buf2 + align2);
 
-  for (i = 0; i < len - 1; ++i)
+  для (i = 0; i < len - 1; ++i)
     {
       s1[i] = 32 + 23 * i % (max_char - 32);
-      if (s1[i] == (char) c)
+      если (s1[i] == (char) c)
 	--s1[i];
     }
   s1[len - 1] = c;
-  for (i = len; i + align1 < page_size && i < len + 64; ++i)
+  для (i = len; i + align1 < page_size && i < len + 64; ++i)
     s1[i] = 32 + 32 * i % (max_char - 32);
 
   FOR_EACH_IMPL (impl, 0)
@@ -99,64 +99,64 @@ do_random_tests (void)
   unsigned char *p2 = buf2 + page_size - 512;
   unsigned char *res, c;
 
-  for (n = 0; n < ITERATIONS; n++)
+  для (n = 0; n < ITERATIONS; n++)
     {
       mode = random ();
       c = random ();
-      if (mode & 1)
+      если (mode & 1)
 	{
 	  size = random () & 255;
 	  align1 = 512 - size - (random () & 15);
-	  if (mode & 2)
+	  если (mode & 2)
 	    align2 = align1 - (random () & 24);
-	  else
+	  иначе
 	    align2 = align1 - (random () & 31);
-	  if (mode & 4)
+	  если (mode & 4)
 	    {
 	      j = align1;
 	      align1 = align2;
 	      align2 = j;
 	    }
-	  if (mode & 8)
+	  если (mode & 8)
 	    len = size - (random () & 31);
-	  else
+	  иначе
 	    len = 512;
-	  if (len >= 512)
+	  если (len >= 512)
 	    len = random () & 511;
 	}
-      else
+      иначе
 	{
 	  align1 = random () & 31;
-	  if (mode & 2)
+	  если (mode & 2)
 	    align2 = random () & 31;
-	  else
+	  иначе
 	    align2 = align1 + (random () & 24);
 	  len = random () & 511;
 	  j = align1;
-	  if (align2 > j)
+	  если (align2 > j)
 	    j = align2;
-	  if (mode & 4)
+	  если (mode & 4)
 	    {
 	      size = random () & 511;
-	      if (size + j > 512)
+	      если (size + j > 512)
 		size = 512 - j - (random() & 31);
 	    }
-	  else
+	  иначе
 	    size = 512 - j;
-	  if ((mode & 8) && len + j >= 512)
+	  если ((mode & 8) && len + j >= 512)
 	    len = 512 - j - (random () & 7);
 	}
       j = len + align1 + 64;
-      if (j > 512)
+      если (j > 512)
 	j = 512;
-      for (i = 0; i < j; i++)
+      для (i = 0; i < j; i++)
 	{
-	  if (i == len + align1)
+	  если (i == len + align1)
 	    p1[i] = c;
-	  else
+	  иначе
 	    {
 	      p1[i] = random () & 255;
-	      if (i >= align1 && i < len + align1 && p1[i] == c)
+	      если (i >= align1 && i < len + align1 && p1[i] == c)
 		p1[i] = (random () & 127) + 3 + c;
 	    }
 	}
@@ -166,20 +166,20 @@ do_random_tests (void)
 	  unsigned char *expect;
 	  memset (p2 - 64, '\1', 512 + 64);
 	  res = CALL (impl, p2 + align2, p1 + align1, (char) c, size);
-	  if (len >= size)
+	  если (len >= size)
 	    expect = NULL;
-	  else
+	  иначе
 	    expect = p2 + align2 + len + 1;
 
-	  if (res != expect)
+	  если (res != expect)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %zd, %zd, %zd, %d) %p != %p",
 		     n, impl->name, align1, align2, len, size, c, res, expect);
 	      ret = 1;
 	    }
-	  for (j = 0; j < align2 + 64; ++j)
+	  для (j = 0; j < align2 + 64; ++j)
 	    {
-	      if (p2[j - 64] != '\1')
+	      если (p2[j - 64] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage before, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -188,11 +188,11 @@ do_random_tests (void)
 		}
 	    }
 	  j = align2 + len + 1;
-	  if (size + align2 < j)
+	  если (size + align2 < j)
 	    j = size + align2;
-	  for (; j < 512; ++j)
+	  для (; j < 512; ++j)
 	    {
-	      if (p2[j] != '\1')
+	      если (p2[j] != '\1')
 		{
 		  error (0, 0, "Iteration %zd - garbage after, %s (%zd, %zd, %zd)",
 			 n, impl->name, align1, align2, len);
@@ -201,9 +201,9 @@ do_random_tests (void)
 		}
 	    }
 	  j = len + 1;
-	  if (size < j)
+	  если (size < j)
 	    j = size;
-	  if (memcmp (p1 + align1, p2 + align2, j))
+	  если (memcmp (p1 + align1, p2 + align2, j))
 	    {
 	      error (0, 0, "Iteration %zd - different strings, %s (%zd, %zd, %zd)",
 		     n, impl->name, align1, align2, len);
@@ -213,7 +213,7 @@ do_random_tests (void)
     }
 }
 
-int
+целое
 test_main (void)
 {
   size_t i;
@@ -225,7 +225,7 @@ test_main (void)
     printf ("\t%s", impl->name);
   putchar ('\n');
 
-  for (i = 1; i < 8; ++i)
+  для (i = 1; i < 8; ++i)
     {
       do_test (i, i, 12, 16, 16, 127);
       do_test (i, i, 23, 16, 16, 255);
@@ -237,7 +237,7 @@ test_main (void)
       do_test (2 * i, 8 - i, i, 2 << i, 1 << i, 255);
     }
 
-  for (i = 1; i < 8; ++i)
+  для (i = 1; i < 8; ++i)
     {
       do_test (0, 0, i, 4 << i, 8 << i, 127);
       do_test (0, 0, i, 16 << i, 8 << i, 127);
@@ -246,7 +246,7 @@ test_main (void)
     }
 
   do_random_tests ();
-  return ret;
+  вернуть ret;
 }
 
 #include <support/test-driver.c>

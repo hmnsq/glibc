@@ -67,8 +67,8 @@ extern impl_t __start_impls[], __stop_impls[];
 # define OPT_SEED 10002
 
 unsigned char *buf1, *buf2;
-int ret, do_srandom;
-unsigned int seed;
+целое ret, do_srandom;
+unsigned целое seed;
 size_t page_size;
 
 # ifndef ITERATIONS
@@ -80,7 +80,7 @@ size_t iterations = 100000;
     iterations = strtoul (optarg, NULL, 0);	\
     break;
 #  define ITERATIONS iterations
-# else
+# иначе
 #  define ITERATIONS_OPTIONS
 #  define ITERATIONS_PROCESS
 # endif
@@ -90,17 +90,17 @@ size_t iterations = 100000;
   { "seed", required_argument, NULL, OPT_SEED },
 
 static void __attribute__ ((used))
-cmdline_process_function (int c)
+cmdline_process_function (целое c)
 {
   switch (c)
     {
       ITERATIONS_PROCESS
       case OPT_RANDOM:
         {
-          int fdr = open ("/dev/urandom", O_RDONLY);
-          if (fdr < 0 || read (fdr, &seed, sizeof (seed)) != sizeof (seed))
+          целое fdr = open ("/dev/urandom", O_RDONLY);
+          если (fdr < 0 || read (fdr, &seed, sizeof (seed)) != sizeof (seed))
             seed = time (NULL);
-          if (fdr >= 0)
+          если (fdr >= 0)
             close (fdr);
           do_srandom = 1;
           break;
@@ -120,32 +120,32 @@ cmdline_process_function (int c)
 #ifdef TEST_NAME
 /* Increase size of FUNC_LIST if assert is triggered at run-time.  */
 static struct libc_ifunc_impl func_list[32];
-static int func_count;
-static int impl_count __attribute__ ((unused)) = -1;
+static целое func_count;
+static целое impl_count __attribute__ ((unused)) = -1;
 static impl_t *impl_array __attribute__ ((unused));
 
 # define FOR_EACH_IMPL(impl, notall) \
   impl_t *impl;								\
-  int count;								\
-  if (impl_count == -1)							\
+  целое count;								\
+  если (impl_count == -1)							\
     {									\
       impl_count = 0;							\
-      if (func_count != 0)						\
+      если (func_count != 0)						\
 	{								\
-	  int f;							\
+	  целое f;							\
 	  impl_t *skip = NULL, *a;					\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (strcmp (impl->name, TEST_NAME) == 0)			\
+	  для (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    если (strcmp (impl->name, TEST_NAME) == 0)			\
 	      skip = impl;						\
-	    else							\
+	    иначе							\
 	      impl_count++;						\
 	  a = impl_array = xmalloc ((impl_count + func_count) *		\
 				    sizeof (impl_t));			\
-	  for (impl = __start_impls; impl < __stop_impls; ++impl)	\
-	    if (impl != skip)						\
+	  для (impl = __start_impls; impl < __stop_impls; ++impl)	\
+	    если (impl != skip)						\
 	      *a++ = *impl;						\
-	  for (f = 0; f < func_count; f++)				\
-	    if (func_list[f].usable)					\
+	  для (f = 0; f < func_count; f++)				\
+	    если (func_list[f].usable)					\
 	      {								\
 		a->name = func_list[f].name;				\
 		a->fn = func_list[f].fn;				\
@@ -154,19 +154,19 @@ static impl_t *impl_array __attribute__ ((unused));
 	      }								\
 	  impl_count = a - impl_array;					\
 	}								\
-      else								\
+      иначе								\
         {								\
 	  impl_count = __stop_impls - __start_impls;			\
 	  impl_array = __start_impls;					\
         }								\
     }									\
   impl = impl_array;							\
-  for (count = 0; count < impl_count; ++count, ++impl)			\
-    if (!notall || impl->test)
-#else
+  для (count = 0; count < impl_count; ++count, ++impl)			\
+    если (!notall || impl->test)
+#иначе
 # define FOR_EACH_IMPL(impl, notall) \
-  for (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
-    if (!notall || impl->test)
+  для (impl_t *impl = __start_impls; impl < __stop_impls; ++impl)	\
+    если (!notall || impl->test)
 #endif
 
 #ifndef BUF1PAGES
@@ -184,22 +184,22 @@ test_init (void)
 
   page_size = 2 * getpagesize ();
 #ifdef MIN_PAGE_SIZE
-  if (page_size < MIN_PAGE_SIZE)
+  если (page_size < MIN_PAGE_SIZE)
     page_size = MIN_PAGE_SIZE;
 #endif
   buf1 = mmap (0, (BUF1PAGES + 1) * page_size, PROT_READ | PROT_WRITE,
 	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf1 == MAP_FAILED)
+  если (buf1 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf1 + BUF1PAGES * page_size, page_size, PROT_NONE))
+  если (mprotect (buf1 + BUF1PAGES * page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
   buf2 = mmap (0, 2 * page_size, PROT_READ | PROT_WRITE,
 	       MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (buf2 == MAP_FAILED)
+  если (buf2 == MAP_FAILED)
     error (EXIT_FAILURE, errno, "mmap failed");
-  if (mprotect (buf2 + page_size, page_size, PROT_NONE))
+  если (mprotect (buf2 + page_size, page_size, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
-  if (do_srandom)
+  если (do_srandom)
     {
       printf ("Setting seed to 0x%x\n", seed);
       srandom (seed);

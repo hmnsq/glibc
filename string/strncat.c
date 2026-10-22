@@ -36,7 +36,7 @@ STRNCAT (char *s1, const char *s2, size_t n)
   s1[ss] = '\0';
   memcpy (s1, s2, ss);
 
-  return s;
+  вернуть s;
 }
 #ifdef STRNCAT_PRIMARY
 strong_alias (STRNCAT, __strncat)

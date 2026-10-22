@@ -24,7 +24,7 @@ swab (const void *bfrom, void *bto, ssize_t n)
   char *to = (char *) bto;
 
   n &= ~((ssize_t) 1);
-  while (n > 1)
+  пока (n > 1)
     {
       const char b0 = from[--n], b1 = from[--n];
       to[n] = b0;

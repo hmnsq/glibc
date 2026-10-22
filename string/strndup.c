@@ -22,10 +22,10 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#if defined _LIBC || defined STDC_HEADERS
+#если defined _LIBC || defined STDC_HEADERS
 # include <stdlib.h>
 # include <string.h>
-#else
+#иначе
 char *malloc ();
 #endif
 
@@ -42,11 +42,11 @@ __strndup (const char *s, size_t n)
   size_t len = __strnlen (s, n);
   char *new = (char *) malloc (len + 1);
 
-  if (new == NULL)
-    return NULL;
+  если (new == NULL)
+    вернуть NULL;
 
   new[len] = '\0';
-  return (char *) memcpy (new, s, len);
+  вернуть (char *) memcpy (new, s, len);
 }
 #ifdef libc_hidden_def
 libc_hidden_def (__strndup)
