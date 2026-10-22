@@ -15,60 +15,60 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <byteswap.h>
-#include <stdio.h>
+#شامل <byteswap.h>
+#شامل <stdio.h>
 
-extern unsigned long long int wash (unsigned long long int a);
+خارجی غیرعلامتی طویل طویل صحیح wash (غیرعلامتی طویل طویل صحیح a);
 
-int
-do_test (void)
+صحیح
+do_test (خالی)
 {
-  int result = 0;
+  صحیح نتیجہ = 0;
 
   /* Test the functions with constant arguments.  */
-  if (bswap_16 (0x1234) != 0x3412)
+  اگر (bswap_16 (0x1234) != 0x3412)
     {
       puts ("bswap_16 (constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_32 (0x12345678) != 0x78563412)
+  اگر (bswap_32 (0x12345678) != 0x78563412)
     {
       puts ("bswap_32 (constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
+  اگر (bswap_64 (0x1234567890abcdefULL) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
 
   /* Test the functions with non-constant arguments.  */
-  if (bswap_16 (wash (0x1234)) != 0x3412)
+  اگر (bswap_16 (wash (0x1234)) != 0x3412)
     {
       puts ("bswap_16 (non-constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_32 (wash (0x12345678)) != 0x78563412)
+  اگر (bswap_32 (wash (0x12345678)) != 0x78563412)
     {
       puts ("bswap_32 (non-constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
-  if (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
+  اگر (bswap_64 (wash (0x1234567890abcdefULL)) != 0xefcdab9078563412ULL)
     {
       puts ("bswap_64 (non-constant) flunked");
-      result = 1;
+      نتیجہ = 1;
     }
 
-  return result;
+  واپس نتیجہ;
 }
 
 
-unsigned long long int
-wash (unsigned long long int a)
+غیرعلامتی طویل طویل صحیح
+wash (غیرعلامتی طویل طویل صحیح a)
 {
   /* Do nothing.  This function simply exists to avoid that the compiler
      regards the argument to the bswap_*() functions as constant.  */
-  return a + 0;
+  واپس a + 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

@@ -16,65 +16,65 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
-#include <libc-pointer-arith.h>
+#شامل <string-fzb.h>
+#شامل <string-fzc.h>
+#شامل <string-fzi.h>
+#شامل <string-shift.h>
+#شامل <string.h>
+#شامل <libc-pointer-arith.h>
 
-#undef __memrchr
-#undef memrchr
+#تعریف_منسوخ __memrchr
+#تعریف_منسوخ memrchr
 
-#ifdef MEMRCHR
+#اگر_تعریف_شدہ MEMRCHR
 # define __memrchr MEMRCHR
-#endif
+#اگر_ختم
 
-void *
-__memrchr (const void *s, int c_in, size_t n)
+خالی *
+__memrchr (ثابت خالی *s, صحیح c_اندر, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  اگر (__glibc_unlikely (n == 0))
+    واپس تہی;
 
-  const op_t *word_ptr = (const op_t *) PTR_ALIGN_UP (s + n, sizeof (op_t));
+  ثابت op_t *لفظ_ptr = (ثابت op_t *) PTR_ALIGN_اوپر (s + n, حجم (op_t));
   uintptr_t s_int = (uintptr_t) s + n;
 
-  op_t word = *--word_ptr;
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t لفظ = *--لفظ_ptr;
+  op_t repeated_c = repeat_بائٹیں (c_اندر);
 
   /* Compute the address of the word containing the initial byte. */
-  const op_t *sword = (const op_t *) PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ثابت op_t *sword = (ثابت op_t *) PTR_ALIGN_نیچے_کو (s, حجم (op_t));
 
   /* If the end of buffer is not op_t aligned, mask off the undesirable bits
      before find the last byte position.  */
-  find_t mask = shift_find_last (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ڈھونڈو_t نقاب = سرکاؤ_ڈھونڈو_آخری (ڈھونڈو_eq_all (لفظ, repeated_c), s_int);
+  اگر (نقاب != 0)
     {
-      char *ret = (char *) word_ptr + index_last (mask);
-      return ret >= (char *) s ? ret : NULL;
+      حرف *ret = (حرف *) لفظ_ptr + اشاریہ_آخری (نقاب);
+      واپس ret >= (حرف *) s ? ret : تہی;
     }
-  if (word_ptr == sword)
-    return NULL;
-  word = *--word_ptr;
+  اگر (لفظ_ptr == sword)
+    واپس تہی;
+  لفظ = *--لفظ_ptr;
 
-  while (word_ptr != sword)
+  جب (لفظ_ptr != sword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_last_eq (word, repeated_c);
-      word = *--word_ptr;
+      اگر (has_eq (لفظ, repeated_c))
+	واپس (حرف *) لفظ_ptr + اشاریہ_آخری_eq (لفظ, repeated_c);
+      لفظ = *--لفظ_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  اگر (has_eq (لفظ, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_last_eq (word, repeated_c);
-      if (ret >= (char *) s)
-	return ret;
+      حرف *ret = (حرف *) لفظ_ptr + اشاریہ_آخری_eq (لفظ, repeated_c);
+      اگر (ret >= (حرف *) s)
+	واپس ret;
     }
-  return NULL;
+  واپس تہی;
 }
-#ifndef MEMRCHR
+#اگر_غیر_تعریف_شدہ MEMRCHR
 libc_hidden_def (__memrchr)
 weak_alias (__memrchr, memrchr)
-#endif
+#اگر_ختم

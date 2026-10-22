@@ -16,17 +16,17 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#اگر_تعریف_شدہ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#اگر_ختم
 
-#include <string.h>
+#شامل <string.h>
 
-#ifndef _LIBC
+#اگر_غیر_تعریف_شدہ _LIBC
 /* Get specification.  */
 # include "strtok_r.h"
 # define __strtok_r strtok_r
-#endif
+#اگر_ختم
 
 /* Parse S into tokens separated by characters in DELIM.
    If S is NULL, the saved pointer in SAVE_PTR is used as
@@ -38,42 +38,42 @@
 	x = strtok_r(NULL, "=", &sp);	// x = NULL
 		// s = "abc\0-def\0"
 */
-char *
-__strtok_r (char *s, const char *delim, char **save_ptr)
+حرف *
+__strtok_r (حرف *s, ثابت حرف *delim, حرف **save_ptr)
 {
-  char *end;
+  حرف *انتہا;
 
-  if (s == NULL)
+  اگر (s == تہی)
     s = *save_ptr;
 
-  if (*s == '\0')
+  اگر (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      واپس تہی;
     }
 
   /* Scan leading delimiters.  */
   s += strspn (s, delim);
-  if (*s == '\0')
+  اگر (*s == '\0')
     {
       *save_ptr = s;
-      return NULL;
+      واپس تہی;
     }
 
   /* Find the end of the token.  */
-  end = s + strcspn (s, delim);
-  if (*end == '\0')
+  انتہا = s + strcspn (s, delim);
+  اگر (*انتہا == '\0')
     {
-      *save_ptr = end;
-      return s;
+      *save_ptr = انتہا;
+      واپس s;
     }
 
   /* Terminate the token and make *SAVE_PTR point past it.  */
-  *end = '\0';
-  *save_ptr = end + 1;
-  return s;
+  *انتہا = '\0';
+  *save_ptr = انتہا + 1;
+  واپس s;
 }
-#ifdef weak_alias
+#اگر_تعریف_شدہ weak_alias
 libc_hidden_def (__strtok_r)
 weak_alias (__strtok_r, strtok_r)
-#endif
+#اگر_ختم

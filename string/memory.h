@@ -19,15 +19,15 @@
  * SVID
  */
 
-#ifndef	_MEMORY_H
-#define	_MEMORY_H	1
+#اگر_غیر_تعریف_شدہ	حافظہ_H
+#تعریف_کرو	حافظہ_H	1
 
-#include <features.h>
+#شامل <features.h>
 
 
-#ifndef	_STRING_H
+#اگر_غیر_تعریف_شدہ	_STRING_H
 # include <string.h>
-#endif	/* string.h  */
+#اگر_ختم	/* string.h  */
 
 
-#endif	/* memory.h  */
+#اگر_ختم	/* memory.h  */

@@ -1,47 +1,47 @@
 /* Test for strverscmp() */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#شامل <stdlib.h>
+#شامل <stdio.h>
+#شامل <string.h>
 
-#define  MAX_STRINGS      256
-#define  MAX_LINE_SIZE    32
+#تعریف_کرو  MAX_لڑیاں      256
+#تعریف_کرو  MAX_سطر_سائز    32
 
-static int
-compare (const void *p1, const void *p2)
+ساکن صحیح
+compare (ثابت خالی *p1, ثابت خالی *p2)
 {
-  return strverscmp (*((char **) p1), *((char **) p2));
+  واپس strverscmp (*((حرف **) p1), *((حرف **) p2));
 }
 
-int
-do_test (void)
+صحیح
+do_test (خالی)
 {
-  char line[MAX_LINE_SIZE + 1];
-  char *str[MAX_STRINGS];
-  int  count = 0;
-  int  i, n;
+  حرف سطر[MAX_سطر_سائز + 1];
+  حرف *str[MAX_لڑیاں];
+  صحیح  گنتی = 0;
+  صحیح  i, n;
 
-  while (count < MAX_STRINGS && fgets (line, MAX_LINE_SIZE, stdin) != NULL)
+  جب (گنتی < MAX_لڑیاں && fgets (سطر, MAX_سطر_سائز, stdin) != تہی)
     {
-      n = strlen (line) - 1;
+      n = لڑی_لمبائی (سطر) - 1;
 
-      if (line[n] == '\n')
-        line[n] = '\0';
+      اگر (سطر[n] == '\n')
+        سطر[n] = '\0';
 
-      str[count] = strdup (line);
+      str[گنتی] = strdup (سطر);
 
-      if (str[count] == NULL)
-        exit (EXIT_FAILURE);
+      اگر (str[گنتی] == تہی)
+        باہر_نکلو (EXIT_FAILURE);
 
-      ++count;
+      ++گنتی;
     }
 
-  qsort (str, count, sizeof (char *), compare);
+  qsort (str, گنتی, حجم (حرف *), compare);
 
-  for (i = 0; i < count; ++i)
+  برائے (i = 0; i < گنتی; ++i)
     puts (str[i]);
 
-  return EXIT_SUCCESS;
+  واپس EXIT_SUCCESS;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

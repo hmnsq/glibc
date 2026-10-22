@@ -16,257 +16,257 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#تعریف_کرو TEST_MAIN
+#اگر_غیر_تعریف_شدہ WIDE
 # ifdef USE_FOR_STRCHRNUL
 #  define TEST_NAME "strchrnul"
-# else
+# ورنہ
 #  define TEST_NAME "strchr"
 # endif /* !USE_FOR_STRCHRNUL */
-#else
+#ورنہ
 # ifdef USE_FOR_STRCHRNUL
 #  define TEST_NAME "wcschrnul"
-# else
+# ورنہ
 #  define TEST_NAME "wcschr"
 # endif /* !USE_FOR_STRCHRNUL */
-#endif /* WIDE */
-#include "test-string.h"
+#اگر_ختم /* WIDE */
+#شامل "test-string.h"
 
-#ifndef WIDE
+#اگر_غیر_تعریف_شدہ WIDE
 # ifdef USE_FOR_STRCHRNUL
 #  define STRCHR strchrnul
-# else
+# ورنہ
 #  define STRCHR strchr
 # endif /* !USE_FOR_STRCHRNUL */
-# define STRLEN strlen
-# define CHAR char
+# define STRLEN لڑی_لمبائی
+# define CHAR حرف
 # define BIG_CHAR CHAR_MAX
-# define MIDDLE_CHAR 127
+# define درمیان_CHAR 127
 # define SMALL_CHAR 23
-# define UCHAR unsigned char
+# define UCHAR غیرعلامتی حرف
 # define L(s) s
-#else
+#ورنہ
 # include <wchar.h>
 # ifdef USE_FOR_STRCHRNUL
 #  define STRCHR wcschrnul
-# else
+# ورنہ
 #  define STRCHR wcschr
 # endif /* !USE_FOR_STRCHRNUL */
 # define STRLEN wcslen
 # define CHAR wchar_t
 # define BIG_CHAR WCHAR_MAX
-# define MIDDLE_CHAR 1121
+# define درمیان_CHAR 1121
 # define SMALL_CHAR 851
 # define UCHAR wchar_t
 # define L(s) L ## s
-#endif /* WIDE */
+#اگر_ختم /* WIDE */
 
-#ifdef USE_FOR_STRCHRNUL
+#اگر_تعریف_شدہ USE_FOR_STRCHRNUL
 # define NULLRET(endptr) endptr
-#else
-# define NULLRET(endptr) NULL
-#endif /* !USE_FOR_STRCHRNUL */
+#ورنہ
+# define NULLRET(endptr) تہی
+#اگر_ختم /* !USE_FOR_STRCHRNUL */
 
 
-typedef CHAR *(*proto_t) (const CHAR *, int);
+قسمتعریف CHAR *(*proto_t) (ثابت CHAR *, صحیح);
 
 IMPL (STRCHR, 1)
 
 /* Also check the generic implementation.  */
-#undef STRCHR
-#undef static_weak_alias
-#define static_weak_alias(a, b)
-#undef libc_hidden_builtin_def
-#define libc_hidden_builtin_def(a)
-#undef libc_hidden_def
-#define libc_hidden_def(a)
-#undef libc_hidden_weak
-#define libc_hidden_weak(a)
-#ifndef WIDE
+#تعریف_منسوخ STRCHR
+#تعریف_منسوخ static_weak_alias
+#تعریف_کرو static_weak_alias(a, b)
+#تعریف_منسوخ libc_hidden_builtin_def
+#تعریف_کرو libc_hidden_builtin_def(a)
+#تعریف_منسوخ libc_hidden_def
+#تعریف_کرو libc_hidden_def(a)
+#تعریف_منسوخ libc_hidden_weak
+#تعریف_کرو libc_hidden_weak(a)
+#اگر_غیر_تعریف_شدہ WIDE
 # define STRCHRNUL __strchrnul_default
 # include "string/strchrnul.c"
 # ifndef USE_FOR_STRCHRNUL
 #  define STRCHR __strchr_default
 #  include "string/strchr.c"
 #  define STRCHR_DEFAULT STRCHR
-# else
+# ورنہ
 #  define STRCHR_DEFAULT STRCHRNUL
 # endif
-#else
+#ورنہ
 # ifndef USE_FOR_STRCHRNUL
 #  define WCSCHR __wcschr_default
 #  include "wcsmbs/wcschr.c"
 #  define STRCHR_DEFAULT WCSCHR
-# else
+# ورنہ
 #  define WCSCHRNUL __wcschrnul_default
 #  include "wcsmbs/wcschrnul.c"
 #  define STRCHR_DEFAULT WCSCHRNUL
 # endif
-#endif
+#اگر_ختم
 IMPL (STRCHR_DEFAULT, 1)
 
-static int
-check_result (impl_t *impl, const CHAR *s, int c, const CHAR *exp_res)
+ساکن صحیح
+check_نتیجہ (impl_t *impl, ثابت CHAR *s, صحیح c, ثابت CHAR *exp_res)
 {
   CHAR *res = CALL (impl, s, c);
-  if (res != exp_res)
+  اگر (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s(%p) %#x %p %p", impl->name, s,
 	     c, res, exp_res);
       ret = 1;
-      return -1;
+      واپس -1;
     }
-  return 0;
+  واپس 0;
 }
 
-static int
-do_one_test (impl_t *impl, const CHAR *s, int c, const CHAR *exp_res)
+ساکن صحیح
+do_one_test (impl_t *impl, ثابت CHAR *s, صحیح c, ثابت CHAR *exp_res)
 {
-  return check_result (impl, s, c, exp_res);
+  واپس check_نتیجہ (impl, s, c, exp_res);
 }
 
-static void
-do_test (size_t align, size_t pos, size_t len, int seek_char, int max_char)
+ساکن خالی
+do_test (size_t align, size_t pos, size_t len, صحیح seek_char, صحیح max_char)
 /* For wcschr: align here means align not in bytes,
    but in wchar_ts, in bytes it will equal to align * (sizeof (wchar_t))
    len for wcschr here isn't in bytes but it's number of wchar_t symbols.  */
 {
   size_t i;
-  CHAR *result;
+  CHAR *نتیجہ;
   CHAR *buf = (CHAR *) buf1;
   align &= 127;
-  if ((align + len) * sizeof (CHAR) >= page_size)
-    return;
+  اگر ((align + len) * حجم (CHAR) >= صفحہ_سائز)
+    واپس;
 
-  for (i = 0; i < len; ++i)
+  برائے (i = 0; i < len; ++i)
     {
       buf[align + i] = 32 + 23 * i % max_char;
-      if (buf[align + i] == seek_char)
+      اگر (buf[align + i] == seek_char)
 	buf[align + i] = seek_char + 1;
-      else if (buf[align + i] == 0)
+      ورنہ اگر (buf[align + i] == 0)
 	buf[align + i] = 1;
     }
   buf[align + len] = 0;
 
-  if (pos < len)
+  اگر (pos < len)
     {
       buf[align + pos] = seek_char;
-      result = buf + align + pos;
+      نتیجہ = buf + align + pos;
     }
-  else if (seek_char == 0)
-    result = buf + align + len;
-  else
-    result = NULLRET (buf + align + len);
+  ورنہ اگر (seek_char == 0)
+    نتیجہ = buf + align + len;
+  ورنہ
+    نتیجہ = NULLRET (buf + align + len);
 
   FOR_EACH_IMPL (impl, 0)
     {
-      if (do_one_test (impl, buf + align, seek_char, result) != 0)
+      اگر (do_one_test (impl, buf + align, seek_char, نتیجہ) != 0)
 	{
 	  error (0, 0,
 		 "\tAlign=%zu, Pos=%zu, Len=%zu, seek=%d, max_char=%d, "
 		 "Buf=%p, Res=%p",
-		 align, pos, len, seek_char, max_char, buf, result);
+		 align, pos, len, seek_char, max_char, buf, نتیجہ);
 	}
     }
 }
 
-static void
-do_random_tests (void)
+ساکن خالی
+do_random_tests (خالی)
 {
   size_t i, j, n, align, pos, len;
-  int seek_char;
-  CHAR *result;
-  UCHAR *p = (UCHAR *) (buf1 + page_size - 512 * sizeof (CHAR));
+  صحیح seek_char;
+  CHAR *نتیجہ;
+  UCHAR *p = (UCHAR *) (buf1 + صفحہ_سائز - 512 * حجم (CHAR));
 
-  for (n = 0; n < ITERATIONS; n++)
+  برائے (n = 0; n < ITERATIONS; n++)
     {
       /* For wcschr: align here means align not in bytes, but in wchar_ts,
 	 in bytes it will equal to align * (sizeof (wchar_t)).  */
       align = random () & 15;
       pos = random () & 511;
       seek_char = random () & 255;
-      if (pos + align >= 511)
+      اگر (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       /* len for wcschr here isn't in bytes but it's number of wchar_t
 	 symbols.  */
       len = random () & 511;
-      if ((pos == len && seek_char)
+      اگر ((pos == len && seek_char)
 	  || (pos > len && (random () & 1)))
 	len = pos + 1 + (random () & 7);
-      if (len + align >= 512)
+      اگر (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      if (pos == len && seek_char)
+      اگر (pos == len && seek_char)
 	len = pos + 1;
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      اگر (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      برائے (i = 0; i < j; i++)
 	{
-	  if (i == pos + align)
+	  اگر (i == pos + align)
 	    p[i] = seek_char;
-	  else if (i == len + align)
+	  ورنہ اگر (i == len + align)
 	    p[i] = 0;
-	  else
+	  ورنہ
 	    {
 	      p[i] = random () & 255;
-	      if (i < pos + align && p[i] == seek_char)
+	      اگر (i < pos + align && p[i] == seek_char)
 		p[i] = seek_char + 13;
-	      if (i < len + align && !p[i])
+	      اگر (i < len + align && !p[i])
 		{
 		  p[i] = seek_char - 13;
-		  if (!p[i])
+		  اگر (!p[i])
 		    p[i] = 140;
 		}
 	    }
 	}
 
-      if (pos <= len)
-	result = (CHAR *) (p + pos + align);
-      else if (seek_char == 0)
-	result = (CHAR *) (p + len + align);
-      else
-	result = NULLRET ((CHAR *) (p + len + align));
+      اگر (pos <= len)
+	نتیجہ = (CHAR *) (p + pos + align);
+      ورنہ اگر (seek_char == 0)
+	نتیجہ = (CHAR *) (p + len + align);
+      ورنہ
+	نتیجہ = NULLRET ((CHAR *) (p + len + align));
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align), seek_char) != result)
+	اگر (CALL (impl, (CHAR *) (p + align), seek_char) != نتیجہ)
 	  {
-	    error (0, 0, "Iteration %zd - wrong result in function \
-		   %s (align in bytes: %zd, seek_char: %d, len: %zd, pos: %zd) %p != %p, p %p",
-		   n, impl->name, align * sizeof (CHAR), seek_char, len, pos,
-		   CALL (impl, (CHAR *) (p + align), seek_char), result, p);
+	    error (0, 0, "Iteration %zd - wrong نتیجہ اندر function \
+		   %s (align اندر بائٹیں: %zd, seek_char: %d, len: %zd, pos: %zd) %p != %p, p %p",
+		   n, impl->name, align * حجم (CHAR), seek_char, len, pos,
+		   CALL (impl, (CHAR *) (p + align), seek_char), نتیجہ, p);
 	    ret = 1;
 	  }
     }
 }
 
-static void
-check1 (void)
+ساکن خالی
+check1 (خالی)
 {
   CHAR s[] __attribute__((aligned(16))) = L ("\xff");
   CHAR c = L ('\xfe');
-#ifndef USE_FOR_STRCHRNUL
-  CHAR *exp_result = NULL;
-#else
-  CHAR *exp_result = s + STRLEN (s);
-#endif
+#اگر_غیر_تعریف_شدہ USE_FOR_STRCHRNUL
+  CHAR *exp_نتیجہ = تہی;
+#ورنہ
+  CHAR *exp_نتیجہ = s + STRLEN (s);
+#اگر_ختم
 
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s, c, exp_result);
+    check_نتیجہ (impl, s, c, exp_نتیجہ);
 }
 
-static void
-check2 (void)
+ساکن خالی
+check2 (خالی)
 {
-  CHAR *s = (CHAR *) (buf1 + getpagesize () - 4 * sizeof (CHAR));
+  CHAR *s = (CHAR *) (buf1 + getpagesize () - 4 * حجم (CHAR));
   CHAR *s_begin = (CHAR *) (buf1 + getpagesize () - 64);
-#ifndef USE_FOR_STRCHRNUL
-  CHAR *exp_result = NULL;
-#else
-  CHAR *exp_result = s + 1;
-#endif
+#اگر_غیر_تعریف_شدہ USE_FOR_STRCHRNUL
+  CHAR *exp_نتیجہ = تہی;
+#ورنہ
+  CHAR *exp_نتیجہ = s + 1;
+#اگر_ختم
   CHAR val = 0x12;
-  for (; s_begin != s; ++s_begin)
+  برائے (; s_begin != s; ++s_begin)
     *s_begin = val;
 
   s[0] = val + 1;
@@ -276,24 +276,24 @@ check2 (void)
 
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_نتیجہ (impl, s, val, exp_نتیجہ);
   }
   s[3] = val;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_نتیجہ (impl, s, val, exp_نتیجہ);
   }
-  exp_result = s;
+  exp_نتیجہ = s;
   s[0] = val;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_نتیجہ (impl, s, val, exp_نتیجہ);
   }
 
   s[3] = val + 1;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_نتیجہ (impl, s, val, exp_نتیجہ);
   }
 
   s[0] = val + 1;
@@ -301,25 +301,25 @@ check2 (void)
   s[2] = val + 1;
   s[3] = val + 1;
   s[4] = val;
-  exp_result = s + 4;
+  exp_نتیجہ = s + 4;
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_نتیجہ (impl, s, val, exp_نتیجہ);
   }
   s[4] = 0;
-#ifndef USE_FOR_STRCHRNUL
-  exp_result = NULL;
-#else
-  exp_result = s + 4;
-#endif
+#اگر_غیر_تعریف_شدہ USE_FOR_STRCHRNUL
+  exp_نتیجہ = تہی;
+#ورنہ
+  exp_نتیجہ = s + 4;
+#اگر_ختم
   {
     FOR_EACH_IMPL (impl, 0)
-      check_result (impl, s, val, exp_result);
+      check_نتیجہ (impl, s, val, exp_نتیجہ);
   }
 }
 
-int
-test_main (void)
+صحیح
+test_main (خالی)
 {
   size_t i;
 
@@ -327,73 +327,73 @@ test_main (void)
 
   check1 ();
   check2 ();
-  printf ("%20s", "");
+  لکھو ("%20s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
-      do_test (i, 16 << i, 2048, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, 16 << i, 2048, SMALL_CHAR, درمیان_CHAR);
+      do_test (i, 16 << i, 2048, SMALL_CHAR, درمیان_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
-      do_test (i, 16 << i, 4096, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, 16 << i, 4096, SMALL_CHAR, درمیان_CHAR);
+      do_test (i, 16 << i, 4096, SMALL_CHAR, درمیان_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
-      do_test (i, 64, 256, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (i, 64, 256, SMALL_CHAR, درمیان_CHAR);
       do_test (i, 64, 256, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 0; i < 8; ++i)
+  برائے (i = 0; i < 8; ++i)
     {
-      do_test (16 * i, 256, 512, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (16 * i, 256, 512, SMALL_CHAR, درمیان_CHAR);
       do_test (16 * i, 256, 512, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  برائے (i = 0; i < 32; ++i)
     {
-      do_test (0, i, i + 1, SMALL_CHAR, MIDDLE_CHAR);
+      do_test (0, i, i + 1, SMALL_CHAR, درمیان_CHAR);
       do_test (0, i, i + 1, SMALL_CHAR, BIG_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 2048, 0, MIDDLE_CHAR);
-      do_test (i, 16 << i, 2048, 0, MIDDLE_CHAR);
+      do_test (0, 16 << i, 2048, 0, درمیان_CHAR);
+      do_test (i, 16 << i, 2048, 0, درمیان_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
-      do_test (0, 16 << i, 4096, 0, MIDDLE_CHAR);
-      do_test (i, 16 << i, 4096, 0, MIDDLE_CHAR);
+      do_test (0, 16 << i, 4096, 0, درمیان_CHAR);
+      do_test (i, 16 << i, 4096, 0, درمیان_CHAR);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
-      do_test (i, 64, 256, 0, MIDDLE_CHAR);
+      do_test (i, 64, 256, 0, درمیان_CHAR);
       do_test (i, 64, 256, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 8; ++i)
+  برائے (i = 0; i < 8; ++i)
     {
-      do_test (16 * i, 256, 512, 0, MIDDLE_CHAR);
+      do_test (16 * i, 256, 512, 0, درمیان_CHAR);
       do_test (16 * i, 256, 512, 0, BIG_CHAR);
     }
 
-  for (i = 0; i < 32; ++i)
+  برائے (i = 0; i < 32; ++i)
     {
-      do_test (0, i, i + 1, 0, MIDDLE_CHAR);
+      do_test (0, i, i + 1, 0, درمیان_CHAR);
       do_test (0, i, i + 1, 0, BIG_CHAR);
     }
 
   do_random_tests ();
-  return ret;
+  واپس ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

@@ -15,20 +15,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <limits.h>
-#define ffsl __something_else
-#include <string.h>
-#undef	ffs
-#include <math-use-builtins.h>
+#شامل <limits.h>
+#تعریف_کرو ffsl __something_else
+#شامل <string.h>
+#تعریف_منسوخ	ffs
+#شامل <math-use-builtins.h>
 
 /* Find the first bit set in I.  */
-int
-__ffs (int i)
+صحیح
+__ffs (صحیح i)
 {
-#if USE_FFS_BUILTIN
-  return __builtin_ffs (i);
-#else
-  static const unsigned char table[] =
+#اگر USE_FFS_BUILTIN
+  واپس __builtin_ffs (i);
+#ورنہ
+  ساکن ثابت غیرعلامتی حرف جدول[] =
     {
       0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
       6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -39,19 +39,19 @@ __ffs (int i)
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
       8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
     };
-  unsigned int a;
-  unsigned int x = i & -i;
+  غیرعلامتی صحیح a;
+  غیرعلامتی صحیح x = i & -i;
 
   a = x <= 0xffff ? (x <= 0xff ? 0 : 8) : (x <= 0xffffff ?  16 : 24);
 
-  return table[x >> a] + a;
-#endif
+  واپس جدول[x >> a] + a;
+#اگر_ختم
 }
 static_weak_alias (__ffs, ffs)
 libc_hidden_def (__ffs)
 libc_hidden_builtin_def (ffs)
 
-#if ULONG_MAX == UINT_MAX
-#undef ffsl
+#اگر ULONG_MAX == UINT_MAX
+#تعریف_منسوخ ffsl
 weak_alias (__ffs, ffsl)
-#endif
+#اگر_ختم

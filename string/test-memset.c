@@ -16,39 +16,39 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifdef TEST_BZERO
+#تعریف_کرو TEST_MAIN
+#اگر_تعریف_شدہ TEST_BZERO
 # ifdef TEST_EXPLICIT_BZERO
 #  define TEST_NAME "explicit_bzero"
-# else
+# ورنہ
 #  define TEST_NAME "bzero"
 # endif
-#else
+#ورنہ
 # ifndef WIDE
 #  ifdef TEST_MEMSET_EXPLICIT
 #   define TEST_NAME "memset_explicit"
-#  else
+#  ورنہ
 #   define TEST_NAME "memset"
 #  endif
-# else
+# ورنہ
 #  define TEST_NAME "wmemset"
 # endif /* WIDE */
-#endif /* !TEST_BZERO */
-#define MIN_PAGE_SIZE 131072
-#include "test-string.h"
+#اگر_ختم /* !TEST_BZERO */
+#تعریف_کرو MIN_صفحہ_سائز 131072
+#شامل "test-string.h"
 
-#ifndef WIDE
+#اگر_غیر_تعریف_شدہ WIDE
 # ifdef TEST_MEMSET_EXPLICIT
 #  define MEMSET memset_explicit
-# else
+# ورنہ
 #  define MEMSET memset
 # endif
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR حرف
+# define UCHAR غیرعلامتی حرف
 # define SIMPLE_MEMSET simple_memset
 # define MEMCMP memcmp
 # define BIG_CHAR CHAR_MAX
-#else
+#ورنہ
 # include <wchar.h>
 # define MEMSET wmemset
 # define CHAR wchar_t
@@ -56,190 +56,190 @@
 # define SIMPLE_MEMSET simple_wmemset
 # define MEMCMP wmemcmp
 # define BIG_CHAR WCHAR_MAX
-#endif /* WIDE */
+#اگر_ختم /* WIDE */
 
-#ifdef TEST_BZERO
-typedef void (*proto_t) (char *, size_t);
+#اگر_تعریف_شدہ TEST_BZERO
+قسمتعریف خالی (*proto_t) (حرف *, size_t);
 # ifdef TEST_EXPLICIT_BZERO
 IMPL (explicit_bzero, 1)
-# else
+# ورنہ
 IMPL (bzero, 1)
 # endif
-#else
-typedef CHAR *(*proto_t) (CHAR *, int, size_t);
+#ورنہ
+قسمتعریف CHAR *(*proto_t) (CHAR *, صحیح, size_t);
 IMPL (MEMSET, 1)
-#endif /* !TEST_BZERO */
+#اگر_ختم /* !TEST_BZERO */
 
 /* Naive implementation to verify results.  */
 CHAR *
-test_cc_inhibit_loop_to_libcall
-SIMPLE_MEMSET (CHAR *s, int c, size_t n)
+test_cc_inhibit_loop_مقصد_libcall
+SIMPLE_MEMSET (CHAR *s, صحیح c, size_t n)
 {
-  CHAR *r = s, *end = s + n;
-  while (r < end)
+  CHAR *r = s, *انتہا = s + n;
+  جب (r < انتہا)
     *r++ = c;
-  return s;
+  واپس s;
 }
 
-static void
-do_one_test (impl_t *impl, CHAR *s, int c __attribute ((unused)), size_t n, int space_below, int space_above)
+ساکن خالی
+do_one_test (impl_t *impl, CHAR *s, صحیح c __attribute ((غیر_مستعمل)), size_t n, صحیح space_نیچے, صحیح space_above)
 {
   CHAR buf[n];
   CHAR sentinel = ~c;
-  if (space_below)
+  اگر (space_نیچے)
       s[-1] = sentinel;
-  if (space_above)
+  اگر (space_above)
       s[n] = sentinel;
   SIMPLE_MEMSET(s, ~c, n);
-#ifdef TEST_BZERO
+#اگر_تعریف_شدہ TEST_BZERO
   SIMPLE_MEMSET (buf, 0, n);
   CALL (impl, s, n);
-  if (memcmp (s, buf, n) != 0
-      || (space_below && s[-1] != sentinel)
+  اگر (memcmp (s, buf, n) != 0
+      || (space_نیچے && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#else
+#ورنہ
   CHAR *res = CALL (impl, s, c, n);
-  if (res != s
+  اگر (res != s
       || SIMPLE_MEMSET (buf, c, n) != buf
       || MEMCMP (s, buf, n) != 0
-      || (space_below && s[-1] != sentinel)
+      || (space_نیچے && s[-1] != sentinel)
       || (space_above && s[n] != sentinel))
-#endif /* !TEST_BZERO */
+#اگر_ختم /* !TEST_BZERO */
     {
       error (0, 0, "Wrong result in function %s", impl->name);
       ret = 1;
-      return;
+      واپس;
     }
 }
 
-static void
-do_test (size_t align, int c, size_t len)
+ساکن خالی
+do_test (size_t align, صحیح c, size_t len)
 {
-  int space_below, space_above;
+  صحیح space_نیچے, space_above;
   align &= 4095;
-  if ((align + len) * sizeof (CHAR) > page_size)
-    return;
+  اگر ((align + len) * حجم (CHAR) > صفحہ_سائز)
+    واپس;
 
-  space_below = !!align;
-  space_above = !((align + len + 1) * sizeof (CHAR) > page_size);
+  space_نیچے = !!align;
+  space_above = !((align + len + 1) * حجم (CHAR) > صفحہ_سائز);
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_below, space_above);
+    do_one_test (impl, (CHAR *) (buf1) + align, c, len, space_نیچے, space_above);
 }
 
-#ifndef TEST_BZERO
-static void
-do_random_tests (void)
+#اگر_غیر_تعریف_شدہ TEST_BZERO
+ساکن خالی
+do_random_tests (خالی)
 {
-  size_t i, j, k, n, align, len, size;
-  int c, o;
+  size_t i, j, k, n, align, len, سائز;
+  صحیح c, o;
   UCHAR *p, *res;
   UCHAR *p2 = (UCHAR *) buf2;
 
-  for (i = 0; i < 65536 / sizeof (CHAR); ++i)
+  برائے (i = 0; i < 65536 / حجم (CHAR); ++i)
     p2[i] = random () & BIG_CHAR;
 
-  for (n = 0; n < ITERATIONS; n++)
+  برائے (n = 0; n < ITERATIONS; n++)
     {
-      if ((random () & 31) == 0)
-	size = 65536 / sizeof (CHAR);
-      else
-	size = 512;
-      p = (UCHAR *) (buf1 + page_size) - size;
-      len = random () & (size - 1);
-      align = size - len - (random () & 31);
-      if (align > size)
-	align = size - len;
-      if ((random () & 7) == 0)
+      اگر ((random () & 31) == 0)
+	سائز = 65536 / حجم (CHAR);
+      ورنہ
+	سائز = 512;
+      p = (UCHAR *) (buf1 + صفحہ_سائز) - سائز;
+      len = random () & (سائز - 1);
+      align = سائز - len - (random () & 31);
+      اگر (align > سائز)
+	align = سائز - len;
+      اگر ((random () & 7) == 0)
 	align &= ~63;
-      if ((random () & 7) == 0)
+      اگر ((random () & 7) == 0)
 	c = 0;
-      else
+      ورنہ
 	c = random () & BIG_CHAR;
       o = random () & BIG_CHAR;
-      if (o == c)
+      اگر (o == c)
 	o = (c + 1) & BIG_CHAR;
       j = len + align + 128;
-      if (j > size)
-	j = size;
-      if (align >= 128)
+      اگر (j > سائز)
+	j = سائز;
+      اگر (align >= 128)
 	k = align - 128;
-      else
+      ورنہ
 	k = 0;
-      for (i = k; i < align; ++i)
+      برائے (i = k; i < align; ++i)
 	p[i] = o;
-      for (i = align + len; i < j; ++i)
+      برائے (i = align + len; i < j; ++i)
 	p[i] = o;
 
       FOR_EACH_IMPL (impl, 1)
 	{
-	  for (i = 0; i < len; ++i)
+	  برائے (i = 0; i < len; ++i)
 	    {
 	      p[i + align] = p2[i];
-	      if (p[i + align] == c)
+	      اگر (p[i + align] == c)
 		p[i + align] = o;
 	    }
 	  res = (UCHAR *) CALL (impl, (CHAR *) p + align, c, len);
-	  if (res != p + align)
+	  اگر (res != p + align)
 	    {
 	      error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %d, %zd) %p != %p",
 		     n, impl->name, align, c, len, res, p + align);
 	      ret = 1;
 	    }
-	  for (i = k; i < align; ++i)
-	    if (p[i] != o)
+	  برائے (i = k; i < align; ++i)
+	    اگر (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage before %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		توڑو;
 	      }
-	  for (; i < align + len; ++i)
-	    if (p[i] != c)
+	  برائے (; i < align + len; ++i)
+	    اگر (p[i] != c)
 	      {
 		error (0, 0, "Iteration %zd - not cleared correctly %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		توڑو;
 	      }
-	  for (; i < j; ++i)
-	    if (p[i] != o)
+	  برائے (; i < j; ++i)
+	    اگر (p[i] != o)
 	      {
 		error (0, 0, "Iteration %zd - garbage after %s (%zd, %d, %zd)",
 		       n, impl->name, align, c, len);
 		ret = 1;
-		break;
+		توڑو;
 	      }
 	}
     }
 }
-#endif /* !TEST_BZERO */
+#اگر_ختم /* !TEST_BZERO */
 
-int
-test_main (void)
+صحیح
+test_main (خالی)
 {
   size_t i;
-  int c = 0;
+  صحیح c = 0;
 
   test_init ();
 
-  printf ("%24s", "");
+  لکھو ("%24s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-#ifndef TEST_BZERO
-  for (c = -65; c <= 130; c += 65)
-#endif
+#اگر_غیر_تعریف_شدہ TEST_BZERO
+  برائے (c = -65; c <= 130; c += 65)
+#اگر_ختم
     {
-      for (i = 0; i < 18; ++i)
+      برائے (i = 0; i < 18; ++i)
 	do_test (0, c, 1 << i);
-      for (i = 1; i < 64; ++i)
+      برائے (i = 1; i < 64; ++i)
 	{
 	  do_test (i, c, i);
 	  do_test (4096 - i, c, i);
 	  do_test (4095, c, i);
-	  if (i & (i - 1))
+	  اگر (i & (i - 1))
 	    do_test (0, c, i);
 	}
       do_test (1, c, 14);
@@ -248,11 +248,11 @@ test_main (void)
       do_test (2, c, 25);
     }
 
-#ifndef TEST_BZERO
+#اگر_غیر_تعریف_شدہ TEST_BZERO
   do_random_tests ();
-#endif
+#اگر_ختم
 
-  return ret;
+  واپس ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

@@ -16,137 +16,137 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#define TEST_NAME "strcasestr"
-#include "test-string.h"
+#تعریف_کرو TEST_MAIN
+#تعریف_کرو TEST_NAME "strcasestr"
+#شامل "test-string.h"
 
 
-#define STRCASESTR c_strcasestr
-#define NO_ALIAS
-#define __strncasecmp strncasecmp
-#define __strnlen strnlen
-#include "strcasestr.c"
+#تعریف_کرو STRCASESTR c_strcasestr
+#تعریف_کرو NO_ALIAS
+#تعریف_کرو __strncasecmp strncasecmp
+#تعریف_کرو __strnlen strnlen
+#شامل "strcasestr.c"
 
 /* Naive implementation to verify results.  */
-static char *
-simple_strcasestr (const char *s1, const char *s2)
+ساکن حرف *
+simple_strcasestr (ثابت حرف *s1, ثابت حرف *s2)
 {
-  ssize_t s1len = strlen (s1);
-  ssize_t s2len = strlen (s2);
+  ssize_t s1len = لڑی_لمبائی (s1);
+  ssize_t s2len = لڑی_لمبائی (s2);
 
-  if (s2len > s1len)
-    return NULL;
+  اگر (s2len > s1len)
+    واپس تہی;
 
-  for (ssize_t i = 0; i <= s1len - s2len; ++i)
+  برائے (ssize_t i = 0; i <= s1len - s2len; ++i)
     {
       size_t j;
-      for (j = 0; j < s2len; ++j)
-	if (tolower (s1[i + j]) != tolower (s2[j]))
-	  break;
-      if (j == s2len)
-	return (char *) s1 + i;
+      برائے (j = 0; j < s2len; ++j)
+	اگر (tolower (s1[i + j]) != tolower (s2[j]))
+	  توڑو;
+      اگر (j == s2len)
+	واپس (حرف *) s1 + i;
     }
 
-  return NULL;
+  واپس تہی;
 }
 
 
-typedef char *(*proto_t) (const char *, const char *);
+قسمتعریف حرف *(*proto_t) (ثابت حرف *, ثابت حرف *);
 
 IMPL (c_strcasestr, 0)
 IMPL (strcasestr, 1)
 
 
-static int
-check_result (impl_t *impl, const char *s1, const char *s2,
-	      char *exp_result)
+ساکن صحیح
+check_نتیجہ (impl_t *impl, ثابت حرف *s1, ثابت حرف *s2,
+	      حرف *exp_نتیجہ)
 {
-  char *result = CALL (impl, s1, s2);
-  if (result != exp_result)
+  حرف *نتیجہ = CALL (impl, s1, s2);
+  اگر (نتیجہ != exp_نتیجہ)
     {
       error (0, 0, "Wrong result in function %s %s %s", impl->name,
-	     (result == NULL) ? "(null)" : result,
-	     (exp_result == NULL) ? "(null)" : exp_result);
+	     (نتیجہ == تہی) ? "(null)" : نتیجہ,
+	     (exp_نتیجہ == تہی) ? "(null)" : exp_نتیجہ);
       ret = 1;
-      return -1;
+      واپس -1;
     }
-  return 0;
+  واپس 0;
 }
 
-static void
-do_one_test (impl_t *impl, const char *s1, const char *s2, char *exp_result)
+ساکن خالی
+do_one_test (impl_t *impl, ثابت حرف *s1, ثابت حرف *s2, حرف *exp_نتیجہ)
 {
-  if (check_result (impl, s1, s2, exp_result) < 0)
-    return;
+  اگر (check_نتیجہ (impl, s1, s2, exp_نتیجہ) < 0)
+    واپس;
 }
 
 
-static void
+ساکن خالی
 do_test (size_t align1, size_t align2, size_t len1, size_t len2,
-	 int fail)
+	 صحیح fail)
 {
-  char *s1 = (char *) (buf1 + align1);
-  char *s2 = (char *) (buf2 + align2);
+  حرف *s1 = (حرف *) (buf1 + align1);
+  حرف *s2 = (حرف *) (buf2 + align2);
 
-  static const char d[] = "1234567890abcxyz";
-#define dl (sizeof (d) - 1)
-  char *ss2 = s2;
-  for (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
+  ساکن ثابت حرف d[] = "1234567890abcxyz";
+#تعریف_کرو dl (حجم (d) - 1)
+  حرف *ss2 = s2;
+  برائے (size_t l = len2; l > 0; l = l > dl ? l - dl : 0)
     {
       size_t t = l > dl ? dl : l;
       ss2 = mempcpy (ss2, d, t);
     }
   s2[len2] = '\0';
 
-  if (fail)
+  اگر (fail)
     {
-      char *ss1 = s1;
-      for (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
+      حرف *ss1 = s1;
+      برائے (size_t l = len1; l > 0; l = l > dl ? l - dl : 0)
 	{
 	  size_t t = l > dl ? dl : l;
-	  memcpy (ss1, d, t);
+	  حافظہ_نقل (ss1, d, t);
 	  ++ss1[len2 > 7 ? 7 : len2 - 1];
 	  ss1 += t;
 	}
     }
-  else
+  ورنہ
     {
       memset (s1, '0', len1);
-      for (size_t i = 0; i < len2; ++i)
-	s1[len1 - len2 + i] = toupper (s2[i]);
+      برائے (size_t i = 0; i < len2; ++i)
+	s1[len1 - len2 + i] = بڑا_حرف (s2[i]);
     }
   s1[len1] = '\0';
 
   FOR_EACH_IMPL (impl, 0)
-    do_one_test (impl, s1, s2, fail ? NULL : s1 + len1 - len2);
+    do_one_test (impl, s1, s2, fail ? تہی : s1 + len1 - len2);
 }
 
-static void
-check1 (void)
+ساکن خالی
+check1 (خالی)
 {
-  const char s1[] = "AOKB";
-  const char s2[] = "OK";
-  char *exp_result;
+  ثابت حرف s1[] = "AOKB";
+  ثابت حرف s2[] = "OK";
+  حرف *exp_نتیجہ;
 
-  exp_result = simple_strcasestr (s1, s2);
+  exp_نتیجہ = simple_strcasestr (s1, s2);
   FOR_EACH_IMPL (impl, 0)
-    check_result (impl, s1, s2, exp_result);
+    check_نتیجہ (impl, s1, s2, exp_نتیجہ);
 }
 
-static int
-test_main (void)
+ساکن صحیح
+test_main (خالی)
 {
   test_init ();
 
   check1 ();
 
-  printf ("%23s", "");
+  لکھو ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-  for (size_t klen = 2; klen < 32; ++klen)
-    for (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
+  برائے (size_t klen = 2; klen < 32; ++klen)
+    برائے (size_t hlen = 2 * klen; hlen < 16 * klen; hlen += klen)
       {
 	do_test (0, 0, hlen, klen, 0);
 	do_test (0, 0, hlen, klen, 1);
@@ -185,10 +185,10 @@ test_main (void)
 	do_test (15, 15, hlen, klen, 1);
       }
 
-  do_test (0, 0, page_size - 1, 16, 0);
-  do_test (0, 0, page_size - 1, 16, 1);
+  do_test (0, 0, صفحہ_سائز - 1, 16, 0);
+  do_test (0, 0, صفحہ_سائز - 1, 16, 1);
 
-  return ret;
+  واپس ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

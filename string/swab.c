@@ -15,19 +15,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <unistd.h>
+#شامل <unistd.h>
 
-void
-swab (const void *bfrom, void *bto, ssize_t n)
+خالی
+swab (ثابت خالی *bfrom, خالی *bto, ssize_t n)
 {
-  const char *from = (const char *) bfrom;
-  char *to = (char *) bto;
+  ثابت حرف *from = (ثابت حرف *) bfrom;
+  حرف *مقصد = (حرف *) bto;
 
   n &= ~((ssize_t) 1);
-  while (n > 1)
+  جب (n > 1)
     {
-      const char b0 = from[--n], b1 = from[--n];
-      to[n] = b0;
-      to[n + 1] = b1;
+      ثابت حرف b0 = from[--n], b1 = from[--n];
+      مقصد[n] = b0;
+      مقصد[n + 1] = b1;
     }
 }

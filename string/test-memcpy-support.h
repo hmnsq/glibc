@@ -21,143 +21,143 @@
    the tests take a long time to run and splitting them allows for
    simpler parallel testing.  */
 
-#ifndef MEMCPY_RESULT
-#define MEMCPY_RESULT(dst, len) dst
-#define MIN_PAGE_SIZE 131072
-#define TEST_MAIN
-#define TEST_NAME "memcpy"
-#define TIMEOUT (8 * 60)
-#include "test-string.h"
+#اگر_غیر_تعریف_شدہ MEMCPY_نتیجہ
+#تعریف_کرو MEMCPY_نتیجہ(dst, len) dst
+#تعریف_کرو MIN_صفحہ_سائز 131072
+#تعریف_کرو TEST_MAIN
+#تعریف_کرو TEST_NAME "memcpy"
+#تعریف_کرو TIMEOUT (8 * 60)
+#شامل "test-string.h"
 
-IMPL (memcpy, 1)
+IMPL (حافظہ_نقل, 1)
 
 /* Naive implementation to verify results.  */
-char *
-simple_memcpy (char *dst, const char *src, size_t n)
+حرف *
+simple_memcpy (حرف *dst, ثابت حرف *src, size_t n)
 {
-  char *ret = dst;
-  while (n--)
+  حرف *ret = dst;
+  جب (n--)
     *dst++ = *src++;
-  return ret;
+  واپس ret;
 }
 
-#endif
-typedef char *(*proto_t) (char *, const char *, size_t);
-typedef uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
+#اگر_ختم
+قسمتعریف حرف *(*proto_t) (حرف *, ثابت حرف *, size_t);
+قسمتعریف uint32_t __attribute__ ((may_alias, aligned (1))) unaligned_uint32_t;
 
-static void
-do_one_test (impl_t *impl, char *dst, const char *src, size_t len)
+ساکن خالی
+do_one_test (impl_t *impl, حرف *dst, ثابت حرف *src, size_t len)
 {
   size_t i;
 
   /* Must clear the destination buffer set by the previous run.  */
-  for (i = 0; i < len; i++)
+  برائے (i = 0; i < len; i++)
     dst[i] = 0;
 
-  if (CALL (impl, dst, src, len) != MEMCPY_RESULT (dst, len))
+  اگر (CALL (impl, dst, src, len) != MEMCPY_نتیجہ (dst, len))
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-             CALL (impl, dst, src, len), MEMCPY_RESULT (dst, len));
+             CALL (impl, dst, src, len), MEMCPY_نتیجہ (dst, len));
       ret = 1;
-      return;
+      واپس;
     }
 
-  if (memcmp (dst, src, len) != 0)
+  اگر (memcmp (dst, src, len) != 0)
     {
       error (0, 0,
              "Wrong result in function %s dst %p \"%.*s\" src %p \"%.*s\" len "
              "%zu",
-             impl->name, dst, (int)len, dst, src, (int)len, src, len);
+             impl->name, dst, (صحیح)len, dst, src, (صحیح)len, src, len);
       ret = 1;
-      return;
+      واپس;
     }
 }
 
-static void
+ساکن خالی
 do_test (size_t align1, size_t align2, size_t len)
 {
   size_t i, j;
-  char *s1, *s2;
+  حرف *s1, *s2;
 
   align1 &= 4095;
-  if (align1 + len >= page_size)
-    return;
+  اگر (align1 + len >= صفحہ_سائز)
+    واپس;
 
   align2 &= 4095;
-  if (align2 + len >= page_size)
-    return;
+  اگر (align2 + len >= صفحہ_سائز)
+    واپس;
 
-  s1 = (char *)(buf1 + align1);
-  s2 = (char *)(buf2 + align2);
-  for (size_t repeats = 0; repeats < 2; ++repeats)
+  s1 = (حرف *)(buf1 + align1);
+  s2 = (حرف *)(buf2 + align2);
+  برائے (size_t repeats = 0; repeats < 2; ++repeats)
     {
-      for (i = 0, j = 1; i < len; i++, j += 23)
+      برائے (i = 0, j = 1; i < len; i++, j += 23)
         s1[i] = j;
 
       FOR_EACH_IMPL (impl, 0)
       do_one_test (impl, s2, s1, len);
 
-      s1 = (char *) (buf2 + align1);
-      s2 = (char *) (buf1 + align2);
+      s1 = (حرف *) (buf2 + align1);
+      s2 = (حرف *) (buf1 + align2);
     }
 }
 
-static void
-do_test1 (size_t align1, size_t align2, size_t size)
+ساکن خالی
+do_test1 (size_t align1, size_t align2, size_t سائز)
 {
-  void *large_buf;
-  size_t mmap_size, region_size;
+  خالی *large_buf;
+  size_t mmap_سائز, region_سائز;
 
-  align1 &= (page_size - 1);
-  if (align1 == 0)
-    align1 = page_size;
+  align1 &= (صفحہ_سائز - 1);
+  اگر (align1 == 0)
+    align1 = صفحہ_سائز;
 
-  align2 &= (page_size - 1);
-  if (align2 == 0)
-    align2 = page_size;
+  align2 &= (صفحہ_سائز - 1);
+  اگر (align2 == 0)
+    align2 = صفحہ_سائز;
 
-  region_size = (size + page_size - 1) & (~(page_size - 1));
+  region_سائز = (سائز + صفحہ_سائز - 1) & (~(صفحہ_سائز - 1));
 
-  mmap_size = region_size * 2 + 3 * page_size;
-  large_buf = mmap (NULL, mmap_size, PROT_READ | PROT_WRITE,
-                    MAP_PRIVATE | MAP_ANON, -1, 0);
-  if (large_buf == MAP_FAILED)
+  mmap_سائز = region_سائز * 2 + 3 * صفحہ_سائز;
+  large_buf = mmap (تہی, mmap_سائز, PROT_READ | PROT_WRITE,
+                    MAP_نجی | MAP_ANON, -1, 0);
+  اگر (large_buf == MAP_FAILED)
     {
       puts ("Failed to allocate large_buf, skipping do_test");
-      return;
+      واپس;
     }
-  if (mprotect (large_buf + region_size + page_size, page_size, PROT_NONE))
+  اگر (mprotect (large_buf + region_سائز + صفحہ_سائز, صفحہ_سائز, PROT_NONE))
     error (EXIT_FAILURE, errno, "mprotect failed");
 
-  size_t array_size = size / sizeof (uint32_t);
+  size_t array_سائز = سائز / حجم (uint32_t);
   unaligned_uint32_t *dest = large_buf + align1;
-  unaligned_uint32_t *src = large_buf + region_size + 2 * page_size + align2;
+  unaligned_uint32_t *src = large_buf + region_سائز + 2 * صفحہ_سائز + align2;
   size_t i;
-  for (size_t repeats = 0; repeats < 2; repeats++)
+  برائے (size_t repeats = 0; repeats < 2; repeats++)
     {
-      for (i = 0; i < array_size; i++)
+      برائے (i = 0; i < array_سائز; i++)
         src[i] = (uint32_t)i;
       FOR_EACH_IMPL (impl, 0)
 	{
-	  memset (dest, -1, size);
-	  CALL (impl, (char *)dest, (char *)src, size);
-	  if (memcmp (src, dest, size))
+	  memset (dest, -1, سائز);
+	  CALL (impl, (حرف *)dest, (حرف *)src, سائز);
+	  اگر (memcmp (src, dest, سائز))
 	    {
-	      for (i = 0; i < array_size; i++)
-		if (dest[i] != src[i])
+	      برائے (i = 0; i < array_سائز; i++)
+		اگر (dest[i] != src[i])
 		  {
 		    error (0, 0,
 			   "Wrong result in function %s dst \"%p\" src \"%p\" "
 			   "offset \"%zd\"",
 			   impl->name, dest, src, i);
 		    ret = 1;
-		    munmap ((void *)large_buf, mmap_size);
-		    return;
+		    munmap ((خالی *)large_buf, mmap_سائز);
+		    واپس;
 		  }
 	    }
 	}
-      dest = large_buf + region_size + 2 * page_size + align1;
+      dest = large_buf + region_سائز + 2 * صفحہ_سائز + align1;
       src = large_buf + align2;
     }
-  munmap ((void *)large_buf, mmap_size);
+  munmap ((خالی *)large_buf, mmap_سائز);
 }

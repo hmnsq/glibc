@@ -15,53 +15,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#اگر_تعریف_شدہ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#اگر_ختم
 
-#include <ctype.h>
-#include <string.h>
+#شامل <ctype.h>
+#شامل <string.h>
 
-#ifndef _LIBC
+#اگر_غیر_تعریف_شدہ _LIBC
 # define __strcasecmp strcasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#ورنہ
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_اندر_EXTENDED_LOCALE_MODEL
 #  define __strcasecmp __strcasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#اگر_ختم
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#اگر_تعریف_شدہ USE_اندر_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#ورنہ
 # define LOCALE_PARAM
-#endif
+#اگر_ختم
 
 /* Compare S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than,
    equal to or greater than S2.  */
-int
-__strcasecmp (const char *s1, const char *s2 LOCALE_PARAM)
+صحیح
+__strcasecmp (ثابت حرف *s1, ثابت حرف *s2 LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#اگر defined _LIBC && !defined USE_اندر_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#اگر_ختم
+  ثابت غیرعلامتی حرف *p1 = (ثابت غیرعلامتی حرف *) s1;
+  ثابت غیرعلامتی حرف *p2 = (ثابت غیرعلامتی حرف *) s2;
+  صحیح نتیجہ;
 
-  if (p1 == p2)
-    return 0;
+  اگر (p1 == p2)
+    واپس 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0')
-      break;
+  جب ((نتیجہ = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    اگر (*p1++ == '\0')
+      توڑو;
 
-  return result;
+  واپس نتیجہ;
 }
-#ifndef __strcasecmp
+#اگر_غیر_تعریف_شدہ __strcasecmp
 libc_hidden_def (__strcasecmp)
 weak_alias (__strcasecmp, strcasecmp)
-#endif
+#اگر_ختم

@@ -1,57 +1,57 @@
 /* Make sure we don't test the optimized inline functions if we want to
    test the real implementation.  */
-#undef __USE_STRING_INLINES
+#تعریف_منسوخ __USE_STRING_INLINES
 
-#include <stdio.h>
-#include <string.h>
+#شامل <stdio.h>
+#شامل <string.h>
 
-int
-do_test (void)
+صحیح
+do_test (خالی)
 {
-  static const size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
+  ساکن ثابت size_t lens[] = { 0, 1, 0, 2, 0, 1, 0, 3,
 				 0, 1, 0, 2, 0, 1, 0, 4 };
-  char basebuf[24 + 32];
-  size_t base;
+  حرف basebuf[24 + 32];
+  size_t بنیاد;
 
-  for (base = 0; base < 32; ++base)
+  برائے (بنیاد = 0; بنیاد < 32; ++بنیاد)
     {
-      char *buf = basebuf + base;
-      size_t words;
+      حرف *buf = basebuf + بنیاد;
+      size_t الفاظ;
 
-      for (words = 0; words < 4; ++words)
+      برائے (الفاظ = 0; الفاظ < 4; ++الفاظ)
 	{
-	  size_t last;
-	  memset (buf, 'a', words * 4);
+	  size_t آخری;
+	  memset (buf, 'a', الفاظ * 4);
 
-	  for (last = 0; last < 16; ++last)
+	  برائے (آخری = 0; آخری < 16; ++آخری)
 	    {
-	      buf[words * 4 + 0] = (last & 1) != 0 ? 'b' : '\0';
-	      buf[words * 4 + 1] = (last & 2) != 0 ? 'c' : '\0';
-	      buf[words * 4 + 2] = (last & 4) != 0 ? 'd' : '\0';
-	      buf[words * 4 + 3] = (last & 8) != 0 ? 'e' : '\0';
-	      buf[words * 4 + 4] = '\0';
+	      buf[الفاظ * 4 + 0] = (آخری & 1) != 0 ? 'b' : '\0';
+	      buf[الفاظ * 4 + 1] = (آخری & 2) != 0 ? 'c' : '\0';
+	      buf[الفاظ * 4 + 2] = (آخری & 4) != 0 ? 'd' : '\0';
+	      buf[الفاظ * 4 + 3] = (آخری & 8) != 0 ? 'e' : '\0';
+	      buf[الفاظ * 4 + 4] = '\0';
 
-	      if (strlen (buf) != words * 4 + lens[last])
+	      اگر (لڑی_لمبائی (buf) != الفاظ * 4 + lens[آخری])
 		{
-		  printf ("\
-strlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strlen (buf), words * 4 + lens[last]);
-		  return 1;
+		  لکھو ("\
+لڑی_لمبائی failed برائے بنیاد=%zu, الفاظ=%zu, and آخری=%zu (is %zd, expected %zd)\n",
+			  بنیاد, الفاظ, آخری,
+			  لڑی_لمبائی (buf), الفاظ * 4 + lens[آخری]);
+		  واپس 1;
 		}
 
-	      if (strnlen (buf, -1) != words * 4 + lens[last])
+	      اگر (strnlen (buf, -1) != الفاظ * 4 + lens[آخری])
 		{
-		  printf ("\
-strnlen failed for base=%zu, words=%zu, and last=%zu (is %zd, expected %zd)\n",
-			  base, words, last,
-			  strnlen (buf, -1), words * 4 + lens[last]);
-		  return 1;
+		  لکھو ("\
+strnlen failed برائے بنیاد=%zu, الفاظ=%zu, and آخری=%zu (is %zd, expected %zd)\n",
+			  بنیاد, الفاظ, آخری,
+			  strnlen (buf, -1), الفاظ * 4 + lens[آخری]);
+		  واپس 1;
 		}
 	    }
 	}
     }
-  return 0;
+  واپس 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

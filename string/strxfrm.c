@@ -15,17 +15,17 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <locale/localeinfo.h>
+#شامل <string.h>
+#شامل <locale/localeinfo.h>
 
-#ifndef STRING_TYPE
-# define STRING_TYPE char
+#اگر_غیر_تعریف_شدہ STRING_TYPE
+# define STRING_TYPE حرف
 # define STRXFRM strxfrm
 # define STRXFRM_L __strxfrm_l
-#endif
+#اگر_ختم
 
 size_t
-STRXFRM (STRING_TYPE *dest, const STRING_TYPE *src, size_t n)
+STRXFRM (STRING_TYPE *dest, ثابت STRING_TYPE *src, size_t n)
 {
-  return STRXFRM_L (dest, src, n, _NL_CURRENT_LOCALE);
+  واپس STRXFRM_L (dest, src, n, _NL_CURRENT_LOCALE);
 }

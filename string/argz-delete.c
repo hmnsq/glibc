@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <argz.h>
-#include <string.h>
-#include <stdlib.h>
+#شامل <argz.h>
+#شامل <string.h>
+#شامل <stdlib.h>
 
 /* Delete ENTRY from ARGZ & ARGZ_LEN, if any.  */
-void
-argz_delete (char **argz, size_t *argz_len, char *entry)
+خالی
+argz_delete (حرف **argz, size_t *argz_len, حرف *اندراج_2)
 {
-  if (entry)
+  اگر (اندراج_2)
     /* Get rid of the old value for NAME.  */
     {
-      size_t entry_len = strlen (entry) + 1;
-      *argz_len -= entry_len;
-      memmove (entry, entry + entry_len, *argz_len - (entry - *argz));
-      if (*argz_len == 0)
+      size_t اندراج_len = لڑی_لمبائی (اندراج_2) + 1;
+      *argz_len -= اندراج_len;
+      memmove (اندراج_2, اندراج_2 + اندراج_len, *argz_len - (اندراج_2 - *argz));
+      اگر (*argz_len == 0)
 	{
-	  free (*argz);
-	  *argz = NULL;
+	  آزاد (*argz);
+	  *argz = تہی;
 	}
     }
 }

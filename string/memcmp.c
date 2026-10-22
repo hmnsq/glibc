@@ -16,54 +16,54 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#اگر_تعریف_شدہ HAVE_CONFIG_H
 # include "config.h"
-#endif
+#اگر_ختم
 
-#if defined HAVE_STRING_H || defined _LIBC
+#اگر defined HAVE_STRING_H || defined _LIBC
 # include <string.h>
-#endif
+#اگر_ختم
 
-#undef memcmp
+#تعریف_منسوخ memcmp
 
-#ifndef MEMCMP
+#اگر_غیر_تعریف_شدہ MEMCMP
 # define MEMCMP memcmp
-#endif
+#اگر_ختم
 
-#ifdef _LIBC
+#اگر_تعریف_شدہ _LIBC
 
 # include <memcopy.h>
 # include <endian.h>
 
-# if __BYTE_ORDER == __BIG_ENDIAN
-#  define WORDS_BIGENDIAN
+# اگر __BYTE_ORDER == __BIG_ENDIAN
+#  define الفاظ_BIGENDIAN
 # endif
 
-#else	/* Not in the GNU C library.  */
+#ورنہ	/* Not in the GNU C library.  */
 
 # include <sys/types.h>
 
 /* Type to use for aligned memory operations.
    This should normally be the biggest type supported by a single load
    and store.  Must be an unsigned type.  */
-# define OPSIZ	(sizeof (op_t))
+# define OPSIZ	(حجم (op_t))
 
 /* Type to use for unaligned operations.  */
-typedef unsigned char byte;
+قسمتعریف غیرعلامتی حرف byte;
 
-# ifndef WORDS_BIGENDIAN
-#  define MERGE(w0, sh_1, w1, sh_2) (((w0) >> (sh_1)) | ((w1) << (sh_2)))
-# else
-#  define MERGE(w0, sh_1, w1, sh_2) (((w0) << (sh_1)) | ((w1) >> (sh_2)))
+# ifndef الفاظ_BIGENDIAN
+#  define ملاؤ(w0, sh_1, w1, sh_2) (((w0) >> (sh_1)) | ((w1) << (sh_2)))
+# ورنہ
+#  define ملاؤ(w0, sh_1, w1, sh_2) (((w0) << (sh_1)) | ((w1) >> (sh_2)))
 # endif
 
-#endif	/* In the GNU C library.  */
+#اگر_ختم	/* In the GNU C library.  */
 
-#ifdef WORDS_BIGENDIAN
+#اگر_تعریف_شدہ الفاظ_BIGENDIAN
 # define CMP_LT_OR_GT(a, b) ((a) > (b) ? 1 : -1)
-#else
-# define CMP_LT_OR_GT(a, b) memcmp_bytes ((a), (b))
-#endif
+#ورنہ
+# define CMP_LT_OR_GT(a, b) memcmp_بائٹیں ((a), (b))
+#اگر_ختم
 
 /* BE VERY CAREFUL IF YOU CHANGE THIS CODE!  */
 
@@ -78,128 +78,128 @@ typedef unsigned char byte;
 
    3. Compare the few remaining bytes.  */
 
-#ifndef WORDS_BIGENDIAN
+#اگر_غیر_تعریف_شدہ الفاظ_BIGENDIAN
 /* memcmp_bytes -- Compare A and B bytewise in the byte order of the machine.
    A and B are known to be different.
    This is needed only on little-endian machines.  */
 
-static int memcmp_bytes (op_t, op_t) __THROW;
+ساکن صحیح memcmp_بائٹیں (op_t, op_t) __THROW;
 
-static int
-memcmp_bytes (op_t a, op_t b)
+ساکن صحیح
+memcmp_بائٹیں (op_t a, op_t b)
 {
-  long int srcp1 = (long int) &a;
-  long int srcp2 = (long int) &b;
+  طویل صحیح srcp1 = (طویل صحیح) &a;
+  طویل صحیح srcp2 = (طویل صحیح) &b;
   op_t a0, b0;
 
-  do
+  کرو
     {
       a0 = ((byte *) srcp1)[0];
       b0 = ((byte *) srcp2)[0];
       srcp1 += 1;
       srcp2 += 1;
     }
-  while (a0 == b0);
-  return a0 - b0;
+  جب (a0 == b0);
+  واپس a0 - b0;
 }
-#endif
+#اگر_ختم
 
-static int memcmp_common_alignment (long, long, size_t) __THROW;
+ساکن صحیح memcmp_common_alignment (طویل, طویل, size_t) __THROW;
 
 /* memcmp_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN `op_t'
    objects (not LEN bytes!).  Both SRCP1 and SRCP2 should be aligned for
    memory operations on `op_t's.  */
-static int
-memcmp_common_alignment (long int srcp1, long int srcp2, size_t len)
+ساکن صحیح
+memcmp_common_alignment (طویل صحیح srcp1, طویل صحیح srcp2, size_t len)
 {
   op_t a0, a1;
   op_t b0, b1;
 
-  switch (len % 4)
+  انتخاب (len % 4)
     {
-    default: /* Avoid warning about uninitialized local variables.  */
-    case 2:
+    طےشدہ: /* Avoid warning about uninitialized local variables.  */
+    حالت 2:
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
       srcp1 -= 2 * OPSIZ;
       srcp2 -= 2 * OPSIZ;
       len += 2;
-      goto do1;
-    case 3:
+      جاؤ do1;
+    حالت 3:
       a1 = ((op_t *) srcp1)[0];
       b1 = ((op_t *) srcp2)[0];
       srcp1 -= OPSIZ;
       srcp2 -= OPSIZ;
       len += 1;
-      goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return 0;
+      جاؤ do2;
+    حالت 0:
+      اگر (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	واپس 0;
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
-      goto do3;
-    case 1:
+      جاؤ do3;
+    حالت 1:
       a1 = ((op_t *) srcp1)[0];
       b1 = ((op_t *) srcp2)[0];
       srcp1 += OPSIZ;
       srcp2 += OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
+      اگر (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	جاؤ do0;
       /* Fall through.  */
     }
 
-  do
+  کرو
     {
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
-      if (a1 != b1)
-	return CMP_LT_OR_GT (a1, b1);
+      اگر (a1 != b1)
+	واپس CMP_LT_OR_GT (a1, b1);
 
     do3:
       a1 = ((op_t *) srcp1)[1];
       b1 = ((op_t *) srcp2)[1];
-      if (a0 != b0)
-	return CMP_LT_OR_GT (a0, b0);
+      اگر (a0 != b0)
+	واپس CMP_LT_OR_GT (a0, b0);
 
     do2:
       a0 = ((op_t *) srcp1)[2];
       b0 = ((op_t *) srcp2)[2];
-      if (a1 != b1)
-	return CMP_LT_OR_GT (a1, b1);
+      اگر (a1 != b1)
+	واپس CMP_LT_OR_GT (a1, b1);
 
     do1:
       a1 = ((op_t *) srcp1)[3];
       b1 = ((op_t *) srcp2)[3];
-      if (a0 != b0)
-	return CMP_LT_OR_GT (a0, b0);
+      اگر (a0 != b0)
+	واپس CMP_LT_OR_GT (a0, b0);
 
       srcp1 += 4 * OPSIZ;
       srcp2 += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  جب (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
-  if (a1 != b1)
-    return CMP_LT_OR_GT (a1, b1);
-  return 0;
+  اگر (a1 != b1)
+    واپس CMP_LT_OR_GT (a1, b1);
+  واپس 0;
 }
 
-static int memcmp_not_common_alignment (long, long, size_t) __THROW;
+ساکن صحیح memcmp_not_common_alignment (طویل, طویل, size_t) __THROW;
 
 /* memcmp_not_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN
    `op_t' objects (not LEN bytes!).  SRCP2 should be aligned for memory
    operations on `op_t', but SRCP1 *should be unaligned*.  */
-static int
-memcmp_not_common_alignment (long int srcp1, long int srcp2, size_t len)
+ساکن صحیح
+memcmp_not_common_alignment (طویل صحیح srcp1, طویل صحیح srcp2, size_t len)
 {
   op_t a0, a1, a2, a3;
   op_t b0, b1, b2, b3;
   op_t x;
-  int shl, shr;
+  صحیح shl, shr;
 
   /* Calculate how to shift a word read at the memory operation
      aligned srcp1 to make it aligned for comparison.  */
@@ -211,110 +211,110 @@ memcmp_not_common_alignment (long int srcp1, long int srcp2, size_t len)
      it points in the middle of.  */
   srcp1 &= -OPSIZ;
 
-  switch (len % 4)
+  انتخاب (len % 4)
     {
-    default: /* Avoid warning about uninitialized local variables.  */
-    case 2:
+    طےشدہ: /* Avoid warning about uninitialized local variables.  */
+    حالت 2:
       a1 = ((op_t *) srcp1)[0];
       a2 = ((op_t *) srcp1)[1];
       b2 = ((op_t *) srcp2)[0];
       srcp1 -= 1 * OPSIZ;
       srcp2 -= 2 * OPSIZ;
       len += 2;
-      goto do1;
-    case 3:
+      جاؤ do1;
+    حالت 3:
       a0 = ((op_t *) srcp1)[0];
       a1 = ((op_t *) srcp1)[1];
       b1 = ((op_t *) srcp2)[0];
       srcp2 -= 1 * OPSIZ;
       len += 1;
-      goto do2;
-    case 0:
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	return 0;
+      جاؤ do2;
+    حالت 0:
+      اگر (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	واپس 0;
       a3 = ((op_t *) srcp1)[0];
       a0 = ((op_t *) srcp1)[1];
       b0 = ((op_t *) srcp2)[0];
       srcp1 += 1 * OPSIZ;
-      goto do3;
-    case 1:
+      جاؤ do3;
+    حالت 1:
       a2 = ((op_t *) srcp1)[0];
       a3 = ((op_t *) srcp1)[1];
       b3 = ((op_t *) srcp2)[0];
       srcp1 += 2 * OPSIZ;
       srcp2 += 1 * OPSIZ;
       len -= 1;
-      if (OP_T_THRES <= 3 * OPSIZ && len == 0)
-	goto do0;
+      اگر (OP_T_THRES <= 3 * OPSIZ && len == 0)
+	جاؤ do0;
       /* Fall through.  */
     }
 
-  do
+  کرو
     {
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
-      x = MERGE(a2, shl, a3, shr);
-      if (x != b3)
-	return CMP_LT_OR_GT (x, b3);
+      x = ملاؤ(a2, shl, a3, shr);
+      اگر (x != b3)
+	واپس CMP_LT_OR_GT (x, b3);
 
     do3:
       a1 = ((op_t *) srcp1)[1];
       b1 = ((op_t *) srcp2)[1];
-      x = MERGE(a3, shl, a0, shr);
-      if (x != b0)
-	return CMP_LT_OR_GT (x, b0);
+      x = ملاؤ(a3, shl, a0, shr);
+      اگر (x != b0)
+	واپس CMP_LT_OR_GT (x, b0);
 
     do2:
       a2 = ((op_t *) srcp1)[2];
       b2 = ((op_t *) srcp2)[2];
-      x = MERGE(a0, shl, a1, shr);
-      if (x != b1)
-	return CMP_LT_OR_GT (x, b1);
+      x = ملاؤ(a0, shl, a1, shr);
+      اگر (x != b1)
+	واپس CMP_LT_OR_GT (x, b1);
 
     do1:
       a3 = ((op_t *) srcp1)[3];
       b3 = ((op_t *) srcp2)[3];
-      x = MERGE(a1, shl, a2, shr);
-      if (x != b2)
-	return CMP_LT_OR_GT (x, b2);
+      x = ملاؤ(a1, shl, a2, shr);
+      اگر (x != b2)
+	واپس CMP_LT_OR_GT (x, b2);
 
       srcp1 += 4 * OPSIZ;
       srcp2 += 4 * OPSIZ;
       len -= 4;
     }
-  while (len != 0);
+  جب (len != 0);
 
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
-  x = MERGE(a2, shl, a3, shr);
-  if (x != b3)
-    return CMP_LT_OR_GT (x, b3);
-  return 0;
+  x = ملاؤ(a2, shl, a3, shr);
+  اگر (x != b3)
+    واپس CMP_LT_OR_GT (x, b3);
+  واپس 0;
 }
 
-int
-MEMCMP (const void *s1, const void *s2, size_t len)
+صحیح
+MEMCMP (ثابت خالی *s1, ثابت خالی *s2, size_t len)
 {
   op_t a0;
   op_t b0;
-  long int srcp1 = (long int) s1;
-  long int srcp2 = (long int) s2;
+  طویل صحیح srcp1 = (طویل صحیح) s1;
+  طویل صحیح srcp2 = (طویل صحیح) s2;
   op_t res;
 
-  if (len >= OP_T_THRES)
+  اگر (len >= OP_T_THRES)
     {
       /* There are at least some bytes to compare.  No need to test
 	 for LEN == 0 in this alignment loop.  */
-      while (srcp2 % OPSIZ != 0)
+      جب (srcp2 % OPSIZ != 0)
 	{
 	  a0 = ((byte *) srcp1)[0];
 	  b0 = ((byte *) srcp2)[0];
 	  srcp1 += 1;
 	  srcp2 += 1;
 	  res = a0 - b0;
-	  if (res != 0)
-	    return res;
+	  اگر (res != 0)
+	    واپس res;
 	  len -= 1;
 	}
 
@@ -322,12 +322,12 @@ MEMCMP (const void *s1, const void *s2, size_t len)
 	 SRCP1 alignment determines if we can do a simple,
 	 aligned compare or need to shuffle bits.  */
 
-      if (srcp1 % OPSIZ == 0)
+      اگر (srcp1 % OPSIZ == 0)
 	res = memcmp_common_alignment (srcp1, srcp2, len / OPSIZ);
-      else
+      ورنہ
 	res = memcmp_not_common_alignment (srcp1, srcp2, len / OPSIZ);
-      if (res != 0)
-	return res;
+      اگر (res != 0)
+	واپس res;
 
       /* Number of bytes remaining in the interval [0..OPSIZ-1].  */
       srcp1 += len & -OPSIZ;
@@ -336,26 +336,26 @@ MEMCMP (const void *s1, const void *s2, size_t len)
     }
 
   /* There are just a few bytes to compare.  Use byte memory operations.  */
-  while (len != 0)
+  جب (len != 0)
     {
       a0 = ((byte *) srcp1)[0];
       b0 = ((byte *) srcp2)[0];
       srcp1 += 1;
       srcp2 += 1;
       res = a0 - b0;
-      if (res != 0)
-	return res;
+      اگر (res != 0)
+	واپس res;
       len -= 1;
     }
 
-  return 0;
+  واپس 0;
 }
 libc_hidden_builtin_def(memcmp)
-#ifdef weak_alias
+#اگر_تعریف_شدہ weak_alias
 # undef bcmp
 weak_alias (memcmp, bcmp)
-#endif
+#اگر_ختم
 
-#undef __memcmpeq
+#تعریف_منسوخ __memcmpeq
 strong_alias (memcmp, __memcmpeq)
 libc_hidden_def(__memcmpeq)

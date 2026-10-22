@@ -15,38 +15,38 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#شامل <libc-pointer-arith.h>
+#شامل <string-fzb.h>
+#شامل <string-fzc.h>
+#شامل <string-fzi.h>
+#شامل <string-shift.h>
+#شامل <string.h>
 
-#ifdef STRLEN
+#اگر_تعریف_شدہ STRLEN
 # define __strlen STRLEN
-#endif
+#اگر_ختم
 
 /* Return the length of the null-terminated string STR.  Scan for
    the null terminator quickly by testing four bytes at a time.  */
 size_t
-__strlen (const char *str)
+__strlen (ثابت حرف *str)
 {
   /* Align pointer to sizeof op_t.  */
-  const uintptr_t s_int = (uintptr_t) str;
-  const op_t *word_ptr = (const op_t*) PTR_ALIGN_DOWN (str, sizeof (op_t));
+  ثابت uintptr_t s_int = (uintptr_t) str;
+  ثابت op_t *لفظ_ptr = (ثابت op_t*) PTR_ALIGN_نیچے_کو (str, حجم (op_t));
 
-  op_t word = *word_ptr;
-  find_t mask = shift_find (find_zero_all (word), s_int);
-  if (mask != 0)
-    return index_first (mask);
+  op_t لفظ = *لفظ_ptr;
+  ڈھونڈو_t نقاب = سرکاؤ_ڈھونڈو (ڈھونڈو_zero_all (لفظ), s_int);
+  اگر (نقاب != 0)
+    واپس اشاریہ_پہلا (نقاب);
 
-  do
-    word = *++word_ptr;
-  while (! has_zero (word));
+  کرو
+    لفظ = *++لفظ_ptr;
+  جب (! has_zero (لفظ));
 
-  return ((const char *) word_ptr) + index_first_zero (word) - str;
+  واپس ((ثابت حرف *) لفظ_ptr) + اشاریہ_پہلا_zero (لفظ) - str;
 }
-#ifndef STRLEN
-weak_alias (__strlen, strlen)
-libc_hidden_builtin_def (strlen)
-#endif
+#اگر_غیر_تعریف_شدہ STRLEN
+weak_alias (__strlen, لڑی_لمبائی)
+libc_hidden_builtin_def (لڑی_لمبائی)
+#اگر_ختم

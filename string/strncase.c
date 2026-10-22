@@ -17,53 +17,53 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
+#اگر_تعریف_شدہ HAVE_CONFIG_H
 # include <config.h>
-#endif
+#اگر_ختم
 
-#include <string.h>
-#include <ctype.h>
+#شامل <string.h>
+#شامل <ctype.h>
 
-#ifndef weak_alias
+#اگر_غیر_تعریف_شدہ weak_alias
 # define __strncasecmp strncasecmp
 # define TOLOWER(Ch) tolower (Ch)
-#else
+#ورنہ
 # include <locale/localeinfo.h>
-# ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# ifdef USE_اندر_EXTENDED_LOCALE_MODEL
 #  define __strncasecmp __strncasecmp_l
 # endif
 # define TOLOWER(Ch) __tolower_l ((Ch), loc)
-#endif
+#اگر_ختم
 
-#ifdef USE_IN_EXTENDED_LOCALE_MODEL
+#اگر_تعریف_شدہ USE_اندر_EXTENDED_LOCALE_MODEL
 # define LOCALE_PARAM , locale_t loc
-#else
+#ورنہ
 # define LOCALE_PARAM
-#endif
+#اگر_ختم
 
 /* Compare no more than N characters of S1 and S2,
    ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less
    than, equal to or greater than S2.  */
-int
-__strncasecmp (const char *s1, const char *s2, size_t n LOCALE_PARAM)
+صحیح
+__strncasecmp (ثابت حرف *s1, ثابت حرف *s2, size_t n LOCALE_PARAM)
 {
-#if defined _LIBC && !defined USE_IN_EXTENDED_LOCALE_MODEL
+#اگر defined _LIBC && !defined USE_اندر_EXTENDED_LOCALE_MODEL
   locale_t loc = _NL_CURRENT_LOCALE;
-#endif
-  const unsigned char *p1 = (const unsigned char *) s1;
-  const unsigned char *p2 = (const unsigned char *) s2;
-  int result;
+#اگر_ختم
+  ثابت غیرعلامتی حرف *p1 = (ثابت غیرعلامتی حرف *) s1;
+  ثابت غیرعلامتی حرف *p2 = (ثابت غیرعلامتی حرف *) s2;
+  صحیح نتیجہ;
 
-  if (p1 == p2 || n == 0)
-    return 0;
+  اگر (p1 == p2 || n == 0)
+    واپس 0;
 
-  while ((result = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
-    if (*p1++ == '\0' || --n == 0)
-      break;
+  جب ((نتیجہ = TOLOWER (*p1) - TOLOWER (*p2++)) == 0)
+    اگر (*p1++ == '\0' || --n == 0)
+      توڑو;
 
-  return result;
+  واپس نتیجہ;
 }
-#ifndef __strncasecmp
+#اگر_غیر_تعریف_شدہ __strncasecmp
 weak_alias (__strncasecmp, strncasecmp)
-#endif
+#اگر_ختم

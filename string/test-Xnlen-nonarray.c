@@ -25,26 +25,26 @@
 
    CHAR must be defined as the character type.  */
 
-#include <array_length.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/next_to_fault.h>
-#include <support/test-driver.h>
-#include <sys/param.h>
-#include <unistd.h>
+#شامل <array_length.h>
+#شامل <string.h>
+#شامل <support/check.h>
+#شامل <support/next_to_fault.h>
+#شامل <support/test-driver.h>
+#شامل <sys/param.h>
+#شامل <unistd.h>
 
-typedef __typeof (TEST_IDENTIFIER) *proto_t;
+قسمتعریف __typeof (TEST_IDENTIFIER) *proto_t;
 
-#define TEST_MAIN
-#include "test-string.h"
+#تعریف_کرو TEST_MAIN
+#شامل "test-string.h"
 
 IMPL (TEST_IDENTIFIER, 1)
 
-static int
-test_main (void)
+ساکن صحیح
+test_main (خالی)
 {
-  enum { buffer_length = 256 };
-  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= buffer_length);
+  شمار { بفر_لمبائی = 256 };
+  TEST_VERIFY_EXIT (sysconf (_SC_PAGESIZE) >= بفر_لمبائی);
 
   test_init ();
 
@@ -76,58 +76,58 @@ test_main (void)
     The length argument must not be greater than buffer_length -
     start_offset, and the result is the length argument.  */
 
-  struct support_next_to_fault ntf
-    = support_next_to_fault_allocate (buffer_length * sizeof (CHAR));
-  CHAR *buffer = (CHAR *) ntf.buffer;
+  ساخت support_اگلا_مقصد_fault ntf
+    = support_اگلا_مقصد_fault_allocate (بفر_لمبائی * حجم (CHAR));
+  CHAR *بفر = (CHAR *) ntf.بفر;
 
   FOR_EACH_IMPL (impl, 0)
     {
-      printf ("info: testing %s\n", impl->name);
-      for (size_t i = 0; i < buffer_length; ++i)
-        buffer[i] = 'A';
+      لکھو ("info: testing %s\n", impl->name);
+      برائے (size_t i = 0; i < بفر_لمبائی; ++i)
+        بفر[i] = 'A';
 
-      for (int zero_count = 0; zero_count <= buffer_length; ++zero_count)
+      برائے (صحیح zero_گنتی = 0; zero_گنتی <= بفر_لمبائی; ++zero_گنتی)
         {
-          if (zero_count > 0)
-            buffer[buffer_length - zero_count] = 0;
-          int a_count = buffer_length - zero_count;
-          for (int start_offset = 0; start_offset <= buffer_length;
-               ++start_offset)
+          اگر (zero_گنتی > 0)
+            بفر[بفر_لمبائی - zero_گنتی] = 0;
+          صحیح a_گنتی = بفر_لمبائی - zero_گنتی;
+          برائے (صحیح آغاز_انحراف = 0; آغاز_انحراف <= بفر_لمبائی;
+               ++آغاز_انحراف)
             {
-              CHAR *start_pointer = buffer + start_offset;
-              if (start_offset == buffer_length)
-                TEST_COMPARE (CALL (impl, buffer + start_offset, 0), 0);
-              else if (zero_count > 0)
-                for (int length_argument = 0;
-                     length_argument <= 2 * buffer_length;
-                     ++length_argument)
+              CHAR *آغاز_اشارہ_گر = بفر + آغاز_انحراف;
+              اگر (آغاز_انحراف == بفر_لمبائی)
+                TEST_COMPARE (CALL (impl, بفر + آغاز_انحراف, 0), 0);
+              ورنہ اگر (zero_گنتی > 0)
+                برائے (صحیح لمبائی_دلیل = 0;
+                     لمبائی_دلیل <= 2 * بفر_لمبائی;
+                     ++لمبائی_دلیل)
                   {
-                    if (test_verbose)
-                      printf ("zero_count=%d a_count=%d start_offset=%d"
+                    اگر (test_verbose)
+                      لکھو ("zero_count=%d a_count=%d start_offset=%d"
                               " length_argument=%d\n",
-                              zero_count, a_count, start_offset,
-                              length_argument);
-                    if (start_offset < a_count)
-                      TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                    MIN (a_count - start_offset,
-                                         length_argument));
-                    else
-                      TEST_COMPARE (CALL (impl, start_pointer, length_argument),
+                              zero_گنتی, a_گنتی, آغاز_انحراف,
+                              لمبائی_دلیل);
+                    اگر (آغاز_انحراف < a_گنتی)
+                      TEST_COMPARE (CALL (impl, آغاز_اشارہ_گر, لمبائی_دلیل),
+                                    MIN (a_گنتی - آغاز_انحراف,
+                                         لمبائی_دلیل));
+                    ورنہ
+                      TEST_COMPARE (CALL (impl, آغاز_اشارہ_گر, لمبائی_دلیل),
                                     0);
                   }
-              else
-                for (int length_argument = 0;
-                     length_argument <= buffer_length - start_offset;
-                     ++length_argument)
-                  TEST_COMPARE (CALL (impl, start_pointer, length_argument),
-                                length_argument);
+              ورنہ
+                برائے (صحیح لمبائی_دلیل = 0;
+                     لمبائی_دلیل <= بفر_لمبائی - آغاز_انحراف;
+                     ++لمبائی_دلیل)
+                  TEST_COMPARE (CALL (impl, آغاز_اشارہ_گر, لمبائی_دلیل),
+                                لمبائی_دلیل);
             }
         }
     }
 
-  support_next_to_fault_free (&ntf);
+  support_اگلا_مقصد_fault_free (&ntf);
 
-  return 0;
+  واپس 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

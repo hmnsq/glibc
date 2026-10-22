@@ -17,61 +17,61 @@
    <https://www.gnu.org/licenses/>.  */
 
 
-#include <locale.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <support/check.h>
-#include <support/namespace.h>
-#include <support/xdlfcn.h>
+#شامل <locale.h>
+#شامل <stdbool.h>
+#شامل <stdlib.h>
+#شامل <string.h>
+#شامل <support/check.h>
+#شامل <support/namespace.h>
+#شامل <support/xdlfcn.h>
 
 /* Interposed malloc that can be used to inject allocation failures.  */
 
-static volatile bool fail_malloc;
+ساکن متلون bool fail_malloc;
 
-void *
-malloc (size_t size)
+خالی *
+حافظہ_دو (size_t سائز)
 {
-  if (fail_malloc)
-    return NULL;
+  اگر (fail_malloc)
+    واپس تہی;
 
-  static void *(*original_malloc) (size_t);
-  if (original_malloc == NULL)
-    original_malloc = xdlsym (RTLD_NEXT, "malloc");
-  return original_malloc (size);
+  ساکن خالی *(*original_malloc) (size_t);
+  اگر (original_malloc == تہی)
+    original_malloc = xdlsym (RTLD_اگلا, "malloc");
+  واپس original_malloc (سائز);
 }
 
 /* Callbacks for the actual tests.  Use fork to run both tests with a
    clean state.  */
 
-static void
-test_strerror (void *closure)
+ساکن خالی
+test_strerror (خالی *احاطہ)
 {
   fail_malloc = true;
-  const char *s = strerror (999);
+  ثابت حرف *s = strerror (999);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
 }
 
-static void
-test_strerror_l (void *closure)
+ساکن خالی
+test_strerror_l (خالی *احاطہ)
 {
   locale_t loc = newlocale (LC_ALL, "C", (locale_t) 0);
   TEST_VERIFY (loc != (locale_t) 0);
   fail_malloc = true;
-  const char *s = strerror_l (999, loc);
+  ثابت حرف *s = strerror_l (999, loc);
   fail_malloc = false;
   TEST_COMPARE_STRING (s, "Unknown error");
   freelocale (loc);
 }
 
-static int
-do_test (void)
+ساکن صحیح
+do_test (خالی)
 {
-  support_isolate_in_subprocess (test_strerror, NULL);
-  support_isolate_in_subprocess (test_strerror_l, NULL);
+  support_isolate_اندر_subprocess (test_strerror, تہی);
+  support_isolate_اندر_subprocess (test_strerror_l, تہی);
 
-  return 0;
+  واپس 0;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

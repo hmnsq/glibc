@@ -1,73 +1,73 @@
 /* Based on a test case by Paul Eggert.  */
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#شامل <locale.h>
+#شامل <stdio.h>
+#شامل <stdlib.h>
+#شامل <string.h>
 
 
-char const string[] = "";
+حرف ثابت string[] = "";
 
 
-static int
-test (const char *locale)
+ساکن صحیح
+test (ثابت حرف *locale)
 {
   size_t bufsize;
   size_t r;
   size_t l;
-  char *buf;
+  حرف *buf;
   locale_t loc;
-  int result = 0;
+  صحیح نتیجہ = 0;
 
-  if (setlocale (LC_COLLATE, locale) == NULL)
+  اگر (setlocale (LC_COLLATE, locale) == تہی)
     {
-      printf ("cannot set locale \"%s\"\n", locale);
-      return 1;
+      لکھو ("cannot set locale \"%s\"\n", locale);
+      واپس 1;
     }
-  bufsize = strxfrm (NULL, string, 0) + 1;
-  buf = malloc (bufsize);
-  if (buf == NULL)
+  bufsize = strxfrm (تہی, string, 0) + 1;
+  buf = حافظہ_دو (bufsize);
+  اگر (buf == تہی)
     {
-      printf ("cannot allocate %zd bytes\n", bufsize);
-      return 1;
+      لکھو ("cannot allocate %zd bytes\n", bufsize);
+      واپس 1;
     }
   r = strxfrm (buf, string, bufsize);
-  l = strlen (buf);
-  if (r != l)
+  l = لڑی_لمبائی (buf);
+  اگر (r != l)
     {
-       printf ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
+       لکھو ("locale \"%s\": strxfrm returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       نتیجہ = 1;
     }
 
-  loc = newlocale (1 << LC_ALL, locale, NULL);
+  loc = newlocale (1 << LC_ALL, locale, تہی);
 
   r = strxfrm_l (buf, string, bufsize, loc);
-  l = strlen (buf);
-  if (r != l)
+  l = لڑی_لمبائی (buf);
+  اگر (r != l)
     {
-       printf ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
+       لکھو ("locale \"%s\": strxfrm_l returned %zu, strlen returned %zu\n",
 	       locale, r, l);
-       result = 1;
+       نتیجہ = 1;
     }
 
   freelocale (loc);
 
-  free (buf);
+  آزاد (buf);
 
-  return result;
+  واپس نتیجہ;
 }
 
 
-int
-do_test (void)
+صحیح
+do_test (خالی)
 {
-  int result = 0;
+  صحیح نتیجہ = 0;
 
-  result |= test ("C");
-  result |= test ("en_US.ISO-8859-1");
-  result |= test ("de_DE.UTF-8");
+  نتیجہ |= test ("C");
+  نتیجہ |= test ("en_US.ISO-8859-1");
+  نتیجہ |= test ("de_DE.UTF-8");
 
-  return result;
+  واپس نتیجہ;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

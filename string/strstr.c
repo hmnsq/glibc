@@ -16,50 +16,50 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _LIBC
+#اگر_غیر_تعریف_شدہ _LIBC
 # include <config.h>
-#endif
+#اگر_ختم
 
-#include <string.h>
+#شامل <string.h>
 
-#define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
+#تعریف_کرو RETURN_TYPE حرف *
+#تعریف_کرو دستیاب(h, h_l, j, n_l)			\
   (((j) + (n_l) <= (h_l)) \
-   || ((h_l) += __strnlen ((void*)((h) + (h_l)), (n_l) + 512), \
+   || ((h_l) += __strnlen ((خالی*)((h) + (h_l)), (n_l) + 512), \
        (j) + (n_l) <= (h_l)))
-#include "str-two-way.h"
+#شامل "str-two-way.h"
 
-#undef strstr
+#تعریف_منسوخ لڑی_تلاش
 
-#ifndef STRSTR
-#define STRSTR strstr
-#endif
+#اگر_غیر_تعریف_شدہ STRSTR
+#تعریف_کرو STRSTR لڑی_تلاش
+#اگر_ختم
 
-static inline char *
-strstr2 (const unsigned char *hs, const unsigned char *ne)
+ساکن اندرونی حرف *
+strstr2 (ثابت غیرعلامتی حرف *hs, ثابت غیرعلامتی حرف *ne)
 {
   uint32_t h1 = (ne[0] << 16) | ne[1];
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  برائے (صحیح c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 << 16) | c;
-  return h1 == h2 ? (char *)hs - 2 : NULL;
+  واپس h1 == h2 ? (حرف *)hs - 2 : تہی;
 }
 
-static inline char *
-strstr3 (const unsigned char *hs, const unsigned char *ne)
+ساکن اندرونی حرف *
+strstr3 (ثابت غیرعلامتی حرف *hs, ثابت غیرعلامتی حرف *ne)
 {
   uint32_t h1 = ((uint32_t)ne[0] << 24) | (ne[1] << 16) | (ne[2] << 8);
   uint32_t h2 = 0;
-  for (int c = hs[0]; h1 != h2 && c != 0; c = *++hs)
+  برائے (صحیح c = hs[0]; h1 != h2 && c != 0; c = *++hs)
       h2 = (h2 | c) << 8;
-  return h1 == h2 ? (char *)hs - 3 : NULL;
+  واپس h1 == h2 ? (حرف *)hs - 3 : تہی;
 }
 
 /* Hash character pairs so a small shift table can be used.  All bits of
    p[0] are included, but not all bits from p[-1].  So if two equal hashes
    match on p[-1], p[0] matches too.  Hash collisions are harmless and result
    in smaller shifts.  */
-#define hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % sizeof (shift))
+#تعریف_کرو hash2(p) (((size_t)(p)[0] - ((size_t)(p)[-1] << 3)) % حجم (سرکاؤ))
 
 /* Fast strstr algorithm with guaranteed linear-time performance.
    Small needles up to size 3 use a dedicated linear search.  Longer needles
@@ -72,91 +72,91 @@ strstr3 (const unsigned char *hs, const unsigned char *ne)
    bits per entry, lowering preprocessing overhead and minimizing cache effects.
    The limit also implies worst-case performance is linear.
    Needles larger than 256 characters use the linear-time Two-Way algorithm.  */
-char *
-STRSTR (const char *haystack, const char *needle)
+حرف *
+STRSTR (ثابت حرف *haystack, ثابت حرف *needle)
 {
-  const unsigned char *hs = (const unsigned char *) haystack;
-  const unsigned char *ne = (const unsigned char *) needle;
+  ثابت غیرعلامتی حرف *hs = (ثابت غیرعلامتی حرف *) haystack;
+  ثابت غیرعلامتی حرف *ne = (ثابت غیرعلامتی حرف *) needle;
 
   /* Handle short needle special cases first.  */
-  if (ne[0] == '\0')
-    return (char *)hs;
-  hs = (const unsigned char *)strchr ((const char*)hs, ne[0]);
-  if (hs == NULL || ne[1] == '\0')
-    return (char*)hs;
-  if (ne[2] == '\0')
-    return strstr2 (hs, ne);
-  if (ne[3] == '\0')
-    return strstr3 (hs, ne);
+  اگر (ne[0] == '\0')
+    واپس (حرف *)hs;
+  hs = (ثابت غیرعلامتی حرف *)strchr ((ثابت حرف*)hs, ne[0]);
+  اگر (hs == تہی || ne[1] == '\0')
+    واپس (حرف*)hs;
+  اگر (ne[2] == '\0')
+    واپس strstr2 (hs, ne);
+  اگر (ne[3] == '\0')
+    واپس strstr3 (hs, ne);
 
   /* Ensure haystack length is at least as long as needle length.
      Since a match may occur early on in a huge haystack, use strnlen
      and read ahead a few cachelines for improved performance.  */
-  size_t ne_len = strlen ((const char*)ne);
-  size_t hs_len = __strnlen ((const char*)hs, ne_len | 512);
-  if (hs_len < ne_len)
-    return NULL;
+  size_t ne_len = لڑی_لمبائی ((ثابت حرف*)ne);
+  size_t hs_len = __strnlen ((ثابت حرف*)hs, ne_len | 512);
+  اگر (hs_len < ne_len)
+    واپس تہی;
 
   /* Check whether we have a match.  This improves performance since we
      avoid initialization overheads.  */
-  if (memcmp (hs, ne, ne_len) == 0)
-    return (char *) hs;
+  اگر (memcmp (hs, ne, ne_len) == 0)
+    واپس (حرف *) hs;
 
   /* Use Two-Way algorithm for very long needles.  */
-  if (__glibc_unlikely (ne_len > 256))
-    return two_way_long_needle (hs, hs_len, ne, ne_len);
+  اگر (__glibc_unlikely (ne_len > 256))
+    واپس two_way_long_needle (hs, hs_len, ne, ne_len);
 
-  const unsigned char *end = hs + hs_len - ne_len;
-  uint8_t shift[256];
+  ثابت غیرعلامتی حرف *انتہا = hs + hs_len - ne_len;
+  uint8_t سرکاؤ[256];
   size_t tmp, shift1;
   size_t m1 = ne_len - 1;
-  size_t offset = 0;
+  size_t انحراف = 0;
 
   /* Initialize bad character shift hash table.  */
-  memset (shift, 0, sizeof (shift));
-  for (int i = 1; i < m1; i++)
-    shift[hash2 (ne + i)] = i;
+  memset (سرکاؤ, 0, حجم (سرکاؤ));
+  برائے (صحیح i = 1; i < m1; i++)
+    سرکاؤ[hash2 (ne + i)] = i;
   /* Shift1 is the amount we can skip after matching the hash of the
      needle end but not the full needle.  */
-  shift1 = m1 - shift[hash2 (ne + m1)];
-  shift[hash2 (ne + m1)] = m1;
+  shift1 = m1 - سرکاؤ[hash2 (ne + m1)];
+  سرکاؤ[hash2 (ne + m1)] = m1;
 
-  while (1)
+  جب (1)
     {
-      if (__glibc_unlikely (hs > end))
+      اگر (__glibc_unlikely (hs > انتہا))
 	{
-	  end += __strnlen ((const char*)end + m1 + 1, 2048);
-	  if (hs > end)
-	    return NULL;
+	  انتہا += __strnlen ((ثابت حرف*)انتہا + m1 + 1, 2048);
+	  اگر (hs > انتہا)
+	    واپس تہی;
 	}
 
       /* Skip past character pairs not in the needle.  */
-      do
+      کرو
 	{
 	  hs += m1;
-	  tmp = shift[hash2 (hs)];
+	  tmp = سرکاؤ[hash2 (hs)];
 	}
-      while (tmp == 0 && hs <= end);
+      جب (tmp == 0 && hs <= انتہا);
 
       /* If the match is not at the end of the needle, shift to the end
 	 and continue until we match the hash of the needle end.  */
       hs -= tmp;
-      if (tmp < m1)
-	continue;
+      اگر (tmp < m1)
+	جاری;
 
       /* Hash of the last 2 characters matches.  If the needle is long,
 	 try to quickly filter out mismatches.  */
-      if (m1 < 15 || memcmp (hs + offset, ne + offset, 8) == 0)
+      اگر (m1 < 15 || memcmp (hs + انحراف, ne + انحراف, 8) == 0)
 	{
-	  if (memcmp (hs, ne, m1) == 0)
-	    return (void *) hs;
+	  اگر (memcmp (hs, ne, m1) == 0)
+	    واپس (خالی *) hs;
 
 	  /* Adjust filter offset when it doesn't find the mismatch.  */
-	  offset = (offset >= 8 ? offset : m1) - 8;
+	  انحراف = (انحراف >= 8 ? انحراف : m1) - 8;
 	}
 
       /* Skip based on matching the hash of the needle end.  */
       hs += shift1;
     }
 }
-libc_hidden_builtin_def (strstr)
+libc_hidden_builtin_def (لڑی_تلاش)

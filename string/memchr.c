@@ -16,73 +16,73 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <libc-pointer-arith.h>
-#include <string-fzb.h>
-#include <string-fzc.h>
-#include <string-fzi.h>
-#include <string-shift.h>
-#include <string.h>
+#شامل <libc-pointer-arith.h>
+#شامل <string-fzb.h>
+#شامل <string-fzc.h>
+#شامل <string-fzi.h>
+#شامل <string-shift.h>
+#شامل <string.h>
 
-#undef memchr
+#تعریف_منسوخ memchr
 
-#ifdef MEMCHR
+#اگر_تعریف_شدہ MEMCHR
 # define __memchr MEMCHR
-#endif
+#اگر_ختم
 
-static __always_inline const char *
+ساکن __always_inline ثابت حرف *
 sadd (uintptr_t x, uintptr_t y)
 {
-  return (const char *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
+  واپس (ثابت حرف *)(y > UINTPTR_MAX - x ? UINTPTR_MAX : x + y);
 }
 
 /* Search no more than N bytes of S for C.  */
-void *
-__memchr (void const *s, int c_in, size_t n)
+خالی *
+__memchr (خالی ثابت *s, صحیح c_اندر, size_t n)
 {
-  if (__glibc_unlikely (n == 0))
-    return NULL;
+  اگر (__glibc_unlikely (n == 0))
+    واپس تہی;
 
   /* Read the first word, but munge it so that bytes before the array
      will not match goal.  */
-  const op_t *word_ptr = PTR_ALIGN_DOWN (s, sizeof (op_t));
+  ثابت op_t *لفظ_ptr = PTR_ALIGN_نیچے_کو (s, حجم (op_t));
   uintptr_t s_int = (uintptr_t) s;
 
-  op_t word = *word_ptr;
-  op_t repeated_c = repeat_bytes (c_in);
+  op_t لفظ = *لفظ_ptr;
+  op_t repeated_c = repeat_بائٹیں (c_اندر);
   /* Compute the address of the last byte taking in consideration possible
      overflow.  */
-  const char *lbyte = sadd (s_int, n - 1);
+  ثابت حرف *lbyte = sadd (s_int, n - 1);
   /* And also the address of the word containing the last byte. */
-  const op_t *lword = (const op_t *) PTR_ALIGN_DOWN (lbyte, sizeof (op_t));
+  ثابت op_t *lword = (ثابت op_t *) PTR_ALIGN_نیچے_کو (lbyte, حجم (op_t));
 
-  find_t mask = shift_find (find_eq_all (word, repeated_c), s_int);
-  if (mask != 0)
+  ڈھونڈو_t نقاب = سرکاؤ_ڈھونڈو (ڈھونڈو_eq_all (لفظ, repeated_c), s_int);
+  اگر (نقاب != 0)
     {
-      char *ret = (char *) s + index_first (mask);
-      return (ret <= lbyte) ? ret : NULL;
+      حرف *ret = (حرف *) s + اشاریہ_پہلا (نقاب);
+      واپس (ret <= lbyte) ? ret : تہی;
     }
-  if (word_ptr == lword)
-    return NULL;
+  اگر (لفظ_ptr == lword)
+    واپس تہی;
 
-  word = *++word_ptr;
-  while (word_ptr != lword)
+  لفظ = *++لفظ_ptr;
+  جب (لفظ_ptr != lword)
     {
-      if (has_eq (word, repeated_c))
-	return (char *) word_ptr + index_first_eq (word, repeated_c);
-      word = *++word_ptr;
+      اگر (has_eq (لفظ, repeated_c))
+	واپس (حرف *) لفظ_ptr + اشاریہ_پہلا_eq (لفظ, repeated_c);
+      لفظ = *++لفظ_ptr;
     }
 
-  if (has_eq (word, repeated_c))
+  اگر (has_eq (لفظ, repeated_c))
     {
       /* We found a match, but it might be in a byte past the end of the
 	 array.  */
-      char *ret = (char *) word_ptr + index_first_eq (word, repeated_c);
-      if (ret <= lbyte)
-	return ret;
+      حرف *ret = (حرف *) لفظ_ptr + اشاریہ_پہلا_eq (لفظ, repeated_c);
+      اگر (ret <= lbyte)
+	واپس ret;
     }
-  return NULL;
+  واپس تہی;
 }
-#ifndef MEMCHR
+#اگر_غیر_تعریف_شدہ MEMCHR
 weak_alias (__memchr, memchr)
 libc_hidden_builtin_def (memchr)
-#endif
+#اگر_ختم

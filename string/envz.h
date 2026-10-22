@@ -16,28 +16,28 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _ENVZ_H
-#define _ENVZ_H	1
+#اگر_غیر_تعریف_شدہ _ENVZ_H
+#تعریف_کرو _ENVZ_H	1
 
-#include <features.h>
+#شامل <features.h>
 
-#include <errno.h>
+#شامل <errno.h>
 
 /* Envz's are argz's too, and should be created etc., using the same
    routines.  */
-#include <argz.h>
+#شامل <argz.h>
 
 __BEGIN_DECLS
 
 /* Returns a pointer to the entry in ENVZ for NAME, or 0 if there is none.  */
-extern char *envz_entry (const char *__restrict __envz, size_t __envz_len,
-			 const char *__restrict __name)
+خارجی حرف *envz_اندراج (ثابت حرف *__restrict __envz, size_t __envz_len,
+			 ثابت حرف *__restrict __name)
      __THROW __attribute_pure__;
 
 /* Returns a pointer to the value portion of the entry in ENVZ for NAME, or 0
    if there is none.  */
-extern char *envz_get (const char *__restrict __envz, size_t __envz_len,
-		       const char *__restrict __name)
+خارجی حرف *envz_get (ثابت حرف *__restrict __envz, size_t __envz_len,
+		       ثابت حرف *__restrict __name)
      __THROW __attribute_pure__;
 
 /* Adds an entry for NAME with value VALUE to ENVZ & ENVZ_LEN.  If an entry
@@ -46,28 +46,28 @@ extern char *envz_get (const char *__restrict __envz, size_t __envz_len,
    return NULL, although envz_entry will still return an entry; this is handy
    because when merging with another envz, the null entry can override an
    entry in the other one.  Null entries can be removed with envz_strip ().  */
-extern error_t envz_add (char **__restrict __envz,
+خارجی error_t envz_جوڑو (حرف **__restrict __envz,
 			 size_t *__restrict __envz_len,
-			 const char *__restrict __name,
-			 const char *__restrict __value) __THROW;
+			 ثابت حرف *__restrict __name,
+			 ثابت حرف *__restrict __value) __THROW;
 
 /* Adds each entry in ENVZ2 to ENVZ & ENVZ_LEN, as if with envz_add().  If
    OVERRIDE is true, then values in ENVZ2 will supersede those with the same
    name in ENV, otherwise not.  */
-extern error_t envz_merge (char **__restrict __envz,
+خارجی error_t envz_ملاؤ (حرف **__restrict __envz,
 			   size_t *__restrict __envz_len,
-			   const char *__restrict __envz2,
-			   size_t __envz2_len, int __override) __THROW;
+			   ثابت حرف *__restrict __envz2,
+			   size_t __envz2_len, صحیح __override) __THROW;
 
 /* Remove the entry for NAME from ENVZ & ENVZ_LEN, if any.  */
-extern void envz_remove (char **__restrict __envz,
+خارجی خالی envz_remove (حرف **__restrict __envz,
 			 size_t *__restrict __envz_len,
-			 const char *__restrict __name) __THROW;
+			 ثابت حرف *__restrict __name) __THROW;
 
 /* Remove null entries.  */
-extern void envz_strip (char **__restrict __envz,
+خارجی خالی envz_strip (حرف **__restrict __envz,
 			size_t *__restrict __envz_len) __THROW;
 
 __END_DECLS
 
-#endif /* envz.h */
+#اگر_ختم /* envz.h */

@@ -15,23 +15,23 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stddef.h>
-#include <string.h>
+#شامل <stddef.h>
+#شامل <string.h>
 
-#undef strcpy
+#تعریف_منسوخ strcpy
 /* Disable internal stpcpy optimization, otherwise the __stpcpy might it
    generate a strcpy call.  */
-#undef __stpcpy
+#تعریف_منسوخ __stpcpy
 
-#ifndef STRCPY
+#اگر_غیر_تعریف_شدہ STRCPY
 # define STRCPY strcpy
-#endif
+#اگر_ختم
 
 /* Copy SRC to DEST.  */
-char *
-STRCPY (char *dest, const char *src)
+حرف *
+STRCPY (حرف *dest, ثابت حرف *src)
 {
   __stpcpy (dest, src);
-  return dest;
+  واپس dest;
 }
 libc_hidden_builtin_def (strcpy)

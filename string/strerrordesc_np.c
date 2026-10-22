@@ -16,11 +16,11 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <stdio.h>
+#شامل <stdio.h>
 
-const char *
-__strerrordesc_np (int errnum)
+ثابت حرف *
+__strerrordesc_np (صحیح errnum)
 {
-  return __get_errlist (errnum);
+  واپس __get_errlist (errnum);
 }
 weak_alias (__strerrordesc_np, strerrordesc_np)

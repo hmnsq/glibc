@@ -16,19 +16,19 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
-#include <signal.h>
-#include <array_length.h>
+#شامل <string.h>
+#شامل <signal.h>
+#شامل <array_length.h>
 
-const char *
-__sigdescr_np (int signum)
+ثابت حرف *
+__sigdescr_np (صحیح signum)
 {
-  const char *descr = NULL;
+  ثابت حرف *descr = تہی;
 
-  if (signum >= 0 && signum <= NSIG && signum < array_length (__sys_siglist))
+  اگر (signum >= 0 && signum <= NSIG && signum < array_لمبائی (__sys_siglist))
     descr = __sys_siglist[signum];
 
-  return descr;
+  واپس descr;
 }
 libc_hidden_def (__sigdescr_np)
 weak_alias (__sigdescr_np, sigdescr_np)

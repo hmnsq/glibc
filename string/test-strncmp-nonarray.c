@@ -1,4 +1,4 @@
-#define TEST_IDENTIFIER strncmp
-#define TEST_NAME "strncmp"
-typedef char CHAR;
-#include "test-Xncmp-nonarray.c"
+#تعریف_کرو TEST_IDENTIFIER لڑی_موازنہ
+#تعریف_کرو TEST_NAME "strncmp"
+قسمتعریف حرف CHAR;
+#شامل "test-Xncmp-nonarray.c"

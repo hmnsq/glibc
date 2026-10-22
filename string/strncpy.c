@@ -15,20 +15,20 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#include <string.h>
+#شامل <string.h>
 
-#undef strncpy
+#تعریف_منسوخ strncpy
 
-#ifndef STRNCPY
- #define STRNCPY strncpy
-#endif
+#اگر_غیر_تعریف_شدہ STRNCPY
+ #تعریف_کرو STRNCPY strncpy
+#اگر_ختم
 
-char *
-STRNCPY (char *s1, const char *s2, size_t n)
+حرف *
+STRNCPY (حرف *s1, ثابت حرف *s2, size_t n)
 {
-  size_t size = __strnlen (s2, n);
-  if (size != n)
-    memset (s1 + size, '\0', n - size);
-  return memcpy (s1, s2, size);
+  size_t سائز = __strnlen (s2, n);
+  اگر (سائز != n)
+    memset (s1 + سائز, '\0', n - سائز);
+  واپس حافظہ_نقل (s1, s2, سائز);
 }
 libc_hidden_builtin_def (strncpy)

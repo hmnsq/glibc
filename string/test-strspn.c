@@ -16,24 +16,24 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#define TEST_MAIN
-#ifndef WIDE
+#تعریف_کرو TEST_MAIN
+#اگر_غیر_تعریف_شدہ WIDE
 # define TEST_NAME "strspn"
-#else
+#ورنہ
 # define TEST_NAME "wcsspn"
-#endif /* WIDE */
-#include "test-string.h"
+#اگر_ختم /* WIDE */
+#شامل "test-string.h"
 
-#ifndef WIDE
+#اگر_غیر_تعریف_شدہ WIDE
 # define STRSPN strspn
-# define CHAR char
-# define UCHAR unsigned char
+# define CHAR حرف
+# define UCHAR غیرعلامتی حرف
 # define SIMPLE_STRSPN simple_strspn
-# define STRLEN strlen
+# define STRLEN لڑی_لمبائی
 # define STRCHR strchr
 # define BIG_CHAR CHAR_MAX
 # define SMALL_CHAR 127
-#else
+#ورنہ
 # include <wchar.h>
 # define STRSPN wcsspn
 # define CHAR wchar_t
@@ -43,74 +43,74 @@
 # define STRCHR wcschr
 # define BIG_CHAR WCHAR_MAX
 # define SMALL_CHAR 1273
-#endif /* WIDE */
+#اگر_ختم /* WIDE */
 
-typedef size_t (*proto_t) (const CHAR *, const CHAR *);
+قسمتعریف size_t (*proto_t) (ثابت CHAR *, ثابت CHAR *);
 
 IMPL (STRSPN, 1)
 
 /* Naive implementation to verify results.  */
 size_t
-SIMPLE_STRSPN (const CHAR *s, const CHAR *acc)
+SIMPLE_STRSPN (ثابت CHAR *s, ثابت CHAR *acc)
 {
-  const CHAR *r, *str = s;
+  ثابت CHAR *r, *str = s;
   CHAR c;
 
-  while ((c = *s++) != '\0')
+  جب ((c = *s++) != '\0')
     {
-      for (r = acc; *r != '\0'; ++r)
-	if (*r == c)
-	  break;
-      if (*r == '\0')
-	return s - str - 1;
+      برائے (r = acc; *r != '\0'; ++r)
+	اگر (*r == c)
+	  توڑو;
+      اگر (*r == '\0')
+	واپس s - str - 1;
     }
-  return s - str - 1;
+  واپس s - str - 1;
 }
 
-static void
-do_one_test (impl_t *impl, const CHAR *s, const CHAR *acc, size_t exp_res)
+ساکن خالی
+do_one_test (impl_t *impl, ثابت CHAR *s, ثابت CHAR *acc, size_t exp_res)
 {
   size_t res = CALL (impl, s, acc);
-  if (res != exp_res)
+  اگر (res != exp_res)
     {
       error (0, 0, "Wrong result in function %s %p %p", impl->name,
-	     (void *) res, (void *) exp_res);
+	     (خالی *) res, (خالی *) exp_res);
       ret = 1;
-      return;
+      واپس;
     }
 }
 
-static void
+ساکن خالی
 do_test (size_t align, size_t pos, size_t len)
 {
   size_t i;
   CHAR *acc, *s;
 
   align &= 7;
-  if ((align + pos + 10) * sizeof (CHAR) >= page_size || len > 240 || ! len)
-    return;
+  اگر ((align + pos + 10) * حجم (CHAR) >= صفحہ_سائز || len > 240 || ! len)
+    واپس;
 
   acc = (CHAR *) (buf2) + (random () & 255);
   s = (CHAR *) (buf1) + align;
 
-  for (i = 0; i < len; ++i)
+  برائے (i = 0; i < len; ++i)
     {
       acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      اگر (!acc[i])
 	acc[i] = random () & BIG_CHAR;
-      if (!acc[i])
+      اگر (!acc[i])
 	acc[i] = 1 + (random () & SMALL_CHAR);
     }
   acc[len] = '\0';
 
-  for (i = 0; i < pos; ++i)
+  برائے (i = 0; i < pos; ++i)
     s[i] = acc[random () % len];
   s[pos] = random () & BIG_CHAR;
-  if (STRCHR (acc, s[pos]))
+  اگر (STRCHR (acc, s[pos]))
     s[pos] = '\0';
-  else
+  ورنہ
     {
-      for (i = pos + 1; i < pos + 10; ++i)
+      برائے (i = pos + 1; i < pos + 10; ++i)
 	s[i] = random () & BIG_CHAR;
       s[i] = '\0';
     }
@@ -119,61 +119,61 @@ do_test (size_t align, size_t pos, size_t len)
     do_one_test (impl, s, acc, pos);
 }
 
-static void
-do_random_tests (void)
+ساکن خالی
+do_random_tests (خالی)
 {
   size_t i, j, n, align, pos, alen, len;
-  UCHAR *p = (UCHAR *) (buf1 + page_size) - 512;
+  UCHAR *p = (UCHAR *) (buf1 + صفحہ_سائز) - 512;
   UCHAR *acc;
 
-  for (n = 0; n < ITERATIONS; n++)
+  برائے (n = 0; n < ITERATIONS; n++)
     {
       align = random () & 15;
-      if (random () & 1)
+      اگر (random () & 1)
 	alen = random () & 63;
-      else
+      ورنہ
 	alen = random () & 15;
-      if (!alen)
+      اگر (!alen)
 	pos = 0;
-      else
+      ورنہ
 	pos = random () & 511;
-      if (pos + align >= 511)
+      اگر (pos + align >= 511)
 	pos = 510 - align - (random () & 7);
       len = random () & 511;
-      if (len + align >= 512)
+      اگر (len + align >= 512)
 	len = 511 - align - (random () & 7);
-      acc = (UCHAR *) (buf2 + page_size) - alen - 1 - (random () & 7);
-      for (i = 0; i < alen; ++i)
+      acc = (UCHAR *) (buf2 + صفحہ_سائز) - alen - 1 - (random () & 7);
+      برائے (i = 0; i < alen; ++i)
 	{
 	  acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  اگر (!acc[i])
 	    acc[i] = random () & BIG_CHAR;
-	  if (!acc[i])
+	  اگر (!acc[i])
 	    acc[i] = 1 + (random () & SMALL_CHAR);
 	}
       acc[i] = '\0';
       j = (pos > len ? pos : len) + align + 64;
-      if (j > 512)
+      اگر (j > 512)
 	j = 512;
 
-      for (i = 0; i < j; i++)
+      برائے (i = 0; i < j; i++)
 	{
-	  if (i == len + align)
+	  اگر (i == len + align)
 	    p[i] = '\0';
-	  else if (i == pos + align)
+	  ورنہ اگر (i == pos + align)
 	    {
 	      p[i] = random () & BIG_CHAR;
-	      if (STRCHR ((CHAR *) acc, p[i]))
+	      اگر (STRCHR ((CHAR *) acc, p[i]))
 		p[i] = '\0';
 	    }
-	  else if (i < align || i > pos + align)
+	  ورنہ اگر (i < align || i > pos + align)
 	    p[i] = random () & BIG_CHAR;
-	  else
+	  ورنہ
 	    p[i] = acc [random () % alen];
 	}
 
       FOR_EACH_IMPL (impl, 1)
-	if (CALL (impl, (CHAR *) (p + align),
+	اگر (CALL (impl, (CHAR *) (p + align),
 		  (CHAR *) acc) != (pos < len ? pos : len))
 	  {
 	    error (0, 0, "Iteration %zd - wrong result in function %s (%zd, %p, %zd, %zd, %zd) %zd != %zd",
@@ -185,38 +185,38 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+صحیح
+test_main (خالی)
 {
   size_t i;
 
   test_init ();
 
-  printf ("%32s", "");
+  لکھو ("%32s", "");
   FOR_EACH_IMPL (impl, 0)
-    printf ("\t%s", impl->name);
-  putchar ('\n');
+    لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-  for (i = 0; i < 32; ++i)
+  برائے (i = 0; i < 32; ++i)
     {
       do_test (0, 512, i);
       do_test (i, 512, i);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     {
       do_test (0, 16 << i, 4);
       do_test (i, 16 << i, 4);
     }
 
-  for (i = 1; i < 8; ++i)
+  برائے (i = 1; i < 8; ++i)
     do_test (i, 64, 10);
 
-  for (i = 0; i < 64; ++i)
+  برائے (i = 0; i < 64; ++i)
     do_test (0, i, 6);
 
   do_random_tests ();
-  return ret;
+  واپس ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>

@@ -17,114 +17,114 @@
    <https://www.gnu.org/licenses/>.  */
 
 /* test-memcpy-support.h contains all test functions.  */
-#include "test-memcpy-support.h"
+#شامل "test-memcpy-support.h"
 
-static void
-do_random_tests (void)
+ساکن خالی
+do_random_tests (خالی)
 {
-  size_t i, j, n, align1, align2, len, size1, size2, size;
-  int c;
-  unsigned char *p1, *p2;
-  unsigned char *res;
+  size_t i, j, n, align1, align2, len, size1, size2, سائز;
+  صحیح c;
+  غیرعلامتی حرف *p1, *p2;
+  غیرعلامتی حرف *res;
 
-  for (n = 0; n < ITERATIONS; n++)
+  برائے (n = 0; n < ITERATIONS; n++)
     {
-      if (n == 0)
+      اگر (n == 0)
         {
           len = getpagesize ();
-          size = len + 512;
-          size1 = size;
-          size2 = size;
+          سائز = len + 512;
+          size1 = سائز;
+          size2 = سائز;
           align1 = 512;
           align2 = 512;
         }
-      else
+      ورنہ
         {
-          if ((random () & 255) == 0)
-            size = 65536;
-          else
-            size = 768;
-          if (size > page_size)
-            size = page_size;
-          size1 = size;
-          size2 = size;
+          اگر ((random () & 255) == 0)
+            سائز = 65536;
+          ورنہ
+            سائز = 768;
+          اگر (سائز > صفحہ_سائز)
+            سائز = صفحہ_سائز;
+          size1 = سائز;
+          size2 = سائز;
           i = random ();
-          if (i & 3)
-            size -= 256;
-          if (i & 1)
+          اگر (i & 3)
+            سائز -= 256;
+          اگر (i & 1)
             size1 -= 256;
-          if (i & 2)
+          اگر (i & 2)
             size2 -= 256;
-          if (i & 4)
+          اگر (i & 4)
             {
-              len = random () % size;
+              len = random () % سائز;
               align1 = size1 - len - (random () & 31);
               align2 = size2 - len - (random () & 31);
-              if (align1 > size1)
+              اگر (align1 > size1)
                 align1 = 0;
-              if (align2 > size2)
+              اگر (align2 > size2)
                 align2 = 0;
             }
-          else
+          ورنہ
             {
               align1 = random () & 63;
               align2 = random () & 63;
-              len = random () % size;
-              if (align1 + len > size1)
+              len = random () % سائز;
+              اگر (align1 + len > size1)
                 align1 = size1 - len;
-              if (align2 + len > size2)
+              اگر (align2 + len > size2)
                 align2 = size2 - len;
             }
         }
-      p1 = buf1 + page_size - size1;
-      p2 = buf2 + page_size - size2;
+      p1 = buf1 + صفحہ_سائز - size1;
+      p2 = buf2 + صفحہ_سائز - size2;
       c = random () & 255;
       j = align1 + len + 256;
-      if (j > size1)
+      اگر (j > size1)
         j = size1;
-      for (i = 0; i < j; ++i)
+      برائے (i = 0; i < j; ++i)
         p1[i] = random () & 255;
 
       FOR_EACH_IMPL (impl, 1)
       {
         j = align2 + len + 256;
-        if (j > size2)
+        اگر (j > size2)
           j = size2;
         memset (p2, c, j);
-        res = (unsigned char *)CALL (impl, (char *)(p2 + align2),
-                                     (char *)(p1 + align1), len);
-        if (res != MEMCPY_RESULT (p2 + align2, len))
+        res = (غیرعلامتی حرف *)CALL (impl, (حرف *)(p2 + align2),
+                                     (حرف *)(p1 + align1), len);
+        اگر (res != MEMCPY_نتیجہ (p2 + align2, len))
           {
             error (0, 0,
                    "Iteration %zd - wrong result in function %s (%zd, %zd, "
                    "%zd) %p != %p",
                    n, impl->name, align1, align2, len, res,
-                   MEMCPY_RESULT (p2 + align2, len));
+                   MEMCPY_نتیجہ (p2 + align2, len));
             ret = 1;
           }
-        for (i = 0; i < align2; ++i)
+        برائے (i = 0; i < align2; ++i)
           {
-            if (p2[i] != c)
+            اگر (p2[i] != c)
               {
                 error (0, 0,
                        "Iteration %zd - garbage before, %s (%zd, %zd, %zd)", n,
                        impl->name, align1, align2, len);
                 ret = 1;
-                break;
+                توڑو;
               }
           }
-        for (i = align2 + len; i < j; ++i)
+        برائے (i = align2 + len; i < j; ++i)
           {
-            if (p2[i] != c)
+            اگر (p2[i] != c)
               {
                 error (0, 0,
                        "Iteration %zd - garbage after, %s (%zd, %zd, %zd)", n,
                        impl->name, align1, align2, len);
                 ret = 1;
-                break;
+                توڑو;
               }
           }
-        if (memcmp (p1 + align1, p2 + align2, len))
+        اگر (memcmp (p1 + align1, p2 + align2, len))
           {
             error (0, 0,
                    "Iteration %zd - different strings, %s (%zd, %zd, %zd)", n,
@@ -135,26 +135,26 @@ do_random_tests (void)
     }
 }
 
-int
-test_main (void)
+صحیح
+test_main (خالی)
 {
   size_t i, j;
 
   test_init ();
 
-  printf ("%23s", "");
+  لکھو ("%23s", "");
   FOR_EACH_IMPL (impl, 0)
-  printf ("\t%s", impl->name);
-  putchar ('\n');
+  لکھو ("\t%s", impl->name);
+  حرف_لکھو ('\n');
 
-  for (i = 0; i < 18; ++i)
+  برائے (i = 0; i < 18; ++i)
     {
       do_test (0, 0, 1 << i);
       do_test (i, 0, 1 << i);
       do_test (0, i, 1 << i);
       do_test (i, i, 1 << i);
     }
-  for (i = 0; i < 32; ++i)
+  برائے (i = 0; i < 32; ++i)
     {
       do_test (0, 0, i);
       do_test (i, 0, i);
@@ -162,17 +162,17 @@ test_main (void)
       do_test (i, i, i);
     }
 
-  for (i = 3; i < 32; ++i)
+  برائے (i = 3; i < 32; ++i)
     {
-      if ((i & (i - 1)) == 0)
-        continue;
+      اگر ((i & (i - 1)) == 0)
+        جاری;
       do_test (0, 0, 16 * i);
       do_test (i, 0, 16 * i);
       do_test (0, i, 16 * i);
       do_test (i, i, 16 * i);
     }
 
-  for (i = 19; i <= 25; ++i)
+  برائے (i = 19; i <= 25; ++i)
     {
       do_test (255, 0, 1 << i);
       do_test (0, 4000, 1 << i);
@@ -186,9 +186,9 @@ test_main (void)
   do_test1 (0, 0, 0x100000);
   do_test1 (0, 0, 0x2000000);
 
-  for (i = 4096; i < 32768; i += 4096)
+  برائے (i = 4096; i < 32768; i += 4096)
     {
-      for (j = 1; j <= 1024; j <<= 1)
+      برائے (j = 1; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -204,9 +204,9 @@ test_main (void)
         }
     }
 
-  for (i = 0x300000; i < 0x2000000; i += 0x235689)
+  برائے (i = 0x300000; i < 0x2000000; i += 0x235689)
     {
-      for (j = 64; j <= 1024; j <<= 1)
+      برائے (j = 64; j <= 1024; j <<= 1)
         {
           do_test1 (0, j, i);
           do_test1 (4095, j, i);
@@ -222,7 +222,7 @@ test_main (void)
         }
     }
 
-  return ret;
+  واپس ret;
 }
 
-#include <support/test-driver.c>
+#شامل <support/test-driver.c>
